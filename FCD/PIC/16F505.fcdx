@@ -1,0 +1,86 @@
+<!-- CRC: 90CF26913586BBA787FE92D553771933440CDC7C3DD3077BBBA2AF32F3BF23792B702871DF5ADABCC487AA0E0C74ACDB9A0D46BD3B6AACB92DE4D84759EBB5079CA9DA2D2BBCDAE2A4D1C56CD1580BF51205AF8B9183813C9C6E061DEBCA3B8DE3776A8AB03D3F99CA964C4599F88498EEF713D547A275BD48B25F43DC0F5D9A0A4BB1AD457AF4C7FE970BB25DCDBBA8E459FB626D6FD0DFE977967E0B128BA2C70DC5D11D158353086944AE325796A67C58B3599C7260E1274F90C1EC57F582FFEC1D82735732B04646F04394134BC3E9D58A8ADF3C3B45 -->
+<!-- REVISION: 1.0 -->
+<!-- GUID: 494C3F6F-9F27-440B-AA95-387FF89B3633 -->
+<!-- DATE: 08\08\2022 -->
+<!-- DIR: FCD\PIC\16F505.fcdx -->
+<root>
+<device name='16F505' product='PIC' cal='PIC' family='16F' bits='8' >
+    <clock max_speed='20000000' master_divider='4' default='19660800' />
+    <memory >
+        <flash bytes='1536' />
+        <ram bytes='72' />
+    </memory>
+    <configuration address='1' mult='2' >
+	<format >
+	  <word value='0x3FFF' />
+        </format>
+        <setting />
+        <settings >
+            <setting name='OSC' offset='0' mask='7' bits='3' hint='Oscillator Selection bits' >
+                <option name='External RC oscillator/CLKOUT function on RB4/OSC2/CLKOUT pin' value='7' />
+                <option name='External RC oscillator/RB4 function on RB4/OSC2/CLKOUT pin' value='6' />
+                <option name='Internal RC oscillator/CLKOUT function on RB4/OSC2/CLKOUT pin' value='5' />
+                <option name='Internal RC oscillator/RB4 function on RB4/OSC2/CLKOUT pin' value='4' />
+                <option name='EC oscillator/RB4 function on RB4/OSC2/CLKOUT pin' value='3' />
+                <option name='HS oscillator' value='2' />
+                <option name='XT oscillator' value='1' />
+                <option name='LP oscillator' value='0' />
+            </setting>
+            <setting name='WDT' offset='3' mask='1' bits='1' hint='Watchdog Timer Enable bit' >
+                <option name='Enabled' value='1' />
+                <option name='Disabled' value='0' />
+            </setting>
+            <setting name='CP' offset='4' mask='1' bits='1' hint='Code Protection bit' >
+                <option name='Disabled' value='1' />
+                <option name='Enabled' value='0' />
+            </setting>
+            <setting name='MCLRE' offset='5' mask='1' bits='1' hint='RB3/MCLR Pin Function Select bit' >
+                <option name='Enabled' value='1' />
+                <option name='Disabled' value='0' />
+            </setting>
+        </settings>
+    </configuration>
+    <pins sides='2' smd='0' >
+        <pin name='VDD' />
+        <pin name='RB5/OSC1/CLKIN' port='1' bit='5' />
+        <pin name='RB4/OSC2/CLKOUT' port='1' bit='4' />
+        <pin name='RB3/MCLR/VPP' port='1' bit='3' />
+        <pin name='RC5/T0CKI' port='2' bit='5' />
+        <pin name='RC4' port='2' bit='4' />
+        <pin name='RC3' port='2' bit='3' />
+        <pin name='RC2' port='2' bit='2' />
+        <pin name='RC1' port='2' bit='1' />
+        <pin name='RC0' port='2' bit='0' />
+        <pin name='RB2' port='1' bit='2' />
+        <pin name='RB1/ICSPCLK' port='1' bit='1' />
+        <pin name='RB0/ICSPDAT' port='1' bit='0' />
+        <pin name='VSS' />
+    </pins>
+    <interrupts />
+</device>
+<inline >
+    <defines code='#define MX_16F5x_TRIS\n#define MX_16F5x_TRISB\n#define MX_16F5x_TRISC\n' />
+    <directives code="#include &lt;xc.h&gt;\n#include &lt;math.h&gt;\n\n" />
+    <main >
+        <start code='\nvoid main()\n{\n\t#ifdef INTOSCHELPER\n\t\tINTOSCHELPERCODE\n\t#endif\n\n' />
+        <end code='\tmainendloop: goto mainendloop;\n}\n\n' />
+        <init code='' />
+    </main>
+    <interrupt >
+        <enable code='st_bit(INTCON,GIE);\n' />
+        <start code='' />
+        <end code='' />
+        <init code='' />
+    </interrupt>
+    <config >
+	<start code='//Chip Configuration Settings\n' />
+        <body code='__PROG_CONFIG($(address), 0x$(value:x));\n' /> 
+    </config>
+</inline>
+<test >
+    <icd >
+        <clock port='1' pin='6' />
+        <data port='1' pin='7' />
+    </icd>
+</test>
+</root>

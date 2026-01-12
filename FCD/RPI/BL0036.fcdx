@@ -1,0 +1,154 @@
+<!-- CRC: 9CBAA20B02874D61C96DAE4FEC699BE78CDD0FC10DC020B824C6701742CDF1682B702871DF5ADABCC487AA0E0C74ACDBF6B7B6BFB0C4C6F420BDE58D868796A68940AE31AE32EB4A0C3CAEE8E7DA69872399175879999B412E3D0492D7FA89506A015DA404F3119729BD0D641A66C205347B8760B897091049C684BAFEE06257C63E7396CFCEE6558F9483AC6B4C57DCB78D590C6E35C93A8C9D06CE68203AA81A645F3B73B73C96086944AE325796A6193A739236E18379610A4B885167AC1FEBF9108CD87DD696A3E761B0B04467EFC0CE2C344F21BA45 -->
+<!-- REVISION: 3.0 -->
+<!-- GUID: 6E4565CF-B777-4251-BAEC-5798D927F0D5 -->
+<!-- DATE: 10\10\2025 -->
+<!-- DIR: FCD\RPI\BL0036.fcdx -->
+<root>
+<build>
+<compiler   exe="$(fcddir)RPI\batch\rbuild.bat" params="&quot;$(target)&quot; &quot;$(outdir)&quot;  &quot;$(compilerrpi)&quot; " />
+<linker     exe="$(appdir)tools\DoNothing\DoNothing.exe" params="" />
+<programmer exe="$(fcddir)RPI\batch\rprog.bat" params="&quot;$(target)&quot; &quot;$(outdir)&quot; &quot;$(compilerrpi)&quot;  $(sship) $(sshuser) $(sshpass) $(sshsudo) " UsesSSH="1" />
+</build>
+
+<device name='E-Blocks 2 RPI Programmer' namealt="BL0036" product='RPI' cal='RPI' family='RPI' compiler='RPI' bits='8' >
+    <clock max_speed='76800000' master_divider='8' fixed='76800000' />
+    <memory >
+        <flash bytes='131072' />
+        <ram bytes='32768' />
+    </memory>
+    <configuration address='0x0000' mult='1' >
+        <setting />
+    </configuration>
+	
+    <pins sides='4' smd='1' >
+        <pin name='PA0' port='0' bit='0' />
+        <pin name='PA1' port='0' bit='1' />
+        <pin name='PA2' port='0' bit='2' />
+        <pin name='PA3' port='0' bit='3' />
+        <pin name='PA4 SCL0' port='0' bit='4' />
+        <pin name='PA5 SDA0' port='0' bit='5' />
+        <pin name='PA6 NC'  />
+        <pin name='PA7 NC'  />
+
+        <pin name='PB0' port='1' bit='0' />
+        <pin name='PB1' port='1' bit='1' />
+        <pin name='PB2' port='1' bit='2' />
+        <pin name='PB3' port='1' bit='3' />
+        <pin name='PB4' port='1' bit='4' />
+        <pin name='PB5' port='1' bit='5' />
+        <pin name='PB6' port='1' bit='6' />
+        <pin name='PB7' port='1' bit='7' />
+		
+        <pin name='PC0 RX' port='2' bit='0' />
+        <pin name='PC1 TX' port='2' bit='1' />
+        <pin name='PC2 SPI0 CS0' port='2' bit='2' />
+        <pin name='PC3 MOSI0' port='2' bit='3' />
+        <pin name='PC4 MISO0' port='2' bit='4' />
+        <pin name='PC5 SCK0' port='2' bit='5' />
+        <pin name='PC6 SCL1' port='2' bit='6' />
+        <pin name='PC7 SDA1' port='2' bit='7' />
+		
+        <pin name='PD0 PWM1' port='3' bit='0' />
+        <pin name='PD1 PWM0' port='3' bit='1' />
+        <pin name='PD2 SPI1 CS0' port='3' bit='2' />
+        <pin name='PD3 MOSI1' port='3' bit='3' />
+        <pin name='PD4 MIOS1' port='3' bit='4' />
+        <pin name='PD5 SCK1' port='3' bit='5' />
+        <pin name='PD6 NC'  />
+        <pin name='PD7 NC'  />
+    </pins>
+	
+    <i2c master='1' >
+        <sda port='2' pin='7' />
+        <scl port='2' pin='6' />
+    </i2c>
+	
+    <spi >
+        <miso port='2' pin='4' />
+        <mosi port='2' pin='3' />
+        <clk  port='2' pin='5' />
+    </spi>
+    
+    <uart aname='/dev/serial0' >
+        <tx port='6' pin='14' />
+        <rx port='6' pin='15' />
+    </uart>
+
+    <uart aname='/dev/serial1' noio='1' />
+    <uart aname='/dev/serial2' noio='1' />
+    <uart aname='/dev/serial3' noio='1' />
+    <uart aname='/dev/serial4' noio='1' />
+
+    <pwm>
+    	<timer>
+    	    <option name='Dedicated' value='0' />
+    	</timer>
+        <prescaler >
+            <option name='1' value='1' />
+            <option name='2' value='2' />
+            <option name='4' value='4' />
+            <option name='8' value='8' />
+            <option name='16' value='16' />
+            <option name='32' value='32' />
+            <option name='64' value='64' />
+            <option name='128' value='128' />
+        </prescaler>
+        <out port='3' pin='1' aport='3' apin='2' />
+        <out port='3' pin='0' aport='3' apin='4' />		
+	</pwm>
+    <interrupts >
+    </interrupts>
+</device>
+<inline >
+    <defines code='
+#define MX_CAL_RPI
+#define	MX_REGISTER_MAP_BASE	0x3F000000
+' />
+    <directives code="" />
+    <main >
+        <start code='
+int main()
+{
+	if ((gpio = FC_CAL_GetRegisterMap(MX_REGISTER_MAP_GPIO)) == MAP_FAILED) return -1 ;
+	FC_CAL_PullupsOff();
+#ifdef USE_FLOWCODE_ICD2
+	// Set pullups on ICD Clock and Data GPIO pins
+	MX_GPIO_PULL = 2;
+	FCI_DELAYBYTE_US(100);
+	MX_GPIO_PULLCLK0 = (1 &lt;&lt; MX_ICD_DATA_GPIO) | (1 &lt;&lt; MX_ICD_CLK_GPIO);
+	FCI_DELAYBYTE_US(100);
+	MX_GPIO_PULLCLK0 = 0;
+	// ICD Startup
+	dbg_mode = 0x08;
+	ICD_PUSH(0);
+	FC_MARKER(1);
+	FC_MARKER(1);
+	ICD_POP();
+#endif
+' />
+        <end code='
+	munmap((void *)gpio, getpagesize());
+	return 0;
+}
+	' />
+        <init code='' />
+    </main>
+    <interrupt >
+        <enable code='' />
+        <start code='' />
+        <end code='' />
+        <init code='' />
+    </interrupt>
+    <config >
+    	<start code='//Configuration Start\n' />
+        <body code='' />
+        <end code='//Configuration End\n\n' />
+    </config>
+</inline>
+<test >
+    <icd >
+        <clock port='1' pin='6' />
+        <data port='1' pin='7' />
+    </icd>
+</test>
+</root>

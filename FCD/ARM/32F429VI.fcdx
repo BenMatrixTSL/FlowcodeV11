@@ -1,0 +1,894 @@
+<!-- CRC: 1CECFE3DB3A1BD5169AEA98AD43ADE63B8C4326BD4390A41F3B0C453A7A9BF4ADA6183FD7E79AA9B6577EF8789F001E857B57B0F0B0A43C64F754F99A1A736FEA4BAF1B34E38B68E0C3CAEE8E7DA698735F15D4F535EFBFE7000B4BD3BC3CD45EBACA219B59D9FFB0744DA0F3E64E3950CDF41F1E34E5DB22809B8E93A3E181DFD8DB4FE7F1D221577A44E5781904EF136AE5E59F842D6436C848A92C5332AF13F2C0D0BAB26DB1A086944AE325796A6342EB0C6779BEF13ED74FAE4CA56DEB205E066AA5C8F626D27FDDD94B8F81F9CD157EA94462C8AB8 -->
+<!-- REVISION: 3.0 -->
+<!-- GUID: 32DE68F6-0075-4CBE-802C-03E4967737C6 -->
+<!-- DATE: 17\06\2025 -->
+<!-- DIR: FCD\ARM\32F429VI.fcdx -->
+<root>
+<build>
+<compiler exe="$(fcddir)ARM\batch\stm32comp.bat" params="&quot;$(target)&quot; &quot;$(outdir)&quot; &quot;$(chipalt)&quot; &quot;$(family)&quot; &quot;$(lscript)&quot; &quot;$(clock)&quot; &quot;$(romsize)&quot; &quot;$(ramsize)&quot; &quot;$(compilerstarm)&quot;" />
+<linker exe="$(appdir)tools\DoNothing\DoNothing.exe" params="" />
+<programmer exe="$(fcddir)ARM\batch\stm32prog.bat" params="&quot;$(outdir)&quot; &quot;$(target)&quot; $(devname) &quot;$(compilerstarm)&quot; " />
+</build>
+
+<device file = '32F429VI' 
+        name='32F429VI'
+        namealt='32F429xx'
+        product='ARM' compiler='STARM' cal='STARM' 
+        family='F4'
+        bits='32' >
+
+    <parameters>
+        <lscript value = 'stm32f_ccm64.ld' />
+        <romsize value = '2048K' />
+        <ramsize value = '192K' />
+    </parameters>
+
+    <clock max_speed='26000000' master_divider='1' default='8000000' />
+    
+    <memory >
+        <flash bytes='2097152' />
+        <ram bytes='262144' />
+    </memory>
+
+    <configuration address='0' mult='1' >
+        <format >
+            <dword address='RCC_OSC_TYPE' value='1' />
+            <dword address='RCC_PLL_SRC' value='2' />
+            <dword address='RCC_PLLM' value='8' />
+            <dword address='RCC_PLLN' value='360' />
+            <dword address='RCC_PLLP' value='2' />
+            <dword address='RCC_PLLQ' value='7' />
+            <dword address='RCC_SYSCLK_SRC' value='2' />
+            <dword address='RCC_AHB_PRE' value='1' />
+            <dword address='RCC_APB1_PRE' value='4' />
+            <dword address='RCC_APB2_PRE' value='2' />
+            <dword address='FLASH_LTNC' value='5' />
+
+        </format>
+        <setting />
+        <settings >
+            <setting name='Osc select (HSI, HSE, EXT)' offset='0' mask='3' bits='2' hint='Osc select (HSI, HSE, EXT)' >
+                <option name='HSI' value='0' />
+                <option name='HSE' value='1' />
+                <option name='EXT' value='3' />
+            </setting>
+            <setting name='PLL Source (OFF, HSI, HSE)' offset='32' mask='3' bits='2' hint='PLL Source (OFF, HSI, HSE)' >
+                <option name='OFF' value='0' />
+                <option name='HSI' value='1' />
+                <option name='HSE/EXT' value='2' />
+            </setting>
+
+            <setting name='PLLM (PLL source divider)' offset='64' mask='0x3F' bits='6' hint='PLLM (PLL source divider)' >
+                <option name='/2' value='2' />
+                <option name='/3' value='3' />
+                <option name='/4' value='4' />
+                <option name='/5' value='5' />
+                <option name='/6' value='6' />
+                <option name='/7' value='7' />
+                <option name='/8' value='8' />
+                <option name='/9' value='9' />
+                <option name='/10' value='10' />
+                <option name='/11' value='11' />
+                <option name='/12' value='12' />
+                <option name='/13' value='13' />
+                <option name='/14' value='14' />
+                <option name='/15' value='15' />
+                <option name='/16' value='16' />
+                <option name='/17' value='17' />
+                <option name='/18' value='18' />
+                <option name='/19' value='19' />
+                <option name='/20' value='20' />
+                <option name='/21' value='21' />
+                <option name='/22' value='22' />
+                <option name='/23' value='23' />
+                <option name='/24' value='24' />
+                <option name='/25' value='25' />
+                <option name='/26' value='26' />
+            </setting>
+            <setting name='PLLN (Main PLL multiplier)' offset='96' mask='0x01FF' bits='9' hint='PLLN (Main PLL multiplier)' >
+                <option name='x100' value='100' />
+                <option name='x180' value='180' />
+                <option name='x192' value='192' />
+                <option name='x200' value='200' />
+                <option name='x240' value='240' />
+                <option name='x300' value='300' />
+                <option name='x336' value='336' />
+                <option name='x360' value='360' />
+                <option name='x384' value='384' />
+                <option name='x400' value='400' />
+                <option name='x432' value='432' />
+            </setting>
+            <setting name='PLLP (Main PLL divisor for main system clock)' offset='128' mask='0x0F' bits='4' hint='PLLP (Main PLL divisor for main system clock)' >
+                <option name='/2' value='2' />
+                <option name='/4' value='4' />
+                <option name='/6' value='6' />
+                <option name='/8' value='8' />
+            </setting>
+            <setting name='PLLQ (Main PLL divisor for USB, SDIO)' offset='160' mask='0x0F' bits='4' hint='PLLQ (Main PLL divisor for USB, SDIO)' >
+                <option name='/2' value='2' />
+                <option name='/3' value='3' />
+                <option name='/4' value='4' />
+                <option name='/5' value='5' />
+                <option name='/6' value='6' />
+                <option name='/7' value='7' />
+                <option name='/8' value='8' />
+                <option name='/9' value='9' />
+                <option name='/10' value='10' />
+                <option name='/11' value='11' />
+                <option name='/12' value='12' />
+                <option name='/13' value='13' />
+                <option name='/14' value='14' />
+                <option name='/15' value='15' />
+            </setting>
+            
+            <setting name='System clock selector (HSI, HSE, PLL)' offset='224' mask='3' bits='2' hint='System clock selector (HSI, HSE, PLL)' >
+                <option name='HSI internal oscillator selected as system clock' value='0' />
+                <option name='HSE external oscillator selected as system clock' value='1' />
+                <option name='PLL selected as system clock' value='2' />
+            </setting>
+            <setting name='HPRE (AHB prescaler)' offset='256' mask='0x03FF' bits='8' hint='HPRE (AHB prescaler)' >
+                <option name='System clock not divided (/1)' value='1' />
+                <option name='System clock divided by 2' value='2' />
+                <option name='System clock divided by 4' value='4' />
+                <option name='System clock divided by 8' value='8' />
+                <option name='System clock divided by 16' value='16' />
+                <option name='System clock divided by 64' value='64' />
+                <option name='System clock divided by 128' value='128' />
+                <option name='System clock divided by 256' value='256' />
+                <option name='System clock divided by 512' value='512' />
+            </setting>    
+            <setting name='PPRE1 (APB1 Low speed prescaler)' offset='288' mask='0x00ff' bits='16' hint='PPRE1 (APB1 Low speed prescaler)' >
+                <option name='ABH clock not divided (/1)' value='1' />
+                <option name='ABH clock divided by 2' value='2' />
+                <option name='ABH clock divided by 4' value='4' />
+                <option name='ABH clock divided by 8' value='8' />
+                <option name='ABH clock divided by 16' value='16' />
+            </setting>    
+            <setting name='PPRE2 (APB2 High speed prescaler)' offset='320' mask='0x00ff' bits='16' hint='PPRE2 (APB2 High speed prescaler)' >
+                <option name='ABH clock not divided (/1)' value='1' />
+                <option name='ABH clock divided by 2' value='2' />
+                <option name='ABH clock divided by 4' value='4' />
+                <option name='ABH clock divided by 8' value='8' />
+                <option name='ABH clock divided by 16' value='16' />
+            </setting>        
+            <setting name='LATENCY (Flash Latency)' offset='352' mask='7' bits='3' hint='LATENCY (Flash Latency)' >
+                <option name='Zero wait states' value='0' />
+                <option name='1 wait state' value='1' />
+                <option name='2 wait states' value='2' />
+                <option name='3 wait states' value='3' />
+                <option name='4 wait states' value='4' />
+                <option name='5 wait states' value='5' />
+                <option name='6 wait states' value='6' />
+                <option name='7 wait states' value='7' />
+            </setting>            
+        </settings>
+    </configuration>
+
+    <pins sides='4' smd='1' >
+        <pin name='PE2' port='4' bit='2' />
+        <pin name='PE3' port='4' bit='3' />
+        <pin name='PE4' port='4' bit='4' />
+        <pin name='PE5' port='4' bit='5' />
+        <pin name='PE6' port='4' bit='6' />
+        <pin name='VBAT' />
+        <pin name='PC13' port='2' bit='13' />
+        <pin name='PC14' port='2' bit='14' />
+        <pin name='PC15' port='2' bit='15' />
+        <pin name='VSS' />
+        <pin name='VDD' />
+        <pin name='PH0' port='7' bit='0' />
+        <pin name='PH1' port='7' bit='1' />
+        <pin name='NRST' />
+        <pin name='PC0' port='2' bit='0' />
+        <pin name='PC1' port='2' bit='1' />
+        <pin name='PC2' port='2' bit='2' />
+        <pin name='PC3' port='2' bit='3' adc='13' />
+        <pin name='VDD' />
+        <pin name='VSSA' />
+        <pin name='VREF+' />
+        <pin name='VDDA' />
+        <pin name='PA0' port='0' bit='0' adc='0'  />
+        <pin name='PA1' port='0' bit='1' adc='1'  />
+        <pin name='PA2' port='0' bit='2' adc='2'  />
+
+        <pin name='PA3' port='0' bit='3' adc='3'  />
+        <pin name='VSS' />
+        <pin name='VDD' />
+        <pin name='PA4' port='0' bit='4' adc='4'  />
+        <pin name='PA5' port='0' bit='5' adc='5'  />
+        <pin name='PA6' port='0' bit='6' adc='6'  />
+        <pin name='PA7' port='0' bit='7' adc='7' />
+        <pin name='PC4' port='2' bit='4' />
+        <pin name='PC5' port='2' bit='5' />
+        <pin name='PB0' port='1' bit='0' />
+        <pin name='PB1' port='1' bit='1' />
+        <pin name='PB2' port='1' bit='2' />
+        <pin name='PE7' port='4' bit='7' />
+        <pin name='PE8' port='4' bit='8' />
+        <pin name='PE9' port='4' bit='9' />
+        <pin name='PE10' port='4' bit='10' />
+        <pin name='PE11' port='4' bit='11' />
+        <pin name='PE12' port='4' bit='12' />
+        <pin name='PE13' port='4' bit='13' />
+        <pin name='PE14' port='4' bit='14' />
+        <pin name='PE15' port='4' bit='15' />
+        <pin name='PB10' port='1' bit='10' />
+        <pin name='PB11' port='1' bit='11' />
+        <pin name='VCAP' />
+        <pin name='VDD' />
+        
+        <pin name='PB12' port='1' bit='12' />
+        <pin name='PB13' port='1' bit='13' />
+        <pin name='PB14' port='1' bit='14' />
+        <pin name='PB15' port='1' bit='15' />
+        <pin name='PD8' port='3' bit='8' />
+        <pin name='PD9' port='3' bit='9' />
+        <pin name='PD10' port='3' bit='10' />
+        <pin name='PD11' port='3' bit='11' />
+        <pin name='PD12' port='3' bit='12' />
+        <pin name='PD13' port='3' bit='13' />
+        <pin name='PD14' port='3' bit='14' />
+        <pin name='PD15' port='3' bit='15' />
+        <pin name='PC6' port='2' bit='6' />
+        <pin name='PC7' port='2' bit='7' />
+        <pin name='PC8' port='2' bit='8' />
+        <pin name='PC9' port='2' bit='9' />
+        <pin name='PA8' port='0' bit='8' />
+        <pin name='PA9' port='0' bit='9' />
+        <pin name='PA10' port='0' bit='10' />
+        <pin name='PA11' port='0' bit='11' />
+        <pin name='PA12' port='0' bit='12' />
+        <pin name='PA13' port='0' bit='13' />
+        <pin name='VCAP' />
+        <pin name='VSS' />
+        <pin name='VDD' />
+        
+        <pin name='PA14' port='0' bit='14' />
+        <pin name='PA15' port='0' bit='15' />
+        <pin name='PC10' port='2' bit='10' />
+        <pin name='PC11' port='2' bit='11' />
+        <pin name='PC12' port='2' bit='12' />
+        <pin name='PD0' port='3' bit='0' />
+        <pin name='PD1' port='3' bit='1' />
+        <pin name='PD2' port='3' bit='2' />
+        <pin name='PD3' port='3' bit='3' />
+        <pin name='PD4' port='3' bit='4' />
+        <pin name='PD5' port='3' bit='5' />
+        <pin name='PD6' port='3' bit='6' />
+        <pin name='PD7' port='3' bit='7' />
+        <pin name='PB3' port='1' bit='3' />
+        <pin name='PB4' port='1' bit='4' />
+        <pin name='PB5' port='1' bit='5' />
+        <pin name='PB6' port='1' bit='6' />
+        <pin name='PB7' port='1' bit='7' />
+        <pin name='BOOT0' />
+        <pin name='PB8' port='1' bit='8' />
+        <pin name='PB9' port='1' bit='9' />
+        <pin name='PE0' port='4' bit='0' />
+        <pin name='PE1' port='4' bit='1' />
+        <pin name='VSS' />
+        <pin name='VDD' />
+    </pins>
+
+    <pwm regset='1' remappable='2' >
+        <timer>
+            <option name='Fixed' value='1' count='8' />
+        </timer>
+        <prescaler >
+            <option name="1" value="1" />
+            <option name="4" value="4" />
+            <option name="16" value="16" />
+            <option name="64" value="64" />
+            <option name="256" value="256" />
+            <option name="1024" value="1024" />
+        </prescaler>
+        <out name='TIM2_CH1' af0='1' port0='0' pin0='0' af1='1' port1='0' pin1='5' />
+        <out name='TIM3_CH1' af0='2' port0='1' pin0='4' />
+        <out name='TIM3_CH2' af0='2' port0='0' pin0='7' />
+        <out name='TIM3_CH3' af0='2' port0='2' pin0='8' />
+        <out name='TIM4_CH2' af0='2' port0='1' pin0='7' />
+        <out name='TIM5_CH1' af0='2' port0='0' pin0='0' />
+        <out name='TIM8_CH3' af0='3' port0='2' pin0='8' />
+        <out name='TIM9_CH1' af0='3' port0='4' pin0='5' />
+        <out name='TIM9_CH2' af0='3' port0='4' pin0='6' />
+        <out name='TIM14_CH1' af0='3' port0='0' pin0='7' />
+    </pwm>
+
+    <adc type='1' bits='12' >
+        <speed >
+            <option name='PCLK/4' value='0' />
+        </speed>
+    </adc>
+    
+    <uart remappable='2' name='USART1' >
+        <tx af0='7' port0='0' pin0='9' />
+        <rx af0='7' port0='0' pin0='10' />
+    </uart>
+
+    <uart remappable='2' name='UART4' >
+        <tx af0='8' port0='0' pin0='0' />
+        <rx af0='8' port0='2' pin0='11' />
+    </uart>
+    
+    <uart remappable='2' name='UART5' >
+        <tx af0='8' port0='2' pin0='12' />
+        <rx af0='8' port0='3' pin0='2' />
+    </uart>
+    
+    <spi remappable='3' name='SPI1' >
+        <clk  af0='5' port0='0' pin0='5' />
+        <miso af0='5' port0='1' pin0='4' />
+        <mosi af0='5' port0='0' pin0='7' />
+    </spi>
+    
+    <spi remappable='3' name='SPI4' >
+        <clk  af0='5' port0='4' pin0='2' />
+        <miso af0='5' port0='4' pin0='5' />
+        <mosi af0='5' port0='4' pin0='6' />
+    </spi>
+    
+    <can remappable='3' name='CAN1' >
+        <tx af0='9' port0='0' pin0='11' af1='9' port1='1' pin1='8' af2='9' port2='3' pin2='0' />
+        <rx af0='9' port0='0' pin0='12' af1='9' port1='1' pin1='9' af2='9' port2='3' pin2='1' />
+    </can>
+    <can remappable='3' name='CAN2' >
+        <tx af0='9' port0='1' pin0='5' af1='9' port1='1' pin1='12' />
+        <rx af0='9' port0='1' pin0='6' af1='9' port1='1' pin1='13' />
+    </can>
+
+    <rtcc type='1'>
+        <clock>
+            <option name='32 kHz internal RC (LSI RC)' value='0' />
+            <option name='32.768 kHz external crystal (LSE crystal)' value='1' />
+        </clock>
+    </rtcc>
+    
+    <i2c remappable='2' master='1' >
+        <scl af0='4' port0='1' pin0='6' af1='4' port1='1' pin1='8' />
+        <sda af0='4' port0='1' pin0='7' af1='4' port1='1' pin1='9' />
+    </i2c>
+    
+    <i2c remappable='2' master='1' >
+        <scl af0='4' port0='1' pin0='10'   />
+        <sda af0='4' port0='1' pin0='11'   />
+    </i2c>
+<!--
+    <i2c remappable='2' master='1' >
+        <scl af0='4' port0='0' pin0='8' />
+        <sda af0='4' port0='2' pin0='9' />
+    </i2c>
+-->
+
+    <interrupts >
+        <interrupt ident='TMR2' reg='TMR2' type='timer16' name='Timer 2'
+            handler='#ifndef MX_ISR_T2\n#define MX_ISR_T2\nvoid TIM2_IRQHandler(void)\n{\n\tHAL_TIM_IRQHandler( &amp;(MX_HANDLE_TIM2));\n}\n\nvoid MX_ISR_TIM2()\n{\n\tFCM_%n();\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n'
+            enable='MX_HANDLE_TIM2.Init.ClockDivision=TIM_CLOCKDIVISION_DIV1;\nMX_HANDLE_TIM2.Init.CounterMode=TIM_COUNTERMODE_UP;\nMX_HANDLE_TIM2.Init.RepetitionCounter=0;\n__HAL_RCC_TIM2_CLK_ENABLE();\nHAL_NVIC_SetPriority(TIM2_IRQn, 3, 0);\nHAL_NVIC_EnableIRQ(TIM2_IRQn);\nHAL_TIM_Base_Init( &amp;(MX_HANDLE_TIM2));\nHAL_TIM_Base_Start_IT( &amp;(MX_HANDLE_TIM2));\n'
+            disable='HAL_NVIC_DisableIRQ(TIM2_IRQn);\n'
+            global='\nTIM_HandleTypeDef MX_HANDLE_TIM2;\n' >
+            <timer overflow='65536' extrange='0' />
+            <options >
+                <prescale name='Prescaler Rate' >
+                    <entry name='1:1' value='MX_HANDLE_TIM2.Init.Prescaler = 1;\n' />
+                    <entry name='1:4' value='MX_HANDLE_TIM2.Init.Prescaler = 4;\n' />
+                    <entry name='1:16' value='MX_HANDLE_TIM2.Init.Prescaler = 16;\n' />
+                    <entry name='1:64' value='MX_HANDLE_TIM2.Init.Prescaler = 64;\n' />
+                    <entry name='1:256' value='MX_HANDLE_TIM2.Init.Prescaler = 256;\n' />
+                    <entry name='1:1024' value='MX_HANDLE_TIM2.Init.Prescaler = 1024;\n' />
+                </prescale>
+                <rollover name='Rollover Value' >
+                    <entry name='65536' min='1' max='65536' value='MX_HANDLE_TIM2.Instance=TIM2;\nMX_HANDLE_TIM2.Init.Period=%d-1;\n' />
+                </rollover>
+            </options>
+        </interrupt>        
+        <interrupt ident='TMR3' reg='TMR3' type='timer16' name='Timer 3'
+            handler='#ifndef MX_ISR_T3\n#define MX_ISR_T3\nvoid TIM3_IRQHandler(void)\n{\n\tHAL_TIM_IRQHandler( &amp;(MX_HANDLE_TIM3));\n}\n\nvoid MX_ISR_TIM3()\n{\n\tFCM_%n();\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n'
+            enable='MX_HANDLE_TIM3.Init.ClockDivision=TIM_CLOCKDIVISION_DIV1;\nMX_HANDLE_TIM3.Init.CounterMode=TIM_COUNTERMODE_UP;\nMX_HANDLE_TIM3.Init.RepetitionCounter=0;\n__HAL_RCC_TIM3_CLK_ENABLE();\nHAL_NVIC_SetPriority(TIM3_IRQn, 3, 0);\nHAL_NVIC_EnableIRQ(TIM3_IRQn);\nHAL_TIM_Base_Init( &amp;(MX_HANDLE_TIM3));\nHAL_TIM_Base_Start_IT( &amp;(MX_HANDLE_TIM3));\n'
+            disable='HAL_NVIC_DisableIRQ(TIM3_IRQn);\n'
+            global='\nTIM_HandleTypeDef MX_HANDLE_TIM3;\n' >
+            <timer overflow='65536' extrange='0' />
+            <options >
+                <prescale name='Prescaler Rate' >
+                    <entry name='1:1' value='MX_HANDLE_TIM3.Init.Prescaler = 1;\n' />
+                    <entry name='1:4' value='MX_HANDLE_TIM3.Init.Prescaler = 4;\n' />
+                    <entry name='1:16' value='MX_HANDLE_TIM3.Init.Prescaler = 16;\n' />
+                    <entry name='1:64' value='MX_HANDLE_TIM3.Init.Prescaler = 64;\n' />
+                    <entry name='1:256' value='MX_HANDLE_TIM3.Init.Prescaler = 256;\n' />
+                    <entry name='1:1024' value='MX_HANDLE_TIM3.Init.Prescaler = 1024;\n' />
+                </prescale>
+                <rollover name='Rollover Value' >
+                    <entry name='65536' min='1' max='65536' value='MX_HANDLE_TIM3.Instance=TIM3;\nMX_HANDLE_TIM3.Init.Period=%d-1;\n' />
+                </rollover>
+            </options>
+        </interrupt>        
+        <interrupt ident='TMR4' reg='TMR4' type='timer16' name='Timer 4'
+            handler='#ifndef MX_ISR_T4\n#define MX_ISR_T4\nvoid TIM4_IRQHandler(void)\n{\n\tHAL_TIM_IRQHandler( &amp;(MX_HANDLE_TIM4));\n}\n\nvoid MX_ISR_TIM4()\n{\n\tFCM_%n();\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n'
+            enable='MX_HANDLE_TIM4.Init.ClockDivision=TIM_CLOCKDIVISION_DIV1;\nMX_HANDLE_TIM4.Init.CounterMode=TIM_COUNTERMODE_UP;\nMX_HANDLE_TIM4.Init.RepetitionCounter=0;\n__HAL_RCC_TIM4_CLK_ENABLE();\nHAL_NVIC_SetPriority(TIM4_IRQn, 3, 0);\nHAL_NVIC_EnableIRQ(TIM4_IRQn);\nHAL_TIM_Base_Init( &amp;(MX_HANDLE_TIM4));\nHAL_TIM_Base_Start_IT( &amp;(MX_HANDLE_TIM4));\n'
+            disable='HAL_NVIC_DisableIRQ(TIM4_IRQn);\n'
+            global='\nTIM_HandleTypeDef MX_HANDLE_TIM4;\n' >
+            <timer overflow='65536' extrange='0' />
+            <options >
+                <prescale name='Prescaler Rate' >
+                    <entry name='1:1' value='MX_HANDLE_TIM4.Init.Prescaler = 1;\n' />
+                    <entry name='1:4' value='MX_HANDLE_TIM4.Init.Prescaler = 4;\n' />
+                    <entry name='1:16' value='MX_HANDLE_TIM4.Init.Prescaler = 16;\n' />
+                    <entry name='1:64' value='MX_HANDLE_TIM4.Init.Prescaler = 64;\n' />
+                    <entry name='1:256' value='MX_HANDLE_TIM4.Init.Prescaler = 256;\n' />
+                    <entry name='1:1024' value='MX_HANDLE_TIM4.Init.Prescaler = 1024;\n' />
+                </prescale>
+                <rollover name='Rollover Value' >
+                    <entry name='65536' min='1' max='65536' value='MX_HANDLE_TIM4.Instance=TIM4;\nMX_HANDLE_TIM4.Init.Period=%d-1;\n' />
+                </rollover>
+            </options>
+        </interrupt>        
+        <interrupt ident='TMR5' reg='TMR5' type='timer16' name='Timer 5'
+            handler='#ifndef MX_ISR_T5\n#define MX_ISR_T5\nvoid TIM5_IRQHandler(void)\n{\n\tHAL_TIM_IRQHandler( &amp;(MX_HANDLE_TIM5));\n}\n\nvoid MX_ISR_TIM5()\n{\n\tFCM_%n();\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n'
+            enable='MX_HANDLE_TIM5.Init.ClockDivision=TIM_CLOCKDIVISION_DIV1;\nMX_HANDLE_TIM5.Init.CounterMode=TIM_COUNTERMODE_UP;\nMX_HANDLE_TIM5.Init.RepetitionCounter=0;\n__HAL_RCC_TIM5_CLK_ENABLE();\nHAL_NVIC_SetPriority(TIM5_IRQn, 3, 0);\nHAL_NVIC_EnableIRQ(TIM5_IRQn);\nHAL_TIM_Base_Init( &amp;(MX_HANDLE_TIM5));\nHAL_TIM_Base_Start_IT( &amp;(MX_HANDLE_TIM5));\n'
+            disable='HAL_NVIC_DisableIRQ(TIM5_IRQn);\n'
+            global='\nTIM_HandleTypeDef MX_HANDLE_TIM5;\n' >
+            <timer overflow='65536' extrange='0' />
+            <options >
+                <prescale name='Prescaler Rate' >
+                    <entry name='1:1' value='MX_HANDLE_TIM5.Init.Prescaler = 1;\n' />
+                    <entry name='1:4' value='MX_HANDLE_TIM5.Init.Prescaler = 4;\n' />
+                    <entry name='1:16' value='MX_HANDLE_TIM5.Init.Prescaler = 16;\n' />
+                    <entry name='1:64' value='MX_HANDLE_TIM5.Init.Prescaler = 64;\n' />
+                    <entry name='1:256' value='MX_HANDLE_TIM5.Init.Prescaler = 256;\n' />
+                    <entry name='1:1024' value='MX_HANDLE_TIM5.Init.Prescaler = 1024;\n' />
+                </prescale>
+                <rollover name='Rollover Value' >
+                    <entry name='65536' min='1' max='65536' value='MX_HANDLE_TIM5.Instance=TIM5;\nMX_HANDLE_TIM5.Init.Period=%d-1;\n' />
+                </rollover>
+            </options>
+        </interrupt>
+        <interrupt ident='TMR7' reg='TMR7' type='timer16' name='Timer 7'
+            handler='#ifndef MX_ISR_T7\n#define MX_ISR_T7\nvoid TIM7_IRQHandler(void)\n{\n\tHAL_TIM_IRQHandler( &amp;(MX_HANDLE_TIM7));\n}\n\nvoid MX_ISR_TIM7()\n{\n\tFCM_%n();\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n'
+            enable='MX_HANDLE_TIM7.Init.ClockDivision=TIM_CLOCKDIVISION_DIV1;\nMX_HANDLE_TIM7.Init.CounterMode=TIM_COUNTERMODE_UP;\nMX_HANDLE_TIM7.Init.RepetitionCounter=0;\n__HAL_RCC_TIM7_CLK_ENABLE();\nHAL_NVIC_SetPriority(TIM7_IRQn, 3, 0);\nHAL_NVIC_EnableIRQ(TIM7_IRQn);\nHAL_TIM_Base_Init( &amp;(MX_HANDLE_TIM7));\nHAL_TIM_Base_Start_IT( &amp;(MX_HANDLE_TIM7));\n'
+            disable='HAL_NVIC_DisableIRQ(TIM7_IRQn);\n'
+            global='\nTIM_HandleTypeDef MX_HANDLE_TIM7;\n' >
+            <timer overflow='65536' extrange='0' />
+            <options >
+                <prescale name='Prescaler Rate' >
+                    <entry name='1:1' value='MX_HANDLE_TIM7.Init.Prescaler = 1;\n' />
+                    <entry name='1:4' value='MX_HANDLE_TIM7.Init.Prescaler = 4;\n' />
+                    <entry name='1:16' value='MX_HANDLE_TIM7.Init.Prescaler = 16;\n' />
+                    <entry name='1:64' value='MX_HANDLE_TIM7.Init.Prescaler = 64;\n' />
+                    <entry name='1:256' value='MX_HANDLE_TIM7.Init.Prescaler = 256;\n' />
+                    <entry name='1:1024' value='MX_HANDLE_TIM7.Init.Prescaler = 1024;\n' />
+                </prescale>
+                <rollover name='Rollover Value' >
+                    <entry name='65536' min='1' max='65536' value='MX_HANDLE_TIM7.Instance=TIM7;\nMX_HANDLE_TIM7.Init.Period=%d-1;\n' />
+                </rollover>
+            </options>
+        </interrupt>
+        <interrupt ident='EXTI0' type='pin' name='EXTI0' handler='#ifndef MX_IRQ_INT0\n#define MX_IRQ_INT0\nvoid EXTI0_IRQHandler(void)\n{\n\tHAL_GPIO_EXTI_IRQHandler(GPIO_PIN_0);\n}\n#endif\n#ifndef MX_ISR_INT0\n#define MX_ISR_INT0\nvoid MX_ISR_EXTI0()\n{\n\tFCM_%n();\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='HAL_NVIC_SetPriority(EXTI0_IRQn, 2, 0);\nHAL_NVIC_EnableIRQ(EXTI0_IRQn);' disable='HAL_NVIC_DisableIRQ(EXTI0_IRQn);' >
+            <options >
+                <pps name='Port' >
+                    <entry name='GPIOA' value='MX_EXTI_PinInit(GPIOA,\n\tGPIO_PIN_0,' port='0' pin='0' />
+                    <entry name='GPIOB' value='MX_EXTI_PinInit(GPIOB,\n\tGPIO_PIN_0,' port='1' pin='0' />
+                    <entry name='GPIOC' value='MX_EXTI_PinInit(GPIOC,\n\tGPIO_PIN_0,' port='2' pin='0' />
+                    <entry name='GPIOD' value='MX_EXTI_PinInit(GPIOD,\n\tGPIO_PIN_0,' port='3' pin='0' />
+                    <entry name='GPIOE' value='MX_EXTI_PinInit(GPIOE,\n\tGPIO_PIN_0,' port='4' pin='0' />
+                    <entry name='GPIOH' value='MX_EXTI_PinInit(GPIOH,\n\tGPIO_PIN_0,' port='7' pin='0' />
+                </pps>
+                <edge name='Interrupt Edge Select' >
+                    <entry name='Rising edge of INT' value='\n\tGPIO_MODE_IT_RISING,' />
+                    <entry name='Falling edge of INT' value='\n\tGPIO_MODE_IT_FALLING,' />
+                    <entry name='Both edges of INT' value='\n\tGPIO_MODE_IT_RISING_FALLING,' />
+                </edge>
+                <option name='Input Weak Bias' >
+                    <entry name='No bias' value='\n\tGPIO_NOPULL);\n' />
+                    <entry name='Pull up' value='\n\tGPIO_PULLUP);\n' />
+                    <entry name='Pull down' value='\n\tGPIO_PULLDOWN);\n' />
+                </option>
+            </options>
+        </interrupt>        
+        <interrupt ident='EXTI1' type='pin' name='EXTI1' handler='#ifndef MX_IRQ_INT1\n#define MX_IRQ_INT1\nvoid EXTI1_IRQHandler(void)\n{\n\tHAL_GPIO_EXTI_IRQHandler(GPIO_PIN_1);\n}\n#endif\n#ifndef MX_ISR_INT1\n#define MX_ISR_INT1\nvoid MX_ISR_EXTI1()\n{\n\tFCM_%n();\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='HAL_NVIC_SetPriority(EXTI1_IRQn, 2, 0);\nHAL_NVIC_EnableIRQ(EXTI1_IRQn);' disable='HAL_NVIC_DisableIRQ(EXTI1_IRQn);' >
+            <options >
+                <pps name='Port' >
+                    <entry name='GPIOA' value='MX_EXTI_PinInit(GPIOA,\n\tGPIO_PIN_1,' port='0' pin='1' />
+                    <entry name='GPIOB' value='MX_EXTI_PinInit(GPIOB,\n\tGPIO_PIN_1,' port='1' pin='1' />
+                    <entry name='GPIOC' value='MX_EXTI_PinInit(GPIOC,\n\tGPIO_PIN_1,' port='2' pin='1' />
+                    <entry name='GPIOD' value='MX_EXTI_PinInit(GPIOD,\n\tGPIO_PIN_1,' port='3' pin='1' />
+                    <entry name='GPIOE' value='MX_EXTI_PinInit(GPIOE,\n\tGPIO_PIN_1,' port='4' pin='1' />
+                    <entry name='GPIOH' value='MX_EXTI_PinInit(GPIOH,\n\tGPIO_PIN_1,' port='7' pin='1' />
+                </pps>
+                <edge name='Interrupt Edge Select' >
+                    <entry name='Rising edge of INT' value='\n\tGPIO_MODE_IT_RISING,' />
+                    <entry name='Falling edge of INT' value='\n\tGPIO_MODE_IT_FALLING,' />
+                    <entry name='Both edges of INT' value='\n\tGPIO_MODE_IT_RISING_FALLING,' />
+                </edge>
+                <option name='Input Weak Bias' >
+                    <entry name='No bias' value='\n\tGPIO_NOPULL);\n' />
+                    <entry name='Pull up' value='\n\tGPIO_PULLUP);\n' />
+                    <entry name='Pull down' value='\n\tGPIO_PULLDOWN);\n' />
+                </option>
+            </options>
+        </interrupt>        
+        <interrupt ident='EXTI2' type='pin' name='EXTI2' handler='#ifndef MX_IRQ_INT2\n#define MX_IRQ_INT2\nvoid EXTI2_IRQHandler(void)\n{\n\tHAL_GPIO_EXTI_IRQHandler(GPIO_PIN_2);\n}\n#endif\n#ifndef MX_ISR_INT2\n#define MX_ISR_INT2\nvoid MX_ISR_EXTI2()\n{\n\tFCM_%n();\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='HAL_NVIC_SetPriority(EXTI2_IRQn, 2, 0);\nHAL_NVIC_EnableIRQ(EXTI2_IRQn);' disable='HAL_NVIC_DisableIRQ(EXTI2_IRQn);' >
+            <options >
+                <pps name='Port' >
+                    <entry name='GPIOA' value='MX_EXTI_PinInit(GPIOA,\n\tGPIO_PIN_2,' port='0' pin='2' />
+                    <entry name='GPIOB' value='MX_EXTI_PinInit(GPIOB,\n\tGPIO_PIN_2,' port='1' pin='2' />
+                    <entry name='GPIOC' value='MX_EXTI_PinInit(GPIOC,\n\tGPIO_PIN_2,' port='2' pin='2' />
+                    <entry name='GPIOD' value='MX_EXTI_PinInit(GPIOD,\n\tGPIO_PIN_2,' port='3' pin='2' />
+                    <entry name='GPIOE' value='MX_EXTI_PinInit(GPIOE,\n\tGPIO_PIN_2,' port='4' pin='2' />
+                </pps>
+                <edge name='Interrupt Edge Select' >
+                    <entry name='Rising edge of INT' value='\n\tGPIO_MODE_IT_RISING,' />
+                    <entry name='Falling edge of INT' value='\n\tGPIO_MODE_IT_FALLING,' />
+                    <entry name='Both edges of INT' value='\n\tGPIO_MODE_IT_RISING_FALLING,' />
+                </edge>
+                <option name='Input Weak Bias' >
+                    <entry name='No bias' value='\n\tGPIO_NOPULL);\n' />
+                    <entry name='Pull up' value='\n\tGPIO_PULLUP);\n' />
+                    <entry name='Pull down' value='\n\tGPIO_PULLDOWN);\n' />
+                </option>
+            </options>
+        </interrupt>
+        <interrupt ident='EXTI3' type='pin' name='EXTI3' handler='#ifndef MX_IRQ_INT3\n#define MX_IRQ_INT3\nvoid EXTI3_IRQHandler(void)\n{\n\tHAL_GPIO_EXTI_IRQHandler(GPIO_PIN_3);\n}\n#endif\n#ifndef MX_ISR_INT3\n#define MX_ISR_INT3\nvoid MX_ISR_EXTI3()\n{\n\tFCM_%n();\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='HAL_NVIC_SetPriority(EXTI3_IRQn, 2, 0);\nHAL_NVIC_EnableIRQ(EXTI3_IRQn);' disable='HAL_NVIC_DisableIRQ(EXTI3_IRQn);' >
+            <options >
+                <pps name='Port' >
+                    <entry name='GPIOA' value='MX_EXTI_PinInit(GPIOA,\n\tGPIO_PIN_3,' port='0' pin='3' />
+                    <entry name='GPIOB' value='MX_EXTI_PinInit(GPIOB,\n\tGPIO_PIN_3,' port='1' pin='3' />
+                    <entry name='GPIOC' value='MX_EXTI_PinInit(GPIOC,\n\tGPIO_PIN_3,' port='2' pin='3' />
+                    <entry name='GPIOD' value='MX_EXTI_PinInit(GPIOD,\n\tGPIO_PIN_3,' port='3' pin='3' />
+                    <entry name='GPIOE' value='MX_EXTI_PinInit(GPIOE,\n\tGPIO_PIN_3,' port='4' pin='3' />
+                </pps>
+                <edge name='Interrupt Edge Select' >
+                    <entry name='Rising edge of INT' value='\n\tGPIO_MODE_IT_RISING,' />
+                    <entry name='Falling edge of INT' value='\n\tGPIO_MODE_IT_FALLING,' />
+                    <entry name='Both edges of INT' value='\n\tGPIO_MODE_IT_RISING_FALLING,' />
+                </edge>
+                <option name='Input Weak Bias' >
+                    <entry name='No bias' value='\n\tGPIO_NOPULL);\n' />
+                    <entry name='Pull up' value='\n\tGPIO_PULLUP);\n' />
+                    <entry name='Pull down' value='\n\tGPIO_PULLDOWN);\n' />
+                </option>
+            </options>
+        </interrupt>        
+        <interrupt ident='EXTI4' type='pin' name='EXTI4' handler='#ifndef MX_IRQ_INT4\n#define MX_IRQ_INT4\nvoid EXTI4_IRQHandler(void)\n{\n\tHAL_GPIO_EXTI_IRQHandler(GPIO_PIN_4);\n}\n#endif\n#ifndef MX_ISR_INT4\n#define MX_ISR_INT4\nvoid MX_ISR_EXTI4()\n{\n\tFCM_%n();\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='HAL_NVIC_SetPriority(EXTI4_IRQn, 2, 0);\nHAL_NVIC_EnableIRQ(EXTI4_IRQn);' disable='HAL_NVIC_DisableIRQ(EXTI4_IRQn);' >
+            <options >
+                <pps name='Port' >
+                    <entry name='GPIOA' value='MX_EXTI_PinInit(GPIOA,\n\tGPIO_PIN_4,' port='0' pin='4' />
+                    <entry name='GPIOB' value='MX_EXTI_PinInit(GPIOB,\n\tGPIO_PIN_4,' port='1' pin='4' />
+                    <entry name='GPIOC' value='MX_EXTI_PinInit(GPIOC,\n\tGPIO_PIN_4,' port='2' pin='4' />
+                    <entry name='GPIOD' value='MX_EXTI_PinInit(GPIOD,\n\tGPIO_PIN_4,' port='3' pin='4' />
+                    <entry name='GPIOE' value='MX_EXTI_PinInit(GPIOE,\n\tGPIO_PIN_4,' port='4' pin='4' />
+                </pps>
+                <edge name='Interrupt Edge Select' >
+                    <entry name='Rising edge of INT' value='\n\tGPIO_MODE_IT_RISING,' />
+                    <entry name='Falling edge of INT' value='\n\tGPIO_MODE_IT_FALLING,' />
+                    <entry name='Both edges of INT' value='\n\tGPIO_MODE_IT_RISING_FALLING,' />
+                </edge>
+                <option name='Input Weak Bias' >
+                    <entry name='No bias' value='\n\tGPIO_NOPULL);\n' />
+                    <entry name='Pull up' value='\n\tGPIO_PULLUP);\n' />
+                    <entry name='Pull down' value='\n\tGPIO_PULLDOWN);\n' />
+                </option>
+            </options>
+        </interrupt>
+        <interrupt ident='EXTI5' type='pin' name='EXTI5' global='#define MX_EXTI5_DEFINED'
+            handler='#ifndef MX_ISR_INT5\n#define MX_ISR_INT5\nvoid MX_ISR_EXTI5()\n{\n\tFCM_%n();\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
+            enable='HAL_NVIC_SetPriority(EXTI9_5_IRQn, 2, 0);\nHAL_NVIC_EnableIRQ(EXTI9_5_IRQn);' 
+            disable='EXTI->IMR &amp;= ~((uint32_t)GPIO_PIN_5);' >
+            <options >
+                <pps name='Port' >
+                    <entry name='GPIOA' value='MX_EXTI_PinInit(GPIOA,\n\tGPIO_PIN_5,' port='0' pin='5' />
+                    <entry name='GPIOB' value='MX_EXTI_PinInit(GPIOB,\n\tGPIO_PIN_5,' port='1' pin='5' />
+                    <entry name='GPIOC' value='MX_EXTI_PinInit(GPIOC,\n\tGPIO_PIN_5,' port='2' pin='5' />
+                    <entry name='GPIOD' value='MX_EXTI_PinInit(GPIOD,\n\tGPIO_PIN_5,' port='3' pin='5' />
+                    <entry name='GPIOE' value='MX_EXTI_PinInit(GPIOE,\n\tGPIO_PIN_5,' port='4' pin='5' />
+                </pps>
+                <edge name='Interrupt Edge Select' >
+                    <entry name='Rising edge of INT' value='\n\tGPIO_MODE_IT_RISING,' />
+                    <entry name='Falling edge of INT' value='\n\tGPIO_MODE_IT_FALLING,' />
+                    <entry name='Both edges of INT' value='\n\tGPIO_MODE_IT_RISING_FALLING,' />
+                </edge>
+                <option name='Input Weak Bias' >
+                    <entry name='No bias' value='\n\tGPIO_NOPULL);\n' />
+                    <entry name='Pull up' value='\n\tGPIO_PULLUP);\n' />
+                    <entry name='Pull down' value='\n\tGPIO_PULLDOWN);\n' />
+                </option>
+            </options>
+        </interrupt>
+        <interrupt ident='EXTI6' type='pin' name='EXTI6' global='#define MX_EXTI6_DEFINED'
+            handler='#ifndef MX_ISR_INT6\n#define MX_ISR_INT6\nvoid MX_ISR_EXTI6()\n{\n\tFCM_%n();\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
+            enable='HAL_NVIC_SetPriority(EXTI9_5_IRQn, 2, 0);\nHAL_NVIC_EnableIRQ(EXTI9_5_IRQn);' 
+            disable='EXTI->IMR &amp;= ~((uint32_t)GPIO_PIN_6);' >
+            <options >
+                <pps name='Port' >
+                    <entry name='GPIOA' value='MX_EXTI_PinInit(GPIOA,\n\tGPIO_PIN_6,' port='0' pin='6' />
+                    <entry name='GPIOB' value='MX_EXTI_PinInit(GPIOB,\n\tGPIO_PIN_6,' port='1' pin='6' />
+                    <entry name='GPIOC' value='MX_EXTI_PinInit(GPIOC,\n\tGPIO_PIN_6,' port='2' pin='6' />
+                    <entry name='GPIOD' value='MX_EXTI_PinInit(GPIOD,\n\tGPIO_PIN_6,' port='3' pin='6' />
+                    <entry name='GPIOE' value='MX_EXTI_PinInit(GPIOE,\n\tGPIO_PIN_6,' port='4' pin='6' />
+                </pps>
+                <edge name='Interrupt Edge Select' >
+                    <entry name='Rising edge of INT' value='\n\tGPIO_MODE_IT_RISING,' />
+                    <entry name='Falling edge of INT' value='\n\tGPIO_MODE_IT_FALLING,' />
+                    <entry name='Both edges of INT' value='\n\tGPIO_MODE_IT_RISING_FALLING,' />
+                </edge>
+                <option name='Input Weak Bias' >
+                    <entry name='No bias' value='\n\tGPIO_NOPULL);\n' />
+                    <entry name='Pull up' value='\n\tGPIO_PULLUP);\n' />
+                    <entry name='Pull down' value='\n\tGPIO_PULLDOWN);\n' />
+                </option>
+            </options>
+        </interrupt>
+        <interrupt ident='EXTI7' type='pin' name='EXTI7' global='#define MX_EXTI7_DEFINED'
+            handler='#ifndef MX_ISR_INT7\n#define MX_ISR_INT7\nvoid MX_ISR_EXTI7()\n{\n\tFCM_%n();\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
+            enable='HAL_NVIC_SetPriority(EXTI9_5_IRQn, 2, 0);\nHAL_NVIC_EnableIRQ(EXTI9_5_IRQn);' 
+            disable='EXTI->IMR &amp;= ~((uint32_t)GPIO_PIN_7);' >
+            <options >
+                <pps name='Port' >
+                    <entry name='GPIOA' value='MX_EXTI_PinInit(GPIOA,\n\tGPIO_PIN_7,' port='0' pin='7' />
+                    <entry name='GPIOB' value='MX_EXTI_PinInit(GPIOB,\n\tGPIO_PIN_7,' port='1' pin='7' />
+                    <entry name='GPIOC' value='MX_EXTI_PinInit(GPIOC,\n\tGPIO_PIN_7,' port='2' pin='7' />
+                    <entry name='GPIOD' value='MX_EXTI_PinInit(GPIOD,\n\tGPIO_PIN_7,' port='3' pin='7' />
+                    <entry name='GPIOE' value='MX_EXTI_PinInit(GPIOE,\n\tGPIO_PIN_7,' port='4' pin='7' />
+                </pps>
+                <edge name='Interrupt Edge Select' >
+                    <entry name='Rising edge of INT' value='\n\tGPIO_MODE_IT_RISING,' />
+                    <entry name='Falling edge of INT' value='\n\tGPIO_MODE_IT_FALLING,' />
+                    <entry name='Both edges of INT' value='\n\tGPIO_MODE_IT_RISING_FALLING,' />
+                </edge>
+                <option name='Input Weak Bias' >
+                    <entry name='No bias' value='\n\tGPIO_NOPULL);\n' />
+                    <entry name='Pull up' value='\n\tGPIO_PULLUP);\n' />
+                    <entry name='Pull down' value='\n\tGPIO_PULLDOWN);\n' />
+                </option>
+            </options>
+        </interrupt>
+        <interrupt ident='EXTI8' type='pin' name='EXTI8' global='#define MX_EXTI8_DEFINED'
+            handler='#ifndef MX_ISR_INT8\n#define MX_ISR_INT8\nvoid MX_ISR_EXTI8()\n{\n\tFCM_%n();\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
+            enable='HAL_NVIC_SetPriority(EXTI9_5_IRQn, 2, 0);\nHAL_NVIC_EnableIRQ(EXTI9_5_IRQn);' 
+            disable='EXTI->IMR &amp;= ~((uint32_t)GPIO_PIN_8);' >
+            <options >
+                <pps name='Port' >
+                    <entry name='GPIOA' value='MX_EXTI_PinInit(GPIOA,\n\tGPIO_PIN_8,' port='0' pin='8' />
+                    <entry name='GPIOB' value='MX_EXTI_PinInit(GPIOB,\n\tGPIO_PIN_8,' port='1' pin='8' />
+                    <entry name='GPIOC' value='MX_EXTI_PinInit(GPIOC,\n\tGPIO_PIN_8,' port='2' pin='8' />
+                    <entry name='GPIOD' value='MX_EXTI_PinInit(GPIOD,\n\tGPIO_PIN_8,' port='3' pin='8' />
+                    <entry name='GPIOE' value='MX_EXTI_PinInit(GPIOE,\n\tGPIO_PIN_8,' port='4' pin='8' />
+                </pps>
+                <edge name='Interrupt Edge Select' >
+                    <entry name='Rising edge of INT' value='\n\tGPIO_MODE_IT_RISING,' />
+                    <entry name='Falling edge of INT' value='\n\tGPIO_MODE_IT_FALLING,' />
+                    <entry name='Both edges of INT' value='\n\tGPIO_MODE_IT_RISING_FALLING,' />
+                </edge>
+                <option name='Input Weak Bias' >
+                    <entry name='No bias' value='\n\tGPIO_NOPULL);\n' />
+                    <entry name='Pull up' value='\n\tGPIO_PULLUP);\n' />
+                    <entry name='Pull down' value='\n\tGPIO_PULLDOWN);\n' />
+                </option>
+            </options>
+        </interrupt>
+        <interrupt ident='EXTI9' type='pin' name='EXTI9' global='#define MX_EXTI9_DEFINED'
+            handler='#ifndef MX_ISR_INT9\n#define MX_ISR_INT9\nvoid MX_ISR_EXTI9()\n{\n\tFCM_%n();\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
+            enable='HAL_NVIC_SetPriority(EXTI9_5_IRQn, 2, 0);\nHAL_NVIC_EnableIRQ(EXTI9_5_IRQn);' 
+            disable='EXTI->IMR &amp;= ~((uint32_t)GPIO_PIN_9);' >
+            <options >
+                <pps name='Port' >
+                    <entry name='GPIOA' value='MX_EXTI_PinInit(GPIOA,\n\tGPIO_PIN_9,' port='0' pin='9' />
+                    <entry name='GPIOB' value='MX_EXTI_PinInit(GPIOB,\n\tGPIO_PIN_9,' port='1' pin='9' />
+                    <entry name='GPIOC' value='MX_EXTI_PinInit(GPIOC,\n\tGPIO_PIN_9,' port='2' pin='9' />
+                    <entry name='GPIOD' value='MX_EXTI_PinInit(GPIOD,\n\tGPIO_PIN_9,' port='3' pin='9' />
+                    <entry name='GPIOE' value='MX_EXTI_PinInit(GPIOE,\n\tGPIO_PIN_9,' port='4' pin='9' />
+                </pps>
+                <edge name='Interrupt Edge Select' >
+                    <entry name='Rising edge of INT' value='\n\tGPIO_MODE_IT_RISING,' />
+                    <entry name='Falling edge of INT' value='\n\tGPIO_MODE_IT_FALLING,' />
+                    <entry name='Both edges of INT' value='\n\tGPIO_MODE_IT_RISING_FALLING,' />
+                </edge>
+                <option name='Input Weak Bias' >
+                    <entry name='No bias' value='\n\tGPIO_NOPULL);\n' />
+                    <entry name='Pull up' value='\n\tGPIO_PULLUP);\n' />
+                    <entry name='Pull down' value='\n\tGPIO_PULLDOWN);\n' />
+                </option>
+            </options>
+        </interrupt>
+        <interrupt ident='EXTI10' type='pin' name='EXTI10' global='#define MX_EXTI10_DEFINED'
+            handler='#ifndef MX_ISR_INT10\n#define MX_ISR_INT10\nvoid MX_ISR_EXTI10()\n{\n\tFCM_%n();\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
+            enable='HAL_NVIC_SetPriority(EXTI15_10_IRQn, 2, 0);\nHAL_NVIC_EnableIRQ(EXTI15_10_IRQn);' 
+            disable='EXTI->IMR &amp;= ~((uint32_t)GPIO_PIN_10);' >
+            <options >
+                <pps name='Port' >
+                    <entry name='GPIOA' value='MX_EXTI_PinInit(GPIOA,\n\tGPIO_PIN_10,' port='0' pin='10' />
+                    <entry name='GPIOB' value='MX_EXTI_PinInit(GPIOB,\n\tGPIO_PIN_10,' port='1' pin='10' />
+                    <entry name='GPIOC' value='MX_EXTI_PinInit(GPIOC,\n\tGPIO_PIN_10,' port='2' pin='10' />
+                    <entry name='GPIOD' value='MX_EXTI_PinInit(GPIOD,\n\tGPIO_PIN_10,' port='3' pin='10' />
+                    <entry name='GPIOE' value='MX_EXTI_PinInit(GPIOE,\n\tGPIO_PIN_10,' port='4' pin='10' />
+                </pps>
+                <edge name='Interrupt Edge Select' >
+                    <entry name='Rising edge of INT' value='\n\tGPIO_MODE_IT_RISING,' />
+                    <entry name='Falling edge of INT' value='\n\tGPIO_MODE_IT_FALLING,' />
+                    <entry name='Both edges of INT' value='\n\tGPIO_MODE_IT_RISING_FALLING,' />
+                </edge>
+                <option name='Input Weak Bias' >
+                    <entry name='No bias' value='\n\tGPIO_NOPULL);\n' />
+                    <entry name='Pull up' value='\n\tGPIO_PULLUP);\n' />
+                    <entry name='Pull down' value='\n\tGPIO_PULLDOWN);\n' />
+                </option>
+            </options>
+        </interrupt>
+        <interrupt ident='EXTI11' type='pin' name='EXTI11' global='#define MX_EXTI11_DEFINED'
+            handler='#ifndef MX_ISR_INT11\n#define MX_ISR_INT11\nvoid MX_ISR_EXTI11()\n{\n\tFCM_%n();\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
+            enable='HAL_NVIC_SetPriority(EXTI15_10_IRQn, 2, 0);\nHAL_NVIC_EnableIRQ(EXTI15_10_IRQn);' 
+            disable='EXTI->IMR &amp;= ~((uint32_t)GPIO_PIN_11);' >
+            <options >
+                <pps name='Port' >
+                    <entry name='GPIOA' value='MX_EXTI_PinInit(GPIOA,\n\tGPIO_PIN_11,' port='0' pin='11' />
+                    <entry name='GPIOB' value='MX_EXTI_PinInit(GPIOB,\n\tGPIO_PIN_11,' port='1' pin='11' />
+                    <entry name='GPIOC' value='MX_EXTI_PinInit(GPIOC,\n\tGPIO_PIN_11,' port='2' pin='11' />
+                    <entry name='GPIOD' value='MX_EXTI_PinInit(GPIOD,\n\tGPIO_PIN_11,' port='3' pin='11' />
+                    <entry name='GPIOE' value='MX_EXTI_PinInit(GPIOE,\n\tGPIO_PIN_11,' port='4' pin='11' />
+                </pps>
+                <edge name='Interrupt Edge Select' >
+                    <entry name='Rising edge of INT' value='\n\tGPIO_MODE_IT_RISING,' />
+                    <entry name='Falling edge of INT' value='\n\tGPIO_MODE_IT_FALLING,' />
+                    <entry name='Both edges of INT' value='\n\tGPIO_MODE_IT_RISING_FALLING,' />
+                </edge>
+                <option name='Input Weak Bias' >
+                    <entry name='No bias' value='\n\tGPIO_NOPULL);\n' />
+                    <entry name='Pull up' value='\n\tGPIO_PULLUP);\n' />
+                    <entry name='Pull down' value='\n\tGPIO_PULLDOWN);\n' />
+                </option>
+            </options>
+        </interrupt>
+        <interrupt ident='EXTI12' type='pin' name='EXTI12' global='#define MX_EXTI12_DEFINED'
+            handler='#ifndef MX_ISR_INT12\n#define MX_ISR_INT12\nvoid MX_ISR_EXTI12()\n{\n\tFCM_%n();\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
+            enable='HAL_NVIC_SetPriority(EXTI15_10_IRQn, 2, 0);\nHAL_NVIC_EnableIRQ(EXTI15_10_IRQn);' 
+            disable='EXTI->IMR &amp;= ~((uint32_t)GPIO_PIN_12);' >
+            <options >
+                <pps name='Port' >
+                    <entry name='GPIOA' value='MX_EXTI_PinInit(GPIOA,\n\tGPIO_PIN_12,' port='0' pin='12' />
+                    <entry name='GPIOB' value='MX_EXTI_PinInit(GPIOB,\n\tGPIO_PIN_12,' port='1' pin='12' />
+                    <entry name='GPIOC' value='MX_EXTI_PinInit(GPIOC,\n\tGPIO_PIN_12,' port='2' pin='12' />
+                    <entry name='GPIOD' value='MX_EXTI_PinInit(GPIOD,\n\tGPIO_PIN_12,' port='3' pin='12' />
+                    <entry name='GPIOE' value='MX_EXTI_PinInit(GPIOE,\n\tGPIO_PIN_12,' port='4' pin='12' />
+                </pps>
+                <edge name='Interrupt Edge Select' >
+                    <entry name='Rising edge of INT' value='\n\tGPIO_MODE_IT_RISING,' />
+                    <entry name='Falling edge of INT' value='\n\tGPIO_MODE_IT_FALLING,' />
+                    <entry name='Both edges of INT' value='\n\tGPIO_MODE_IT_RISING_FALLING,' />
+                </edge>
+                <option name='Input Weak Bias' >
+                    <entry name='No bias' value='\n\tGPIO_NOPULL);\n' />
+                    <entry name='Pull up' value='\n\tGPIO_PULLUP);\n' />
+                    <entry name='Pull down' value='\n\tGPIO_PULLDOWN);\n' />
+                </option>
+            </options>
+        </interrupt>
+        <interrupt ident='EXTI13' type='pin' name='EXTI13' global='#define MX_EXTI13_DEFINED'
+            handler='#ifndef MX_ISR_INT13\n#define MX_ISR_INT13\nvoid MX_ISR_EXTI13()\n{\n\tFCM_%n();\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
+            enable='HAL_NVIC_SetPriority(EXTI15_10_IRQn, 2, 0);\nHAL_NVIC_EnableIRQ(EXTI15_10_IRQn);' 
+            disable='EXTI->IMR &amp;= ~((uint32_t)GPIO_PIN_13);' >
+            <options >
+                <pps name='Port' >
+                    <entry name='GPIOA' value='MX_EXTI_PinInit(GPIOA,\n\tGPIO_PIN_13,' port='0' pin='13' />
+                    <entry name='GPIOB' value='MX_EXTI_PinInit(GPIOB,\n\tGPIO_PIN_13,' port='1' pin='13' />
+                    <entry name='GPIOC' value='MX_EXTI_PinInit(GPIOC,\n\tGPIO_PIN_13,' port='2' pin='13' />
+                    <entry name='GPIOD' value='MX_EXTI_PinInit(GPIOD,\n\tGPIO_PIN_13,' port='3' pin='13' />
+                    <entry name='GPIOE' value='MX_EXTI_PinInit(GPIOE,\n\tGPIO_PIN_13,' port='4' pin='13' />
+                </pps>
+                <edge name='Interrupt Edge Select' >
+                    <entry name='Rising edge of INT' value='\n\tGPIO_MODE_IT_RISING,' />
+                    <entry name='Falling edge of INT' value='\n\tGPIO_MODE_IT_FALLING,' />
+                    <entry name='Both edges of INT' value='\n\tGPIO_MODE_IT_RISING_FALLING,' />
+                </edge>
+                <option name='Input Weak Bias' >
+                    <entry name='No bias' value='\n\tGPIO_NOPULL);\n' />
+                    <entry name='Pull up' value='\n\tGPIO_PULLUP);\n' />
+                    <entry name='Pull down' value='\n\tGPIO_PULLDOWN);\n' />
+                </option>
+            </options>
+        </interrupt>
+        <interrupt ident='EXTI14' type='pin' name='EXTI14' global='#define MX_EXTI14_DEFINED'
+            handler='#ifndef MX_ISR_INT14\n#define MX_ISR_INT14\nvoid MX_ISR_EXTI14()\n{\n\tFCM_%n();\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
+            enable='HAL_NVIC_SetPriority(EXTI15_10_IRQn, 2, 0);\nHAL_NVIC_EnableIRQ(EXTI15_10_IRQn);' 
+            disable='EXTI->IMR &amp;= ~((uint32_t)GPIO_PIN_14);' >
+            <options >
+                <pps name='Port' >
+                    <entry name='GPIOA' value='MX_EXTI_PinInit(GPIOA,\n\tGPIO_PIN_14,' port='0' pin='14' />
+                    <entry name='GPIOB' value='MX_EXTI_PinInit(GPIOB,\n\tGPIO_PIN_14,' port='1' pin='14' />
+                    <entry name='GPIOC' value='MX_EXTI_PinInit(GPIOC,\n\tGPIO_PIN_14,' port='2' pin='14' />
+                    <entry name='GPIOD' value='MX_EXTI_PinInit(GPIOD,\n\tGPIO_PIN_14,' port='3' pin='14' />
+                    <entry name='GPIOE' value='MX_EXTI_PinInit(GPIOE,\n\tGPIO_PIN_14,' port='4' pin='14' />
+                </pps>
+                <edge name='Interrupt Edge Select' >
+                    <entry name='Rising edge of INT' value='\n\tGPIO_MODE_IT_RISING,' />
+                    <entry name='Falling edge of INT' value='\n\tGPIO_MODE_IT_FALLING,' />
+                    <entry name='Both edges of INT' value='\n\tGPIO_MODE_IT_RISING_FALLING,' />
+                </edge>
+                <option name='Input Weak Bias' >
+                    <entry name='No bias' value='\n\tGPIO_NOPULL);\n' />
+                    <entry name='Pull up' value='\n\tGPIO_PULLUP);\n' />
+                    <entry name='Pull down' value='\n\tGPIO_PULLDOWN);\n' />
+                </option>
+            </options>
+        </interrupt>
+        <interrupt ident='EXTI15' type='pin' name='EXTI15' global='#define MX_EXTI15_DEFINED'
+            handler='#ifndef MX_ISR_INT15\n#define MX_ISR_INT15\nvoid MX_ISR_EXTI15()\n{\n\tFCM_%n();\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
+            enable='HAL_NVIC_SetPriority(EXTI15_10_IRQn, 2, 0);\nHAL_NVIC_EnableIRQ(EXTI15_10_IRQn);' 
+            disable='EXTI->IMR &amp;= ~((uint32_t)GPIO_PIN_15);' >
+            <options >
+                <pps name='Port' >
+                    <entry name='GPIOA' value='MX_EXTI_PinInit(GPIOA,\n\tGPIO_PIN_15,' port='0' pin='15' />
+                    <entry name='GPIOB' value='MX_EXTI_PinInit(GPIOB,\n\tGPIO_PIN_15,' port='1' pin='15' />
+                    <entry name='GPIOC' value='MX_EXTI_PinInit(GPIOC,\n\tGPIO_PIN_15,' port='2' pin='15' />
+                    <entry name='GPIOD' value='MX_EXTI_PinInit(GPIOD,\n\tGPIO_PIN_15,' port='3' pin='15' />
+                    <entry name='GPIOE' value='MX_EXTI_PinInit(GPIOE,\n\tGPIO_PIN_15,' port='4' pin='15' />
+                </pps>
+                <edge name='Interrupt Edge Select' >
+                    <entry name='Rising edge of INT' value='\n\tGPIO_MODE_IT_RISING,' />
+                    <entry name='Falling edge of INT' value='\n\tGPIO_MODE_IT_FALLING,' />
+                    <entry name='Both edges of INT' value='\n\tGPIO_MODE_IT_RISING_FALLING,' />
+                </edge>
+                <option name='Input Weak Bias' >
+                    <entry name='No bias' value='\n\tGPIO_NOPULL);\n' />
+                    <entry name='Pull up' value='\n\tGPIO_PULLUP);\n' />
+                    <entry name='Pull down' value='\n\tGPIO_PULLDOWN);\n' />
+                </option>
+            </options>
+        </interrupt>
+
+        <interrupt ident='RXINT1' type='comms' name='UART RXINT 1'
+            handler='\n#ifndef MX_ISR_RX1\n#define MX_ISR_RX1\nvoid USART1_IRQHandler(void)\n{\n\tMX_HANDLE_UART1_RX_VAL = (&amp;(MX_HANDLE_UART1))->Instance->DR;\n\t__HAL_USART_CLEAR_NEFLAG(&amp;(MX_HANDLE_UART1));\n\tFCM_%n();\n}\n#else\n\t#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif'
+            enable='HAL_NVIC_SetPriority(USART1_IRQn, 0, 1);\nHAL_NVIC_EnableIRQ(USART1_IRQn);\nMX_HANDLE_UART1_IRQ_EN = 1;\n__HAL_USART_ENABLE_IT(&amp;(MX_HANDLE_UART1), USART_IT_RXNE);'
+            disable='HAL_NVIC_DisableIRQ(USART1_IRQn);\nMX_HANDLE_UART1_IRQ_EN = 0;\n'
+            global = 'UART_HandleTypeDef MX_HANDLE_UART1;\nMX_UINT16 MX_HANDLE_UART1_RX_VAL, MX_HANDLE_UART1_IRQ_EN;\n' />
+
+        <interrupt ident='RXINT4' type='comms' name='UART RXINT 4'
+            handler='#ifndef MX_ISR_RX4\n#define MX_ISR_RX4\nvoid UART4_IRQHandler(void)\n{\n\tHAL_UART_IRQHandler( &amp;(MX_HANDLE_UART4));\n\tHAL_UART_Receive_IT( &amp;(MX_HANDLE_UART4), (uint8_t *) &amp;(MX_HANDLE_UART4_RX_VAL), 1);\n}\n\nvoid MX_ISR_UART4()\n{\n\tFCM_%n();\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n'
+            enable='HAL_NVIC_SetPriority(UART4_IRQn, 0, 1);\nHAL_NVIC_EnableIRQ(UART4_IRQn);\nMX_HANDLE_UART4_IRQ_EN = 1;\nHAL_UART_Receive_IT( &amp;(MX_HANDLE_UART4), (uint8_t *) &amp;(MX_HANDLE_UART4_RX_VAL), 1);\n'
+            disable='HAL_NVIC_DisableIRQ(UART4_IRQn);\nMX_HANDLE_UART4_IRQ_EN = 0;\n'
+            global = 'UART_HandleTypeDef MX_HANDLE_UART4;\nMX_UINT16 MX_HANDLE_UART4_RX_VAL, MX_HANDLE_UART4_IRQ_EN;\n' />
+        <interrupt ident='RXINT5' type='comms' name='UART RXINT 5'
+            handler='#ifndef MX_ISR_RX5\n#define MX_ISR_RX5\nvoid UART5_IRQHandler(void)\n{\n\tHAL_UART_IRQHandler( &amp;(MX_HANDLE_UART5));\n\tHAL_UART_Receive_IT( &amp;(MX_HANDLE_UART5), (uint8_t *) &amp;(MX_HANDLE_UART5_RX_VAL), 1);\n}\n\nvoid MX_ISR_UART5()\n{\n\tFCM_%n();\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n'
+            enable='HAL_NVIC_SetPriority(UART5_IRQn, 0, 1);\nHAL_NVIC_EnableIRQ(UART5_IRQn);\nMX_HANDLE_UART5_IRQ_EN = 1;\nHAL_UART_Receive_IT( &amp;(MX_HANDLE_UART5), (uint8_t *) &amp;(MX_HANDLE_UART5_RX_VAL), 1);\n'
+            disable='HAL_NVIC_DisableIRQ(UART5_IRQn);\nMX_HANDLE_UART5_IRQ_EN = 0;\n'
+            global = 'UART_HandleTypeDef MX_HANDLE_UART5;\nMX_UINT16 MX_HANDLE_UART5_RX_VAL, MX_HANDLE_UART5_IRQ_EN;\n' />
+    </interrupts>
+    
+</device>
+<inline >
+    <defines code='\n#define MX_CAL_STARM\n#define CLK_OVRDRV\n' />
+    <directives code='' />
+    <main >
+        <start code='
+int main()
+{
+    SystemClocksSetup();
+//    PeriphClockInit();
+    HAL_Init();
+
+    // Enable ports
+    __HAL_RCC_GPIOA_CLK_ENABLE();
+    __HAL_RCC_GPIOB_CLK_ENABLE();
+    __HAL_RCC_GPIOC_CLK_ENABLE();
+    __HAL_RCC_GPIOD_CLK_ENABLE();
+    __HAL_RCC_GPIOE_CLK_ENABLE();
+    __HAL_RCC_GPIOH_CLK_ENABLE();
+' />
+        <end code='    mainendloop: goto mainendloop;\n\treturn 0;\n}\n\n' />
+        <init code='' />
+    </main>
+    <interrupt >
+        <enable code='' />
+        <start code='' />
+        <end code='' />
+        <init code='' />
+    </interrupt>
+    <config >
+        <start code='//Configuration Start\n' />
+        <body code='#define $(address) ($(value))\n' />
+        <end code='//Configuration End\n\n' />
+    </config>
+</inline>
+<test >
+    <icd >
+        <clock port0='1' pin0='1' />
+        <data port0='1' pin0='0' />
+    </icd>
+</test>
+</root>

@@ -1,0 +1,314 @@
+<!-- CRC: 90CF26913586BBA787FE92D5537719330A5EA7F59AFAAACEEA378F1294F8939FD25B68236B1250AD0BA53E298FFFDF382A2DEBF087B7B27458B81D2DA8A374FB9A0D46BD3B6AACB92DE4D84759EBB5079CA9DA2D2BBCDAE2A4D1C56CD1580BF506E50D3DE7CC5209375CDF249919AC5DFD8C2F59A4C51AB6AA17A1D2520F9EEE0E345F884B9F2C432E99BA7A9C8104E2B627AA6A77F37D07182633D5A7C4C60360C922C2D291A61B8E7B21FD8A549773145DFD23EBF23A93086944AE325796A64C9CEC7B8DDCAFB90C6D023D9AE37938CB95D4C56BF96DF12E2E537ED3A62AD834F73E07AA889468 -->
+<!-- REVISION: 1.0 -->
+<!-- GUID: 0AC76F48-3A36-4D26-A1A2-A3F78190B163 -->
+<!-- DATE: 08\08\2022 -->
+<!-- DIR: FCD\PIC\Microchip|Curiosity.fcdx -->
+<root>
+
+<build>
+
+    <compiler exe="$(compilerpic)bin\xc8.exe" 
+	params="--chip=$(chipalt) &quot;$(target).c&quot; --MSGDISABLE=359,1273,1388"
+	/>
+
+    <programmer exe="C:\Program Files (x86)\Microchip\MPLABX\v3.35\mplab_ipe\ipecmd.exe" 
+	params="/P$(chipalt) /F&quot;$(outdir)$(target).hex&quot; /TPPKOB /M /OL /W3.3"
+	/>
+</build>
+
+<device name='Microchip Curiosity' namealt='16F1619' product='PIC' cal='PIC' family='16F' bits='8' >
+    <clock max_speed='32000000' master_divider='4' default='32000000' />
+    <memory >
+        <flash bytes='14336' />
+        <ram bytes='1024' />
+    </memory>
+    <pins sides='2' smd='0' >
+        <pin name='VDD' />
+        <pin name='RA5/OSC1/CLKIN' port='0' bit='5' rpreg='RA5PPS' rpnum='5' />
+        <pin name='RA4/AN3/OSC2/CLKOUT' port='0' bit='4' adc='3' rpreg='RA4PPS' rpnum='4' />
+        <pin name='RA3/MCLR/VPP' port='0' bit='3' rpnum='3' in_only="1" />
+        <pin name='RC5/RX/CCP1' port='2' bit='5' rpreg='RC5PPS' rpnum='22' />
+        <pin name='RC4/TX' port='2' bit='4' rpreg='RC4PPS' rpnum='20' />
+        <pin name='RC3/AN7' port='2' bit='3' adc='7' rpreg='RC3PPS' rpnum='19' />
+        <pin name='RC6/AN8' port='2' bit='6' adc='8' rpreg='RC6PPS' rpnum='23' />
+        <pin name='RC7/AN9' port='2' bit='7' adc='9' rpreg='RC7PPS' rpnum='24' />
+        <pin name='RB7' port='1' bit='7' rpreg='RB7PPS' rpnum='15' />
+        <pin name='RB6' port='1' bit='6' rpreg='RB6PPS' rpnum='14' />
+        <pin name='RB5/AN11' port='1' bit='5' adc='11' rpreg='RB5PPS' rpnum='13' />
+        <pin name='RB4/AN10' port='1' bit='4' adc='10' rpreg='RB4PPS' rpnum='12' />
+        <pin name='RC2/AN6/SDO' port='2' bit='2' adc='6' rpreg='RC2PPS' rpnum='18' />
+        <pin name='RC1/AN5/SDA/SDI' port='2' bit='1' adc='5' rpreg='RC1PPS' rpnum='17' />
+        <pin name='RC0/AN4/SCL/SCK' port='2' bit='0' adc='4' rpreg='RC0PPS' rpnum='16' />
+        <pin name='RA2/AN2/T0CKI' port='0' bit='2' adc='2' rpreg='RA2PPS' rpnum='2' />
+        <pin name='RA1/AN1/VREF/ICSPCLK' port='0' bit='1' adc='1' rpreg='RA1PPS' rpnum='1' />
+        <pin name='RA0/AN0/ICSPDAT' port='0' bit='0' adc='0' rpreg='RA0PPS' rpnum='0' />
+        <pin name='VSS' />
+    </pins>
+    <adc type='26' bits='10' >
+        <speed >
+            <option name='Fosc / 2' value='0' />
+            <option name='Fosc / 8' value='1' />
+            <option name='Fosc / 32' value='2' />
+            <option name='FRC' value='3' />
+            <option name='Fosc / 4' value='4' />
+            <option name='Fosc / 16' value='5' />
+            <option name='Fosc / 64' value='6' />
+        </speed>
+        <vref>
+            <option name='VDD' value='0' />
+            <option name='Vref+' value='2' />
+            <option name='FVR' value='3' />
+        </vref>
+    </adc>
+    <dac type='1' bits='8' >
+        <vref>
+            <option name='VDD' value='0' />
+            <option name='Vref+' value='1' />
+            <option name='FVR' value='2' />
+        </vref>
+        <out port='0' pin='0' />
+    </dac>
+    <spi remappable='1' >
+        <miso rpreg='SSPDATPPS' />
+        <mosi rpnum='17' />
+        <clk rpnum='16' rpreg='SSPCLKPPS' />
+        <ss rpreg='SSPSSPPS' />
+    </spi>
+    <uart remappable='1' >
+        <tx rpnum='18' />
+        <rx rpreg='RXPPS' />
+    </uart>
+    <pwm remappable='1' >
+    	<timer>
+    	    <option name='Timer2' value='2' />
+    	    <option name='Timer4' value='4' />
+    	    <option name='Timer6' value='6' />
+    	</timer>
+        <prescaler >
+            <option name='1' value='1' />
+            <option name='2' value='2' />
+            <option name='4' value='4' />
+            <option name='8' value='8' />
+            <option name='16' value='16' />
+            <option name='32' value='32' />
+            <option name='64' value='64' />
+            <option name='128' value='128' />
+        </prescaler>
+        <out rpnum='12' />
+        <out rpnum='13' />
+        <out rpnum='14' pwmtype='1' />
+        <out rpnum='15' pwmtype='1' />
+    </pwm>
+    <intosc>
+        <option name='31000' value='OSCCON = 0x00;' />   
+    	<option name='31250' value='OSCCON = 0x10;' />   
+    	<option name='62500' value='OSCCON = 0x20;' />
+    	<option name='125000' value='OSCCON = 0x28;' /> 
+    	<option name='250000' value='OSCCON = 0x30;' /> 
+    	<option name='500000' value='OSCCON = 0x38;' default='1' /> 
+    	<option name='1000000' value='OSCCON = 0x58;' /> 
+    	<option name='2000000' value='OSCCON = 0x60;' /> 
+    	<option name='4000000' value='OSCCON = 0x68;' /> 
+    	<option name='8000000' value='OSCCON = 0x70;' /> 
+    	<option name='16000000' value='OSCCON = 0x78;' /> 
+    	<option name='32000000' value='OSCCON = 0xF0;' /> 
+    </intosc>
+    <interrupts >
+        <interrupt ident='TMR0' regl='TMR0' regh='' type='timer8' name='Timer 0' handler='#ifndef MX_INTHANDLER_INTCON_TMR0IF\n#define MX_INTHANDLER_INTCON_TMR0IF\nif (ts_bit(INTCON, TMR0IF) &amp;&amp; ts_bit(INTCON, TMR0IE))\n{\n\tFCM_%n();\n\tcr_bit(INTCON, TMR0IF);\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='st_bit(INTCON, TMR0IE);\n' disable='cr_bit(INTCON, TMR0IE);\n' >
+            <timer overflow='256' extrange='0' />
+            <options >
+                <option name='Clock Source Select' >
+                    <entry name='Transition on T0CKI pin' clkdiv='0' value='st_bit(OPTION_REG,T0CS);\n' />
+                    <entry name='Internal clock (CLKO)' clkdiv='4' value='cr_bit(OPTION_REG,T0CS);\n' />
+                </option>
+                <option name='Source Edge Select' >
+                    <entry name='high-to-low transition on TMR0 Clock' value='st_bit(OPTION_REG,T0SE);\n' />
+                    <entry name='low-to-high transition on TMR0 Clock' value='cr_bit(OPTION_REG,T0SE);\n' />
+                </option>
+                <prescale name='Prescaler Rate' >
+                    <entry name='1:1' value='OPTION_REG = (OPTION_REG &amp; 0xF0) | 0x08;\n' />
+                    <entry name='1:2' value='OPTION_REG = (OPTION_REG &amp; 0xF0) | 0x00;\n' />
+                    <entry name='1:4' value='OPTION_REG = (OPTION_REG &amp; 0xF0) | 0x01;\n' />
+                    <entry name='1:8' value='OPTION_REG = (OPTION_REG &amp; 0xF0) | 0x02;\n' />
+                    <entry name='1:16' value='OPTION_REG = (OPTION_REG &amp; 0xF0) | 0x03;\n' />
+                    <entry name='1:32' value='OPTION_REG = (OPTION_REG &amp; 0xF0) | 0x04;\n' />
+                    <entry name='1:64' value='OPTION_REG = (OPTION_REG &amp; 0xF0) | 0x05;\n' />
+                    <entry name='1:128' value='OPTION_REG = (OPTION_REG &amp; 0xF0) | 0x06;\n' />
+                    <entry name='1:256' value='OPTION_REG = (OPTION_REG &amp; 0xF0) | 0x07;\n' />
+                </prescale>
+            </options>
+        </interrupt>
+        <interrupt ident='INT0' type='pin' name='INT0 Pin' handler='#ifndef MX_INTHANDLER_INTCON_INTF\n#define MX_INTHANDLER_INTCON_INTF\nif (ts_bit(INTCON, INTF) &amp;&amp; ts_bit(INTCON, INTE))\n{\n\tFCM_%n();\n\tcr_bit(INTCON, INTF);\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='st_bit(INTCON, INTE);\n' disable='cr_bit(INTCON, INTE);\n' >
+            <ioc config='3' >
+                <rising port='0' mask='4' />
+                <falling port='0' mask='4' />
+            </ioc>
+            <options >
+                <edge name='Interrupt Edge Select' >
+                    <entry name='Rising edge of INT' value='st_bit(OPTION_REG,INTEDG);\n' />
+                    <entry name='Falling edge of INT' value='cr_bit(OPTION_REG,INTEDG);\n' />
+                </edge>
+            </options>
+        </interrupt>
+        <interrupt ident='IOC0' type='multipin' name='IOC PORTA' handler='#ifndef MX_INTHANDLER_INTCON_IOCIF\n#define MX_INTHANDLER_INTCON_IOCIF\nchar mxtmp;\nif (ts_bit(INTCON, IOCIF) &amp;&amp; ts_bit(INTCON, IOCIE))\n{\n\tFCM_%n();\n\tmxtmp=PORTA;\n\tcr_bit(INTCON, IOCIF);\n\tIOCAF=0;\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='IOCAP=%pA0h;\nIOCAN=%pA0l;\nst_bit(INTCON, IOCIE);\n' disable='cr_bit(INTCON, IOCIE);\n' >
+            <ioc config='0x0F' >
+                <rising port='0' mask='0x3F' />
+                <falling port='0' mask='0x3F' />
+            </ioc>
+        </interrupt>
+        <interrupt ident='RXINT0' type='comms' name='UART RXINT0' handler='#ifndef MX_INTHANDLER_PIR1_RCIF\n#define MX_INTHANDLER_PIR1_RCIF\nif (ts_bit(PIR1, RCIF) &amp;&amp; ts_bit(PIE1, RCIE))\n{\n\tFCM_%n();\n\tcr_bit(PIR1, RCIF);\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='st_bit(PIE1, RCIE);\nst_bit(INTCON, PEIE);\n' disable='cr_bit(PIE1, RCIE);\n' />
+        <interrupt ident='TXINT0' type='comms' name='UART TXINT0' handler='#ifndef MX_INTHANDLER_PIR1_TXIF\n#define MX_INTHANDLER_PIR1_TXIF\nif (ts_bit(PIR1, TXIF) &amp;&amp; ts_bit(PIE1, TXIE))\n{\n\tFCM_%n();\n\tcr_bit(PIR1, TXIF);\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='st_bit(PIE1, TXIE);\nst_bit(INTCON, PEIE);\n' disable='cr_bit(PIE1, TXIE);\n' />
+        <interrupt ident='TMR2' regl='TMR2' regh='' type='timer8' name='Timer 2' handler='#ifndef MX_INTHANDLER_PIR1_TMR2IF\n#define MX_INTHANDLER_PIR1_TMR2IF\nif (ts_bit(PIR1, TMR2IF) &amp;&amp; ts_bit(PIE1, TMR2IE))\n{\n\tFCM_%n();\n\tcr_bit(PIR1, TMR2IF);\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='st_bit(PIE1, TMR2IE);\n' disable='cr_bit(PIE1, TMR2IE);\n' >
+            <timer overflow='256' extrange='0' />
+            <options >
+                <prescale name='Prescaler Rate' >
+                    <entry name='1:1' value='st_bit(INTCON,PEIE);\nT2CON = 0x80;\n' />
+                    <entry name='1:2' value='st_bit(INTCON,PEIE);\nT2CON = 0x90;\n' />
+                    <entry name='1:4' value='st_bit(INTCON,PEIE);\nT2CON = 0xA0;\n' />
+                    <entry name='1:8' value='st_bit(INTCON,PEIE);\nT2CON = 0xB0;\n' />
+                    <entry name='1:16' value='st_bit(INTCON,PEIE);\nT2CON = 0xC0;\n' />
+                    <entry name='1:32' value='st_bit(INTCON,PEIE);\nT2CON = 0xD0;\n' />
+                    <entry name='1:64' value='st_bit(INTCON,PEIE);\nT2CON = 0xE0;\n' />
+                    <entry name='1:128' value='st_bit(INTCON,PEIE);\nT2CON = 0xF0;\n' />
+                </prescale>
+                <postscale name='Postscaler Rate' >
+                    <entry name='1:1' value='T2CON = T2CON &amp; 0xF0;\n' />
+                    <entry name='1:2' value='T2CON = (T2CON &amp; 0xF0) | 0x01;\n' />
+                    <entry name='1:3' value='T2CON = (T2CON &amp; 0xF0) | 0x02;\n' />
+                    <entry name='1:4' value='T2CON = (T2CON &amp; 0xF0) | 0x03;\n' />
+                    <entry name='1:5' value='T2CON = (T2CON &amp; 0xF0) | 0x04;\n' />
+                    <entry name='1:6' value='T2CON = (T2CON &amp; 0xF0) | 0x05;\n' />
+                    <entry name='1:7' value='T2CON = (T2CON &amp; 0xF0) | 0x06;\n' />
+                    <entry name='1:8' value='T2CON = (T2CON &amp; 0xF0) | 0x07;\n' />
+                    <entry name='1:9' value='T2CON = (T2CON &amp; 0xF0) | 0x08;\n' />
+                    <entry name='1:10' value='T2CON = (T2CON &amp; 0xF0) | 0x09;\n' />
+                    <entry name='1:11' value='T2CON = (T2CON &amp; 0xF0) | 0x0A;\n' />
+                    <entry name='1:12' value='T2CON = (T2CON &amp; 0xF0) | 0x0B;\n' />
+                    <entry name='1:13' value='T2CON = (T2CON &amp; 0xF0) | 0x0C;\n' />
+                    <entry name='1:14' value='T2CON = (T2CON &amp; 0xF0) | 0x0D;\n' />
+                    <entry name='1:15' value='T2CON = (T2CON &amp; 0xF0) | 0x0E;\n' />
+                    <entry name='1:16' value='T2CON = (T2CON &amp; 0xF0) | 0x0F;\n' />
+                </postscale>
+                <rollover name='Rollover Value' >
+                    <entry name='256' min='1' max='256' value='PR2=%d-1;\n' />
+                </rollover>
+            </options>
+        </interrupt>
+        <interrupt ident='TMR4' regl='TMR4' regh='' type='timer8' name='Timer 4' handler='#ifndef MX_INTHANDLER_PIR2_TMR4IF\n#define MX_INTHANDLER_PIR2_TMR4IF\nif (ts_bit(PIR2, TMR4IF) &amp;&amp; ts_bit(PIE2, TMR4IE))\n{\n\tFCM_%n();\n\tcr_bit(PIR2, TMR4IF);\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='st_bit(PIE2, TMR4IE);\n' disable='cr_bit(PIE2, TMR4IE);\n' >
+            <timer overflow='256' extrange='0' />
+            <options >
+                <prescale name='Prescaler Rate' >
+                    <entry name='1:1' value='st_bit(INTCON,PEIE);\nT4CON = 0x80;\n' />
+                    <entry name='1:2' value='st_bit(INTCON,PEIE);\nT4CON = 0x90;\n' />
+                    <entry name='1:4' value='st_bit(INTCON,PEIE);\nT4CON = 0xA0;\n' />
+                    <entry name='1:8' value='st_bit(INTCON,PEIE);\nT4CON = 0xB0;\n' />
+                    <entry name='1:16' value='st_bit(INTCON,PEIE);\nT4CON = 0xC0;\n' />
+                    <entry name='1:32' value='st_bit(INTCON,PEIE);\nT4CON = 0xD0;\n' />
+                    <entry name='1:64' value='st_bit(INTCON,PEIE);\nT4CON = 0xE0;\n' />
+                    <entry name='1:128' value='st_bit(INTCON,PEIE);\nT4CON = 0xF0;\n' />
+                </prescale>
+                <postscale name='Postscaler Rate' >
+                    <entry name='1:1' value='T4CON = T4CON &amp; 0xF0;\n' />
+                    <entry name='1:2' value='T4CON = (T4CON &amp; 0xF0) | 0x01;\n' />
+                    <entry name='1:3' value='T4CON = (T4CON &amp; 0xF0) | 0x02;\n' />
+                    <entry name='1:4' value='T4CON = (T4CON &amp; 0xF0) | 0x03;\n' />
+                    <entry name='1:5' value='T4CON = (T4CON &amp; 0xF0) | 0x04;\n' />
+                    <entry name='1:6' value='T4CON = (T4CON &amp; 0xF0) | 0x05;\n' />
+                    <entry name='1:7' value='T4CON = (T4CON &amp; 0xF0) | 0x06;\n' />
+                    <entry name='1:8' value='T4CON = (T4CON &amp; 0xF0) | 0x07;\n' />
+                    <entry name='1:9' value='T4CON = (T4CON &amp; 0xF0) | 0x08;\n' />
+                    <entry name='1:10' value='T4CON = (T4CON &amp; 0xF0) | 0x09;\n' />
+                    <entry name='1:11' value='T4CON = (T4CON &amp; 0xF0) | 0x0A;\n' />
+                    <entry name='1:12' value='T4CON = (T4CON &amp; 0xF0) | 0x0B;\n' />
+                    <entry name='1:13' value='T4CON = (T4CON &amp; 0xF0) | 0x0C;\n' />
+                    <entry name='1:14' value='T4CON = (T4CON &amp; 0xF0) | 0x0D;\n' />
+                    <entry name='1:15' value='T4CON = (T4CON &amp; 0xF0) | 0x0E;\n' />
+                    <entry name='1:16' value='T4CON = (T4CON &amp; 0xF0) | 0x0F;\n' />
+                </postscale>
+                <rollover name='Rollover Value' >
+                    <entry name='256' min='1' max='256' value='PR4=%d-1;\n' />
+                </rollover>
+            </options>
+        </interrupt>
+        <interrupt ident='TMR6' regl='TMR6' regh='' type='timer8' name='Timer 6' handler='#ifndef MX_INTHANDLER_PIR2_TMR6IF\n#define MX_INTHANDLER_PIR2_TMR6IF\nif (ts_bit(PIR2, TMR6IF) &amp;&amp; ts_bit(PIE2, TMR6IE))\n{\n\tFCM_%n();\n\tcr_bit(PIR2, TMR6IF);\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='st_bit(PIE2, TMR6IE);\n' disable='cr_bit(PIE2, TMR6IE);\n' >
+            <timer overflow='256' extrange='0' />
+            <options >
+                <prescale name='Prescaler Rate' >
+                    <entry name='1:1' value='st_bit(INTCON,PEIE);\nT6CON = 0x80;\n' />
+                    <entry name='1:2' value='st_bit(INTCON,PEIE);\nT6CON = 0x90;\n' />
+                    <entry name='1:4' value='st_bit(INTCON,PEIE);\nT6CON = 0xA0;\n' />
+                    <entry name='1:8' value='st_bit(INTCON,PEIE);\nT6CON = 0xB0;\n' />
+                    <entry name='1:16' value='st_bit(INTCON,PEIE);\nT6CON = 0xC0;\n' />
+                    <entry name='1:32' value='st_bit(INTCON,PEIE);\nT6CON = 0xD0;\n' />
+                    <entry name='1:64' value='st_bit(INTCON,PEIE);\nT6CON = 0xE0;\n' />
+                    <entry name='1:128' value='st_bit(INTCON,PEIE);\nT6CON = 0xF0;\n' />
+                </prescale>
+                <postscale name='Postscaler Rate' >
+                    <entry name='1:1' value='T6CON = T6CON &amp; 0xF0;\n' />
+                    <entry name='1:2' value='T6CON = (T6CON &amp; 0xF0) | 0x01;\n' />
+                    <entry name='1:3' value='T6CON = (T6CON &amp; 0xF0) | 0x02;\n' />
+                    <entry name='1:4' value='T6CON = (T6CON &amp; 0xF0) | 0x03;\n' />
+                    <entry name='1:5' value='T6CON = (T6CON &amp; 0xF0) | 0x04;\n' />
+                    <entry name='1:6' value='T6CON = (T6CON &amp; 0xF0) | 0x05;\n' />
+                    <entry name='1:7' value='T6CON = (T6CON &amp; 0xF0) | 0x06;\n' />
+                    <entry name='1:8' value='T6CON = (T6CON &amp; 0xF0) | 0x07;\n' />
+                    <entry name='1:9' value='T6CON = (T6CON &amp; 0xF0) | 0x08;\n' />
+                    <entry name='1:10' value='T6CON = (T6CON &amp; 0xF0) | 0x09;\n' />
+                    <entry name='1:11' value='T6CON = (T6CON &amp; 0xF0) | 0x0A;\n' />
+                    <entry name='1:12' value='T6CON = (T6CON &amp; 0xF0) | 0x0B;\n' />
+                    <entry name='1:13' value='T6CON = (T6CON &amp; 0xF0) | 0x0C;\n' />
+                    <entry name='1:14' value='T6CON = (T6CON &amp; 0xF0) | 0x0D;\n' />
+                    <entry name='1:15' value='T6CON = (T6CON &amp; 0xF0) | 0x0E;\n' />
+                    <entry name='1:16' value='T6CON = (T6CON &amp; 0xF0) | 0x0F;\n' />
+                </postscale>
+                <rollover name='Rollover Value' >
+                    <entry name='256' min='1' max='256' value='PR6=%d-1;\n' />
+                </rollover>
+            </options>
+        </interrupt>
+        <interrupt ident='TMR1' regl='TMR1L' regh='TMR1H' type='timer16' name='Timer 1' handler='#ifndef MX_INTHANDLER_PIR1_TMR1IF\n#define MX_INTHANDLER_PIR1_TMR1IF\nif (ts_bit(PIR1, TMR1IF) &amp;&amp; ts_bit(PIE1, TMR1IE))\n{\n\tFCM_%n();\n\tcr_bit(PIR1, TMR1IF);\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='st_bit(PIE1, TMR1IE);\n' disable='cr_bit(PIE1, TMR1IE);\n' >
+            <timer overflow='65536' extrange='0' />
+            <options >
+                <option name='Clock Source Select' >
+                    <entry name='Transition on T1CKI pin' clkdiv='0' value='st_bit(INTCON,PEIE);\ncr_bit(T1CON,T1OSCEN);\nst_bit(T1CON,TMR1ON);\nst_bit(T1CON,TMR1CS1);\n' />
+                    <entry name='Internal clock (Fosc/4)' clkdiv='4' value='st_bit(INTCON,PEIE);\ncr_bit(T1CON,T1OSCEN);\nst_bit(T1CON,TMR1ON);\ncr_bit(T1CON,TMR1CS1);\n' />
+                    <entry name='32.768KHz XTAL T1CKI/T1CKO' clkdiv='0' value='st_bit(INTCON,PEIE);\nst_bit(T1CON,T1OSCEN);\nst_bit(T1CON,TMR1ON);\nst_bit(T1CON,TMR1CS1);\n' />
+                </option>
+                <prescale name='Prescaler Rate' >
+                    <entry name='1:1' value='T1CON = T1CON &amp; 0x0F;\n' />
+                    <entry name='1:2' value='T1CON = (T1CON &amp; 0x0F) | 0x10;\n' />
+                    <entry name='1:4' value='T1CON = (T1CON &amp; 0x0F) | 0x20;\n' />
+                    <entry name='1:8' value='T1CON = (T1CON &amp; 0x0F) | 0x30;\n' />
+                </prescale>
+            </options>
+        </interrupt>
+        <interrupt ident='SSP0' type='comms' name='Synchronous Serial Port1' handler='#ifndef MX_INTHANDLER_PIR1_SSP1IF\n#define MX_INTHANDLER_PIR1_SSP1IF\nif (ts_bit(PIR1, SSP1IF) &amp;&amp; ts_bit(PIE1, SSP1IE))\n{\n\tFCM_%n();\n\tcr_bit(PIR1, SSP1IF);\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='st_bit(PIE1, SSP1IE);\nst_bit(INTCON, PEIE);\n' disable='cr_bit(PIE1, SSP1IE);\n' />
+    </interrupts>
+</device>
+<inline >
+    <defines code='#define MX_PWM_NEW_TMR_CONF\n\n' />
+    <directives code='#include &lt;xc.h&gt;\n#include &lt;math.h&gt;\n\n__PROG_CONFIG(0x1, 0x3FDC);\n__PROG_CONFIG(0x2, 0x3FFB);\n__PROG_CONFIG(0x3, 0x3F9F);\n\n' />
+    <main >
+        <start code='\nvoid main()\n{\n\t#ifdef INTOSCHELPER\n\t\tINTOSCHELPERCODE\n\t#endif\n\n' />
+        <end code='\tmainendloop: goto mainendloop;\n}\n\n' />
+        <init code='OSCCON = 0xF0;\nANSELA = 0x00;\nANSELB = 0x00;\nANSELC = 0x00;\n' />
+    </main>
+    <interrupt >
+        <enable code='st_bit(INTCON,GIE);\n' />
+        <start code='void MX_INTERRUPT_MACRO(void)\n{\n' />
+        <end code='}\n\n' />
+        <init code='OPTION_REG = 0xC0;\n\n' />
+    </interrupt>
+    <config >
+	<start code='//Config Start\n' />
+        <body code='__PROG_CONFIG($(address), 0x$(value:x));\n' /> 
+        <end code='//Config End\n\n' /> 
+    </config>
+</inline>
+<test >
+    <icd >
+        <clock port='0' pin='1' />
+        <data port='0' pin='0' />
+    </icd>
+</test>
+</root>

@@ -1,0 +1,158 @@
+<root>
+<document schema='101' license='1,Dev User,Q5XHCQ' title='' description='' target='SIMULATION.SIM.SIM' >
+	<config data='' clkspd='100000000' simspd='1' usewdt='0' constif='0' />
+	<plugins >
+		<dll_dbg_icd enabled='0' >
+			<data name='debug' value='1' />
+			<data name='userpins' value='0' />
+			<data name='speed' value='0' />
+			<data name='usev9' value='0' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='ghostype' value='0' />
+			<data name='monitor' value='1' />
+			<data name='ictloop' value='0' />
+			<data name='ictrate' value='20000' />
+			<data name='ictmask' value='0' />
+			<data name='anlpres' value='19' />
+			<data name='digmask1' value='-1' />
+			<data name='digmask2' value='-1' />
+		</dll_dbg_icd>
+		<dll_models enabled='1' />
+		<dll_upgrader enabled='1' />
+		<dll_webhelp enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug />
+	<components >
+		<settings autoimg='1' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='dbbabe1b-3975-4af6-8ce4-b3ffa41f702d' vstate='40' vmin='0' vmaj='1' srcleaf='' visiblename='' description='' category='' catenable='1' author='' manuname='' manucode='' sysinfo='0' keywords='' dynamic='0' iconpath='' />
+		<component class_type='root' codename='panel' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+			<resources />
+			<properties />
+			<values />
+			<events />
+			<apis />
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='false' type='b1' description='' isconst='1' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='bck' type='u8' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='fwd' type='u8' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='true' type='b1' description='' isconst='1' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='Main' description='' >
+						<return name='Return' type='v0' description='' isconst='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='loop' title='Loop' cmdcolor='3568629' cmdcolor_sec='3568629' type='0' exp='1' >
+							<flowline >
+								<command class_type='call' title='Call Component Macro' cmdcolor='1975743' cmdcolor_sec='1975743' component='fwd' macro='ReadState' >
+									<return exp='fwd' />
+								</command>
+								<command class_type='call' title='Call Component Macro' cmdcolor='1975743' cmdcolor_sec='1975743' component='bck' macro='ReadState' >
+									<return exp='bck' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='fwd' swap='0' >
+									<flowline >
+										<command class_type='sim' title='Call Component Macro' cmdcolor='1975743' cmdcolor_sec='1975743' component='CarSeat1' macro='Motor1' >
+											<argument exp='1' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='sim' title='Call Component Macro' cmdcolor='1975743' cmdcolor_sec='1975743' component='CarSeat1' macro='Motor1' >
+											<argument exp='0' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='bck' swap='0' >
+									<flowline >
+										<command class_type='sim' title='Call Component Macro' cmdcolor='1975743' cmdcolor_sec='1975743' component='CarSeat1' macro='Motor1' >
+											<argument exp='2' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='sim' title='Call Component Macro' cmdcolor='1975743' cmdcolor_sec='1975743' component='CarSeat1' macro='Motor1' >
+											<argument exp='0' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='delay' title='Delay' cmdcolor='7895044' cmdcolor_sec='7895044' exp='10' type='1' />
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='fde30de0-35ed-40ca-937a-88da6409c1d2' vmin='3' vmaj='0' codename='CarSeat1' x='-4.25981' y='-1.6976' z='10.461' xsz='0.1' ysz='0.1' zsz='0.1' xang='0' yang='0' zang='180' xquat='0' yquat='0' zquat='1' wquat='6.12323e-17' visible='1' interactive='1' solid='1' layer='0' poslock='1' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Show_Hide' data='001' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='5c1da48f-ce54-4622-bdd9-fc812e373696' vmin='1' vmaj='1' codename='fwd' x='-40' y='0' z='-6.175' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='1' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='pin' data='$PORTA.0' />
+					<value target='polarity' data='000' />
+					<value target='debounce' data='10' />
+					<value target='operation' data='000' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='5c1da48f-ce54-4622-bdd9-fc812e373696' vmin='1' vmaj='1' codename='bck' x='10' y='0' z='-6.175' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='1' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='pin' data='$PORTA.1' />
+					<value target='polarity' data='000' />
+					<value target='debounce' data='10' />
+					<value target='operation' data='000' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<keymap />
+	<panel2d shadows='0' lighting='2' brightness='0' perspective='0' >
+		<background rgb='2105930' img='' style='0' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel2d>
+	<panel3d shadows='0' lighting='2' brightness='0' perspective='0' >
+		<background rgb='9868950' img='' style='0' />
+		<table rgb='11842740' img='' style='0' size='25' />
+		<camera xe='-71.3389' ye='-54.9609' ze='57.801' xt='-3.60584' yt='3.64185' zt='3.47566' xquat='-0.45364' yquat='0.186842' zquat='0.39218' wquat='0.778136' />
+		<camerakey0 xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey1 xe='-3.67394e-14' ye='0' ze='-300' xt='0' yt='0' zt='0' xquat='0' yquat='1' zquat='0' wquat='6.12323e-17' />
+		<camerakey2 xe='0' ye='-300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.707107' yquat='0' zquat='0' wquat='0.707107' />
+		<camerakey3 xe='-3.67394e-14' ye='300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-4.32978e-17' yquat='0.707107' zquat='0.707107' wquat='4.32978e-17' />
+		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
+		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
+		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
+	</panel3d>
+	<layout >
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuQIAAIcDAAA' zoom='75' scrollx='0' scrolly='11' flags='0' />
+	</layout>
+</document>
+</root>

@@ -1,0 +1,135 @@
+<!-- CRC: 90CF26913586BBA787FE92D5537719335B50978E8B93CD43F1AC86B0C9EC79CE2B702871DF5ADABCC487AA0E0C74ACDB9A0D46BD3B6AACB92DE4D84759EBB5079CA9DA2D2BBCDAE2A4D1C56CD1580BF50401838ECEF37F98C792D324AD297F74656F1D4C7A28453FCA6D0827E08D5C43E9FF615A6C1CBEF30FB0EDB040B94AEE1D4FD6A1FC4B3903834899A035CC5CC432D39D06DD5AFB2DE90D3FF09110BCFB7755EB81AE0BA678086944AE325796A69F3F19B2A8CCFB1A1A474F2F796A8E29CD393F4B8A47F797 -->
+<!-- REVISION: 1.0 -->
+<!-- GUID: 5E137454-549C-400B-8962-4E084A632732 -->
+<!-- DATE: 08\08\2022 -->
+<!-- DIR: FCD\PIC\16LF83.fcdx -->
+<root>
+<device name='16LF83' product='PIC' cal='PIC' family='16F' bits='8' >
+    <clock max_speed='10000000' master_divider='4' default='19660800' />
+    <memory >
+        <flash bytes='896' />
+        <ram bytes='36' />
+    </memory>
+    <configuration address='1' mult='2' >
+	<format >
+	  <word value='0x3FFF' />
+        </format>
+        <setting />
+        <settings >
+            <setting name='OSC' offset='0' mask='3' bits='2' hint='Oscillator' >
+                <option name='RC' value='3' />
+                <option name='LP' value='0' />
+                <option name='XT' value='1' />
+                <option name='HS' value='2' />
+            </setting>
+            <setting name='WDT' offset='2' mask='1' bits='1' hint='Watchdog Timer' >
+                <option name='On' value='1' />
+                <option name='Off' value='0' />
+            </setting>
+            <setting name='PUT' offset='3' mask='1' bits='1' hint='Power Up Timer' >
+                <option name='Off' value='1' />
+                <option name='On' value='0' />
+            </setting>
+            <setting name='CP' offset='4' mask='1023' bits='10' hint='Code Protect' >
+                <option name='Off' value='1023' />
+                <option name='On' value='0' />
+            </setting>
+        </settings>
+    </configuration>
+    <pins sides='2' smd='0' >
+        <pin name='RA2' port='0' bit='2' />
+        <pin name='RA3' port='0' bit='3' />
+        <pin name='RA4/T0CKI' port='0' bit='4' />
+        <pin name='MCLR' />
+        <pin name='VSS' />
+        <pin name='RB0/INT' port='1' bit='0' />
+        <pin name='RB1' port='1' bit='1' />
+        <pin name='RB2' port='1' bit='2' />
+        <pin name='RB3' port='1' bit='3' />
+        <pin name='RB4' port='1' bit='4' />
+        <pin name='RB5' port='1' bit='5' />
+        <pin name='RB6' port='1' bit='6' />
+        <pin name='RB7' port='1' bit='7' />
+        <pin name='VDD' />
+        <pin name='OSC2/CLKOUT' />
+        <pin name='OSC1/CLKIN' />
+        <pin name='RA0' port='0' bit='0' />
+        <pin name='RA1' port='0' bit='1' />
+    </pins>
+    <eeprom type='1' bytes='64' />
+    <interrupts >
+        <interrupt ident='TMR0' regl='TMR0' regh='' type='timer8' name='Timer 0' handler='#ifndef MX_INTHANDLER_INTCON_T0IF\n#define MX_INTHANDLER_INTCON_T0IF\nif (ts_bit(INTCON, T0IF) &amp;&amp; ts_bit(INTCON, T0IE))\n{\n\tFCM_%n();\n\tcr_bit(INTCON, T0IF);\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='st_bit(INTCON, T0IE);\n' disable='cr_bit(INTCON, T0IE);\n' >
+            <timer overflow='256' extrange='0' />
+            <options >
+                <option name='Clock Source Select' >
+                    <entry name='Transition on T0CKI pin' clkdiv='0' value='st_bit(OPTION_REG,T0CS);\n' />
+                    <entry name='Internal clock (CLKO)' clkdiv='4' value='cr_bit(OPTION_REG,T0CS);\n' />
+                </option>
+                <option name='Source Edge Select' >
+                    <entry name='high-to-low transition on TMR0 Clock' value='st_bit(OPTION_REG,T0SE);\n' />
+                    <entry name='low-to-high transition on TMR0 Clock' value='cr_bit(OPTION_REG,T0SE);\n' />
+                </option>
+                <prescale name='Prescaler Rate' >
+                    <entry name='1:1' value='OPTION_REG = (OPTION_REG &amp; 0xF0) | 0x08;\n' />
+                    <entry name='1:2' value='OPTION_REG = (OPTION_REG &amp; 0xF0) | 0x00;\n' />
+                    <entry name='1:4' value='OPTION_REG = (OPTION_REG &amp; 0xF0) | 0x01;\n' />
+                    <entry name='1:8' value='OPTION_REG = (OPTION_REG &amp; 0xF0) | 0x02;\n' />
+                    <entry name='1:16' value='OPTION_REG = (OPTION_REG &amp; 0xF0) | 0x03;\n' />
+                    <entry name='1:32' value='OPTION_REG = (OPTION_REG &amp; 0xF0) | 0x04;\n' />
+                    <entry name='1:64' value='OPTION_REG = (OPTION_REG &amp; 0xF0) | 0x05;\n' />
+                    <entry name='1:128' value='OPTION_REG = (OPTION_REG &amp; 0xF0) | 0x06;\n' />
+                    <entry name='1:256' value='OPTION_REG = (OPTION_REG &amp; 0xF0) | 0x07;\n' />
+                </prescale>
+            </options>
+        </interrupt>
+        <interrupt ident='INT0' type='pin' name='INT0 Pin' handler='#ifndef MX_INTHANDLER_INTCON_INTF\n#define MX_INTHANDLER_INTCON_INTF\nif (ts_bit(INTCON, INTF) &amp;&amp; ts_bit(INTCON, INTE))\n{\n\tFCM_%n();\n\tcr_bit(INTCON, INTF);\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='st_bit(INTCON, INTE);\n' disable='cr_bit(INTCON, INTE);\n' >
+            <ioc config='3' >
+                <rising port='1' mask='1' />
+                <falling port='1' mask='1' />
+            </ioc>
+            <options >
+                <edge name='Interrupt Edge Select' >
+                    <entry name='Rising edge of INT' value='st_bit(OPTION_REG,INTEDG);\n' />
+                    <entry name='Falling edge of INT' value='cr_bit(OPTION_REG,INTEDG);\n' />
+                </edge>
+            </options>
+        </interrupt>
+        <interrupt ident='IOC0' type='multipin' name='IOC Port B' handler='#ifndef MX_INTHANDLER_INTCON_RBIF\n#define MX_INTHANDLER_INTCON_RBIF\nchar mxtmp;\nif (ts_bit(INTCON, RBIF) &amp;&amp; ts_bit(INTCON, RBIE))\n{\n\tFCM_%n();\n\tmxtmp=PORTB;\n\tcr_bit(INTCON, RBIF);\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='st_bit(INTCON, RBIE);\n' disable='cr_bit(INTCON, RBIE);\n' >
+            <ioc config='4' >
+                <rising port='1' mask='0xF0' />
+                <falling port='1' mask='0xF0' />
+            </ioc>
+            <options >
+                <option name='Interrupt Pins' >
+                    <entry name='RB4 - RB7' value='' />
+                </option>
+            </options>            
+        </interrupt>
+    </interrupts>
+</device>
+<inline >
+    <defines code="" />
+    <directives code="#include &lt;xc.h&gt;\n#include &lt;math.h&gt;\n\n" />
+    <main >
+        <start code='\nvoid main()\n{\n\t#ifdef INTOSCHELPER\n\t\tINTOSCHELPERCODE\n\t#endif\n\n' />
+        <end code='\tmainendloop: goto mainendloop;\n}\n\n' />
+        <init code='' />
+    </main>
+    <interrupt >
+        <enable code='st_bit(INTCON,GIE);\n' />
+        <start code='void MX_INTERRUPT_MACRO(void)\n{\n' />
+        <end code='}\n\n' />
+        <init code='OPTION_REG = 0xC0;\n\n' />
+    </interrupt>
+    <config >
+	<start code='//Chip Configuration Settings\n' />
+        <body code='__PROG_CONFIG($(address), 0x$(value:x));\n' /> 
+    </config>
+</inline>
+<test >
+    <icd >
+        <clock port='1' pin='6' />
+        <data port='1' pin='7' />
+    </icd>
+</test>
+</root>

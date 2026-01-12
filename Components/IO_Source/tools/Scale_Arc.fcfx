@@ -1,0 +1,1410 @@
+<root>
+<document scada='0' schema='102' license='1,CompMaker,PWKUUN' title='' description='' fcversion='655360' target='PIC.16F.16F877A' >
+	<config data='!0,3f72%0,2%2,0%3,0%6,1%7,0%9,3%b,1%8,1%d,1' clkspd='19660800' simspd='1' usewdt='0' constif='0' Use3V3='0' />
+	<plugins />
+	<supplement use='0' head='' body='' />
+	<debug />
+	<traces />
+	<ghost >
+		<FK2 >
+			<data name='FK2D0' port='4294967295' pin='4294967295' />
+			<data name='FK2D1' port='4294967295' pin='4294967295' />
+			<data name='FK2D2' port='4294967295' pin='4294967295' />
+			<data name='FK2D3' port='4294967295' pin='4294967295' />
+			<data name='FK2D4' port='4294967295' pin='4294967295' />
+			<data name='FK2D5' port='4294967295' pin='4294967295' />
+			<data name='FK2D6' port='4294967295' pin='4294967295' />
+			<data name='FK2D7' port='4294967295' pin='4294967295' />
+			<data name='FK2D8' port='4294967295' pin='4294967295' />
+			<data name='FK2D9' port='4294967295' pin='4294967295' />
+			<data name='FK2D10' port='4294967295' pin='4294967295' />
+			<data name='FK2D11' port='4294967295' pin='4294967295' />
+			<data name='FK2D12' port='4294967295' pin='4294967295' />
+			<data name='FK2D13' port='4294967295' pin='4294967295' />
+			<data name='FK2D14' port='4294967295' pin='4294967295' />
+			<data name='FK2D15' port='4294967295' pin='4294967295' />
+			<data name='FK2A0' port='4294967295' pin='4294967295' />
+			<data name='FK2A1' port='4294967295' pin='4294967295' />
+			<data name='FK2A2' port='4294967295' pin='4294967295' />
+			<data name='FK2A3' port='4294967295' pin='4294967295' />
+			<data name='FK2A4' port='4294967295' pin='4294967295' />
+			<data name='FK2A5' port='4294967295' pin='4294967295' />
+		</FK2>
+		<ICD >
+			<data name='AnalogPrescaleValue' value='19' />
+			<data name='DigitalSampleRate' value='100000' />
+			<data name='BreakpointCount' value='8' />
+			<data name='CallStackDepthCount' value='8' />
+			<data name='ClockPort' value='1' />
+			<data name='ClockPin' value='6' />
+			<data name='DataPort' value='1' />
+			<data name='DataPin' value='7' />
+			<data name='UseDefaultPins' value='1' />
+			<data name='WrapEnabled' value='1' />
+			<data name='CommsDelayOverridden' value='0' />
+			<data name='CommsDelay' value='9' />
+			<data name='CalculatedCommsDelay' value='9' />
+			<data name='AnalogEB2PrescaleValue' value='2' />
+			<data name='DigitalEB2SampleRate' value='100000' />
+		</ICD>
+		<pins >
+			<digital A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+			<analog A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+		</pins>
+	</ghost>
+	<components >
+		<settings autoimg='0' center='0' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='f307403b-2134-4efa-bfac-bbd0adc0f253' vstate='40' vmin='2' vmaj='1' srcleaf='Scale_Arc.fcfx' visiblename='Scale Arc Template' description='A base component for drawing circular dials.  This allows a simple way to create graduated
+and labelled dials, for example, within meter and rotary control components.
+Mouse handling is built in for ease of building interactive controls.
+' category='Advanced Shapes' category2='' category3='' bIs2dOnly='0' bIs3dOnly='1' catenable='1' author='Matrix Ltd' manuname='' manucode='' sysinfo='1069351' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='1' iconpath='..\..\Icons\Components\arc_scale.png' />
+		<component class_type='root' codename='scale_arc' panelId='-1' x='0' y='0' z='0' xsz='2' ysz='2' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+			<resources />
+			<properties >
+				<property name='Pointer' target='target_object' typeid='17' hidden='0' locked='0' info='Set another panel object to be a pointer that will rotate around the scale.
+Depending on the property &apos;Function&apos; (below)....
+&quot;Display&quot; mode - the object acts as a pointer showing the values set by the &quot;SetValue&quot; macro.
+&quot;Control&quot; mode - the object acts as a handle for mouse movements that will set the current value.' />
+				<property name='Axis Object' target='axis_object' typeid='17' hidden='0' locked='0' info='An object to act as the centre of the arc, and rotation point of the &apos;Pointer&apos; object.
+By default, the arc is drawn centrally, but by assigning an object here, the whole scale can be centred
+around a different point.' />
+				<property name='Function' target='is_control' typeid='16' hidden='0' locked='0' info='Choose the &apos;mode&apos; of the component.
+&quot;Display&quot; mode - the arc can act as a value display, with the &apos;Pointer&apos; object rotating to show incoming
+value changes.
+&quot;Control&quot; mode - clicking on the scale, or &apos;Pointer&apos; object, sets the value directly, which can be
+susequently read by the &quot;GetValue&quot; macro.' filter='000Display
+001Control' />
+				<property name='Style' hidden='0' >
+					<property name='Canvas Shape' target='canvas_shape' typeid='16' hidden='0' locked='0' info='Shape of the plane on which to draw the scale.  ' filter='100Circle
+101Rectangle
+102Rounded Rect' />
+					<property name='Resolution' target='resolution' typeid='14' hidden='0' locked='0' info='The number of pixels per world unit of size.
+The scale is drawn as a bit-map, so this setting determines the level of detail vs. drawing speed and memory
+usage.' />
+					<property name='BG Color' target='bg_color' typeid='2' hidden='0' locked='0' info='Color of the scale background.' />
+					<property name='Positive Color' target='ink_color' typeid='1' hidden='0' locked='0' info='Color for arc and divisions for negative values.' />
+					<property name='Negative Color' target='neg_color' typeid='1' hidden='0' locked='0' info='Color for the arc and divisions for positive values.' />
+					<property name='Label Color' target='label_color' typeid='1' hidden='0' locked='0' info='Color for the component label text.' />
+				</property>
+				<property name='Arc' hidden='0' >
+					<property name='Radius %' target='arc_radius' typeid='14' hidden='0' locked='0' info='Radius of the arc line as a percentage of the component&apos;s shortest dimension.' />
+					<property name='Start Angle' target='arc_start' typeid='14' hidden='0' locked='0' info='Start angle of the sweep, where the minimum value will appear.
+Measured in degrees, anti-clockwise from the positive X-axis.' />
+					<property name='Sweep' target='arc_sweep' typeid='14' hidden='0' locked='0' info='The number of degrees between the minimum value and the maximum value.' />
+					<property name='Thickness' target='arc_thick' typeid='15' hidden='0' locked='0' info='Thickness of the arc line.' />
+					<property name='Show' target='show_arc' typeid='7' hidden='0' locked='0' info='Whether to show or hide the arc.' />
+				</property>
+				<property name='Marks' hidden='0' >
+					<property name='Divisions' target='marks_count' typeid='14' hidden='0' locked='0' info='Number of main divisions around the scale - these divisions can be numbered.' />
+					<property name='Radius %' target='marks_radius' typeid='14' hidden='0' locked='0' info='Radius of the division ends - they are drawn from here to their intersection with the arc.
+% of the component size.' />
+					<property name='Thickness' target='divs_thick' typeid='15' hidden='0' locked='0' info='Thickness of main (numbered) division lines.' />
+					<property name='Subdivisions' target='marks_subdiv' typeid='14' hidden='0' locked='0' info='Number of smaller divisions between each main division.  Set to zero if not required.' />
+					<property name='Subs Radius %' target='subdiv_radius' typeid='14' hidden='0' locked='0' info='Radius of the small division ends.  They are drawn from here to their intersection with the arc.
+% of component size.' />
+					<property name='Subs Thickness' target='subs_thick' typeid='15' hidden='0' locked='0' info='Thickness of sub-division lines.' />
+					<property name='Show' target='show_marks' typeid='7' hidden='0' locked='0' info='Whether to show or hide the division markings.' />
+				</property>
+				<property name='Numbers' hidden='0' >
+					<property name='Maximum' target='val_max' typeid='15' hidden='0' locked='0' info='Maximum value to show on the display.' />
+					<property name='Minimum' target='val_min' typeid='15' hidden='0' locked='0' info='Minimum value to show on the display.' />
+					<property name='Decimals' target='dec_places' typeid='14' hidden='0' locked='0' info='Number of decimal places to show on the number values.' />
+					<property name='Radius %' target='num_radius' typeid='14' hidden='0' locked='0' info='Radius from the centre to place the number values.
+% of component size.' />
+					<property name='Text Size %' target='num_size' typeid='14' hidden='0' locked='0' info='Height of number text - % of component size.' />
+					<property name='Font' target='num_font' typeid='3' hidden='0' locked='0' info='Font for the number values.' />
+					<property name='Show' target='show_numbers' typeid='7' hidden='0' locked='0' info='Show or hide the number values.' />
+				</property>
+				<property name='Label' hidden='0' >
+					<property name='Text' target='label_text' typeid='10' hidden='0' locked='0' info='A text label to help identify the display.' />
+					<property name='Radius %' target='label_radius' typeid='14' hidden='0' locked='0' info='Radius to place the label - % of component size.' />
+					<property name='Angle' target='label_angle' typeid='14' hidden='0' locked='0' info='Angle at which to place the label - degrees anti-clockwise from the positive X-axis.' />
+					<property name='Text Size %' target='label_size' typeid='14' hidden='0' locked='0' info='Height of the label font - % of component size.' />
+					<property name='Font' target='label_font' typeid='3' hidden='0' locked='0' info='Font for the text label.' />
+					<property name='Show' target='show_label' typeid='7' hidden='0' locked='0' info='Show or hide the text label.' />
+				</property>
+				<property name='Buttons' folder='property_1' hidden='0' >
+					<property name='Show Buttons' target='ShowButtons' typeid='7' hidden='0' locked='0' info='Controls if the adjustment buttons are shown on the scale arc or not.' />
+					<property name='Adjustment Value' target='ButtonAdjustment' typeid='15' hidden='0' locked='0' info='Sets the button adjustment value, will round the value to the nearest whole adjustment.
+For example with an adjustment of 1,0 the adjustment buttons will jump to the next whole number.' />
+				</property>
+			</properties>
+			<values >
+				<value target='target_object' data='' />
+				<value target='axis_object' data='' />
+				<value target='is_control' data='001' />
+				<value target='canvas_shape' data='100' />
+				<value target='resolution' data='50' />
+				<value target='bg_color' data='0' />
+				<value target='ink_color' data='49152' />
+				<value target='neg_color' data='255' />
+				<value target='label_color' data='6908265' />
+				<value target='arc_radius' data='95' />
+				<value target='arc_start' data='240' />
+				<value target='arc_sweep' data='300' />
+				<value target='arc_thick' data='6.000000' />
+				<value target='show_arc' data='1' />
+				<value target='marks_count' data='9' />
+				<value target='marks_radius' data='83' />
+				<value target='divs_thick' data='6.000000' />
+				<value target='marks_subdiv' data='4' />
+				<value target='subdiv_radius' data='90' />
+				<value target='subs_thick' data='3.000000' />
+				<value target='show_marks' data='1' />
+				<value target='val_max' data='1.000000' />
+				<value target='val_min' data='-1.000000' />
+				<value target='dec_places' data='2' />
+				<value target='num_radius' data='68' />
+				<value target='num_size' data='10' />
+				<value target='num_font' data='Arial Narrow' />
+				<value target='show_numbers' data='1' />
+				<value target='label_text' data='Amount' />
+				<value target='label_radius' data='80' />
+				<value target='label_angle' data='270' />
+				<value target='label_size' data='12' />
+				<value target='label_font' data='Arial Narrow' />
+				<value target='show_label' data='1' />
+				<value target='ShowButtons' data='0' />
+				<value target='ButtonAdjustment' data='0.100000' />
+			</values>
+			<events >
+				<event class='Mouse' event='Drag' target='Ev_Click' />
+				<event class='Components' event='Initialise' target='Ev_Initialise' />
+				<event class='Components' event='Resize' target='Ev_Resize' />
+				<event class='Mouse' event='Click' target='Ev_Click' />
+				<event class='Components' event='Property' target='Ev_Property' />
+			</events>
+			<apis >
+				<api name='GetValue' alt='' type='2' proto='1' />
+				<api name='SetValue' alt='' type='2' proto='1' />
+				<api name='SetLabel' alt='' type='2' proto='1' />
+				<api name='SetRange' alt='' type='2' proto='1' />
+			</apis>
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='px_size_label' type='f32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0.0' setinit='0.0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='world_centre_y' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='centre_y' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='Angle' type='f32' description='Angle set by the most recent mouse interaction (if enabled)' isconst='0' isHidden='0' isinit='1' usrinit='0.0' setinit='0.0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='world_centre_x' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='centre_x' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='TEST' type='f32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0.0' setinit='0.0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='sweep_radians' type='f32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0.0' setinit='0.0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='PI' type='f32' description='' isconst='1' isHidden='0' isinit='1' usrinit='3.1415927410125732421875' setinit='3.1415926535897932384626433832795' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='px_y_label' type='f32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0.0' setinit='0.0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='test_pos' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='px_rad_marks' type='f32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0.0' setinit='0.0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='px_y_centre' type='f32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0.0' setinit='0.0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='LabInc' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='false' type='b1' description='' isconst='1' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='px_rad_numbers' type='f32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0.0' setinit='0.0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='Value' type='f32' description='A scaled value set by the most recent mouse interaction (if enabled).' isconst='0' isHidden='0' isinit='1' usrinit='0.0' setinit='0.0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='target_start_pos' type='h32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='pixel_radius' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='px_rad_subs' type='f32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0.0' setinit='0.0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='px_rad_arc' type='f32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0.0' setinit='0.0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='MouseEnabled' type='b1' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='false' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='px_y_offset' type='f32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0.0' setinit='0.0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='test_knob' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='axis_handle' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='LabDec' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='px_x_centre' type='f32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0.0' setinit='0.0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='px_size' type='f32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0.0' setinit='0.0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='start_radians' type='f32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0.0' setinit='0.0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='px_x_label' type='f32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0.0' setinit='0.0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='world_height' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='target_handle' type='h32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='px_x_offset' type='f32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0.0' setinit='0.0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='px_size_number' type='f32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0.0' setinit='0.0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='HANDLE_TEST' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='world_width' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='width_px' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='height_px' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='canvas_handle' type='h32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='true' type='b1' description='' isconst='1' isHidden='0' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='Prv_MakeCanvas' description='Attempts to create a canvas on the named object.
+Returns true/false whether or not this succeeded.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<local name='dimensions' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' >
+							<array size='3' />
+						</local>
+						<local name='aspect' type='f32' description='Aspect ratio - width divided by height' isconst='0' isHidden='0' isinit='1' usrinit='0.0' setinit='0.0' />
+						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.GetScale' >
+							<return exp='.dimensions' />
+							<argument exp='canvas_handle' />
+							<argument exp='this' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='world_width = .dimensions[0]' />
+							<exp exp='world_height = .dimensions[1]' />
+							<exp exp='.aspect = world_width / world_height' />
+							<exp exp='' />
+							<exp exp='' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='world_width &gt; world_height' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='width_px = world_width * resolution' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='width_px &gt; 512' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='width_px = 512' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='height_px = width_px / .aspect' />
+									<exp exp='px_size = height_px' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='height_px = world_height * resolution' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='height_px &gt; 512' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='height_px = 512' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='width_px = height_px * .aspect' />
+									<exp exp='px_size = width_px' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Graphics.DrawCreate' >
+							<argument exp='canvas_handle' />
+							<argument exp='width_px' />
+							<argument exp='height_px' />
+							<argument exp='0' />
+							<argument exp='bg_color' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Prv_ConstrainAngle' description='Keeps the angle within the bounds of the scale.' statediag='0' >
+						<return name='Return' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='in_angle' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.in_angle &lt; 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.in_angle = 0 - .in_angle' />
+									<exp exp='.in_angle = .in_angle MOD 360' />
+									<exp exp='.in_angle = 360 - .in_angle' />
+									<exp exp='.Return = .in_angle MOD 360' />
+									<exp exp='' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = .in_angle MOD 360' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='GetValue' description='Get the current scale value - this will be the most recent value set using &quot;SetValue&quot;, or from the most recent mouse click if the component is in &quot;Control&quot;
+mode.' statediag='0' >
+						<return name='Return' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = Value' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Initialise' description='Initialisation routine for the component once the component is linked to its parent' statediag='0' >
+						<return name='Return' type='u32' description='Non-zero to prevent initialisation' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='target_handle = target_object' />
+						</command>
+						<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Get' >
+							<return exp='target_start_pos' />
+							<argument exp='target_handle' />
+						</command>
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_Property' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Prv_DrawMarks' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<local name='segments' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='index' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='step' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='x0' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='x1' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='y0' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='y1' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='angle' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='scale_rad' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='mark_rad' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='sub_index' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='subdiv_rad' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='text_rad' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='angle_str' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<local name='real_val' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Graphics.SetTextScale' >
+							<argument exp='px_size_number' />
+							<argument exp='px_size_number' />
+						</command>
+						<command class_type='decision' title='Decision' textarea='257,14,257,14' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='val_min &lt; 0' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Graphics.SetColor' >
+									<argument exp='neg_color' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Graphics.SetColor' >
+									<argument exp='ink_color' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Graphics.SetTextFont' >
+							<argument exp='num_font' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.step = sweep_radians / (1 - marks_count)' />
+							<exp exp='.angle = start_radians' />
+							<exp exp='.index = 0' />
+							<exp exp='' />
+							<exp exp='' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='.index &lt; marks_count' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.x0 = px_x_centre + cos (.angle) * px_rad_arc' />
+									<exp exp='.y0 = px_y_centre + sin (.angle) * px_rad_arc' />
+									<exp exp='.x1 = px_x_centre + cos (.angle) * px_rad_marks' />
+									<exp exp='.y1 = px_y_centre + sin (.angle) * px_rad_marks' />
+								</command>
+								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_GetNumber' >
+									<return exp='.real_val' />
+									<argument exp='.Angle' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='round (.real_val * pow (10,dec_places)) &lt; 0' swap='0' >
+									<flowline >
+										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Graphics.SetColor' >
+											<argument exp='neg_color' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Graphics.SetColor' >
+											<argument exp='ink_color' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='show_marks' swap='0' >
+									<flowline >
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Graphics.SetLineThickness' >
+											<argument exp='divs_thick' />
+										</command>
+										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Graphics.DrawLineA' >
+											<argument exp='.x0' />
+											<argument exp='.y0' />
+											<argument exp='.x1' />
+											<argument exp='.y1' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='decision' title='show_numbers' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='show_numbers' swap='0' >
+									<flowline >
+										<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_FloatRound' >
+											<return exp='.angle_str' />
+											<argument exp='.real_val' />
+											<argument exp='dec_places' />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.x0 = px_x_centre + cos (.angle) * px_rad_numbers' />
+											<exp exp='.y0 = px_y_centre + sin (.angle) * px_rad_numbers' />
+										</command>
+										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Graphics.DrawText' >
+											<argument exp='.x0' />
+											<argument exp='.y0' />
+											<argument exp='.angle_str' />
+											<argument exp='::Panel .Graphics .Align_Center' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.index &lt; (marks_count - 1)' swap='0' >
+									<flowline >
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='show_arc' swap='0' >
+											<flowline >
+												<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_DrawArc' >
+													<argument exp='.angle' />
+													<argument exp='.angle + .step' />
+													<argument exp='px_rad_arc' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+										<command class_type='decision' title='Draw sub-divisions' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='show_marks AND marks_subdiv &gt; 0' swap='0' >
+											<flowline >
+												<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Graphics.SetLineThickness' >
+													<argument exp='subs_thick' />
+												</command>
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='.sub_index = 0' />
+												</command>
+												<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='.sub_index &lt; marks_subdiv' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+															<exp exp='.angle = .angle + (.step / (marks_subdiv + 1))' />
+															<exp exp='.sub_index = .sub_index + 1' />
+														</command>
+														<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+															<exp exp='.x0 = px_x_centre + cos (.angle) * px_rad_arc' />
+															<exp exp='.y0 = px_y_centre + sin (.angle) * px_rad_arc' />
+															<exp exp='.x1 = px_x_centre + cos (.angle) * px_rad_subs' />
+															<exp exp='.y1 = px_y_centre + sin (.angle) * px_rad_subs' />
+														</command>
+														<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Graphics.DrawLineA' >
+															<argument exp='.x0' />
+															<argument exp='.y0' />
+															<argument exp='.x1' />
+															<argument exp='.y1' />
+														</command>
+													</flowline>
+												</command>
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='.angle = .angle + (.step / (marks_subdiv + 1))' />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='.angle = .angle + .step' />
+												</command>
+											</flowline>
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.index = .index + 1' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Property' description='Sent when a property has been changed by the User' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='object_handle' type='h32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='angle_temp' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.ReleaseMouse' >
+							<argument exp='target_handle' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='target_handle != target_object' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='target_handle = target_object' />
+								</command>
+								<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Get' >
+									<return exp='target_start_pos' />
+									<argument exp='target_handle' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='ShowButtons' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+									<argument exp='BGP' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+									<argument exp='LabelP' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+									<argument exp='BGM' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+									<argument exp='LabelM' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetInteractive' >
+									<argument exp='BGP' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetInteractive' >
+									<argument exp='LabelP' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetInteractive' >
+									<argument exp='BGM' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetInteractive' >
+									<argument exp='LabelM' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetSolid' >
+									<argument exp='BGP' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetSolid' >
+									<argument exp='LabelP' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetSolid' >
+									<argument exp='BGM' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetSolid' >
+									<argument exp='LabelM' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetColor' >
+									<argument exp='BGP' />
+									<argument exp='bg_color' />
+									<argument exp='bg_color &gt;&gt; 8' />
+									<argument exp='bg_color &gt;&gt; 16' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetColor' >
+									<argument exp='BGM' />
+									<argument exp='bg_color' />
+									<argument exp='bg_color &gt;&gt; 8' />
+									<argument exp='bg_color &gt;&gt; 16' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetColor' >
+									<argument exp='LabelP' />
+									<argument exp='label_color' />
+									<argument exp='label_color &gt;&gt; 8' />
+									<argument exp='label_color &gt;&gt; 16' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetColor' >
+									<argument exp='LabelM' />
+									<argument exp='label_color' />
+									<argument exp='label_color &gt;&gt; 8' />
+									<argument exp='label_color &gt;&gt; 16' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+									<argument exp='BGP' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+									<argument exp='LabelP' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+									<argument exp='BGM' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+									<argument exp='LabelM' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetInteractive' >
+									<argument exp='BGP' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetInteractive' >
+									<argument exp='LabelP' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetInteractive' >
+									<argument exp='BGM' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetInteractive' >
+									<argument exp='LabelM' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetSolid' >
+									<argument exp='BGP' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetSolid' >
+									<argument exp='LabelP' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetSolid' >
+									<argument exp='BGM' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetSolid' >
+									<argument exp='LabelM' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.FindChild' >
+							<return exp='.object_handle' />
+							<argument exp='this' />
+							<argument exp='&quot;canvas&quot;' />
+						</command>
+						<command class_type='decision' title='Exit if the target is not found' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.object_handle = 0' swap='0' >
+							<flowline >
+								<command class_type='goto' title='Goto Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' labelid='0' labelname='' />
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='canvas_handle = .object_handle' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='axis_object = 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='axis_handle = .object_handle' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='axis_handle = axis_object' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='comment' title='' comment='Condition Angle Variables' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='call' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_ConstrainAngle' >
+							<return exp='.angle_temp' />
+							<argument exp='arc_start' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;arc_start&quot;' />
+							<argument exp='.angle_temp' />
+						</command>
+						<command class_type='call' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_ConstrainAngle' >
+							<return exp='.angle_temp' />
+							<argument exp='arc_sweep' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;arc_sweep&quot;' />
+							<argument exp='.angle_temp' />
+						</command>
+						<command class_type='call' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_ConstrainAngle' >
+							<return exp='.angle_temp' />
+							<argument exp='label_angle' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;label_angle&quot;' />
+							<argument exp='.angle_temp' />
+						</command>
+						<command class_type='comment' title='' comment='Make a blank canvas and start drawing' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='canvas_handle' />
+							<argument exp='&quot;color&quot;' />
+							<argument exp='0xFFFFFF' />
+						</command>
+						<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='canvas_handle' />
+							<argument exp='&quot;shape&quot;' />
+							<argument exp='canvas_shape' />
+						</command>
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_MakeCanvas' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_InitParameters' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_DrawScale' />
+						<command class_type='label' title='Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' labelid='0' labelname='A' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Prv_DrawArc' description='Draw the arc' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Start' type='f32' description='Start angle of the arc' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<param name='End' type='f32' description='End angle of the arc' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<param name='Radius' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='segments' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='sweep' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='index' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='step' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='x0' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='x1' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='y0' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='y1' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='angle' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='scale_rad' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Graphics.SetLineThickness' >
+							<argument exp='arc_thick' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.sweep = .End - .Start' />
+							<exp exp='.segments = ceil (12 * fabs (.sweep))' />
+							<exp exp='.step = .sweep / .segments' />
+							<exp exp='.angle = .Start' />
+							<exp exp='.index = 0' />
+							<exp exp='.x0 = px_x_centre + cos (.angle) * .Radius' />
+							<exp exp='.y0 = px_y_centre + sin (.angle) * .Radius' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='.index &lt; .segments' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.angle = .angle + .step' />
+									<exp exp='.x1 = px_x_centre + cos (.angle) * .Radius' />
+									<exp exp='.y1 = px_y_centre + sin (.angle) * .Radius' />
+								</command>
+								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Graphics.DrawLineA' >
+									<argument exp='.x0' />
+									<argument exp='.y0' />
+									<argument exp='.x1' />
+									<argument exp='.y1' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.x0 = .x1' />
+									<exp exp='.y0 = .y1' />
+									<exp exp='.index = .index + 1' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Prv_DrawLabel' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<local name='x0' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='y0' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Graphics.SetTextFont' >
+							<argument exp='label_font' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Graphics.SetTextScale' >
+							<argument exp='px_size_label' />
+							<argument exp='px_size_label' />
+						</command>
+						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Graphics.SetColor' >
+							<argument exp='label_color' />
+						</command>
+						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Graphics.DrawText' >
+							<argument exp='px_x_label' />
+							<argument exp='px_y_label' />
+							<argument exp='label_text' />
+							<argument exp='::Panel .Graphics .Align_Center' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SetValue' description='Set the pointer to the given value on the scale.  Returns the angle required to point at the given value.' statediag='0' >
+						<return name='Return' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<param name='Value' type='f32' description='The value on the scale to move the pointer to.' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Value &gt; val_max' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Value = val_max' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Value &lt; val_min' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Value = val_min' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='Value = .Value' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = arc_start - arc_sweep * ((.Value - val_min) / (val_max - val_min))' />
+							<exp exp='.Return = .Return % 360' />
+							<exp exp='' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='Angle != .Return' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='Angle = .Return' />
+								</command>
+								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_MoveObject' />
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Prv_MoveObject' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<local name='centre_pos' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='target_handle != 0' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Set' >
+									<argument exp='target_handle' />
+									<argument exp='target_start_pos' />
+								</command>
+								<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.RotateTo' >
+									<argument exp='target_handle' />
+									<argument exp='axis_handle' />
+									<argument exp='axis_handle' />
+									<argument exp='0' />
+									<argument exp='0' />
+									<argument exp='Angle' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Prv_SetAngle' description='Converts an angle relative the the arc centre into the equivalent scaled value.' statediag='0' >
+						<return name='Return' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<param name='Angle' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Angle = (720 + arc_start - .Angle) % 360' />
+							<exp exp='' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Angle &lt; 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Angle = .Angle + 360' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Angle &lt;= arc_sweep' swap='0' >
+							<flowline />
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Angle &lt; (arc_sweep + 360) / 2' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Angle = arc_sweep' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Angle = 0' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='Value = (.Angle / arc_sweep) * (val_max - val_min) + val_min' />
+							<exp exp='Angle = arc_start - .Angle' />
+						</command>
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_MoveObject' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = Value' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Prv_InitParameters' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<local name='coords' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' >
+							<array size='3' />
+						</local>
+						<local name='canv_coords' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' >
+							<array size='3' />
+						</local>
+						<local name='x_off' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='y_off' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<command class_type='calculation' title='Arc Properties scaling' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='start_radians = arc_start * PI / 180' />
+							<exp exp='sweep_radians = arc_sweep * PI / 180' />
+							<exp exp='px_rad_arc = px_size * 0.005 * arc_radius' />
+						</command>
+						<command class_type='calculation' title='Marks Properties scaling' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='px_rad_marks = px_size * 0.005 * marks_radius' />
+							<exp exp='px_rad_subs = px_size * 0.005 * subdiv_radius' />
+							<exp exp='' />
+						</command>
+						<command class_type='calculation' title='Numbers Parameters' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='px_rad_numbers = px_size * 0.005 * num_radius' />
+							<exp exp='px_size_number = px_size * 0.01 * num_size' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.GetCoords' >
+							<return exp='.coords' />
+							<argument exp='axis_handle' />
+							<argument exp='this' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.GetCoords' >
+							<return exp='.canv_coords' />
+							<argument exp='canvas' />
+							<argument exp='this' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='world_centre_x = .coords[0]' />
+							<exp exp='world_centre_y = .coords[1]' />
+							<exp exp='.x_off = .coords[0] - .canv_coords[0]' />
+							<exp exp='.y_off = .coords[1] - .canv_coords[1]' />
+							<exp exp='px_x_centre = width_px * 0.5 + width_px / world_width * .x_off' />
+							<exp exp='px_y_centre = height_px * 0.5 + height_px / world_height * .y_off' />
+						</command>
+						<command class_type='calculation' title='Label Parameters' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='px_x_label = px_x_centre + cos (label_angle * PI / 180) * (label_radius * px_size * 0.005)' />
+							<exp exp='px_y_label = px_y_centre + sin (label_angle * PI / 180) * (label_radius * px_size * 0.005)' />
+							<exp exp='px_size_label = px_size * 0.01 * label_size' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Prv_FloatRound' description='Get a string representation of a float value rounded to the required number of places.' statediag='0' >
+						<return name='Return' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='2000' />
+						</return>
+						<param name='Value' type='f32' description='0.0' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<param name='Places' type='s16' description='Number the decimal places' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='factor' type='f32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0.0' setinit='0.0' />
+						<local name='pre' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<local name='post' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<local name='str_len' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='val_int' type='s32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='leading' type='T8' description='' isconst='0' isHidden='0' isinit='1' usrinit='&quot;&quot;' setinit='&quot;&quot;' >
+							<array size='2' />
+						</local>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.factor = pow (10, .Places)' />
+							<exp exp='.val_int = round (.Value * .factor)' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='fabs (.val_int) &lt; .factor' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.leading = &quot;0.&quot;' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.leading = &quot;.&quot;' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.val_int == 0' swap='0' >
+							<flowline >
+								<command class_type='decision' title='.Places &gt; 0' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Places &gt; 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Return = &quot;0.&quot; + Left$ (&quot;0000000000&quot;, .Places)' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Return = &quot;0&quot;' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = ToString$ (.val_int)' />
+									<exp exp='.str_len = Length$ (.Return)' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Places &gt; 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.pre = Left$ (.Return, .str_len - .Places)' />
+											<exp exp='.post = Right$ (.Return, .Places)' />
+											<exp exp='.Return = .pre + .leading + .post' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Resize' description='Sent to the mouse target when the user has altered the position of a component child' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Component' type='h32' description='The component that has been altered' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='PrevPos' type='h32' description='The position of the object before the start of positioning' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Final' type='b1' description='True if this is the end of a drag operation' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Final' swap='0' >
+							<flowline >
+								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_Property' />
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Prv_DrawScale' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='comment' title='' comment='Identify the target object' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Graphics.DrawBegin' >
+							<argument exp='canvas_handle' />
+						</command>
+						<command class_type='comment' title='' comment='MAIN DRAW ROUTINES BEGIN' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_DrawMarks' />
+						<command class_type='decision' title='show' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='show_label' swap='0' >
+							<flowline >
+								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_DrawLabel' />
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='comment' title='' comment='Tidy up at the end' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Graphics.DrawEnd' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Prv_GetNumber' description='Coverts a number (radians) to a scale marking number' statediag='0' >
+						<return name='Return' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<param name='Angle' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='range' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='dp_scale' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.range = val_max - val_min' />
+							<exp exp='.Return = .range * (start_radians - .Angle) / sweep_radians + val_min' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SetLabel' description='Set the label text for the scale' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Label' type='T8' description='Text to display.as the component label.' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</param>
+						<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;label_text&quot;' />
+							<argument exp='.Label' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SetRange' description='Set the minimum and maximum values of the scale' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Minimum' type='f32' description='Minimum value for the scale' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<param name='Maximum' type='f32' description='Maximum value for the scale' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;val_min&quot;' />
+							<argument exp='.Minimum' />
+						</command>
+						<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;val_max&quot;' />
+							<argument exp='.Maximum' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<local name='tes_pos' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_Property' />
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='1' >
+							<flowline >
+								<command class_type='call' title='Call Macro' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetValue' >
+									<return exp='TEST' />
+								</command>
+								<command class_type='sim' title='Call Macro' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Debug.PrintLn' >
+									<argument exp='FloatToString$ (TEST) + &quot; &quot;' />
+								</command>
+								<command class_type='call' title='Call Macro' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetValue' >
+									<argument exp='TEST' />
+								</command>
+								<command class_type='sim' title='Call Macro' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Debug.PrintLn' >
+									<argument exp='ToString$ (TEST)' />
+								</command>
+								<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='50' type='1' />
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Click' description='Sent when the mouse is clicked on a child of the component during simulation' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Component' type='h32' description='The component clicked on' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='X' type='f32' description='X coordinate relative to &apos;Component&apos;' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<param name='Y' type='f32' description='Y coordinate relative to &apos;Component&apos;' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<param name='Z' type='f32' description='Z coordinate relative to &apos;Component&apos;' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='canvas_pos' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' >
+							<array size='3' />
+						</local>
+						<local name='mouse_handle' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='mouse_pos' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' >
+							<array size='3' />
+						</local>
+						<local name='val' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='Name' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<local name='CompHandle' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Real' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<command class_type='decision' title='Bypass if mouse is disabled' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='is_control = 0' swap='0' >
+							<flowline />
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.GetName' >
+									<return exp='.Name' />
+									<argument exp='.Component' />
+								</command>
+								<command class_type='sim' title='Simulation' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Debug.PrintLn' >
+									<argument exp='.Name' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='(Compare$ (.Name,&quot;shape1&quot;,1) == 0) || (Compare$ (.Name,&quot;label1&quot;,1) == 0)' swap='0' >
+									<flowline >
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.GetCopy' >
+											<return exp='.CompHandle' />
+											<argument exp='.Component' />
+										</command>
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.StepParent' >
+											<argument exp='.CompHandle' />
+										</command>
+										<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetValue' >
+											<return exp='.val' />
+										</command>
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='(.CompHandle == BGP) || (.CompHandle == LabelP)' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='.Val = .Val + ButtonAdjustment' />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='.Val = .Val - ButtonAdjustment' />
+												</command>
+											</flowline>
+										</command>
+										<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetValue' >
+											<argument exp='.val' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Component != canvas_handle' swap='0' >
+											<flowline >
+												<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.GetCoords' >
+													<return exp='.canvas_pos' />
+													<argument exp='canvas_handle' />
+													<argument exp='this' />
+												</command>
+												<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Mouse.GetPosition' >
+													<return exp='.mouse_handle' />
+												</command>
+												<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.GetCoords' >
+													<return exp='.mouse_pos' />
+													<argument exp='.mouse_handle' />
+													<argument exp='this' />
+												</command>
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='.X = .mouse_pos[0] - (.canvas_pos[0] + world_centre_x)' />
+													<exp exp='.Y = .mouse_pos[1] - (.canvas_pos[1] + world_centre_y)' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.X = ((.X + 1) * width_px * 0.5) - px_x_centre' />
+											<exp exp='.Y = ((.Y + 1) * height_px * 0.5) - px_y_centre' />
+											<exp exp='' />
+											<exp exp='Angle = (atan2 (.Y, .X) * 180) / PI' />
+											<exp exp='' />
+											<exp exp='' />
+										</command>
+										<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_SetAngle' >
+											<argument exp='Angle' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='shape' codename='canvas' panelId='-1' x='0' y='0' z='0' xsz='16' ysz='16' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Shape' data='100' />
+					<value target='Color' data='16777215' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0.000000' />
+					<value target='Image' data='' />
+					<value target='Model' data='' />
+					<value target='Unit' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='8583543f-4a30-428c-baa1-699145e36314' vmin='0' vmaj='1' codename='BGP' panelId='-1' x='2.5' y='-9.5' z='0' xsz='0.07' ysz='0.07' zsz='0.07' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Color' data='0' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='9a971ee1-28e0-4e47-9c09-71268383fc75' vmin='0' vmaj='1' codename='LabelP' panelId='-1' x='2.5' y='-9.5' z='0.01' xsz='0.5' ysz='0.5' zsz='0.5' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Color' data='6908265' />
+					<value target='Background' data='-1' />
+					<value target='Font' data='Arial' />
+					<value target='Text' data='+' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='8583543f-4a30-428c-baa1-699145e36314' vmin='0' vmaj='1' codename='BGM' panelId='-1' x='-2.5' y='-9.5' z='0' xsz='0.07' ysz='0.07' zsz='0.07' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Color' data='0' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='9a971ee1-28e0-4e47-9c09-71268383fc75' vmin='0' vmaj='1' codename='LabelM' panelId='-1' x='-2.5' y='-9.15' z='0.01' xsz='0.7' ysz='0.5' zsz='0.5' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Color' data='6908265' />
+					<value target='Background' data='-1' />
+					<value target='Font' data='Arial' />
+					<value target='Text' data='-' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<scadaresourcelookup />
+	<keymap />
+	<panel2d shadows='0' lighting='0' brightness='0' >
+		<background rgb='9737364' img='' style='0' />
+		<camera xe='0' ye='0' ze='406.388' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='1414' dy='503' zoom='421.011' fix_topleft='0' />
+		<page x='1000' y='1000' show='0' rgb='7360576' />
+	</panel2d>
+	<panel3d shadows='0' lighting='0' brightness='0' perspective='1' >
+		<background rgb='32768' img='' style='0' />
+		<table rgb='7360576' img='' style='0' size='0' />
+		<camera xe='8.91241' ye='-3.54286' ze='112.022' xt='8.91241' yt='-3.54286' zt='1.14869' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey0 xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey1 xe='-3.67394e-14' ye='0' ze='-300' xt='0' yt='0' zt='0' xquat='0' yquat='1' zquat='0' wquat='6.12323e-17' />
+		<camerakey2 xe='0' ye='-300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.707107' yquat='0' zquat='0' wquat='0.707107' />
+		<camerakey3 xe='-3.67394e-14' ye='300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-4.32978e-17' yquat='0.707107' zquat='0.707107' wquat='4.32978e-17' />
+		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
+		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
+		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
+	</panel3d>
+	<panels2d count='0' />
+	<layout >
+		<view type='0' name='SetValue' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlQUAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_MoveObject' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlQUAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlQUAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Click' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlQUAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlQUAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_MakeCanvas' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlQUAAEwCAAA' zoom='70' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_InitParameters' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlQUAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_DrawMarks' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlQUAAEwCAAA' zoom='70' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_DrawScale' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlQUAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_DrawLabel' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlQUAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_ConstrainAngle' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlQUAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetValue' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlQUAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Resize' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlQUAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetRange' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlQUAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_SetAngle' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlQUAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_GetNumber' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlQUAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_FloatRound' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlQUAAEwCAAA' zoom='80' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_DrawArc' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlQUAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetLabel' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlQUAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlQUAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

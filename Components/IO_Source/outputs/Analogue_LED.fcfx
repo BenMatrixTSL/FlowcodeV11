@@ -1,0 +1,428 @@
+<root>
+<document schema='101' license='50,Dev User,2RNUW6' title='' description='' guid='82ad55f8-4aa6-4c27-9470-2619f045b869' target='PIC.16F.16F877A' >
+	<config data='!0,3f72%0,2%2,0%3,0%6,1%7,0%9,3%b,1%8,1%d,1' clkspd='19660800' simspd='0' usewdt='0' constif='0' />
+	<plugins >
+		<dll_dbg_icd enabled='0' >
+			<data name='debug' value='1' />
+			<data name='userpins' value='0' />
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='monitor' value='1' />
+			<data name='ictloop' value='1' />
+			<data name='ictrate' value='1000' />
+			<data name='ictmask' value='-1' />
+		</dll_dbg_icd>
+		<dll_dbg_ict enabled='0' >
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='userpins' value='0' />
+		</dll_dbg_ict>
+		<dll_models enabled='1' />
+		<dll_upgrader enabled='1' />
+		<dll_webhelp enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug />
+	<components >
+		<settings autoimg='0' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='82ad55f8-4aa6-4c27-9470-2619f045b869' vmin='0' vmaj='1' visiblename='Analogue LED' description='An LED with variable brightness.  Simulation Only.
+Brightness can be set either by macro call or by connection to an analogue pin.' category='Outputs' dynamic='0' iconpath='..\..\icons\components\LED.png' />
+		<component class_type='root' codename='led_analog' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+			<resources />
+			<properties >
+				<property name='Connections' folder='property_3' hidden='0' >
+					<property name='Analogue' target='analogue' typeid='6' hidden='0' locked='0' info='Choose an analogue pin to connect to the LED.
+When the analogue value changes, the LED brightness will be updated.' />
+				</property>
+				<property name='Color Range' folder='property_1' hidden='0' >
+					<property name='On Color' target='OnColor' typeid='1' hidden='0' locked='0' info='LED color when at maximum brightness' />
+					<property name='Off Color' target='OffColor' typeid='1' hidden='0' locked='0' info='LED color when at minimum brightness' />
+					<property name='Auto Off' target='AutoOff' typeid='7' hidden='0' locked='0' info='When AutoOff is enabled, the Off Color is automatically set whenever the On Color is changed.
+The automatic off color will be the same hue as the on color, but 25% of the brightness.' />
+					<property name='Minimum' target='Min' typeid='15' hidden='0' locked='0' info='Input value that gives the darkest LED color.' />
+					<property name='Maximum' target='Max' typeid='15' hidden='0' locked='0' info='Input value that gives the brightest LED color.' />
+				</property>
+				<property name='Shape' folder='property_2' hidden='0' >
+					<property name='Target' target='Target' typeid='17' hidden='0' locked='0' info='A panel object to be treated as the illuminating part of the LED.
+If unconnected, a built-in default shape can be chosen.' />
+					<property name='Shape' target='shape' typeid='16' hidden='0' locked='0' info='Choose a shape for the LED.' filter='000Cuboid
+007Dome
+004Cylinder' />
+					<property name='Width' target='Width' typeid='15' hidden='0' locked='0' info='Width of the LED shape.' />
+					<property name='Height' target='Height' typeid='15' hidden='0' locked='0' info='Height of the LED shape.' />
+					<property name='Depth' target='Depth' typeid='15' hidden='0' locked='0' info='Depth of the LED shape.' />
+				</property>
+			</properties>
+			<values >
+				<value target='analogue' data='' />
+				<value target='OnColor' data='255' />
+				<value target='OffColor' data='63' />
+				<value target='AutoOff' data='1' />
+				<value target='Min' data='0.000000' />
+				<value target='Max' data='255.000000' />
+				<value target='Target' data='' />
+				<value target='shape' data='007' />
+				<value target='Width' data='5.000000' />
+				<value target='Height' data='5.000000' />
+				<value target='Depth' data='2.500000' />
+			</values>
+			<events >
+				<event class='Connection' event='AnChange' target='Ev_AnChange' />
+				<event class='Components' event='Property' target='Ev_Property' />
+				<event class='Components' event='Initialise' target='Ev_Property' />
+			</events>
+			<apis >
+				<api name='SetBrightness' alt='' type='2' proto='1' />
+			</apis>
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='Test' type='u8' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='New_col' type='u32' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='false' type='b1' array='0' description='' isconst='1' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='has_kids' type='b1' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='false' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='off_rgb' type='u8' array='3' description='' isconst='0' isinit='0' usrinit='&quot;&quot;' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='true' type='b1' array='0' description='' isconst='1' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='on_rgb' type='u8' array='3' description='' isconst='0' isinit='0' usrinit='&quot;&quot;' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='target_object' type='h32' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='SetBrightness' description='Set the brightness of the LED.' >
+						<param name='Brightness' type='f32' array='0' description='Brightness from 0.0 to 1.0' isconst='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='r' type='f32' array='0' description='' isconst='0' isinit='1' usrinit='0.0' setinit='0.0' />
+						<local name='g' type='f32' array='0' description='' isconst='0' isinit='1' usrinit='0.0' setinit='0.0' />
+						<local name='b' type='f32' array='0' description='' isconst='0' isinit='1' usrinit='0.0' setinit='0.0' />
+						<local name='Inv' type='f32' array='0' description='' isconst='0' isinit='1' usrinit='0.0' setinit='0.0' />
+						<local name='temp_col' type='u32' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='Max &gt; Min' swap='0' >
+							<flowline >
+								<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='.Brightness &gt; Max' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='.Brightness = Max' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='.Brightness &lt; Min' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+													<exp exp='.Brightness = Min' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='.Brightness &lt; Max' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='.Brightness = Max' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='.Brightness &gt; Min' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+													<exp exp='.Brightness = Min' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+						<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+							<exp exp='.Brightness = (.Brightness - Min) / (Max - Min)' />
+							<exp exp='.Inv = 1 - .Brightness' />
+						</command>
+						<command class_type='calculation' title='Scale colors' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+							<exp exp='.r = on_rgb[0] * .Brightness + off_rgb[0] * .Inv' />
+							<exp exp='.g = on_rgb[1] * .Brightness + off_rgb[1] * .Inv' />
+							<exp exp='.b = on_rgb[2] * .Brightness + off_rgb[2] * .Inv' />
+						</command>
+						<command class_type='calculation' title='Make new colour' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+							<exp exp='.temp_col = .b' />
+							<exp exp='.temp_col = .temp_col &lt;&lt; 8' />
+							<exp exp='.temp_col = .temp_col + .g' />
+							<exp exp='.temp_col = .temp_col &lt;&lt; 8' />
+							<exp exp='.temp_col = .temp_col + .r' />
+						</command>
+						<command class_type='decision' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='has_kids' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Component.Property.SetChildValues' >
+									<argument exp='target_object' />
+									<argument exp='&quot;color&quot;' />
+									<argument exp='.temp_col' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Component.Property.SetValue' >
+									<argument exp='target_object' />
+									<argument exp='&quot;color&quot;' />
+									<argument exp='.temp_col' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Property' description='Sent when a property has been changed by the User' >
+						<return name='Return' type='u32' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='r' type='u8' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='g' type='u8' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='b' type='u8' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='temp' type='u32' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='test' type='T8' array='20' description='' isconst='0' isinit='1' usrinit='&quot;&quot;' setinit='&quot;&quot;' />
+						<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='Target &gt; 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='target_object = Target' />
+								</command>
+								<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Component.SetInteractive' >
+									<argument exp='default_target' />
+									<argument exp='false' />
+								</command>
+								<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Component.SetVisible' >
+									<argument exp='default_target' />
+									<argument exp='false' />
+								</command>
+								<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Component.SetSolid' >
+									<argument exp='default_target' />
+									<argument exp='false' />
+								</command>
+								<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;Shape&quot;' />
+									<argument exp='false' />
+								</command>
+								<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;Width&quot;' />
+									<argument exp='false' />
+								</command>
+								<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;Height&quot;' />
+									<argument exp='false' />
+								</command>
+								<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;Depth&quot;' />
+									<argument exp='false' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='target_object = default_target' />
+								</command>
+								<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Component.SetInteractive' >
+									<argument exp='default_target' />
+									<argument exp='true' />
+								</command>
+								<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Component.SetVisible' >
+									<argument exp='default_target' />
+									<argument exp='true' />
+								</command>
+								<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Component.SetSolid' >
+									<argument exp='default_target' />
+									<argument exp='true' />
+								</command>
+								<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Component.Property.CopyValue' >
+									<argument exp='this' />
+									<argument exp='default_target' />
+									<argument exp='&quot;Shape&quot;' />
+								</command>
+								<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Panel.Position.ScaleTo' >
+									<argument exp='default_target' />
+									<argument exp='Width' />
+									<argument exp='Height' />
+									<argument exp='Depth' />
+								</command>
+								<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;Shape&quot;' />
+									<argument exp='true' />
+								</command>
+								<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;Width&quot;' />
+									<argument exp='true' />
+								</command>
+								<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;Height&quot;' />
+									<argument exp='true' />
+								</command>
+								<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;Depth&quot;' />
+									<argument exp='true' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='AutoOff' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='.temp = OnColor' />
+									<exp exp='on_rgb[0] = .temp &amp; 255' />
+									<exp exp='.temp = .temp &gt;&gt; 8' />
+									<exp exp='on_rgb[1] = .temp &amp; 255' />
+									<exp exp='.temp = .temp &gt;&gt; 8' />
+									<exp exp='on_rgb[2] = .temp &amp; 255' />
+									<exp exp='' />
+									<exp exp='off_rgb[0] = on_rgb[0] &gt;&gt; 2' />
+									<exp exp='off_rgb[1] = on_rgb[1] &gt;&gt; 2' />
+									<exp exp='off_rgb[2] = on_rgb[2] &gt;&gt; 2' />
+									<exp exp='' />
+									<exp exp='.temp = (off_rgb[2] &lt;&lt; 16) + (off_rgb[1] &lt;&lt; 8) + off_rgb[0]' />
+									<exp exp='' />
+								</command>
+								<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Component.Property.SetValue' >
+									<argument exp='this' />
+									<argument exp='&quot;OffColor&quot;' />
+									<argument exp='.temp' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='.temp = OnColor' />
+									<exp exp='on_rgb[0] = .temp &amp; 255' />
+									<exp exp='.temp = .temp &gt;&gt; 8' />
+									<exp exp='on_rgb[1] = .temp &amp; 255' />
+									<exp exp='.temp = .temp &gt;&gt; 8' />
+									<exp exp='on_rgb[2] = .temp &amp; 255' />
+									<exp exp='' />
+									<exp exp='.temp = OffColor' />
+									<exp exp='off_rgb[0] = .temp &amp; 255' />
+									<exp exp='.temp = .temp &gt;&gt; 8' />
+									<exp exp='off_rgb[1] = .temp &amp; 255' />
+									<exp exp='.temp = .temp &gt;&gt; 8' />
+									<exp exp='off_rgb[2] = .temp &amp; 255' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Tree.CheckChildren' >
+							<return exp='has_kids' />
+							<argument exp='target_object' />
+						</command>
+						<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Component.Property.GetValue' >
+							<return exp='.test' />
+							<argument exp='this' />
+							<argument exp='&quot;analogue&quot;' />
+						</command>
+						<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='Compare$ (.test,&quot;&quot;,1)' swap='0' >
+							<flowline >
+								<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Ev_AnChange' />
+							</flowline>
+							<flowline >
+								<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='SetBrightness' >
+									<argument exp='Min' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_AnChange' description='Sent during simulation if a connected ADC channel changes' >
+						<return name='Return' type='u32' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='ana_val' type='f32' array='0' description='' isconst='0' isinit='0' usrinit='0.0' setinit='' />
+						<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Connection.GetAn' >
+							<return exp='.ana_val' />
+							<argument exp='analogue' />
+							<argument exp='false' />
+						</command>
+						<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+							<exp exp='.ana_val = Min + ((Max - Min) * .ana_val)' />
+						</command>
+						<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='SetBrightness' >
+							<argument exp='.ana_val' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='' >
+						<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Ev_Property' />
+						<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+							<exp exp='Test = 0' />
+						</command>
+						<command class_type='loop' title='Loop' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='1' type='0' start='1' count='1' breakend='0' >
+							<flowline >
+								<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='1' hide='0' customize='0' macro='SetBrightness' >
+									<argument exp='Test' />
+								</command>
+								<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='1' hide='0' customize='0' >
+									<exp exp='Test = Test + 20' />
+								</command>
+								<command class_type='delay' title='Delay' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='1' hide='0' customize='0' exp='100' type='1' />
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='shape' codename='default_target' x='0' y='0' z='0' xsz='5' ysz='5' zsz='2.5' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Shape' data='007' />
+					<value target='Color' data='63' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+					<value target='Model' data='' />
+					<value target='Unit' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<keymap />
+	<panel2d shadows='0' perspective='0' >
+		<background rgb='3158064' img='' style='0' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel2d>
+	<panel3d shadows='0' perspective='0' >
+		<background rgb='8404224' img='' style='0' />
+		<table rgb='0' img='' style='0' size='0' />
+		<camera xe='0' ye='0' ze='58.6318' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel3d>
+	<layout >
+		<view type='0' name='SetBrightness' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAXwUAAJsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAXwUAAJsDAAA' zoom='80' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_AnChange' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAXwUAAJsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAXwUAAJsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

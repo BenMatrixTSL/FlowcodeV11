@@ -1,0 +1,83 @@
+<!-- CRC: 90CF26913586BBA787FE92D553771933FECD22D43A8C3CCD35315F085C4091FB2B702871DF5ADABCC487AA0E0C74ACDB9A0D46BD3B6AACB92DE4D84759EBB5079CA9DA2D2BBCDAE2A4D1C56CD1580BF5E758871232AB4B8A8AF756C7185E27B74B10B9C1F0D6961C587405F061671DCE8F3E98F5D91436E2BC0759F27E6DC54CC2414FD0015220CF8DDFCE2AE20B6350F60F06A9FCB912284932F13CC0B7A1A979EAA4C742C699E1086944AE325796A68DD2E47086EE9AFA4A3C446044953ED4CBD12526D6C5B79476AD1A7DB9B9D5F43F565616D7803A54 -->
+<!-- REVISION: 1.0 -->
+<!-- GUID: 2830FC50-0FE5-48CB-90F4-E5EB0ADA890B -->
+<!-- DATE: 08\08\2022 -->
+<!-- DIR: FCD\PIC\10F220.fcdx -->
+<root>
+<device name='10F220' product='PIC' cal='PIC' family='10F' bits='8' >
+    <clock max_speed='8000000' master_divider='4' default='8000000' />
+    <memory >
+        <flash bytes='512' />
+        <ram bytes='16' />
+    </memory>
+    <configuration address='1' mult='2' >
+	<format >
+	  <word value='0x3FFF' />
+        </format>
+        <setting />
+        <settings >
+            <setting name='WDT' offset='2' mask='1' bits='1' hint='Watchdog Timer' >
+                <option name='Enabled' value='1' />
+                <option name='Disabled' value='0' />
+            </setting>
+            <setting name='MCLRE' offset='4' mask='1' bits='1' hint='Master Clear Enable' >
+                <option name='External' value='1' />
+                <option name='Internal GP3 is I/O' value='0' />
+            </setting>
+            <setting name='CP' offset='3' mask='1' bits='1' hint='Code Protect' >
+                <option name='Disabled' value='1' />
+                <option name='Enabled' value='0' />
+            </setting>
+            <setting name='MCPU' offset='1' mask='1' bits='1' hint='MCLR Internal Pull-Up' >
+                <option name='Disabled' value='1' />
+                <option name='Enabled' value='0' />
+            </setting>
+            <setting name='CP' offset='0' mask='1' bits='1' hint='Int Osc Freq' >
+                <option name='8MHz' value='1' />
+                <option name='4MHz' value='0' />
+            </setting>
+        </settings>
+    </configuration>
+    <pins sides='2' smd='0' >
+        <pin name='NC' />
+        <pin name='VDD' />
+        <pin name='GP2/T0CKI/COUT/FOSC4' port='0' bit='2' />
+        <pin name='GP1/AN1/PGC' port='0' bit='1' adc='1' />
+        <pin name='GP0/AN0/PGD' port='0' bit='0' adc='0' />
+        <pin name='NC' />
+        <pin name='VSS' />
+        <pin name='GP3/MCLR' port='0' bit='3' in_only="1" />
+    </pins>
+    <adc type='22' bits='8' >
+        <speed >
+            <option name='INTOSC / 4' value='0' />
+        </speed>
+    </adc>
+    <interrupts />
+</device>
+<inline >
+    <defines code="#define MX_10F_TRIS\n\n" />
+    <directives code="#include &lt;xc.h&gt;\n#include &lt;math.h&gt;\n\n" />
+    <main >
+        <start code='\nvoid main()\n{\n\t#ifdef INTOSCHELPER\n\t\tINTOSCHELPERCODE\n\t#endif\n\n' />
+        <end code='\tmainendloop: goto mainendloop;\n}\n\n' />
+        <init code='OSCCAL = OSCCAL &amp; 0xFE;\n\tADCON0 = 0x00;\n\tasm(&quot;movlw 0xDF&quot;);\n\tasm(&quot;OPTION&quot;);\n' />
+    </main>
+    <interrupt >
+        <enable code='' />
+        <start code='' />
+        <end code='' />
+        <init code='' />
+    </interrupt>
+    <config >
+        <start code='' />
+        <body code='__PROG_CONFIG($(address), 0x$(value:x));\n' /> 
+    </config>
+</inline>
+<test >
+    <icd >
+        <clock port='0' pin='1' />
+        <data port='0' pin='0' />
+    </icd>
+</test>
+</root>

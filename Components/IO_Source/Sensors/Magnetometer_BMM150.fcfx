@@ -1,0 +1,1164 @@
+<root>
+<document scada='0' schema='103' license='1,MartinW,JAK2JB' title='Demo I2C Component' description='A starting point for creating a component based on I2C communications.
+
+Includes the I2C CAL component with all the nesssisary exposed properties.' fcversion='655616' target='PIC.16F.16F18877' >
+	<config data='!0,3f8c!10,37fd!20,3f92!30,1fff!40,3fff%0,4%4,0%8,1%b,1%d,1%10,1%11,0%15,1%16,3%19,1%1a,1%1b,0%1c,1%1d,1%20,12%25,0%28,7%2b,7%30,3%3c,1%3d,0%40,1%41,1' clkspd='32000000' simspd='0' usewdt='0' constif='0' Use3V3='0' />
+	<plugins >
+		<dll_models enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug />
+	<traces />
+	<ghost >
+		<FK2 >
+			<data name='FK2D0' port='4294967295' pin='4294967295' />
+			<data name='FK2D1' port='4294967295' pin='4294967295' />
+			<data name='FK2D2' port='4294967295' pin='4294967295' />
+			<data name='FK2D3' port='4294967295' pin='4294967295' />
+			<data name='FK2D4' port='4294967295' pin='4294967295' />
+			<data name='FK2D5' port='4294967295' pin='4294967295' />
+			<data name='FK2D6' port='4294967295' pin='4294967295' />
+			<data name='FK2D7' port='4294967295' pin='4294967295' />
+			<data name='FK2D8' port='4294967295' pin='4294967295' />
+			<data name='FK2D9' port='4294967295' pin='4294967295' />
+			<data name='FK2D10' port='4294967295' pin='4294967295' />
+			<data name='FK2D11' port='4294967295' pin='4294967295' />
+			<data name='FK2D12' port='4294967295' pin='4294967295' />
+			<data name='FK2D13' port='4294967295' pin='4294967295' />
+			<data name='FK2D14' port='4294967295' pin='4294967295' />
+			<data name='FK2D15' port='4294967295' pin='4294967295' />
+			<data name='FK2A0' port='4294967295' pin='4294967295' />
+			<data name='FK2A1' port='4294967295' pin='4294967295' />
+			<data name='FK2A2' port='4294967295' pin='4294967295' />
+			<data name='FK2A3' port='4294967295' pin='4294967295' />
+			<data name='FK2A4' port='4294967295' pin='4294967295' />
+			<data name='FK2A5' port='4294967295' pin='4294967295' />
+		</FK2>
+		<ICD >
+			<data name='AnalogPrescaleValue' value='19' />
+			<data name='DigitalSampleRate' value='100000' />
+			<data name='BreakpointCount' value='8' />
+			<data name='CallStackDepthCount' value='8' />
+			<data name='ClockPort' value='1' />
+			<data name='ClockPin' value='6' />
+			<data name='DataPort' value='1' />
+			<data name='DataPin' value='7' />
+			<data name='UseDefaultPins' value='1' />
+			<data name='WrapEnabled' value='1' />
+			<data name='CommsDelayOverridden' value='0' />
+			<data name='CommsDelay' value='6' />
+			<data name='CalculatedCommsDelay' value='6' />
+			<data name='AnalogEB2PrescaleValue' value='2' />
+			<data name='DigitalEB2SampleRate' value='100000' />
+		</ICD>
+		<pins >
+			<digital A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+			<analog A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+		</pins>
+	</ghost>
+	<components >
+		<settings autoimg='0' center='0' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='36175036-08af-4bcf-8dd2-1c46f6761385' vstate='40' vmin='0' vmaj='1' srcleaf='Magnetometer_BMM150.fcfx' visiblename='Magnetometer (BMM150)' description='A low-power, low-noise 3-axis digital geomagnetic sensor that perfectly matches 
+the requirements of compass applications.' category='Environmental' category2='API Environmental' category3='' bIs2dOnly='1' bIs3dOnly='0' catenable='1' author='MatrixTSL' manuname='' manucode='' sysinfo='1053451' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='1' showmacros='1' iconpath='..\..\Icons\Components\accelerometert.png' />
+		<component class_type='root' codename='MagBMM150' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+			<resources />
+			<properties >
+				<property name='Component Properties' hidden='0' >
+					<property name='Device Address' target='DeviceAddress' typeid='16' hidden='0' locked='0' info='' filter='000CSB (GND) SDO (GND)
+001CSB (GND) SDO (VDD)
+002CSB (VDD) SDO (GND)
+003CSB (VDD) SDO (VDD)' />
+					<property name='Preset' target='DefaultPreset' typeid='16' hidden='0' locked='0' info='Sets the default preset for the module.
+Can be overridden by calling the SetPresetMode component macro.' filter='000Low Power
+001Default
+002High Precision
+003Enhanced' />
+				</property>
+				<property name='I2C Properties' folder='property_1' hidden='0' >
+					<property name='Connections' folder='cal_i2c1::property_2' hidden='0' >
+						<property name='Channel' target='cal_i2c1::CHANNEL' typeid='16' hidden='0' locked='0' info='Channel selection' filter='000Software
+001Channel 1
+002Channel 2
+' />
+						<property name='SDA' target='cal_i2c1::SDA' typeid='5' hidden='0' locked='1' info='Pin used for SDA (data signal)' />
+						<property name='SDA Remap Pin' target='cal_i2c1::SDAPins' typeid='16' hidden='0' locked='0' info='' filter='016$PORTC.0
+017$PORTC.1
+018$PORTC.2
+019$PORTC.3
+020$PORTC.4
+021$PORTC.5
+022$PORTC.6
+023$PORTC.7
+008$PORTB.0
+009$PORTB.1
+010$PORTB.2
+011$PORTB.3
+012$PORTB.4
+013$PORTB.5
+014$PORTB.6
+015$PORTB.7' />
+						<property name='SCL' target='cal_i2c1::SCL' typeid='5' hidden='0' locked='1' info='Pin used for SCL (clock signal)' />
+						<property name='SCL Remap Pin' target='cal_i2c1::SCLPins' typeid='16' hidden='0' locked='0' info='' filter='016$PORTC.0
+017$PORTC.1
+018$PORTC.2
+019$PORTC.3
+020$PORTC.4
+021$PORTC.5
+022$PORTC.6
+023$PORTC.7
+008$PORTB.0
+009$PORTB.1
+010$PORTB.2
+011$PORTB.3
+012$PORTB.4
+013$PORTB.5
+014$PORTB.6
+015$PORTB.7' />
+					</property>
+					<property name='Options' folder='cal_i2c1::property_3' hidden='0' >
+						<property name='Stop Delay' target='cal_i2c1::StopDel' typeid='7' hidden='0' locked='0' info='On older microcontroller devices there is a potential for the I2C hardware channel to lock up if there is not 
+a 10ms delay between an I2C stop event and the next I2C start event.
+
+Most modern microcontrollers will not have a problem so this property can be disabled to speed up the 
+I2C communications. ' />
+						<property name='Baud Select' target='cal_i2c1::BAUD_LIST' typeid='16' hidden='0' locked='0' info='Baud rate option selector' filter='000Custom
+001100KHz
+002400KHz
+0031MHz' />
+						<property name='Baud Rate' target='cal_i2c1::BAUD' typeid='14' hidden='0' locked='1' info='Baud rate to be used' />
+						<property name='Clock Stretching' target='cal_i2c1::ClockStretching' typeid='7' hidden='1' locked='0' info='Allows the clock signal to be stretched to help combat high capacitance on the SCL/SDA bus signals.
+When setting the clock high the CAL code will wait for the clock to read as a high before continuing.
+Can potentially cause lockups if pull up resistors are missing from the SDA / SCL signals.
+Only compatible with Software I2C channels. ' />
+					</property>
+				</property>
+				<property name='Simulation' folder='cal_i2c1::property_1' hidden='0' >
+					<property name='Simulate Comms' target='SimComms' typeid='7' hidden='0' locked='0' info='' />
+					<property name='Comms Simulation' folder='property_2' hidden='1' >
+						<property name='Scope Traces' target='cal_i2c1::ScopeTraces' typeid='7' hidden='0' locked='0' info='Selects if the component pin connections are automatically generated on the data recorder window or not.
+Yes: Automatically add the component pins to a group on the data recorder which will reflect the sim data during simultion.
+No: Do not show the pin signals on the data recorder window.' />
+						<property name='Console Data' target='cal_i2c1::ConsoleData' typeid='7' hidden='0' locked='0' info='Selects if the console data is automatically generated or not' />
+						<property name='Injector' target='cal_i2c1::Injector' typeid='16' hidden='0' locked='0' info='Specifies the injector component on the panel to interact with to provide comms simulation.' filter='000 
+' />
+					</property>
+					<property name='Injector Handle' target='cal_i2c1::InjectorHandle' typeid='21' hidden='1' locked='0' info='' />
+				</property>
+			</properties>
+			<values >
+				<value target='DeviceAddress' data='003' />
+				<value target='DefaultPreset' data='001' />
+				<value target='cal_i2c1::CHANNEL' data='001' />
+				<value target='cal_i2c1::SDA' data='$PORTC.0' />
+				<value target='cal_i2c1::SDAPins' data='016' />
+				<value target='cal_i2c1::SCL' data='$PORTC.1' />
+				<value target='cal_i2c1::SCLPins' data='017' />
+				<value target='cal_i2c1::StopDel' data='0' />
+				<value target='cal_i2c1::BAUD_LIST' data='001' />
+				<value target='cal_i2c1::BAUD' data='100000' />
+				<value target='cal_i2c1::ClockStretching' data='1' />
+				<value target='SimComms' data='0' />
+				<value target='cal_i2c1::ScopeTraces' data='1' />
+				<value target='cal_i2c1::ConsoleData' data='1' />
+				<value target='cal_i2c1::Injector' data='000' />
+				<value target='cal_i2c1::InjectorHandle' data='0' />
+			</values>
+			<events >
+				<event class='Components' event='Initialise' target='Ev_Initialise' />
+				<event class='Components' event='Property' target='Ev_Property' />
+			</events>
+			<apis >
+				<api name='SetOperatingMode' alt='SetOperatingMode' type='1' proto='1' />
+				<api name='ReadSample' alt='ReadSample' type='1' proto='1' />
+				<api name='ReadRegister' alt='ReadRegisterSim' type='1' proto='1' />
+				<api name='SetPresetMode' alt='SetPresetMode' type='1' proto='1' />
+				<api name='SampleMagData' alt='SampleMagDataSim' type='1' proto='1' />
+				<api name='WriteRegister' alt='WriteRegisterSim' type='1' proto='1' />
+				<api name='Initialise' alt='InitialiseSim' type='1' proto='1' />
+			</apis>
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='trimXYZ' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='XYZ' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' >
+						<array size='3' />
+					</def>
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='trimXY' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' >
+						<array size='2' />
+					</def>
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='trimZ' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' >
+						<array size='4' />
+					</def>
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='trimY' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' >
+						<array size='2' />
+					</def>
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='trimX' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' >
+						<array size='2' />
+					</def>
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='InitialiseSim' description='Sim version of initialise macro, specified using the File -&gt; Export -&gt; Configuration -&gt; Interface Tab' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Are we simulating the communications?' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='SimComms' swap='0' >
+							<flowline >
+								<command class_type='call' title='Call the embedded version of the macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Initialise' >
+									<return exp='.Return' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = 1' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='CompensateY' description='' statediag='0' >
+						<return name='Return' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='data' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='rhall' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='y0' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='y2' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='y1' type='s32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='y3' type='s32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='y4' type='s32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='y5' type='s32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='y6' type='s32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='y7' type='s32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='y8' type='s32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='y9' type='s32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.data != -4096' swap='0' >
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.rhall != 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.y0 = .rhall' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='trimXYZ != 0' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='.y0 = trimXYZ' />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='.y0 = 0' />
+												</command>
+											</flowline>
+										</command>
+									</flowline>
+								</command>
+								<command class_type='decision' title='Process Compensation?' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.y0 != 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.y1 = (trimXYZ * 16384) / .y0' />
+											<exp exp='.y2 = .y1 - 0x4000' />
+											<exp exp='.Return = .y2' />
+											<exp exp='.y3 = .Return * .Return' />
+											<exp exp='.y4 = trimXY[1] * (.y3 / 128)' />
+											<exp exp='.y5 = trimXY[0] * 128' />
+											<exp exp='.y6 = (.y4 + (.Return * .y5)) / 512' />
+											<exp exp='.y7 = trimX[1] + 0xA0' />
+											<exp exp='.y8 = ((.y6 + 0x100000) * .y7) / 4096' />
+											<exp exp='.y9 = .data * .y8' />
+											<exp exp='.Return = .y9 / 8192' />
+											<exp exp='.Return = (.Return + (trimY[0] * 8)) / 16' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Return = -32768' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = -32768' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='CompensateX' description='' statediag='0' >
+						<return name='Return' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='data' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='rhall' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='x0' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='x2' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='x3' type='s32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='x4' type='s32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='x5' type='s32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='x6' type='s32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='x7' type='s32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='x8' type='s32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='x9' type='s32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='x10' type='s32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='x1' type='s32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.data != -4096' swap='0' >
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.rhall != 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.x0 = .rhall' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='trimXYZ != 0' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='.x0 = trimXYZ' />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='.x0 = 0' />
+												</command>
+											</flowline>
+										</command>
+									</flowline>
+								</command>
+								<command class_type='decision' title='Process Compensation?' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.x0 != 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.x1 = trimXYZ * 16384' />
+											<exp exp='.x2 = (.x1 / .x0) - 0x4000' />
+											<exp exp='.Return = .x2' />
+											<exp exp='.x3 = .Return * .Return' />
+											<exp exp='.x4 = trimXY[1] * (.x3 / 128)' />
+											<exp exp='.x5 = trimXY[0] * 128' />
+											<exp exp='.x6 = .Return * .x5' />
+											<exp exp='.x7 = ((.x4 + .x6) / 512) + 0x100000' />
+											<exp exp='.x8 = trimX[1] + 0xA0' />
+											<exp exp='.x9 = (.x7 * .x8) / 4096' />
+											<exp exp='.x10 = .data * .x9' />
+											<exp exp='.Return = .x10 / 8192' />
+											<exp exp='.Return = (.Return + (trimX[0] * 8)) / 16' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Return = -32768' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = -32768' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Initialise' description='Initialisation routine for the component once the component is linked to its parent' statediag='0' >
+						<return name='Return' type='u32' description='Non-zero to prevent initialisation' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='comment' title='' comment='This code will execute when adding the component to the panel.
+Or when loading a saved project that includes the component.' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='ReadRegisterSim' description='Sim version of ReadRegistermacro, specified using the File -&gt; Export -&gt; Configuration -&gt; Interface Tab' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Address' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Are we simulating the communications?' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='SimComms' swap='0' >
+							<flowline >
+								<command class_type='call' title='Call the embedded version of the macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+									<return exp='.Return' />
+									<argument exp='.Address' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='comment' title='' comment='Maybe do a panel simulation here using runtime panel components' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SampleMagDataSim' description='Samples the magnetometer and processes the data ready to be read out using
+the read sample macro.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='ApplyTrim' type='b1' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='RegData' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='8' />
+						</local>
+						<local name='msb_data' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='RawXYZ' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' >
+							<array size='4' />
+						</local>
+						<command class_type='decision' title='Are we simulating the communications?' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='SimComms' swap='0' >
+							<flowline >
+								<command class_type='call' title='Call the embedded version of the macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SampleMagData' >
+									<argument exp='.ApplyTrim' />
+								</command>
+								<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='SetValue' >
+									<argument exp='0' />
+									<argument exp='XYZ[0]' />
+								</command>
+								<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='SetValue' >
+									<argument exp='1' />
+									<argument exp='XYZ[1]' />
+								</command>
+								<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='SetValue' >
+									<argument exp='2' />
+									<argument exp='XYZ[2]' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='GetValue' >
+									<return exp='XYZ[0]' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='GetValue' >
+									<return exp='XYZ[1]' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='GetValue' >
+									<return exp='XYZ[2]' />
+									<argument exp='2' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='FlashRx' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SetOperatingMode' description='Select the operating mode and power level used by the device' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Mode' type='u8' description='0=Normal, 1=Forced, 3=Sleep, 4=Suspend' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='RegData' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Mode = 4' swap='0' >
+							<flowline >
+								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetPowerControlBit' >
+									<argument exp='0' />
+								</command>
+								<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='3' type='1' />
+							</flowline>
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Mode &lt; 4' swap='0' >
+									<flowline >
+										<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetPowerControlBit' >
+											<argument exp='1' />
+										</command>
+										<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='3' type='1' />
+										<command class_type='call' title='BMM150_OP_MODE_ADDR' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+											<return exp='.RegData' />
+											<argument exp='0x4C' />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.RegData = .RegData &amp; 0xF9' />
+											<exp exp='.RegData = .RegData | (.Mode &lt;&lt; 1)' />
+										</command>
+										<command class_type='call' title='BMM150_OP_MODE_ADDR' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+											<argument exp='0x4C' />
+											<argument exp='.RegData' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='FlashTx' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='ReadRegisterArray' description='A simple example showing a generic way to read a register using I2C.' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Address' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Data' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='10' />
+						</param>
+						<param name='Count' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='buff' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='1' />
+						</local>
+						<command class_type='calculation' title='Assign address to read/write buffer' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.buff[0] = .Address' />
+						</command>
+						<command class_type='call' title='Write 1 byte - don&apos;t stop' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Transaction_Write' >
+							<argument exp='.buff' />
+							<argument exp='0x8001' />
+						</command>
+						<command class_type='call' title='Read x bytes' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Transaction_Read' >
+							<return exp='.Return' />
+							<argument exp='.Data' />
+							<argument exp='.Count' />
+						</command>
+						<command class_type='calculation' title='Read return value from buffer' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = .buff[0]' />
+						</command>
+						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='FlashRx' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='ReadSample' description='Collect a sample fromt he last SampleMag operation' statediag='0' >
+						<return name='Return' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Axis' type='u8' description='0=X, 1=Y, 2=Z' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Axis &lt; 3' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = XYZ[.axis]' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = 0' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='FlashRx' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Property' description='Sent when a property has been changed by the User' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Handle' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Comms Flashers' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='SensorLibraryComponent1' />
+							<argument exp='&quot;ShowComms&quot;' />
+							<argument exp='SimComms' />
+						</command>
+						<command class_type='comment' title='' comment='This code will execute when any of the component property values are changed.' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='SimComms' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Show Comms Simulation Property Folder' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;property_2&quot;' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<argument exp='SensorLibraryComponent1' />
+									<argument exp='&quot;OutputIcon::CommsType&quot;' />
+									<argument exp='4' />
+								</command>
+								<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='GetConsoleHandle' >
+									<return exp='.Handle' />
+								</command>
+								<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='SetConsoleHandle' >
+									<argument exp='.Handle' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Hide Comms Simulation Property Folder' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;property_2&quot;' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<argument exp='SensorLibraryComponent1' />
+									<argument exp='&quot;OutputIcon::CommsType&quot;' />
+									<argument exp='255' />
+								</command>
+								<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='SetConsoleHandle' >
+									<argument exp='0' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='WriteRegisterSim' description='Sim version of WriteRegister macro, specified using the File -&gt; Export -&gt; Configuration -&gt; Interface Tab' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Address' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Data' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Are we simulating the communications?' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='SimComms' swap='0' >
+							<flowline >
+								<command class_type='call' title='Call the embedded version of the macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+									<argument exp='.Address' />
+									<argument exp='.Data' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='comment' title='' comment='Maybe do a panel simulation here using runtime panel components' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+							</flowline>
+						</command>
+						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='FlashTx' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='ReadTrimRegisters' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<local name='trim_x1y1' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='2' />
+						</local>
+						<local name='trim_xyz_data' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='4' />
+						</local>
+						<local name='trim_xy1xy2' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='10' />
+						</local>
+						<local name='temp_msb' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegisterArray' >
+							<argument exp='0x5D' />
+							<argument exp='.trim_x1y1' />
+							<argument exp='2' />
+						</command>
+						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='FlashRx' />
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegisterArray' >
+							<argument exp='0x62' />
+							<argument exp='.trim_xyz_data' />
+							<argument exp='4' />
+						</command>
+						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='FlashRx' />
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegisterArray' >
+							<argument exp='0x68' />
+							<argument exp='.trim_xy1xy2' />
+							<argument exp='10' />
+						</command>
+						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='FlashRx' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='trimX[0] = .trim_x1y1[0]' />
+							<exp exp='trimY[0] = .trim_x1y1[1]' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='trimX[1] = .trim_xyz_data[2]' />
+							<exp exp='trimY[1] = .trim_xyz_data[3]' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.temp_msb = .trim_xy1xy2[3] &lt;&lt; 8' />
+							<exp exp='trimZ[0] = .temp_msb | .trim_xy1xy2[2]' />
+							<exp exp='' />
+							<exp exp='.temp_msb = .trim_xy1xy2[1] &lt;&lt; 8' />
+							<exp exp='trimZ[1] = .temp_msb | .trim_xy1xy2[0]' />
+							<exp exp='' />
+							<exp exp='.temp_msb = .trim_xy1xy2[7] &lt;&lt; 8' />
+							<exp exp='trimZ[2] = .temp_msb | .trim_xy1xy2[6]' />
+							<exp exp='' />
+							<exp exp='.temp_msb = .trim_xyz_data[1] &lt;&lt; 8' />
+							<exp exp='trimZ[3] = .temp_msb | .trim_xyz_data[0]' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='trimXY[0] = .trim_xy1xy2[9]' />
+							<exp exp='trimXY[1] = .trim_xy1xy2[8]' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.temp_msb = (.trim_xy1xy2[5] &amp; 0x7F) &lt;&lt; 8' />
+							<exp exp='trimXYZ = .temp_msb | .trim_xy1xy2[4]' />
+							<exp exp='' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='ReadRegister' description='A simple example showing a generic way to read a register using I2C.' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Address' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='buff' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='1' />
+						</local>
+						<command class_type='calculation' title='Assign address to read/write buffer' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.buff[0] = .Address' />
+						</command>
+						<command class_type='call' title='Write 1 byte - don&apos;t stop' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Transaction_Write' >
+							<argument exp='.buff' />
+							<argument exp='0x8001' />
+						</command>
+						<command class_type='call' title='Read 1 byte' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Transaction_Read' >
+							<argument exp='.buff' />
+							<argument exp='1' />
+						</command>
+						<command class_type='calculation' title='Read return value from buffer' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = .buff[0]' />
+						</command>
+						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='FlashRx' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SetPresetMode' description='Controls the device sample rate and accuracy' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Mode' type='u8' description='0=LowPower, 1=Normal, 2=HighAccuracy, 3=Enhanced' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='RegData' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+							<return exp='.RegData' />
+							<argument exp='0x4C' />
+						</command>
+						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='FlashTx' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Mode = 2' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='20Hz Operation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.RegData = .RegData &amp; 0xC7' />
+									<exp exp='.RegData = .RegData | 0x28' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='10Hz Operation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.RegData = .RegData &amp; 0xC7' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+							<argument exp='0x4C' />
+							<argument exp='.RegData' />
+						</command>
+						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='FlashTx' />
+						<command class_type='switch' title='Switch' textarea='36,25,36,25' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Mode' >
+							<case >
+								<flowline />
+							</case>
+							<case exp='0' >
+								<flowline >
+									<command class_type='call' title='BMM150_LOWPOWER_REPXY' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+										<argument exp='0x51' />
+										<argument exp='1' />
+									</command>
+									<command class_type='call' title='BMM150_LOWPOWER_REPZ' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+										<argument exp='0x52' />
+										<argument exp='2' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='1' >
+								<flowline >
+									<command class_type='call' title='BMM150_REGULAR_REPXY' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+										<argument exp='0x51' />
+										<argument exp='4' />
+									</command>
+									<command class_type='call' title='BMM150_REGULAR_REPZ' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+										<argument exp='0x52' />
+										<argument exp='14' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='2' >
+								<flowline >
+									<command class_type='call' title='BMM150_HIGHACCURACY_REPXY' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+										<argument exp='0x51' />
+										<argument exp='23' />
+									</command>
+									<command class_type='call' title='BMM150_HIGHACCURACY_REPZ' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+										<argument exp='0x52' />
+										<argument exp='82' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='3' >
+								<flowline >
+									<command class_type='call' title='BMM150_ENHANCED_REPXY' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+										<argument exp='0x51' />
+										<argument exp='7' />
+									</command>
+									<command class_type='call' title='BMM150_ENHANCED_REPZ' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+										<argument exp='0x52' />
+										<argument exp='26' />
+									</command>
+								</flowline>
+							</case>
+						</command>
+						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='FlashTx' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SetPowerControlBit' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='PowerControlBit' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='RegData' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<command class_type='call' title='Read Power Control Reg' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+							<argument exp='0x4B' />
+						</command>
+						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='FlashTx' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.PowerControlBit' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.RegData = .RegData | 0x01' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.RegData = .RegData &amp; 0xFE' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='call' title='Write Power Control Reg' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+							<argument exp='0x4B' />
+							<argument exp='.RegData' />
+						</command>
+						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='FlashTx' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SampleMagData' description='Samples the magnetometer and processes the data ready to be read out using
+the read sample macro.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='ApplyTrim' type='b1' description='0=ReadRawValues, 1=ApplyCalibrationTrim' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='RegData' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='8' />
+						</local>
+						<local name='msb_data' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='RawXYZ' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' >
+							<array size='4' />
+						</local>
+						<command class_type='call' title='Read XYZ Data' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegisterArray' >
+							<argument exp='0x42' />
+							<argument exp='.RegData' />
+							<argument exp='8' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.RegData[0] = (.RegData[0] &amp; 0xF8) &gt;&gt; 3' />
+							<exp exp='.RegData[2] = (.RegData[2] &amp; 0xF8) &gt;&gt; 3' />
+							<exp exp='.RegData[4] = (.RegData[4] &amp; 0xFE) &gt;&gt; 1' />
+							<exp exp='.RegData[6] = (.RegData[6] &amp; 0xFC) &gt;&gt; 2' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.msb_data = .RegData[1] &lt;&lt; 5' />
+							<exp exp='.RawXYZ[0] = .msb_data | .RegData[0]' />
+							<exp exp='' />
+							<exp exp='.msb_data = .RegData[3] &lt;&lt; 5' />
+							<exp exp='.RawXYZ[1] = .msb_data | .RegData[2]' />
+							<exp exp='' />
+							<exp exp='.msb_data = .RegData[5] &lt;&lt; 7' />
+							<exp exp='.RawXYZ[2] = .msb_data | .RegData[4]' />
+							<exp exp='' />
+							<exp exp='.msb_data = .RegData[7] &lt;&lt; 6' />
+							<exp exp='.RawXYZ[3] = .msb_data | .RegData[6]' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.ApplyTrim' swap='0' >
+							<flowline >
+								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='CompensateX' >
+									<return exp='XYZ[0]' />
+									<argument exp='.RawXYZ[0]' />
+									<argument exp='.RawXYZ[3]' />
+								</command>
+								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='CompensateY' >
+									<return exp='XYZ[1]' />
+									<argument exp='.RawXYZ[1]' />
+									<argument exp='.RawXYZ[3]' />
+								</command>
+								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='CompensateZ' >
+									<return exp='XYZ[2]' />
+									<argument exp='.RawXYZ[2]' />
+									<argument exp='.RawXYZ[3]' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='XYZ[0] = .RawXYZ[0]' />
+									<exp exp='XYZ[1] = .RawXYZ[1]' />
+									<exp exp='XYZ[2] = .RawXYZ[2]' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='comment' title='' comment='Main macro is not included when you export the code as a component.
+So you can use this as your test routine for the component.' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='call' title='Call User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='InitialiseSim' />
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='1' >
+							<flowline >
+								<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='100' type='1' />
+								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SampleMagDataSim' >
+									<argument exp='0' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='WriteRegister' description='A simple example showing a generic way to write a register using I2C.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Address' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Data' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='buff' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='2' />
+						</local>
+						<command class_type='calculation' title='Assign address and data to write buffer' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.buff[0] = .Address' />
+							<exp exp='.buff[1] = .Data' />
+						</command>
+						<command class_type='call' title='Write 2 bytes' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Transaction_Write' >
+							<argument exp='.buff' />
+							<argument exp='2' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Initialise' description='Startup communications to the sensor module.
+Puts the device into normal operating and preset modes.
+Returns 1 if module found and communicating.' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='RegData' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Startup I2C comms' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Master_Init' />
+						<command class_type='call' title='Assign 7-bit I2C Device Address' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Transaction_Initialise' >
+							<argument exp='0x10 | DeviceAddress' />
+						</command>
+						<command class_type='comment' title='' comment='Do any setup code here to configure and enable the device.' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='call' title='Put device to sleep mode' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetOperatingMode' >
+							<argument exp='3' />
+						</command>
+						<command class_type='call' title='Read chip ID address' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+							<return exp='.RegData' />
+							<argument exp='0x40' />
+						</command>
+						<command class_type='decision' title='Address OK?' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.RegData = 0x32' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = 1' />
+								</command>
+								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadTrimRegisters' />
+								<command class_type='call' title='Put device to normal mode' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetOperatingMode' >
+									<argument exp='0' />
+								</command>
+								<command class_type='call' title='Setup device for normal sample frequency' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetPresetMode' >
+									<argument exp='DefaultPreset' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = 0' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='CompensateZ' description='' statediag='0' >
+						<return name='Return' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='data' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='rhall' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='retval' type='s32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='z1' type='s32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='z2' type='s32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='z3' type='s32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='z0' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='z4' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.data != -16384' swap='0' >
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='(trimZ[1] != 0) &amp;&amp; (trimZ[0] != 0) &amp;&amp; (.rhall != 0) &amp;&amp; (trimXYZ != 0)' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.z0 = .rhall - trimXYZ' />
+											<exp exp='.z1 = (trimZ[2] * .z0) / 4' />
+											<exp exp='.z2 = (.data - trimZ[3]) * 32768' />
+											<exp exp='.z3 = trimZ[0] * (.rhall * 2)' />
+											<exp exp='.z4 = (.z3 + 32768) / 65536' />
+											<exp exp='.retval = ((.z2 - .z1) / (.z2 + .z4))' />
+										</command>
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.retval &gt; 32767' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='.retval = 32767' />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.retval &lt; -32767' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+															<exp exp='.retval = -32767' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+											</flowline>
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Return = .retval / 16' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Return = -32768' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = -32768' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='ed3a5141-43bb-43e0-86b0-2243fd1147ca' vmin='0' vmaj='2' codename='cal_i2c1' panelId='-1' x='0' y='0' z='0' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='ENABLED' data='1' />
+					<value target='REF' data='1' />
+					<value target='CHANNEL' data='001' />
+					<value target='Mode' data='000' />
+					<value target='SDA' data='$PORTC.0' />
+					<value target='SDAPins' data='016' />
+					<value target='SCL' data='$PORTC.1' />
+					<value target='SCLPins' data='017' />
+					<value target='StopDel' data='0' />
+					<value target='BAUD_LIST' data='001' />
+					<value target='BAUD' data='100000' />
+					<value target='SRC' data='000' />
+					<value target='SMB' data='000' />
+					<value target='ClockStretching' data='1' />
+					<value target='BMODE' data='0' />
+					<value target='SDA_PORT' data='$PORTC.0' />
+					<value target='SDA_TRIS' data='$PORTC.0' />
+					<value target='SDA_PIN' data='0' />
+					<value target='SCL_PORT' data='$PORTC.1' />
+					<value target='SCL_TRIS' data='$PORTC.1' />
+					<value target='SCL_PIN' data='1' />
+					<value target='MASTER' data='1' />
+					<value target='ScopeTraces' data='1' />
+					<value target='ConsoleData' data='1' />
+					<value target='Injector' data='000' />
+					<value target='InjectorHandle' data='0' />
+					<value target='InjectorChannel' data='0' />
+					<value target='Loading' data='0' />
+					<value target='REMAPPABLE' data='1' />
+					<value target='SDABank' data='b' />
+					<value target='SDABank2' data='c' />
+					<value target='SCLBank' data='b' />
+					<value target='SCLBank2' data='c' />
+					<value target='SDARPNUM' data='21' />
+					<value target='SCLRPNUM' data='20' />
+					<value target='SDARPREG' data='SSP1DATPPS' />
+					<value target='SCLRPREG' data='SSP1CLKPPS' />
+					<value target='SDAREG' data='016' />
+					<value target='SCLREG' data='017' />
+					<value target='Sim' data='1' />
+					<value target='ParentName' data='' />
+					<value target='BitDelay' data='10' />
+					<value target='SDAAlts' data='000' />
+					<value target='SCLAlts' data='000' />
+					<value target='SDAAlt' data='0' />
+					<value target='SCLAlt' data='0' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='960e433c-1295-4aeb-ac84-04d75422119e' vmin='0' vmaj='1' codename='SensorLibraryComponent1' panelId='-1' x='0' y='0' z='0' xsz='100' ysz='100' zsz='100' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Text::sText' data='Magnetometer BMM150' />
+					<value target='Name' data='MagBMM150' />
+					<value target='Peripheral::sText' data='(I2C CH1)' />
+					<value target='ShowComms' data='0' />
+					<value target='InputIcon::CommsType' data='255' />
+					<value target='OutputIcon::CommsType' data='255' />
+					<value target='OutputIcon::LinkTo' data='0' />
+					<value target='ConsoleHandle' data='0' />
+					<value target='NumDP' data='0' />
+					<value target='ValueCount' data='003' />
+					<value target='Label0::sText' data='X' />
+					<value target='Max0' data='32768' />
+					<value target='Min0' data='-32768' />
+					<value target='MajTick0' data='8' />
+					<value target='MinTick0' data='1024' />
+					<value target='Label1::sText' data='Y' />
+					<value target='Max1' data='32678' />
+					<value target='Min1' data='-32678' />
+					<value target='MajTick1' data='8' />
+					<value target='MinTick1' data='1024' />
+					<value target='Label2::sText' data='Z' />
+					<value target='Max2' data='32678' />
+					<value target='Min2' data='-32678' />
+					<value target='MajTick2' data='8' />
+					<value target='MinTick2' data='1024' />
+					<value target='Label3::sText' data='Val 3' />
+					<value target='Max3' data='100.000000' />
+					<value target='Min3' data='0.000000' />
+					<value target='MajTick3' data='10' />
+					<value target='MinTick3' data='2.000000' />
+					<value target='Label4::sText' data='Val 4' />
+					<value target='Max4' data='100.000000' />
+					<value target='Min4' data='0.000000' />
+					<value target='MajTick4' data='10' />
+					<value target='MinTick4' data='2.000000' />
+					<value target='Label5::sText' data='Val 5' />
+					<value target='Max5' data='100.000000' />
+					<value target='Min5' data='0.000000' />
+					<value target='MajTick5' data='10' />
+					<value target='MinTick5' data='2.000000' />
+					<value target='Label6::sText' data='Val 6' />
+					<value target='Max6' data='100.000000' />
+					<value target='Min6' data='0.000000' />
+					<value target='MajTick6' data='10' />
+					<value target='MinTick6' data='2.000000' />
+					<value target='Label7::sText' data='Val 7' />
+					<value target='Max7' data='100.000000' />
+					<value target='Min7' data='0.000000' />
+					<value target='MajTick7' data='10' />
+					<value target='MinTick7' data='2.000000' />
+					<value target='Label8::sText' data='Val 8' />
+					<value target='Max8' data='100.000000' />
+					<value target='Min8' data='0.000000' />
+					<value target='MajTick8' data='10' />
+					<value target='MinTick8' data='2.000000' />
+					<value target='Label9::sText' data='Val 9' />
+					<value target='Max9' data='100.000000' />
+					<value target='Min9' data='0.000000' />
+					<value target='MajTick9' data='10' />
+					<value target='MinTick9' data='2.000000' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<scadaresourcelookup />
+	<keymap />
+	<panel2d shadows='0' lighting='2' brightness='0' >
+		<background rgb='2105930' img='' style='0' />
+		<camera xe='75.3844' ye='7.95663' ze='768.719' xt='75.3844' yt='7.95663' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='622' dy='352' zoom='97.9058' fix_topleft='0' />
+		<page x='1000' y='1000' show='0' rgb='0' />
+		<winpos ID='7005' RectRecentFloat='2370,269,3020,719' RectRecentDocked='0,0,298,419' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+	</panel2d>
+	<panel3d shadows='0' lighting='2' brightness='0' perspective='1' >
+		<background rgb='8409120' img='' style='0' />
+		<table rgb='7360576' img='' style='0' size='0' />
+		<camera xe='0' ye='0' ze='781.66' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey0 xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey1 xe='-3.67394e-14' ye='0' ze='-300' xt='0' yt='0' zt='0' xquat='0' yquat='1' zquat='0' wquat='6.12323e-17' />
+		<camerakey2 xe='0' ye='-300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.707107' yquat='0' zquat='0' wquat='0.707107' />
+		<camerakey3 xe='-3.67394e-14' ye='300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-4.32978e-17' yquat='0.707107' zquat='0.707107' wquat='4.32978e-17' />
+		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
+		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
+		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
+		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,210,721' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+	</panel3d>
+	<panels2d count='0' />
+	<layout >
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadRegister' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='WriteRegister' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='InitialiseSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadRegisterSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='WriteRegisterSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetOperatingMode' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetPowerControlBit' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadTrimRegisters' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadRegisterArray' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetPresetMode' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SampleMagData' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CompensateX' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CompensateY' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CompensateZ' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadSample' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SampleMagDataSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

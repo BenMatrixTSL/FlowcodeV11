@@ -1,0 +1,257 @@
+<root>
+<document schema='101' license='50,Dev User,2RNUW6' title='' description='' guid='b5062d01-7646-47a9-8913-4e096b633828' target='PIC.16F.16F877A' >
+	<config data='!0,3f72%0,2%2,0%3,0%6,1%7,0%9,3%b,1%8,1%d,1' clkspd='10000000' simspd='0' usewdt='0' constif='0' />
+	<plugins >
+		<dll_dbg_icd enabled='0' >
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='userpins' value='0' />
+		</dll_dbg_icd>
+		<dll_dbg_ict enabled='0' >
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='userpins' value='0' />
+		</dll_dbg_ict>
+		<dll_models enabled='1' />
+		<dll_upgrader enabled='1' />
+		<dll_webhelp enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug />
+	<components >
+		<settings autoimg='1' center='1' unitscale='1' fixedscale='0' fixedx='0' fixedy='0' fixedz='0' headcode='0'  />
+		<definition guid='2814226e-55f7-4adc-9064-2fef87a34b59' vmin='0' vmaj='1' visiblename='Scrollbar control' description='A simple scrollbar with a floating point range from 0 to 1
+' category='Controls' dynamic='1'   iconpath='' />
+		<component class_type='root' codename='scrollbar' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+			<resources />
+			<properties />
+			<values />
+			<events >
+				<event class='Components' event='Initialise' target='Ev_Initialise' />
+				<event class='Mouse' event='Drag' target='Ev_Click' />
+				<event class='Mouse' event='Click' target='Ev_Click' />
+			</events>
+			<apis >
+				<api name='GetValue' alt='' type='2' proto='1' />
+				<api name='SetValue' alt='' type='2' proto='1' />
+				<api name='SetInteractive' alt='' type='2' proto='1' />
+				<api name='SetTitle' alt='' type='2' proto='1' />
+			</apis>
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='Interactive' type='b1' array='0' description='Set true to act on mouse clicks' isconst='0' isinit='1' usrinit='1' setinit='true' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='Value' type='f32' array='0' description='The value the graph represents' isconst='0' isinit='1' usrinit='-1.0' setinit='-1.0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='false' type='b1' array='0' description='' isconst='1' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='true' type='b1' array='0' description='' isconst='1' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='Prv_SetPos' description='Sets the grabber position' >
+						<command class_type='sim' title='Set dark part' comment='' ccode='' textshow='1' textmode='0' textarea='96,30,96,30' break='0' mark='0' disable='0' hide='0' customize='0' macro='Panel.Position.MoveTo' >
+							<argument exp='button' />
+							<argument exp='0' />
+							<argument exp='(Value - 0.5) * 60' />
+							<argument exp='0' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='GetValue' description='Gets the bar graphs value' >
+						<return name='Return' type='f32' array='0' description='' isconst='0' isinit='0' usrinit='0.0' setinit='' />
+						<command class_type='calculation' title='Get value' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+							<exp exp='.Return = Value' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Initialise' description='Initialisation routine for the component' >
+						<return name='Return' type='u32' array='0' description='Non-zero to prevent initialisation' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Draw the marks' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='SetValue' >
+							<argument exp='0' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Prv_Redraw' description='' />
+				</macro>
+				<macro >
+					<flowline name='SetValue' description='' >
+						<param name='Value' type='f32' array='0' description='' isconst='0' isinit='0' usrinit='0.0' setinit='' />
+						<command class_type='decision' title='Bound upper' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='.Value &gt; 1' swap='0' >
+							<flowline name='SetValue' description='' >
+								<command class_type='calculation' title='Bound' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='.Value = 1' />
+								</command>
+							</flowline>
+							<flowline name='SetValue' description='' />
+						</command>
+						<command class_type='decision' title='Bound lower' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='.Value &lt; 0' swap='0' >
+							<flowline name='SetValue' description='' >
+								<command class_type='calculation' title='Bound' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='.Value = 0' />
+								</command>
+							</flowline>
+							<flowline name='SetValue' description='' />
+						</command>
+						<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='.Value != Value' swap='0' >
+							<flowline name='SetValue' description='' >
+								<command class_type='calculation' title='Commit' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='Value = .Value' />
+								</command>
+								<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Prv_SetPos' />
+							</flowline>
+							<flowline name='SetValue' description='' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SetInteractive' description='' >
+						<param name='Enable' type='b1' array='0' description='Set true to allow clicks to set scale' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Commit value' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+							<exp exp='Interactive = .Enable' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='' >
+						<local name='count' type='s16' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+						<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Ev_Initialise' />
+						<command class_type='loop' title='Set values' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='.count &lt; 1000' type='0' start='1' count='1' breakend='0' >
+							<flowline name='Main' description='' >
+								<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='1' hide='0' customize='0' macro='SetValue' >
+									<argument exp='.count / 10.0' />
+								</command>
+								<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='.count = .count + 1' />
+								</command>
+								<command class_type='delay' title='Delay' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='50' type='1' />
+							</flowline>
+						</command>
+						<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='SetValue' >
+							<argument exp='5' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Click' description='Sent when the mouse is clicked on a child of the component during simulation' >
+						<return name='Return' type='u32' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Component' type='h32' array='0' description='The component clicked on' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<param name='X' type='f32' array='0' description='X coordinate relative to &apos;Component&apos;' isconst='0' isinit='0' usrinit='0.0' setinit='' />
+						<param name='Y' type='f32' array='0' description='Y coordinate relative to &apos;Component&apos;' isconst='0' isinit='0' usrinit='0.0' setinit='' />
+						<param name='Z' type='f32' array='0' description='Z coordinate relative to &apos;Component&apos;' isconst='0' isinit='0' usrinit='0.0' setinit='' />
+						<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='Interactive' swap='0' >
+							<flowline name='Ev_Click' description='' >
+								<command class_type='calculation' title='Scale so can not slide out of range' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='.Z = (.Z * 64.0) / 60.0' />
+								</command>
+								<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='.Z &lt; -1' swap='0' >
+									<flowline name='Ev_Click' description='' >
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='.Z = -1' />
+										</command>
+									</flowline>
+									<flowline name='Ev_Click' description='' >
+										<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='.Z &gt; 1' swap='0' >
+											<flowline name='Ev_Click' description='' >
+												<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+													<exp exp='.Z = 1' />
+												</command>
+											</flowline>
+											<flowline name='Ev_Click' description='' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='calculation' title='Set value' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='Value = (.Z + 1) / 2' />
+								</command>
+								<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Prv_SetPos' />
+							</flowline>
+							<flowline name='Ev_Click' description='' />
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='group' codename='group' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values />
+				<events />
+				<apis />
+				<variables />
+				<macros />
+				<component class_type='shape' codename='bar' x='0' y='0' z='0' xsz='5' ysz='10' zsz='64' xang='0' yang='-90' zang='0' xquat='0.5' yquat='0.5' zquat='0.5' wquat='-0.5' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Shape' data=' 10' />
+						<value target='Color' data='7895160' />
+						<value target='Outline' data='0' />
+						<value target='Thickness' data='0' />
+						<value target='Image' data='' />
+						<value target='Model' data='' />
+						<value target='Unit' data='' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='shape' codename='button' x='0' y='1.11022e-015' z='0' xsz='11' ysz='5.5' zsz='5' xang='90' yang='0' zang='0' xquat='0.707107' yquat='0' zquat='0' wquat='0.707107' visible='1' interactive='0' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Shape' data='  4' />
+						<value target='Color' data='12623872' />
+						<value target='Outline' data='0' />
+						<value target='Thickness' data='0.000000' />
+						<value target='Image' data='' />
+						<value target='Model' data='' />
+						<value target='Unit' data='' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+			</component>
+		</component>
+	</components>
+	<keymap />
+	<panel2d shadows='1' perspective='0' >
+		<background rgb='9737364' img='' style='0' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel2d>
+	<panel3d shadows='1' perspective='0' >
+		<background rgb='8409120' img='' style='0' />
+		<table rgb='32768' img='' style='0' size='50' />
+		<camera xe='0' ye='0' ze='166.305' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel3d>
+	<layout >
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAA.wMAAEsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_SetPos' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAA.wMAAEsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetValue' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAA.wMAAEsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Click' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAA.wMAAEsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAA.wMAAEsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_Redraw' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAA.wMAAEsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

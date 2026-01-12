@@ -1,0 +1,325 @@
+<!-- CRC: C09139DD0A75D64CECB6A655701556ECC9D6F74ED0D3E47ACDB0BF7143A6B82B25FF37B297F9A200CC671842E99E31865D362FEAF5AAADADC10D5A554C6808E48D6FBA8944EFB526A10634EB7F31C4B96ED5D536AA0B2C84E7EEDE774A5BCDA65F886504A3DD679E4449FC1EB467FDBC0AA5B623939EB5CDDECFB50D6419D48198A407B3D009AC108B36ADD875FF30CD4B551D542EE7C126CF0119554805587A55581373C3F91154DC1AFA610227482609E276128AF11B6F56996EC7634A95AFA4BAF1B34E38B68E0C3CAEE8E7DA69872FA70C18040457687ED6D46377B4B27FF04F2D2C287A78E76B5CEEE899A2723E9FC6A4D0078BB7421E1975CFDE3C7D2296CE7A394DD886184A6D00E9668E79F2CE4EE5F3C111B3B00188FBFDCBBCBBB6C1A4C3FEE8690A5E086944AE325796A6A825335EA4C130AB694AF6F23DD44496332FAF0F1A6880D214E084950FA5CC8F5270B55B262AFD36 -->
+<!-- REVISION: 1.0 -->
+<!-- GUID: 191F025E-4C9D-4481-92A7-D2E53145B3A2 -->
+<!-- DATE: 10\12\2025 -->
+<!-- DIR: Misc\Templates\Introduction|to|microcontrollers\ESP32S3\timer|interrupts|-|ESP.fcfx -->
+<root>
+<document scada='0' projtype='1' schema='103' license='1,65060919,MNBNUH' title='Timer Interrupts - PIC' description='' fcversion='720896' target='ESP.ESP32.E-Blocks3 ESP32S3 Programmer' >
+	<config data='' clkspd='240000000' simspd='2' usewdt='0' constif='0' commport='18' Use3V3='0' />
+	<plugins >
+		<dll_models enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug />
+	<traces />
+	<ghost >
+		<FK2 >
+			<data name='FK2D0' port='4294967295' pin='4294967295' />
+			<data name='FK2D1' port='4294967295' pin='4294967295' />
+			<data name='FK2D2' port='4294967295' pin='4294967295' />
+			<data name='FK2D3' port='4294967295' pin='4294967295' />
+			<data name='FK2D4' port='4294967295' pin='4294967295' />
+			<data name='FK2D5' port='4294967295' pin='4294967295' />
+			<data name='FK2D6' port='4294967295' pin='4294967295' />
+			<data name='FK2D7' port='4294967295' pin='4294967295' />
+			<data name='FK2D8' port='4294967295' pin='4294967295' />
+			<data name='FK2D9' port='4294967295' pin='4294967295' />
+			<data name='FK2D10' port='4294967295' pin='4294967295' />
+			<data name='FK2D11' port='4294967295' pin='4294967295' />
+			<data name='FK2D12' port='4294967295' pin='4294967295' />
+			<data name='FK2D13' port='4294967295' pin='4294967295' />
+			<data name='FK2D14' port='4294967295' pin='4294967295' />
+			<data name='FK2D15' port='4294967295' pin='4294967295' />
+			<data name='FK2A0' port='4294967295' pin='4294967295' />
+			<data name='FK2A1' port='4294967295' pin='4294967295' />
+			<data name='FK2A2' port='4294967295' pin='4294967295' />
+			<data name='FK2A3' port='4294967295' pin='4294967295' />
+			<data name='FK2A4' port='4294967295' pin='4294967295' />
+			<data name='FK2A5' port='4294967295' pin='4294967295' />
+		</FK2>
+		<ICD >
+			<data name='AnalogPrescaleValue' value='19' />
+			<data name='DigitalSampleRate' value='100000' />
+			<data name='BreakpointCount' value='8' />
+			<data name='CallStackDepthCount' value='8' />
+			<data name='ClockPort' value='1' />
+			<data name='ClockPin' value='6' />
+			<data name='DataPort' value='1' />
+			<data name='DataPin' value='7' />
+			<data name='UseDefaultPins' value='1' />
+			<data name='WrapEnabled' value='1' />
+			<data name='CommsDelayOverridden' value='0' />
+			<data name='CommsDelay' value='1' />
+			<data name='CalculatedCommsDelay' value='1' />
+			<data name='AnalogEB2PrescaleValue' value='2' />
+			<data name='DigitalEB2SampleRate' value='100000' />
+		</ICD>
+		<pins >
+			<digital A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+			<analog A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+		</pins>
+	</ghost>
+	<components >
+		<settings autoimg='0' center='1' unitscale='0' fixedscale='0' fixedx='25' fixedy='25' fixedz='25' headcode='0' />
+		<definition guid='d1f0c926-cffd-4a09-9922-36b7f007c23e' vstate='40' vmin='0' vmaj='1' srcleaf='' visiblename='' description='' category='' category2='' category3='' bIs2dOnly='0' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='' manuname='' manucode='' sysinfo='0' keywords='' dynamic='1' scadaCompatible='0' embeddedCompatible='1' showmacros='1' iconpath='' />
+		<component class_type='root' codename='ComponentRoot' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+			<resources />
+			<properties />
+			<values />
+			<events />
+			<apis />
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='false' type='b1' description='' isconst='1' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='timer_int_count' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='second_count' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='true' type='b1' description='' isconst='1' isHidden='0' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='timer_interrupt' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='Timer_int_count = Timer_int_count + 1' />
+						</command>
+						<command class_type='decision' title='Decision' exp='timer_int_count = 200' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='timer_int_count = 0' />
+									<exp exp='second_count = second_count + 1' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='call' title='Component Macro' component='lcd_4x20' macro='Start' />
+						<command class_type='interrupt' title='Interrupt' enable='1' name='TMR0' call='timer_interrupt' >
+							<settings timer='1' prescale='-1' postscale='-1' rollover='5' bitcount='-1' trigger='3' ppsport='-1' ppspin='-1' maskhi='AAAAAAAAAAAAAAAAAAAAAP----------------------------------------------------------------------------------------------------------------------------------------------------8' masklo='AAAAAAAAAAAAAAAAAAAAAP----------------------------------------------------------------------------------------------------------------------------------------------------8' >
+								<option value='5' />
+								<option value='1' />
+								<option value='-1' />
+								<option value='-1' />
+								<option value='-1' />
+								<option value='-1' />
+								<option value='-1' />
+								<option value='-1' />
+							</settings>
+						</command>
+						<command class_type='loop' title='Loop' type='0' exp='1' >
+							<flowline >
+								<command class_type='call' title='Component Macro' component='lcd_4x20' macro='Cursor' >
+									<argument exp='0' />
+									<argument exp='0' />
+								</command>
+								<command class_type='call' title='Component Macro' component='lcd_4x20' macro='PrintNumber' >
+									<argument exp='second_count' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='a2b40602-5421-4e2f-ba82-96db1be51d69' vmin='1' vmaj='1' codename='lcd_4x20' panelId='0' x='307' y='-175' z='0' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='2' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Pin_Data_0' data='$PORTB.0' />
+					<value target='Pin_Data_1' data='$PORTB.1' />
+					<value target='Pin_Data_2' data='$PORTB.2' />
+					<value target='Pin_Data_3' data='$PORTB.3' />
+					<value target='Pin_RS' data='$PORTB.4' />
+					<value target='Pin_E' data='$PORTB.5' />
+					<value target='LCD::ctrl_lcd::Base_GLCD1::ComponentLabel' data='000' />
+					<value target='LCD::ctrl_lcd::Base_GLCD1::GdiText1::sText' data='lcd_4x20' />
+					<value target='LCD::ctrl_lcd::Base_GLCD1::GdiText1::dScale' data='1.4' />
+					<value target='LCD::ctrl_lcd::Base_GLCD1::foreground_colour' data='0' />
+					<value target='LCD::ctrl_lcd::TextBg' data='14803425' />
+					<value target='LCD::ctrl_lcd::Base_GLCD1::background_colour' data='16777215' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='GdiText' codename='Text2' panelId='0' x='292' y='-32' z='1' xsz='37.5' ysz='12.5' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='2' poslock='8' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='46' >
+				<resources />
+				<properties />
+				<values >
+					<value target='sText' data='Timer interrupts' />
+					<value target='bWordWrap' data='0' />
+					<value target='nHorizontalAlignment' data='2' />
+					<value target='nVerticalAlignment' data='2' />
+					<value target='nAngle' data='0' />
+					<value target='fntFamily' data='Arial Black' />
+					<value target='bFixedScale' data='0' />
+					<value target='dScale' data='3' />
+					<value target='bScaleWidth' data='0' />
+					<value target='iFontSize' data='12' />
+					<value target='bBold' data='1' />
+					<value target='bItalic' data='0' />
+					<value target='bUnderline' data='0' />
+					<value target='bStrikethrough' data='0' />
+					<value target='colTextColour' data='0' />
+					<value target='colTextGradient' data='9868950' />
+					<value target='nGradient' data='0' />
+					<value target='nTextOpacity' data='1.0' />
+					<value target='colBackgroundColour' data='-1' />
+					<value target='colBackgroundGradient' data='-1' />
+					<value target='nBackgroundGradient' data='0' />
+					<value target='nBackgroundOpacity' data='1.0' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='GdiText' codename='Text3' panelId='0' x='109' y='-81' z='2' xsz='32.5' ysz='20' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='2' poslock='8' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='46' >
+				<resources />
+				<properties />
+				<values >
+					<value target='sText' data='ESP 32' />
+					<value target='bWordWrap' data='0' />
+					<value target='nHorizontalAlignment' data='  2' />
+					<value target='nVerticalAlignment' data='2' />
+					<value target='nAngle' data='0' />
+					<value target='fntFamily' data='Calibri' />
+					<value target='bFixedScale' data='0' />
+					<value target='dScale' data='1.00000' />
+					<value target='bScaleWidth' data='0' />
+					<value target='iFontSize' data='12' />
+					<value target='bBold' data='0' />
+					<value target='bItalic' data='0' />
+					<value target='bUnderline' data='0' />
+					<value target='bStrikethrough' data='0' />
+					<value target='colTextColour' data='0' />
+					<value target='colTextGradient' data='9868950' />
+					<value target='nGradient' data='0' />
+					<value target='nTextOpacity' data='1' />
+					<value target='colBackgroundColour' data='255' />
+					<value target='colBackgroundGradient' data='-1' />
+					<value target='nBackgroundGradient' data='0' />
+					<value target='nBackgroundOpacity' data='1.0' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='GdiText' codename='Text4' panelId='0' x='169' y='-325' z='3' xsz='80' ysz='85' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='2' poslock='8' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='46' >
+				<resources />
+				<properties />
+				<values >
+					<value target='sText' data='E-blocks BL0070 ESP board
+Port A: Combo board
+Port B: Combo board
+Port C: Vacant
+Port D: Vacant
+' />
+					<value target='bWordWrap' data='0' />
+					<value target='nHorizontalAlignment' data='  0' />
+					<value target='nVerticalAlignment' data='2' />
+					<value target='nAngle' data='0' />
+					<value target='fntFamily' data='Calibri' />
+					<value target='bFixedScale' data='0' />
+					<value target='dScale' data='1.00000' />
+					<value target='bScaleWidth' data='0' />
+					<value target='iFontSize' data='12' />
+					<value target='bBold' data='0' />
+					<value target='bItalic' data='0' />
+					<value target='bUnderline' data='0' />
+					<value target='bStrikethrough' data='0' />
+					<value target='colTextColour' data='16777215' />
+					<value target='colTextGradient' data='9868950' />
+					<value target='nGradient' data='0' />
+					<value target='nTextOpacity' data='1' />
+					<value target='colBackgroundColour' data='0' />
+					<value target='colBackgroundGradient' data='-1' />
+					<value target='nBackgroundGradient' data='0' />
+					<value target='nBackgroundOpacity' data='1.0' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='GdiText' codename='Text1' panelId='0' x='448' y='-334' z='4' xsz='80' ysz='57.5' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='2' poslock='8' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='46' >
+				<resources />
+				<properties />
+				<values >
+					<value target='sText' data='Note that Combo board is
+on different ports to the 
+ones in the video' />
+					<value target='bWordWrap' data='1' />
+					<value target='nHorizontalAlignment' data='  0' />
+					<value target='nVerticalAlignment' data='2' />
+					<value target='nAngle' data='0' />
+					<value target='fntFamily' data='Calibri' />
+					<value target='bFixedScale' data='0' />
+					<value target='dScale' data='1.00000' />
+					<value target='bScaleWidth' data='0' />
+					<value target='iFontSize' data='12' />
+					<value target='bBold' data='0' />
+					<value target='bItalic' data='0' />
+					<value target='bUnderline' data='0' />
+					<value target='bStrikethrough' data='0' />
+					<value target='colTextColour' data='0' />
+					<value target='colTextGradient' data='9868950' />
+					<value target='nGradient' data='0' />
+					<value target='nTextOpacity' data='1' />
+					<value target='colBackgroundColour' data='10551295' />
+					<value target='colBackgroundGradient' data='-1' />
+					<value target='nBackgroundGradient' data='0' />
+					<value target='nBackgroundOpacity' data='1.0' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<scadaresourcelookup />
+	<keymap />
+	<panel2d shadows='0' lighting='2' brightness='0' >
+		<background rgb='7292207' img='' style='0' />
+		<camera xe='0' ye='0' ze='525.593' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='200' dy='514' zoom='46.0432' fix_topleft='0' />
+		<page x='1000' y='1000' show='0' rgb='7360576' />
+		<winpos ID='7005' RectRecentFloat='0,40,1094,855' RectRecentDocked='0,0,200,537' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+	</panel2d>
+	<panel3d shadows='0' lighting='2' brightness='0' perspective='1' >
+		<background rgb='8409120' img='' style='0' />
+		<table rgb='7360576' img='' style='0' size='0' />
+		<camera xe='0' ye='0' ze='781.66' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey0 xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey1 xe='-3.67394e-14' ye='0' ze='-300' xt='0' yt='0' zt='0' xquat='0' yquat='1' zquat='0' wquat='6.12323e-17' />
+		<camerakey2 xe='0' ye='-300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.707107' yquat='0' zquat='0' wquat='0.707107' />
+		<camerakey3 xe='-3.67394e-14' ye='300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-4.32978e-17' yquat='0.707107' zquat='0.707107' wquat='4.32978e-17' />
+		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
+		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
+		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
+		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,210,593' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+	</panel3d>
+	<panels2d count='1' >
+		<panel2d_0 id='0' name='2D Panel' type='0' >
+			<winpos ID='1171' RectRecentFloat='814,184,1464,663' RectRecentDocked='903,141,1458,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+			<background fill='72057594037598975' showgrid='1' gridstyle='1' gridsize='8' gridbrush='7881299347898368' snaptogrid='0' fitcomp='0' disp_x='300' disp_y='400' scale='100' disp_col='16777215' />
+		</panel2d_0>
+	</panels2d>
+	<layout >
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='timer_interrupt' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

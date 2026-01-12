@@ -1,0 +1,1652 @@
+<root>
+<document schema='101' license='1,Dev User,HJVC24' title='' description='' target='PIC.16F.16F877A' >
+	<config data='!0,3f72%0,2%2,0%3,0%6,1%7,0%9,3%b,1%8,1%d,1' clkspd='20000000' simspd='1' usewdt='0' constif='0' />
+	<plugins >
+		<dll_dbg_icd enabled='0' >
+			<data name='debug' value='1' />
+			<data name='userpins' value='0' />
+			<data name='speed' value='0' />
+			<data name='usev9' value='0' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='ghostype' value='0' />
+			<data name='monitor' value='1' />
+			<data name='ictloop' value='0' />
+			<data name='ictrate' value='20000' />
+			<data name='ictmask' value='0' />
+			<data name='anlpres' value='19' />
+			<data name='digmask1' value='-1' />
+			<data name='digmask2' value='-1' />
+		</dll_dbg_icd>
+		<dll_models enabled='1' />
+		<dll_upgrader enabled='1' />
+		<dll_webhelp enabled='1' />
+	</plugins>
+	<supplement use='1' head='#ifdef MX_PIC
+  #define LINS_CONVAL 0xc0
+  #define LINS_TIMER_ADJUST_RX 	31
+  #define LINS_TIMER_ADJUST_TX 	37
+
+  #ifdef OPTION_REG
+    #define LINS_T0CON option_reg
+    #define LINS_TMR0  tmr0
+  #else
+    #ifdef T0CON
+      #define LINS_T0CON t0con
+      #define LINS_TMR0  tmr0l
+    #endif
+  #endif
+
+  #ifndef LINS_T0CON
+    #define LINS_T0CON option_reg
+  #endif
+
+  #ifndef LINS_TMR0
+    #define LINS_TMR0  tmr0
+  #endif
+#endif
+
+#ifdef MX_AVR
+  #ifndef TIFR
+    #ifdef TIFR0
+      #define TIFR TIFR0
+    #endif
+  #endif
+
+  #ifndef TIMSK
+    #ifdef TIMSK0
+      #define TIMSK TIMSK0
+    #endif
+  #endif
+
+  #ifndef TCCR0
+	  #ifdef TCCR0B
+		#define TCCR0 TCCR0B
+	  #else
+        #ifdef TCCR0A
+          #define TCCR0 TCCR0A
+        #endif
+      #endif
+  #endif
+
+  #define LINS_TIMER_ADJUST_RX 	2
+  #define LINS_TIMER_ADJUST_TX 	10
+  #define LINS_TX_EXTRA_WAIT 		delay_us(1);
+
+  unsigned char FCV_SREG_TEMP;
+
+#endif
+
+' body='' />
+	<debug />
+	<components >
+		<settings autoimg='0' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='1' />
+		<definition guid='7cd0e114-1063-4702-bee2-24641c4d3788' vstate='40' vmin='2' vmaj='1' srcleaf='LinSlave.fcfx' visiblename='LIN Slave' description='Low level routines for controlling the LIN bus (1.3 / 2.0) slave interface.' category='Comms' catenable='1' author='Matrix Ltd' manuname='' manucode='' sysinfo='17830891' keywords='' dynamic='1' iconpath='..\icons\components\LINslave.png' />
+		<component class_type='root' codename='LIN_Slave' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+			<resources >
+				<file name='LINslave.png' source='..\icons\Large Comms Icons\LINslave.png' />
+			</resources>
+			<properties >
+				<property name='Connections' folder='property_1' hidden='0' >
+					<property name='TX pin' target='TX' typeid='5' hidden='0' locked='0' info='LIN bus data transmit pin' />
+					<property name='RX pin' target='RX' typeid='5' hidden='0' locked='0' info='LIN bus data receive pin' />
+					<property name='CS pin' target='CS' typeid='5' hidden='0' locked='0' info='LIN bus chip select pin
+' />
+					<property name='FAULT pin' target='FAULT' typeid='5' hidden='0' locked='0' info='LIN bus fault detection pin
+' />
+					<property name='VREG pin' target='VREG' typeid='5' hidden='0' locked='0' info='LIN bus voltage regulation pin
+' />
+					<property name='MESSAGES' target='MESSAGES' typeid='16' hidden='0' locked='0' info='Number of messages the firmware is designed to listen for' filter='0011
+0022
+0033
+0044
+0055
+0066
+0077
+0088' />
+				</property>
+				<property name='MESSAGE1' folder='MESSAGE1' hidden='0' layout='' >
+					<property name='ID' target='MSG1_ID' typeid='14' hidden='0' locked='0' info='Message identifier to listen for' />
+					<property name='BYTES' target='MSG1_BYTES' typeid='16' hidden='0' locked='0' info='Number of bytes to expent in the packet' filter='0000
+0011
+0022
+0033
+0044
+0055
+0066
+0077
+0088' />
+					<property name='TX_RX' target='MSG1_TX_RX' typeid='16' hidden='0' locked='0' info='Data direction for packet' filter='000TX
+001RX' />
+				</property>
+				<property name='MESSAGE2' folder='MESSAGE2' hidden='1' layout='' >
+					<property name='ID' target='MSG2_ID' typeid='14' hidden='0' locked='0' info='Message identifier to listen for' />
+					<property name='BYTES' target='MSG2_BYTES' typeid='16' hidden='0' locked='0' info='Number of bytes to expent in the packet' filter='0000
+0011
+0022
+0033
+0044
+0055
+0066
+0077
+0088' />
+					<property name='TX_RX' target='MSG2_TX_RX' typeid='16' hidden='0' locked='0' info='Data direction for packet' filter='000TX
+001RX' />
+				</property>
+				<property name='MESSAGE3' folder='MESSAGE3' hidden='1' layout='' >
+					<property name='ID' target='MSG3_ID' typeid='14' hidden='0' locked='0' info='Message identifier to listen for' />
+					<property name='BYTES' target='MSG3_BYTES' typeid='16' hidden='0' locked='0' info='Number of bytes to expent in the packet' filter='0000
+0011
+0022
+0033
+0044
+0055
+0066
+0077
+0088' />
+					<property name='TX_RX' target='MSG3_TX_RX' typeid='16' hidden='0' locked='0' info='Data direction for packet' filter='000TX
+001RX' />
+				</property>
+				<property name='MESSAGE4' folder='MESSAGE4' hidden='1' layout='' >
+					<property name='ID' target='MSG4_ID' typeid='14' hidden='0' locked='0' info='Message identifier to listen for' />
+					<property name='BYTES' target='MSG4_BYTES' typeid='16' hidden='0' locked='0' info='Number of bytes to expent in the packet' filter='0000
+0011
+0022
+0033
+0044
+0055
+0066
+0077
+0088' />
+					<property name='TX_RX' target='MSG4_TX_RX' typeid='16' hidden='0' locked='0' info='Data direction for packet' filter='000TX
+001RX' />
+				</property>
+				<property name='MESSAGE5' folder='MESSAGE5' hidden='1' layout='' >
+					<property name='ID' target='MSG5_ID' typeid='14' hidden='0' locked='0' info='Message identifier to listen for' />
+					<property name='BYTES' target='MSG5_BYTES' typeid='16' hidden='0' locked='0' info='Number of bytes to expent in the packet' filter='0000
+0011
+0022
+0033
+0044
+0055
+0066
+0077
+0088' />
+					<property name='TX_RX' target='MSG5_TX_RX' typeid='16' hidden='0' locked='0' info='Data direction for packet' filter='000TX
+001RX' />
+				</property>
+				<property name='MESSAGE6' folder='MESSAGE6' hidden='1' layout='' >
+					<property name='ID' target='MSG6_ID' typeid='14' hidden='0' locked='0' info='Message identifier to listen for' />
+					<property name='BYTES' target='MSG6_BYTES' typeid='16' hidden='0' locked='0' info='Number of bytes to expent in the packet' filter='0000
+0011
+0022
+0033
+0044
+0055
+0066
+0077
+0088' />
+					<property name='TX_RX' target='MSG6_TX_RX' typeid='16' hidden='0' locked='0' info='Data direction for packet' filter='000TX
+001RX' />
+				</property>
+				<property name='MESSAGE7' folder='MESSAGE7' hidden='1' layout='' >
+					<property name='ID' target='MSG7_ID' typeid='14' hidden='0' locked='0' info='Message identifier to listen for' />
+					<property name='BYTES' target='MSG7_BYTES' typeid='16' hidden='0' locked='0' info='Number of bytes to expent in the packet' filter='0000
+0011
+0022
+0033
+0044
+0055
+0066
+0077
+0088' />
+					<property name='TX_RX' target='MSG7_TX_RX' typeid='16' hidden='0' locked='0' info='Data direction for packet' filter='000TX
+001RX' />
+				</property>
+				<property name='MESSAGE8' folder='MESSAGE8' hidden='1' layout='' >
+					<property name='ID' target='MSG8_ID' typeid='14' hidden='0' locked='0' info='Message identifier to listen for' />
+					<property name='BYTES' target='MSG8_BYTES' typeid='16' hidden='0' locked='0' info='Number of bytes to expent in the packet' filter='0000
+0011
+0022
+0033
+0044
+0055
+0066
+0077
+0088' />
+					<property name='TX_RX' target='MSG8_TX_RX' typeid='16' hidden='0' locked='0' info='Data direction for packet' filter='000TX
+001RX' />
+				</property>
+				<property name='Simulation' folder='property_2' hidden='0' >
+					<property name='Label' target='label' typeid='10' hidden='0' locked='0' info='A text label to aid identifying the component.' />
+				</property>
+				<property name='Timing Adjustments' folder='property_3' hidden='0' >
+					<property name='Timer Adjust TX' target='TIMER_ADJUST_T' typeid='21' hidden='0' locked='0' info='' />
+					<property name='Timer Adjust RX' target='TIMER_ADJUST_R' typeid='21' hidden='0' locked='0' info='' />
+				</property>
+			</properties>
+			<values >
+				<value target='TX' data='$PORTC.7' />
+				<value target='RX' data='$PORTC.6' />
+				<value target='CS' data='$PORTC.5' />
+				<value target='FAULT' data='$PORTC.4' />
+				<value target='VREG' data='$PORTC.3' />
+				<value target='MESSAGES' data='001' />
+				<value target='MSG1_ID' data='1' />
+				<value target='MSG1_BYTES' data='002' />
+				<value target='MSG1_TX_RX' data='001' />
+				<value target='MSG2_ID' data='2' />
+				<value target='MSG2_BYTES' data='002' />
+				<value target='MSG2_TX_RX' data='001' />
+				<value target='MSG3_ID' data='3' />
+				<value target='MSG3_BYTES' data='002' />
+				<value target='MSG3_TX_RX' data='001' />
+				<value target='MSG4_ID' data='4' />
+				<value target='MSG4_BYTES' data='002' />
+				<value target='MSG4_TX_RX' data='001' />
+				<value target='MSG5_ID' data='5' />
+				<value target='MSG5_BYTES' data='002' />
+				<value target='MSG5_TX_RX' data='001' />
+				<value target='MSG6_ID' data='6' />
+				<value target='MSG6_BYTES' data='002' />
+				<value target='MSG6_TX_RX' data='001' />
+				<value target='MSG7_ID' data='7' />
+				<value target='MSG7_BYTES' data='002' />
+				<value target='MSG7_TX_RX' data='001' />
+				<value target='MSG8_ID' data='8' />
+				<value target='MSG8_BYTES' data='002' />
+				<value target='MSG8_TX_RX' data='001' />
+				<value target='label' data='LIN Slave' />
+				<value target='TIMER_ADJUST_T' data='55' />
+				<value target='TIMER_ADJUST_R' data='48' />
+			</values>
+			<events >
+				<event class='Components' event='Property' target='Ev_Property' />
+				<event class='Components' event='Initialise' target='Ev_Initialise' />
+			</events>
+			<apis >
+				<api name='PowerDown' alt='PowerDown' type='1' proto='1' />
+				<api name='GetState' alt='GetState' type='1' proto='1' />
+				<api name='ListenForMessages' alt='ListenForMessages' type='1' proto='1' />
+				<api name='ReadAddress' alt='ReadAddress' type='1' proto='1' />
+				<api name='ReadDataCount' alt='ReadDataCount' type='1' proto='1' />
+				<api name='ReadData' alt='ReadData' type='1' proto='1' />
+				<api name='SetData' alt='SetData' type='1' proto='1' />
+				<api name='Initialize' alt='Initialize' type='1' proto='1' />
+				<api name='WakeUp' alt='WakeUp' type='1' proto='1' />
+			</apis>
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='ERR_RX' type='s16' description='' isconst='1' isinit='1' usrinit='138' setinit='0x8A' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='MSG_DATA' type='u8' description='' isconst='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+						<array size='64' />
+					</def>
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='MSG_CNT_MASK' type='s16' description='' isconst='1' isinit='1' usrinit='15' setinit='0x0f' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='STATE_SYNC_LO' type='s16' description='' isconst='1' isinit='1' usrinit='3' setinit='3' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='ERR_PARITY' type='s16' description='' isconst='1' isinit='1' usrinit='139' setinit='0x8B' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='ERR_BITERROR' type='s16' description='' isconst='1' isinit='1' usrinit='134' setinit='0x86' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='ERR_ADDR_READ' type='s16' description='' isconst='1' isinit='1' usrinit='136' setinit='0x88' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='DevStr' type='T8' description='' isconst='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+						<array size='20' />
+					</def>
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='TIMEOUTVAL' type='s16' description='' isconst='1' isinit='1' usrinit='200' setinit='200' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='MODEPAUSE' type='s16' description='' isconst='1' isinit='1' usrinit='100' setinit='100' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='false' type='b1' description='' isconst='1' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='RX_ADDR' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='ERR_TX' type='s16' description='' isconst='1' isinit='1' usrinit='137' setinit='0x89' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='TIMER_LO_RX' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='ERR_FERR' type='s16' description='' isconst='1' isinit='1' usrinit='132' setinit='0x84' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='STATE_NULL' type='s16' description='' isconst='1' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='STATE_FAULT' type='s16' description='' isconst='1' isinit='1' usrinit='10' setinit='10' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='STATE_POWERDOWN' type='s16' description='' isconst='1' isinit='1' usrinit='9' setinit='9' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='STATE_READY' type='s16' description='' isconst='1' isinit='1' usrinit='7' setinit='7' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='UNWANTED_ADDR' type='s16' description='' isconst='1' isinit='1' usrinit='255' setinit='0xFF' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='BitTime' type='u16' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='TIMER_LO_TX' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='LISTEN_TO_PAUSE' type='s16' description='' isconst='1' isinit='1' usrinit='100' setinit='100' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='TIMER_HI_RX' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='STATE_RX' type='s16' description='' isconst='1' isinit='1' usrinit='2' setinit='2' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='ERR_TIMEOUT' type='s16' description='' isconst='1' isinit='1' usrinit='131' setinit='0x83' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='STATE_LISTEN_TIMEOUT' type='s16' description='' isconst='1' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='STATE_OPERATION' type='s16' description='' isconst='1' isinit='1' usrinit='8' setinit='8' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='LIN_STATE' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='STATE_SYNC_HI' type='s16' description='' isconst='1' isinit='1' usrinit='4' setinit='4' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='ERR_BADCRC' type='s16' description='' isconst='1' isinit='1' usrinit='133' setinit='0x85' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='SENDING' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='BitHalfTime' type='u16' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='MSG_TX_MSK' type='s16' description='' isconst='1' isinit='1' usrinit='16' setinit='0x10' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='MSG_CNT' type='u8' description='' isconst='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+						<array size='8' />
+					</def>
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='sreg_temp' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='TIMER_HI_TX' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='STATE_TX' type='s16' description='' isconst='1' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='ERR_CLOCKSYNC' type='s16' description='' isconst='1' isinit='1' usrinit='135' setinit='0x87' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='MSG_ID' type='u8' description='' isconst='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+						<array size='8' />
+					</def>
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='true' type='b1' description='' isconst='1' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='RX_BYTE' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='Ev_Initialise' description='Initialisation routine for the component once the component is linked to its parent' >
+						<return name='Return' type='u32' description='Non-zero to prevent initialisation' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Call Macro' cmdcolor='1975743' cmdcolor_sec='1975743' macro='Ev_Property' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='PowerDown' description='Power Down the device' >
+						<return name='Return' type='v0' description='' isconst='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+							<exp exp='CS = 0' />
+						</command>
+						<command class_type='delay' title='Delay' cmdcolor='7895044' cmdcolor_sec='7895044' exp='MODEPAUSE' type='0' />
+						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+							<exp exp='LIN_STATE = STATE_POWERDOWN' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SendByte' description='' >
+						<return name='Return' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<param name='ByteVal' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='BitVal' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+							<exp exp='.Return = STATE_TX' />
+						</command>
+						<command class_type='comment' title='' comment='Send START bit' textarea='12,0,12,0' cmdcolor='1975743' cmdcolor_sec='1975743' />
+						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+							<exp exp='TX = 0' />
+						</command>
+						<command class_type='call' title='Call Macro' cmdcolor='1975743' cmdcolor_sec='1975743' macro='Wait_HalfTBit' />
+						<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='RX' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+									<exp exp='.Return = ERR_BITERROR' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='call' title='Call Macro' cmdcolor='1975743' cmdcolor_sec='1975743' macro='Wait_HalfTBit' />
+						<command class_type='comment' title='' comment='Send DATA bits' textarea='12,0,12,0' cmdcolor='1975743' cmdcolor_sec='1975743' />
+						<command class_type='loop' title='Loop' cmdcolor='3568629' cmdcolor_sec='3568629' type='2' exp='8' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+									<exp exp='.BitVal = (.ByteVal &amp; 0x01)' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+									<exp exp='TX = .BitVal' />
+								</command>
+								<command class_type='call' title='Call Macro' cmdcolor='1975743' cmdcolor_sec='1975743' macro='Wait_HalfTBit' />
+								<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='RX != .BitVal' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+											<exp exp='.Return = ERR_BITERROR' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='call' title='Call Macro' cmdcolor='1975743' cmdcolor_sec='1975743' macro='Wait_HalfTBit' />
+								<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+									<exp exp='.ByteVal = .ByteVal &gt;&gt; 1' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='delay' title='Delay' cmdcolor='7895044' cmdcolor_sec='7895044' exp='2' type='0' />
+						<command class_type='comment' title='' comment='Send STOP bit' textarea='12,0,12,0' cmdcolor='1975743' cmdcolor_sec='1975743' />
+						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+							<exp exp='TX = 1' />
+						</command>
+						<command class_type='call' title='Call Macro' cmdcolor='1975743' cmdcolor_sec='1975743' macro='Wait_HalfTBit' />
+						<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='RX' swap='0' >
+							<flowline />
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+									<exp exp='.Return = ERR_BITERROR' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='call' title='Call Macro' cmdcolor='1975743' cmdcolor_sec='1975743' macro='Wait_HalfTBit' />
+						<command class_type='sim' title='Simulation' cmdcolor='1975743' cmdcolor_sec='1975743' component='dash_IO_flasher1' macro='FlashTx' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='GetState' description='Returns the state of the device' >
+						<return name='Return' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='VREG' swap='0' >
+							<flowline />
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+									<exp exp='.Return = STATE_POWERDOWN' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='FAULT' swap='0' >
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='LIN_STATE = STATE_READY' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+											<exp exp='.Return = STATE_READY' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+											<exp exp='.Return = STATE_OPERATION' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+									<exp exp='.Return = STATE_FAULT' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Property' description='Sent when a property has been changed by the User' >
+						<return name='Return' type='u32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='filepath' type='T8' description='' isconst='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<command class_type='sim' title='Simulation' cmdcolor='1975743' cmdcolor_sec='1975743' macro='Component.Property.CopyValue' >
+							<argument exp='this' />
+							<argument exp='dash_IO_flasher1' />
+							<argument exp='&quot;label&quot;' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='1975743' cmdcolor_sec='1975743' macro='File.AbsPath' >
+							<return exp='.filepath' />
+							<argument exp='&quot;this:LINslave.png&quot;' />
+							<argument exp='this' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='1975743' cmdcolor_sec='1975743' macro='Component.Property.SetValue' >
+							<argument exp='dash_IO_flasher1' />
+							<argument exp='&quot;icon_image&quot;' />
+							<argument exp='.filepath' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='MESSAGES &gt; 1' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='1975743' cmdcolor_sec='1975743' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;MESSAGE2&quot;' />
+									<argument exp='1' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='1975743' cmdcolor_sec='1975743' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;MESSAGE2&quot;' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='MESSAGES &gt; 2' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='1975743' cmdcolor_sec='1975743' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;MESSAGE3&quot;' />
+									<argument exp='1' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='1975743' cmdcolor_sec='1975743' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;MESSAGE3&quot;' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='MESSAGES &gt; 3' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='1975743' cmdcolor_sec='1975743' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;MESSAGE4&quot;' />
+									<argument exp='1' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='1975743' cmdcolor_sec='1975743' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;MESSAGE4&quot;' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='MESSAGES &gt; 4' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='1975743' cmdcolor_sec='1975743' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;MESSAGE5&quot;' />
+									<argument exp='1' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='1975743' cmdcolor_sec='1975743' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;MESSAGE5&quot;' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='MESSAGES &gt; 5' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='1975743' cmdcolor_sec='1975743' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;MESSAGE6&quot;' />
+									<argument exp='1' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='1975743' cmdcolor_sec='1975743' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;MESSAGE6&quot;' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='MESSAGES &gt; 6' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='1975743' cmdcolor_sec='1975743' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;MESSAGE7&quot;' />
+									<argument exp='1' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='1975743' cmdcolor_sec='1975743' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;MESSAGE7&quot;' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='MESSAGES &gt; 7' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='1975743' cmdcolor_sec='1975743' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;MESSAGE8&quot;' />
+									<argument exp='1' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='1975743' cmdcolor_sec='1975743' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;MESSAGE8&quot;' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='ListenForMessages' description='Listens for messages with Timeout and returns the state' >
+						<return name='Return' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Timeout' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<param name='ChecksumType' type='u8' description='0=Classic, 1=Enhanced' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='WaitForever' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Timeout2' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Idx' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Timer16' type='u16' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Temp16' type='u16' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='LoopCount' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='IdxBase' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='DataCount' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='CheckSum' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='ByteVal' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Ctst' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='comment' title='' comment='PIC' textarea='12,0,12,0' cmdcolor='1975743' cmdcolor_sec='1975743' />
+						<command class_type='native' title='C Code' ccode='#ifdef MX_PIC' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+						<command class_type='native' title='C Code' ccode='char IntSave = intcon;
+char ConSave = LINS_T0CON;' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+						<command class_type='native' title='C Code' ccode='#endif' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+						<command class_type='comment' title='' comment='AVR' textarea='12,0,12,0' cmdcolor='1975743' cmdcolor_sec='1975743' />
+						<command class_type='native' title='C Code' ccode='#ifdef MX_AVR' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+						<command class_type='native' title='C Code' ccode='#endif' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+						<command class_type='comment' title='' comment='PIC16' textarea='12,0,12,0' cmdcolor='1975743' cmdcolor_sec='1975743' />
+						<command class_type='native' title='C Code' ccode='#ifdef MX_PIC16' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+						<command class_type='native' title='C Code' ccode='#endif' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+						<command class_type='comment' title='' comment='ARM' textarea='12,0,12,0' cmdcolor='1975743' cmdcolor_sec='1975743' />
+						<command class_type='native' title='C Code' ccode='#ifdef MX_ARM' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+						<command class_type='native' title='C Code' ccode='#endif' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+							<exp exp='.Return = STATE_NULL' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+							<exp exp='.WaitForever = 0' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+							<exp exp='.Timer16 = 0' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+							<exp exp='SENDING = 0' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='.Timeout = 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+									<exp exp='.WaitForever = 1' />
+									<exp exp='.Timeout = 255' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+							<exp exp='.Timeout2 = .Timeout' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='3568629' cmdcolor_sec='3568629' type='0' exp='.Timeout2 &gt; 0' >
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='RX &gt; 0' swap='0' >
+									<flowline >
+										<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='.WaitForever = 0' swap='0' >
+											<flowline >
+												<command class_type='comment' title='' comment='Don&apos;t wait forever so timeout' textarea='12,0,12,0' cmdcolor='1975743' cmdcolor_sec='1975743' />
+												<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+													<exp exp='.Timeout2 = .Timeout2 - 1' />
+												</command>
+												<command class_type='delay' title='Delay' cmdcolor='7895044' cmdcolor_sec='7895044' exp='LISTEN_TO_PAUSE' type='0' />
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='comment' title='' comment='Found Sync Break' textarea='12,0,12,0' cmdcolor='1975743' cmdcolor_sec='1975743' />
+										<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+											<exp exp='.Return = STATE_SYNC_LO' />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+											<exp exp='.Timeout2 = 0' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='.Return = STATE_SYNC_LO' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+									<exp exp='.Idx = 22' />
+								</command>
+								<command class_type='loop' title='Loop' cmdcolor='3568629' cmdcolor_sec='3568629' type='0' exp='.Idx' >
+									<flowline >
+										<command class_type='delay' title='Delay' cmdcolor='7895044' cmdcolor_sec='7895044' exp='BitHalfTime' type='0' />
+										<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='RX = 0' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+													<exp exp='.Idx = .Idx - 1' />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+													<exp exp='.Return = ERR_CLOCKSYNC' />
+												</command>
+												<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+													<exp exp='.Idx = 0' />
+												</command>
+											</flowline>
+										</command>
+										<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='.Return = STATE_SYNC_LO' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+													<exp exp='.Timeout2 = .Timeout' />
+												</command>
+												<command class_type='loop' title='Loop' cmdcolor='3568629' cmdcolor_sec='3568629' type='0' exp='.Timeout2' >
+													<flowline >
+														<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='RX' swap='0' >
+															<flowline >
+																<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																	<exp exp='.Return = STATE_SYNC_HI' />
+																</command>
+																<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																	<exp exp='.Timeout2 = 0' />
+																</command>
+																<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																	<exp exp='.Idx = 0' />
+																</command>
+															</flowline>
+															<flowline >
+																<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='.WaitForever' swap='0' >
+																	<flowline />
+																	<flowline >
+																		<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																			<exp exp='.Timeout2 = .Timeout2 - 1' />
+																		</command>
+																	</flowline>
+																</command>
+															</flowline>
+														</command>
+														<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='.Return = STATE_SYNC_HI' swap='0' >
+															<flowline >
+																<command class_type='comment' title='' comment='Disable interrupts' textarea='12,0,12,0' cmdcolor='1975743' cmdcolor_sec='1975743' />
+																<command class_type='native' title='C Code' ccode='#ifdef MX_CAL_AVR
+  FCV_SREG_TEMP = SREG;  //Store I flag
+  cli();				 //Disable all interrupts
+#endif' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+																<command class_type='native' title='C Code' ccode='#ifdef MX_PIC
+  INTCON1bits.NSTDIS = 1;										//temporarily disable interrupts
+  LINS_T0CON = OPTION_VAL;
+#endif' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+																<command class_type='native' title='C Code' ccode='#ifdef FC_CAL_PIC16BIT
+  INTCON1bits.NSTDIS = 1;										//temporarily disable interrupts
+  LINS_T0CON = OPTION_VAL;
+#endif' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+																<command class_type='native' title='C Code' ccode='#ifdef FC_CAL_ARM
+  AT91C_BASE_TC0-&gt;TC_RC = 0xffff;								//temporarily disable interrupts
+#endif' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+																<command class_type='loop' title='End of break' cmdcolor='3568629' cmdcolor_sec='3568629' type='0' exp='RX = 1' >
+																	<flowline />
+																</command>
+																<command class_type='loop' title='start bit of sync' cmdcolor='3568629' cmdcolor_sec='3568629' type='0' exp='RX = 0' >
+																	<flowline />
+																</command>
+																<command class_type='native' title='C Code' ccode='#ifdef MX_PIC' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+																<command class_type='comment' title='' comment='Overwrite option reg' textarea='12,0,12,0' cmdcolor='1975743' cmdcolor_sec='1975743' />
+																<command class_type='comment' title='' comment='Reset timer' textarea='12,0,12,0' cmdcolor='1975743' cmdcolor_sec='1975743' />
+																<command class_type='loop' title='Loop' cmdcolor='3568629' cmdcolor_sec='3568629' type='2' exp='4' >
+																	<flowline >
+																		<command class_type='loop' title='Loop' cmdcolor='3568629' cmdcolor_sec='3568629' type='0' exp='RX = 1' >
+																			<flowline >
+																				<command class_type='decision' title='Timer overflow flag' cmdcolor='3568629' cmdcolor_sec='3568629' exp='0' swap='0' >
+																					<flowline >
+																						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																							<exp exp='.Timer16 = .Timer16 + 0x0100' />
+																						</command>
+																						<command class_type='comment' title='' comment='Clear timer overflow flag' textarea='12,0,12,0' cmdcolor='1975743' cmdcolor_sec='1975743' />
+																					</flowline>
+																					<flowline />
+																				</command>
+																			</flowline>
+																		</command>
+																		<command class_type='loop' title='Loop' cmdcolor='3568629' cmdcolor_sec='3568629' type='0' exp='RX = 0' >
+																			<flowline >
+																				<command class_type='decision' title='Timer overflow flag' cmdcolor='3568629' cmdcolor_sec='3568629' exp='0' swap='0' >
+																					<flowline >
+																						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																							<exp exp='.Timer16 = .Timer16 + 0x0100' />
+																						</command>
+																						<command class_type='comment' title='' comment='Clear timer overflow flag' textarea='12,0,12,0' cmdcolor='1975743' cmdcolor_sec='1975743' />
+																					</flowline>
+																					<flowline />
+																				</command>
+																			</flowline>
+																		</command>
+																	</flowline>
+																</command>
+																<command class_type='comment' title='' comment='Timer16 = Timer16 + TMR0' textarea='12,0,12,0' cmdcolor='1975743' cmdcolor_sec='1975743' />
+																<command class_type='decision' title='Tiimer overflow flag' cmdcolor='3568629' cmdcolor_sec='3568629' exp='0' swap='0' >
+																	<flowline >
+																		<command class_type='calculation' title='Handle timer overflow' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																			<exp exp='.Timer16 = (.Timer16 + 0x0100) &amp; 0xff00' />
+																		</command>
+																	</flowline>
+																	<flowline />
+																</command>
+																<command class_type='native' title='C Code' ccode='#endif
+' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+																<command class_type='comment' title='' comment='AVR' textarea='12,0,12,0' cmdcolor='1975743' cmdcolor_sec='1975743' />
+																<command class_type='native' title='C Code' ccode='#ifdef MX_AVR' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+																<command class_type='native' title='C Code' ccode='TCNT0 = 0;
+set_bit(TIFR, TOV0);' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+																<command class_type='loop' title='Loop' cmdcolor='3568629' cmdcolor_sec='3568629' type='2' exp='4' >
+																	<flowline >
+																		<command class_type='loop' title='Loop' cmdcolor='3568629' cmdcolor_sec='3568629' type='0' exp='RX = 1' >
+																			<flowline >
+																				<command class_type='native' title='C Code' ccode='FCL_CTST = test_bit(TIFR, TOV0);' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+																				<command class_type='decision' title='Timer overflow flag' cmdcolor='3568629' cmdcolor_sec='3568629' exp='.Ctst' swap='0' >
+																					<flowline >
+																						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																							<exp exp='.Timer16 = .Timer16 + 0x0100' />
+																						</command>
+																						<command class_type='comment' title='' comment='Clear timer overflow flag' textarea='12,0,12,0' cmdcolor='1975743' cmdcolor_sec='1975743' />
+																						<command class_type='native' title='write 1 to clear flag!!' ccode='set_bit(TIFR, TOV0);' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+																					</flowline>
+																					<flowline />
+																				</command>
+																			</flowline>
+																		</command>
+																		<command class_type='loop' title='Loop' cmdcolor='3568629' cmdcolor_sec='3568629' type='0' exp='RX = 0' >
+																			<flowline >
+																				<command class_type='native' title='C Code' ccode='FCL_CTST = test_bit(TIFR, TOV0);' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+																				<command class_type='decision' title='Timer overflow flag' cmdcolor='3568629' cmdcolor_sec='3568629' exp='.Ctst' swap='0' >
+																					<flowline >
+																						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																							<exp exp='.Timer16 = .Timer16 + 0x0100' />
+																						</command>
+																						<command class_type='comment' title='' comment='Clear timer overflow flag' textarea='12,0,12,0' cmdcolor='1975743' cmdcolor_sec='1975743' />
+																						<command class_type='native' title='write 1 to clear flag!!' ccode='set_bit(TIFR, TOV0);' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+																					</flowline>
+																					<flowline />
+																				</command>
+																			</flowline>
+																		</command>
+																	</flowline>
+																</command>
+																<command class_type='native' title='C Code' ccode='FCL_TIMER16 = FCL_TIMER16 | TCNT0;' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+																<command class_type='native' title='C Code' ccode='#endif' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+																<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																	<exp exp='.Timer16 = .Timer16 &gt;&gt; 3' />
+																</command>
+																<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='.Timer16 &amp; 0x0001' swap='0' >
+																	<flowline >
+																		<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																			<exp exp='.Timer16 = .Timer16 + 1' />
+																		</command>
+																	</flowline>
+																	<flowline />
+																</command>
+																<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																	<exp exp='.Timer16 = .Timer16 &gt;&gt; 1' />
+																</command>
+																<command class_type='calculation' title='Adjust RX timer' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																	<exp exp='.Temp16 = .Timer16 - TIMER_ADJUST_R' />
+																	<exp exp='TIMER_LO_RX = .Temp16' />
+																	<exp exp='TIMER_HI_RX = .Temp16 &gt;&gt; 8' />
+																</command>
+																<command class_type='calculation' title='Adjust TX timer' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																	<exp exp='.Temp16 = .Timer16 - TIMER_ADJUST_T' />
+																	<exp exp='TIMER_LO_TX = .Temp16' />
+																	<exp exp='TIMER_HI_TX = .Temp16 &gt;&gt; 8' />
+																</command>
+																<command class_type='comment' title='' comment='PIC' textarea='12,0,12,0' cmdcolor='1975743' cmdcolor_sec='1975743' />
+																<command class_type='native' title='restore the option register' ccode='#ifdef MX_PIC
+  LINS_T0CON = OptionRegSave;
+#endif' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+																<command class_type='comment' title='' comment='PIC16' textarea='12,0,12,0' cmdcolor='1975743' cmdcolor_sec='1975743' />
+																<command class_type='native' title='restore the option register' ccode='#ifdef MX_PIC16BIT
+  LINS_T0CON = OptionRegSave;
+#endif' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+																<command class_type='loop' title='Skip over stop bit' cmdcolor='3568629' cmdcolor_sec='3568629' type='0' exp='RX = 1' >
+																	<flowline />
+																</command>
+																<command class_type='call' title='Call Macro' cmdcolor='1975743' cmdcolor_sec='1975743' macro='ReadByte' >
+																	<return exp='.Return' />
+																</command>
+																<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='.Return = STATE_RX' swap='0' >
+																	<flowline >
+																		<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																			<exp exp='RX_ADDR = RX_BYTE &amp; 0x3F' />
+																		</command>
+																		<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																			<exp exp='.LoopCount = 0' />
+																			<exp exp='.Idx = 255' />
+																		</command>
+																		<command class_type='loop' title='Loop' cmdcolor='3568629' cmdcolor_sec='3568629' type='0' exp='.LoopCount &lt; MESSAGES' start='0' >
+																			<flowline >
+																				<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='RX_ADDR = MSG_ID[.LoopCount]' swap='0' >
+																					<flowline >
+																						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																							<exp exp='.Idx = .LoopCount' />
+																							<exp exp='.LoopCount = 8' />
+																						</command>
+																					</flowline>
+																					<flowline />
+																				</command>
+																				<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																					<exp exp='.LoopCount = .LoopCount + 1' />
+																				</command>
+																			</flowline>
+																		</command>
+																		<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='.Idx &lt; 255' swap='0' >
+																			<flowline >
+																				<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																					<exp exp='.IdxBase = .Idx &lt;&lt; 3' />
+																					<exp exp='.DataCount = MSG_CNT[.Idx] &amp; MSG_CNT_MASK' />
+																					<exp exp='.CheckSum = 0' />
+																				</command>
+																				<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='MSG_CNT[.Idx] &amp; MSG_TX_MSK' swap='0' >
+																					<flowline >
+																						<command class_type='comment' title='' comment='Send Data
+' textarea='12,0,12,0' cmdcolor='1975743' cmdcolor_sec='1975743' />
+																						<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='.ChecksumType &gt; 0' swap='0' >
+																							<flowline >
+																								<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																									<exp exp='.CheckSum = RX_BYTE' />
+																								</command>
+																							</flowline>
+																							<flowline />
+																						</command>
+																						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																							<exp exp='SENDING = 1' />
+																						</command>
+																						<command class_type='call' title='Call Macro' cmdcolor='1975743' cmdcolor_sec='1975743' macro='Wait_HalfTBit' />
+																						<command class_type='comment' title='' comment='Loop through data to send' textarea='12,0,12,0' cmdcolor='1975743' cmdcolor_sec='1975743' />
+																						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																							<exp exp='.LoopCount = 0' />
+																						</command>
+																						<command class_type='loop' title='Loop' cmdcolor='3568629' cmdcolor_sec='3568629' type='0' exp='.LoopCount &lt; .DataCount' >
+																							<flowline >
+																								<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																									<exp exp='.ByteVal = MSG_DATA[.IdxBase + .LoopCount]' />
+																								</command>
+																								<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																									<exp exp='.CheckSum = .CheckSum + .ByteVal' />
+																								</command>
+																								<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='.CheckSum &lt; .ByteVal' swap='0' >
+																									<flowline >
+																										<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																											<exp exp='.CheckSum = .CheckSum + 1' />
+																										</command>
+																									</flowline>
+																									<flowline />
+																								</command>
+																								<command class_type='call' title='Call Macro' cmdcolor='1975743' cmdcolor_sec='1975743' macro='SendByte' >
+																									<return exp='.Return' />
+																									<argument exp='.ByteVal' />
+																								</command>
+																								<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='.Return = STATE_TX' swap='0' >
+																									<flowline />
+																									<flowline >
+																										<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																											<exp exp='.Return = ERR_TX' />
+																										</command>
+																									</flowline>
+																								</command>
+																								<command class_type='calculation' title='Testing BR' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																									<exp exp='.LoopCount = .LoopCount + 1' />
+																								</command>
+																							</flowline>
+																						</command>
+																						<command class_type='call' title='Call Macro' cmdcolor='1975743' cmdcolor_sec='1975743' macro='SendByte' >
+																							<return exp='.Return' />
+																							<argument exp='.CheckSum' />
+																						</command>
+																					</flowline>
+																					<flowline >
+																						<command class_type='comment' title='' comment='Receive Data
+' textarea='12,0,12,0' cmdcolor='1975743' cmdcolor_sec='1975743' />
+																						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																							<exp exp='SENDING = 0' />
+																						</command>
+																						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																							<exp exp='.LoopCount = 0' />
+																						</command>
+																						<command class_type='loop' title='Loop' cmdcolor='3568629' cmdcolor_sec='3568629' type='0' exp='.LoopCount &lt; .DataCount' >
+																							<flowline >
+																								<command class_type='call' title='Call Macro' cmdcolor='1975743' cmdcolor_sec='1975743' macro='ReadByte' >
+																									<return exp='.Return' />
+																								</command>
+																								<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																									<exp exp='.ByteVal = RX_BYTE' />
+																								</command>
+																								<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='.Return = STATE_RX' swap='0' >
+																									<flowline >
+																										<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																											<exp exp='MSG_DATA[.IdxBase + .LoopCount] = .ByteVal' />
+																										</command>
+																										<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																											<exp exp='.CheckSum = .CheckSum + .ByteVal' />
+																										</command>
+																										<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='.CheckSum &lt; .ByteVal' swap='0' >
+																											<flowline >
+																												<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																													<exp exp='.CheckSum = .CheckSum + 1' />
+																												</command>
+																											</flowline>
+																											<flowline />
+																										</command>
+																									</flowline>
+																									<flowline />
+																								</command>
+																								<command class_type='calculation' title='Testing BR' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																									<exp exp='.LoopCount = .LoopCount + 1' />
+																								</command>
+																							</flowline>
+																						</command>
+																					</flowline>
+																				</command>
+																				<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																					<exp exp='.Idx = 0' />
+																				</command>
+																			</flowline>
+																			<flowline >
+																				<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																					<exp exp='.Return = UNWANTED_ADDR' />
+																				</command>
+																			</flowline>
+																		</command>
+																	</flowline>
+																	<flowline />
+																</command>
+																<command class_type='native' title='C Code' ccode='#ifdef MX_CAL_AVR
+  if (FCV_SREG_TEMP &amp; (1 &lt;&lt; SREG_I)) sei();			//Restore all interrupts
+#endif
+' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+															</flowline>
+															<flowline />
+														</command>
+													</flowline>
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+									<exp exp='.Return = STATE_LISTEN_TIMEOUT' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='comment' title='' comment='PIC' textarea='12,0,12,0' cmdcolor='1975743' cmdcolor_sec='1975743' />
+						<command class_type='native' title='C Code' ccode='#ifdef MX_PIC
+  intcon = IntSave;
+  LINS_T0CON = ConSave;
+#endif' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='ReadAddress' description='Returns the Identifier read' >
+						<return name='Return' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+							<exp exp='.Return = RX_ADDR &amp; 0x3F' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Wait_HalfTBit' description='' >
+						<return name='Return' type='v0' description='' isconst='0' isinit='0' usrinit='' setinit='' />
+						<local name='clock_hi' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='clock_lo' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='ProductStr' type='T8' description='' isconst='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<command class_type='comment' title='' comment='PIC' textarea='12,0,12,0' cmdcolor='1975743' cmdcolor_sec='1975743' />
+						<command class_type='native' title='C Code' ccode='#ifdef MX_PIC' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+						<command class_type='native' title='Save system settings' ccode='char ConSave = LINS_T0CON;
+char IntSave = intcon;
+' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+						<command class_type='native' title='Disable interrupts' ccode='cr_bit(intcon, GIE);' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+						<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='SENDING = 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+									<exp exp='.clock_hi = TIMER_HI_RX' />
+									<exp exp='.clock_lo = TIMER_LO_RX' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+									<exp exp='.clock_hi = TIMER_HI_TX' />
+									<exp exp='.clock_lo = TIMER_LO_TX' />
+								</command>
+								<command class_type='delay' title='Delay' cmdcolor='7895044' cmdcolor_sec='7895044' exp='1' type='0' />
+							</flowline>
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+							<exp exp='.clock_hi = .clock_hi + 1' />
+						</command>
+						<command class_type='native' title='Initialize timer' ccode='LINS_TMR0 = 0;
+LINS_T0CON = LINS_CONVAL;
+
+LINS_TMR0 = 255 - FCL_CLOCK_LO;
+cr_bit(intcon, TMR0IF);' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+						<command class_type='native' title='C Code' ccode='while (FCL_CLOCK_HI)
+{
+    if (ts_bit(intcon, TMR0IF))
+    {
+        FCL_CLOCK_HI = FCL_CLOCK_HI - 1;
+        cr_bit(intcon, TMR0IF);
+    }
+}' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+						<command class_type='native' title='Restore saved settings' ccode='LINS_T0CON = ConSave;
+intcon = IntSave;' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+						<command class_type='native' title='C Code' ccode='#endif' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+						<command class_type='comment' title='' comment='AVR' textarea='12,0,12,0' cmdcolor='1975743' cmdcolor_sec='1975743' />
+						<command class_type='native' title='C Code' ccode='#ifdef MX_AVR' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+						<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='SENDING = 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+									<exp exp='.clock_hi = TIMER_HI_RX' />
+									<exp exp='.clock_lo = TIMER_LO_RX' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+									<exp exp='.clock_hi = TIMER_HI_TX' />
+									<exp exp='.clock_lo = TIMER_LO_TX' />
+								</command>
+								<command class_type='delay' title='Delay' cmdcolor='7895044' cmdcolor_sec='7895044' exp='1' type='0' />
+							</flowline>
+						</command>
+						<command class_type='native' title='' ccode='//Load partial timeout into timer register
+
+TCNT0 = 255 - FCL_CLOCK_LO;
+set_bit(TIFR, TOV0);
+
+//Wait for partial timeout to end
+
+while (test_bit(TIFR, TOV0) == 0) {};
+
+set_bit(TIFR, TOV0);
+
+//Wait for complete timesouts to end
+
+while (FCL_CLOCK_HI &gt; 0)
+{
+  if (test_bit(TIFR, TOV0))
+  {
+    FCL_CLOCK_HI--;
+    set_bit(TIFR, TOV0);
+  }
+}' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+						<command class_type='native' title='C Code' ccode='#endif' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+						<command class_type='comment' title='' comment='PIC16' textarea='12,0,12,0' cmdcolor='1975743' cmdcolor_sec='1975743' />
+						<command class_type='native' title='C Code' ccode='#ifdef MX_PIC16' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+						<command class_type='native' title='C Code' ccode='#endif' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+						<command class_type='comment' title='' comment='ARM' textarea='12,0,12,0' cmdcolor='1975743' cmdcolor_sec='1975743' />
+						<command class_type='native' title='C Code' ccode='#ifdef MX_ARM' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+						<command class_type='native' title='C Code' ccode='#endif' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='ReadByte' description='' >
+						<return name='Return' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='BitVal' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='TimeoutCount' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='LoopCount' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+							<exp exp='.Return = ERR_TIMEOUT' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+							<exp exp='.TimeoutCount = TIMEOUTVAL' />
+						</command>
+						<command class_type='comment' title='' comment='Wait for START bit' textarea='12,0,12,0' cmdcolor='1975743' cmdcolor_sec='1975743' />
+						<command class_type='loop' title='Loop' cmdcolor='3568629' cmdcolor_sec='3568629' type='0' exp='.TimeoutCount' start='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+									<exp exp='.TimeoutCount = .TimeoutCount - 1' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+									<exp exp='.LoopCount = 0' />
+								</command>
+								<command class_type='loop' title='Loop' cmdcolor='3568629' cmdcolor_sec='3568629' type='0' exp='.LoopCount' start='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+											<exp exp='.LoopCount = .LoopCount + 1' />
+										</command>
+										<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='RX = 0' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Exit loops' cmdcolor='7895044' cmdcolor_sec='7895044' >
+													<exp exp='.LoopCount = 0' />
+													<exp exp='.TimeoutCount = 0' />
+												</command>
+												<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+													<exp exp='.Return = STATE_RX' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='.Return = STATE_RX' swap='0' >
+							<flowline >
+								<command class_type='call' title='Call Macro' cmdcolor='1975743' cmdcolor_sec='1975743' macro='Wait_HalfTBit' />
+								<command class_type='call' title='Call Macro' cmdcolor='1975743' cmdcolor_sec='1975743' macro='Wait_HalfTBit' />
+								<command class_type='comment' title='' comment='Read DATA bits' textarea='12,0,12,0' cmdcolor='1975743' cmdcolor_sec='1975743' />
+								<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+									<exp exp='RX_BYTE = 0' />
+								</command>
+								<command class_type='loop' title='Loop' cmdcolor='3568629' cmdcolor_sec='3568629' type='2' exp='8' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+											<exp exp='RX_BYTE = RX_BYTE &gt;&gt; 1' />
+										</command>
+										<command class_type='call' title='Call Macro' cmdcolor='1975743' cmdcolor_sec='1975743' macro='Wait_HalfTBit' />
+										<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='RX' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+													<exp exp='RX_BYTE = RX_BYTE | 0x80' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+										<command class_type='call' title='Call Macro' cmdcolor='1975743' cmdcolor_sec='1975743' macro='Wait_HalfTBit' />
+									</flowline>
+								</command>
+								<command class_type='comment' title='' comment='Check STOP bit' textarea='12,0,12,0' cmdcolor='1975743' cmdcolor_sec='1975743' />
+								<command class_type='call' title='Call Macro' cmdcolor='1975743' cmdcolor_sec='1975743' macro='Wait_HalfTBit' />
+								<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='RX' swap='0' >
+									<flowline >
+										<command class_type='call' title='Call Macro' cmdcolor='1975743' cmdcolor_sec='1975743' macro='Wait_HalfTBit' />
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+											<exp exp='.Return = ERR_FERR' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='1975743' cmdcolor_sec='1975743' component='dash_IO_flasher1' macro='FlashRx' />
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='ReadDataCount' description='Return the data count size for Message' >
+						<return name='Return' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Message' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='(.Message &gt; 0) &amp; (.Message &lt;= MESSAGES)' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+									<exp exp='.Return = MSG_CNT[.Message - 1] &amp; 0x0F' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+									<exp exp='.Return = 0' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='ReadData' description='Returns the message data byte' >
+						<return name='Return' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Message' type='u8' description='Message to be read' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Index' type='u8' description='Index of data byte to be returned' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='(.Message &gt; 0) &amp; (.Message &lt; MESSAGES)' swap='0' >
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='(.Index &gt; 0) &amp; (.Index &lt;= MSG_CNT[.Message - 1])' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+											<exp exp='.Index = .Index - 1 + ((.Message - 1) &lt;&lt; 3)' />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+											<exp exp='.Return = MSG_DATA[.Index]' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+											<exp exp='.Return = 0' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+									<exp exp='.Return = 0' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SetData' description='Set the Message data to be automatically sent as part of the ListenForMessages macro.' >
+						<return name='Return' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Message' type='u8' description='Message to assign data for Range: 1-8' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Data1' type='u8' description='Data byte value' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Data2' type='u8' description='Data byte value' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Data3' type='u8' description='Data byte value' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Data4' type='u8' description='Data byte value' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Data5' type='u8' description='Data byte value' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Data6' type='u8' description='Data byte value' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Data7' type='u8' description='Data byte value' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Data8' type='u8' description='Data byte value' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='IdxBase' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='(.Message &gt; 0) &amp; (.Message &lt;= MESSAGES)' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+									<exp exp='.IdxBase = (.Message - 1) &lt;&lt; 3' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+									<exp exp='MSG_DATA[.IdxBase] = .Data1' />
+									<exp exp='MSG_DATA[.IdxBase + 1] = .Data2' />
+									<exp exp='MSG_DATA[.IdxBase + 2] = .Data3' />
+									<exp exp='MSG_DATA[.IdxBase + 3] = .Data4' />
+									<exp exp='MSG_DATA[.IdxBase + 4] = .Data5' />
+									<exp exp='MSG_DATA[.IdxBase + 5] = .Data6' />
+									<exp exp='MSG_DATA[.IdxBase + 6] = .Data7' />
+									<exp exp='MSG_DATA[.IdxBase + 7] = .Data8' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+									<exp exp='.Return = 1' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+									<exp exp='.Return = 0' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Initialize' description='Initialises the device' >
+						<return name='Return' type='v0' description='' isconst='0' isinit='0' usrinit='' setinit='' />
+						<local name='Temp' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='index' type='u8' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+						<command class_type='native' title='C Code' ccode='  //#ifdef MX_AVR
+	clear_bit(TIMSK, TOIE0);					//disable tc0 interrupts
+	TCCR0 = 0x01;(1 &lt;&lt; CS00);						//tc0: normal mode, /8 prescaler
+   //#ifdef TCCR0B
+	//TCCR0A = 0;
+   //#endif
+  //#endif' cmdcolor='3389439' cmdcolor_sec='3389439' language='C' />
+						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+							<exp exp='TX = 1' />
+							<exp exp='CS = 0' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+							<exp exp='.Temp = RX' />
+							<exp exp='.Temp = FAULT' />
+							<exp exp='.Temp = VREG' />
+						</command>
+						<command class_type='delay' title='Delay' cmdcolor='7895044' cmdcolor_sec='7895044' exp='1' type='1' />
+						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+							<exp exp='LIN_STATE = STATE_READY' />
+						</command>
+						<command class_type='delay' title='Delay' cmdcolor='7895044' cmdcolor_sec='7895044' exp='MODEPAUSE' type='0' />
+						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+							<exp exp='CS = 1' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+							<exp exp='LIN_STATE = STATE_OPERATION' />
+						</command>
+						<command class_type='delay' title='Delay' cmdcolor='7895044' cmdcolor_sec='7895044' exp='MODEPAUSE' type='0' />
+						<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='MESSAGES &gt; 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+									<exp exp='MSG_ID[0] = MSG1_ID' />
+									<exp exp='MSG_CNT[0] = MSG1_BYTES' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='MSG1_TX_RX = 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+											<exp exp='MSG_CNT[0] = MSG_CNT[0] | MSG_TX_MSK' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='MESSAGES &gt; 1' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+											<exp exp='MSG_ID[1] = MSG2_ID' />
+											<exp exp='MSG_CNT[1] = MSG2_BYTES' />
+										</command>
+										<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='MSG2_TX_RX = 0' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+													<exp exp='MSG_CNT[1] = MSG_CNT[1] | MSG_TX_MSK' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+										<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='MESSAGES &gt; 2' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+													<exp exp='MSG_ID[2] = MSG3_ID' />
+													<exp exp='MSG_CNT[2] = MSG3_BYTES' />
+												</command>
+												<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='MSG3_TX_RX = 0' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+															<exp exp='MSG_CNT[2] = MSG_CNT[2] | MSG_TX_MSK' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='MESSAGES &gt; 3' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+															<exp exp='MSG_ID[3] = MSG4_ID' />
+															<exp exp='MSG_CNT[3] = MSG4_BYTES' />
+														</command>
+														<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='MSG4_TX_RX = 0' swap='0' >
+															<flowline >
+																<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																	<exp exp='MSG_CNT[3] = MSG_CNT[3] | MSG_TX_MSK' />
+																</command>
+															</flowline>
+															<flowline />
+														</command>
+														<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='MESSAGES &gt; 4' swap='0' >
+															<flowline >
+																<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																	<exp exp='MSG_ID[4] = MSG5_ID' />
+																	<exp exp='MSG_CNT[4] = MSG5_BYTES' />
+																</command>
+																<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='MSG5_TX_RX = 0' swap='0' >
+																	<flowline >
+																		<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																			<exp exp='MSG_CNT[4] = MSG_CNT[4] | MSG_TX_MSK' />
+																		</command>
+																	</flowline>
+																	<flowline />
+																</command>
+																<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='MESSAGES &gt; 5' swap='0' >
+																	<flowline >
+																		<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																			<exp exp='MSG_ID[5] = MSG6_ID' />
+																			<exp exp='MSG_CNT[5] = MSG6_BYTES' />
+																		</command>
+																		<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='MSG6_TX_RX = 0' swap='0' >
+																			<flowline >
+																				<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																					<exp exp='MSG_CNT[5] = MSG_CNT[5] | MSG_TX_MSK' />
+																				</command>
+																			</flowline>
+																			<flowline />
+																		</command>
+																		<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='MESSAGES &gt; 6' swap='0' >
+																			<flowline >
+																				<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																					<exp exp='MSG_ID[6] = MSG7_ID' />
+																					<exp exp='MSG_CNT[6] = MSG7_BYTES' />
+																				</command>
+																				<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='MSG7_TX_RX = 0' swap='0' >
+																					<flowline >
+																						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																							<exp exp='MSG_CNT[6] = MSG_CNT[6] | MSG_TX_MSK' />
+																						</command>
+																					</flowline>
+																					<flowline />
+																				</command>
+																				<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='MESSAGES &gt; 7' swap='0' >
+																					<flowline >
+																						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																							<exp exp='MSG_ID[7] = MSG8_ID' />
+																							<exp exp='MSG_CNT[7] = MSG8_BYTES' />
+																						</command>
+																						<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='MSG8_TX_RX = 0' swap='0' >
+																							<flowline >
+																								<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+																									<exp exp='MSG_CNT[7] = MSG_CNT[7] | MSG_TX_MSK' />
+																								</command>
+																							</flowline>
+																							<flowline />
+																						</command>
+																					</flowline>
+																					<flowline />
+																				</command>
+																			</flowline>
+																			<flowline />
+																		</command>
+																	</flowline>
+																	<flowline />
+																</command>
+															</flowline>
+															<flowline />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+							<exp exp='RX_ADDR = 0' />
+						</command>
+						<command class_type='calculation' title='RX Timer - temporary value' cmdcolor='7895044' cmdcolor_sec='7895044' >
+							<exp exp='TIMER_HI_RX = 0' />
+							<exp exp='TIMER_LO_RX = 10' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='' >
+						<return name='Return' type='v0' description='' isconst='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='call' title='Call Macro' cmdcolor='1975743' cmdcolor_sec='1975743' macro='Ev_Initialise' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='WakeUp' description='Wake Up the device' >
+						<return name='Return' type='v0' description='' isconst='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+							<exp exp='CS = 1' />
+						</command>
+						<command class_type='delay' title='Delay' cmdcolor='7895044' cmdcolor_sec='7895044' exp='MODEPAUSE' type='0' />
+						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+							<exp exp='LIN_STATE = STATE_OPERATION' />
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='175423b4-b359-4aa7-9bc4-1867301742af' vmin='1' vmaj='1' codename='dash_IO_flasher1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='label' data='LIN Slave' />
+					<value target='icon_image' data='@00000001:LINslave.png' />
+					<value target='flash_time' data='250' />
+					<value target='Tx_on_color' data='65280' />
+					<value target='Tx_off_color' data='13056' />
+					<value target='Rx_on_color' data='255' />
+					<value target='Rx_off_color' data='65' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<keymap />
+	<panel2d shadows='0' lighting='0' brightness='0' perspective='0' >
+		<background rgb='9737364' img='' style='0' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel2d>
+	<panel3d shadows='0' lighting='0' brightness='0' perspective='0' >
+		<background rgb='8409120' img='' style='0' />
+		<table rgb='7360576' img='' style='0' size='25' />
+		<camera xe='0' ye='0' ze='138.913' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey0 xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey1 xe='-3.67394e-14' ye='0' ze='-300' xt='0' yt='0' zt='0' xquat='0' yquat='1' zquat='0' wquat='6.12323e-17' />
+		<camerakey2 xe='0' ye='-300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.707107' yquat='0' zquat='0' wquat='0.707107' />
+		<camerakey3 xe='-3.67394e-14' ye='300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-4.32978e-17' yquat='0.707107' zquat='0.707107' wquat='4.32978e-17' />
+		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
+		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
+		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
+	</panel3d>
+	<layout >
+		<view type='0' name='ListenForMessages' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVgUAAHcDAAA' zoom='50' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Wait_HalfTBit' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVgUAAHcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadByte' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVgUAAHcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Initialize' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVgUAAHcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SendByte' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVgUAAHcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadDataCount' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVgUAAHcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadData' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVgUAAHcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetData' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVgUAAHcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVgUAAHcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadAddress' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVgUAAHcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetState' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVgUAAHcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='PowerDown' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVgUAAHcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='WakeUp' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVgUAAHcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVgUAAHcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVgUAAHcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

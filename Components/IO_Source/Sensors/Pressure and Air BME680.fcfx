@@ -1,0 +1,1028 @@
+<root>
+<document scada='0' schema='102' license='10,FCDev,PUA8F7' title='' description='' fcversion='655360' target='PIC.16F.16F1937' >
+	<config data='!0,fe2!10,1eff%0,2%3,0%5,1%6,1%7,1%8,1%9,3%b,1%c,0%d,0%10,3%14,3%18,0%19,1%1a,1%1c,1%1d,0' clkspd='19660800' simspd='1' usewdt='0' constif='0' Use3V3='0' />
+	<plugins >
+		<dll_models enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug />
+	<traces />
+	<ghost >
+		<FK2 >
+			<data name='FK2D0' port='4294967295' pin='4294967295' />
+			<data name='FK2D1' port='4294967295' pin='4294967295' />
+			<data name='FK2D2' port='4294967295' pin='4294967295' />
+			<data name='FK2D3' port='4294967295' pin='4294967295' />
+			<data name='FK2D4' port='4294967295' pin='4294967295' />
+			<data name='FK2D5' port='4294967295' pin='4294967295' />
+			<data name='FK2D6' port='4294967295' pin='4294967295' />
+			<data name='FK2D7' port='4294967295' pin='4294967295' />
+			<data name='FK2D8' port='4294967295' pin='4294967295' />
+			<data name='FK2D9' port='4294967295' pin='4294967295' />
+			<data name='FK2D10' port='4294967295' pin='4294967295' />
+			<data name='FK2D11' port='4294967295' pin='4294967295' />
+			<data name='FK2D12' port='4294967295' pin='4294967295' />
+			<data name='FK2D13' port='4294967295' pin='4294967295' />
+			<data name='FK2D14' port='4294967295' pin='4294967295' />
+			<data name='FK2D15' port='4294967295' pin='4294967295' />
+			<data name='FK2A0' port='4294967295' pin='4294967295' />
+			<data name='FK2A1' port='4294967295' pin='4294967295' />
+			<data name='FK2A2' port='4294967295' pin='4294967295' />
+			<data name='FK2A3' port='4294967295' pin='4294967295' />
+			<data name='FK2A4' port='4294967295' pin='4294967295' />
+			<data name='FK2A5' port='4294967295' pin='4294967295' />
+		</FK2>
+		<ICD >
+			<data name='AnalogPrescaleValue' value='19' />
+			<data name='DigitalSampleRate' value='100000' />
+			<data name='BreakpointCount' value='8' />
+			<data name='CallStackDepthCount' value='8' />
+			<data name='ClockPort' value='1' />
+			<data name='ClockPin' value='6' />
+			<data name='DataPort' value='1' />
+			<data name='DataPin' value='7' />
+			<data name='UseDefaultPins' value='1' />
+			<data name='WrapEnabled' value='1' />
+			<data name='CommsDelayOverridden' value='0' />
+			<data name='CommsDelay' value='9' />
+			<data name='CalculatedCommsDelay' value='9' />
+			<data name='AnalogEB2PrescaleValue' value='2' />
+			<data name='DigitalEB2SampleRate' value='100000' />
+		</ICD>
+		<pins >
+			<digital A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+			<analog A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+		</pins>
+	</ghost>
+	<components >
+		<settings autoimg='0' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='c8c865ac-a47b-43b9-9fb0-fa21ff6a9798' vstate='40' vmin='0' vmaj='1' srcleaf='' visiblename='Air Quality (BME680)' description='A low power sensor capable of measuring air quality, pressure, temperature and humidiy.
+Connected to microcontroller using either I2C or SPI communications bus.' category='Environmental' category2='' category3='' bIs2dOnly='0' bIs3dOnly='0' catenable='1' author='Matrix TSL' manuname='Bosch' manucode='BME680' sysinfo='0' keywords='' dynamic='1' scadaCompatible='0' embeddedCompatible='1' iconpath='..\..\icons\components\Science-Pressure-icon-32.png' />
+		<component class_type='root' codename='BME680' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+			<resources />
+			<properties >
+				<property name='Comms Type' target='CommsType' typeid='16' hidden='0' locked='0' info='' filter='000I2C
+001SPI' />
+				<property name='Simulate Comms' target='SimulateComms' typeid='7' hidden='0' locked='0' info='Allows the communications to be simulated to allow for data to be sent via injector components,' />
+				<property name='I2C Comms' folder='property_2' hidden='0' >
+					<property name='Channel' target='cal_i2c1::CHANNEL' typeid='16' hidden='0' locked='0' info='Channel selection' filter='000Software
+001Channel 1
+' />
+					<property name='SDO Address Pin' target='AddressPin' typeid='16' hidden='0' locked='0' info='The SDO pin specifies the least significant bit of the device address.' filter='236GND
+238VCC' />
+					<property name='SDA' target='cal_i2c1::SDA' typeid='5' hidden='0' locked='1' info='Pin used for SDA (data signal)' />
+					<property name='SDA Remap Pin' target='cal_i2c1::SDAPins' typeid='16' hidden='1' locked='0' info='' filter='016$PORTC.0
+017$PORTC.1
+018$PORTC.2
+019$PORTC.3
+020$PORTC.4
+021$PORTC.5
+022$PORTC.6
+023$PORTC.7
+008$PORTB.0
+009$PORTB.1
+010$PORTB.2
+011$PORTB.3
+012$PORTB.4
+013$PORTB.5
+014$PORTB.6
+015$PORTB.7' />
+					<property name='SCL' target='cal_i2c1::SCL' typeid='5' hidden='0' locked='1' info='Pin used for SCL (clock signal)' />
+					<property name='SCL Remap Pin' target='cal_i2c1::SCLPins' typeid='16' hidden='1' locked='0' info='' filter='016$PORTC.0
+017$PORTC.1
+018$PORTC.2
+019$PORTC.3
+020$PORTC.4
+021$PORTC.5
+022$PORTC.6
+023$PORTC.7
+008$PORTB.0
+009$PORTB.1
+010$PORTB.2
+011$PORTB.3
+012$PORTB.4
+013$PORTB.5
+014$PORTB.6
+015$PORTB.7' />
+					<property name='Baud Select' target='cal_i2c1::BAUD_LIST' typeid='16' hidden='0' locked='0' info='Baud rate option selector' filter='000Custom
+001100KHz
+002400KHz
+0031MHz' />
+					<property name='Baud Rate' target='cal_i2c1::BAUD' typeid='14' hidden='0' locked='1' info='Baud rate to be used' />
+					<property name='Simulation' folder='property_4' hidden='1' >
+						<property name='Scope Traces' target='cal_i2c1::ScopeTraces' typeid='7' hidden='0' locked='0' info='Selects if the component pin connections are automatically generated on the data recorder window or not.
+Yes: Automatically add the component pins to a group on the data recorder which will reflect the sim data during simultion.
+No: Do not show the pin signals on the data recorder window.' />
+						<property name='Console Data' target='cal_i2c1::ConsoleData' typeid='7' hidden='0' locked='0' info='Selects if the console data is automatically generated or not' />
+						<property name='API' target='cal_i2c1::Injector' typeid='16' hidden='0' locked='0' info='Specifies the injector component on the panel to interact with to provide comms simulation.' filter='000' />
+					</property>
+				</property>
+				<property name='SPI Comms' folder='property_3' hidden='1' >
+					<property name='Channel' target='cal_spi1::CHANNEL' typeid='16' hidden='0' locked='0' info='SPI Channel selector' filter='000Software
+001Channel 1
+' />
+					<property name='Prescale' target='cal_spi1::PR_SCALE' typeid='16' hidden='0' locked='0' info='Prescale option selector' filter='004Fosc/4
+016Fosc/16
+064Fosc/64' />
+					<property name='MOSI' target='cal_spi1::MOSI' typeid='5' hidden='0' locked='1' info='SPI Data Out Pin SDO - Also Known as Master Out Slave In (MOSI) when used in Master mode.' />
+					<property name='MOSI Remap Pin' target='cal_spi1::MOSIPins' typeid='16' hidden='1' locked='0' info='Select which the target pin to assign the MOSI hardware pin functionality.' filter='000$PORTC.0
+001$PORTC.1
+002$PORTC.2
+003$PORTC.3
+004$PORTC.4
+005$PORTC.5
+006$PORTC.6
+007$PORTC.7
+008$PORTB.0
+009$PORTB.1
+010$PORTB.2
+011$PORTB.3
+012$PORTB.4
+013$PORTB.5
+014$PORTB.6
+015$PORTB.7' />
+					<property name='MISO' target='cal_spi1::MISO' typeid='5' hidden='0' locked='1' info='SPI Data In Pin SDI - Also Known as Master In Slave Out (MISO) when used in Master mode.' />
+					<property name='MISO Remap Pin' target='cal_spi1::MISOPins' typeid='16' hidden='1' locked='0' info='Select which the target pin to assign the MISO hardware pin functionality.' filter='016$PORTC.0
+017$PORTC.1
+018$PORTC.2
+019$PORTC.3
+020$PORTC.4
+021$PORTC.5
+022$PORTC.6
+023$PORTC.7
+008$PORTB.0
+009$PORTB.1
+010$PORTB.2
+011$PORTB.3
+012$PORTB.4
+013$PORTB.5
+014$PORTB.6
+015$PORTB.7' />
+					<property name='CLK' target='cal_spi1::CLK' typeid='5' hidden='0' locked='1' info='SPI Clock Pin CLK - The Clock signal is driven by the SPI master.' />
+					<property name='CLK Remap Pin' target='cal_spi1::CLKPins' typeid='16' hidden='1' locked='0' info='Select which the target pin to assign the CLK hardware pin functionality.' filter='000$PORTC.0
+001$PORTC.1
+002$PORTC.2
+003$PORTC.3
+004$PORTC.4
+005$PORTC.5
+006$PORTC.6
+007$PORTC.7
+008$PORTB.0
+009$PORTB.1
+010$PORTB.2
+011$PORTB.3
+012$PORTB.4
+013$PORTB.5
+014$PORTB.6
+015$PORTB.7' />
+					<property name='CS / SS' target='cal_spi1::SS' typeid='5' hidden='0' locked='0' info='Chip Select / Slave Select Pin 
+Master Mode: General purpose output pin used to select the remote SPI device.
+Slave Mode: Hardware chip select pin input used to select the SPI device.
+' />
+					<property name='Simulation' folder='property_5' hidden='1' >
+						<property name='Scope Traces' target='cal_spi1::ScopeTraces' typeid='7' hidden='0' locked='0' info='Selects if the scope traces are automatically generated or not' />
+						<property name='Console Data' target='cal_spi1::ConsoleData' typeid='7' hidden='0' locked='0' info='Selects if the console data is automatically generated or not' />
+						<property name='API' target='cal_spi1::Injector' typeid='16' hidden='0' locked='0' info='' filter='000' />
+						<property name='API CS Pin' target='cal_spi1::InjectorCS' typeid='21' hidden='1' locked='0' info='' />
+					</property>
+				</property>
+				<property name='Sensor Configuration' folder='property_1' hidden='0' >
+					<property name='Humidity Oversampling' target='HumidityOversampling' typeid='16' hidden='0' locked='0' info='Controls the humidity oversampling setting' filter='000Skipped
+001Oversampling x1
+002Oversampling x2
+003Oversampling x4
+004Oversampling x8
+005Oversampling x16' />
+					<property name='Temperature Oversampling' target='TemperatureOversampling' typeid='16' hidden='0' locked='0' info='Controls the temperature oversampling setting' filter='000Skipped
+001Oversampling x1
+002Oversampling x2
+003Oversampling x4
+004Oversampling x8
+005Oversampling x16' />
+					<property name='Pressure Oversampling' target='PressureOversampling' typeid='16' hidden='0' locked='0' info='Controls the pressure oversampling setting' filter='000Skipped
+001Oversampling x1
+002Oversampling x2
+003Oversampling x4
+004Oversampling x8
+005Oversampling x16' />
+					<property name='IIR Filter' target='IIRFilter' typeid='16' hidden='0' locked='0' info='Controls the filter coefficient used on the temperature and pressure data' filter='0000
+0011
+0023
+0037
+00415
+00531
+00663
+007127' />
+					<property name='Gas Wait Time' target='GasWaitTime' typeid='16' hidden='0' locked='0' info='Gas sensor wait time multiplication factor' filter='0001
+0014
+00216
+00364' />
+				</property>
+			</properties>
+			<values >
+				<value target='CommsType' data='000' />
+				<value target='SimulateComms' data='0' />
+				<value target='cal_i2c1::CHANNEL' data='001' />
+				<value target='AddressPin' data='236' />
+				<value target='cal_i2c1::SDA' data='$PORTC.4' />
+				<value target='cal_i2c1::SDAPins' data='000' />
+				<value target='cal_i2c1::SCL' data='$PORTC.3' />
+				<value target='cal_i2c1::SCLPins' data='001' />
+				<value target='cal_i2c1::BAUD_LIST' data='001' />
+				<value target='cal_i2c1::BAUD' data='100000' />
+				<value target='cal_i2c1::ScopeTraces' data='0' />
+				<value target='cal_i2c1::ConsoleData' data='0' />
+				<value target='cal_i2c1::Injector' data='000' />
+				<value target='cal_spi1::CHANNEL' data='001' />
+				<value target='cal_spi1::PR_SCALE' data='004' />
+				<value target='cal_spi1::MOSI' data='$PORTC.5' />
+				<value target='cal_spi1::MOSIPins' data='008' />
+				<value target='cal_spi1::MISO' data='$PORTC.4' />
+				<value target='cal_spi1::MISOPins' data='013' />
+				<value target='cal_spi1::CLK' data='$PORTC.3' />
+				<value target='cal_spi1::CLKPins' data='004' />
+				<value target='cal_spi1::SS' data='$PORTC.2' />
+				<value target='cal_spi1::ScopeTraces' data='0' />
+				<value target='cal_spi1::ConsoleData' data='0' />
+				<value target='cal_spi1::Injector' data='000' />
+				<value target='cal_spi1::InjectorCS' data='' />
+				<value target='HumidityOversampling' data='001' />
+				<value target='TemperatureOversampling' data='001' />
+				<value target='PressureOversampling' data='001' />
+				<value target='IIRFilter' data='000' />
+				<value target='GasWaitTime' data='000' />
+			</values>
+			<events >
+				<event class='Components' event='Property' target='Ev_Property' />
+				<event class='Components' event='Initialise' target='Ev_Initialise' />
+			</events>
+			<apis />
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='false' type='b1' description='' isconst='1' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='SPI_Mem_Page' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0x00' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='true' type='b1' description='' isconst='1' isHidden='0' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='Ev_Initialise' description='Initialisation routine for the component once the component is linked to its parent' statediag='0' >
+						<return name='Return' type='u32' description='Non-zero to prevent initialisation' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Initialise_Sim' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='SimulateComms' swap='0' >
+							<flowline >
+								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Initialise' />
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SampleHumidity_Sim' description='Reads the humidity measurement from the sensor' statediag='0' >
+						<return name='Return' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='raw_reading' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='lsb' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='msb' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='SimulateComms' swap='0' >
+							<flowline >
+								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SampleHumidity' >
+									<return exp='.Return' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='Hum' macro='SetValue' >
+									<argument exp='.Return' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='Hum' macro='GetValue' >
+									<return exp='.Return' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='ControlHeater' description='Controls the onboard heater required for the air quality measurement' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Setting' type='u8' description='Range: 0-9' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Property' description='Sent when a property has been changed by the User' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='CommsType' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<argument exp='cal_i2c1' />
+									<argument exp='&quot;ENABLED&quot;' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<argument exp='cal_spi1' />
+									<argument exp='&quot;ENABLED&quot;' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;property_2&quot;' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;property_3&quot;' />
+									<argument exp='1' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<argument exp='cal_i2c1' />
+									<argument exp='&quot;ENABLED&quot;' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<argument exp='cal_spi1' />
+									<argument exp='&quot;ENABLED&quot;' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;property_2&quot;' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;property_3&quot;' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='SimulateComms' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;property_4&quot;' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;property_5&quot;' />
+									<argument exp='1' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;property_4&quot;' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;property_5&quot;' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SampleHumidity' description='Reads the humidity measurement from the sensor' statediag='0' >
+						<return name='Return' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='raw_reading' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='lsb' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='msb' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+							<return exp='.msb' />
+							<argument exp='0x25' />
+						</command>
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+							<return exp='.lsb' />
+							<argument exp='0x26' />
+						</command>
+						<command class_type='calculation' title='Combine values into 16-bit reading' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.raw_reading = .msb' />
+							<exp exp='.raw_reading = .raw_reading &lt;&lt; 8' />
+							<exp exp='.raw_reading = .raw_reading | .lsb' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SampleTemperature' description='Reads the temperature measurement from the sensor' statediag='0' >
+						<return name='Return' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='raw_reading' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='lsb' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='xlsb' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='msb' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+							<return exp='.msb' />
+							<argument exp='0x22' />
+						</command>
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+							<return exp='.lsb' />
+							<argument exp='0x23' />
+						</command>
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+							<return exp='.xlsb' />
+							<argument exp='0x24' />
+						</command>
+						<command class_type='calculation' title='Combine values into 20-bit reading' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.raw_reading = .msb' />
+							<exp exp='.raw_reading = .raw_reading &lt;&lt; 8' />
+							<exp exp='.raw_reading = .raw_reading | .lsb' />
+							<exp exp='.raw_reading = .raw_reading &lt;&lt; 4' />
+							<exp exp='.raw_reading = .raw_reading | (.xlsb &gt;&gt; 4)' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='ReadRegister' description='Reads an 8-bit value from one of the device registers at the specified address' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Address' type='u8' description='Register Address' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='CommsType' swap='0' >
+							<flowline >
+								<command class_type='call' title='Enable SPi Device' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_spi1' macro='Master_Enable_CS' />
+								<command class_type='call' title='Internal Register address + Read mode' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_spi1' macro='Master_Byte' >
+									<argument exp='.Address | 0x80' />
+								</command>
+								<command class_type='call' title='Device address + Read mode' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_spi1' macro='Master_Byte' >
+									<return exp='.Return' />
+									<argument exp='0x5A' />
+								</command>
+								<command class_type='call' title='Disable SPi Device' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_spi1' macro='Master_Disable_CS' />
+							</flowline>
+							<flowline >
+								<command class_type='call' title='I2C Start' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Master_Start' />
+								<command class_type='call' title='Send Device Address - Write Mode' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Master_TxByte' >
+									<argument exp='AddressPin' />
+								</command>
+								<command class_type='call' title='Send Internal Register Address' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Master_TxByte' >
+									<argument exp='.Address' />
+								</command>
+								<command class_type='call' title='I2C Start' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Master_Restart' />
+								<command class_type='call' title='Send Device Address - Read Mode' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Master_TxByte' >
+									<argument exp='AddressPin | 0x01' />
+								</command>
+								<command class_type='call' title='Collect register value' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Master_RxByte' >
+									<return exp='.Return' />
+									<argument exp='1' />
+								</command>
+								<command class_type='call' title='I2C Stop' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Master_Stop' />
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SamplePressure_Sim' description='Reads the pressure measurement from the sensor' statediag='0' >
+						<return name='Return' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='raw_reading' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='lsb' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='xlsb' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='msb' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='SimulateComms' swap='0' >
+							<flowline >
+								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SamplePressure' >
+									<return exp='.Return' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='Press' macro='SetValue' >
+									<argument exp='.Return' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='Press' macro='GetValue' >
+									<return exp='.Return' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SamplePressure' description='Reads the pressure measurement from the sensor' statediag='0' >
+						<return name='Return' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='raw_reading' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='lsb' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='xlsb' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='msb' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+							<return exp='.msb' />
+							<argument exp='0x1F' />
+						</command>
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+							<return exp='.lsb' />
+							<argument exp='0x20' />
+						</command>
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+							<return exp='.xlsb' />
+							<argument exp='0x21' />
+						</command>
+						<command class_type='calculation' title='Combine values into 20-bit reading' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.raw_reading = .msb' />
+							<exp exp='.raw_reading = .raw_reading &lt;&lt; 8' />
+							<exp exp='.raw_reading = .raw_reading | .lsb' />
+							<exp exp='.raw_reading = .raw_reading &lt;&lt; 4' />
+							<exp exp='.raw_reading = .raw_reading | (.xlsb &gt;&gt; 4)' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SampleGasResistance' description='Reads the gas resistance measurement from the sensor' statediag='0' >
+						<return name='Return' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='raw_reading' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='lsb' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='msb' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='range' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+							<return exp='.msb' />
+							<argument exp='0x2A' />
+						</command>
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+							<return exp='.lsb' />
+							<argument exp='0x2B' />
+						</command>
+						<command class_type='calculation' title='Combine values into 10-bit reading' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.raw_reading = .msb' />
+							<exp exp='.raw_reading = .raw_reading &lt;&lt; 2' />
+							<exp exp='.raw_reading = .raw_reading | (.lsb &gt;&gt; 6)' />
+						</command>
+						<command class_type='calculation' title='Get ADC Range of gas resistance' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.range = .lsb &amp; 0x0F' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SampleGasResistance_Sim' description='Reads the gas resistance measurement from the sensor' statediag='0' >
+						<return name='Return' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='raw_reading' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='lsb' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='msb' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='range' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='SimulateComms' swap='0' >
+							<flowline >
+								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SampleGasResistance' >
+									<return exp='.Return' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='Air' macro='SetValue' >
+									<argument exp='.Return' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='Air' macro='GetValue' >
+									<return exp='.Return' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SampleTemperature_Sim' description='Reads the temperature measurement from the sensor' statediag='0' >
+						<return name='Return' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='raw_reading' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='lsb' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='xlsb' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='msb' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='SimulateComms' swap='0' >
+							<flowline >
+								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SampleTemperature' >
+									<return exp='.Return' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='Temp' macro='SetValue' >
+									<argument exp='.Return' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='Temp' macro='GetValue' >
+									<return exp='.Return' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='WriteRegister' description='Writes an 8-bit value to one of the device registers at the specified address' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Address' type='u8' description='Register Address' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Data' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='CommsType' swap='0' >
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Address &gt; 0x7F' swap='0' >
+									<flowline >
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='SPI_Mem_Page = 1' swap='0' >
+											<flowline >
+												<command class_type='call' title='Enable SPi Device' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_spi1' macro='Master_Enable_CS' />
+												<command class_type='call' title='Internal Register address + Write mode' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_spi1' macro='Master_Byte' >
+													<argument exp='0x73' />
+												</command>
+												<command class_type='call' title='Assign Page 0' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_spi1' macro='Master_Byte' >
+													<argument exp='0x00' />
+												</command>
+												<command class_type='call' title='Disable SPi Device' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_spi1' macro='Master_Disable_CS' />
+												<command class_type='calculation' title='Store that we are now in page 0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='SPI_Mem_Page = 0' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='SPI_Mem_Page = 0' swap='0' >
+											<flowline >
+												<command class_type='call' title='Enable SPi Device' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_spi1' macro='Master_Enable_CS' />
+												<command class_type='call' title='Internal Register address + Write mode' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_spi1' macro='Master_Byte' >
+													<argument exp='0x73' />
+												</command>
+												<command class_type='call' title='Assign Page 1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_spi1' macro='Master_Byte' >
+													<argument exp='0x10' />
+												</command>
+												<command class_type='call' title='Disable SPi Device' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_spi1' macro='Master_Disable_CS' />
+												<command class_type='calculation' title='Store that we are now in page 1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='SPI_Mem_Page = 1' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='call' title='Enable SPi Device' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_spi1' macro='Master_Enable_CS' />
+								<command class_type='call' title='Internal Register address + Write mode' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_spi1' macro='Master_Byte' >
+									<argument exp='.Address &amp; 0x7F' />
+								</command>
+								<command class_type='call' title='Device address + Read mode' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_spi1' macro='Master_Byte' >
+									<argument exp='.Data' />
+								</command>
+								<command class_type='call' title='Disable SPi Device' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_spi1' macro='Master_Disable_CS' />
+							</flowline>
+							<flowline >
+								<command class_type='call' title='I2C Start' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Master_Start' />
+								<command class_type='call' title='Send Device Address - Write Mode' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Master_TxByte' >
+									<argument exp='AddressPin' />
+								</command>
+								<command class_type='call' title='Send Internal Register Address' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Master_TxByte' >
+									<argument exp='.Address' />
+								</command>
+								<command class_type='call' title='Send Register Value' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Master_TxByte' >
+									<argument exp='.Data' />
+								</command>
+								<command class_type='call' title='I2C Stop' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Master_Stop' />
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Initialise' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='CommsType' swap='0' >
+							<flowline >
+								<command class_type='call' title='SPI Init' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_spi1' macro='Master_Init' />
+							</flowline>
+							<flowline >
+								<command class_type='call' title='I2C Init' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Master_Init' />
+							</flowline>
+						</command>
+						<command class_type='call' title='Mode Selection - Temp/Pressure Oversampling + Forced Mode' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+							<argument exp='0x74' />
+							<argument exp='(TemperatureOversampling &lt;&lt; 5) | (PressureOversampling &lt;&lt; 2) | 0x01' />
+						</command>
+						<command class_type='call' title='Humidity Oversampling' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+							<argument exp='0x72' />
+							<argument exp='HumidityOversampling' />
+						</command>
+						<command class_type='call' title='IIR Filter' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+							<argument exp='0x75' />
+							<argument exp='IIRFilter &lt;&lt; 2' />
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='f51b5e55-6a64-49ad-b79d-2b57db0cd54b' vmin='3' vmaj='1' codename='Press' panelId='-1' x='6' y='-5' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='1' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='is_slider' data='001' />
+					<value target='val_max' data='1100.000000' />
+					<value target='val_min' data='300.000000' />
+					<value target='bg_color' data='0' />
+					<value target='ink_color' data='49152' />
+					<value target='neg_color' data='33023' />
+					<value target='label_color' data='16777215' />
+					<value target='bezel_color' data='2960685' />
+					<value target='resolution' data='10' />
+					<value target='marks_count' data='9' />
+					<value target='marks_subdiv' data='4' />
+					<value target='dec_places' data='0' />
+					<value target='num_size' data='6' />
+					<value target='num_font' data='Arial Narrow' />
+					<value target='label_text' data='Press' />
+					<value target='label_size' data='8' />
+					<value target='label_font' data='Arial Narrow' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='4cbae05a-fee8-4685-b94c-829abc3466ab' vmin='0' vmaj='1' codename='shape_cuboid1' panelId='-1' x='0' y='0' z='-0.67' xsz='1.5625' ysz='1.71875' zsz='0.03125' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Color' data='1973790' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='f51b5e55-6a64-49ad-b79d-2b57db0cd54b' vmin='3' vmaj='1' codename='Temp' panelId='-1' x='-18' y='-5' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='1' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='is_slider' data='001' />
+					<value target='val_max' data='80.000000' />
+					<value target='val_min' data='-40.000000' />
+					<value target='bg_color' data='0' />
+					<value target='ink_color' data='49152' />
+					<value target='neg_color' data='33023' />
+					<value target='label_color' data='16777215' />
+					<value target='bezel_color' data='2960685' />
+					<value target='resolution' data='10' />
+					<value target='marks_count' data='13' />
+					<value target='marks_subdiv' data='1' />
+					<value target='dec_places' data='0' />
+					<value target='num_size' data='6' />
+					<value target='num_font' data='Arial Narrow' />
+					<value target='label_text' data='Temp' />
+					<value target='label_size' data='8' />
+					<value target='label_font' data='Arial Narrow' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='f51b5e55-6a64-49ad-b79d-2b57db0cd54b' vmin='3' vmaj='1' codename='Hum' panelId='-1' x='-6' y='-5' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='1' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='is_slider' data='001' />
+					<value target='val_max' data='100.000000' />
+					<value target='val_min' data='0.000000' />
+					<value target='bg_color' data='0' />
+					<value target='ink_color' data='49152' />
+					<value target='neg_color' data='33023' />
+					<value target='label_color' data='16777215' />
+					<value target='bezel_color' data='2960685' />
+					<value target='resolution' data='10' />
+					<value target='marks_count' data='11' />
+					<value target='marks_subdiv' data='4' />
+					<value target='dec_places' data='0' />
+					<value target='num_size' data='6' />
+					<value target='num_font' data='Arial Narrow' />
+					<value target='label_text' data='Hum' />
+					<value target='label_size' data='8' />
+					<value target='label_font' data='Arial Narrow' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='f51b5e55-6a64-49ad-b79d-2b57db0cd54b' vmin='3' vmaj='1' codename='Air' panelId='-1' x='18' y='-5' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='1' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='is_slider' data='001' />
+					<value target='val_max' data='500.000000' />
+					<value target='val_min' data='0.000000' />
+					<value target='bg_color' data='0' />
+					<value target='ink_color' data='49152' />
+					<value target='neg_color' data='33023' />
+					<value target='label_color' data='16777215' />
+					<value target='bezel_color' data='2960685' />
+					<value target='resolution' data='10' />
+					<value target='marks_count' data='11' />
+					<value target='marks_subdiv' data='1' />
+					<value target='dec_places' data='0' />
+					<value target='num_size' data='6' />
+					<value target='num_font' data='Arial Narrow' />
+					<value target='label_text' data='Air' />
+					<value target='label_size' data='8' />
+					<value target='label_font' data='Arial Narrow' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='9a971ee1-28e0-4e47-9c09-71268383fc75' vmin='0' vmaj='1' codename='shape_label1' panelId='-1' x='0' y='21' z='0' xsz='0.841463' ysz='0.75' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Color' data='16777215' />
+					<value target='Background' data='-1' />
+					<value target='Font' data='Arial' />
+					<value target='Text' data='BME680' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='d497dced-8e07-49d5-a9f9-4e67c43cb186' vmin='2' vmaj='1' codename='bezel_radiused1' panelId='-1' x='0' y='0' z='-0.67' xsz='52' ysz='57' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='bezel_thick' data='1.000000' />
+					<value target='margin' data='0.000000' />
+					<value target='color' data='3947580' />
+					<value target='fit_outside' data='0' />
+					<value target='fit_inside' data='0' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='c67171df-0ad6-4b11-8361-cfe14b072847' vmin='1' vmaj='2' codename='cal_spi1' panelId='-1' x='0' y='0' z='0' xsz='0.2' ysz='0.2' zsz='0.2' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='ENABLED' data='0' />
+					<value target='REF' data='1' />
+					<value target='CHANNEL' data='001' />
+					<value target='MOSI' data='$PORTC.5' />
+					<value target='MOSIPins' data='008' />
+					<value target='MISO' data='$PORTC.4' />
+					<value target='MISOPins' data='013' />
+					<value target='CLK' data='$PORTC.3' />
+					<value target='CLKPins' data='004' />
+					<value target='UseAutoCS' data='1' />
+					<value target='UseCS' data='0' />
+					<value target='SS' data='$PORTC.2' />
+					<value target='CSPolarity' data='000' />
+					<value target='SSPins' data='000' />
+					<value target='AltSSPin' data='0' />
+					<value target='Mode' data='000' />
+					<value target='PR_SCALE' data='004' />
+					<value target='CKE' data='001' />
+					<value target='CKP' data='000' />
+					<value target='SMP' data='000' />
+					<value target='ScopeTraces' data='0' />
+					<value target='ConsoleData' data='0' />
+					<value target='Injector' data='000' />
+					<value target='InjectorCS' data='0' />
+					<value target='InjectorHandle' data='0' />
+					<value target='InjectorChannel' data='0' />
+					<value target='BMODE' data='2' />
+					<value target='MOSI_PORT' data='$PORTC.5' />
+					<value target='MOSI_TRIS' data='$PORTC.5' />
+					<value target='MOSI_PIN' data='5' />
+					<value target='MISO_PORT' data='$PORTC.4' />
+					<value target='MISO_TRIS' data='$PORTC.4' />
+					<value target='MISO_PIN' data='4' />
+					<value target='SCK_PORT' data='$PORTC.3' />
+					<value target='SCK_TRIS' data='$PORTC.3' />
+					<value target='SCK_PIN' data='3' />
+					<value target='SS_PORT' data='$PORTC.2' />
+					<value target='SS_TRIS' data='$PORTC.2' />
+					<value target='SS_PIN' data='2' />
+					<value target='Remappable' data='' />
+					<value target='MOSIReg' data='008' />
+					<value target='CLKREG' data='004' />
+					<value target='MOSIRPNUM' data='21' />
+					<value target='MOSIBank' data='b' />
+					<value target='MOSIBank2' data='c' />
+					<value target='CLKRPNUM' data='20' />
+					<value target='CLKBank' data='b' />
+					<value target='MISORPREG' data='SSP1DATPPS' />
+					<value target='MISOBank' data='b' />
+					<value target='SPIName' data='' />
+					<value target='MISOReg' data='000' />
+					<value target='SPIClock' data='' />
+					<value target='MISOBank2' data='c' />
+					<value target='CLKBank2' data='c' />
+					<value target='ParentName' data='' />
+					<value target='BitDelay' data='0' />
+					<value target='ClockSpeed' data='19660800' />
+					<value target='MasterDivider' data='4' />
+					<value target='Sim' data='1' />
+					<value target='CLKRPREG' data='' />
+					<value target='SSRPREG' data='SSP1SSPPS' />
+					<value target='SSBank' data='a' />
+					<value target='SSBank2' data='d' />
+					<value target='AltSSReg' data='' />
+					<value target='AltSSMask' data='0' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='ed3a5141-43bb-43e0-86b0-2243fd1147ca' vmin='0' vmaj='2' codename='cal_i2c1' panelId='-1' x='0' y='0' z='0' xsz='0.2' ysz='0.2' zsz='0.2' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='ENABLED' data='1' />
+					<value target='REF' data='1' />
+					<value target='CHANNEL' data='001' />
+					<value target='Mode' data='000' />
+					<value target='SDA' data='$PORTC.4' />
+					<value target='SDAPins' data='000' />
+					<value target='SCL' data='$PORTC.3' />
+					<value target='SCLPins' data='001' />
+					<value target='StopDel' data='0' />
+					<value target='BAUD_LIST' data='001' />
+					<value target='BAUD' data='100000' />
+					<value target='SRC' data='000' />
+					<value target='SMB' data='000' />
+					<value target='ClockStretching' data='1' />
+					<value target='BMODE' data='0' />
+					<value target='SDA_PORT' data='$PORTC.4' />
+					<value target='SDA_TRIS' data='$PORTC.4' />
+					<value target='SDA_PIN' data='4' />
+					<value target='SCL_PORT' data='$PORTC.3' />
+					<value target='SCL_TRIS' data='$PORTC.3' />
+					<value target='SCL_PIN' data='3' />
+					<value target='MASTER' data='1' />
+					<value target='ScopeTraces' data='0' />
+					<value target='ConsoleData' data='0' />
+					<value target='Injector' data='000' />
+					<value target='InjectorHandle' data='0' />
+					<value target='InjectorChannel' data='0' />
+					<value target='REMAPPABLE' data='' />
+					<value target='SDABank' data='b' />
+					<value target='SDABank2' data='c' />
+					<value target='SCLBank' data='b' />
+					<value target='SCLBank2' data='c' />
+					<value target='SDARPNUM' data='21' />
+					<value target='SCLRPNUM' data='20' />
+					<value target='SDARPREG' data='SSP1DATPPS' />
+					<value target='SCLRPREG' data='SSP1CLKPPS' />
+					<value target='SDAREG' data='000' />
+					<value target='SCLREG' data='001' />
+					<value target='Sim' data='1' />
+					<value target='ParentName' data='' />
+					<value target='BitDelay' data='10' />
+					<value target='SDAAlts' data='000' />
+					<value target='SCLAlts' data='000' />
+					<value target='SDAAlt' data='0' />
+					<value target='SCLAlt' data='0' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<scadaresourcelookup />
+	<keymap />
+	<panel2d shadows='0' lighting='2' brightness='-25' >
+		<background rgb='9737364' img='' style='0' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='543' dy='505' zoom='219.01' fix_topleft='0' />
+		<page x='1000' y='1000' show='0' rgb='7360576' />
+	</panel2d>
+	<panel3d shadows='0' lighting='0' brightness='-51' perspective='1' >
+		<background rgb='8409120' img='' style='4' />
+		<table rgb='1517134' img='' style='0' size='0' />
+		<camera xe='1.129' ye='-0.0307591' ze='89.0618' xt='1.129' yt='-0.0307591' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey0 xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey1 xe='-3.67394e-14' ye='0' ze='-300' xt='0' yt='0' zt='0' xquat='0' yquat='1' zquat='0' wquat='6.12323e-17' />
+		<camerakey2 xe='0' ye='-300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.707107' yquat='0' zquat='0' wquat='0.707107' />
+		<camerakey3 xe='-3.67394e-14' ye='300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-4.32978e-17' yquat='0.707107' zquat='0.707107' wquat='4.32978e-17' />
+		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
+		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
+		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
+	</panel3d>
+	<panels2d count='0' />
+	<layout >
+		<view type='0' name='ControlHeater' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAmQQAACIBAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SampleTemperature' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAmQQAACIBAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='WriteRegister' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAmQQAACIBAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SampleTemperature_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAmQQAACIBAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SamplePressure_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAmQQAACIBAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SampleHumidity_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAmQQAACIBAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SampleGasResistance_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAmQQAACIBAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Initialise_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAmQQAACIBAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAmQQAACIBAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAmQQAACIBAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SampleGasResistance' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAmQQAACIBAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SampleHumidity' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAmQQAACIBAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SamplePressure' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAmQQAACIBAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAmQQAACIBAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadRegister' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAmQQAACIBAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

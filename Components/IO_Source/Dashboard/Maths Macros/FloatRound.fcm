@@ -1,0 +1,67 @@
+<root>
+<file schema='101' />
+<macros >
+<macro >
+<flowline name='FloatRound' description='Get a string representation of a float value rounded to the required number of places.' >
+<return name='Return' type='T8' array='0' description='' isconst='0' isinit='0' usrinit='&quot;&quot;' setinit='' />
+<param name='Value' type='f32' array='0' description='0.0' isconst='0' isinit='0' usrinit='0.0' setinit='' />
+<param name='Places' type='s16' array='0' description='Number the decimal places' isconst='0' isinit='0' usrinit='0' setinit='' />
+<local name='factor' type='f32' array='0' description='' isconst='0' isinit='1' usrinit='0.0' setinit='0.0' />
+<local name='pre' type='T8' array='20' description='' isconst='0' isinit='0' usrinit='&quot;&quot;' setinit='' />
+<local name='post' type='T8' array='20' description='' isconst='0' isinit='0' usrinit='&quot;&quot;' setinit='' />
+<local name='str_len' type='u8' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+<local name='val_int' type='s32' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+<local name='leading' type='T8' array='2' description='' isconst='0' isinit='1' usrinit='&quot;&quot;' setinit='&quot;&quot;' />
+<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+<exp exp='.factor = pow (10, .Places)' />
+<exp exp='.val_int = round (.Value * .factor)' />
+</command>
+<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='fabs (.val_int) &lt; .factor' swap='0' >
+<flowline name='FloatRound' description='' >
+<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+<exp exp='.leading = &quot;0.&quot;' />
+</command>
+</flowline>
+<flowline name='FloatRound' description='' >
+<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+<exp exp='.leading = &quot;.&quot;' />
+</command>
+</flowline>
+</command>
+<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='.val_int == 0' swap='0' >
+<flowline name='FloatRound' description='' >
+<command class_type='decision' title='.Places &gt; 0' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='.Places &gt; 0' swap='0' >
+<flowline name='FloatRound' description='' >
+<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+<exp exp='.Return = &quot;0.&quot; + Left$ (&quot;0000000000&quot;, .Places)' />
+</command>
+</flowline>
+<flowline name='FloatRound' description='' >
+<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+<exp exp='.Return = &quot;0&quot;' />
+</command>
+</flowline>
+</command>
+</flowline>
+<flowline name='FloatRound' description='' >
+<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+<exp exp='.Return = ToString$ (.val_int)' />
+<exp exp='.str_len = Length$ (.Return)' />
+</command>
+<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='.Places &gt; 0' swap='0' >
+<flowline name='FloatRound' description='' >
+<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+<exp exp='.pre = Left$ (.Return, .str_len - .Places)' />
+<exp exp='.post = Right$ (.Return, .Places)' />
+<exp exp='.Return = .pre + .leading + .post' />
+</command>
+</flowline>
+<flowline name='FloatRound' description='' />
+</command>
+</flowline>
+</command>
+</flowline>
+</macro>
+</macros>
+<variables />
+</root>

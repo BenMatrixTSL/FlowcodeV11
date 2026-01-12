@@ -1,0 +1,339 @@
+<!-- CRC: 2A91787DEE406C1E1E100DE8DD2FBD097BB5476ED29E05126DCA357C5EEE67304877DD4CC3BB2517481DAECB7F708471D2C5805F52213B71AA82B12A5C31EB459FB6363FE4F57E311A0BA8598BEB5437EA68E2929511E6E27D52A876A9F220FA562AF2F62E9AB6760C3CAEE8E7DA69877BE693C75943E6FA64674C79746F4F7B293D67BBAC72CC0A145F21383B75202084BAAD782F82A746DC48703A95DCDE7167E26EB73D862146CAEA589551911D8455E0A90FCB18392F42975D777BEFE359A9597E5871E02481086944AE325796A63BF346C7FAC5D8736B90D0EAA4EBF3B185CF6DF3C6465F0B61112B2378F6127E5D3A7ED706D09BBA -->
+<!-- REVISION: 6.0 -->
+<!-- GUID: 6AF1359B-FAF6-4247-97FE-3E37D8ACEF33 -->
+<!-- DATE: 19\09\2025 -->
+<!-- DIR: FCD\ARD\Arduino|Uno|R3|PDIP|Flowkit.fcdx -->
+
+<root>
+
+  <build>
+    <compiler exe="$(fcddir)AVR\batchfiles\avra.bat" params="&quot;$(compileravr)&quot; $(chip:l) &quot;$(outdir)$(target).elf&quot; &quot;$(outdir)$(target).c&quot; &quot;$(outdir)$(target).lst&quot;" />		
+    <linker exe="$(fcddir)AVR\batchfiles\avrb.bat" params="&quot;$(compileravr)&quot; &quot;$(outdir)$(target).elf&quot; &quot;$(outdir)$(target).hex&quot; &quot;$(outdir)$(target).cof&quot;" />
+    <programmer exe="$(fcddir)AVR\batchfiles\avrc_arduinoA.bat" params="&quot;$(compileravr)&quot; $(chipalt) arduino $(comport) 115200 &quot;$(outdir)$(target).hex&quot;" UsesComm="1" />
+  </build>
+
+  <device file="Arduino Uno R3 PDIP Flowkit"
+          name="ATMEGA328P"
+          namealt="m328p"
+          product='ARD' compiler='AVR' cal='AVR' 
+          family="ATMEGA"
+          bits="8" >
+
+    <comminfo>
+        <com pid="0043" vid="2A03" devdesc="Arduino UNO" />
+        <com pid="0043" vid="2341" devdesc="Arduino UNO R3" />
+        <com pid="0001" vid="2341" devdesc="Arduino UNO R3" />
+        <com pid="0243" vid="2341" devdesc="Arduino UNO R3" />
+        <com pid="006A" vid="2341" devdesc="Arduino UNO R3" />
+    </comminfo>
+
+    <clock max_speed="16000000"
+           master_divider="1"
+           fixed="16000000" />
+
+    <memory>
+      <flash bytes="32768" />
+      <ram bytes="2048" />
+    </memory>
+
+    <configuration address="0x0000"
+                   mult="1" >
+      <format>
+      </format>
+
+      <setting>
+      </setting>
+
+    </configuration>
+
+    <pins sides="2" smd="0" alt_pin_refs="1" >
+        <pin name="PD0 (RXD 0)" port="3" bit="0" caption="D0" />
+        <pin name="PD1 (TXD 1)" port="3" bit="1" caption="D1" />
+        <pin name="PD2 (2)" port="3" bit="2" caption="D2" />
+        <pin name="PD3 (3 PWM)" port="3" bit="3" caption="D3" />
+        <pin name="PD4 (4)" port="3" bit="4" caption="D4" />
+        <pin name="PD5 (5 PWM)" port="3" bit="5" caption="D5" />
+        <pin name="PD6 (6 PWM)" port="3" bit="6" caption="D6" />
+        <pin name="PD7 (7)" port="3" bit="7" caption="D7" />
+        <pin name="PB0 (8)" port="1" bit="0" caption="D8" />
+        <pin name="(9 PWM) PB1" port="1" bit="1" caption="D9" />
+        <pin name="(SS 10 PWM) PB2" port="1" bit="2" caption="D10" />
+        <pin name="(MOSI 11 PWM INT) PB3" port="1" bit="3" caption="D11" />
+        <pin name="(MISO 12) PB4" port="1" bit="4" caption="D12" />
+        <pin name="(SCK 13 LED) PB5" port="1" bit="5" caption="D13" />
+        <pin name="AREF" />
+        <pin name="(ADC0) PC0" port="2" bit="0" adc="0" caption="D14_A0" />
+        <pin name="(ADC1) PC1" port="2" bit="1" adc="1" caption="D15_A1" />
+        <pin name="(ADC2) PC2" port="2" bit="2" adc="2" caption="D16_A2" />
+        <pin name="(ADC3) PC3" port="2" bit="3" adc="3" caption="D17_A3" />
+        <pin name="(SDA ADC4) PC4" port="2" bit="4" adc="4" caption="D18_A4" />
+        <pin name="(SCL ADC5) PC5" port="2" bit="5" adc="5" caption="D19_A5" />
+    </pins>
+
+    <adc type="2" bits="10" >
+      <speed>
+        <option name="Fosc / 2" value="1" />
+        <option name="Fosc / 4" value="2" />
+        <option name="Fosc / 8" value="3" />
+        <option name="Fosc / 16" value="4" />
+        <option name="Fosc / 32" value="5" />
+        <option name="Fosc / 64" value="6" />
+        <option name="Fosc / 128" value="7" />
+      </speed>
+        <vref>
+            <option name='AREF' value='0' />
+            <option name='AVCC' value='1' />
+            <option name='Internal 1.1V' value='3' />
+        </vref>
+    </adc>
+
+    <eeprom type="1" bytes="1024" />
+
+    <spi>
+      <miso port="1" pin="4" />
+      <mosi port="1" pin="3" />
+      <clk port="1" pin="5" />
+      <ss port="1" pin="2" />
+    </spi>
+
+    <uart>
+      <tx port="3" pin="1" />
+      <rx port="3" pin="0" />
+    </uart>
+
+    <i2c master="1" >
+      <sda port="2" pin="4" />
+      <scl port="2" pin="5" />
+    </i2c>
+
+    <pwm type="1" >
+      <timer>
+        <option name="timer0" count="2" />
+        <option name="timer1" count="2" />
+        <option name="timer2" count="2" />
+        <option name="timer3" count="0" />
+        <option name="timer4" count="0" />
+        <option name="timer5" count="0" />
+      </timer>
+      <prescaler>
+        <option name="1" value="1" />
+        <option name="8" value="8" />
+        <option name="64" value="64" />
+        <option name="256" value="256" />
+        <option name="1024" value="1024" />
+      </prescaler>
+      <out port="3" pin="6" />
+      <out port="3" pin="5" />
+      <out port="1" pin="1" />
+      <out port="1" pin="2" />
+      <out port="1" pin="3" />
+      <out port="3" pin="3" />
+    </pwm>
+
+    <interrupts>
+
+      <interrupt
+          ident="TMR0" regl='TCNT0' regh=''
+          type="timer8"
+          name="Timer 0"
+          handler='#ifndef MX_TIMER0OVF_HANDLER\n#define MX_TIMER0OVF_HANDLER\nISR(TIMER0_OVF_vect)\n{\n\tFCM_%n();\n}\n#else\n#warning The &lt;TIMER0 OVF&gt; interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.\n#endif\n'
+          enable="TIMSK0 |= (1 &lt;&lt; TOIE0);\n"
+          disable="TIMSK0 &amp;= ~(1 &lt;&lt; TOIE0);\n" >
+        <timer overflow="256" extrange="0" />
+        <options>
+          <prescale name="Prescaler Rate">
+            <entry name="no clock" value ="TCCR0B &amp;= 0xf8;\n" />
+            <entry name="1:1" value ="TCCR0B &amp;= 0xf8;\nTCCR0B |= 0x01;\n" />
+            <entry name="1:8" value ="TCCR0B &amp;= 0xf8;\nTCCR0B |= 0x02;\n" />
+            <entry name="1:64" value ="TCCR0B &amp;= 0xf8;\nTCCR0B |= 0x03;\n" />
+            <entry name="1:256" value ="TCCR0B &amp;= 0xf8;\nTCCR0B |= 0x04;\n" />
+            <entry name="1:1024" value ="TCCR0B &amp;= 0xf8;\nTCCR0B |= 0x05;\n" />
+            <entry name="T0 pin, -ve edge" value ="TCCR0B &amp;= 0xf8;\nTCCR0B |= 0x06;\n" />
+            <entry name="T0 pin, +ve edge" value ="TCCR0B &amp;= 0xf8;\nTCCR0B |= 0x07;\n" />
+          </prescale>
+        </options>
+      </interrupt>
+
+      <interrupt
+          ident='TMR1' regl='TCNT1L' regh='TCNT1H'
+          type="timer16"
+          name="Timer 1"
+          handler='#ifndef MX_TIMER1OVF_HANDLER\n#define MX_TIMER1OVF_HANDLER\nISR(TIMER1_OVF_vect)\n{\n\tFCM_%n();\n}\n#else\n#warning The &lt;TIMER1 OVF&gt; interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.\n#endif\n'
+          enable="TIMSK1 |= (1 &lt;&lt; TOIE1);\n"
+          disable="TIMSK1 &amp;= ~(1 &lt;&lt; TOIE1);\n" >
+        <timer overflow="65536" extrange="0" />
+        <options>
+          <prescale name="Prescaler Rate">
+            <entry name="no clock" value ="TCCR1B &amp;= 0xf8;\n" />
+            <entry name="1:1" value ="TCCR1B &amp;= 0xf8;\nTCCR1B |= 0x01;\n" />
+            <entry name="1:8" value ="TCCR1B &amp;= 0xf8;\nTCCR1B |= 0x02;\n" />
+            <entry name="1:64" value ="TCCR1B &amp;= 0xf8;\nTCCR1B |= 0x03;\n" />
+            <entry name="1:256" value ="TCCR1B &amp;= 0xf8;\nTCCR1B |= 0x04;\n" />
+            <entry name="1:1024" value ="TCCR1B &amp;= 0xf8;\nTCCR1B |= 0x05;\n" />
+            <entry name="T0 pin, -ve edge" value ="TCCR1B &amp;= 0xf8;\nTCCR1B |= 0x06;\n" />
+            <entry name="T0 pin, +ve edge" value ="TCCR1B &amp;= 0xf8;\nTCCR1B |= 0x07;\n" />
+          </prescale>
+        </options>
+      </interrupt>
+
+      <interrupt
+          ident="TMR2" regl='TCNT2' regh=''
+          type="timer8"
+          name="Timer 2"
+          handler='#ifndef MX_TIMER2OVF_HANDLER\n#define MX_TIMER2OVF_HANDLER\nISR(TIMER2_OVF_vect)\n{\n\tFCM_%n();\n}\n#else\n#warning The &lt;TIMER2 OVF&gt; interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.\n#endif\n'
+          enable="TIMSK2 |= (1 &lt;&lt; TOIE2);\n"
+          disable="TIMSK2 &amp;= ~(1 &lt;&lt; TOIE2);\n" >
+        <timer overflow="256" extrange="0" />
+        <options>
+          <prescale name="Prescaler Rate">
+            <entry name="no clock" value ="TCCR2B &amp;= 0xf8;\n" />
+            <entry name="1:1" value ="TCCR2B &amp;= 0xf8;\nTCCR2B |= 0x01;\n" />
+            <entry name="1:8" value ="TCCR2B &amp;= 0xf8;\nTCCR2B |= 0x02;\n" />
+            <entry name="1:64" value ="TCCR2B &amp;= 0xf8;\nTCCR2B |= 0x03;\n" />
+            <entry name="1:256" value ="TCCR2B &amp;= 0xf8;\nTCCR2B |= 0x04;\n" />
+            <entry name="1:1024" value ="TCCR2B &amp;= 0xf8;\nTCCR2B |= 0x05;\n" />
+            <entry name="T0 pin, -ve edge" value ="TCCR2B &amp;= 0xf8;\nTCCR2B |= 0x06;\n" />
+            <entry name="T0 pin, +ve edge" value ="TCCR2B &amp;= 0xf8;\nTCCR2B |= 0x07;\n" />
+          </prescale>
+        </options>
+      </interrupt>
+
+        <interrupt ident='IOC0' type='multipin' name='IOC PORT B' handler='#ifndef MX_PCINT0_HANDLER\n#define MX_PCINT0_HANDLER\nISR(PCINT0_vect)\n{\n\tFCM_%n();\n}\n#else\n#warning The &lt;PORTB Change&gt; interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.\n#endif\n' enable='PCMSK0=%pB0h;\nPCICR |= (1 &lt;&lt; PCIE0);\n' disable='PCICR &amp;= ~(1 &lt;&lt; PCIE0);\n' >
+            <ioc config='0x0C' >
+                <rising port='1' mask='0xFF' />
+                <falling port='1' mask='0xFF' />
+            </ioc>
+        </interrupt>
+        <interrupt ident='IOC1' type='multipin' name='IOC PORT C' handler='#ifndef MX_PCINT1_HANDLER\n#define MX_PCINT1_HANDLER\nISR(PCINT1_vect)\n{\n\tFCM_%n();\n}\n#else\n#warning The &lt;PORTC Change&gt; interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.\n#endif\n' enable='PCMSK1=%pC0h;\nPCICR |= (1 &lt;&lt; PCIE1);\n' disable='PCICR &amp;= ~(1 &lt;&lt; PCIE1);\n' >
+            <ioc config='0x0C' >
+                <rising port='2' mask='0x7F' />
+                <falling port='2' mask='0x7F' />
+            </ioc>
+        </interrupt>
+        <interrupt ident='IOC2' type='multipin' name='IOC PORT D' handler='#ifndef MX_PCINT2_HANDLER\n#define MX_PCINT2_HANDLER\nISR(PCINT2_vect)\n{\n\tFCM_%n();\n}\n#else\n#warning The &lt;PORTD Change&gt; interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.\n#endif\n' enable='PCMSK2=%pD0h;\nPCICR |= (1 &lt;&lt; PCIE2);\n' disable='PCICR &amp;= ~(1 &lt;&lt; PCIE2);\n' >
+            <ioc config='0x0C' >
+                <rising port='3' mask='0xFF' />
+                <falling port='3' mask='0xFF' />
+            </ioc>
+        </interrupt>
+
+      <interrupt
+          ident="INT0"
+          type="pin"
+          name="INT0 Input"
+          handler="#ifndef MX_INT0_HANDLER\n#define MX_INT0_HANDLER\nISR(INT0_vect)\n{\n\tFCM_%n();\n}\n#else\n#warning The &lt;INT0 Input&gt; interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.\n#endif\n"
+          enable="EIMSK |= (1 &lt;&lt; INT0);\n"
+          disable="EIMSK &amp;= ~(1 &lt;&lt; INT0);\n" >
+        <ioc config="3">
+          <rising port="3" mask="4" />
+          <falling port="3" mask="4" />
+        </ioc>
+        <options>
+          <edge name="Interrupt Edge Select">
+            <entry name="Rising edge of INT" value="EICRA |= (1 &lt;&lt; ISC01) | (1 &lt;&lt; ISC00);\n" />
+            <entry name="Falling edge of INT" value="EICRA |= (1 &lt;&lt; ISC01);\nEICRA &amp;= ~(1 &lt;&lt; ISC00);\n" />
+            <entry name="Any edge of INT" value="EICRA &amp;= ~(1 &lt;&lt; ISC01);\nEICRA |= (1 &lt;&lt; ISC00);\n" />
+            <entry name="Low level of INT" value="EICRA &amp;= ~(1 &lt;&lt; ISC01);\nEICRA &amp;= ~(1 &lt;&lt; ISC00);\n" />
+          </edge>
+        </options>
+      </interrupt>
+
+      <interrupt
+          ident="INT1"
+          type="pin"
+          name="INT1 Input"
+          handler="#ifndef MX_INT1_HANDLER\n#define MX_INT1_HANDLER\nISR(INT1_vect)\n{\n\tFCM_%n();\n}\n#else\n#warning The &lt;INT1 Input&gt; interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.\n#endif\n"
+          enable="EIMSK |= (1 &lt;&lt; INT1);\n"
+          disable="EIMSK &amp;= ~(1 &lt;&lt; INT1);\n" >
+        <ioc config="3">
+          <rising port="3" mask="8" />
+          <falling port="3" mask="8" />
+        </ioc>
+        <options>
+          <edge name="Interrupt Edge Select">
+            <entry name="Rising edge of INT" value="EICRA |= (1 &lt;&lt; ISC11) | (1 &lt;&lt; ISC10);\n" />
+            <entry name="Falling edge of INT" value="EICRA |= (1 &lt;&lt; ISC11);\nEICRA &amp;= ~(1 &lt;&lt; ISC10);\n" />
+            <entry name="Any edge of INT" value="EICRA &amp;= ~(1 &lt;&lt; ISC11);\nEICRA |= (1 &lt;&lt; ISC10);\n" />
+            <entry name="Low level of INT" value="EICRA &amp;= ~(1 &lt;&lt; ISC11);\nEICRA &amp;= ~(1 &lt;&lt; ISC10);\n" />
+          </edge>
+        </options>
+      </interrupt>
+
+      <interrupt
+          ident="RXINT0"
+          type="comms"
+          name="UART0 RX"
+          handler="#ifndef MX_UART0_RX_HANDLER\n#define MX_UART0_RX_HANDLER\nISR(USART_RX_vect)\n{\n\tFCM_%n();\n}\n#else\n#warning The &lt;UART0 RX&gt; interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.\n#endif\n"
+          enable="UCSR0B |= (1 &lt;&lt; RXCIE0);\n"
+          disable="UCSR0B &amp;=  ~(1 &lt;&lt; RXCIE0);\n" >
+      </interrupt>
+
+
+    </interrupts>
+
+  </device>
+
+  <inline>
+
+    <defines code="#define MX_UART_ID\n#define MX_UART_UCSRC\n\n#include &lt;stdlib.h&gt;\n#include &lt;stdio.h&gt;\n#include &lt;math.h&gt;\n#include &lt;avr\io.h&gt;\n#include &lt;avr\interrupt.h&gt;\n#include &lt;avr\eeprom.h&gt;\n#include &lt;avr\wdt.h&gt;\n\n" />
+    <directives code="" />
+
+    <main>
+      <start code="int main()\n{\n" />
+      <end code="\tmainendloop: goto mainendloop;\n}\n\n" />
+      <init code="\tMCUSR=0x00;\n" />
+    </main>
+
+    <interrupt>
+      <enable code="sei();\n" />
+      <start code="#ifdef USE_FLOWCODE_ICD3\nICD_INTERRUPT_HANDLER\n#endif\n" />
+      <end code="" />
+      <init code="" />
+    </interrupt>
+
+    <config>
+      <start code='//Configuration Start\n' /> 
+      <body code='' /> 
+      <end code='//Configuration End\n\n' />
+    </config>
+
+  </inline>
+
+  <flowkit2>
+    <analog>
+      <map from='AN0' port="2" pin="0" />
+      <map from='AN1' port="2" pin="1" />
+      <map from='AN2' port="2" pin="2" />
+      <map from='AN3' port="2" pin="3" />
+      <map from='AN4' port="2" pin="4" />
+      <map from='AN5' port="2" pin="5" />
+    </analog>
+    <digital>
+      <map from='D0' port="3" pin="0" />
+      <map from='D1' port="3" pin="1" />
+      <map from='D2' port="3" pin="2" />
+      <map from='D3' port="3" pin="3" />
+      <map from='D4' port="3" pin="4" />
+      <map from='D5' port="3" pin="5" />
+      <map from='D6' port="3" pin="6" />
+      <map from='D7' port="3" pin="7" />
+      <map from='D8' port="1" pin="0" />
+      <map from='D9' port="1" pin="1" />
+      <map from='D10' port="1" pin="2" />
+      <map from='D11' port="1" pin="3" />
+      <map from='D12' port="1" pin="4" />
+      <map from='D13' port="1" pin="5" />
+      <map from='D14' port="2" pin="4" />
+      <map from='D15' port="2" pin="5" />
+    </digital>
+  </flowkit2>
+
+  <test>
+    <icd>
+        <clock port='3' pin='1' aport='1' apin='5' />
+        <data port='3' pin='0' aport='1' apin='4' />
+    </icd>
+    <icd3 type='com' channel='1' baud='115200' rxport='3' rxpin='0' txport='3' txpin='1' autodetect='0' />
+  </test>
+
+</root>

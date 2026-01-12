@@ -1,0 +1,141 @@
+<!-- CRC: 90CF26913586BBA787FE92D553771933DD884B3973F89E6538704CF91F17CE0AFC1CCCFA5F4233CFD1787D44233A22EA9A0D46BD3B6AACB92DE4D84759EBB5079CA9DA2D2BBCDAE2A4D1C56CD1580BF5061DC7CBAE6E877E86F1EB9BCCB2F6E16714DA1F5FF94698966BFE56BE1F103E4DE80A464A1D85FFB0C459FC7928606E430E73DDDAC2F590441DBE09636F18271D8BDDF83F284F32E7D979E4A85AEC0915AB12A441A533A1086944AE325796A68153ADA519EC806C6D8CD575283C39146BF12CA2A041CBE776AD1A7DB9B9D5F43F565616D7803A54 -->
+<!-- REVISION: 1.0 -->
+<!-- GUID: 3041BAF9-654F-44A0-AF3B-76EDB0509662 -->
+<!-- DATE: 08\08\2022 -->
+<!-- DIR: FCD\PIC\12CE673.fcdx -->
+<root>
+<device name='12CE673' product='PIC' cal='PIC' family='12F' bits='8' >
+    <clock max_speed='10000000' master_divider='4' default='19660800' />
+    <memory >
+        <flash bytes='1792' />
+        <ram bytes='128' />
+    </memory>
+    <configuration address='1' mult='2' >
+	<format >
+	  <word value='0x3FFF' />
+        </format>
+        <setting />
+        <settings >
+            <setting name='OSC' offset='0' mask='7' bits='3' hint='Oscillator' >
+                <option name='External RC Clockout' value='7' />
+                <option name='External RC No Clock' value='6' />
+                <option name='Internal RC Clockout' value='5' />
+                <option name='Internal RC No Clock' value='4' />
+                <option name='HS' value='2' />
+                <option name='XT' value='1' />
+                <option name='LP' value='0' />
+            </setting>
+            <setting name='WDT' offset='3' mask='1' bits='1' hint='Watchdog Timer' >
+                <option name='On' value='1' />
+                <option name='Off' value='0' />
+            </setting>
+            <setting name='PUT' offset='4' mask='1' bits='1' hint='Power Up Timer' >
+                <option name='Off' value='1' />
+                <option name='On' value='0' />
+            </setting>
+            <setting name='MCLRE' offset='7' mask='1' bits='1' hint='Master Clear Enable' >
+                <option name='External' value='1' />
+                <option name='Internal' value='0' />
+            </setting>
+            <setting name='CP' offset='5' mask='507' bits='9' hint='Code Protect' >
+                <option name='Off' value='507' />
+                <option name='200:3FE' value='169' />
+                <option name='All' value='0' />
+            </setting>
+        </settings>
+    </configuration>
+    <pins sides='2' smd='0' >
+        <pin name='VDD' />
+        <pin name='GP5/OSC1' port='0' bit='5' />
+        <pin name='GP4/AN3/OSC2' port='0' bit='4' adc='3' />
+        <pin name='GP3/MCLR' port='0' bit='3' in_only="1" />
+        <pin name='GP2/AN2/T0CKI/INT' port='0' bit='2' adc='2' />
+        <pin name='GP1/AN1/VREF' port='0' bit='1' adc='1' />
+        <pin name='GP0/AN0' port='0' bit='0' adc='0' />
+        <pin name='VSS' />
+    </pins>
+    <adc type='10' bits='8' >
+        <speed >
+            <option name='Fosc / 2' value='0' />
+            <option name='Fosc / 8' value='1' />
+            <option name='Fosc / 32' value='2' />
+            <option name='FRC' value='3' />
+        </speed>
+    </adc>
+    <eeprom type='3' bytes='16' />
+    <interrupts >
+        <interrupt ident='TMR0' regl='TMR0' regh='' type='timer8' name='Timer 0' handler='#ifndef MX_INTHANDLER_INTCON_T0IF\n#define MX_INTHANDLER_INTCON_T0IF\nif (ts_bit(INTCON, T0IF) &amp;&amp; ts_bit(INTCON, T0IE))\n{\n\tFCM_%n();\n\tcr_bit(INTCON, T0IF);\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='st_bit(INTCON, T0IE);\n' disable='cr_bit(INTCON, T0IE);\n' >
+            <timer overflow='256' extrange='0' />
+            <options >
+                <option name='Clock Source Select' >
+                    <entry name='Transition on T0CKI pin' clkdiv='0' value='st_bit(OPTION_REG,T0CS);\n' />
+                    <entry name='Internal clock (CLKO)' clkdiv='4' value='cr_bit(OPTION_REG,T0CS);\n' />
+                </option>
+                <option name='Source Edge Select' >
+                    <entry name='high-to-low transition on TMR0 Clock' value='st_bit(OPTION_REG,T0SE);\n' />
+                    <entry name='low-to-high transition on TMR0 Clock' value='cr_bit(OPTION_REG,T0SE);\n' />
+                </option>
+                <prescale name='Prescaler Rate' >
+                    <entry name='1:1' value='OPTION_REG = (OPTION_REG &amp; 0xF0) | 0x08;\n' />
+                    <entry name='1:2' value='OPTION_REG = (OPTION_REG &amp; 0xF0) | 0x00;\n' />
+                    <entry name='1:4' value='OPTION_REG = (OPTION_REG &amp; 0xF0) | 0x01;\n' />
+                    <entry name='1:8' value='OPTION_REG = (OPTION_REG &amp; 0xF0) | 0x02;\n' />
+                    <entry name='1:16' value='OPTION_REG = (OPTION_REG &amp; 0xF0) | 0x03;\n' />
+                    <entry name='1:32' value='OPTION_REG = (OPTION_REG &amp; 0xF0) | 0x04;\n' />
+                    <entry name='1:64' value='OPTION_REG = (OPTION_REG &amp; 0xF0) | 0x05;\n' />
+                    <entry name='1:128' value='OPTION_REG = (OPTION_REG &amp; 0xF0) | 0x06;\n' />
+                    <entry name='1:256' value='OPTION_REG = (OPTION_REG &amp; 0xF0) | 0x07;\n' />
+                </prescale>
+            </options>
+        </interrupt>
+        <interrupt ident='INT0' type='pin' name='INT0 Pin' handler='#ifndef MX_INTHANDLER_INTCON_INTF\n#define MX_INTHANDLER_INTCON_INTF\nif (ts_bit(INTCON, INTF) &amp;&amp; ts_bit(INTCON, INTE))\n{\n\tFCM_%n();\n\tcr_bit(INTCON, INTF);\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='st_bit(INTCON, INTE);\n' disable='cr_bit(INTCON, INTE);\n' >
+            <ioc config='3' >
+                <rising port='0' mask='4' />
+                <falling port='0' mask='4' />
+            </ioc>
+            <options >
+                <edge name='Interrupt Edge Select' >
+                    <entry name='Rising edge of INT' value='st_bit(OPTION_REG,INTEDG);\n' />
+                    <entry name='Falling edge of INT' value='cr_bit(OPTION_REG,INTEDG);\n' />
+                </edge>
+            </options>
+        </interrupt>
+        <interrupt ident='IOC0' type='multipin' name='IOC GPIO' handler='#ifndef MX_INTHANDLER_INTCON_GPIF\n#define MX_INTHANDLER_INTCON_GPIF\nchar mxtmp;\nif (ts_bit(INTCON, GPIF) &amp;&amp; ts_bit(INTCON, GPIE))\n{\n\tFCM_%n();\n\tmxtmp=GPIO;\n\tcr_bit(INTCON, GPIF);\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='st_bit(INTCON, GPIE);\n' disableCode='cr_bit(INTCON, GPIE);\n' >
+            <ioc config='4' >
+                <rising port='0' mask='0x0B' />
+                <falling port='0' mask='0x0B' />
+            </ioc>
+            <options >
+                <option name='Interrupt Pins' >
+                    <entry name='GPIO0, GPIO1, GPIO3' value='' />
+                </option>
+            </options>              
+        </interrupt>
+    </interrupts>
+</device>
+<inline >
+    <defines code="" />
+    <directives code="#include &lt;xc.h&gt;\n#include &lt;math.h&gt;\n\n" />
+    <main >
+        <start code='\nvoid main()\n{\n\t#ifdef INTOSCHELPER\n\t\tINTOSCHELPERCODE\n\t#endif\n\n' />
+        <end code='\tmainendloop: goto mainendloop;\n}\n\n' />
+        <init code='ADCON1 = 0x07;\n' />
+    </main>
+    <interrupt >
+        <enable code='st_bit(INTCON,GIE);\n' />
+        <start code='void MX_INTERRUPT_MACRO(void)\n{\n' />
+        <end code='}\n\n' />
+        <init code='' />
+    </interrupt>
+    <config >
+	<start code='//Chip Configuration Settings\n' />
+        <body code='__PROG_CONFIG($(address), 0x$(value:x));\n' /> 
+    </config>
+</inline>
+<test >
+    <icd >
+        <clock port='0' pin='1' />
+        <data port='0' pin='0' />
+    </icd>
+</test>
+</root>

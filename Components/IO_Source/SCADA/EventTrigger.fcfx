@@ -1,0 +1,683 @@
+<root>
+<document scada='0' schema='103' license='10,BenR,C9TN1M' title='' description='' fcversion='655360' target='SIMULATION.SIM.SIM' >
+	<config data='' clkspd='100000000' simspd='1' usewdt='0' constif='0' Use3V3='0' />
+	<plugins >
+		<dll_models enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug >
+		<watch expr='CountdownTime' />
+		<watch expr='Started' />
+	</debug>
+	<traces />
+	<ghost >
+		<FK2 >
+			<data name='FK2D0' port='4294967295' pin='4294967295' />
+			<data name='FK2D1' port='4294967295' pin='4294967295' />
+			<data name='FK2D2' port='4294967295' pin='4294967295' />
+			<data name='FK2D3' port='4294967295' pin='4294967295' />
+			<data name='FK2D4' port='4294967295' pin='4294967295' />
+			<data name='FK2D5' port='4294967295' pin='4294967295' />
+			<data name='FK2D6' port='4294967295' pin='4294967295' />
+			<data name='FK2D7' port='4294967295' pin='4294967295' />
+			<data name='FK2D8' port='4294967295' pin='4294967295' />
+			<data name='FK2D9' port='4294967295' pin='4294967295' />
+			<data name='FK2D10' port='4294967295' pin='4294967295' />
+			<data name='FK2D11' port='4294967295' pin='4294967295' />
+			<data name='FK2D12' port='4294967295' pin='4294967295' />
+			<data name='FK2D13' port='4294967295' pin='4294967295' />
+			<data name='FK2D14' port='4294967295' pin='4294967295' />
+			<data name='FK2D15' port='4294967295' pin='4294967295' />
+			<data name='FK2A0' port='4294967295' pin='4294967295' />
+			<data name='FK2A1' port='4294967295' pin='4294967295' />
+			<data name='FK2A2' port='4294967295' pin='4294967295' />
+			<data name='FK2A3' port='4294967295' pin='4294967295' />
+			<data name='FK2A4' port='4294967295' pin='4294967295' />
+			<data name='FK2A5' port='4294967295' pin='4294967295' />
+		</FK2>
+		<ICD >
+			<data name='AnalogPrescaleValue' value='19' />
+			<data name='DigitalSampleRate' value='100000' />
+			<data name='BreakpointCount' value='8' />
+			<data name='CallStackDepthCount' value='8' />
+			<data name='ClockPort' value='1' />
+			<data name='ClockPin' value='6' />
+			<data name='DataPort' value='1' />
+			<data name='DataPin' value='7' />
+			<data name='UseDefaultPins' value='1' />
+			<data name='WrapEnabled' value='1' />
+			<data name='CommsDelayOverridden' value='0' />
+			<data name='CommsDelay' value='2' />
+			<data name='CalculatedCommsDelay' value='2' />
+			<data name='AnalogEB2PrescaleValue' value='2' />
+			<data name='DigitalEB2SampleRate' value='100000' />
+		</ICD>
+		<pins >
+			<digital A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+			<analog A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+		</pins>
+	</ghost>
+	<components >
+		<settings autoimg='0' center='1' unitscale='1' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='f137a538-3ebf-42e7-a941-b8f628802070' vstate='40' vmin='0' vmaj='1' srcleaf='EventTrigger.fcfx' visiblename='Timed Event Trigger' description='Component that will check to see if a predetermined amount of time has passed.
+Useful for doing things on a regular basis, e.g. every minute or every hour.' category='Runtime Tools' category2='Timing ' category3='' bIs2dOnly='1' bIs3dOnly='0' catenable='1' author='Matrix TSL' manuname='' manucode='' sysinfo='1061127' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='1' showmacros='1' iconpath='..\..\icons\components\Timer.png' />
+		<component class_type='root' codename='EventTrigger' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+			<resources />
+			<properties >
+				<property name='Time Period Units' target='TimePeriodUnits' typeid='16' hidden='0' locked='0' info='Units of time to wait for' filter='000Seconds
+001Minutes
+002Hours' />
+				<property name='Time Period Value' target='TimePeriodValue' typeid='21' hidden='0' locked='0' info='Number of time periods to wait before firing' />
+				<property name='Time Period Count' target='TimePeriodCount' typeid='21' hidden='1' locked='0' info='' />
+				<property name='Call a macro' target='CallMacro' typeid='7' hidden='0' locked='0' info='Decides if a user macro wil be called when the event time period is over.
+No - requires the use of polling in your application by calling the CheckTrigger component macro.
+Yes - Automatically calls the selected user macro' />
+				<property name='Macro' target='Macro' typeid='22' hidden='1' locked='0' info='' />
+				<property name='Auto Reset' target='AutoReset' typeid='7' hidden='0' locked='0' info='Yes: Automatically resets and restarts the timer when running and actioned.
+No: Waits for the user to restart the timer running by calling the Start macro.' />
+				<property name='Start Ran At All' target='StartRanAtAll' typeid='14' hidden='1' locked='1' info='' />
+			</properties>
+			<values >
+				<value target='TimePeriodUnits' data='000' />
+				<value target='TimePeriodValue' data='1' />
+				<value target='TimePeriodCount' data='1' />
+				<value target='CallMacro' data='0' />
+				<value target='Macro' data='' />
+				<value target='AutoReset' data='1' />
+				<value target='StartRanAtAll' data='1' />
+			</values>
+			<events >
+				<event class='Simulation' event='Start' target='Ev_Start' />
+				<event class='Components' event='Property' target='Ev_Property' />
+				<event class='System' event='Timer' target='Ev_Timer' />
+				<event class='Simulation' event='Stop' target='Ev_Stop' />
+			</events>
+			<apis >
+				<api name='Reset' alt='' type='2' proto='1' />
+				<api name='SetTimePeriod' alt='' type='2' proto='1' />
+				<api name='Stop' alt='' type='2' proto='1' />
+				<api name='CheckTrigger' alt='' type='2' proto='1' />
+				<api name='Start' alt='' type='2' proto='1' />
+			</apis>
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='Started' type='b1' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='TimePeriod' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='Day' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='Rollover' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='StartTime' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='CountdownTime' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='DayCount' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='Reset' description='Resets the countdown timer' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='CountdownTime = TimePeriod' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Timer' description='Called back on the panel command System.TimerStart' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='TimerID' type='u32' description='The identifier passed to the System.TimerStart panel command' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Trigger' type='b1' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='CheckTrigger' >
+							<return exp='.Trigger' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Trigger' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.MacroExists' >
+									<return exp='.Trigger' />
+									<argument exp='Macro' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Trigger' swap='0' >
+									<flowline >
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.Call.CallMacro' >
+											<argument exp='Macro' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.TimerStart' >
+							<argument exp='0' />
+							<argument exp='100' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SetTimePeriod' description='Sets the time period in seconds. 
+Ideally this should only be called when the timer is not running.
+Automatically stops, resets and restarts the timer if already running.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Time' type='u32' description='Time period in units specified' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Units' type='u8' description='0=Seconds, 1=Minutes, 2=Hours' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='switch' title='Switch' textarea='36,25,36,25' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Units' >
+							<case >
+								<flowline >
+									<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='TimePeriod = .Time' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='1' >
+								<flowline >
+									<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='TimePeriod = .Time * 60' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='2' >
+								<flowline >
+									<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='TimePeriod = .Time * 3600' />
+									</command>
+								</flowline>
+							</case>
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='CountdownTime = 0' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='Started' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='Started = 0' />
+								</command>
+								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Start' />
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SetPanelText' description='Sets the Text on the panel display' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Time' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Hours' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Mins' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Secs' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Str' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Hours = .Time / 3600' />
+							<exp exp='.Mins = (.Time % 3600) / 60' />
+							<exp exp='.Secs = (.Time % 60)' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Str = &quot;&quot;' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Hours &lt; 10' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Str = .Str + &quot;0&quot;' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Str = .Str + STRING .Hours' />
+							<exp exp='.Str = .Str + &quot;:&quot;' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Mins &lt; 10' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Str = .Str + &quot;0&quot;' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Str = .Str + STRING .Mins' />
+							<exp exp='.Str = .Str + &quot;:&quot;' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Secs &lt; 10' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Str = .Str + &quot;0&quot;' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Str = .Str + STRING .Secs' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='GdiText2' />
+							<argument exp='&quot;sText&quot;' />
+							<argument exp='.Str' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Stop' description='Broadcast to all components that simulation has stopped' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='CallMacro' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.TimerStop' >
+									<argument exp='0' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Stop' description='Stops the countdown timer running' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='StartRanAtAll' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Generate End Time from Start Time' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='CountdownTime = CountdownTime - GetTimeOffset ()' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Generate End Time from Start Time' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='CountdownTime = TimePeriodValue' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;StartRanAtAll&quot;' />
+							<argument exp='0' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='Started = 0' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='CallMacro' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.TimerStop' >
+									<argument exp='0' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Property' description='Sent when a property has been changed by the User' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='temp' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='switch' title='Switch' textarea='36,25,36,25' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='TimePeriodUnits' >
+							<case >
+								<flowline >
+									<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='.Temp = TimePeriodValue' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='1' >
+								<flowline >
+									<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='.Temp = TimePeriodValue * 60' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='2' >
+								<flowline >
+									<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='.Temp = TimePeriodValue * 3600' />
+									</command>
+								</flowline>
+							</case>
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;TimePeriodCount&quot;' />
+							<argument exp='.temp' />
+						</command>
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetPanelText' >
+							<argument exp='.temp' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='CallMacro' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;Macro&quot;' />
+									<argument exp='1' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;Macro&quot;' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='GetTimeOffset' description='Checks for the time offset between start time and current time' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='temp' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='OldDay' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Temp = GetCurrentTime ()' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.OldDay = Day' />
+						</command>
+						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='TimeStamp1' macro='GetValue' >
+							<return exp='Day' />
+							<argument exp='3' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.OldDay != Day' swap='0' >
+							<flowline >
+								<command class_type='comment' title='' comment='Day Rollover' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='DayCount = DayCount + 1' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='DayCount &gt; 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Temp = .Temp + ((3600 * 24) * DayCount)' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = .Temp - StartTime' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='CheckTrigger' description='Checks the state of the trigger to determine if the allocated amount of time has passed.
+Returns true if amount of time has passed, otherwise returns false.' statediag='0' >
+						<return name='Return' type='b1' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='temp' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Return False' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = 0' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='Started' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Temp = GetTimeOffset ()' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='CountdownTime &lt;= .temp' swap='0' >
+									<flowline >
+										<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetPanelText' >
+											<argument exp='0' />
+										</command>
+										<command class_type='calculation' title='Return True' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Return = 1' />
+										</command>
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='AutoReset' swap='0' >
+											<flowline >
+												<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Start' />
+											</flowline>
+											<flowline >
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='CountdownTime = 0' />
+												</command>
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='Started = 0' />
+												</command>
+											</flowline>
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetPanelText' >
+											<argument exp='CountdownTime - .temp' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Start' description='Starts the countdown timer running.
+Automatically performs a reset if the event has already been triggered.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;StartRanAtAll&quot;' />
+							<argument exp='1' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='CountdownTime = 0' swap='0' >
+							<flowline >
+								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Reset' />
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetCurrentTime' >
+							<return exp='StartTime' />
+						</command>
+						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='TimeStamp1' macro='GetValue' >
+							<return exp='Day' />
+							<argument exp='3' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='DayCount = 0' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='Started = 1' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='CallMacro' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.TimerStart' >
+									<argument exp='0' />
+									<argument exp='100' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='GetCurrentTime' description='Returns the current time as a long' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='temp' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Read Hours' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='TimeStamp1' macro='GetValue' >
+							<return exp='.temp' />
+							<argument exp='2' />
+						</command>
+						<command class_type='calculation' title='Add Seconds in hours to count' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = (.temp * 3600)' />
+						</command>
+						<command class_type='sim' title='Read Minutes' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='TimeStamp1' macro='GetValue' >
+							<return exp='.temp' />
+							<argument exp='1' />
+						</command>
+						<command class_type='calculation' title='Add seconds in minutes to count' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = .Return + (.temp * 60)' />
+						</command>
+						<command class_type='sim' title='Read Seconds' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='TimeStamp1' macro='GetValue' >
+							<return exp='.temp' />
+							<argument exp='0' />
+						</command>
+						<command class_type='calculation' title='Add seconds to count' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = .Return + .temp' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Start' description='Broadcast to all components that simulation is starting' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='CountdownTime = 0' />
+							<exp exp='TimePeriod = TimePeriodCount' />
+						</command>
+						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;StartRanAtAll&quot;' />
+							<argument exp='0' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetPanelText' >
+							<argument exp='0' />
+						</command>
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Stop' />
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Start' />
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='CheckTrigger () == 0' >
+							<flowline >
+								<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='100' type='1' />
+							</flowline>
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='CheckTrigger () == 0' >
+							<flowline >
+								<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='100' type='1' />
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='a96ddf9d-631d-4db7-a66e-c709e2de7164' vmin='2' vmaj='1' codename='TimeStamp1' panelId='-1' x='55.3913' y='1.03721' z='-0.417925' xsz='0.0302174' ysz='0.0344814' zsz='0.01' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='DateFormat' data='000' />
+					<value target='TimeSeperator' data=':' />
+					<value target='DateSeparator' data='/' />
+					<value target='TimeStampSeparator' data=' - ' />
+					<value target='IncludeMillis' data='1' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='GdiShape' codename='GdiShape1' panelId='-1' x='70.5' y='35.5186' z='-0.283145' xsz='43.4375' ysz='21.5509' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='8' comp2dType='46' >
+				<resources />
+				<properties />
+				<values >
+					<value target='nType' data='  3' />
+					<value target='colFill' data='1973790' />
+					<value target='colFillGradient' data='16777215' />
+					<value target='nGradientStyle' data='  0' />
+					<value target='nStyle' data='0' />
+					<value target='fThickness' data='1.00000' />
+					<value target='colOutline' data='7895160' />
+					<value target='colOutlineGradient' data='16777215' />
+					<value target='nOutlineStyle' data='  3' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='GdiText' codename='GdiText1' panelId='-1' x='70.5' y='52.7593' z='0.210315' xsz='23.6073' ysz='21.5509' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='8' comp2dType='46' >
+				<resources />
+				<properties />
+				<values >
+					<value target='sText' data='Timed Event Trigger' />
+					<value target='bWordWrap' data='0' />
+					<value target='nHorizontalAlignment' data='2' />
+					<value target='nVerticalAlignment' data='2' />
+					<value target='nAngle' data='0' />
+					<value target='fntFamily' data='Calibri' />
+					<value target='dScale' data='1.00000' />
+					<value target='bScaleWidth' data='1' />
+					<value target='bBold' data='0' />
+					<value target='bItalic' data='0' />
+					<value target='bUnderline' data='0' />
+					<value target='bStrikethrough' data='0' />
+					<value target='colTextColour' data='16777215' />
+					<value target='colTextGradient' data='255' />
+					<value target='nGradient' data='  0' />
+					<value target='colBackgroundColour' data='-1' />
+					<value target='colBackgroundGradient' data='-1' />
+					<value target='nBackgroundGradient' data='0' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='GdiText' codename='GdiText2' panelId='-1' x='70.5' y='25.1742' z='0.460315' xsz='23.6073' ysz='21.5509' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='8' comp2dType='46' >
+				<resources />
+				<properties />
+				<values >
+					<value target='sText' data='00:00:00' />
+					<value target='bWordWrap' data='0' />
+					<value target='nHorizontalAlignment' data='2' />
+					<value target='nVerticalAlignment' data='2' />
+					<value target='nAngle' data='0' />
+					<value target='fntFamily' data='Calibri' />
+					<value target='dScale' data='1.00000' />
+					<value target='bScaleWidth' data='1' />
+					<value target='bBold' data='0' />
+					<value target='bItalic' data='0' />
+					<value target='bUnderline' data='0' />
+					<value target='bStrikethrough' data='0' />
+					<value target='colTextColour' data='16777215' />
+					<value target='colTextGradient' data='255' />
+					<value target='nGradient' data='  0' />
+					<value target='colBackgroundColour' data='-1' />
+					<value target='colBackgroundGradient' data='-1' />
+					<value target='nBackgroundGradient' data='0' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<scadaresourcelookup />
+	<keymap />
+	<panel2d shadows='0' lighting='2' brightness='0' >
+		<background rgb='2105930' img='' style='0' />
+		<camera xe='43.7493' ye='-13.1368' ze='794.842' xt='43.7493' yt='-13.1368' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='622' dy='352' zoom='94.688' fix_topleft='0' />
+		<page x='1000' y='1000' show='0' rgb='0' />
+		<winpos ID='7005' RectRecentFloat='2444,288,3094,738' RectRecentDocked='1910,454,2378,873' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+	</panel2d>
+	<panel3d shadows='0' lighting='2' brightness='0' perspective='1' >
+		<background rgb='8409120' img='' style='0' />
+		<table rgb='7360576' img='' style='0' size='0' />
+		<camera xe='-0.610654' ye='0.794953' ze='62.7936' xt='-0.610654' yt='0.794953' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey0 xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey1 xe='-3.67394e-14' ye='0' ze='-300' xt='0' yt='0' zt='0' xquat='0' yquat='1' zquat='0' wquat='6.12323e-17' />
+		<camerakey2 xe='0' ye='-300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.707107' yquat='0' zquat='0' wquat='0.707107' />
+		<camerakey3 xe='-3.67394e-14' ye='300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-4.32978e-17' yquat='0.707107' zquat='0.707107' wquat='4.32978e-17' />
+		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
+		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
+		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
+		<winpos ID='7004' RectRecentFloat='2476,304,3126,754' RectRecentDocked='4,452,472,998' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+	</panel3d>
+	<panels2d count='0' />
+	<layout >
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAowMAAEUDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CheckTrigger' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAowMAAEUDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAowMAAEUDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Start' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAowMAAEUDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Stop' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAowMAAEUDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Reset' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAowMAAEUDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetCurrentTime' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAowMAAEUDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Start' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAowMAAEUDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetPanelText' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAowMAAEUDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Stop' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAowMAAEUDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Timer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAowMAAEUDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetTimeOffset' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAowMAAEUDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetTimePeriod' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAowMAAEUDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

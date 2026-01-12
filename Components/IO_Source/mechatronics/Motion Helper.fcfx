@@ -1,0 +1,841 @@
+<root>
+<document scada='0' schema='103' license='1,CompMaker,PWKUUN' title='' description='' fcversion='655360' target='PIC.18F.18F4455' >
+	<config data='!0,cf3f!10,1f3f!20,873f!30,ff!40,c03f!50,e03f!60,403f%5,1%3,3%0,7%8,f%e,1%f,1%15,1%10,1%11,3%13,3%18,1%19,f%28,1%29,1%2a,1%2f,1%30,1%32,1%35,1%36,1%37,1%40,1%41,1%42,1%43,1%4f,1%4e,1%50,1%51,1%52,1%53,1%5f,1%5e,1%5d,1%60,1%61,1%62,1%63,1%6e,1' clkspd='19660800' simspd='1' usewdt='0' constif='0' Use3V3='0' />
+	<plugins >
+		<dll_models enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug />
+	<traces />
+	<ghost >
+		<FK2 >
+			<data name='FK2D0' port='4294967295' pin='4294967295' />
+			<data name='FK2D1' port='4294967295' pin='4294967295' />
+			<data name='FK2D2' port='4294967295' pin='4294967295' />
+			<data name='FK2D3' port='4294967295' pin='4294967295' />
+			<data name='FK2D4' port='4294967295' pin='4294967295' />
+			<data name='FK2D5' port='4294967295' pin='4294967295' />
+			<data name='FK2D6' port='4294967295' pin='4294967295' />
+			<data name='FK2D7' port='4294967295' pin='4294967295' />
+			<data name='FK2D8' port='4294967295' pin='4294967295' />
+			<data name='FK2D9' port='4294967295' pin='4294967295' />
+			<data name='FK2D10' port='4294967295' pin='4294967295' />
+			<data name='FK2D11' port='4294967295' pin='4294967295' />
+			<data name='FK2D12' port='4294967295' pin='4294967295' />
+			<data name='FK2D13' port='4294967295' pin='4294967295' />
+			<data name='FK2D14' port='4294967295' pin='4294967295' />
+			<data name='FK2D15' port='4294967295' pin='4294967295' />
+			<data name='FK2A0' port='4294967295' pin='4294967295' />
+			<data name='FK2A1' port='4294967295' pin='4294967295' />
+			<data name='FK2A2' port='4294967295' pin='4294967295' />
+			<data name='FK2A3' port='4294967295' pin='4294967295' />
+			<data name='FK2A4' port='4294967295' pin='4294967295' />
+			<data name='FK2A5' port='4294967295' pin='4294967295' />
+		</FK2>
+		<ICD >
+			<data name='AnalogPrescaleValue' value='19' />
+			<data name='DigitalSampleRate' value='100000' />
+			<data name='BreakpointCount' value='8' />
+			<data name='CallStackDepthCount' value='8' />
+			<data name='ClockPort' value='1' />
+			<data name='ClockPin' value='6' />
+			<data name='DataPort' value='1' />
+			<data name='DataPin' value='7' />
+			<data name='UseDefaultPins' value='1' />
+			<data name='WrapEnabled' value='1' />
+			<data name='CommsDelayOverridden' value='0' />
+			<data name='CommsDelay' value='9' />
+			<data name='CalculatedCommsDelay' value='9' />
+			<data name='AnalogEB2PrescaleValue' value='2' />
+			<data name='DigitalEB2SampleRate' value='100000' />
+		</ICD>
+		<pins >
+			<digital A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+			<analog A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+		</pins>
+	</ghost>
+	<components >
+		<settings autoimg='0' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='ddc97f5d-2b6c-4e5a-be40-c5c91123b8cc' vstate='40' vmin='1' vmaj='1' srcleaf='Motion Helper.fcfx' visiblename='Motion Helper' description='Helper for building components which require simulation of constant motion.
+Linked objects can be issued speed and acceleration parameters, and will then
+be animated automatically until another command is issued.
+The helper can control motion for up to four objects simultaneously, all with their
+own discrete motion settings. ' category='Misc' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' catenable='1' author='Matrix Ltd' manuname='' manucode='' sysinfo='1061127' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='1' showmacros='1' iconpath='..\..\icons\components\Animator.png' />
+		<component class_type='root' codename='motion_helper' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+			<resources />
+			<properties >
+				<property name='Frame Interval' target='interval' typeid='21' hidden='0' locked='0' info='Time interval between animation frames.
+Does not affect the speed of motion, only the rate of screen updates.' />
+				<property name='On Stop' target='on_stop' typeid='16' hidden='0' locked='0' info='Decide what action to take when simulation stops.
+No Action - Animation is paused, continues from this position when simulation restarts
+Return to start - all object returned to their start positions, current speed resumes on simulation start.
+Clear speeds - objects retain their position, but speed is set to zero.
+Return and clear - objects return to start position and have theri speed set to zero.
+' filter='000No action
+001Return to start
+002Clear speeds
+003Return and clear' />
+				<property name='Connecting Object' target='ConnHandle' typeid='21' hidden='1' locked='0' info='' />
+			</properties>
+			<values >
+				<value target='interval' data='50' />
+				<value target='on_stop' data='003' />
+				<value target='ConnHandle' data='0' />
+			</values>
+			<events >
+				<event class='Components' event='Initialise' target='Ev_Initialise' />
+				<event class='Simulation' event='Start' target='Ev_Start' />
+				<event class='Simulation' event='Stop' target='Ev_Stop' />
+				<event class='System' event='Timer' target='Ev_Timer' />
+				<event class='Components' event='Renamed' target='Ev_Renamed' />
+				<event class='Simulation' event='Resume' target='Ev_Resume' />
+				<event class='Simulation' event='Pause' target='Ev_Pause' />
+				<event class='Components' event='Property' target='Ev_Property' />
+			</events>
+			<apis >
+				<api name='RegisterTarget' alt='' type='2' proto='1' />
+				<api name='SetAcceleration' alt='' type='2' proto='1' />
+				<api name='SetSpeed' alt='' type='2' proto='1' />
+				<api name='UnregisterAll' alt='' type='2' proto='1' />
+				<api name='UnregisterTarget' alt='' type='2' proto='1' />
+			</apis>
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='speeds' type='f32' description='Current speed of each linked object' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' >
+						<array size='4' />
+					</def>
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='axis_ids' type='u8' description='Which axis to use (0=X, 1=Y, 2=Z)' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+						<array size='4' />
+					</def>
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='handles' type='h32' description='Handles of objects linked for motion' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' >
+						<array size='4' />
+					</def>
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='false' type='b1' description='' isconst='1' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='axis_handles' type='h32' description='Handles for object axes' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' >
+						<array size='4' />
+					</def>
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='start_positions' type='h32' description='Start positions of objects - set when the object is registered' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' >
+						<array size='4' />
+					</def>
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='target_speeds' type='f32' description='Speeds to attain at current acceleration' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' >
+						<array size='4' />
+					</def>
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='types' type='u8' description='types of motion (0 = rotary, 1 = linear)' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+						<array size='4' />
+					</def>
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='accelerations' type='f32' description='acceleration settings for each object' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' >
+						<array size='4' />
+					</def>
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='true' type='b1' description='' isconst='1' isHidden='0' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='Ev_Timer' description='Called back on the panel command System.TimerStart' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='TimerID' type='u32' description='The identifier passed to the System.TimerStart panel command' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='idx' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='speed' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='target_speed' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='accel_step' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='object' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='axis' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='all_stopped' type='b1' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.TimerID != 0' swap='0' >
+							<flowline >
+								<command class_type='goto' title='Goto Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' labelid='0' labelname='' />
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.idx = 0' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.idx &lt; 4' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.object = handles[.idx]' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.object == 0' swap='0' >
+									<flowline >
+										<command class_type='goto' title='Goto Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' labelid='1' labelname='' />
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='comment' title='' comment='Update speed and acceleration' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.speed = speeds[.idx]' />
+									<exp exp='.target_speed = target_speeds[.idx]' />
+									<exp exp='.accel_step = accelerations[.idx]' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.accel_step == 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.speed = target_speeds[.idx]' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.target_speed &lt; .speed' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='.accel_step = - .accel_step' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='fabs (.speed - .target_speed) &lt; fabs (.accel_step)' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.speed = .target_speed' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.speed = .speed + .accel_step' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='speeds[.idx] = .speed' />
+								</command>
+								<command class_type='sim' title='Simulation' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Debug.Print' >
+									<argument exp='STRING .speed + &quot; &quot;' />
+								</command>
+								<command class_type='comment' title='' comment='Do the movement' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.speed != 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.axis = axis_handles[.idx]' />
+										</command>
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='types[.idx] == 1' swap='0' >
+											<flowline >
+												<command class_type='switch' title='Switch' textarea='36,25,36,25' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='axis_ids[.idx]' >
+													<case >
+														<flowline >
+															<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.MoveAlong' >
+																<argument exp='.object' />
+																<argument exp='.axis' />
+																<argument exp='.speed' />
+																<argument exp='0' />
+																<argument exp='0' />
+															</command>
+															<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+															<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+															<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+															<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+															<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+															<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+															<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+															<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+															<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+															<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+															<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+															<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+															<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+															<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+															<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+															<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+															<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+															<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+														</flowline>
+													</case>
+													<case exp='1' >
+														<flowline >
+															<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.MoveAlong' >
+																<argument exp='.object' />
+																<argument exp='.axis' />
+																<argument exp='0' />
+																<argument exp='.speed' />
+																<argument exp='0' />
+															</command>
+														</flowline>
+													</case>
+													<case exp='2' >
+														<flowline >
+															<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.MoveAlong' >
+																<argument exp='.object' />
+																<argument exp='.axis' />
+																<argument exp='0' />
+																<argument exp='0' />
+																<argument exp='.speed' />
+															</command>
+														</flowline>
+													</case>
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='switch' title='Switch' textarea='36,25,36,25' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='axis_ids[.idx]' >
+													<case >
+														<flowline >
+															<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.RotateAlong' >
+																<argument exp='.object' />
+																<argument exp='.axis' />
+																<argument exp='.axis' />
+																<argument exp='.speed' />
+																<argument exp='0' />
+																<argument exp='0' />
+															</command>
+															<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+															<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+															<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+															<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+															<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+															<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+															<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+															<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+															<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+															<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+															<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+															<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+															<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+															<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+															<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+															<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+														</flowline>
+													</case>
+													<case exp='1' >
+														<flowline >
+															<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.RotateAlong' >
+																<argument exp='.object' />
+																<argument exp='.axis' />
+																<argument exp='.axis' />
+																<argument exp='0' />
+																<argument exp='.speed' />
+																<argument exp='0' />
+															</command>
+														</flowline>
+													</case>
+													<case exp='2' >
+														<flowline >
+															<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.RotateAlong' >
+																<argument exp='.object' />
+																<argument exp='.axis' />
+																<argument exp='.axis' />
+																<argument exp='0' />
+																<argument exp='0' />
+																<argument exp='.speed' />
+															</command>
+														</flowline>
+													</case>
+												</command>
+											</flowline>
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='ConnHandle' swap='0' >
+									<flowline >
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='CouplingDummy1' macro='Rotate' >
+											<argument exp='.Speed' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='label' title='Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' labelid='1' labelname='Next' />
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.idx = .idx + 1' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='label' title='Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' labelid='0' labelname='Exit' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_AllStopped' >
+							<return exp='.all_stopped' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.all_stopped' swap='0' >
+							<flowline />
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.TimerStart' >
+									<argument exp='0' />
+									<argument exp='interval' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Prv_AllStopped' description='' statediag='0' >
+						<return name='Return' type='b1' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='idx' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = true' />
+							<exp exp='.idx = 0' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.idx &lt; 4' >
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='speeds[.idx] != 0 || target_speeds[.idx] != 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Return = false' />
+										</command>
+										<command class_type='goto' title='Goto Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' labelid='0' labelname='' />
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.idx = .idx + 1' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='label' title='Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' labelid='0' labelname='Break' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='RegisterTarget' description='Add a new object to the list of objects which the motion helper is animating.
+Up to four objects can be animated by each Motion Helper.
+' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Target' type='h32' description='Handle of the target to link to.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='AxisObject' type='h32' description='Axis object for this definition' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Axis' type='u8' description='Axis to move along/around (0=X, 1=Y, 2=Z)' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Type' type='u8' description='Motion type (0=Rotary, 1=Linear)' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='idx' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='position' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Axis_X' type='s16' description='' isconst='1' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='Axis_Y' type='s16' description='' isconst='1' isHidden='0' isinit='1' usrinit='1' setinit='1' />
+						<local name='Axis_Z' type='s16' description='' isconst='1' isHidden='0' isinit='1' usrinit='2' setinit='2' />
+						<local name='Type_Rotary' type='s16' description='' isconst='1' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='Type_Linear' type='s16' description='' isconst='1' isHidden='0' isinit='1' usrinit='1' setinit='1' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Target == 0 || .Target == this' swap='0' >
+							<flowline >
+								<command class_type='goto' title='Goto Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' labelid='0' labelname='' />
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='comment' title='' comment='If target already in the array, update it.' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.idx = 0' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.idx &lt; 4' >
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='handles[.idx] = .Target' swap='0' >
+									<flowline >
+										<command class_type='goto' title='Goto Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' labelid='1' labelname='' />
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.idx = .idx + 1' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='comment' title='' comment='Find the next empty slot' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.idx = 0' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.idx &lt; 4' >
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='handles[.idx] == 0' swap='0' >
+									<flowline >
+										<command class_type='goto' title='Goto Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' labelid='1' labelname='' />
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.idx = .idx + 1' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='goto' title='Quit if no free slot' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' labelid='0' labelname='' />
+						<command class_type='label' title='Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' labelid='1' labelname='Found' />
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Get' >
+							<return exp='.position' />
+							<argument exp='.Target' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='handles[.idx] = .Target' />
+							<exp exp='start_positions[.idx] = .position' />
+							<exp exp='axis_handles[.idx] = .AxisObject' />
+							<exp exp='axis_ids[.idx] = .Axis' />
+							<exp exp='types[.idx] = .Type' />
+							<exp exp='speeds[.idx] = 0.0' />
+							<exp exp='accelerations[.idx] = 0.0' />
+						</command>
+						<command class_type='label' title='Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' labelid='0' labelname='Exit' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Stop' description='Broadcast to all components that simulation has stopped' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='idx' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.TimerStop' >
+							<argument exp='0' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.idx = 0' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.idx &lt; 4' >
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='handles[.idx] &gt; 0' swap='0' >
+									<flowline >
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='on_stop &amp; 1' swap='0' >
+											<flowline >
+												<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Set' >
+													<argument exp='handles[.idx]' />
+													<argument exp='start_positions[.idx]' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='on_stop &amp; 2' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='speeds[.idx] = 0.0' />
+													<exp exp='target_speeds[.idx] = 0.0' />
+													<exp exp='accelerations[.idx] = 0' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.idx = .idx + 1' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SetAcceleration' description='Sets the acceleration for the target object.  This sets how quickly the object
+reaches its new speed following a call to SetSpeed.
+NB) The object must be one of those registered using RegisterTarget.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Target' type='h32' description='Handle of the object to set the acceleration for.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Acceleration' type='f32' description='Time in milliseconds to reach a new speed.' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='idx' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.idx = 0' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.idx &lt; 4' >
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='handles[.idx] = .Target' swap='0' >
+									<flowline >
+										<command class_type='goto' title='Goto Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' labelid='0' labelname='' />
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.idx = .idx + 1' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='goto' title='Goto Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' labelid='1' labelname='' />
+						<command class_type='label' title='Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' labelid='0' labelname='SetValue' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='accelerations[.idx] = .Acceleration * (FLOAT interval / 1000.0) * (FLOAT interval / 1000.0)' />
+						</command>
+						<command class_type='label' title='Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' labelid='1' labelname='Exit' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Initialise' description='Initialisation routine for the component once the component is linked to its parent' statediag='0' >
+						<return name='Return' type='u32' description='Non-zero to prevent initialisation' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='UnregisterAll' />
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;running&quot;' />
+							<argument exp='false' />
+						</command>
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_Property' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Prv_ReturnToStart' description='Returns all objects to their start positions' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<local name='idx' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.idx &lt; 4' >
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='handles[.idx] != 0' swap='0' >
+									<flowline >
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Set' >
+											<argument exp='handles[.idx]' />
+											<argument exp='start_positions[.idx]' />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='speeds[.idx] = 0.0' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.idx = 0' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.idx = 0' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Pause' description='Broadcast to all components that simulation has paused' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.TimerStop' >
+							<argument exp='0' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Property' description='Sent when a property has been changed by the User' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='interval &lt; 20' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<argument exp='this' />
+									<argument exp='&quot;interval&quot;' />
+									<argument exp='20' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='ConnHandle' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.RedirectMacros' >
+									<argument exp='CouplingDummy1' />
+									<argument exp='ConnHandle' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SetSpeed' description='Set a new target speed for this object.  Will use the acceleration parameter
+to set how long it will take to reach the new speed.
+NB) The object must be one of those previously declared using RegisterTarget' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Target' type='h32' description='Target object to set the speed for.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Speed' type='f32' description='Target speed.  World units per second or degrees per second.' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='idx' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='all_stopped' type='b1' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_AllStopped' >
+							<return exp='.all_stopped' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.idx = 0' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.idx &lt; 4' >
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='handles[.idx] = .Target' swap='0' >
+									<flowline >
+										<command class_type='goto' title='Goto Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' labelid='0' labelname='' />
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.idx = .idx + 1' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='goto' title='Goto Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' labelid='1' labelname='' />
+						<command class_type='label' title='Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' labelid='0' labelname='SetValue' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='target_speeds[.idx] = .Speed * FLOAT interval / 1000.0' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.all_stopped &amp;&amp; .Speed == 0' swap='0' >
+							<flowline />
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.TimerStart' >
+									<argument exp='0' />
+									<argument exp='interval' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='label' title='Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' labelid='1' labelname='Exit' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Renamed' description='' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Name' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<command class_type='sim' title='' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.GetName' >
+							<return exp='.Name' />
+							<argument exp='this' />
+						</command>
+						<command class_type='sim' title='' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='LibraryComponent1' />
+							<argument exp='&quot;Name&quot;' />
+							<argument exp='.Name' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='UnregisterTarget' description='Remove a target from the list of links.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Target' type='h32' description='Handle of the object to remove' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='idx' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.idx = 0' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.idx &lt; 4' >
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='handles[.idx] == .Target' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='accelerations[.idx] = 0' />
+											<exp exp='axis_handles[.idx] = 0' />
+											<exp exp='axis_ids[.idx] = 0' />
+											<exp exp='handles[.idx] = 0' />
+											<exp exp='speeds[.idx] = 0' />
+											<exp exp='types[.idx] = 0' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.idx = .idx + 1' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='UnregisterAll' description='Totally clear the list of registered objects' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<local name='idx' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.idx = 0' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.idx &lt; 4' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='accelerations[.idx] = 0.0' />
+									<exp exp='axis_handles[.idx] = 0' />
+									<exp exp='axis_ids[.idx] = 0' />
+									<exp exp='handles[.idx] = 0' />
+									<exp exp='speeds[.idx] = 0' />
+									<exp exp='types[.idx] = 0' />
+									<exp exp='.idx = .idx + 1' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Start' description='Broadcast to all components that simulation is starting' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='all_stopped' type='b1' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_AllStopped' >
+							<return exp='.all_stopped' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.all_stopped' swap='0' >
+							<flowline />
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.TimerStart' >
+									<argument exp='0' />
+									<argument exp='interval' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Resume' description='Broadcast to all components that simulation has resumed' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_Start' />
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='53f26532-bd9d-4e78-a19e-8c198271492a' vmin='0' vmaj='1' codename='CouplingDummy1' panelId='-1' x='0.994702' y='-0.440268' z='65.1603' xsz='0.01' ysz='0.01' zsz='0.01' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values />
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='58be670e-18fb-477e-ab09-61fde14b23ec' vmin='0' vmaj='1' codename='LibraryComponent1' panelId='-1' x='-0.880129' y='1.32019' z='0' xsz='100' ysz='100' zsz='100' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Text::sText' data='Motion
+Helper' />
+					<value target='Name' data='' />
+					<value target='Peripheral::sText' data='' />
+					<value target='Text::nVerticalAlignment' data='002' />
+					<value target='ShowComms' data='0' />
+					<value target='InputIcon::CommsType' data='255' />
+					<value target='InputIcon::LinkTo' data='0' />
+					<value target='IconsOnRight' data='0' />
+					<value target='OutputIcon::CommsType' data='255' />
+					<value target='OutputIcon::LinkTo' data='0' />
+					<value target='ConsoleHandle' data='0' />
+					<value target='Upgraded' data='0' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<scadaresourcelookup />
+	<keymap />
+	<panel2d shadows='0' lighting='2' brightness='0' >
+		<background rgb='3158064' img='' style='0' />
+		<camera xe='-6.96629' ye='-8.15842' ze='347.134' xt='-6.96629' yt='-8.15842' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='622' dy='343' zoom='216.81' fix_topleft='0' />
+		<page x='1000' y='1000' show='0' rgb='0' />
+		<winpos ID='7005' RectRecentFloat='1270,379,1920,829' RectRecentDocked='0,0,642,413' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+	</panel2d>
+	<panel3d shadows='1' lighting='2' brightness='0' perspective='1' >
+		<background rgb='8409120' img='' style='0' />
+		<table rgb='8404224' img='' style='0' size='40' />
+		<camera xe='0.180199' ye='-2.30613' ze='75.609' xt='0.180199' yt='-2.30613' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey0 xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey1 xe='-3.67394e-14' ye='0' ze='-300' xt='0' yt='0' zt='0' xquat='0' yquat='1' zquat='0' wquat='6.12323e-17' />
+		<camerakey2 xe='0' ye='-300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.707107' yquat='0' zquat='0' wquat='0.707107' />
+		<camerakey3 xe='-3.67394e-14' ye='300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-4.32978e-17' yquat='0.707107' zquat='0.707107' wquat='4.32978e-17' />
+		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
+		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
+		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
+		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='52,5954,694,6367' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+	</panel3d>
+	<panels2d count='0' />
+	<layout >
+		<view type='0' name='Ev_Timer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Pause' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Start' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Resume' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Stop' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetSpeed' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetAcceleration' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='RegisterTarget' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_AllStopped' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='UnregisterAll' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='55' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_ReturnToStart' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='UnregisterTarget' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

@@ -1,0 +1,99 @@
+<!-- CRC: 90CF26913586BBA787FE92D5537719339843ED727D1F7F89BA2A9E1965F248812B702871DF5ADABCC487AA0E0C74ACDB9A0D46BD3B6AACB92DE4D84759EBB5079CA9DA2D2BBCDAE2A4D1C56CD1580BF50328A5C56C80C3BB9F0375E4DEED8E7E93399525F703264AEDD5E987B5CBC8430F1DEDCD50151F89B1EFEF1292018B3CBBF5C932164F2A85C9656DE9406DC5B8B66A8A85FFC96C663A25084AC6408A8150FB150867B63AA7086944AE325796A62836BDD4179932790908A9EBBBDA8A87B9DE5359EEACBDE5A3608A0B0CE69F969622A912E6E6A2FB -->
+<!-- REVISION: 1.0 -->
+<!-- GUID: 37BBD63C-CD0B-4353-838F-18BBEB84CDDB -->
+<!-- DATE: 08\08\2022 -->
+<!-- DIR: FCD\PIC\16F506.fcdx -->
+<root>
+
+<device name='16F506' namealt="PIC16F506" product='PIC' cal='PIC' family='16F' bits='8' >
+    <clock max_speed='20000000' master_divider='4' default='19660800' />
+    <memory >
+        <flash bytes='1536' />
+        <ram bytes='67' />
+    </memory>
+    <configuration address='1' mult='2' >
+	<format >
+	  <word value='0x3FFF' />
+        </format>
+        <setting />
+        <settings >
+            <setting name='OSC' offset='0' mask='7' bits='3' hint='Oscillator Selection bits' >
+                <option name='LP oscillator and 18 ms DRT' value='0' />
+                <option name='XT oscillator and 18 ms DRT' value='1' />
+                <option name='HS oscillator and 18 ms DRT' value='2' />
+                <option name='EC Osc With RB4 and 1.125 ms DRT' value='3' />
+                <option name='INTRC With RB4 and 1.125 ms DRT' value='4' />
+                <option name='INTRC With CLKOUT and 1.125 ms DRT' value='5' />
+                <option name='EXTRC With RB4 and 1.125 ms DRT' value='6' />
+                <option name='EXTRC With CLKOUT and 1.125 ms DRT' value='7' />
+            </setting>
+            <setting name='WDT' offset='3' mask='1' bits='1' hint='Watchdog Timer Enable bit' >
+                <option name='Enabled' value='1' />
+                <option name='Disabled' value='0' />
+            </setting>
+            <setting name='CP' offset='4' mask='1' bits='1' hint='Code Protect' >
+                <option name='Disabled' value='1' />
+                <option name='Enabled' value='0' />
+            </setting>
+            <setting name='MCLRE' offset='5' mask='1' bits='1' hint='Master Clear Enable bit' >
+                <option name='Enabled' value='1' />
+                <option name='Disabled' value='0' />
+            </setting>
+            <setting name='IOSCFS' offset='6' mask='1' bits='1' hint='Internal Oscillator Frequency Select bit' >
+                <option name='8MHz INTOSC' value='1' />
+                <option name='4MHz INTOSC' value='0' />
+            </setting>
+        </settings>
+    </configuration>
+    <pins sides='2' smd='0' >
+        <pin name='VDD' />
+        <pin name='RB5/OSC1/CLKIN' port='1' bit='5' />
+        <pin name='RB4/OSC2/CLKOUT' port='1' bit='4' />
+        <pin name='RB3/MCLR/VPP' port='1' bit='3' />
+        <pin name='RC5/T0CKI' port='2' bit='5' />
+        <pin name='RC4/C2OUT' port='2' bit='4' />
+        <pin name='RC3' port='2' bit='3' />
+        <pin name='RC2/CVREF' port='2' bit='2' />
+        <pin name='RC1/C2IN-' port='2' bit='1' />
+        <pin name='RC0/C2IN+' port='2' bit='0' />
+        <pin name='RB2AN2/C1OUT' port='1' bit='2' adc='2' />
+        <pin name='RB1/AN1/C1IN-/ICSPCLK' port='1' bit='1' adc='1' />
+        <pin name='RB0/AN0/C1IN+/ICSPDAT' port='1' bit='0' adc='0' />
+        <pin name='VSS' />
+    </pins>
+    <adc type='31' bits='8' >
+        <speed >
+            <option name='Fosc / 16' value='0' />
+            <option name='Fosc / 8' value='1' />
+            <option name='Fosc / 4' value='2' />
+            <option name='INTOSC / 4' value='3' />
+        </speed>
+    </adc>
+    <interrupts />
+</device>
+<inline >
+    <defines code='#define MX_16F5x_TRIS\n#define MX_16F5x_TRISB\n#define MX_16F5x_TRISC\n' />
+    <directives code="#include &lt;xc.h&gt;\n#include &lt;math.h&gt;\n\n" />
+    <main >
+        <start code='\nvoid main()\n{\n\t#ifdef INTOSCHELPER\n\t\tINTOSCHELPERCODE\n\t#endif\n\n' />
+        <end code='\tmainendloop: goto mainendloop;\n}\n\n' />
+        <init code='ADCON0 = 0x00;\n' />
+    </main>
+    <interrupt >
+        <enable code='st_bit(INTCON,GIE);\n' />
+        <start code='' />
+        <end code='' />
+        <init code='' />
+    </interrupt>
+    <config >
+	<start code='//Chip Configuration Settings\n' />
+        <body code='__PROG_CONFIG($(address), 0x$(value:x));\n' /> 
+    </config>
+</inline>
+<test >
+    <icd >
+        <clock port='1' pin='6' />
+        <data port='1' pin='7' />
+    </icd>
+</test>
+</root>

@@ -1,0 +1,1089 @@
+<root>
+<document scada='0' schema='103' license='1,CompMaker,PWKUUN' title='' description='' fcversion='655360' target='PIC.16F.16F877A' >
+	<config data='!0,3f72%0,2%2,0%3,0%6,1%7,0%9,3%b,1%8,1%d,1' clkspd='20000000' simspd='1' usewdt='0' constif='0' Use3V3='0' />
+	<plugins >
+		<dll_models enabled='1' />
+	</plugins>
+	<supplement use='1' head='#ifdef MX_PIC
+  #define LINS_CONVAL 0xc0
+  #define LINS_TIMER_ADJUST_RX 	31
+  #define LINS_TIMER_ADJUST_TX 	37
+
+  #ifdef OPTION_REG
+    #define LINS_T0CON option_reg
+    #define LINS_TMR0  tmr0
+  #else
+    #ifdef T0CON
+      #define LINS_T0CON t0con
+      #define LINS_TMR0  tmr0l
+    #endif
+  #endif
+
+  #ifndef LINS_T0CON
+    #define LINS_T0CON option_reg
+  #endif
+
+  #ifndef LINS_TMR0
+    #define LINS_TMR0  tmr0
+  #endif
+#endif
+
+#ifdef MX_AVR
+  #ifndef TIFR
+    #ifdef TIFR0
+      #define TIFR TIFR0
+    #endif
+  #endif
+
+  #ifndef TIMSK
+    #ifdef TIMSK0
+      #define TIMSK TIMSK0
+    #endif
+  #endif
+
+  #ifndef TCCR0
+	  #ifdef TCCR0B
+		#define TCCR0 TCCR0B
+	  #else
+        #ifdef TCCR0A
+          #define TCCR0 TCCR0A
+        #endif
+      #endif
+  #endif
+
+  #define LINS_TIMER_ADJUST_RX 	2
+  #define LINS_TIMER_ADJUST_TX 	10
+  #define LINS_TX_EXTRA_WAIT 		delay_us(1);
+
+  unsigned char FCV_SREG_TEMP;
+
+#endif
+
+' body='' />
+	<debug />
+	<traces />
+	<ghost >
+		<FK2 >
+			<data name='FK2D0' port='4294967295' pin='4294967295' />
+			<data name='FK2D1' port='4294967295' pin='4294967295' />
+			<data name='FK2D2' port='4294967295' pin='4294967295' />
+			<data name='FK2D3' port='4294967295' pin='4294967295' />
+			<data name='FK2D4' port='4294967295' pin='4294967295' />
+			<data name='FK2D5' port='4294967295' pin='4294967295' />
+			<data name='FK2D6' port='4294967295' pin='4294967295' />
+			<data name='FK2D7' port='4294967295' pin='4294967295' />
+			<data name='FK2D8' port='4294967295' pin='4294967295' />
+			<data name='FK2D9' port='4294967295' pin='4294967295' />
+			<data name='FK2D10' port='4294967295' pin='4294967295' />
+			<data name='FK2D11' port='4294967295' pin='4294967295' />
+			<data name='FK2D12' port='4294967295' pin='4294967295' />
+			<data name='FK2D13' port='4294967295' pin='4294967295' />
+			<data name='FK2D14' port='4294967295' pin='4294967295' />
+			<data name='FK2D15' port='4294967295' pin='4294967295' />
+			<data name='FK2A0' port='4294967295' pin='4294967295' />
+			<data name='FK2A1' port='4294967295' pin='4294967295' />
+			<data name='FK2A2' port='4294967295' pin='4294967295' />
+			<data name='FK2A3' port='4294967295' pin='4294967295' />
+			<data name='FK2A4' port='4294967295' pin='4294967295' />
+			<data name='FK2A5' port='4294967295' pin='4294967295' />
+		</FK2>
+		<ICD >
+			<data name='AnalogPrescaleValue' value='19' />
+			<data name='DigitalSampleRate' value='100000' />
+			<data name='BreakpointCount' value='8' />
+			<data name='CallStackDepthCount' value='8' />
+			<data name='ClockPort' value='1' />
+			<data name='ClockPin' value='6' />
+			<data name='DataPort' value='1' />
+			<data name='DataPin' value='7' />
+			<data name='UseDefaultPins' value='1' />
+			<data name='WrapEnabled' value='1' />
+			<data name='CommsDelayOverridden' value='0' />
+			<data name='CommsDelay' value='9' />
+			<data name='CalculatedCommsDelay' value='9' />
+			<data name='AnalogEB2PrescaleValue' value='2' />
+			<data name='DigitalEB2SampleRate' value='100000' />
+		</ICD>
+		<pins >
+			<digital A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+			<analog A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+		</pins>
+	</ghost>
+	<components >
+		<settings autoimg='0' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='1' />
+		<definition guid='822ce79d-3339-4d92-bd2b-abae0ba3b780' vstate='40' vmin='2' vmaj='1' srcleaf='LinSlaveV2.fcfx' visiblename='LIN Slave' description='Low level routines for controlling the LIN bus (1.3 / 2.0) slave interface.' category='Comms: Interface' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' catenable='1' author='Matrix Ltd' manuname='' manucode='' sysinfo='1053579' keywords='' dynamic='1' scadaCompatible='0' embeddedCompatible='1' showmacros='1' iconpath='..\..\Icons\Components\LIN Slave.png' />
+		<component class_type='root' codename='LINSlaveV2' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+			<resources />
+			<properties >
+				<property name='Bus Options' folder='property_4' hidden='0' >
+					<property name='Channel' target='cal_uart1::CHANNEL' typeid='16' hidden='0' locked='0' info='UART Channel selector
+Software channels are bit banged using generic I/O pins but are not as reliable as hardware channels.
+Hardware channels use the selected peripheral on-board the target microcontroller.' filter='000Software
+001Channel 1
+' />
+					<property name='Baud Options' target='cal_uart1::BAUD_LIST' typeid='16' hidden='0' locked='0' info='Baud rate option selector' filter='000Custom
+0011200
+0022400
+0034800
+0049600
+00519200
+00631250
+00738400
+00857600
+009115200' />
+					<property name='Baud Rate' target='cal_uart1::BAUD' typeid='14' hidden='0' locked='1' info='' />
+					<property name='Messages' target='MESSAGES' typeid='16' hidden='0' locked='0' info='Number of messages the firmware is designed to listen for' filter='0011
+0022
+0033
+0044
+0055
+0066
+0077
+0088' />
+					<property name='Checksum Type' target='CSumType' typeid='16' hidden='0' locked='0' info='' filter='000Classic (LIN 1.3)
+001Enhanced (LIN 2.0)' />
+				</property>
+				<property name='Connections' folder='property_1' hidden='0' >
+					<property name='TX' target='cal_uart1::TX' typeid='5' hidden='0' locked='1' info='Pin to be used for Transmit data' />
+					<property name='TX Remap Pin' target='cal_uart1::OutputPins' typeid='16' hidden='1' locked='0' info='Allows the hardware transmit pin to be configured from a list of available pins based on your target device,' filter='000$PORTA.0
+001$PORTC.10' />
+					<property name='TX Alt Pin' target='cal_uart1::TXAlt' typeid='7' hidden='1' locked='0' info='Allows the TX pin to be allocated to an alternate I/O pin.' />
+					<property name='RX' target='cal_uart1::RX' typeid='5' hidden='0' locked='1' info='Pin to be used for Receive data' />
+					<property name='RX Remap Pin' target='cal_uart1::InputPins' typeid='16' hidden='1' locked='0' info='Allows the hardware receive pin to be configured from a list of available pins based on your target device,' filter='000$PORTA.1
+001$PORTC.11' />
+					<property name='RX Alt Pin' target='cal_uart1::RXAlt' typeid='7' hidden='1' locked='0' info='Allows the RX pin to be allocated to an alternate I/O pin.' />
+					<property name='CS pin' target='CS' typeid='5' hidden='0' locked='0' info='LIN bus chip select pin
+' />
+				</property>
+				<property name='MESSAGE1' folder='MESSAGE1' hidden='0' layout='' >
+					<property name='ID' target='MSG1_ID' typeid='14' hidden='0' locked='0' info='Message identifier to listen for' />
+					<property name='BYTES' target='MSG1_BYTES' typeid='16' hidden='0' locked='0' info='Number of bytes to expent in the packet' filter='0000
+0011
+0022
+0033
+0044
+0055
+0066
+0077
+0088' />
+					<property name='TX_RX' target='MSG1_TX_RX' typeid='16' hidden='0' locked='0' info='Data direction for packet' filter='000TX
+001RX' />
+				</property>
+				<property name='MESSAGE2' folder='MESSAGE2' hidden='1' layout='' >
+					<property name='ID' target='MSG2_ID' typeid='14' hidden='0' locked='0' info='Message identifier to listen for' />
+					<property name='BYTES' target='MSG2_BYTES' typeid='16' hidden='0' locked='0' info='Number of bytes to expent in the packet' filter='0000
+0011
+0022
+0033
+0044
+0055
+0066
+0077
+0088' />
+					<property name='TX_RX' target='MSG2_TX_RX' typeid='16' hidden='0' locked='0' info='Data direction for packet' filter='000TX
+001RX' />
+				</property>
+				<property name='MESSAGE3' folder='MESSAGE3' hidden='1' layout='' >
+					<property name='ID' target='MSG3_ID' typeid='14' hidden='0' locked='0' info='Message identifier to listen for' />
+					<property name='BYTES' target='MSG3_BYTES' typeid='16' hidden='0' locked='0' info='Number of bytes to expent in the packet' filter='0000
+0011
+0022
+0033
+0044
+0055
+0066
+0077
+0088' />
+					<property name='TX_RX' target='MSG3_TX_RX' typeid='16' hidden='0' locked='0' info='Data direction for packet' filter='000TX
+001RX' />
+				</property>
+				<property name='MESSAGE4' folder='MESSAGE4' hidden='1' layout='' >
+					<property name='ID' target='MSG4_ID' typeid='14' hidden='0' locked='0' info='Message identifier to listen for' />
+					<property name='BYTES' target='MSG4_BYTES' typeid='16' hidden='0' locked='0' info='Number of bytes to expent in the packet' filter='0000
+0011
+0022
+0033
+0044
+0055
+0066
+0077
+0088' />
+					<property name='TX_RX' target='MSG4_TX_RX' typeid='16' hidden='0' locked='0' info='Data direction for packet' filter='000TX
+001RX' />
+				</property>
+				<property name='MESSAGE5' folder='MESSAGE5' hidden='1' layout='' >
+					<property name='ID' target='MSG5_ID' typeid='14' hidden='0' locked='0' info='Message identifier to listen for' />
+					<property name='BYTES' target='MSG5_BYTES' typeid='16' hidden='0' locked='0' info='Number of bytes to expent in the packet' filter='0000
+0011
+0022
+0033
+0044
+0055
+0066
+0077
+0088' />
+					<property name='TX_RX' target='MSG5_TX_RX' typeid='16' hidden='0' locked='0' info='Data direction for packet' filter='000TX
+001RX' />
+				</property>
+				<property name='MESSAGE6' folder='MESSAGE6' hidden='1' layout='' >
+					<property name='ID' target='MSG6_ID' typeid='14' hidden='0' locked='0' info='Message identifier to listen for' />
+					<property name='BYTES' target='MSG6_BYTES' typeid='16' hidden='0' locked='0' info='Number of bytes to expent in the packet' filter='0000
+0011
+0022
+0033
+0044
+0055
+0066
+0077
+0088' />
+					<property name='TX_RX' target='MSG6_TX_RX' typeid='16' hidden='0' locked='0' info='Data direction for packet' filter='000TX
+001RX' />
+				</property>
+				<property name='MESSAGE7' folder='MESSAGE7' hidden='1' layout='' >
+					<property name='ID' target='MSG7_ID' typeid='14' hidden='0' locked='0' info='Message identifier to listen for' />
+					<property name='BYTES' target='MSG7_BYTES' typeid='16' hidden='0' locked='0' info='Number of bytes to expent in the packet' filter='0000
+0011
+0022
+0033
+0044
+0055
+0066
+0077
+0088' />
+					<property name='TX_RX' target='MSG7_TX_RX' typeid='16' hidden='0' locked='0' info='Data direction for packet' filter='000TX
+001RX' />
+				</property>
+				<property name='MESSAGE8' folder='MESSAGE8' hidden='1' layout='' >
+					<property name='ID' target='MSG8_ID' typeid='14' hidden='0' locked='0' info='Message identifier to listen for' />
+					<property name='BYTES' target='MSG8_BYTES' typeid='16' hidden='0' locked='0' info='Number of bytes to expent in the packet' filter='0000
+0011
+0022
+0033
+0044
+0055
+0066
+0077
+0088' />
+					<property name='TX_RX' target='MSG8_TX_RX' typeid='16' hidden='0' locked='0' info='Data direction for packet' filter='000TX
+001RX' />
+				</property>
+				<property name='Simulation' folder='cal_uart1::property_1' hidden='0' >
+					<property name='Scope Traces' target='cal_uart1::ScopeTraces' typeid='7' hidden='0' locked='0' info='Selects if the scope traces are automatically added to the data recorder window or not.
+    Simulation - draws an approximation of the UART data onto the scope trace.
+    ICT - sets up the scope trace for incoming data and adds UART packet decoding at the correct BAUD.' />
+					<property name='Console Data' target='cal_uart1::ConsoleData' typeid='7' hidden='0' locked='0' info='Selects if the console data is automatically generated or not' />
+					<property name='Console Format' target='cal_uart1::ConsoleFormat' typeid='16' hidden='0' locked='0' info='Controls if the data is shown as a log with time and date stamps or just as raw data' filter='000Log
+001Data' />
+					<property name='Console Columns' target='cal_uart1::ConsoleColumns' typeid='21' hidden='0' locked='0' info='Number of characters that can be displayed on a single line of the console.' />
+					<property name='Data Source' target='cal_uart1::DataSource' typeid='16' hidden='0' locked='0' info='Simulation data source used to allow the component to connect to various remote devices
+    Nothing - Simulation data is ignored
+    COM port - Routes the communication data to and from a physical or virtual COM port 
+    API - Routes the communication data via a data injector component on the Panel.' filter='000Nothing
+001COM Port
+002API Slave' />
+					<property name='COM Port' target='cal_uart1::com_port' typeid='16' hidden='1' locked='0' info='Lists all the current available COM port hardware on your PC.' filter='032COM32 Arduino Uno' />
+					<property name='API' target='cal_uart1::Injector' typeid='16' hidden='1' locked='0' info='Selects which API component to route the communication data via.
+Add API components to the panel before they will be available in this list.
+API components are available from the Comms component category.' filter='000' />
+				</property>
+			</properties>
+			<values >
+				<value target='cal_uart1::CHANNEL' data='001' />
+				<value target='cal_uart1::BAUD_LIST' data='004' />
+				<value target='cal_uart1::BAUD' data='9600' />
+				<value target='MESSAGES' data='001' />
+				<value target='CSumType' data='001' />
+				<value target='cal_uart1::TX' data='$PORTC.6' />
+				<value target='cal_uart1::OutputPins' data='000' />
+				<value target='cal_uart1::TXAlt' data='0' />
+				<value target='cal_uart1::RX' data='$PORTC.7' />
+				<value target='cal_uart1::InputPins' data='000' />
+				<value target='cal_uart1::RXAlt' data='0' />
+				<value target='CS' data='$PORTC.5' />
+				<value target='MSG1_ID' data='1' />
+				<value target='MSG1_BYTES' data='002' />
+				<value target='MSG1_TX_RX' data='001' />
+				<value target='MSG2_ID' data='2' />
+				<value target='MSG2_BYTES' data='002' />
+				<value target='MSG2_TX_RX' data='001' />
+				<value target='MSG3_ID' data='3' />
+				<value target='MSG3_BYTES' data='002' />
+				<value target='MSG3_TX_RX' data='001' />
+				<value target='MSG4_ID' data='4' />
+				<value target='MSG4_BYTES' data='002' />
+				<value target='MSG4_TX_RX' data='001' />
+				<value target='MSG5_ID' data='5' />
+				<value target='MSG5_BYTES' data='002' />
+				<value target='MSG5_TX_RX' data='001' />
+				<value target='MSG6_ID' data='6' />
+				<value target='MSG6_BYTES' data='002' />
+				<value target='MSG6_TX_RX' data='001' />
+				<value target='MSG7_ID' data='7' />
+				<value target='MSG7_BYTES' data='002' />
+				<value target='MSG7_TX_RX' data='001' />
+				<value target='MSG8_ID' data='8' />
+				<value target='MSG8_BYTES' data='002' />
+				<value target='MSG8_TX_RX' data='001' />
+				<value target='cal_uart1::ScopeTraces' data='1' />
+				<value target='cal_uart1::ConsoleData' data='1' />
+				<value target='cal_uart1::ConsoleFormat' data='000' />
+				<value target='cal_uart1::ConsoleColumns' data='64' />
+				<value target='cal_uart1::DataSource' data='000' />
+				<value target='cal_uart1::com_port' data='000' />
+				<value target='cal_uart1::Injector' data='' />
+			</values>
+			<events >
+				<event class='Components' event='Property' target='Ev_Property' />
+				<event class='Components' event='Renamed' target='Ev_Renamed' />
+				<event class='Components' event='Initialise' target='Ev_Initialise' />
+				<event class='Compile' event='GetVarSize' target='Ev_GetVarSize' />
+			</events>
+			<apis >
+				<api name='PowerDown' alt='PowerDown' type='1' proto='1' />
+				<api name='ListenForMessages' alt='ListenForMessages' type='1' proto='1' />
+				<api name='ReadDataCount' alt='ReadDataCount' type='1' proto='1' />
+				<api name='ReadData' alt='ReadData' type='1' proto='1' />
+				<api name='SetData' alt='SetData' type='1' proto='1' />
+				<api name='WakeUp' alt='WakeUp' type='1' proto='1' />
+				<api name='Initialise' alt='Initialise' type='1' proto='1' />
+			</apis>
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='MSG_DATA' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+						<array size='64' />
+					</def>
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='MODEPAUSE' type='s16' description='' isconst='1' isHidden='0' isinit='1' usrinit='100' setinit='100' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='Ev_Initialise' description='Initialisation routine for the component once the component is linked to its parent' statediag='0' >
+						<return name='Return' type='u32' description='Non-zero to prevent initialisation' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_Property' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='PowerDown' description='Puts the bus into the Powered Down state driving the CS pin low.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='CS = 0' />
+						</command>
+						<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='MODEPAUSE' type='0' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Property' description='Sent when a property has been changed by the User' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Str' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<local name='Idx' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Val' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='2' forvar='.Idx' exp='8' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Str = &quot;MSG&quot; + ToString$ (.Idx + 1) + &quot;_ID&quot;' />
+								</command>
+								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetValue' >
+									<return exp='.Val' />
+									<argument exp='this' />
+									<argument exp='.str' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Val &gt; 0x3F' swap='0' >
+									<flowline >
+										<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+											<argument exp='this' />
+											<argument exp='.str' />
+											<argument exp='.Val &amp; 0x3F' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Str = &quot;MESSAGE&quot; + ToString$ (.Idx + 1)' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='MESSAGES &gt; .Idx' swap='0' >
+									<flowline >
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+											<argument exp='this' />
+											<argument exp='.Str' />
+											<argument exp='1' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+											<argument exp='this' />
+											<argument exp='.Str' />
+											<argument exp='0' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='ListenForMessages' description='Listens for messages with Timeout and returns the state.
+Returns 255 for timeout, 254 for CRC error and 0 for none matching ID received.
+Returns 1-8 for a valid ID received.' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Timeout' type='u8' description='timeout in milliseconds to wait for incoming message, 255=Wait Forever' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Idx' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='RxTest' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Ident' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='ID' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Mode' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Count' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='MsgIndex' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='CSum' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='TCount' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Timeout' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = 255' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Tcount = 0' />
+							<exp exp='.count = 0' />
+						</command>
+						<command class_type='loop' title='Wait for Break' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='(.TCount &lt; .Timeout)' start='0' >
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Timeout &lt; 255' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.count = .count + 1' />
+										</command>
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.count = 100' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='.count = 0' />
+												</command>
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='.Tcount = .Tcount + 1' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='call' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='Receive' >
+									<return exp='.RxTest' />
+									<argument exp='0' />
+								</command>
+								<command class_type='decision' title='Frame Error' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.RXtest = 0x400' swap='0' >
+									<flowline >
+										<command class_type='goto' title='Goto Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' labelid='1' labelname='' />
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='10' type='0' />
+							</flowline>
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.TCount = .Timeout' swap='0' >
+							<flowline >
+								<command class_type='goto' title='Goto Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' labelid='0' labelname='' />
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='label' title='Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' labelid='1' labelname='B' />
+						<command class_type='call' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='Receive' >
+							<return exp='.RxTest' />
+							<argument exp='100' />
+						</command>
+						<command class_type='decision' title='Frame Error' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.RXtest = 0x400' swap='0' >
+							<flowline >
+								<command class_type='goto' title='Goto Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' labelid='1' labelname='' />
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.RxTest != 0x55' swap='0' >
+							<flowline >
+								<command class_type='goto' title='Goto Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' labelid='0' labelname='' />
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='call' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='Receive' >
+							<return exp='.Ident' />
+							<argument exp='100' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='CSumType &gt; 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.CSum = .Ident' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.CSum = 0' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Ident = .Ident &amp; 0x3F' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='2' forvar='.Idx' exp='MESSAGES' >
+							<flowline >
+								<command class_type='switch' title='Switch' textarea='36,25,36,25' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Idx' >
+									<case >
+										<flowline >
+											<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<exp exp='.ID = MSG1_ID' />
+											</command>
+										</flowline>
+									</case>
+									<case exp='1' >
+										<flowline >
+											<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<exp exp='.ID = MSG2_ID' />
+											</command>
+										</flowline>
+									</case>
+									<case exp='2' >
+										<flowline >
+											<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<exp exp='.ID = MSG3_ID' />
+											</command>
+										</flowline>
+									</case>
+									<case exp='3' >
+										<flowline >
+											<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<exp exp='.ID = MSG4_ID' />
+											</command>
+										</flowline>
+									</case>
+									<case exp='4' >
+										<flowline >
+											<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<exp exp='.ID = MSG5_ID' />
+											</command>
+										</flowline>
+									</case>
+									<case exp='5' >
+										<flowline >
+											<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<exp exp='.ID = MSG6_ID' />
+											</command>
+										</flowline>
+									</case>
+									<case exp='6' >
+										<flowline >
+											<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<exp exp='.ID = MSG7_ID' />
+											</command>
+										</flowline>
+									</case>
+									<case exp='7' >
+										<flowline >
+											<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<exp exp='.ID = MSG8_ID' />
+											</command>
+										</flowline>
+									</case>
+								</command>
+								<command class_type='decision' title='Matching ID?' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.ID = .Ident' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.MsgIndex = .Idx' />
+										</command>
+										<command class_type='goto' title='Goto Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' labelid='2' labelname='' />
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='calculation' title='None Matching ID' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = 0' />
+						</command>
+						<command class_type='goto' title='Goto Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' labelid='0' labelname='' />
+						<command class_type='label' title='Declare Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' labelid='2' labelname='C' />
+						<command class_type='switch' title='Switch' textarea='36,25,36,25' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.MsgIndex' >
+							<case >
+								<flowline >
+									<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='.Count = MSG1_BYTES' />
+										<exp exp='.Mode = MSG1_TX_RX' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='1' >
+								<flowline >
+									<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='.Count = MSG2_BYTES' />
+										<exp exp='.Mode = MSG2_TX_RX' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='2' >
+								<flowline >
+									<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='.Count = MSG3_BYTES' />
+										<exp exp='.Mode = MSG3_TX_RX' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='3' >
+								<flowline >
+									<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='.Count = MSG4_BYTES' />
+										<exp exp='.Mode = MSG4_TX_RX' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='4' >
+								<flowline >
+									<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='.Count = MSG5_BYTES' />
+										<exp exp='.Mode = MSG5_TX_RX' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='5' >
+								<flowline >
+									<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='.Count = MSG6_BYTES' />
+										<exp exp='.Mode = MSG6_TX_RX' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='6' >
+								<flowline >
+									<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='.Count = MSG7_BYTES' />
+										<exp exp='.Mode = MSG7_TX_RX' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='7' >
+								<flowline >
+									<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='.Count = MSG8_BYTES' />
+										<exp exp='.Mode = MSG8_TX_RX' />
+									</command>
+								</flowline>
+							</case>
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Mode' swap='0' >
+							<flowline >
+								<command class_type='comment' title='' comment='RX' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+								<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='2' forvar='.Idx' exp='.Count' >
+									<flowline >
+										<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='Receive' >
+											<return exp='MSG_DATA[(.MsgIndex &lt;&lt; 3) + .Idx]' />
+											<argument exp='100' />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.CSum = .CSum + MSG_DATA[(.MsgIndex &lt;&lt; 3) + .Idx]' />
+										</command>
+										<command class_type='decision' title='Check for rollover' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.CSum &lt; MSG_DATA[(.MsgIndex &lt;&lt; 3) + .Idx]' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='.CSum = .CSum + 1' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='call' title='Receive Checksum Byte' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='Receive' >
+									<return exp='.CSum' />
+									<argument exp='100' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='comment' title='' comment='TX' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+								<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='2' forvar='.Idx' exp='.Count' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.CSum = .CSum + MSG_DATA[(.MsgIndex &lt;&lt; 3) + .Idx]' />
+										</command>
+										<command class_type='decision' title='Check for rollover' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.CSum &lt; MSG_DATA[(.MsgIndex &lt;&lt; 3) + .Idx]' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='.CSum = .CSum + 1' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+										<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='Send' >
+											<argument exp='MSG_DATA[(.MsgIndex &lt;&lt; 3) + .Idx]' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.CSum = ~ (.CSum)' />
+								</command>
+								<command class_type='call' title='Send Checksum' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='Send' >
+									<argument exp='.CSum' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='calculation' title='Matched ID' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = .MsgIndex + 1' />
+						</command>
+						<command class_type='label' title='Declare Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' labelid='0' labelname='A' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Renamed' description='' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Name' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<command class_type='sim' title='' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.GetName' >
+							<return exp='.Name' />
+							<argument exp='this' />
+						</command>
+						<command class_type='sim' title='' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='LibraryComponent1' />
+							<argument exp='&quot;Name&quot;' />
+							<argument exp='.Name' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_GetVarSize' description='Sent to a component to amend the size of the expected array' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='VarName' type='T8' description='The original Flowcode variable' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</param>
+						<param name='Elements' type='u32*' description='The number of elements in the array' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='Compare$ (.VarName,&quot;MSG_DATA&quot;,0) == 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Elements = MESSAGES * 8' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = 1' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='ReadDataCount' description='Return the data count size for Message' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Message' type='u8' description='Range: 1 - Num Messages' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Count' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='(.Message &gt; 0) &amp; (.Message &lt;= MESSAGES)' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Message = .Message - 1' />
+								</command>
+								<command class_type='switch' title='Switch' textarea='36,25,36,25' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Message' >
+									<case >
+										<flowline >
+											<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<exp exp='.Count = MSG1_BYTES' />
+											</command>
+										</flowline>
+									</case>
+									<case exp='1' >
+										<flowline >
+											<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<exp exp='.Count = MSG2_BYTES' />
+											</command>
+										</flowline>
+									</case>
+									<case exp='2' >
+										<flowline >
+											<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<exp exp='.Count = MSG3_BYTES' />
+											</command>
+										</flowline>
+									</case>
+									<case exp='3' >
+										<flowline >
+											<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<exp exp='.Count = MSG4_BYTES' />
+											</command>
+										</flowline>
+									</case>
+									<case exp='4' >
+										<flowline >
+											<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<exp exp='.Count = MSG5_BYTES' />
+											</command>
+										</flowline>
+									</case>
+									<case exp='5' >
+										<flowline >
+											<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<exp exp='.Count = MSG6_BYTES' />
+											</command>
+										</flowline>
+									</case>
+									<case exp='6' >
+										<flowline >
+											<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<exp exp='.Count = MSG7_BYTES' />
+											</command>
+										</flowline>
+									</case>
+									<case exp='7' >
+										<flowline >
+											<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<exp exp='.Count = MSG8_BYTES' />
+											</command>
+										</flowline>
+									</case>
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = .Count' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = 0' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='ReadData' description='Get the Message data automatically received from a specific message as part of the ListenForMessages macro.' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Message' type='u8' description='Message index to be read. Range: 1 - Num Messages' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Data' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='8' />
+						</param>
+						<local name='Count' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='IdxBase' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Idx' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='(.Message &gt; 0) &amp; (.Message &lt;= MESSAGES)' swap='0' >
+							<flowline >
+								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadDataCount' >
+									<return exp='.Count' />
+									<argument exp='.Message' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.IdxBase = (.Message - 1) &lt;&lt; 3' />
+								</command>
+								<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='2' forvar='.Idx' exp='.Count' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Data[.Idx] = MSG_DATA[.IdxBase + .Idx]' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = 1' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = 0' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SetData' description='Set the Message data to be automatically sent for a specific message as part of the ListenForMessages macro.' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Message' type='u8' description='Message index to write. Range: 1 - Num Messages' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Data' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='8' />
+						</param>
+						<local name='IdxBase' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Count' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Idx' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='(.Message &gt; 0) &amp; (.Message &lt;= MESSAGES)' swap='0' >
+							<flowline >
+								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadDataCount' >
+									<return exp='.Count' />
+									<argument exp='.Message' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.IdxBase = (.Message - 1) &lt;&lt; 3' />
+								</command>
+								<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='2' forvar='.Idx' exp='.Count' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='MSG_DATA[.IdxBase + .Idx] = .Data[.Idx]' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = 1' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = 0' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_Initialise' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='WakeUp' description='Puts the bus into the Wake state driving the CS pin high.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='CS = 1' />
+						</command>
+						<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='MODEPAUSE' type='0' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Initialise' description='Initialises the device ready for communications from the master.
+Puts the bus into the Wake state driving the CS pin high.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<local name='Temp' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='index' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='Init' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='CS = 0' />
+						</command>
+						<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='1' type='1' />
+						<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='MODEPAUSE' type='0' />
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WakeUp' />
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='58be670e-18fb-477e-ab09-61fde14b23ec' vmin='0' vmaj='1' codename='LibraryComponent1' panelId='-1' x='0' y='0' z='0' xsz='100' ysz='100' zsz='100' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Text::sText' data='LIN
+Slave' />
+					<value target='Name' data='' />
+					<value target='Peripheral::sText' data='(UART CH1)' />
+					<value target='Text::nVerticalAlignment' data='002' />
+					<value target='ShowComms' data='1' />
+					<value target='InputIcon::CommsType' data='255' />
+					<value target='InputIcon::LinkTo' data='0' />
+					<value target='IconsOnRight' data='0' />
+					<value target='OutputIcon::CommsType' data='006' />
+					<value target='OutputIcon::LinkTo' data='0' />
+					<value target='ConsoleHandle' data='0' />
+					<value target='Upgraded' data='0' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='91b64b1d-b8b2-40f1-b073-e953a91fa234' vmin='2' vmaj='2' codename='cal_uart1' panelId='-1' x='0' y='0' z='0' xsz='0.01' ysz='0.01' zsz='0.01' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='UseUART' data='1' />
+					<value target='CHANNEL' data='001' />
+					<value target='UseTX' data='1' />
+					<value target='TX' data='$PORTC.6' />
+					<value target='OutputPins' data='000' />
+					<value target='TXAlt' data='0' />
+					<value target='UseRX' data='1' />
+					<value target='RX' data='$PORTC.7' />
+					<value target='InputPins' data='000' />
+					<value target='RXAlt' data='0' />
+					<value target='FLOWEN' data='000' />
+					<value target='RTS' data='$PORTC.4' />
+					<value target='CTS' data='$PORTC.5' />
+					<value target='BAUD_LIST' data='004' />
+					<value target='BAUD' data='9600' />
+					<value target='DBITS' data='008' />
+					<value target='RETURN' data='001' />
+					<value target='ECHO' data='000' />
+					<value target='INT' data='000' />
+					<value target='ScopeTraces' data='1' />
+					<value target='ConsoleData' data='1' />
+					<value target='ConsoleFormat' data='000' />
+					<value target='ConsoleColumns' data='64' />
+					<value target='DataSource' data='000' />
+					<value target='com_port' data='000' />
+					<value target='Injector' data='' />
+					<value target='InjectorHandle' data='0' />
+					<value target='InjectorChannel' data='0' />
+					<value target='APIUseDDR' data='0' />
+					<value target='APIDDRPin' data='0' />
+					<value target='APIUseFC' data='' />
+					<value target='APICTSPin' data='0' />
+					<value target='APIRTSPin' data='' />
+					<value target='APIDDRRXState' data='000' />
+					<value target='NoIO' data='' />
+					<value target='REF' data='0' />
+					<value target='TX_PORT' data='$PORTC.6' />
+					<value target='TX_TRIS' data='$PORTC.6' />
+					<value target='TX_PIN' data='6' />
+					<value target='RX_PORT' data='$PORTC.7' />
+					<value target='RX_TRIS' data='$PORTC.7' />
+					<value target='RX_PIN' data='7' />
+					<value target='CTS_PORT' data='$PORTC.5' />
+					<value target='CTS_PIN' data='5' />
+					<value target='CTS_TRIS' data='$PORTC.5' />
+					<value target='RTS_PORT' data='$PORTC.4' />
+					<value target='RTS_PIN' data='4' />
+					<value target='RTS_TRIS' data='$PORTC.4' />
+					<value target='REMAPPABLE' data='' />
+					<value target='OutputReg' data='' />
+					<value target='InputReg' data='' />
+					<value target='TXRPNUM' data='' />
+					<value target='TXBank' data='' />
+					<value target='RXRPREG' data='' />
+					<value target='RXBank' data='' />
+					<value target='UARTName' data='' />
+					<value target='UARTClock' data='' />
+					<value target='UartNumber' data='' />
+					<value target='TXBank2' data='' />
+					<value target='RXBank2' data='' />
+					<value target='TX_ALT' data='' />
+					<value target='RX_ALT' data='' />
+					<value target='BitDelay' data='104' />
+					<value target='ParentName' data='LINSlaveV2' />
+					<value target='CompName' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<scadaresourcelookup />
+	<keymap />
+	<panel2d shadows='0' lighting='0' brightness='0' >
+		<background rgb='9737364' img='' style='0' />
+		<camera xe='1.13562' ye='6.85722' ze='114.026' xt='1.13562' yt='6.85722' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='622' dy='343' zoom='660.045' fix_topleft='0' />
+		<page x='1000' y='1000' show='0' rgb='7360576' />
+		<winpos ID='7005' RectRecentFloat='1270,427,1920,877' RectRecentDocked='0,0,642,413' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+	</panel2d>
+	<panel3d shadows='0' lighting='0' brightness='0' perspective='1' >
+		<background rgb='8409120' img='' style='0' />
+		<table rgb='7360576' img='' style='0' size='25' />
+		<camera xe='0' ye='0' ze='138.913' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey0 xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey1 xe='-3.67394e-14' ye='0' ze='-300' xt='0' yt='0' zt='0' xquat='0' yquat='1' zquat='0' wquat='6.12323e-17' />
+		<camerakey2 xe='0' ye='-300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.707107' yquat='0' zquat='0' wquat='0.707107' />
+		<camerakey3 xe='-3.67394e-14' ye='300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-4.32978e-17' yquat='0.707107' zquat='0.707107' wquat='4.32978e-17' />
+		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
+		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
+		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
+		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='16,1832,658,2245' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+	</panel3d>
+	<panels2d count='0' />
+	<layout >
+		<view type='0' name='ListenForMessages' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='60' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadDataCount' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadData' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetData' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='PowerDown' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='WakeUp' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_GetVarSize' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

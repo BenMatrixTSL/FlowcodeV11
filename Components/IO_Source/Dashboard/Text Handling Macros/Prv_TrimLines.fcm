@@ -1,0 +1,36 @@
+<root>
+<file schema='101' />
+<macros >
+<macro >
+<flowline name='Prv_TrimLines' description='' >
+<return name='Return' type='T8' array='0' description='' isconst='0' isinit='0' usrinit='&quot;&quot;' setinit='' />
+<param name='in_string' type='T8' array='256' description='' isconst='0' isinit='0' usrinit='&quot;&quot;' setinit='' />
+<param name='Lines' type='u8' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+<local name='count' type='u8' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Prv_StripSpace' >
+<return exp='.in_string' />
+<argument exp='.in_string' />
+</command>
+<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Prv_CountLines' >
+<return exp='.count' />
+<argument exp='.in_string' />
+</command>
+<command class_type='loop' title='Loop' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='.count &gt; .Lines' type='0' start='1' count='1' breakend='0' >
+<flowline name='Prv_TrimLines' description='' >
+<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Prv_DeleteLine' >
+<return exp='.in_string' />
+<argument exp='.in_string' />
+</command>
+<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+<exp exp='.count = .count - 1' />
+</command>
+</flowline>
+</command>
+<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+<exp exp='.Return = .in_string' />
+</command>
+</flowline>
+</macro>
+</macros>
+<variables />
+</root>

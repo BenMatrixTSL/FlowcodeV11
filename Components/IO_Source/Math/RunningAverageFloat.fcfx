@@ -1,0 +1,191 @@
+<root>
+<document scada='0' schema='103' license='10,BenR,C9TN1M' title='' description='' fcversion='655616' target='ARD.ATMEGA.Arduino Uno R3 SMD' >
+	<config data='' clkspd='16000000' simspd='0' usewdt='0' constif='0' Use3V3='0' />
+	<plugins >
+		<dll_models enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug />
+	<traces />
+	<ghost >
+		<FK2 >
+			<data name='FK2D0' port='4294967295' pin='4294967295' />
+			<data name='FK2D1' port='4294967295' pin='4294967295' />
+			<data name='FK2D2' port='4294967295' pin='4294967295' />
+			<data name='FK2D3' port='4294967295' pin='4294967295' />
+			<data name='FK2D4' port='4294967295' pin='4294967295' />
+			<data name='FK2D5' port='4294967295' pin='4294967295' />
+			<data name='FK2D6' port='4294967295' pin='4294967295' />
+			<data name='FK2D7' port='4294967295' pin='4294967295' />
+			<data name='FK2D8' port='4294967295' pin='4294967295' />
+			<data name='FK2D9' port='4294967295' pin='4294967295' />
+			<data name='FK2D10' port='4294967295' pin='4294967295' />
+			<data name='FK2D11' port='4294967295' pin='4294967295' />
+			<data name='FK2D12' port='4294967295' pin='4294967295' />
+			<data name='FK2D13' port='4294967295' pin='4294967295' />
+			<data name='FK2D14' port='4294967295' pin='4294967295' />
+			<data name='FK2D15' port='4294967295' pin='4294967295' />
+			<data name='FK2A0' port='4294967295' pin='4294967295' />
+			<data name='FK2A1' port='4294967295' pin='4294967295' />
+			<data name='FK2A2' port='4294967295' pin='4294967295' />
+			<data name='FK2A3' port='4294967295' pin='4294967295' />
+			<data name='FK2A4' port='4294967295' pin='4294967295' />
+			<data name='FK2A5' port='4294967295' pin='4294967295' />
+		</FK2>
+		<ICD >
+			<data name='AnalogPrescaleValue' value='19' />
+			<data name='DigitalSampleRate' value='100000' />
+			<data name='BreakpointCount' value='8' />
+			<data name='CallStackDepthCount' value='8' />
+			<data name='ClockPort' value='3' />
+			<data name='ClockPin' value='1' />
+			<data name='DataPort' value='3' />
+			<data name='DataPin' value='0' />
+			<data name='UseDefaultPins' value='1' />
+			<data name='WrapEnabled' value='1' />
+			<data name='CommsDelayOverridden' value='0' />
+			<data name='CommsDelay' value='11' />
+			<data name='CalculatedCommsDelay' value='11' />
+			<data name='AnalogEB2PrescaleValue' value='2' />
+			<data name='DigitalEB2SampleRate' value='100000' />
+		</ICD>
+		<pins >
+			<digital A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+			<analog A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+		</pins>
+	</ghost>
+	<components >
+		<settings autoimg='0' center='1' unitscale='0' fixedscale='0' fixedx='25' fixedy='25' fixedz='25' headcode='0' />
+		<definition guid='de7d4dbc-e93f-4b5e-b6f2-b7d035992206' vstate='40' vmin='0' vmaj='1' srcleaf='LowPassFilterFloat.fcfx' visiblename='Running Average Float' description='Allows a value from a sensor to be averaged out filtering out high frequencies and removing noise.
+Running average means we have a variable that we maintain that on each pass will be 
+10% new value + 90% old value for example at a ratio of 0.1.' category='Calculation' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' catenable='1' author='Matrix TSL' manuname='' manucode='' sysinfo='11' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='1' showmacros='1' iconpath='..\..\Icons\Components\comp2d_basechart.png' />
+		<component class_type='root' codename='RunningAverageFloat' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+			<resources />
+			<properties />
+			<values />
+			<events />
+			<apis >
+				<api name='Filter' alt='Filter' type='1' proto='1' />
+				<api name='SetFilterValue' alt='SetFilterValue' type='1' proto='1' />
+				<api name='SetFilterRatio' alt='SetFilterRatio' type='1' proto='1' />
+			</apis>
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='FilteredValue' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='Ratio' type='f32' description='' isconst='0' isHidden='0' isinit='1' usrinit='1.0' setinit='1.0' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='Filter' description='Performs the filtering function, passing in the latest sampled value and outputting the
+latest filtered value.' statediag='0' >
+						<return name='Return' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<param name='Value' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<command class_type='calculation' title='Merge latest value in with running filter value' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='FilteredValue = FilteredValue * (1.0 - Ratio)' />
+							<exp exp='FilteredValue = FilteredValue + (.Value * Ratio)' />
+						</command>
+						<command class_type='calculation' title='Return latest filter value' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = FilteredValue' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SetFilterValue' description='Sets the absolute value of the filter value i.e. for setting the initial state.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Value' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<command class_type='calculation' title='Assign latest value to filtered value global var' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='FilteredValue = .Value' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SetFilterRatio' description='Sets the amount of input that makes it into each output.
+0.25 would be 25% new and 75% old.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Ratio' type='f32' description='Range: 0.0 to 1.0' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Ratio &gt;= 0.0' swap='0' >
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Ratio &lt;= 1.0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Copy ratio to global variable' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='Ratio = .Ratio' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='58be670e-18fb-477e-ab09-61fde14b23ec' vmin='0' vmaj='1' codename='LibraryComponent1' panelId='0' x='67' y='-65.5' z='0' xsz='100.707' ysz='100.893' zsz='100' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='0' layer='2' poslock='1' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Text::sText' data='Running
+Average
+Float' />
+					<value target='Name' data='' />
+					<value target='Peripheral::sText' data='' />
+					<value target='Text::nVerticalAlignment' data='002' />
+					<value target='ShowComms' data='0' />
+					<value target='InputIcon::CommsType' data='255' />
+					<value target='InputIcon::LinkTo' data='0' />
+					<value target='IconsOnRight' data='0' />
+					<value target='OutputIcon::CommsType' data='255' />
+					<value target='OutputIcon::LinkTo' data='0' />
+					<value target='ConsoleHandle' data='0' />
+					<value target='Upgraded' data='0' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<scadaresourcelookup />
+	<keymap />
+	<panel2d shadows='0' lighting='2' brightness='0' >
+		<background rgb='7292207' img='' style='0' />
+		<camera xe='0' ye='0' ze='5157.48' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='1138' dy='751' zoom='26.6987' fix_topleft='0' />
+		<page x='1000' y='1000' show='0' rgb='0' />
+		<winpos ID='7005' RectRecentFloat='-1439,-852,-293,-70' RectRecentDocked='0,0,508,751' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+	</panel2d>
+	<panel3d shadows='0' lighting='2' brightness='0' perspective='1' >
+		<background rgb='8409120' img='' style='0' />
+		<table rgb='7360576' img='' style='0' size='0' />
+		<camera xe='0' ye='0' ze='781.66' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey0 xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey1 xe='-3.67394e-14' ye='0' ze='-300' xt='0' yt='0' zt='0' xquat='0' yquat='1' zquat='0' wquat='6.12323e-17' />
+		<camerakey2 xe='0' ye='-300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.707107' yquat='0' zquat='0' wquat='0.707107' />
+		<camerakey3 xe='-3.67394e-14' ye='300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-4.32978e-17' yquat='0.707107' zquat='0.707107' wquat='4.32978e-17' />
+		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
+		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
+		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
+		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,505,546' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+	</panel3d>
+	<panels2d count='1' >
+		<panel2d_0 id='0' name='2D Panel' >
+			<winpos ID='1171' RectRecentFloat='-1188,483,-538,933' RectRecentDocked='926,141,1434,1021' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+			<background fill='72057594037927935' showgrid='1' gridstyle='1' gridsize='10' gridbrush='71776119075691740' snaptogrid='1' />
+		</panel2d_0>
+	</panels2d>
+	<layout >
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA9AMAAGsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Filter' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA9AMAAGsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetFilterRatio' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA9AMAAGsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetFilterValue' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA9AMAAGsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

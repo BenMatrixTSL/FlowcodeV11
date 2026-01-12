@@ -1,0 +1,581 @@
+<root>
+<document scada='0' schema='102' license='1,Dev User,H1YQFU' title='' description='' fcversion='524544' target='PIC.18F.18F24K42' >
+	<config data='!0,fefa!10,f6f5!20,ff80!30,dfff!40,ffff%0,2%4,7%8,0%9,1%b,1%d,1%10,1%11,2%13,0%14,1%15,1%16,3%18,2%1a,1%1b,0%1c,1%1d,1%1f,1%20,0%25,0%28,7%2b,7%30,7%33,1%34,1%37,1%38,1%39,1%3a,1%3b,1%3d,0%40,1' clkspd='19660800' simspd='1' usewdt='0' constif='0' />
+	<plugins >
+		<dll_models enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug />
+	<ghost >
+		<FK2 >
+			<data name='FK2D0' port='4294967295' pin='4294967295' />
+			<data name='FK2D1' port='4294967295' pin='4294967295' />
+			<data name='FK2D2' port='4294967295' pin='4294967295' />
+			<data name='FK2D3' port='4294967295' pin='4294967295' />
+			<data name='FK2D4' port='4294967295' pin='4294967295' />
+			<data name='FK2D5' port='4294967295' pin='4294967295' />
+			<data name='FK2D6' port='4294967295' pin='4294967295' />
+			<data name='FK2D7' port='4294967295' pin='4294967295' />
+			<data name='FK2D8' port='4294967295' pin='4294967295' />
+			<data name='FK2D9' port='4294967295' pin='4294967295' />
+			<data name='FK2D10' port='4294967295' pin='4294967295' />
+			<data name='FK2D11' port='4294967295' pin='4294967295' />
+			<data name='FK2D12' port='4294967295' pin='4294967295' />
+			<data name='FK2D13' port='4294967295' pin='4294967295' />
+			<data name='FK2D14' port='4294967295' pin='4294967295' />
+			<data name='FK2D15' port='4294967295' pin='4294967295' />
+			<data name='FK2A0' port='4294967295' pin='4294967295' />
+			<data name='FK2A1' port='4294967295' pin='4294967295' />
+			<data name='FK2A2' port='4294967295' pin='4294967295' />
+			<data name='FK2A3' port='4294967295' pin='4294967295' />
+			<data name='FK2A4' port='4294967295' pin='4294967295' />
+			<data name='FK2A5' port='4294967295' pin='4294967295' />
+		</FK2>
+		<ICD >
+			<data name='AnalogPrescaleValue' value='19' />
+			<data name='DigitalSampleRate' value='100000' />
+			<data name='BreakpointCount' value='8' />
+			<data name='CallStackDepthCount' value='8' />
+			<data name='ClockPort' value='1' />
+			<data name='ClockPin' value='6' />
+			<data name='DataPort' value='1' />
+			<data name='DataPin' value='7' />
+			<data name='UseDefaultPins' value='1' />
+			<data name='WrapEnabled' value='1' />
+			<data name='CommsDelayOverridden' value='0' />
+			<data name='CommsDelay' value='9' />
+			<data name='CalculatedCommsDelay' value='9' />
+		</ICD>
+		<pins >
+			<digital A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+			<analog A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+		</pins>
+	</ghost>
+	<components >
+		<settings autoimg='1' center='0' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='2c3e9a76-1de2-48e4-b42a-edd0b3ad98d6' vstate='40' vmin='0' vmaj='1' srcleaf='Lift.fcfx' visiblename='Lift' description='Simple lift created using panel primitives with functioning doors.
+Includes camera controls to simplify simulations.' category='Misc Shapes' catenable='1' author='Ben Rowland' manuname='' manucode='' sysinfo='1061159' keywords='' dynamic='1' scadaCompatible='0' embeddedCompatible='1' iconpath='' />
+		<component class_type='root' codename='Lift' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' >
+			<resources >
+				<file name='flowcode-8-logo.png' source='.\flowcode-8-logo.png' />
+			</resources>
+			<properties >
+				<property name='Viewpoint' target='Viewpoint' typeid='16' hidden='0' locked='0' info='Some useful camera positions' filter='000Outside looking in
+001Inside looking out
+002User (unaltered)' />
+				<property name='Door Movement Period' target='DoorSpeed' typeid='21' hidden='0' locked='0' info='Amount of time in milliseconds for the doors to open and close.' />
+			</properties>
+			<values >
+				<value target='Viewpoint' data='000' />
+				<value target='DoorSpeed' data='2000' />
+			</values>
+			<events >
+				<event class='Simulation' event='Stop' target='Ev_Stop' />
+				<event class='Components' event='Property' target='Ev_Property' />
+				<event class='System' event='Timer' target='Ev_Timer' />
+			</events>
+			<apis >
+				<api name='ControlDoor' alt='$(type)_$(module)__$(macro)' type='2' proto='1' />
+				<api name='GetCameraPosition' alt='' type='2' proto='1' />
+				<api name='CheckDoor' alt='' type='2' proto='1' />
+			</apis>
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='done' type='b1' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='false' type='b1' description='' isconst='1' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='DoorState' type='b1' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='true' type='b1' description='' isconst='1' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='Ev_Timer' description='Called back on the panel command System.TimerStart' >
+						<return name='Return' type='u32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<param name='TimerID' type='u32' description='The identifier passed to the System.TimerStart panel command' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='16760919' cmdcolor_sec='16760832' >
+							<exp exp='done = 1' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Stop' description='Broadcast to all components that simulation has stopped' >
+						<return name='Return' type='u32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Property' description='Sent when a property has been changed by the User' >
+						<return name='Return' type='u32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='12615680' cmdcolor_sec='15376912' exp='Viewpoint = 0' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='1879295' cmdcolor_sec='5751039' macro='Panel.Position.Camera.SetLookAt' >
+									<argument exp='GetCameraPosition(1)' />
+									<argument exp='GetCameraPosition(0)' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='12615680' cmdcolor_sec='15376912' exp='Viewpoint = 1' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='1879295' cmdcolor_sec='5751039' macro='Panel.Position.Camera.SetLookAt' >
+									<argument exp='GetCameraPosition(0)' />
+									<argument exp='GetCameraPosition(1)' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='GetCameraPosition' description='Gets the location of the camera objects to allow for automated 3D panel inside or outside tracking and views.
+Returns a Flowcode handle variable containing the position.' >
+						<return name='Return' type='h32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<param name='View' type='u8' description='Range: 0-1 Where 0 = Inside and 1 = Outside' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Handle' type='h32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='12615680' cmdcolor_sec='15376912' exp='.View' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='1879295' cmdcolor_sec='5751039' macro='Panel.Position.Get' >
+									<return exp='.Return' />
+									<argument exp='CameraExternal' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='1879295' cmdcolor_sec='5751039' macro='Panel.Position.Get' >
+									<return exp='.Return' />
+									<argument exp='CameraInternal' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='ControlDoor' description='Controls the lift door. 
+' >
+						<return name='Return' type='v0' description='' isconst='0' isinit='0' usrinit='' setinit='' />
+						<param name='State' type='b1' description='State to move to 0=Open 1=Closed' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='IDL' type='h32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='ODL' type='h32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='IDR' type='h32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='ODR' type='h32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Speed' type='f32' description='' isconst='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='Pos' type='f32' description='' isconst='0' isinit='0' usrinit='0.0' setinit='' >
+							<array size='3' />
+						</local>
+						<command class_type='decision' title='Decision' cmdcolor='12615680' cmdcolor_sec='15376912' exp='DoorState != .State' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='1879295' cmdcolor_sec='5751039' macro='System.TimerStop' >
+									<argument exp='0' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='16760919' cmdcolor_sec='16760832' >
+									<exp exp='done = 0' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='1879295' cmdcolor_sec='5751039' macro='Panel.Position.Get' >
+									<return exp='.IDL' />
+									<argument exp='InnerDoorLeft' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='1879295' cmdcolor_sec='5751039' macro='Panel.Position.Get' >
+									<return exp='.IDR' />
+									<argument exp='InnerDoorRight' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='1879295' cmdcolor_sec='5751039' macro='Panel.Position.Get' >
+									<return exp='.ODL' />
+									<argument exp='OuterDoorLeft' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='1879295' cmdcolor_sec='5751039' macro='Panel.Position.Get' >
+									<return exp='.ODR' />
+									<argument exp='OuterDoorRight' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='1879295' cmdcolor_sec='5751039' macro='Panel.Position.GetCoords' >
+									<return exp='.Pos' />
+									<argument exp='.IDR' />
+									<argument exp='Origin' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='12615680' cmdcolor_sec='15376912' exp='.State' swap='0' >
+									<flowline >
+										<command class_type='comment' title='' comment='Close Doors' textarea='12,0,12,0' cmdcolor='10944511' cmdcolor_sec='11465458' />
+										<command class_type='sim' title='Simulation' cmdcolor='1879295' cmdcolor_sec='5751039' macro='Panel.Position.MoveTo' >
+											<argument exp='.IDL' />
+											<argument exp='-126.0' />
+											<argument exp='0' />
+											<argument exp='0' />
+										</command>
+										<command class_type='sim' title='Simulation' cmdcolor='1879295' cmdcolor_sec='5751039' macro='Panel.Position.MoveTo' >
+											<argument exp='.ODL' />
+											<argument exp='-375.0' />
+											<argument exp='0' />
+											<argument exp='0' />
+										</command>
+										<command class_type='sim' title='Simulation' cmdcolor='1879295' cmdcolor_sec='5751039' macro='Panel.Position.MoveTo' >
+											<argument exp='.IDR' />
+											<argument exp='126.0' />
+											<argument exp='0' />
+											<argument exp='0' />
+										</command>
+										<command class_type='sim' title='Simulation' cmdcolor='1879295' cmdcolor_sec='5751039' macro='Panel.Position.MoveTo' >
+											<argument exp='.ODR' />
+											<argument exp='375.0' />
+											<argument exp='0' />
+											<argument exp='0' />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='16760919' cmdcolor_sec='16760832' >
+											<exp exp='.Speed = (.Pos[0] - 126.0) / (620.0 - 126.0)' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='comment' title='' comment='Open Doors' textarea='12,0,12,0' cmdcolor='10944511' cmdcolor_sec='11465458' />
+										<command class_type='sim' title='Simulation' cmdcolor='1879295' cmdcolor_sec='5751039' macro='Panel.Position.MoveTo' >
+											<argument exp='.IDL' />
+											<argument exp='-620.0' />
+											<argument exp='0' />
+											<argument exp='0' />
+										</command>
+										<command class_type='sim' title='Simulation' cmdcolor='1879295' cmdcolor_sec='5751039' macro='Panel.Position.MoveTo' >
+											<argument exp='.ODL' />
+											<argument exp='-620.0' />
+											<argument exp='0' />
+											<argument exp='0' />
+										</command>
+										<command class_type='sim' title='Simulation' cmdcolor='1879295' cmdcolor_sec='5751039' macro='Panel.Position.MoveTo' >
+											<argument exp='.IDR' />
+											<argument exp='620.0' />
+											<argument exp='0' />
+											<argument exp='0' />
+										</command>
+										<command class_type='sim' title='Simulation' cmdcolor='1879295' cmdcolor_sec='5751039' macro='Panel.Position.MoveTo' >
+											<argument exp='.ODR' />
+											<argument exp='620.0' />
+											<argument exp='0' />
+											<argument exp='0' />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='16760919' cmdcolor_sec='16760832' >
+											<exp exp='.Speed = (620.0 - .Pos[0]) / (620.0 - 126.0)' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='12615680' cmdcolor_sec='15376912' exp='.Speed &lt; 0.05' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='16760919' cmdcolor_sec='16760832' >
+											<exp exp='.Speed = 0.05' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='1879295' cmdcolor_sec='5751039' macro='Panel.Position.Animate' >
+									<argument exp='InnerDoorLeft' />
+									<argument exp='InnerDoorLeft' />
+									<argument exp='.IDL' />
+									<argument exp='DoorSpeed * .Speed' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='1879295' cmdcolor_sec='5751039' macro='Panel.Position.Animate' >
+									<argument exp='InnerDoorRight' />
+									<argument exp='InnerDoorRight' />
+									<argument exp='.IDR' />
+									<argument exp='DoorSpeed * .Speed' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='1879295' cmdcolor_sec='5751039' macro='Panel.Position.Animate' >
+									<argument exp='OuterDoorLeft' />
+									<argument exp='OuterDoorLeft' />
+									<argument exp='.ODL' />
+									<argument exp='DoorSpeed * .Speed' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='1879295' cmdcolor_sec='5751039' macro='Panel.Position.Animate' >
+									<argument exp='OuterDoorRight' />
+									<argument exp='OuterDoorRight' />
+									<argument exp='.ODR' />
+									<argument exp='DoorSpeed * .Speed' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='1879295' cmdcolor_sec='5751039' macro='System.TimerStart' >
+									<argument exp='0' />
+									<argument exp='DoorSpeed * .Speed' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='16760919' cmdcolor_sec='16760832' >
+									<exp exp='DoorState = .State' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='' >
+						<return name='Return' type='v0' description='' isconst='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='loop' title='Loop' cmdcolor='12615680' cmdcolor_sec='15376912' type='0' exp='1' >
+							<flowline >
+								<command class_type='call' title='Call Macro' cmdcolor='1879295' cmdcolor_sec='5751039' macro='ControlDoor' >
+									<argument exp='0' />
+								</command>
+								<command class_type='call' title='Call Macro' cmdcolor='1879295' cmdcolor_sec='5751039' macro='ControlDoor' >
+									<argument exp='1' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='CheckDoor' description='Checks to see if the door is open, closed or moving.
+Returns 1 if the door is closed or 0 if the door is open.
+Returns 255 if the door is moving.' >
+						<return name='Return' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='12615680' cmdcolor_sec='15376912' exp='done' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='16760919' cmdcolor_sec='16760832' >
+									<exp exp='.Return = DoorState' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='16760919' cmdcolor_sec='16760832' >
+									<exp exp='.Return = 255' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='4cbae05a-fee8-4685-b94c-829abc3466ab' vmin='0' vmaj='1' codename='CameraExternal' x='0' y='-4500' z='0' xsz='0.00625' ysz='0.00625' zsz='0.00625' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='0' solid='0' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Color' data='255' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='4cbae05a-fee8-4685-b94c-829abc3466ab' vmin='0' vmaj='1' codename='InnerDoorLeft' x='-620' y='0' z='0' xsz='7.8125' ysz='0.625' zsz='46.875' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Color' data='7895160' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='4cbae05a-fee8-4685-b94c-829abc3466ab' vmin='0' vmaj='1' codename='InnerDoorRight' x='620' y='0' z='0' xsz='7.8125' ysz='0.625' zsz='46.875' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Color' data='7895160' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='4cbae05a-fee8-4685-b94c-829abc3466ab' vmin='0' vmaj='1' codename='OuterDoorLeft' x='-620' y='0' z='0' xsz='7.8125' ysz='1.25' zsz='46.875' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Color' data='5921370' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='4cbae05a-fee8-4685-b94c-829abc3466ab' vmin='0' vmaj='1' codename='OuterDoorRight' x='620' y='0' z='0' xsz='7.8125' ysz='1.25' zsz='46.875' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Color' data='5921370' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='4cbae05a-fee8-4685-b94c-829abc3466ab' vmin='0' vmaj='1' codename='DoorRecessLeft' x='-625' y='0' z='0' xsz='7.8125' ysz='1.875' zsz='46.875' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Color' data='3947580' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='4cbae05a-fee8-4685-b94c-829abc3466ab' vmin='0' vmaj='1' codename='DoorRecessRight' x='625' y='0' z='0' xsz='7.8125' ysz='1.875' zsz='46.875' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Color' data='3947580' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='4cbae05a-fee8-4685-b94c-829abc3466ab' vmin='0' vmaj='1' codename='BackWall' x='0' y='1440' z='0' xsz='46.875' ysz='1.875' zsz='46.875' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Color' data='3947580' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='4cbae05a-fee8-4685-b94c-829abc3466ab' vmin='0' vmaj='1' codename='RightWall' x='720' y='720' z='0' xsz='46.875' ysz='1.875' zsz='46.875' xang='0' yang='0' zang='90' xquat='0' yquat='0' zquat='0.707107' wquat='0.707107' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Color' data='3947580' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='4cbae05a-fee8-4685-b94c-829abc3466ab' vmin='0' vmaj='1' codename='LeftWall' x='-720' y='720' z='0' xsz='46.875' ysz='1.875' zsz='46.875' xang='0' yang='0' zang='90' xquat='0' yquat='0' zquat='0.707107' wquat='0.707107' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Color' data='3947580' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='4cbae05a-fee8-4685-b94c-829abc3466ab' vmin='0' vmaj='1' codename='CameraInternal' x='0' y='1400' z='0' xsz='0.00625' ysz='0.00625' zsz='0.00625' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='0' solid='0' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Color' data='255' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='4cbae05a-fee8-4685-b94c-829abc3466ab' vmin='0' vmaj='1' codename='BackWall1' x='0' y='720' z='780' xsz='46.875' ysz='46.875' zsz='1.875' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Color' data='3947580' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='4cbae05a-fee8-4685-b94c-829abc3466ab' vmin='0' vmaj='1' codename='BackWall2' x='0' y='720' z='-780' xsz='46.875' ysz='46.875' zsz='1.875' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Color' data='3947580' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='4cbae05a-fee8-4685-b94c-829abc3466ab' vmin='0' vmaj='1' codename='Origin' x='0' y='0' z='0' xsz='0.001' ysz='0.001' zsz='0.001' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='0' solid='0' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Color' data='1975743' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='4cbae05a-fee8-4685-b94c-829abc3466ab' vmin='0' vmaj='1' codename='BackWall3' x='0' y='1380.25' z='370' xsz='30' ysz='1.875' zsz='4' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Color' data='16777215' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='this:flowcode-8-logo.png' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<scadaresourcelookup />
+	<keymap />
+	<panel2d shadows='0' lighting='2' brightness='-25' >
+		<background rgb='15335401' img='' style='0' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel2d>
+	<panel3d shadows='0' lighting='0' brightness='-51' perspective='1' >
+		<background rgb='8409120' img='' style='5' />
+		<table rgb='7360576' img='' style='0' size='0' />
+		<camera xe='123.695' ye='-3366.67' ze='-256.906' xt='123.695' yt='1400' zt='-256.906' xquat='-0.707107' yquat='0' zquat='0' wquat='0.707107' />
+		<camerakey0 xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey1 xe='-3.67394e-14' ye='0' ze='-300' xt='0' yt='0' zt='0' xquat='0' yquat='1' zquat='0' wquat='6.12323e-17' />
+		<camerakey2 xe='0' ye='-300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.707107' yquat='0' zquat='0' wquat='0.707107' />
+		<camerakey3 xe='-3.67394e-14' ye='300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-4.32978e-17' yquat='0.707107' zquat='0.707107' wquat='4.32978e-17' />
+		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
+		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
+		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
+	</panel3d>
+	<layout >
+		<view type='0' name='ControlDoor' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAALgcAACoHAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAALgcAACoHAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Timer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAALgcAACoHAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CheckDoor' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAALgcAACoHAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAALgcAACoHAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Stop' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAALgcAACoHAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetCameraPosition' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAALgcAACoHAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

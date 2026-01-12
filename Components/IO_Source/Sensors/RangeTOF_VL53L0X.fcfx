@@ -1,0 +1,1908 @@
+<root>
+<document scada='0' schema='103' license='10,BenR,C9TN1M' title='' description='A starting point for creating a component based on I2C communications.
+
+Includes the I2C CAL component with all the nesssisary exposed properties.' fcversion='655616' target='PIC.16F.16F18877' >
+	<config data='!0,3f8c!10,37fd!20,3f92!30,1fff!40,3fff%0,4%4,0%8,1%b,1%d,1%10,1%11,0%15,1%16,3%19,1%1a,1%1b,0%1c,1%1d,1%20,12%25,0%28,7%2b,7%30,3%3c,1%3d,0%40,1%41,1' clkspd='32000000' simspd='0' usewdt='0' constif='0' Use3V3='0' />
+	<plugins >
+		<dll_models enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug />
+	<traces />
+	<ghost >
+		<FK2 >
+			<data name='FK2D0' port='4294967295' pin='4294967295' />
+			<data name='FK2D1' port='4294967295' pin='4294967295' />
+			<data name='FK2D2' port='4294967295' pin='4294967295' />
+			<data name='FK2D3' port='4294967295' pin='4294967295' />
+			<data name='FK2D4' port='4294967295' pin='4294967295' />
+			<data name='FK2D5' port='4294967295' pin='4294967295' />
+			<data name='FK2D6' port='4294967295' pin='4294967295' />
+			<data name='FK2D7' port='4294967295' pin='4294967295' />
+			<data name='FK2D8' port='4294967295' pin='4294967295' />
+			<data name='FK2D9' port='4294967295' pin='4294967295' />
+			<data name='FK2D10' port='4294967295' pin='4294967295' />
+			<data name='FK2D11' port='4294967295' pin='4294967295' />
+			<data name='FK2D12' port='4294967295' pin='4294967295' />
+			<data name='FK2D13' port='4294967295' pin='4294967295' />
+			<data name='FK2D14' port='4294967295' pin='4294967295' />
+			<data name='FK2D15' port='4294967295' pin='4294967295' />
+			<data name='FK2A0' port='4294967295' pin='4294967295' />
+			<data name='FK2A1' port='4294967295' pin='4294967295' />
+			<data name='FK2A2' port='4294967295' pin='4294967295' />
+			<data name='FK2A3' port='4294967295' pin='4294967295' />
+			<data name='FK2A4' port='4294967295' pin='4294967295' />
+			<data name='FK2A5' port='4294967295' pin='4294967295' />
+		</FK2>
+		<ICD >
+			<data name='AnalogPrescaleValue' value='19' />
+			<data name='DigitalSampleRate' value='100000' />
+			<data name='BreakpointCount' value='8' />
+			<data name='CallStackDepthCount' value='8' />
+			<data name='ClockPort' value='1' />
+			<data name='ClockPin' value='6' />
+			<data name='DataPort' value='1' />
+			<data name='DataPin' value='7' />
+			<data name='UseDefaultPins' value='1' />
+			<data name='WrapEnabled' value='1' />
+			<data name='CommsDelayOverridden' value='0' />
+			<data name='CommsDelay' value='6' />
+			<data name='CalculatedCommsDelay' value='6' />
+			<data name='AnalogEB2PrescaleValue' value='2' />
+			<data name='DigitalEB2SampleRate' value='100000' />
+		</ICD>
+		<pins >
+			<digital A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+			<analog A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+		</pins>
+	</ghost>
+	<components >
+		<settings autoimg='0' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='488c3a77-9ff2-4e60-9bfd-cf074405e294' vstate='40' vmin='0' vmaj='1' srcleaf='RangeTOF_VL53L0X.fcfx' visiblename='Range Time of Flight (VL53L0X)' description='A laser based range sensor designed to provide accurate range infomation for a very
+narrow sensing beam. Capable of sensing ranges from 50mm to 1200mm.
+Communication with the device is based on a I2C bus.' category='Light' category2='API Light' category3='' bIs2dOnly='1' bIs3dOnly='0' catenable='1' author='MatrixTSL' manuname='' manucode='' sysinfo='1061643' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='1' showmacros='1' iconpath='..\..\icons\components\Infrared_icon.png' />
+		<component class_type='root' codename='RangeTOF_VL53L0X' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+			<resources />
+			<properties >
+				<property name='Sensor Properties' folder='property_3' hidden='0' >
+					<property name='Range' target='Range' typeid='16' hidden='0' locked='0' info='' filter='000Short Range
+001Long Range' />
+				</property>
+				<property name='I2C Properties' folder='property_1' hidden='0' >
+					<property name='Channel' target='cal_i2c1::CHANNEL' typeid='16' hidden='0' locked='0' info='Channel selection' filter='000Software
+001Channel 1
+002Channel 2
+' />
+					<property name='Baud Select' target='cal_i2c1::BAUD_LIST' typeid='16' hidden='0' locked='0' info='Baud rate option selector' filter='000Custom
+001100KHz
+002400KHz
+0031MHz' />
+					<property name='Baud Rate' target='cal_i2c1::BAUD' typeid='14' hidden='0' locked='1' info='Baud rate to be used' />
+					<property name='SDA' target='cal_i2c1::SDA' typeid='5' hidden='0' locked='1' info='Pin used for SDA (data signal)' />
+					<property name='SDA Remap Pin' target='cal_i2c1::SDAPins' typeid='16' hidden='0' locked='0' info='' filter='016$PORTC.0
+017$PORTC.1
+018$PORTC.2
+019$PORTC.3
+020$PORTC.4
+021$PORTC.5
+022$PORTC.6
+023$PORTC.7
+008$PORTB.0
+009$PORTB.1
+010$PORTB.2
+011$PORTB.3
+012$PORTB.4
+013$PORTB.5
+014$PORTB.6
+015$PORTB.7' />
+					<property name='SCL' target='cal_i2c1::SCL' typeid='5' hidden='0' locked='1' info='Pin used for SCL (clock signal)' />
+					<property name='SCL Remap Pin' target='cal_i2c1::SCLPins' typeid='16' hidden='0' locked='0' info='' filter='016$PORTC.0
+017$PORTC.1
+018$PORTC.2
+019$PORTC.3
+020$PORTC.4
+021$PORTC.5
+022$PORTC.6
+023$PORTC.7
+008$PORTB.0
+009$PORTB.1
+010$PORTB.2
+011$PORTB.3
+012$PORTB.4
+013$PORTB.5
+014$PORTB.6
+015$PORTB.7' />
+					<property name='Stop Delay' target='cal_i2c1::StopDel' typeid='7' hidden='0' locked='0' info='On older microcontroller devices there is a potential for the I2C hardware channel to lock up if there is not 
+a 10ms delay between an I2C stop event and the next I2C start event.
+
+Most modern microcontrollers will not have a problem so this property can be disabled to speed up the 
+I2C communications. ' />
+				</property>
+				<property name='Simulation' folder='cal_i2c1::property_1' hidden='0' >
+					<property name='Simulate Comms' target='SimComms' typeid='7' hidden='0' locked='0' info='' />
+					<property name='Comms Simulation' folder='property_2' hidden='1' >
+						<property name='Scope Traces' target='cal_i2c1::ScopeTraces' typeid='7' hidden='0' locked='0' info='Selects if the component pin connections are automatically generated on the data recorder window or not.
+Yes: Automatically add the component pins to a group on the data recorder which will reflect the sim data during simultion.
+No: Do not show the pin signals on the data recorder window.' />
+						<property name='Console Data' target='cal_i2c1::ConsoleData' typeid='7' hidden='0' locked='0' info='Selects if the console data is automatically generated or not' />
+						<property name='Injector' target='cal_i2c1::Injector' typeid='16' hidden='0' locked='0' info='Specifies the injector component on the panel to interact with to provide comms simulation.' filter='000 
+' />
+					</property>
+					<property name='Injector Handle' target='cal_i2c1::InjectorHandle' typeid='21' hidden='1' locked='0' info='' />
+					<property name='Initilise Added' target='InitiliseAdded' typeid='7' hidden='1' locked='1' info='' />
+				</property>
+			</properties>
+			<values >
+				<value target='Range' data='000' />
+				<value target='cal_i2c1::CHANNEL' data='001' />
+				<value target='cal_i2c1::BAUD_LIST' data='001' />
+				<value target='cal_i2c1::BAUD' data='100000' />
+				<value target='cal_i2c1::SDA' data='$PORTC.0' />
+				<value target='cal_i2c1::SDAPins' data='016' />
+				<value target='cal_i2c1::SCL' data='$PORTC.1' />
+				<value target='cal_i2c1::SCLPins' data='017' />
+				<value target='cal_i2c1::StopDel' data='0' />
+				<value target='SimComms' data='0' />
+				<value target='cal_i2c1::ScopeTraces' data='1' />
+				<value target='cal_i2c1::ConsoleData' data='1' />
+				<value target='cal_i2c1::Injector' data='000' />
+				<value target='cal_i2c1::InjectorHandle' data='0' />
+				<value target='InitiliseAdded' data='0' />
+			</values>
+			<events >
+				<event class='Components' event='Renamed' target='Ev_Renamed' />
+				<event class='System' event='Timer' target='Ev_Timer' />
+				<event class='Components' event='Initialise' target='Ev_Initialise' />
+				<event class='Components' event='Property' target='Ev_Property' />
+			</events>
+			<apis >
+				<api name='ChangeI2CAddress' alt='ChangeI2CAddress' type='1' proto='1' />
+				<api name='ReadModel' alt='ReadModel' type='1' proto='1' />
+				<api name='ReadRegister16' alt='ReadRegister16' type='1' proto='1' />
+				<api name='ReadRevision' alt='ReadRevision' type='1' proto='1' />
+				<api name='ReadDistance' alt='ReadDistanceSim' type='1' proto='1' />
+				<api name='ReadRegister' alt='ReadRegister' type='1' proto='1' />
+				<api name='WriteRegister' alt='WriteRegister' type='1' proto='1' />
+				<api name='WriteRegister16' alt='WriteRegister16' type='1' proto='1' />
+				<api name='Initialise' alt='InitialiseSim' type='1' proto='1' />
+			</apis>
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='SST_msrc_dss_tcc_mclks' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='measurement_timing_budget_us' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='Stop_Variable' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='SEQUENCE_ENABLE_FINAL_RANGE' type='s16' description='' isconst='1' isHidden='0' isinit='1' usrinit='128' setinit='0x80' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='SEQUENCE_ENABLE_TCC' type='s16' description='' isconst='1' isHidden='0' isinit='1' usrinit='16' setinit='0x10' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='SST_final_range_vcsel' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='SST_msrc_dss_tcc_us' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='spad_type_is_aperture' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='OverheadDss' type='s16' description='' isconst='1' isHidden='0' isinit='1' usrinit='690' setinit='690' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='OverheadEnd' type='s16' description='' isconst='1' isHidden='0' isinit='1' usrinit='960' setinit='960' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='SEQUENCE_ENABLE_PRE_RANGE' type='s16' description='' isconst='1' isHidden='0' isinit='1' usrinit='64' setinit='0x40' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='OverheadMsrc' type='s16' description='' isconst='1' isHidden='0' isinit='1' usrinit='660' setinit='660' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='SST_pre_range_vcsel' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='spad_count' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='SST_final_range_mclks' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='SST_pre_range_us' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='MinTimingBudget' type='s16' description='' isconst='1' isHidden='0' isinit='1' usrinit='20000' setinit='20000' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='MAX_TIMEOUT' type='s16' description='' isconst='1' isHidden='0' isinit='1' usrinit='50' setinit='50' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='OverheadFinalRange' type='s16' description='' isconst='1' isHidden='0' isinit='1' usrinit='550' setinit='550' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='SEQUENCE_ENABLE_DSS' type='s16' description='' isconst='1' isHidden='0' isinit='1' usrinit='8' setinit='0x08' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='OverheadTcc' type='s16' description='' isconst='1' isHidden='0' isinit='1' usrinit='590' setinit='590' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='OverheadPreRange' type='s16' description='' isconst='1' isHidden='0' isinit='1' usrinit='660' setinit='660' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='SEQUENCE_ENABLE_MSRC' type='s16' description='' isconst='1' isHidden='0' isinit='1' usrinit='4' setinit='0x04' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='SST_pre_range_mclks' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='SST_final_range_us' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='OverheadStartSet' type='s16' description='' isconst='1' isHidden='0' isinit='1' usrinit='1320' setinit='1320' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='OverheadStartGet' type='s16' description='' isconst='1' isHidden='0' isinit='1' usrinit='1910' setinit='1910' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='InitialiseSim' description='' statediag='0' >
+						<return name='Return' type='b1' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Reg' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='ref_spad_map' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='6' />
+						</local>
+						<local name='ucFirstSPAD' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='ucSPADsEnabled' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='i' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='SimComms' swap='0' >
+							<flowline >
+								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Initialise' >
+									<return exp='.Return' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<argument exp='this' />
+									<argument exp='&quot;InitiliseAdded&quot;' />
+									<argument exp='1' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = 1' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Timer' description='Called back on the panel command System.TimerStart' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='TimerID' type='u32' description='The identifier passed to the System.TimerStart panel command' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Handle' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='GetConsoleHandle' >
+							<return exp='.Handle' />
+						</command>
+						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='SetConsoleHandle' >
+							<argument exp='.Handle' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='ChangeI2CAddress' description='Updates the I2C address of the sensor.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Address' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='UpdateAddressReg' type='b1' description='0=Leave address register alone, 1=Update address register' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Address = .Address &amp; 0x7F' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.UpdateAddressReg' swap='0' >
+							<flowline >
+								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+									<argument exp='0x8A' />
+									<argument exp='.Address' />
+								</command>
+								<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='10' type='1' />
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='call' title='Assign 7-bit I2C Device Address' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Transaction_Initialise' >
+							<argument exp='.Address' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='WriteMulti' description='A simple example showing a generic way to write a register using I2C.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Address' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Data' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='6' />
+						</param>
+						<param name='Count' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='buff' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='7' />
+						</local>
+						<local name='i' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='FlashTx' />
+						<command class_type='calculation' title='Assign address and data to write buffer' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.buff[0] = .Address' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='2' forvar='.i' exp='.Count' >
+							<flowline >
+								<command class_type='calculation' title='Assign address and data to write buffer' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.buff[.i + 1] = .Data[.i]' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='call' title='Write 2 bytes' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Transaction_Write' >
+							<argument exp='.buff' />
+							<argument exp='.Count + 1' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='GetSequenceStepTimeouts' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='enables' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='reg' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='reg16' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='PRE_RANGE_CONFIG_VCSEL_PERIOD' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+							<return exp='.reg' />
+							<argument exp='0x50' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='SST_pre_range_vcsel = (.reg + 1) &lt;&lt; 1' />
+						</command>
+						<command class_type='call' title='MSRC_CONFIG_TIMEOUT_MACROP' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+							<return exp='.reg' />
+							<argument exp='0x46' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='SST_msrc_dss_tcc_mclks = .reg + 1' />
+						</command>
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TimeoutMclksToMicroseconds' >
+							<return exp='SST_msrc_dss_tcc_us' />
+							<argument exp='SST_msrc_dss_tcc_mclks' />
+							<argument exp='SST_pre_range_vcsel' />
+						</command>
+						<command class_type='call' title='PRE_RANGE_CONFIG_TIMEOUT_MACROP_HI' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister16' >
+							<return exp='.reg16' />
+							<argument exp='0x51' />
+						</command>
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DecodeTimeout' >
+							<return exp='SST_pre_range_mclks' />
+							<argument exp='.reg16' />
+						</command>
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TimeoutMclksToMicroseconds' >
+							<return exp='SST_pre_range_us' />
+							<argument exp='SST_pre_range_mclks' />
+							<argument exp='SST_pre_range_vcsel' />
+						</command>
+						<command class_type='call' title='FINAL_RANGE_CONFIG_VCSEL_PERIOD' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+							<return exp='.reg' />
+							<argument exp='0x70' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='SST_final_range_vcsel = (.reg + 1) &lt;&lt; 1' />
+						</command>
+						<command class_type='call' title='FINAL_RANGE_CONFIG_TIMEOUT_MACROP_HI' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister16' >
+							<return exp='.reg16' />
+							<argument exp='0x71' />
+						</command>
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DecodeTimeout' >
+							<return exp='SST_final_range_mclks' />
+							<argument exp='.reg16' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.enables &amp; SEQUENCE_ENABLE_PRE_RANGE' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='SST_final_range_mclks = SST_final_range_mclks - SST_pre_range_mclks' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TimeoutMclksToMicroseconds' >
+							<return exp='SST_final_range_us' />
+							<argument exp='SST_final_range_mclks' />
+							<argument exp='SST_final_range_vcsel' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Initialise' description='Initialisation routine for the component once the component is linked to its parent' statediag='0' >
+						<return name='Return' type='u32' description='Non-zero to prevent initialisation' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='comment' title='' comment='This code will execute when adding the component to the panel.
+Or when loading a saved project that includes the component.' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_Property' />
+						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;InitiliseAdded&quot;' />
+							<argument exp='0' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='WriteRegList' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Offset' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Count' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Idx' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='Reg' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Val' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='add' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.add = .Offset * 2' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.Idx &lt; .Count' >
+							<flowline >
+								<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='lut1' macro='GetInt' >
+									<return exp='.Reg' />
+									<argument exp='.add' />
+								</command>
+								<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='lut1' macro='GetInt' >
+									<return exp='.Val' />
+									<argument exp='.add + 1' />
+								</command>
+								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+									<argument exp='.Reg' />
+									<argument exp='.Val' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Idx = .Idx + 1' />
+									<exp exp='.add = .add + 2' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='ReadMulti' description='A simple example showing a generic way to read a register using I2C.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Address' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Data' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='6' />
+						</param>
+						<param name='Count' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='buff' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='1' />
+						</local>
+						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='FlashRx' />
+						<command class_type='calculation' title='Assign address to read/write buffer' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.buff[0] = .Address' />
+						</command>
+						<command class_type='call' title='Write 1 byte - don&apos;t stop' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Transaction_Write' >
+							<argument exp='.buff' />
+							<argument exp='0x8001' />
+						</command>
+						<command class_type='call' title='Read 1 byte' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Transaction_Read' >
+							<argument exp='.Data' />
+							<argument exp='.Count' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='TimeoutMicrosecondsToMclks' description='Convert sequence step timeout from MCLKs to microseconds with given VCSEL 
+period in PCLKs based on VL53L0X_calc_timeout_us()' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='timeout_period' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='vcsel_period' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='macro_period_ns' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='CalcMacroPeriod' >
+							<return exp='.macro_period_ns' />
+							<argument exp='.vcsel_period' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = ((.timeout_period * 1000) + (.macro_period_ns / 2)) / .macro_period_ns' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='GetSpadInfo' description='' statediag='0' >
+						<return name='Return' type='b1' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Reg' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='iTimeout' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='ucTemp' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='ucSPAD0' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegList' >
+							<argument exp='7' />
+							<argument exp='4' />
+						</command>
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+							<return exp='.Reg' />
+							<argument exp='0x83' />
+						</command>
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+							<argument exp='0x83' />
+							<argument exp='.Reg | 0x04' />
+						</command>
+						<command class_type='call' title='ucSPAD1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegList' >
+							<argument exp='11' />
+							<argument exp='5' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Reg = 0' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='(.iTimeout &lt; MAX_TIMEOUT) &amp;&amp; (.Reg = 0x00)' >
+							<flowline >
+								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+									<return exp='.Reg' />
+									<argument exp='0x83' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Reg = 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.iTimeout = .iTimeout + 1' />
+										</command>
+										<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='5' type='1' />
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.iTimeout = MAX_TIMEOUT' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = 0' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+									<argument exp='0x83' />
+									<argument exp='0x01' />
+								</command>
+								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+									<return exp='.ucTemp' />
+									<argument exp='0x92' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='spad_count = .ucTemp &amp; 0x7F' />
+									<exp exp='spad_type_is_aperture = .ucTemp &amp; 0x80' />
+								</command>
+								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+									<argument exp='0x81' />
+									<argument exp='0x00' />
+								</command>
+								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+									<argument exp='0xFF' />
+									<argument exp='0x06' />
+								</command>
+								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+									<return exp='.Reg' />
+									<argument exp='0x83' />
+								</command>
+								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+									<argument exp='0x83' />
+									<argument exp='.Reg &amp; ~0x04' />
+								</command>
+								<command class_type='call' title='ucSPAD2' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegList' >
+									<argument exp='16' />
+									<argument exp='4' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = 1' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='ReadModel' description='Collects the model number from the sensor' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='REG_IDENTIFICATION_MODEL_ID' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+							<return exp='.Return' />
+							<argument exp='0xC0' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SetVcselPulsePeriod' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Type' type='b1' description='0=PreRange, 1=FinalRange' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='period_pclks' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='vcsel_period_reg' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='enables' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='new_pre_range_timeout_mclks' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='tout' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='new_msrc_timeout_mclks' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='new_final_range_timeout_mclks' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='sequence_config' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.vcsel_period_reg = (.period_pclks &gt;&gt; 1) - 1' />
+						</command>
+						<command class_type='call' title='SYSTEM_SEQUENCE_CONFIG' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+							<return exp='.enables' />
+							<argument exp='0x01' />
+						</command>
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetSequenceStepTimeouts' >
+							<argument exp='.enables' />
+						</command>
+						<command class_type='decision' title='VcselPeriodPreRange' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Type = 0' swap='0' >
+							<flowline >
+								<command class_type='switch' title='Switch' textarea='36,25,36,25' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.period_pclks' >
+									<case >
+										<flowline />
+									</case>
+									<case exp='12' >
+										<flowline >
+											<command class_type='call' title='PRE_RANGE_CONFIG_VALID_PHASE_HIGH' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+												<argument exp='0x57' />
+												<argument exp='0x18' />
+											</command>
+										</flowline>
+									</case>
+									<case exp='14' >
+										<flowline >
+											<command class_type='call' title='PRE_RANGE_CONFIG_VALID_PHASE_HIGH' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+												<argument exp='0x57' />
+												<argument exp='0x30' />
+											</command>
+										</flowline>
+									</case>
+									<case exp='16' >
+										<flowline >
+											<command class_type='call' title='PRE_RANGE_CONFIG_VALID_PHASE_HIGH' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+												<argument exp='0x57' />
+												<argument exp='0x40' />
+											</command>
+										</flowline>
+									</case>
+									<case exp='18' >
+										<flowline >
+											<command class_type='call' title='PRE_RANGE_CONFIG_VALID_PHASE_HIGH' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+												<argument exp='0x57' />
+												<argument exp='0x50' />
+											</command>
+										</flowline>
+									</case>
+								</command>
+								<command class_type='call' title='PRE_RANGE_CONFIG_VALID_PHASE_LOW' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+									<argument exp='0x56' />
+									<argument exp='0x08' />
+								</command>
+								<command class_type='call' title='apply new VCSEL period' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+									<argument exp='0x50' />
+									<argument exp='.vcsel_period_reg' />
+								</command>
+								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TimeoutMicrosecondsToMclks' >
+									<return exp='.new_pre_range_timeout_mclks' />
+									<argument exp='SST_pre_range_us' />
+									<argument exp='.period_pclks' />
+								</command>
+								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='EncodeTimeout' >
+									<return exp='.tout' />
+									<argument exp='.new_pre_range_timeout_mclks' />
+								</command>
+								<command class_type='call' title='PRE_RANGE_CONFIG_TIMEOUT_MACROP_HI' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister16' >
+									<argument exp='0x51' />
+									<argument exp='.tout' />
+								</command>
+								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TimeoutMicrosecondsToMclks' >
+									<return exp='.new_msrc_timeout_mclks' />
+									<argument exp='SST_msrc_dss_tcc_us' />
+									<argument exp='.period_pclks' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.new_msrc_timeout_mclks &gt; 256' swap='0' >
+									<flowline >
+										<command class_type='call' title='MSRC_CONFIG_TIMEOUT_MACROP' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+											<argument exp='0x46' />
+											<argument exp='255' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='call' title='MSRC_CONFIG_TIMEOUT_MACROP' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+											<argument exp='0x46' />
+											<argument exp='.new_msrc_timeout_mclks - 1' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='switch' title='Switch' textarea='36,25,36,25' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.period_pclks' >
+									<case >
+										<flowline />
+									</case>
+									<case exp='8' >
+										<flowline >
+											<command class_type='call' title='PRE_RANGE_CONFIG_VALID_PHASE_HIGH' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+												<argument exp='0x57' />
+												<argument exp='0x10' />
+											</command>
+											<command class_type='call' title='FINAL_RANGE_CONFIG_VALID_PHASE_LOW' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+												<argument exp='0x47' />
+												<argument exp='0x08' />
+											</command>
+											<command class_type='call' title='GLOBAL_CONFIG_VCSEL_WIDTH' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+												<argument exp='0x32' />
+												<argument exp='0x02' />
+											</command>
+											<command class_type='call' title='ALGO_PHASECAL_CONFIG_TIMEOUT' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+												<argument exp='0x30' />
+												<argument exp='0x0C' />
+											</command>
+											<command class_type='call' title='ALGO_PHASECAL_CONFIG_TIMEOUT' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+												<argument exp='0xFF' />
+												<argument exp='0x01' />
+											</command>
+											<command class_type='call' title='ALGO_PHASECAL_LIM' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+												<argument exp='0x30' />
+												<argument exp='0x30' />
+											</command>
+											<command class_type='call' title='ALGO_PHASECAL_LIM' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+												<argument exp='0xFF' />
+												<argument exp='0x00' />
+											</command>
+										</flowline>
+									</case>
+									<case exp='10' >
+										<flowline >
+											<command class_type='call' title='PRE_RANGE_CONFIG_VALID_PHASE_HIGH' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+												<argument exp='0x57' />
+												<argument exp='0x28' />
+											</command>
+											<command class_type='call' title='FINAL_RANGE_CONFIG_VALID_PHASE_LOW' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+												<argument exp='0x47' />
+												<argument exp='0x08' />
+											</command>
+											<command class_type='call' title='GLOBAL_CONFIG_VCSEL_WIDTH' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+												<argument exp='0x32' />
+												<argument exp='0x03' />
+											</command>
+											<command class_type='call' title='ALGO_PHASECAL_CONFIG_TIMEOUT' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+												<argument exp='0x30' />
+												<argument exp='0x09' />
+											</command>
+											<command class_type='call' title='ALGO_PHASECAL_CONFIG_TIMEOUT' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+												<argument exp='0xFF' />
+												<argument exp='0x01' />
+											</command>
+											<command class_type='call' title='ALGO_PHASECAL_LIM' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+												<argument exp='0x30' />
+												<argument exp='0x20' />
+											</command>
+											<command class_type='call' title='ALGO_PHASECAL_LIM' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+												<argument exp='0xFF' />
+												<argument exp='0x00' />
+											</command>
+										</flowline>
+									</case>
+									<case exp='12' >
+										<flowline >
+											<command class_type='call' title='PRE_RANGE_CONFIG_VALID_PHASE_HIGH' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+												<argument exp='0x57' />
+												<argument exp='0x38' />
+											</command>
+											<command class_type='call' title='FINAL_RANGE_CONFIG_VALID_PHASE_LOW' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+												<argument exp='0x47' />
+												<argument exp='0x08' />
+											</command>
+											<command class_type='call' title='GLOBAL_CONFIG_VCSEL_WIDTH' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+												<argument exp='0x32' />
+												<argument exp='0x03' />
+											</command>
+											<command class_type='call' title='ALGO_PHASECAL_CONFIG_TIMEOUT' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+												<argument exp='0x30' />
+												<argument exp='0x08' />
+											</command>
+											<command class_type='call' title='ALGO_PHASECAL_CONFIG_TIMEOUT' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+												<argument exp='0xFF' />
+												<argument exp='0x01' />
+											</command>
+											<command class_type='call' title='ALGO_PHASECAL_LIM' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+												<argument exp='0x30' />
+												<argument exp='0x20' />
+											</command>
+											<command class_type='call' title='ALGO_PHASECAL_LIM' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+												<argument exp='0xFF' />
+												<argument exp='0x00' />
+											</command>
+										</flowline>
+									</case>
+									<case exp='14' >
+										<flowline >
+											<command class_type='call' title='PRE_RANGE_CONFIG_VALID_PHASE_HIGH' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+												<argument exp='0x57' />
+												<argument exp='0x48' />
+											</command>
+											<command class_type='call' title='FINAL_RANGE_CONFIG_VALID_PHASE_LOW' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+												<argument exp='0x47' />
+												<argument exp='0x08' />
+											</command>
+											<command class_type='call' title='GLOBAL_CONFIG_VCSEL_WIDTH' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+												<argument exp='0x32' />
+												<argument exp='0x03' />
+											</command>
+											<command class_type='call' title='ALGO_PHASECAL_CONFIG_TIMEOUT' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+												<argument exp='0x30' />
+												<argument exp='0x07' />
+											</command>
+											<command class_type='call' title='ALGO_PHASECAL_CONFIG_TIMEOUT' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+												<argument exp='0xFF' />
+												<argument exp='0x01' />
+											</command>
+											<command class_type='call' title='ALGO_PHASECAL_LIM' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+												<argument exp='0x30' />
+												<argument exp='0x20' />
+											</command>
+											<command class_type='call' title='ALGO_PHASECAL_LIM' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+												<argument exp='0xFF' />
+												<argument exp='0x00' />
+											</command>
+										</flowline>
+									</case>
+								</command>
+								<command class_type='call' title='FINAL_RANGE_CONFIG_VCSEL_PERIOD' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister16' >
+									<argument exp='0x70' />
+									<argument exp='.vcsel_period_reg' />
+								</command>
+								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TimeoutMicrosecondsToMclks' >
+									<return exp='.new_final_range_timeout_mclks' />
+									<argument exp='SST_final_range_us' />
+									<argument exp='.period_pclks' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.enables &amp; SEQUENCE_ENABLE_PRE_RANGE' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.new_final_range_timeout_mclks = .new_final_range_timeout_mclks + SST_pre_range_mclks' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='EncodeTimeout' >
+									<return exp='.tout' />
+									<argument exp='.new_final_range_timeout_mclks' />
+								</command>
+								<command class_type='call' title='FINAL_RANGE_CONFIG_TIMEOUT_MACROP_HI' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister16' >
+									<argument exp='0x71' />
+									<argument exp='.tout' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetMeasurementTimingBudget' >
+							<argument exp='measurement_timing_budget_us' />
+						</command>
+						<command class_type='call' title='SYSTEM_SEQUENCE_CONFIG' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+							<return exp='.sequence_config' />
+							<argument exp='0x01' />
+						</command>
+						<command class_type='call' title='SYSTEM_SEQUENCE_CONFIG' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+							<argument exp='0x01' />
+							<argument exp='0x02' />
+						</command>
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='PerformSingleRefCalibration' >
+							<argument exp='0x0' />
+						</command>
+						<command class_type='call' title='SYSTEM_SEQUENCE_CONFIG' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+							<argument exp='0x01' />
+							<argument exp='.sequence_config' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='ReadRegister16' description='A simple example showing a generic way to read a register using I2C.' statediag='0' >
+						<return name='Return' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Address' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='buff' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='2' />
+						</local>
+						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='FlashRx' />
+						<command class_type='calculation' title='Assign address to read/write buffer' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.buff[0] = .Address' />
+						</command>
+						<command class_type='call' title='Write 1 byte - don&apos;t stop' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Transaction_Write' >
+							<argument exp='.buff' />
+							<argument exp='0x8001' />
+						</command>
+						<command class_type='call' title='Read 2 bytes' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Transaction_Read' >
+							<argument exp='.buff' />
+							<argument exp='2' />
+						</command>
+						<command class_type='calculation' title='Read return value from buffer' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = (.buff[0] &lt;&lt; 8) | .buff[1]' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Property' description='Sent when a property has been changed by the User' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='comment' title='' comment='This code will execute when any of the component property values are changed.' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='Range' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<argument exp='SensorLibraryComponent1' />
+									<argument exp='&quot;Max0&quot;' />
+									<argument exp='2000' />
+								</command>
+								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<argument exp='SensorLibraryComponent1' />
+									<argument exp='&quot;MinTick0&quot;' />
+									<argument exp='50' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<argument exp='SensorLibraryComponent1' />
+									<argument exp='&quot;Max0&quot;' />
+									<argument exp='1200' />
+								</command>
+								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<argument exp='SensorLibraryComponent1' />
+									<argument exp='&quot;MinTick0&quot;' />
+									<argument exp='20' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='SensorLibraryComponent1' />
+							<argument exp='&quot;ShowComms&quot;' />
+							<argument exp='SimComms' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='SimComms' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<argument exp='SensorLibraryComponent1' />
+									<argument exp='&quot;OutputIcon::CommsType&quot;' />
+									<argument exp='4' />
+								</command>
+								<command class_type='sim' title='Show Comms Simulation Property Folder' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;property_2&quot;' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.TimerStart' >
+									<argument exp='0' />
+									<argument exp='200' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='SetConsoleHandle' >
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<argument exp='SensorLibraryComponent1' />
+									<argument exp='&quot;OutputIcon::CommsType&quot;' />
+									<argument exp='255' />
+								</command>
+								<command class_type='sim' title='Hide Comms Simulation Property Folder' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;property_2&quot;' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='GetMeasurementTimingBudget' description='' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='enables' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='budget_us' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.budget_us = OverheadStartGet + OverheadEnd' />
+						</command>
+						<command class_type='call' title='SYSTEM_SEQUENCE_CONFIG' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+							<return exp='.enables' />
+							<argument exp='0x01' />
+						</command>
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetSequenceStepTimeouts' >
+							<argument exp='.enables' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.enables &amp; SEQUENCE_ENABLE_TCC' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.budget_us = .budget_us + (SST_msrc_dss_tcc_us + OverheadTcc)' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.enables &amp; SEQUENCE_ENABLE_DSS' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.budget_us = .budget_us + 2 * (SST_msrc_dss_tcc_us + OverheadDss)' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.enables &amp; SEQUENCE_ENABLE_MSRC' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.budget_us = .budget_us + (SST_msrc_dss_tcc_us + OverheadMsrc)' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.enables &amp; SEQUENCE_ENABLE_PRE_RANGE' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.budget_us = .budget_us + (SST_pre_range_us + OverheadPreRange)' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.enables &amp; SEQUENCE_ENABLE_FINAL_RANGE' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.budget_us = .budget_us + OverheadFinalRange' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = .budget_us' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='ReadRevision' description='Collects the revision number from the sensor' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='REG_IDENTIFICATION_REVISION_ID' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+							<return exp='.Return' />
+							<argument exp='0xC2' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='DecodeTimeout' description='Decode sequence step timeout in MCLKs from register value based on VL53L0X_decode_timeout()' statediag='0' >
+						<return name='Return' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='RegVal' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = ((.RegVal &amp; 0x00FF) &lt;&lt; ((.RegVal &amp; 0xFF00) &gt;&gt; 8)) + 1' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='PerformSingleRefCalibration' description='' statediag='0' >
+						<return name='Return' type='b1' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='vhv_init_byte' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='iTimeout' type='s16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='Reg' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = 1' />
+						</command>
+						<command class_type='call' title='SYSRANGE_START' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+							<argument exp='0x00' />
+							<argument exp='0x01 | .vhv_init_byte' />
+						</command>
+						<command class_type='call' title='RESULT_INTERRUPT_STATUS' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+							<return exp='.Reg' />
+							<argument exp='0x13' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='((.Reg &amp; 7) = 0) &amp;&amp; (.Return = 1)' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.iTimeout = .iTimeout + 1' />
+								</command>
+								<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='5' type='1' />
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.iTimeout &gt; 100' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Return = 0' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='call' title='RESULT_INTERRUPT_STATUS' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+											<return exp='.Reg' />
+											<argument exp='0x13' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Return' swap='0' >
+							<flowline >
+								<command class_type='call' title='SYSTEM_INTERRUPT_CLEAR' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+									<argument exp='0x0B' />
+									<argument exp='0x01' />
+								</command>
+								<command class_type='call' title='SYSRANGE_START' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+									<argument exp='0x00' />
+									<argument exp='0x00' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='ReadDistanceSim' description='Read the current distance in mm.
+Returns -1 if the sensor timed out during the read operation.' statediag='0' >
+						<return name='Return' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='iTimeout' type='s16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='Reg' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = 0' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='SimComms' swap='0' >
+							<flowline >
+								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadDistance' >
+									<return exp='.Return' />
+								</command>
+								<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='SetValue' >
+									<argument exp='0' />
+									<argument exp='.Return' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='InitiliseAdded' swap='0' >
+									<flowline >
+										<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='GetValue' >
+											<return exp='.Return' />
+											<argument exp='0' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Renamed' description='' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Name' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<command class_type='sim' title='' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.GetName' >
+							<return exp='.Name' />
+							<argument exp='this' />
+						</command>
+						<command class_type='sim' title='' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='SensorLibraryComponent1' />
+							<argument exp='&quot;Name&quot;' />
+							<argument exp='.Name' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='ReadDistance' description='Read the current distance in mm.
+Returns -1 if the sensor timed out during the read operation.' statediag='0' >
+						<return name='Return' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='iTimeout' type='s16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='Reg' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+							<argument exp='0x80' />
+							<argument exp='0x01' />
+						</command>
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+							<argument exp='0xFF' />
+							<argument exp='0x01' />
+						</command>
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+							<argument exp='0x00' />
+							<argument exp='0x00' />
+						</command>
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+							<argument exp='0x91' />
+							<argument exp='Stop_Variable' />
+						</command>
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+							<argument exp='0x00' />
+							<argument exp='0x01' />
+						</command>
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+							<argument exp='0xFF' />
+							<argument exp='0x00' />
+						</command>
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+							<argument exp='0x80' />
+							<argument exp='0x00' />
+						</command>
+						<command class_type='call' title='SYSRANGE_START' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+							<argument exp='0x00' />
+							<argument exp='0x01' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Reg = 0x01' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='(.Reg &amp; 0x01) &amp;&amp; (.iTimeout &lt; 50)' >
+							<flowline >
+								<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='5' type='1' />
+								<command class_type='call' title='SYSRANGE_START' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+									<return exp='.Reg' />
+									<argument exp='0x00' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Reg &amp; 0x01' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.iTimeout = .iTimeout + 1' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = -1' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.iTimeout &lt; 50' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Reg = 0x00' />
+									<exp exp='.iTimeout = 0' />
+								</command>
+								<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='((.Reg &amp; 0x07) == 0) &amp;&amp; (.iTimeout &lt; 50)' >
+									<flowline >
+										<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='5' type='1' />
+										<command class_type='call' title='RESULT_INTERRUPT_STATUS' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+											<return exp='.Reg' />
+											<argument exp='0x13' />
+										</command>
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Reg &amp; 0x07' swap='0' >
+											<flowline />
+											<flowline >
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='.iTimeout = .iTimeout + 1' />
+												</command>
+											</flowline>
+										</command>
+									</flowline>
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.iTimeout &lt; 50' swap='0' >
+									<flowline >
+										<command class_type='call' title='RESULT_INTERRUPT_STATUS' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister16' >
+											<return exp='.Return' />
+											<argument exp='30' />
+										</command>
+										<command class_type='call' title='SYSTEM_INTERRUPT_CLEAR' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+											<argument exp='0x0B' />
+											<argument exp='0x01' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='ReadRegister' description='A simple example showing a generic way to read a register using I2C.' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Address' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='buff' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='1' />
+						</local>
+						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='FlashRx' />
+						<command class_type='calculation' title='Assign address to read/write buffer' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.buff[0] = .Address' />
+						</command>
+						<command class_type='call' title='Write 1 byte - don&apos;t stop' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Transaction_Write' >
+							<argument exp='.buff' />
+							<argument exp='0x8001' />
+						</command>
+						<command class_type='call' title='Read 1 byte' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Transaction_Read' >
+							<argument exp='.buff' />
+							<argument exp='1' />
+						</command>
+						<command class_type='calculation' title='Read return value from buffer' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = .buff[0]' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='EncodeTimeout' description='Encode sequence step timeout register value from timeout in MCLKs based on VL53L0X_encode_timeout()' statediag='0' >
+						<return name='Return' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Timeout_Mclks' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='ls_byte' type='u32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='ms_byte' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Timeout_Mclks &gt; 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.ls_byte = .Timeout_Mclks - 1' />
+								</command>
+								<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='(.ls_byte &amp; 0xFFFFFF00) &gt; 0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.ls_byte = .ls_byte &gt;&gt; 1' />
+											<exp exp='.ms_byte = .ms_byte + 1' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = (.ms_byte &lt;&lt; 8) | (.ls_byte &amp; 0xFF)' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = 0' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='CalcMacroPeriod' description='' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='vcsel_period_pclks' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = (((2304 * (.vcsel_period_pclks) * 1655) + 500) / 1000)' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='comment' title='' comment='Main macro is not included when you export the code as a component.
+So you can use this as your test routine for the component.' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='call' title='Call User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Initialise' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='WriteRegister' description='A simple example showing a generic way to write a register using I2C.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Address' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Data' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='buff' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='2' />
+						</local>
+						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='FlashTx' />
+						<command class_type='calculation' title='Assign address and data to write buffer' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.buff[0] = .Address' />
+							<exp exp='.buff[1] = .Data' />
+						</command>
+						<command class_type='call' title='Write 2 bytes' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Transaction_Write' >
+							<argument exp='.buff' />
+							<argument exp='2' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='WriteRegister16' description='A simple example showing a generic way to write a register using I2C.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Address' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Data' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='buff' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='3' />
+						</local>
+						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='FlashTx' />
+						<command class_type='calculation' title='Assign address and data to write buffer' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.buff[0] = .Address' />
+							<exp exp='.buff[1] = .Data &gt;&gt; 8' />
+							<exp exp='.buff[2] = .Data' />
+						</command>
+						<command class_type='call' title='Write 2 bytes' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Transaction_Write' >
+							<argument exp='.buff' />
+							<argument exp='3' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SetMeasurementTimingBudget' description='' statediag='0' >
+						<return name='Return' type='b1' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='budget_us' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='used_budget_us' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='final_range_timeout_us' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='final_range_timeout_mclks' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='enables' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='tout' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.budget_us &lt; MinTimingBudget' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = 0' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = 1' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.used_budget_us = OverheadStartSet + OverheadEnd' />
+								</command>
+								<command class_type='call' title='SYSTEM_SEQUENCE_CONFIG' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+									<return exp='.enables' />
+									<argument exp='0x01' />
+								</command>
+								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetSequenceStepTimeouts' >
+									<argument exp='.enables' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.enables &amp; SEQUENCE_ENABLE_TCC' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.used_budget_us = .used_budget_us + (SST_msrc_dss_tcc_us + OverheadTcc)' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.enables &amp; SEQUENCE_ENABLE_DSS' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.used_budget_us = .used_budget_us + 2 * (SST_msrc_dss_tcc_us + OverheadDss)' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.enables &amp; SEQUENCE_ENABLE_MSRC' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='.used_budget_us = .used_budget_us + (SST_msrc_dss_tcc_us + OverheadMsrc)' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.enables &amp; SEQUENCE_ENABLE_PRE_RANGE' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.used_budget_us = .used_budget_us + (SST_pre_range_us + OverheadPreRange)' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.enables &amp; SEQUENCE_ENABLE_FINAL_RANGE' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.used_budget_us = .used_budget_us + OverheadFinalRange' />
+										</command>
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.used_budget_us &gt; .budget_us' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='.Return = 0' />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='.final_range_timeout_us = .budget_us - .used_budget_us' />
+												</command>
+												<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TimeoutMicrosecondsToMclks' >
+													<return exp='.final_range_timeout_mclks' />
+													<argument exp='.final_range_timeout_us' />
+													<argument exp='SST_final_range_vcsel' />
+												</command>
+												<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.enables &amp; SEQUENCE_ENABLE_PRE_RANGE' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+															<exp exp='.final_range_timeout_mclks = .final_range_timeout_mclks + SST_pre_range_mclks' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='EncodeTimeout' >
+													<return exp='.tout' />
+													<argument exp='.final_range_timeout_mclks' />
+												</command>
+												<command class_type='call' title='FINAL_RANGE_CONFIG_TIMEOUT_MACROP_HI' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister16' >
+													<argument exp='0x71' />
+													<argument exp='.tout' />
+												</command>
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='measurement_timing_budget_us = .budget_us' />
+												</command>
+											</flowline>
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Initialise' description='' statediag='0' >
+						<return name='Return' type='b1' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Reg' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='ref_spad_map' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='6' />
+						</local>
+						<local name='ucFirstSPAD' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='ucSPADsEnabled' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='i' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Startup I2C comms' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Master_Init' />
+						<command class_type='call' title='Assign 7-bit I2C Device Address' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Transaction_Initialise' >
+							<argument exp='0x29' />
+						</command>
+						<command class_type='comment' title='' comment='Do any setup code here to configure and enable the device.' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='call' title='VHV_CONFIG_PAD_SCL_SDA__EXTSUP_HV' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+							<return exp='.Reg' />
+							<argument exp='0x89' />
+						</command>
+						<command class_type='call' title='VHV_CONFIG_PAD_SCL_SDA__EXTSUP_HV' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+							<argument exp='0x89' />
+							<argument exp='.Reg | 0x01' />
+						</command>
+						<command class_type='comment' title='' comment='I2C Mode' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='call' title='ucI2CMode' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegList' >
+							<argument exp='0' />
+							<argument exp='4' />
+						</command>
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+							<return exp='Stop_Variable' />
+							<argument exp='0x91' />
+						</command>
+						<command class_type='comment' title='' comment='I2C Mode 2' textarea='36,12,36,12' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='call' title='ucI2CMode2' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegList' >
+							<argument exp='4' />
+							<argument exp='3' />
+						</command>
+						<command class_type='call' title='REG_MSRC_CONFIG_CONTROL' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+							<return exp='.Reg' />
+							<argument exp='0x60' />
+						</command>
+						<command class_type='call' title='disable limit checks' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+							<argument exp='0x60' />
+							<argument exp='.Reg | 0x12' />
+						</command>
+						<command class_type='comment' title='' comment='Q9.7 fixed point format (9 integer bits, 7 fractional bits)' textarea='36,12,36,12' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='call' title='FINAL_RANGE_CONFIG_MIN_COUNT_RATE_RTN_LIMIT' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister16' >
+							<argument exp='0x44' />
+							<argument exp='32' />
+						</command>
+						<command class_type='call' title='SYSTEM_SEQUENCE_CONFIG' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+							<argument exp='0x01' />
+							<argument exp='0xFF' />
+						</command>
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetSpadInfo' />
+						<command class_type='call' title='GLOBAL_CONFIG_SPAD_ENABLES_REF_0' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadMulti' >
+							<argument exp='0xB0' />
+							<argument exp='.ref_spad_map' />
+							<argument exp='6' />
+						</command>
+						<command class_type='call' title='ucSPAD' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegList' >
+							<argument exp='20' />
+							<argument exp='5' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='spad_type_is_aperture' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.ucFirstSPAD = 12' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.ucFirstSPAD = 0' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='2' forvar='.i' exp='48' >
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.i &lt; .ucFirstSPAD || .ucSPADsEnabled == spad_count' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.ref_spad_map[.i &gt;&gt; 3] = .ref_spad_map[.i &gt;&gt; 3] &amp; ~ (1 &lt;&lt; (.i &amp; 7))' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.ref_spad_map[.i &gt;&gt; 3] &amp; (1 &lt;&lt; (.i &amp; 7))' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='.ucSPADsEnabled = .ucSPADsEnabled + 1' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+						<command class_type='call' title='GLOBAL_CONFIG_SPAD_ENABLES_REF_0' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteMulti' >
+							<argument exp='0xB0' />
+							<argument exp='.ref_spad_map' />
+							<argument exp='6' />
+						</command>
+						<command class_type='call' title='ucDefTuning' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegList' >
+							<argument exp='25' />
+							<argument exp='80' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='Range' swap='0' >
+							<flowline >
+								<command class_type='call' title='FINAL_RANGE_CONFIG_MIN_COUNT_RATE_RTN_LIMIT' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister16' >
+									<argument exp='0x44' />
+									<argument exp='13' />
+								</command>
+								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetVcselPulsePeriod' >
+									<argument exp='0' />
+									<argument exp='18' />
+								</command>
+								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetVcselPulsePeriod' >
+									<argument exp='1' />
+									<argument exp='14' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='call' title='SYSTEM_INTERRUPT_CONFIG_GPIO' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+							<argument exp='0x0A' />
+							<argument exp='0x04' />
+						</command>
+						<command class_type='call' title='GPIO_HV_MUX_ACTIVE_HIGH' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadRegister' >
+							<return exp='.Reg' />
+							<argument exp='0x84' />
+						</command>
+						<command class_type='call' title='GPIO_HV_MUX_ACTIVE_HIGH' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+							<argument exp='0x84' />
+							<argument exp='.Reg &amp; ~0x10' />
+						</command>
+						<command class_type='call' title='SYSTEM_INTERRUPT_CLEAR' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+							<argument exp='0x0B' />
+							<argument exp='0x01' />
+						</command>
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetMeasurementTimingBudget' >
+							<return exp='measurement_timing_budget_us' />
+						</command>
+						<command class_type='call' title='SYSTEM_SEQUENCE_CONFIG' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+							<argument exp='0x01' />
+							<argument exp='0xE8' />
+						</command>
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetMeasurementTimingBudget' >
+							<argument exp='measurement_timing_budget_us' />
+						</command>
+						<command class_type='call' title='SYSTEM_SEQUENCE_CONFIG' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+							<argument exp='0x01' />
+							<argument exp='0x01' />
+						</command>
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='PerformSingleRefCalibration' >
+							<return exp='.Reg' />
+							<argument exp='0x40' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Reg = 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = 0' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='call' title='SYSTEM_SEQUENCE_CONFIG' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+									<argument exp='0x01' />
+									<argument exp='0x02' />
+								</command>
+								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='PerformSingleRefCalibration' >
+									<return exp='.Reg' />
+									<argument exp='0x00' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Reg = 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Return = 0' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='call' title='SYSTEM_SEQUENCE_CONFIG' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteRegister' >
+											<argument exp='0x01' />
+											<argument exp='0xE8' />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Return = 1' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='TimeoutMclksToMicroseconds' description='Convert sequence step timeout from MCLKs to microseconds with given VCSEL 
+period in PCLKs based on VL53L0X_calc_timeout_us()' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='timeout_period' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='vcsel_period' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='macro_period_ns' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='CalcMacroPeriod' >
+							<return exp='.macro_period_ns' />
+							<argument exp='.vcsel_period' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = ((.timeout_period * .macro_period_ns) + (.macro_period_ns / 2)) / 1000' />
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='ed3a5141-43bb-43e0-86b0-2243fd1147ca' vmin='0' vmaj='2' codename='cal_i2c1' panelId='-1' x='0' y='0' z='0' xsz='0.1' ysz='0.1' zsz='0.1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='ENABLED' data='1' />
+					<value target='REF' data='1' />
+					<value target='CHANNEL' data='001' />
+					<value target='Mode' data='000' />
+					<value target='SDA' data='$PORTC.0' />
+					<value target='SDAPins' data='016' />
+					<value target='SCL' data='$PORTC.1' />
+					<value target='SCLPins' data='017' />
+					<value target='StopDel' data='0' />
+					<value target='BAUD_LIST' data='001' />
+					<value target='BAUD' data='100000' />
+					<value target='SRC' data='000' />
+					<value target='SMB' data='000' />
+					<value target='ClockStretching' data='1' />
+					<value target='BMODE' data='0' />
+					<value target='SDA_PORT' data='$PORTC.0' />
+					<value target='SDA_TRIS' data='$PORTC.0' />
+					<value target='SDA_PIN' data='0' />
+					<value target='SCL_PORT' data='$PORTC.1' />
+					<value target='SCL_TRIS' data='$PORTC.1' />
+					<value target='SCL_PIN' data='1' />
+					<value target='MASTER' data='1' />
+					<value target='ScopeTraces' data='1' />
+					<value target='ConsoleData' data='1' />
+					<value target='Injector' data='000' />
+					<value target='InjectorHandle' data='0' />
+					<value target='InjectorChannel' data='0' />
+					<value target='Loading' data='0' />
+					<value target='REMAPPABLE' data='1' />
+					<value target='SDABank' data='b' />
+					<value target='SDABank2' data='c' />
+					<value target='SCLBank' data='b' />
+					<value target='SCLBank2' data='c' />
+					<value target='SDARPNUM' data='21' />
+					<value target='SCLRPNUM' data='20' />
+					<value target='SDARPREG' data='SSP1DATPPS' />
+					<value target='SCLRPREG' data='SSP1CLKPPS' />
+					<value target='SDAREG' data='016' />
+					<value target='SCLREG' data='017' />
+					<value target='Sim' data='1' />
+					<value target='ParentName' data='' />
+					<value target='BitDelay' data='10' />
+					<value target='SDAAlts' data='000' />
+					<value target='SCLAlts' data='000' />
+					<value target='SDAAlt' data='0' />
+					<value target='SCLAlt' data='0' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='dfb4d07a-3d70-45d5-83ef-07e3c95d86ab' vmin='7' vmaj='1' codename='lut1' panelId='-1' x='0' y='0' z='0' xsz='0.01' ysz='0.01' zsz='0.01' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Enabled' data='1' />
+					<value target='StorageType' data='000' />
+					<value target='Sign' data='000' />
+					<value target='intfixed' data='0x88,0x00, 0x80,0x01, 0xff,0x01, 0x00,0x00,
+0x00,0x01, 0xff,0x00, 0x80,0x00,
+0x80,0x01, 0xff,0x01, 0x00,0x00, 0xff,0x06,
+0xff,0x07, 0x81,0x01, 0x80,0x01, 0x94,0x6b, 0x83,0x00,
+0xff,0x01, 0x00,0x01, 0xff,0x00, 0x80,0x00,
+0xff,0x01, 0x4f,0x00, 0x4e,0x2c, 0xff,0x00, 0xb6,0xb4,
+0xff,0x01, 0x00,0x00, 0xff,0x00, 0x09,0x00,
+0x10,0x00, 0x11,0x00, 0x24,0x01, 0x25,0xff, 0x75,0x00, 0xff,0x01, 0x4e,0x2c,
+0x48,0x00, 0x30,0x20, 0xff,0x00, 0x30,0x09, 0x54,0x00, 0x31,0x04, 0x32,0x03,
+0x40,0x83, 0x46,0x25, 0x60,0x00, 0x27,0x00, 0x50,0x06, 0x51,0x00, 0x52,0x96,
+0x56,0x08, 0x57,0x30, 0x61,0x00, 0x62,0x00, 0x64,0x00, 0x65,0x00, 0x66,0xa0,
+0xff,0x01, 0x22,0x32, 0x47,0x14, 0x49,0xff, 0x4a,0x00, 0xff,0x00, 0x7a,0x0a,
+0x7b,0x00, 0x78,0x21, 0xff,0x01, 0x23,0x34, 0x42,0x00, 0x44,0xff, 0x45,0x26,
+0x46,0x05, 0x40,0x40, 0x0e,0x06, 0x20,0x1a, 0x43,0x40, 0xff,0x00, 0x34,0x03,
+0x35,0x44, 0xff,0x01, 0x31,0x04, 0x4b,0x09, 0x4c,0x05, 0x4d,0x04, 0xff,0x00,
+0x44,0x00, 0x45,0x20, 0x47,0x08, 0x48,0x28, 0x67,0x00, 0x70,0x04, 0x71,0x01,
+0x72,0xfe, 0x76,0x00, 0x77,0x00, 0xff,0x01, 0x0d,0x01, 0xff,0x00, 0x80,0x01,
+0x01,0xf8, 0xff,0x01, 0x8e,0x01, 0x00,0x01, 0xff,0x00, 0x80,0x00' />
+					<value target='floatfixed' data='' />
+					<value target='NumVals' data='210' />
+					<value target='EmbedIntoC' data='1' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='960e433c-1295-4aeb-ac84-04d75422119e' vmin='0' vmaj='1' codename='SensorLibraryComponent1' panelId='-1' x='0' y='0' z='0' xsz='100' ysz='100' zsz='100' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Text::sText' data='TOF  VL53L0X' />
+					<value target='Name' data='RangeTOF_VL53L0X' />
+					<value target='Peripheral::sText' data='(I2C CH1)' />
+					<value target='ShowComms' data='0' />
+					<value target='InputIcon::CommsType' data='255' />
+					<value target='OutputIcon::CommsType' data='255' />
+					<value target='OutputIcon::LinkTo' data='0' />
+					<value target='ConsoleHandle' data='0' />
+					<value target='NumDP' data='0' />
+					<value target='ValueCount' data='001' />
+					<value target='Label0::sText' data='Distance (mm)' />
+					<value target='Max0' data='1200' />
+					<value target='Min0' data='0' />
+					<value target='MajTick0' data='5' />
+					<value target='MinTick0' data='20' />
+					<value target='Label1::sText' data='Val 1' />
+					<value target='Max1' data='100.000000' />
+					<value target='Min1' data='0.000000' />
+					<value target='MajTick1' data='10' />
+					<value target='MinTick1' data='2.000000' />
+					<value target='Label2::sText' data='Val 2' />
+					<value target='Max2' data='100.000000' />
+					<value target='Min2' data='0.000000' />
+					<value target='MajTick2' data='10' />
+					<value target='MinTick2' data='2.000000' />
+					<value target='Label3::sText' data='Val 3' />
+					<value target='Max3' data='100.000000' />
+					<value target='Min3' data='0.000000' />
+					<value target='MajTick3' data='10' />
+					<value target='MinTick3' data='2.000000' />
+					<value target='Label4::sText' data='Val 4' />
+					<value target='Max4' data='100.000000' />
+					<value target='Min4' data='0.000000' />
+					<value target='MajTick4' data='10' />
+					<value target='MinTick4' data='2.000000' />
+					<value target='Label5::sText' data='Val 5' />
+					<value target='Max5' data='100.000000' />
+					<value target='Min5' data='0.000000' />
+					<value target='MajTick5' data='10' />
+					<value target='MinTick5' data='2.000000' />
+					<value target='Label6::sText' data='Val 6' />
+					<value target='Max6' data='100.000000' />
+					<value target='Min6' data='0.000000' />
+					<value target='MajTick6' data='10' />
+					<value target='MinTick6' data='2.000000' />
+					<value target='Label7::sText' data='Val 7' />
+					<value target='Max7' data='100.000000' />
+					<value target='Min7' data='0.000000' />
+					<value target='MajTick7' data='10' />
+					<value target='MinTick7' data='2.000000' />
+					<value target='Label8::sText' data='Val 8' />
+					<value target='Max8' data='100.000000' />
+					<value target='Min8' data='0.000000' />
+					<value target='MajTick8' data='10' />
+					<value target='MinTick8' data='2.000000' />
+					<value target='Label9::sText' data='Val 9' />
+					<value target='Max9' data='100.000000' />
+					<value target='Min9' data='0.000000' />
+					<value target='MajTick9' data='10' />
+					<value target='MinTick9' data='2.000000' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<scadaresourcelookup />
+	<keymap />
+	<panel2d shadows='0' lighting='2' brightness='0' >
+		<background rgb='2105930' img='' style='0' />
+		<camera xe='-9.7144' ye='-2.0461' ze='682.841' xt='-9.7144' yt='-2.0461' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='622' dy='352' zoom='110.219' fix_topleft='0' />
+		<page x='1000' y='1000' show='0' rgb='0' />
+		<winpos ID='7005' RectRecentFloat='2413,342,3063,792' RectRecentDocked='0,0,423,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+	</panel2d>
+	<panel3d shadows='0' lighting='2' brightness='0' perspective='1' >
+		<background rgb='8409120' img='' style='0' />
+		<table rgb='7360576' img='' style='0' size='0' />
+		<camera xe='0' ye='0' ze='781.66' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey0 xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey1 xe='-3.67394e-14' ye='0' ze='-300' xt='0' yt='0' zt='0' xquat='0' yquat='1' zquat='0' wquat='6.12323e-17' />
+		<camerakey2 xe='0' ye='-300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.707107' yquat='0' zquat='0' wquat='0.707107' />
+		<camerakey3 xe='-3.67394e-14' ye='300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-4.32978e-17' yquat='0.707107' zquat='0.707107' wquat='4.32978e-17' />
+		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
+		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
+		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
+		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,423,546' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+	</panel3d>
+	<panels2d count='0' />
+	<layout >
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadRegister' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='WriteRegister' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='WriteRegister16' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetSpadInfo' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='WriteRegList' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadMulti' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='WriteMulti' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetVcselPulsePeriod' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetSequenceStepTimeouts' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='TimeoutMclksToMicroseconds' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CalcMacroPeriod' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DecodeTimeout' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadRegister16' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='TimeoutMicrosecondsToMclks' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='EncodeTimeout' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetMeasurementTimingBudget' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='PerformSingleRefCalibration' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetMeasurementTimingBudget' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadModel' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadRevision' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadDistance' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadDistanceSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Timer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='InitialiseSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ChangeI2CAddress' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

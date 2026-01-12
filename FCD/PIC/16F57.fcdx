@@ -1,0 +1,93 @@
+<!-- CRC: 90CF26913586BBA787FE92D553771933AFFEDAF440981181CA721463FEAF6200F8B48017CEA9C3F928FAD4357B6CF5FF9A0D46BD3B6AACB92DE4D84759EBB5079CA9DA2D2BBCDAE2A4D1C56CD1580BF5274802B5759D0E5B1FAAF35B4F81A74DDC534A8B5ACCBBC57A79067A35AF021115B4771F1C2A1B0796BDC8042EB1E38A4B107538CA2B1D67D02848E4254D6DE8B4170EC05184A7620340A5C47520A910056817D9C2299ED8086944AE325796A6D0D9AF6AA438D6E140B1C101A34E33B6BB0BBF3DA988F0D2E4565E63FDA312627DD474674123A97D -->
+<!-- REVISION: 1.0 -->
+<!-- GUID: D6918876-900C-411A-BCC6-41AEE8E6A64D -->
+<!-- DATE: 08\08\2022 -->
+<!-- DIR: FCD\PIC\16F57.fcdx -->
+<root>
+<device name='16F57' namealt="PIC16F57" product='PIC' cal='PIC' family='16F' bits='8' >
+    <clock max_speed='20000000' master_divider='4' default='19660800' />
+    <memory >
+        <flash bytes='3072' />
+        <ram bytes='72' />
+    </memory>
+    <configuration address='1' mult='2' >
+        <format >
+            <word value='0x3F72' />
+        </format>
+        <setting />
+        <settings >
+            <setting name='OSC' offset='0' mask='3' bits='2' hint='Oscillator' >
+                <option name='RC' value='3' />
+                <option name='LP' value='0' />
+                <option name='XT' value='1' />
+                <option name='HS' value='2' />
+            </setting>
+            <setting name='WDT' offset='2' mask='1' bits='1' hint='Watchdog Timer' >
+                <option name='On' value='1' />
+                <option name='Off' value='0' />
+            </setting>
+            <setting name='CP' offset='3' mask='1' bits='1' hint='Code Protect' >
+                <option name='Off' value='1' />
+                <option name='On' value='0' />
+            </setting>
+        </settings>
+    </configuration>
+    <pins sides='2' smd='0' >
+    	<pin name='T0CKI' />
+    	<pin name='VDD' />
+    	<pin name='NC' />
+    	<pin name='VSS' />
+    	<pin name='NC' />
+        <pin name='RA0' port='0' bit='0' />
+        <pin name='RA1' port='0' bit='1' />
+        <pin name='RA2' port='0' bit='2' />
+        <pin name='RA3' port='0' bit='3' />
+        <pin name='RB0' port='1' bit='0' />
+        <pin name='RB1' port='1' bit='1' />
+        <pin name='RB2' port='1' bit='2' />
+        <pin name='RB3' port='1' bit='3' />
+        <pin name='RB4' port='1' bit='4' />
+        <pin name='RB5' port='1' bit='5' />
+        <pin name='RB6/PGC' port='1' bit='6' />
+        <pin name='RB7/PGD' port='1' bit='7' />
+        <pin name='RC0' port='2' bit='0' />
+        <pin name='RC1' port='2' bit='1' />
+        <pin name='RC2' port='2' bit='2' />
+        <pin name='RC3' port='2' bit='3' />
+        <pin name='RC4' port='2' bit='4' />
+        <pin name='RC5' port='2' bit='5' />
+        <pin name='RC6' port='2' bit='6' />
+        <pin name='RC7' port='2' bit='7' />
+        <pin name='OSC2/CLKO' />
+        <pin name='OSC1/CLKI' />
+        <pin name='MCLR/VPP' />
+    </pins>
+    <interrupts >
+    </interrupts>
+</device>
+<inline >
+    <defines code='#define MX_16F5x_TRIS\n#define MX_16F5x_TRISA\n#define MX_16F5x_TRISB\n#define MX_16F5x_TRISC\n' />
+    <directives code="#include &lt;xc.h&gt;\n#include &lt;math.h&gt;\n\n" />
+    <main >
+        <start code='\nvoid main()\n{\n\t#ifdef INTOSCHELPER\n\t\tINTOSCHELPERCODE\n\t#endif\n\n' />
+        <end code='\tmainendloop: goto mainendloop;\n}\n\n' />
+        <init code='' />
+    </main>
+    <interrupt >
+        <enable code='' />
+        <start code='' />
+        <end code='' />
+        <init code='' />
+    </interrupt>
+    <config >
+	<start code='//Chip Configuration Settings\n' />
+        <body code='__PROG_CONFIG($(address), 0x$(value:x));\n' /> 
+    </config>
+</inline>
+<test >
+    <icd >
+        <clock port='1' pin='6' />
+        <data port='1' pin='7' />
+    </icd>
+</test>
+</root>

@@ -1,0 +1,144 @@
+<root>
+<document schema='101' license=',,' title='' description='' guid='c71c09a5-0e47-42ed-8435-33ba0145826a' target='PIC.16f.16f88' >
+<config data='!0,3f62!10,3ffe' clkspd='19660800' simspd='0' usewdt='0' constif='0' />
+<plugins >
+<dll_dbg_icd enabled='0' >
+<data name='speed' value='1000' />
+<data name='firmware' value='0000000000000000' />
+<data name='breaks' value='8' />
+<data name='stacks' value='8' />
+<data name='clkport' value='1' />
+<data name='clkbit' value='6' />
+<data name='dataport' value='1' />
+<data name='databit' value='7' />
+<data name='userpins' value='0' />
+</dll_dbg_icd>
+</plugins>
+<supplement use='0' head='' body='' />
+<debug />
+<components >
+<settings autoimg='0' center='1' unitscale='1' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0'  />
+<definition guid='02f7fa54-e9c8-4ad4-b4af-aa6a413b2c8a' vmin='0' vmaj='1' visiblename='Single LED' description='A single pin LED
+' category='Outputs' dynamic='0' standalone='0' iconpath='..\icons\components\LED.png' />
+<component class_type='root' codename='led' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' macronames='$(defmacro)' varnames='$(defvar)' >
+<resources />
+<properties >
+<property name='Bulb colour' target='color' typeid='1' hidden='0' locked='0' info='' />
+<property name='Connection' target='pin' typeid='5' hidden='0' locked='0' info='' />
+</properties>
+<values >
+<value target='color' data='255' />
+<value target='pin' data='$PORTA0.0' />
+</values>
+<events >
+<event class='Connection' event='PinChange' target='Ev_PinChange' />
+<event class='Components' event='Property' target='Ev_PinChange' />
+</events>
+<apis >
+<api name='LEDOff' alt='LEDOff' type='1' proto='1' />
+<api name='LEDOn' alt='LEDOn' type='1' proto='1' />
+</apis>
+<variables >
+<variable public='0' >
+<def class_type='variable' name='test' type='u32' array='0' byref='0' description='' isconst='0' isinit='0' ismacro='0' usrinit='0' setinit='' coffaddr='-1' />
+</variable>
+<variable public='0' >
+<def class_type='variable' name='false' type='b1' array='0' byref='0' description='' isconst='1' isinit='1' ismacro='0' usrinit='0' setinit='0' coffaddr='-1' />
+</variable>
+<variable public='0' >
+<def class_type='variable' name='true' type='b1' array='0' byref='0' description='' isconst='1' isinit='1' ismacro='0' usrinit='1' setinit='1' coffaddr='-1' />
+</variable>
+</variables>
+<macros >
+<macro >
+<flowline name='LEDOff' description='Turns the LED off' icdid='0' >
+<command class_type='calculation' title='Set state' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' icdid='1' break='0' mark='0' disable='0' hide='0' customize='0' >
+<exp exp='pin = 0' />
+</command>
+</flowline>
+</macro>
+<macro >
+<flowline name='LEDOn' description='Turns the LED on' icdid='1' >
+<command class_type='calculation' title='Set state' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' icdid='4' break='0' mark='0' disable='0' hide='0' customize='0' >
+<exp exp='pin = 1' />
+</command>
+</flowline>
+</macro>
+<macro >
+<flowline name='Ev_PinChange' description='Sent during simulation if a connected port pin changes' icdid='2' >
+<return name='Return' type='u32' array='0' byref='0' description='' isconst='0' isinit='0' ismacro='0' usrinit='0' setinit='' coffaddr='-1' />
+<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' icdid='7' break='0' mark='0' disable='0' hide='0' customize='0' exp='pin' swap='0' >
+<flowline name='Ev_PinChange' description='' >
+<command class_type='panel' title='Lighten the bulb' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' icdid='9' break='0' mark='0' disable='0' hide='0' customize='0' macro='Component.Property.SetValue' >
+<argument exp='bulb' />
+<argument exp='&quot;color&quot;' />
+<argument exp='color' />
+</command>
+</flowline>
+<flowline name='Ev_PinChange' description='' >
+<command class_type='panel' title='Darken the bulb' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' icdid='8' break='0' mark='0' disable='0' hide='0' customize='0' macro='Component.Property.SetValue' >
+<argument exp='bulb' />
+<argument exp='&quot;color&quot;' />
+<argument exp='(color &amp; 0xFCFCFC) &gt;&gt; 2' />
+</command>
+</flowline>
+</command>
+</flowline>
+</macro>
+<macro >
+<flowline name='Main' description='' icdid='3' />
+</macro>
+</macros>
+<component class_type='shape' codename='bulb' x='0' y='-2.66454e-015' z='2' xsz='32' ysz='32' zsz='6' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' macronames='$(defmacro)' varnames='$(defvar)' >
+<resources />
+<properties />
+<values >
+<value target='Shape' data='6' />
+<value target='Color' data='63' />
+<value target='Outline' data='0' />
+<value target='Thickness' data='0' />
+<value target='Image' data='' />
+<value target='Model' data='' />
+<value target='Unit' data='' />
+</values>
+<events />
+<apis />
+<variables />
+<macros />
+</component>
+<component class_type='shape' codename='shape' x='0' y='8.88178e-016' z='-3' xsz='32' ysz='32' zsz='4' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' macronames='$(defmacro)' varnames='$(defvar)' >
+<resources />
+<properties />
+<values >
+<value target='Shape' data='0' />
+<value target='Color' data='9868950' />
+<value target='Outline' data='0' />
+<value target='Thickness' data='0' />
+<value target='Image' data='' />
+<value target='Model' data='' />
+<value target='Unit' data='' />
+</values>
+<events />
+<apis />
+<variables />
+<macros />
+</component>
+</component>
+</components>
+<keymap />
+<panel2d shadows='0' perspective='0' >
+<background rgb='9737364' img='' style='0' />
+<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+</panel2d>
+<panel3d shadows='0' perspective='1' >
+<background rgb='8409120' img='' style='4' />
+<table rgb='7360576' img='' style='0' size='30' />
+<camera xe='14.0225' ye='-45.8239' ze='22.0607' xt='0' yt='0' zt='0' xquat='-0.533431' yquat='-0.0797911' zquat='-0.124572' wquat='0.832807' />
+</panel3d>
+<layout >
+<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAyQIAAIkDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+<view type='0' name='LEDOn' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAyQIAAIkDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+<view type='0' name='LEDOff' mode='0' placement='LAAAAAAAAAABAAAA---------------------zAAAAAFAAAAtZAAAA3AAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+</layout>
+</document>
+</root>

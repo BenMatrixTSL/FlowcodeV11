@@ -1,0 +1,228 @@
+<root>
+<document schema='101' license='1,Dev User,HJVC24' title='' description='' target='PIC16.24F.24FV16KA304' >
+	<config data='!0,ffff!10,ffff!20,ffff!30,ffbf!40,ffff!50,ffff!60,ffff!70,ffff%0,1%1,7%10,1%11,1%20,7%25,1%26,1%27,1%30,3%32,1%33,3%35,1%36,2%40,f%44,1%45,5%46,1%50,3%52,1%53,1%54,1%55,3%57,1%60,3%67,1%70,f%74,1%76,1%77,1' clkspd='12000000' simspd='1' usewdt='0' constif='0' />
+	<plugins >
+		<dll_dbg_icd enabled='0' >
+			<data name='debug' value='1' />
+			<data name='userpins' value='0' />
+			<data name='speed' value='0' />
+			<data name='usev9' value='0' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='ghostype' value='0' />
+			<data name='monitor' value='1' />
+			<data name='ictloop' value='0' />
+			<data name='ictrate' value='20000' />
+			<data name='ictmask' value='0' />
+			<data name='anlpres' value='19' />
+			<data name='digmask1' value='-1' />
+			<data name='digmask2' value='-1' />
+		</dll_dbg_icd>
+		<dll_models enabled='1' />
+		<dll_upgrader enabled='1' />
+		<dll_webhelp enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug />
+	<components >
+		<settings autoimg='1' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='7c18fa09-1cc2-416e-94d4-a7bf95e2d5fb' vstate='40' vmin='0' vmaj='1' srcleaf='' visiblename='' description='' category='' catenable='1' author='' manuname='' manucode='' sysinfo='0' keywords='' dynamic='1' iconpath='' />
+		<component class_type='root' codename='panel' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+			<resources />
+			<properties >
+				<property name='Prime Number' target='Prime' typeid='21' hidden='0' locked='0' info='32-bit secret prime number to use to encrypt the data.
+Must be a prime number i.e. only divisible by itself and 1.
+Use a prime number generator to generate a new prime number if you don&apos;t want to use the default.' />
+				<property name='Generator' target='generator' typeid='21' hidden='0' locked='0' info='' />
+			</properties>
+			<values >
+				<value target='Prime' data='2147483647' />
+				<value target='generator' data='16807' />
+			</values>
+			<events />
+			<apis />
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='false' type='b1' description='' isconst='1' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='k' type='u32' description='Secret Shared Key' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='true' type='b1' description='' isconst='1' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='MulMod' description='code to compute the remainder of two numbers multiplied together' >
+						<return name='Return' type='u32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<param name='a' type='u32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<param name='b' type='u32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<param name='m' type='u32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='RunningCount' type='u32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='i' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+							<exp exp='.Return = 0' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+							<exp exp='.RunningCount = .b % .m' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='3568629' cmdcolor_sec='3568629' type='2' forvar='.i' exp='32' >
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='.i &gt; 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+											<exp exp='.RunningCount = (.RunningCount &lt;&lt; 1) % .m' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='(.a &gt;&gt; .i) &amp; 0x01' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+											<exp exp='.Return = ((.Return % .m) + (.RunningCount % .m)) % .m' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='KeyGen' description='Generates our 8-bit private secret.' >
+						<return name='Return' type='u32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+							<exp exp='.Return = random ()' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='3568629' cmdcolor_sec='3568629' type='0' exp='(.Return &lt; 1) || (.Return &gt; Prime)' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+									<exp exp='.Return = random ()' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='PowMod' description='The pow_mod function to compute (b^e) % m that was given in the class files' >
+						<return name='Return' type='u32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<param name='b' type='u32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<param name='e' type='u32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<param name='m' type='u32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='pw' type='u32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='e_i' type='u32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+							<exp exp='.e_i = .e' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='(.b == 0) || (.m == 0)' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+									<exp exp='.Return = 0' />
+								</command>
+								<command class_type='goto' title='Goto Connection Point' cmdcolor='3389439' cmdcolor_sec='3389439' labelid='0' labelname='' />
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='.e == 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+									<exp exp='.Return = 1' />
+								</command>
+								<command class_type='goto' title='Goto Connection Point' cmdcolor='3389439' cmdcolor_sec='3389439' labelid='0' labelname='' />
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+							<exp exp='.b = .b % .m' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+							<exp exp='.pw = .b' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+							<exp exp='.Return = 1' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='3568629' cmdcolor_sec='3568629' type='0' exp='.e_i' >
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='3568629' cmdcolor_sec='3568629' exp='.e_i &amp; 1' swap='0' >
+									<flowline >
+										<command class_type='call' title='Call Macro' cmdcolor='1975743' cmdcolor_sec='1975743' macro='MulMod' >
+											<return exp='.Return' />
+											<argument exp='.Return' />
+											<argument exp='.pw' />
+											<argument exp='.m' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='call' title='Call Macro' cmdcolor='1975743' cmdcolor_sec='1975743' macro='MulMod' >
+									<return exp='.pw' />
+									<argument exp='.pw' />
+									<argument exp='.pw' />
+									<argument exp='.m' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='7895044' cmdcolor_sec='7895044' >
+									<exp exp='.e_i = .e_i &gt;&gt; 1' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='label' title='Connection Point' cmdcolor='3389439' cmdcolor_sec='3389439' labelid='0' labelname='A' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='' >
+						<return name='Return' type='v0' description='' isconst='0' isinit='0' usrinit='' setinit='' />
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='e77a4e40-e0df-431a-98f8-7ae4d8ebfbeb' vmin='3' vmaj='1' codename='cal_adc1' x='0' y='0' z='0' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='1' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='CHANNEL' data='2' />
+					<value target='REF' data='0' />
+					<value target='VREFOP' data='000' />
+					<value target='VREFVOL' data='500' />
+					<value target='ACTIME' data='2' />
+					<value target='CONVSP' data='064' />
+					<value target='CHANNEL_REF' data='2' />
+					<value target='TYPE' data='9' />
+					<value target='BITS' data='12' />
+					<value target='ScopeTraces' data='0' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<keymap />
+	<panel2d shadows='0' lighting='2' brightness='0' perspective='0' >
+		<background rgb='2105930' img='' style='0' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel2d>
+	<panel3d shadows='1' lighting='2' brightness='0' perspective='0' >
+		<background rgb='7895160' img='' style='0' />
+		<table rgb='8388608' img='' style='0' size='7' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey0 xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey1 xe='-3.67394e-14' ye='0' ze='-300' xt='0' yt='0' zt='0' xquat='0' yquat='1' zquat='0' wquat='6.12323e-17' />
+		<camerakey2 xe='0' ye='-300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.707107' yquat='0' zquat='0' wquat='0.707107' />
+		<camerakey3 xe='-3.67394e-14' ye='300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-4.32978e-17' yquat='0.707107' zquat='0.707107' wquat='4.32978e-17' />
+		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
+		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
+		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
+	</panel3d>
+	<layout >
+		<view type='0' name='PowMod' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOgUAAKcDAAA' zoom='75' scrollx='0' scrolly='605' flags='0' />
+		<view type='0' name='KeyGen' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOgUAAKcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='MulMod' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOgUAAKcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOgUAAKcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

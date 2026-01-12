@@ -1,0 +1,1477 @@
+<root>
+<document scada='0' schema='102' license='1,CompMaker,PWKUUN' title='' description='' fcversion='655360' target='PIC.16F.16F877A' >
+	<config data='!0,3f72%0,2%2,0%3,0%6,1%7,0%9,3%b,1%8,1%d,1' clkspd='19660800' simspd='1' usewdt='0' constif='0' Use3V3='0' />
+	<plugins />
+	<supplement use='0' head='' body='' />
+	<debug >
+		<watch expr='.Delay' />
+		<watch expr='.X' />
+		<watch expr='.Y' />
+		<watch expr='.Distance' />
+		<watch expr='MoveToXYZ.Accumulator' />
+	</debug>
+	<traces />
+	<ghost >
+		<FK2 >
+			<data name='FK2D0' port='4294967295' pin='4294967295' />
+			<data name='FK2D1' port='4294967295' pin='4294967295' />
+			<data name='FK2D2' port='4294967295' pin='4294967295' />
+			<data name='FK2D3' port='4294967295' pin='4294967295' />
+			<data name='FK2D4' port='4294967295' pin='4294967295' />
+			<data name='FK2D5' port='4294967295' pin='4294967295' />
+			<data name='FK2D6' port='4294967295' pin='4294967295' />
+			<data name='FK2D7' port='4294967295' pin='4294967295' />
+			<data name='FK2D8' port='4294967295' pin='4294967295' />
+			<data name='FK2D9' port='4294967295' pin='4294967295' />
+			<data name='FK2D10' port='4294967295' pin='4294967295' />
+			<data name='FK2D11' port='4294967295' pin='4294967295' />
+			<data name='FK2D12' port='4294967295' pin='4294967295' />
+			<data name='FK2D13' port='4294967295' pin='4294967295' />
+			<data name='FK2D14' port='4294967295' pin='4294967295' />
+			<data name='FK2D15' port='4294967295' pin='4294967295' />
+			<data name='FK2A0' port='4294967295' pin='4294967295' />
+			<data name='FK2A1' port='4294967295' pin='4294967295' />
+			<data name='FK2A2' port='4294967295' pin='4294967295' />
+			<data name='FK2A3' port='4294967295' pin='4294967295' />
+			<data name='FK2A4' port='4294967295' pin='4294967295' />
+			<data name='FK2A5' port='4294967295' pin='4294967295' />
+		</FK2>
+		<ICD >
+			<data name='AnalogPrescaleValue' value='19' />
+			<data name='DigitalSampleRate' value='100000' />
+			<data name='BreakpointCount' value='8' />
+			<data name='CallStackDepthCount' value='8' />
+			<data name='ClockPort' value='1' />
+			<data name='ClockPin' value='6' />
+			<data name='DataPort' value='1' />
+			<data name='DataPin' value='7' />
+			<data name='UseDefaultPins' value='1' />
+			<data name='WrapEnabled' value='1' />
+			<data name='CommsDelayOverridden' value='0' />
+			<data name='CommsDelay' value='9' />
+			<data name='CalculatedCommsDelay' value='9' />
+			<data name='AnalogEB2PrescaleValue' value='2' />
+			<data name='DigitalEB2SampleRate' value='100000' />
+		</ICD>
+		<pins >
+			<digital A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+			<analog A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+		</pins>
+	</ghost>
+	<components >
+		<settings autoimg='1' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='62b6ca37-eb0a-4b5f-b2e1-9a732c4e05ce' vstate='40' vmin='4' vmaj='1' srcleaf='3D_Printer.fcfx' visiblename='3D Printer' description='A simulation only version of a very basic 3D printer such as a standard RepRap.' category='Scenarios' category2='' category3='' bIs2dOnly='0' bIs3dOnly='1' catenable='1' author='Matrix Ltd' manuname='' manucode='' sysinfo='1061159' keywords='' dynamic='1' scadaCompatible='0' embeddedCompatible='1' iconpath='' />
+		<component class_type='root' codename='RepRap_Printer' panelId='-1' x='0' y='0' z='10' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+			<resources />
+			<properties >
+				<property name='Bed Colour' target='Col_Bed' typeid='1' hidden='0' locked='0' info='Specifies the colour of the print bed.' />
+				<property name='Print Colour' target='Col_Print' typeid='1' hidden='0' locked='0' info='Specifies the colour of the print output.' />
+				<property name='Print Speed (0-100)' target='print_speed' typeid='14' hidden='0' locked='0' info='Specifies the speed of the printer movements.
+100 = as fast as possible.' />
+				<property name='Print Type' target='PrintType' typeid='16' hidden='0' locked='0' info='Specifies how the print is drawn.
+Object based - uses panel primitives to build up the 3D object, useful for simulated interaction e.g. the formula flowcode and the maze solving example.
+Point cloud based - uses the point cloud interface to allow complex objects to be built without slowing down the panel interface.' filter='000Object Based
+001Point Cloud Based' />
+				<property name='Resolution' target='Resolution' typeid='21' hidden='1' locked='0' info='Specifies the maximum point cloud pixel resolution compared to the panel dimensions.' />
+				<property name='Redraw Count' target='RedrawCount' typeid='21' hidden='1' locked='0' info='Specifies how often to redraw the point cloud in pixels.' />
+				<property name='Print Size' target='print_size' typeid='15' hidden='0' locked='0' info='Specifies the size of a single print object.' />
+				<property name='Print Shape' target='Shape' typeid='12' hidden='0' locked='0' info='Specifies the shape of the print object.' filter='000Cuboid
+004Cylinder
+001Sphere' />
+				<property name='Max Print Dimensions' hidden='0' >
+					<property name='X Width' target='X_Width' typeid='14' hidden='0' locked='0' info='Printer dimensions X axis' />
+					<property name='Y Length' target='Y_Length' typeid='14' hidden='0' locked='0' info='Printer dimensions Y axis' />
+					<property name='Z Height' target='Z_Height' typeid='14' hidden='0' locked='0' info='Printer dimensions Z axis' />
+				</property>
+			</properties>
+			<values >
+				<value target='Col_Bed' data='16777215' />
+				<value target='Col_Print' data='12582912' />
+				<value target='print_speed' data='100' />
+				<value target='PrintType' data='000' />
+				<value target='Resolution' data='5' />
+				<value target='RedrawCount' data='10' />
+				<value target='print_size' data='1.000000' />
+				<value target='Shape' data='000' />
+				<value target='X_Width' data='50' />
+				<value target='Y_Length' data='50' />
+				<value target='Z_Height' data='20' />
+			</values>
+			<events >
+				<event class='Components' event='Property' target='prv_prop_change' />
+				<event class='Simulation' event='Start' target='Ev_Start' />
+				<event class='Components' event='Initialise' target='prv_prop_change' />
+				<event class='System' event='Timer' target='Ev_Timer' />
+			</events>
+			<apis >
+				<api name='ClearPrevPrint' alt='ClearPrevPrint' type='2' proto='1' />
+				<api name='ControlPrintHead' alt='ControlPrintHead' type='2' proto='1' />
+				<api name='MoveByXYZ' alt='MoveByXYZ' type='2' proto='1' />
+				<api name='SetMovementSpeed' alt='' type='2' proto='1' />
+				<api name='MoveToHome' alt='MoveToHome' type='2' proto='1' />
+				<api name='MoveToXYZ' alt='MoveToXYZ' type='2' proto='1' />
+				<api name='MoveByXYZReal' alt='MoveByXYZReal' type='2' proto='1' />
+				<api name='SetMovementSpeedReal' alt='' type='2' proto='1' />
+				<api name='MoveToXYZReal' alt='MoveToXYZReal' type='2' proto='1' />
+				<api name='Initialise' alt='Initialise' type='2' proto='1' />
+			</apis>
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='PointCloudHandle' type='h32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='Enabled' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='PrintArray' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' >
+						<array size='1000' />
+					</def>
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='false' type='b1' description='' isconst='1' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='Height' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='PrintIndex' type='u32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='Wait' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='MDelay' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='95' setinit='95' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='Loc_start' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='Loc_End' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='true' type='b1' description='' isconst='1' isHidden='0' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='Ev_Timer' description='Called back on the panel command System.TimerStart' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='TimerID' type='u32' description='The identifier passed to the System.TimerStart panel command' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='Wait = 0' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='ClearPrevPrint' description='Clears all of the content from any previous print cycles.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<local name='Child_Handle' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Child_Name' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<local name='X' type='s32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='Y' type='s32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='Z' type='s32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='PCVar' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' >
+							<array size='100' />
+						</local>
+						<local name='Idx' type='u32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='PrintType = 1' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.PCloud.Create' >
+									<return exp='PointCloudHandle' />
+									<argument exp='PrintArea' />
+									<argument exp='::Panel .PCloud .Mode_Point' />
+									<argument exp='Col_Print' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='PrintIndex = 0' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.GetChildHead' >
+									<return exp='.Child_Handle' />
+									<argument exp='Printer_Group' />
+								</command>
+								<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='.Child_Handle' >
+									<flowline >
+										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.GetName' >
+											<return exp='.Child_Name' />
+											<argument exp='.Child_Handle' />
+										</command>
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='Compare$ (.Child_Name,&quot;Print_Bed&quot;,0) = 0' swap='0' >
+											<flowline />
+											<flowline >
+												<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='Compare$ (.Child_Name,&quot;Print_Head&quot;,0) = 0' swap='0' >
+													<flowline />
+													<flowline >
+														<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Delete' >
+															<argument exp='.Child_Handle' />
+														</command>
+														<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.GetChildHead' >
+															<return exp='.Child_Handle' />
+															<argument exp='Printer_Group' />
+														</command>
+													</flowline>
+												</command>
+											</flowline>
+										</command>
+										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.StepNext' >
+											<argument exp='.Child_Handle' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='ControlPrintHead' description='Controls the print extruder which plots the location of the print head as the head moves.
+If Enable = 0 then the extruder is disabled
+If Enable != 0 then the extruder is enabled' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Enable' type='u8' description='Controls if the extruder is active or not' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='Enabled = .Enable' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='MoveByXYZ' description='Moves the print head by the amount specified in the axis variables using linear interpolation.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='X' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Y' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Z' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Loc_End' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Distance' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='Delay' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Loc_Start' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Accumulator' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='xyz' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' >
+							<array size='3' />
+						</local>
+						<command class_type='sim' title='Ensure all other animation is stopped' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.StopAnimate' />
+						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Get' >
+							<return exp='Loc_Start' />
+							<argument exp='&quot;Print_Head&quot;' />
+						</command>
+						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Get' >
+							<return exp='Loc_End' />
+							<argument exp='&quot;Print_Head&quot;' />
+						</command>
+						<command class_type='sim' title='Move to new location' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.MoveBy' >
+							<argument exp='Loc_End' />
+							<argument exp='.X' />
+							<argument exp='.Y' />
+							<argument exp='.Z' />
+						</command>
+						<command class_type='sim' title='Calculate distance from original' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Math.GetDistance' >
+							<return exp='.Distance' />
+							<argument exp='Loc_Start' />
+							<argument exp='Loc_End' />
+							<argument exp='this' />
+						</command>
+						<command class_type='calculation' title='Convert to INT' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Delay = float2int (.Distance)' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Delay = 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Ensure the delay is not 0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Delay = 1' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='PrintType = 1' swap='0' >
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='Enabled' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Delay = .Delay * Resolution' />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Distance = 1.0 / .Delay' />
+											<exp exp='.Accumulator = .Distance' />
+										</command>
+										<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='.Delay' >
+											<flowline >
+												<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='MDELAY &gt; 0' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+															<exp exp='Wait = 1' />
+														</command>
+														<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.TimerStart' >
+															<argument exp='0x40' />
+															<argument exp='MDELAY / 5' />
+														</command>
+														<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='Wait' >
+															<flowline />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='sim' title='Step Animation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Morph' >
+													<argument exp='Print_Head' />
+													<argument exp='Loc_Start' />
+													<argument exp='Loc_End' />
+													<argument exp='.Distance' />
+													<argument exp='1' />
+												</command>
+												<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.GetCoords' >
+													<return exp='.xyz' />
+													<argument exp='Print_Head' />
+													<argument exp='PrintArea' />
+												</command>
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='PrintArray[PrintIndex * 3] = .xyz[0] / FLOAT (X_Width / 2)' />
+													<exp exp='PrintArray[(PrintIndex * 3) + 1] = .xyz[1] / FLOAT (Y_Length / 2)' />
+													<exp exp='PrintArray[(PrintIndex * 3) + 2] = (.xyz[2] - FLOAT (Z_Height / 2)) / FLOAT (Z_Height / 2)' />
+												</command>
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='PrintIndex = PrintIndex + 1' />
+												</command>
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='.Distance = .Distance + .Accumulator' />
+													<exp exp='.Delay = .Delay - 1' />
+												</command>
+												<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='PrintIndex MOD RedrawCount = 0' swap='0' >
+													<flowline >
+														<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.PCloud.SetPoints' >
+															<argument exp='PointCloudHandle' />
+															<argument exp='PrintArray' />
+															<argument exp='PrintIndex' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+											</flowline>
+										</command>
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.PCloud.SetPoints' >
+											<argument exp='PointCloudHandle' />
+											<argument exp='PrintArray' />
+											<argument exp='PrintIndex' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Animate' >
+											<argument exp='Print_Head' />
+											<argument exp='Loc_Start' />
+											<argument exp='Loc_End' />
+											<argument exp='.Delay * MDELAY' />
+										</command>
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='MDELAY &gt; 0' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='Wait = 1' />
+												</command>
+												<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.TimerStart' >
+													<argument exp='0x40' />
+													<argument exp='MDELAY' />
+												</command>
+												<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='Wait' >
+													<flowline />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='Enabled' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Distance = 1.0 / .Delay' />
+											<exp exp='.Accumulator = .Distance' />
+										</command>
+										<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='.Delay' >
+											<flowline >
+												<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='MDELAY &gt; 0' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+															<exp exp='Wait = 1' />
+														</command>
+														<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.TimerStart' >
+															<argument exp='0x40' />
+															<argument exp='MDELAY' />
+														</command>
+														<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='Wait' >
+															<flowline />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='sim' title='Step Animation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Morph' >
+													<argument exp='Print_Head' />
+													<argument exp='Loc_Start' />
+													<argument exp='Loc_End' />
+													<argument exp='.Distance' />
+													<argument exp='1' />
+												</command>
+												<command class_type='sim' title='Print Position' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Clone' >
+													<argument exp='Print_Head' />
+													<argument exp='Printer_Group' />
+													<argument exp='Print_Head' />
+												</command>
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='.Distance = .Distance + .Accumulator' />
+													<exp exp='.Delay = .Delay - 1' />
+												</command>
+											</flowline>
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Animate' >
+											<argument exp='Print_Head' />
+											<argument exp='Loc_Start' />
+											<argument exp='Loc_End' />
+											<argument exp='.Delay * MDELAY' />
+										</command>
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='MDELAY &gt; 0' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='Wait = 1' />
+												</command>
+												<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.TimerStart' >
+													<argument exp='0x40' />
+													<argument exp='.Delay * MDELAY' />
+												</command>
+												<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='Wait' >
+													<flowline />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SetMovementSpeed' description='Allows the movement speed to be set progmatically.
+Range 0 - 100' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Speed' type='u8' description='Speed control (0 - 100)' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Speed &gt; 100' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Speed = 100' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='calculation' title='Set Print Speed' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='MDelay = 100 - .Speed' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='MoveToHome' description='Returns the print head to the start position (0,0,0)' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='call' title='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='MoveToXYZReal' >
+							<argument exp='0' />
+							<argument exp='0' />
+							<argument exp='0' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='MoveToXYZ' description='Moves the print head to the specific location specified in the axis variables using linear interpolation.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='X' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Y' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Z' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Distance' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='Delay' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='XVar' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='YVar' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Accumulator' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='xyz' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' >
+							<array size='3' />
+						</local>
+						<local name='thisscale' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' >
+							<array size='3' />
+						</local>
+						<local name='divisor' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.X &gt; X_Width' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.X = X_Width' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Y &gt; Y_Length' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Y = Y_Length' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='calculation' title='Calculate Offset' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.XVar = .X - (X_Width / 2)' />
+							<exp exp='.YVar = .Y - (Y_Length / 2)' />
+							<exp exp='.Z = .Z + (print_size / 2)' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Z &gt; Z_Height' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Z = Z_Height' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='sim' title='Ensure all other animation is stopped' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.StopAnimate' />
+						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Get' >
+							<return exp='Loc_Start' />
+							<argument exp='&quot;Print_Head&quot;' />
+						</command>
+						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Get' >
+							<return exp='Loc_End' />
+							<argument exp='&quot;Print_Head&quot;' />
+						</command>
+						<command class_type='sim' title='Move to new location' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.MoveTo' >
+							<argument exp='Loc_End' />
+							<argument exp='.XVar' />
+							<argument exp='.YVar' />
+							<argument exp='.Z' />
+						</command>
+						<command class_type='sim' title='Calculate distance from original' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Math.GetDistance' >
+							<return exp='.Distance' />
+							<argument exp='Loc_Start' />
+							<argument exp='Loc_End' />
+							<argument exp='this' />
+						</command>
+						<command class_type='calculation' title='Convert to INT' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Delay = float2int (.Distance)' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Delay = 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Ensure the delay is not 0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Delay = 1' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='PrintType = 1' swap='0' >
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='Enabled' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Delay = .Delay * Resolution' />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Distance = 1.0 / .Delay' />
+											<exp exp='.Accumulator = .Distance' />
+										</command>
+										<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='.Delay' >
+											<flowline >
+												<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='MDELAY &gt; 0' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+															<exp exp='Wait = 1' />
+														</command>
+														<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.TimerStart' >
+															<argument exp='0x40' />
+															<argument exp='MDELAY / 5' />
+														</command>
+														<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='Wait' >
+															<flowline />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='sim' title='Step Animation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Morph' >
+													<argument exp='Print_Head' />
+													<argument exp='Loc_Start' />
+													<argument exp='Loc_End' />
+													<argument exp='.Distance' />
+													<argument exp='1' />
+												</command>
+												<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.GetCoords' >
+													<return exp='.xyz' />
+													<argument exp='Print_Head' />
+													<argument exp='PrintArea' />
+												</command>
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='PrintArray[PrintIndex * 3] = .xyz[0] / FLOAT (X_Width / 2)' />
+													<exp exp='PrintArray[(PrintIndex * 3) + 1] = .xyz[1] / FLOAT (Y_Length / 2)' />
+													<exp exp='PrintArray[(PrintIndex * 3) + 2] = (.xyz[2] - FLOAT (Z_Height / 2)) / FLOAT (Z_Height / 2)' />
+												</command>
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='PrintIndex = PrintIndex + 1' />
+												</command>
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='.Distance = .Distance + .Accumulator' />
+													<exp exp='.Delay = .Delay - 1' />
+												</command>
+												<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='PrintIndex MOD RedrawCount = 0' swap='0' >
+													<flowline >
+														<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.PCloud.SetPoints' >
+															<argument exp='PointCloudHandle' />
+															<argument exp='PrintArray' />
+															<argument exp='PrintIndex' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+											</flowline>
+										</command>
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.PCloud.SetPoints' >
+											<argument exp='PointCloudHandle' />
+											<argument exp='PrintArray' />
+											<argument exp='PrintIndex' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Animate' >
+											<argument exp='Print_Head' />
+											<argument exp='Loc_Start' />
+											<argument exp='Loc_End' />
+											<argument exp='.Delay * MDELAY' />
+										</command>
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='MDELAY &gt; 0' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='Wait = 1' />
+												</command>
+												<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.TimerStart' >
+													<argument exp='0x40' />
+													<argument exp='.Delay * MDELAY' />
+												</command>
+												<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='Wait' >
+													<flowline />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='Enabled' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Distance = 1.0 / .Delay' />
+											<exp exp='.Accumulator = .Distance' />
+										</command>
+										<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='.Delay' >
+											<flowline >
+												<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='MDELAY &gt; 0' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+															<exp exp='Wait = 1' />
+														</command>
+														<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.TimerStart' >
+															<argument exp='0x40' />
+															<argument exp='MDELAY' />
+														</command>
+														<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='Wait' >
+															<flowline />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='sim' title='Step Animation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Morph' >
+													<argument exp='Print_Head' />
+													<argument exp='Loc_Start' />
+													<argument exp='Loc_End' />
+													<argument exp='.Distance' />
+													<argument exp='1' />
+												</command>
+												<command class_type='sim' title='Print Position' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Clone' >
+													<argument exp='Print_Head' />
+													<argument exp='Printer_Group' />
+													<argument exp='Print_Head' />
+												</command>
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='.Distance = .Distance + .Accumulator' />
+													<exp exp='.Delay = .Delay - 1' />
+												</command>
+											</flowline>
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Animate' >
+											<argument exp='Print_Head' />
+											<argument exp='Loc_Start' />
+											<argument exp='Loc_End' />
+											<argument exp='.Delay * MDELAY' />
+										</command>
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='MDELAY &gt; 0' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='Wait = 1' />
+												</command>
+												<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.TimerStart' >
+													<argument exp='0x40' />
+													<argument exp='.Delay * MDELAY' />
+												</command>
+												<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='Wait' >
+													<flowline />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='MoveByXYZReal' description='Moves the print head by the amount specified in the axis variables using linear interpolation.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='X' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<param name='Y' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<param name='Z' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='Loc_End' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Distance' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='Delay' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Loc_Start' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Accumulator' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='xyz' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' >
+							<array size='3' />
+						</local>
+						<command class_type='sim' title='Ensure all other animation is stopped' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.StopAnimate' />
+						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Get' >
+							<return exp='Loc_Start' />
+							<argument exp='&quot;Print_Head&quot;' />
+						</command>
+						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Get' >
+							<return exp='Loc_End' />
+							<argument exp='&quot;Print_Head&quot;' />
+						</command>
+						<command class_type='sim' title='Move to new location' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.MoveBy' >
+							<argument exp='Loc_End' />
+							<argument exp='.X' />
+							<argument exp='.Y' />
+							<argument exp='.Z' />
+						</command>
+						<command class_type='sim' title='Calculate distance from original' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Math.GetDistance' >
+							<return exp='.Distance' />
+							<argument exp='Loc_Start' />
+							<argument exp='Loc_End' />
+							<argument exp='this' />
+						</command>
+						<command class_type='calculation' title='Convert to INT' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Delay = float2int (.Distance)' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Delay = 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Ensure the delay is not 0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Delay = 1' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='PrintType = 1' swap='0' >
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='Enabled' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Delay = .Delay * Resolution' />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Distance = 1.0 / .Delay' />
+											<exp exp='.Accumulator = .Distance' />
+										</command>
+										<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='.Delay' >
+											<flowline >
+												<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='MDELAY &gt; 0' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+															<exp exp='Wait = 1' />
+														</command>
+														<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.TimerStart' >
+															<argument exp='0x40' />
+															<argument exp='MDELAY / 5' />
+														</command>
+														<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='Wait' >
+															<flowline />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='sim' title='Step Animation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Morph' >
+													<argument exp='Print_Head' />
+													<argument exp='Loc_Start' />
+													<argument exp='Loc_End' />
+													<argument exp='.Distance' />
+													<argument exp='1' />
+												</command>
+												<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.GetCoords' >
+													<return exp='.xyz' />
+													<argument exp='Print_Head' />
+													<argument exp='PrintArea' />
+												</command>
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='PrintArray[PrintIndex * 3] = .xyz[0] / FLOAT (X_Width / 2)' />
+													<exp exp='PrintArray[(PrintIndex * 3) + 1] = .xyz[1] / FLOAT (Y_Length / 2)' />
+													<exp exp='PrintArray[(PrintIndex * 3) + 2] = (.xyz[2] - FLOAT (Z_Height / 2)) / FLOAT (Z_Height / 2)' />
+												</command>
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='PrintIndex = PrintIndex + 1' />
+												</command>
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='.Distance = .Distance + .Accumulator' />
+													<exp exp='.Delay = .Delay - 1' />
+												</command>
+												<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='PrintIndex MOD RedrawCount = 0' swap='0' >
+													<flowline >
+														<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.PCloud.SetPoints' >
+															<argument exp='PointCloudHandle' />
+															<argument exp='PrintArray' />
+															<argument exp='PrintIndex' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+											</flowline>
+										</command>
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.PCloud.SetPoints' >
+											<argument exp='PointCloudHandle' />
+											<argument exp='PrintArray' />
+											<argument exp='PrintIndex' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Animate' >
+											<argument exp='Print_Head' />
+											<argument exp='Loc_Start' />
+											<argument exp='Loc_End' />
+											<argument exp='.Delay * MDELAY' />
+										</command>
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='MDELAY &gt; 0' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='Wait = 1' />
+												</command>
+												<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.TimerStart' >
+													<argument exp='0x40' />
+													<argument exp='.Delay * MDELAY' />
+												</command>
+												<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='Wait' >
+													<flowline />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='Enabled' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Distance = 1.0 / .Delay' />
+											<exp exp='.Accumulator = .Distance' />
+										</command>
+										<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='.Delay' >
+											<flowline >
+												<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='MDELAY &gt; 0' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+															<exp exp='Wait = 1' />
+														</command>
+														<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.TimerStart' >
+															<argument exp='0x40' />
+															<argument exp='.Delay' />
+														</command>
+														<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='Wait' >
+															<flowline />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='sim' title='Step Animation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Morph' >
+													<argument exp='Print_Head' />
+													<argument exp='Loc_Start' />
+													<argument exp='Loc_End' />
+													<argument exp='.Distance' />
+													<argument exp='1' />
+												</command>
+												<command class_type='sim' title='Print Position' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Clone' >
+													<argument exp='Print_Head' />
+													<argument exp='Printer_Group' />
+													<argument exp='Print_Head' />
+												</command>
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='.Distance = .Distance + .Accumulator' />
+													<exp exp='.Delay = .Delay - 1' />
+												</command>
+											</flowline>
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Animate' >
+											<argument exp='Print_Head' />
+											<argument exp='Loc_Start' />
+											<argument exp='Loc_End' />
+											<argument exp='.Delay * MDELAY' />
+										</command>
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='MDELAY &gt; 0' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='Wait = 1' />
+												</command>
+												<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.TimerStart' >
+													<argument exp='0x40' />
+													<argument exp='.Delay * MDELAY' />
+												</command>
+												<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='Wait' >
+													<flowline />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SetMovementSpeedReal' description='Allows the movement speed to be set progmatically.
+Range 0.0 - 100.0' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Speed' type='f32' description='Speed control (0 - 100)' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='SpeedInt' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.SpeedInt = float2int (.Speed)' />
+						</command>
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetMovementSpeed' >
+							<argument exp='.SpeedInt' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='prv_prop_change' description='Sent when a property has been changed by the User' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.ScaleTo' >
+							<argument exp='PrintArea' />
+							<argument exp='X_Width' />
+							<argument exp='Y_Length' />
+							<argument exp='Z_Height' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.MoveTo' >
+							<argument exp='PrintArea' />
+							<argument exp='0.0' />
+							<argument exp='0.0' />
+							<argument exp='Z_Height / 2' />
+						</command>
+						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='Print_Bed' />
+							<argument exp='&quot;color&quot;' />
+							<argument exp='Col_Bed' />
+						</command>
+						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='Print_Head' />
+							<argument exp='&quot;color&quot;' />
+							<argument exp='Col_Print' />
+						</command>
+						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.ScaleTo' >
+							<argument exp='Print_Bed' />
+							<argument exp='X_Width + 2' />
+							<argument exp='Y_Length + 2' />
+							<argument exp='1' />
+						</command>
+						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.ScaleTo' >
+							<argument exp='Print_Head' />
+							<argument exp='print_size' />
+							<argument exp='print_size' />
+							<argument exp='print_size' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.CopyValue' >
+							<argument exp='this' />
+							<argument exp='Print_Head' />
+							<argument exp='&quot;Shape&quot;' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='print_speed &gt; 100' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<argument exp='this' />
+									<argument exp='&quot;print_speed&quot;' />
+									<argument exp='100' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='PrintType = 1' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;print_size&quot;' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;Shape&quot;' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;RedrawCount&quot;' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;Resolution&quot;' />
+									<argument exp='1' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;print_size&quot;' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;Shape&quot;' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;RedrawCount&quot;' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;Resolution&quot;' />
+									<argument exp='0' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='PointCloudHandle = 0' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='MoveToXYZReal' description='Moves the print head to the specific location specified in the axis variables using linear interpolation.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='X' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<param name='Y' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<param name='Z' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='Distance' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='Delay' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Accumulator' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='XVar2' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='YVar2' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='xyz' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' >
+							<array size='3' />
+						</local>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.X &gt; X_Width' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.X = X_Width' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Y &gt; Y_Length' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Y = Y_Length' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='calculation' title='Calculate Offset' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.XVar2 = .X - (X_Width / 2)' />
+							<exp exp='.YVar2 = .Y - (Y_Length / 2)' />
+							<exp exp='.Z = .Z + ((print_size / 2) + 0.001)' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Z &gt; Z_Height' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Z = Z_Height' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='sim' title='Ensure all other animation is stopped' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.StopAnimate' />
+						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Get' >
+							<return exp='Loc_Start' />
+							<argument exp='&quot;Print_Head&quot;' />
+						</command>
+						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Get' >
+							<return exp='Loc_End' />
+							<argument exp='&quot;Print_Head&quot;' />
+						</command>
+						<command class_type='sim' title='Move to new location' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.MoveTo' >
+							<argument exp='Loc_End' />
+							<argument exp='.XVar2' />
+							<argument exp='.YVar2' />
+							<argument exp='.Z' />
+						</command>
+						<command class_type='sim' title='Calculate distance from original' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Math.GetDistance' >
+							<return exp='.Distance' />
+							<argument exp='Loc_Start' />
+							<argument exp='Loc_End' />
+							<argument exp='this' />
+						</command>
+						<command class_type='calculation' title='Convert to INT' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Delay = float2int (.Distance)' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Delay = 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Ensure the delay is not 0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Delay = 1' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='PrintType = 1' swap='0' >
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='Enabled' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Delay = .Delay * Resolution' />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Distance = 1.0 / .Delay' />
+											<exp exp='.Accumulator = .Distance' />
+										</command>
+										<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='.Delay' >
+											<flowline >
+												<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='MDELAY &gt; 0' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+															<exp exp='Wait = 1' />
+														</command>
+														<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.TimerStart' >
+															<argument exp='0x40' />
+															<argument exp='MDELAY / 5' />
+														</command>
+														<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='Wait' >
+															<flowline />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='sim' title='Step Animation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Morph' >
+													<argument exp='Print_Head' />
+													<argument exp='Loc_Start' />
+													<argument exp='Loc_End' />
+													<argument exp='.Distance' />
+													<argument exp='1' />
+												</command>
+												<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.GetCoords' >
+													<return exp='.xyz' />
+													<argument exp='Print_Head' />
+													<argument exp='PrintArea' />
+												</command>
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='PrintArray[PrintIndex * 3] = .xyz[0] / FLOAT (X_Width / 2)' />
+													<exp exp='PrintArray[(PrintIndex * 3) + 1] = .xyz[1] / FLOAT (Y_Length / 2)' />
+													<exp exp='PrintArray[(PrintIndex * 3) + 2] = (.xyz[2] - FLOAT (Z_Height / 2)) / FLOAT (Z_Height / 2)' />
+												</command>
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='PrintIndex = PrintIndex + 1' />
+												</command>
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='.Distance = .Distance + .Accumulator' />
+													<exp exp='.Delay = .Delay - 1' />
+												</command>
+												<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='PrintIndex MOD RedrawCount = 0' swap='0' >
+													<flowline >
+														<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.PCloud.SetPoints' >
+															<argument exp='PointCloudHandle' />
+															<argument exp='PrintArray' />
+															<argument exp='PrintIndex' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+											</flowline>
+										</command>
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.PCloud.SetPoints' >
+											<argument exp='PointCloudHandle' />
+											<argument exp='PrintArray' />
+											<argument exp='PrintIndex' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Animate' >
+											<argument exp='Print_Head' />
+											<argument exp='Loc_Start' />
+											<argument exp='Loc_End' />
+											<argument exp='.Delay * MDELAY' />
+										</command>
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='MDELAY &gt; 0' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='Wait = 1' />
+												</command>
+												<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.TimerStart' >
+													<argument exp='0x40' />
+													<argument exp='.Delay * MDELAY' />
+												</command>
+												<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='Wait' >
+													<flowline />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='Enabled' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Distance = 1.0 / .Delay' />
+											<exp exp='.Accumulator = .Distance' />
+										</command>
+										<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='.Delay' >
+											<flowline >
+												<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='MDELAY &gt; 0' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+															<exp exp='Wait = 1' />
+														</command>
+														<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.TimerStart' >
+															<argument exp='0x40' />
+															<argument exp='MDELAY' />
+														</command>
+														<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='Wait' >
+															<flowline />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='sim' title='Step Animation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Morph' >
+													<argument exp='Print_Head' />
+													<argument exp='Loc_Start' />
+													<argument exp='Loc_End' />
+													<argument exp='.Distance' />
+													<argument exp='1' />
+												</command>
+												<command class_type='sim' title='Print Position' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Clone' >
+													<argument exp='Print_Head' />
+													<argument exp='Printer_Group' />
+													<argument exp='Print_Head' />
+												</command>
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='.Distance = .Distance + .Accumulator' />
+													<exp exp='.Delay = .Delay - 1' />
+												</command>
+											</flowline>
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Animate' >
+											<argument exp='Print_Head' />
+											<argument exp='Loc_Start' />
+											<argument exp='Loc_End' />
+											<argument exp='.Delay * MDELAY' />
+										</command>
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='MDELAY &gt; 0' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='Wait = 1' />
+												</command>
+												<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.TimerStart' >
+													<argument exp='0x40' />
+													<argument exp='.Delay * MDELAY' />
+												</command>
+												<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='Wait' >
+													<flowline />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Start' description='Broadcast to all components that simulation is starting' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Printer Off' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='Enabled = 0' />
+						</command>
+						<command class_type='calculation' title='Set Print Speed' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='MDelay = 100 - print_speed' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='MoveToHome' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ClearPrevPrint' />
+						<command class_type='delay' title='Delay' disable='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='1' type='2' />
+						<command class_type='call' title='1' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='MoveByXYZ' >
+							<argument exp='10' />
+							<argument exp='10' />
+							<argument exp='0' />
+						</command>
+						<command class_type='delay' title='Delay' disable='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='1' type='2' />
+						<command class_type='call' title='Call Macro' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ControlPrintHead' >
+							<argument exp='1' />
+						</command>
+						<command class_type='loop' title='Loop' disable='1' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='Height &lt; 4' >
+							<flowline >
+								<command class_type='call' title='1' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='MoveByXYZ' >
+									<argument exp='0' />
+									<argument exp='10' />
+									<argument exp='0' />
+								</command>
+								<command class_type='call' title='1' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='MoveByXYZ' >
+									<argument exp='10' />
+									<argument exp='0' />
+									<argument exp='0' />
+								</command>
+								<command class_type='call' title='1' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='MoveByXYZ' >
+									<argument exp='0' />
+									<argument exp='-10' />
+									<argument exp='0' />
+								</command>
+								<command class_type='call' title='1' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='MoveByXYZ' >
+									<argument exp='-10' />
+									<argument exp='0' />
+									<argument exp='0' />
+								</command>
+								<command class_type='decision' title='Decision' disable='1' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='Height &lt; 3' swap='0' >
+									<flowline >
+										<command class_type='call' title='1' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='MoveByXYZ' >
+											<argument exp='0' />
+											<argument exp='0' />
+											<argument exp='1' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='calculation' title='Calculation' disable='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='Height = Height + 1' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='call' title='Call Macro' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ControlPrintHead' >
+							<argument exp='0' />
+						</command>
+						<command class_type='call' title='Call Macro' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='MoveToHome' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Initialise' description='Sets up the 3D printer component by homing, clearing old print data and assigning the movement speed.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='MoveToHome' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ClearPrevPrint' />
+						<command class_type='calculation' title='Printer Off' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='Enabled = 0' />
+						</command>
+						<command class_type='calculation' title='Set Print Speed' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='MDelay = 100 - print_speed' />
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='group' codename='Printer_Group' panelId='-1' x='0' y='0' z='0.5005' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values />
+				<events />
+				<apis />
+				<variables />
+				<macros />
+				<component class_type='shape' codename='Print_Bed' panelId='-1' x='0' y='0' z='-0.5005' xsz='52' ysz='52' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Shape' data='101' />
+						<value target='Color' data='16777215' />
+						<value target='Outline' data='0' />
+						<value target='Thickness' data='0' />
+						<value target='Image' data='' />
+						<value target='Model' data='' />
+						<value target='Unit' data='' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='shape' codename='Print_Head' panelId='-1' x='-25' y='-25' z='0.501' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Shape' data='000' />
+						<value target='Color' data='12582912' />
+						<value target='Outline' data='0' />
+						<value target='Thickness' data='0' />
+						<value target='Image' data='' />
+						<value target='Model' data='' />
+						<value target='Unit' data='' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+			</component>
+			<component class_type='shape' codename='PrintArea' panelId='-1' x='0.00408281' y='-0.083235' z='14.2515' xsz='50' ysz='50' zsz='20' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Shape' data='0' />
+					<value target='Color' data='192' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+					<value target='Model' data='' />
+					<value target='Unit' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<scadaresourcelookup />
+	<keymap />
+	<panel2d shadows='0' lighting='0' brightness='0' >
+		<background rgb='9737364' img='' style='0' />
+		<camera xe='0' ye='0' ze='391.678' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='1414' dy='503' zoom='436.823' fix_topleft='0' />
+		<page x='1000' y='1000' show='0' rgb='7360576' />
+	</panel2d>
+	<panel3d shadows='2' lighting='0' brightness='0' perspective='1' >
+		<background rgb='8409120' img='' style='0' />
+		<table rgb='7360576' img='' style='0' size='4' />
+		<camera xe='41.6783' ye='-53.7839' ze='66.336' xt='-3.55698' yt='1.77114' zt='5.52264' xquat='-0.395754' yquat='-0.140742' zquat='-0.304081' wquat='0.855047' />
+		<camerakey0 xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey1 xe='-3.67394e-14' ye='0' ze='-300' xt='0' yt='0' zt='0' xquat='0' yquat='1' zquat='0' wquat='6.12323e-17' />
+		<camerakey2 xe='0' ye='-300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.707107' yquat='0' zquat='0' wquat='0.707107' />
+		<camerakey3 xe='-3.67394e-14' ye='300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-4.32978e-17' yquat='0.707107' zquat='0.707107' wquat='4.32978e-17' />
+		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
+		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
+		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
+	</panel3d>
+	<panels2d count='0' />
+	<layout >
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlQUAAEwCAAA' zoom='55' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='MoveByXYZ' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlQUAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='MoveToHome' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlQUAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='MoveToXYZ' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlQUAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='MoveByXYZReal' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlQUAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='MoveToXYZReal' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlQUAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Start' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlQUAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlQUAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetMovementSpeedReal' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlQUAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetMovementSpeed' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlQUAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ControlPrintHead' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlQUAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ClearPrevPrint' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlQUAAEwCAAA' zoom='60' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='prv_prop_change' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlQUAAEwCAAA' zoom='50' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Timer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlQUAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

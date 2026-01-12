@@ -1,0 +1,797 @@
+<root>
+<document scada='0' schema='103' license='10,BenR,C9TN1M' title='' description='' fcversion='655360' target='PIC.16F.16F1937' >
+	<config data='!0,9e2!10,1433%0,2%3,0%5,1%6,1%7,1%8,1%9,0%b,1%c,0%d,0%10,3%14,3%18,0%19,0%1a,1%1c,1%1d,0' clkspd='19660800' simspd='1' usewdt='0' constif='0' Use3V3='0' />
+	<plugins >
+		<dll_models enabled='1' />
+	</plugins>
+	<supplement use='1' head='//#define ULTRASONIC_DEBUG
+#if defined (MX_CAL_PIC)
+MX_GLOBAL MX_UINT8 MX_EBM019_HIGH_COUNT = 0;
+#elif defined (MX_CAL_PIC16)
+#elif defined (MX_CAL_AVR)
+MX_GLOBAL MX_UINT8 MX_EBM019_HIGH_COUNT = 0;
+#elif defined (MX_CAL_ARM)
+#else
+#endif
+MX_GLOBAL MX_UINT8 MX_EBM019_PEAK = 128;
+MX_GLOBAL MX_UINT8 MX_EBM019_PULSE = MX_EBM019_PULSE_VALUE;
+MX_GLOBAL MX_UINT8 MX_EBM019_THRESHOLD = MX_EBM019_THRESHOLD_VALUE;
+MX_GLOBAL MX_UINT16 MX_EBM019_DELAY = MX_EBM019_DELAY_VALUE;
+' body='' />
+	<debug >
+		<watch expr='distance' />
+	</debug>
+	<traces />
+	<ghost >
+		<FK2 >
+			<data name='FK2D0' port='4294967295' pin='4294967295' />
+			<data name='FK2D1' port='4294967295' pin='4294967295' />
+			<data name='FK2D2' port='4294967295' pin='4294967295' />
+			<data name='FK2D3' port='4294967295' pin='4294967295' />
+			<data name='FK2D4' port='4294967295' pin='4294967295' />
+			<data name='FK2D5' port='4294967295' pin='4294967295' />
+			<data name='FK2D6' port='4294967295' pin='4294967295' />
+			<data name='FK2D7' port='4294967295' pin='4294967295' />
+			<data name='FK2D8' port='4294967295' pin='4294967295' />
+			<data name='FK2D9' port='4294967295' pin='4294967295' />
+			<data name='FK2D10' port='4294967295' pin='4294967295' />
+			<data name='FK2D11' port='4294967295' pin='4294967295' />
+			<data name='FK2D12' port='4294967295' pin='4294967295' />
+			<data name='FK2D13' port='4294967295' pin='4294967295' />
+			<data name='FK2D14' port='4294967295' pin='4294967295' />
+			<data name='FK2D15' port='4294967295' pin='4294967295' />
+			<data name='FK2A0' port='4294967295' pin='4294967295' />
+			<data name='FK2A1' port='4294967295' pin='4294967295' />
+			<data name='FK2A2' port='4294967295' pin='4294967295' />
+			<data name='FK2A3' port='4294967295' pin='4294967295' />
+			<data name='FK2A4' port='4294967295' pin='4294967295' />
+			<data name='FK2A5' port='4294967295' pin='4294967295' />
+		</FK2>
+		<ICD >
+			<data name='AnalogPrescaleValue' value='19' />
+			<data name='DigitalSampleRate' value='100000' />
+			<data name='BreakpointCount' value='8' />
+			<data name='CallStackDepthCount' value='8' />
+			<data name='ClockPort' value='1' />
+			<data name='ClockPin' value='6' />
+			<data name='DataPort' value='1' />
+			<data name='DataPin' value='7' />
+			<data name='UseDefaultPins' value='1' />
+			<data name='WrapEnabled' value='1' />
+			<data name='CommsDelayOverridden' value='0' />
+			<data name='CommsDelay' value='9' />
+			<data name='CalculatedCommsDelay' value='9' />
+			<data name='AnalogEB2PrescaleValue' value='2' />
+			<data name='DigitalEB2SampleRate' value='100000' />
+		</ICD>
+		<pins >
+			<digital A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+			<analog A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+		</pins>
+	</ghost>
+	<components >
+		<settings autoimg='0' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='1' />
+		<definition guid='feb064a2-e087-45e1-a7f9-c9fa0edfdace' vstate='40' vmin='0' vmaj='1' srcleaf='EBM019_Ultrasonic.fcfx' visiblename='Ultrasonic' description='This  board  has  both  an  ultrasonic  transmitter  and receiver. The transmitter is driven by an on-board 40KHz 
+oscillator which is enabled by the host microprocessor. 
+The receiving sensor signal is amplified and provided as an analogue signal to be processed by a single channel 
+ADC of the microprocessor. By measuring the time delay between  enabling  a  transmit  pulse  and  receiving  an 
+echo the distance of objects in a range of around 3cm to 3m can be determined.' category='EBM Modules' category2='' category3='' bIs2dOnly='0' bIs3dOnly='1' catenable='1' author='Matrix TSL' manuname='Matrix TSL' manucode='EBM019' sysinfo='1054699' keywords='ultrasonic|distance|sensor' dynamic='1' scadaCompatible='0' embeddedCompatible='1' showmacros='1' iconpath='..\..\icons\components\Ultrasonic_icon_2.png' />
+		<component class_type='root' codename='EBM019_Ultrasonic' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='1' comp2dType='0' >
+			<resources >
+				<file name='Dashboard BG.PNG' source='..\..\models\Dashboard BG Small.png' />
+			</resources>
+			<properties >
+				<property name='Output Pulse Pin' target='OPP' typeid='5' hidden='0' locked='0' info='Pin used for controlling the output pulse' />
+				<property name='Echo ADC channel' target='ECHO' typeid='6' hidden='0' locked='0' info='ADC channel used to monitor the echo' />
+				<property name='Pulse Width (uS)' target='PULSE' typeid='21' hidden='0' locked='0' info='Output ultrasonic pulse width in microseconds' expansion='MX_EBM019_PULSE_VALUE' initialiser='($(value))' />
+				<property name='Read Delay (uS)' target='DELAY' typeid='21' hidden='0' locked='0' info='Time delay in microseconds before sampling for echo' expansion='MX_EBM019_DELAY_VALUE' initialiser='($(value))' />
+				<property name='Pulse Detection Value' target='THRESHOLD' typeid='21' hidden='0' locked='0' info='Detection ADC delta trigger value
+A lower value is more sensitive' expansion='MX_EBM019_THRESHOLD_VALUE' initialiser='($(value))' />
+			</properties>
+			<values >
+				<value target='OPP' data='$PORTB.4' />
+				<value target='ECHO' data='13' />
+				<value target='PULSE' data='10' />
+				<value target='DELAY' data='1000' />
+				<value target='THRESHOLD' data='3' />
+			</values>
+			<events >
+				<event class='Components' event='Initialise' target='Ev_Initialise' />
+				<event class='Compile' event='AddInterrupts' target='Ev_AddInterrupts' />
+				<event class='Components' event='Property' target='Ev_Property' />
+			</events>
+			<apis >
+				<api name='GetDistance' alt='GetDistanceSim' type='1' proto='1' />
+				<api name='SetDelayTime' alt='SetDelayTime' type='1' proto='1' />
+				<api name='SetDetectionValue' alt='SetDetectionValue' type='1' proto='1' />
+				<api name='SetPulseWidth' alt='SetPulseWidth' type='1' proto='1' />
+				<api name='Initialise' alt='Initialise' type='1' proto='1' />
+			</apis>
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='test' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='false' type='b1' description='' isconst='1' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='distance' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='positionhandle' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='sense' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='true' type='b1' description='' isconst='1' isHidden='0' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='GetDistance' description='Sends a pulse and processes the echo.
+Returns a object distance in cm' statediag='0' >
+						<return name='Return' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='sample' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = 0' />
+						</command>
+						<command class_type='call' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_adc1' macro='Enable' >
+							<argument exp='ECHO' />
+							<argument exp='3' />
+							<argument exp='0' />
+							<argument exp='10' />
+						</command>
+						<command class_type='native' title='C Code' ccode='#if defined (MX_CAL_PIC)
+
+	MX_EBM019_HIGH_COUNT = 0;
+	// start the timer interrupt
+	// Timer0 Clock Source Select internal Focs/4
+	// Pre-scaler NOT assigned to Timer0 module
+
+#if defined (_OPTION_REG_TMR0CS_POSN)
+	OPTION_REG &amp;= 0x30;
+	OPTION_REG |= 0x08;
+#elif defined (_T0CON_T0CS_POSN)
+	T0CON = 0xC8;
+#endif
+
+	TMR0 = 0;
+	// clear the timer0 interrupt flag
+	INTCON &amp;= 0xfb;
+	// enable timer0 interrupt
+	// Peripheral Interrupt Enable
+	// enable general interrupts
+	INTCON |= 0xe0;
+
+#if defined (ULTRASONIC_DEBUG)
+	TRISB &amp;= 0xfb;
+	LATB |= 0x04;	// PORT B.2 HIGH
+#endif
+
+#elif defined (MX_CAL_PIC16)
+
+	// setup the timer, no interrupt
+	// prescaler 1:1
+	T1CON = 0xa000;
+	PR1 = 0x0100;
+	TMR1 = 0;
+
+#elif defined (MX_CAL_AVR)
+
+	MX_EBM019_HIGH_COUNT = 0;
+	// setup the timer interrupt
+	// prescaler 1:8
+	TCCR0B &amp;= 0xf8;
+	TCCR0B |= 0x02;
+	TCNT0 = 0;
+	sei();
+	TIMSK0 |= (1 &lt;&lt; TOIE0);
+
+#elif defined (MX_CAL_ARM)
+	#warning &quot;ARM not yet supported&quot;
+
+#else
+	#warning &quot;No platform defined&quot;
+#endif' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='OPP = 1' />
+						</command>
+						<command class_type='native' title='C Code' ccode='FCI_DELAYBYTE_US(MX_EBM019_PULSE);' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='OPP = 0' />
+						</command>
+						<command class_type='native' title='C Code' ccode='#if defined (MX_CAL_PIC)
+
+MX_UINT32 MX_TEMP;
+
+#if defined (ULTRASONIC_DEBUG)
+	TRISB &amp;= 0xfb;
+	LATB &amp;= 0xfb;	// PORT B.2 LOW
+#endif
+
+while (MX_EBM019_HIGH_COUNT != 0xff)
+{
+	FCL_SAMPLE = FC_CAL_ADC_Sample_1(0);
+	
+	if (MX_EBM019_HIGH_COUNT &gt; MX_EBM019_DELAY)
+	{
+		// in the active area
+#if defined (ULTRASONIC_DEBUG)
+		LATB |= 0x04;	// PORT B.2 HIGH
+#endif
+		if (FCL_SAMPLE &gt; MX_EBM019_PEAK)
+		{
+			if ((FCL_SAMPLE - MX_EBM019_PEAK) &gt; MX_EBM019_THRESHOLD)
+			{
+				MX_TEMP = (MX_EBM019_HIGH_COUNT &lt;&lt; 8) + TMR0;
+				MX_TEMP = (MX_TEMP * 4000);
+				MX_TEMP = MX_TEMP /((MX_CLK_SPEED * 58)/1000);
+				FCR_RETVAL = MX_TEMP;
+				break;
+			}
+			MX_EBM019_PEAK  = FCL_SAMPLE;
+		}
+	
+	}
+	else
+	{
+		// in the initial dead area
+		if (FCL_SAMPLE &gt; MX_EBM019_PEAK)
+		{
+			MX_EBM019_PEAK  = FCL_SAMPLE;
+		}
+	}
+	
+	if (MX_EBM019_PEAK)
+	{
+		--MX_EBM019_PEAK;
+	}
+
+}
+
+#if defined (ULTRASONIC_DEBUG)
+	LATB &amp;= 0xfb;	// PORT B.2 LOW
+#endif
+
+#elif defined (MX_CAL_PIC16)
+
+MX_UINT32 MX_TEMP;
+
+while ((TMR1 &amp; 0xff00) != 0xff00)
+{
+	FCL_SAMPLE = FC_CAL_ADC_Sample_1(0);
+	
+	if ((TMR1 &gt;&gt; 8) &gt; MX_EBM019_DELAY)
+	{
+		// in the active area
+		if (FCL_SAMPLE &gt; MX_EBM019_PEAK)
+		{
+			if ((FCL_SAMPLE - MX_EBM019_PEAK) &gt; MX_EBM019_THRESHOLD)
+			{
+				MX_TEMP = TMR1;
+				MX_TEMP = (MX_TEMP * 4000);
+				MX_TEMP = MX_TEMP /((MX_CLK_SPEED * 58)/1000);
+				FCR_RETVAL = MX_TEMP;
+				break;
+			}
+			MX_EBM019_PEAK  = FCL_SAMPLE;
+		}
+	
+	}
+	else
+	{
+		// in the initial dead area
+		if (FCL_SAMPLE &gt; MX_EBM019_PEAK)
+		{
+			MX_EBM019_PEAK  = FCL_SAMPLE;
+		}
+	}
+	
+	if (MX_EBM019_PEAK)
+	{
+		--MX_EBM019_PEAK;
+	}
+
+}
+
+#elif defined (MX_CAL_AVR)
+
+MX_UINT32 MX_TEMP;
+
+while (MX_EBM019_HIGH_COUNT != 0xff)
+{
+	FCL_SAMPLE = FC_CAL_ADC_Sample_1(0);
+	
+	if (MX_EBM019_HIGH_COUNT &gt; MX_EBM019_DELAY)
+	{
+		// in the active area
+		if (FCL_SAMPLE &gt; MX_EBM019_PEAK)
+		{
+			if ((FCL_SAMPLE - MX_EBM019_PEAK) &gt; MX_EBM019_THRESHOLD)
+			{
+				MX_TEMP = (MX_EBM019_HIGH_COUNT &lt;&lt; 8) + TCNT0;
+				MX_TEMP = (MX_TEMP * 8000);
+				MX_TEMP = MX_TEMP /((MX_CLK_SPEED * 58)/1000);
+				FCR_RETVAL = MX_TEMP;
+				break;
+			}
+			MX_EBM019_PEAK  = FCL_SAMPLE;
+		}
+	
+	}
+	else
+	{
+		// in the initial dead area
+		if (FCL_SAMPLE &gt; MX_EBM019_PEAK)
+		{
+			MX_EBM019_PEAK  = FCL_SAMPLE;
+		}
+	}
+	
+	if (MX_EBM019_PEAK)
+	{
+		--MX_EBM019_PEAK;
+	}
+
+}
+
+#elif defined (MX_CAL_ARM)
+
+#else
+
+#endif' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DisableTimer' />
+						<command class_type='call' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_adc1' macro='Disable' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_AddInterrupts' description='Sent to a component to allow dynamic amendment of the interrupts for a component' statediag='0' >
+						<return name='Return' type='u32' description='Non-zero to block code insertion' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='HandlerCode' type='T8*' description='Text to amend for all component interrupts' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</param>
+						<local name='ISR_str' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Expand.MacroBody' >
+							<return exp='.ISR_str' />
+							<argument exp='&quot;ISR&quot;' />
+							<argument exp='this' />
+							<argument exp='0' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.ISR_str = .ISR_str + &quot;\n\n&quot;' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.HandlerCode = .HandlerCode + &quot;\n// EBM019 Interrupts Handler\n&quot;' />
+							<exp exp='.HandlerCode = .HandlerCode + .ISR_str' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Initialise' description='Initialisation routine for the component once the component is linked to its parent' statediag='0' >
+						<return name='Return' type='u32' description='Non-zero to prevent initialisation' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_Property' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='GetDistanceSim' description='' statediag='0' >
+						<return name='Return' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Count' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='Data' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='tree_handle' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' disable='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = 200' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.tree_handle = this' />
+						</command>
+						<command class_type='sim' title='Call Macro' textarea='36,12,36,12' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.StepParent' >
+							<argument exp='.tree_handle' />
+						</command>
+						<command class_type='comment' title='' comment='Sense distance from background image' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Get' >
+							<return exp='positionhandle' />
+							<argument exp='BackgroundImage' />
+						</command>
+						<command class_type='sim' title='Scale sensor area' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.ScaleTo' >
+							<argument exp='positionhandle' />
+							<argument exp='6.0' />
+							<argument exp='6.0' />
+							<argument exp='1.0' />
+						</command>
+						<command class_type='sim' title='Move a distance of 10mm to &apos;clear&apos; the transceiver' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.MoveBy' >
+							<argument exp='positionhandle' />
+							<argument exp='0.0' />
+							<argument exp='0.0' />
+							<argument exp='10' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = 255' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='.Count &lt; 255' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Collision.GetMultiAxis' >
+									<return exp='.Data' />
+									<argument exp='positionhandle' />
+									<argument exp='0.0' />
+									<argument exp='0.0' />
+									<argument exp='0.0' />
+									<argument exp='.tree_handle' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Data &gt; 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Return = .Count' />
+										</command>
+										<command class_type='goto' title='Goto Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' labelid='0' labelname='' />
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='sim' title='Move sense shape in 1cm increments in z-axis' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.MoveBy' >
+									<argument exp='positionhandle' />
+									<argument exp='0.0' />
+									<argument exp='0.0' />
+									<argument exp='10' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Count = .Count + 1' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='label' title='Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' labelid='0' labelname='A' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SetDelayTime' description='Set the delay time before sampling for the echo, in microseconds' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='delay' type='u16' description='delay time in microseconds' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='native' title='C Code' ccode='#if defined (MX_CAL_PIC)
+
+	MX_UINT32 MX_TEMP;
+	MX_TEMP = (MX_CLK_SPEED / 1024) * FCL_DELAY;
+	MX_TEMP = MX_TEMP / 1000000;
+	MX_EBM019_DELAY = MX_TEMP;
+
+#elif defined (MX_CAL_PIC16)
+
+	MX_UINT32 MX_TEMP;
+	MX_TEMP = (MX_CLK_SPEED / 1024) * FCL_DELAY;
+	MX_TEMP = MX_TEMP / 1000000;
+	MX_EBM019_DELAY = MX_TEMP;
+
+#elif defined (MX_CAL_AVR)
+
+	MX_UINT32 MX_TEMP;
+	MX_TEMP = (MX_CLK_SPEED / 2048) * FCL_DELAY;
+	MX_TEMP = MX_TEMP / 1000000;
+	MX_EBM019_DELAY = MX_TEMP;
+
+#elif defined (MX_CAL_ARM)
+
+#else
+
+#endif' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Property' description='Sent when a property has been changed by the User' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_adc1' macro='SetValue' >
+							<argument exp='&quot;CHANNEL&quot;' />
+							<argument exp='ECHO' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SetDetectionValue' description='Set the delta value for echo detection' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='value' type='u8' description='trigger point for echo detection' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='native' title='C Code' ccode='MX_EBM019_THRESHOLD = FCL_VALUE;' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+					</flowline>
+				</macro>
+				<macro keep='1' >
+					<flowline name='ISR' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='native' title='C Code' ccode='#if defined (MX_CAL_PIC)
+
+		#ifndef MX_INTHANDLER_intcon_T0IF
+		#define MX_INTHANDLER_intcon_T0IF
+		if (ts_bit(INTCON, T0IF) &amp;&amp; ts_bit(INTCON, T0IE))
+		{
+			if (0xff == MX_EBM019_HIGH_COUNT)
+			{
+				// disable the interrupt
+				cr_bit(INTCON, T0IE);
+			}
+			else
+			{
+				++MX_EBM019_HIGH_COUNT;
+			}
+			cr_bit(INTCON, T0IF);
+		}
+		#else
+		#warning &quot;This interrupt has previously been enabled, so this EBM019 code will never get called.&quot;
+		#endif
+
+	#elif defined (MX_CAL_PIC16)
+
+		// no interrupt needed for EBM019 due to use of 16 bit timer register
+
+	#elif defined (MX_CAL_AVR)
+
+		#ifndef MX_TIMER0OVF_HANDLER
+		#define MX_TIMER0OVF_HANDLER
+		ISR(TIMER0_OVF_vect)
+		{
+			if (0xff == MX_EBM019_HIGH_COUNT)
+			{
+				// disable the interrupt
+				TIMSK0 &amp;= ~(1 &lt;&lt; TOIE0);
+			}
+			else
+			{
+				++MX_EBM019_HIGH_COUNT;
+			}
+		}
+		#else
+		#warning &quot;This interrupt has previously been enabled, so this EBM019 code will never get called.&quot;
+		#endif
+
+	#elif defined (MX_CAL_ARM)
+		#warning &quot;ARM not yet supported&quot;
+	#else
+		#warning &quot;No platform defined&quot;
+	#endif' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='DisableTimer' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='native' title='C Code' ccode='#if defined (MX_CAL_PIC)
+
+	// disable the interrupt
+	cr_bit(INTCON, T0IE);
+
+#elif defined (MX_CAL_PIC16)
+
+#elif defined (MX_CAL_AVR)
+
+	// disable the interrupt
+	TIMSK0 &amp;= ~(1 &lt;&lt; TOIE0);
+
+#elif defined (MX_CAL_ARM)
+
+#else
+
+#endif' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SetPulseWidth' description='Set the output pulse width, in microsecond (0-255uS)' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='pulse' type='u8' description='width of pulse in microseconds' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='native' title='C Code' ccode='MX_EBM019_PULSE = FCL_PULSE;' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<local name='Bit' type='b1' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Initialise' />
+						<command class_type='call' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetDelayTime' >
+							<argument exp='1000' />
+						</command>
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetDistanceSim' >
+							<return exp='distance' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='1' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' disable='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='n = 0' />
+									<exp exp='max = 0' />
+									<exp exp='pulse = 0' />
+									<exp exp='min = 0' />
+									<exp exp='prev = 0' />
+								</command>
+								<command class_type='calculation' title='Calculation' disable='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='sense = sense / 20' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='Sense = 7' />
+								</command>
+								<command class_type='call' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetDetectionValue' >
+									<argument exp='sense' />
+								</command>
+								<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='1' type='2' />
+								<command class_type='call' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetDistanceSim' >
+									<return exp='distance' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='comment' title='' comment='My code...never executes currently' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Initialise' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetDelayTime' >
+							<argument exp='1000' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='1' >
+							<flowline >
+								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetDetectionValue' >
+									<argument exp='3' />
+								</command>
+								<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='500' type='1' />
+								<command class_type='call' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetDistance' >
+									<return exp='test' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Initialise' description='Setup the device.
+This sets the control output to logic 0' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='OPP = 0' />
+						</command>
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetPulseWidth' >
+							<argument exp='PULSE' />
+						</command>
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetDelayTime' >
+							<argument exp='DELAY' />
+						</command>
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetDetectionValue' >
+							<argument exp='THRESHOLD' />
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='e77a4e40-e0df-431a-98f8-7ae4d8ebfbeb' vmin='0' vmaj='2' codename='cal_adc1' panelId='-1' x='0' y='0' z='0' xsz='0.01' ysz='0.01' zsz='0.01' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Peripheral' data='001' />
+					<value target='CHANNEL' data='13' />
+					<value target='ChannelCustom' data='000' />
+					<value target='VREFOP' data='000' />
+					<value target='VREFVOL' data='500' />
+					<value target='ACTIME' data='10' />
+					<value target='UseFRC' data='0' />
+					<value target='CONVSP' data='003' />
+					<value target='TYPE' data='18' />
+					<value target='BITS' data='10' />
+					<value target='CustomPins' data='0' />
+					<value target='HasDMA' data='0' />
+					<value target='UseDMA' data='0' />
+					<value target='DMATrigger' data='000' />
+					<value target='HasScanning' data='0' />
+					<value target='UseScanning' data='0' />
+					<value target='ScopeTraces' data='0' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='text' codename='comp_label1' panelId='-1' x='0' y='20' z='0.2' xsz='7' ysz='7' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Color' data='16777215' />
+					<value target='Background' data='-1' />
+					<value target='Font' data='Arial' />
+					<value target='Text' data='EBM019 - Ultrasonic' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='shape' codename='BackgroundImage' panelId='-1' x='0' y='0' z='0.05' xsz='60' ysz='56' zsz='32' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Shape' data='102' />
+					<value target='Color' data='16777215' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0.000000' />
+					<value target='Image' data='this:Dashboard BG.PNG' />
+					<value target='Model' data='' />
+					<value target='Unit' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='shape' codename='shape1' panelId='-1' x='0' y='0' z='0' xsz='64' ysz='60' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Shape' data='102' />
+					<value target='Color' data='0' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+					<value target='Model' data='' />
+					<value target='Unit' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='shape' codename='shape2' panelId='-1' x='-10' y='0' z='5' xsz='15' ysz='15' zsz='8.9' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Shape' data='4' />
+					<value target='Color' data='1973790' />
+					<value target='Outline' data='1973790' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+					<value target='Model' data='' />
+					<value target='Unit' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='shape' codename='shape3' panelId='-1' x='10' y='0' z='5' xsz='15' ysz='15' zsz='8.9' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Shape' data='4' />
+					<value target='Color' data='1973790' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+					<value target='Model' data='' />
+					<value target='Unit' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<scadaresourcelookup />
+	<keymap />
+	<panel2d shadows='0' lighting='2' brightness='0' >
+		<background rgb='9737364' img='' style='0' />
+		<camera xe='-12.2501' ye='-4.97938' ze='426.827' xt='-12.2501' yt='-4.97938' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='622' dy='352' zoom='176.329' fix_topleft='0' />
+		<page x='1000' y='1000' show='0' rgb='7360576' />
+	</panel2d>
+	<panel3d shadows='1' lighting='2' brightness='0' perspective='1' >
+		<background rgb='32768' img='' style='0' />
+		<table rgb='8404224' img='' style='0' size='25' />
+		<camera xe='-6.27654' ye='3.63462' ze='105.74' xt='-6.27654' yt='3.63462' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey0 xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey1 xe='-3.67394e-14' ye='0' ze='-300' xt='0' yt='0' zt='0' xquat='0' yquat='1' zquat='0' wquat='6.12323e-17' />
+		<camerakey2 xe='0' ye='-300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.707107' yquat='0' zquat='0' wquat='0.707107' />
+		<camerakey3 xe='-3.67394e-14' ye='300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-4.32978e-17' yquat='0.707107' zquat='0.707107' wquat='4.32978e-17' />
+		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
+		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
+		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
+	</panel3d>
+	<panels2d count='0' />
+	<layout >
+		<view type='0' name='GetDistance' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAALAMAAH4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetPulseWidth' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAALAMAAH4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetDetectionValue' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAALAMAAH4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetDelayTime' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAALAMAAH4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAALAMAAH4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ISR' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAALAMAAH4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetDistanceSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAALAMAAH4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAALAMAAH4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAALAMAAH4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_AddInterrupts' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAALAMAAH4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DisableTimer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAALAMAAH4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAALAMAAH4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

@@ -1,0 +1,76 @@
+<!-- CRC: 90CF26913586BBA787FE92D553771933221CAA9BAABC644F03F90AC8A1174025FC1CCCFA5F4233CFD1787D44233A22EA9A0D46BD3B6AACB92DE4D84759EBB5079CA9DA2D2BBCDAE2A4D1C56CD1580BF5F6686EE0B3F7DC3704F3B6443F2CA88EFC5CE86FCF54819003065D62825879AB54B85BFA84EB0E2790B6224297C6B12B27E1D848D559511474CB6A512121EC9DC47E5E2F910890E83881E4B751DD21C8A7D3E4FD8D480832086944AE325796A62F54D979C46FD55BCAFA212C9C8721C7A72930155E964E59FA0264F21FD71235929CCCA4409E3163 -->
+<!-- REVISION: 1.0 -->
+<!-- GUID: D16A6D40-93E2-4624-9F7B-DC718A1E2F1D -->
+<!-- DATE: 08\08\2022 -->
+<!-- DIR: FCD\PIC\12C509A.fcdx -->
+<root>
+<device name='12C509A' product='PIC' cal='PIC' family='12F' bits='8' >
+    <clock max_speed='4000000' master_divider='4' default='19660800' />
+    <memory >
+        <flash bytes='1792' />
+        <ram bytes='41' />
+    </memory>
+    <configuration address='1' mult='2' >
+        <format >
+            <word value='0x3FFF' />
+        </format>
+        <setting />
+        <settings >
+            <setting name='OSC' offset='0' mask='3' bits='2' hint='Oscillator selection bits' >
+                <option name='external RC oscillator' value='3' />
+                <option name='LP oscillator' value='0' />
+                <option name='XT oscillator' value='1' />
+                <option name='internal RC oscillator' value='2' />
+            </setting>
+            <setting name='WDT' offset='2' mask='1' bits='1' hint='Watchdog timer enable bit' >
+                <option name='Enabled' value='1' />
+                <option name='Disabled' value='0' />
+            </setting>
+            <setting name='CP' offset='3' mask='1' bits='1' hint='Code protection bit' >
+                <option name='Disabled' value='1' />
+                <option name='Enabled' value='0' />
+            </setting>
+            <setting name='MCLRE' offset='4' mask='1' bits='1' hint='MCLR enable bit' >
+                <option name='Enabled' value='1' />
+                <option name='Disabled' value='0' />
+            </setting>
+        </settings>
+    </configuration>
+    <pins sides='2' smd='0' >
+        <pin name='VDD' />
+        <pin name='GP5/OSC1/CLKIN' port='0' bit='5' />
+        <pin name='GP4/OSC2' port='0' bit='4' />
+        <pin name='GP3/MCLR/VPP' port='0' bit='3' />
+        <pin name='GP2/T0CKI' port='0' bit='2' />
+        <pin name='GP1' port='0' bit='1' />
+        <pin name='GP0' port='0' bit='0' />
+        <pin name='VSS' />
+    </pins>
+    <interrupts />
+</device>
+<inline >
+    <defines code="#include &lt;xc.h&gt;\n#include &lt;math.h&gt;\n\n#define MX_10F_TRIS\n\n" />
+    <directives code="#include &lt;xc.h&gt;\n#include &lt;math.h&gt;\n\n" />
+    <main >
+        <start code='\nvoid main()\n{\n\t#ifdef INTOSCHELPER\n\t\tINTOSCHELPERCODE\n\t#endif\n\n' />
+        <end code='\tmainendloop: goto mainendloop;\n}\n\n' />
+        <init code='' />
+    </main>
+    <interrupt >
+        <enable code='st_bit(INTCON,GIE);\n' />
+        <start code='' />
+        <end code='' />
+        <init code='' />
+    </interrupt>
+    <config >
+	<start code='//Configuration Settings\n' />
+        <body code='__PROG_CONFIG($(address), 0x$(value:x));\n' /> 
+    </config>
+</inline>
+<test >
+    <icd >
+        <clock port='0' pin='1' />
+        <data port='0' pin='0' />
+    </icd>
+</test>
+</root>

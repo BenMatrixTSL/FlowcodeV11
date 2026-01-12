@@ -1,0 +1,1896 @@
+<root>
+<document scada='0' schema='103' license='1,CompMaker,PWKUUN' title='' description='' fcversion='655360' target='PIC.16F.16F877A' >
+	<config data='!0,3f72%0,2%2,0%3,0%6,1%7,0%9,3%b,1%8,1%d,1' clkspd='19660800' simspd='1' usewdt='0' constif='0' Use3V3='0' />
+	<plugins >
+		<dll_models enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug >
+		<watch expr='.Mask' />
+		<watch expr='.TempValue' />
+		<watch expr='.Count' />
+		<watch expr='count' />
+		<watch expr='.TempValue' />
+		<watch expr='tempcount' />
+		<watch expr='.value' />
+		<watch expr='object_handles[0]' />
+		<watch expr='object_handles[1]' />
+		<watch expr='.led_handle' />
+	</debug>
+	<traces />
+	<ghost >
+		<FK2 >
+			<data name='FK2D0' port='4294967295' pin='4294967295' />
+			<data name='FK2D1' port='4294967295' pin='4294967295' />
+			<data name='FK2D2' port='4294967295' pin='4294967295' />
+			<data name='FK2D3' port='4294967295' pin='4294967295' />
+			<data name='FK2D4' port='4294967295' pin='4294967295' />
+			<data name='FK2D5' port='4294967295' pin='4294967295' />
+			<data name='FK2D6' port='4294967295' pin='4294967295' />
+			<data name='FK2D7' port='4294967295' pin='4294967295' />
+			<data name='FK2D8' port='4294967295' pin='4294967295' />
+			<data name='FK2D9' port='4294967295' pin='4294967295' />
+			<data name='FK2D10' port='4294967295' pin='4294967295' />
+			<data name='FK2D11' port='4294967295' pin='4294967295' />
+			<data name='FK2D12' port='4294967295' pin='4294967295' />
+			<data name='FK2D13' port='4294967295' pin='4294967295' />
+			<data name='FK2D14' port='4294967295' pin='4294967295' />
+			<data name='FK2D15' port='4294967295' pin='4294967295' />
+			<data name='FK2A0' port='4294967295' pin='4294967295' />
+			<data name='FK2A1' port='4294967295' pin='4294967295' />
+			<data name='FK2A2' port='4294967295' pin='4294967295' />
+			<data name='FK2A3' port='4294967295' pin='4294967295' />
+			<data name='FK2A4' port='4294967295' pin='4294967295' />
+			<data name='FK2A5' port='4294967295' pin='4294967295' />
+		</FK2>
+		<ICD >
+			<data name='AnalogPrescaleValue' value='19' />
+			<data name='DigitalSampleRate' value='100000' />
+			<data name='BreakpointCount' value='8' />
+			<data name='CallStackDepthCount' value='8' />
+			<data name='ClockPort' value='1' />
+			<data name='ClockPin' value='6' />
+			<data name='DataPort' value='1' />
+			<data name='DataPin' value='7' />
+			<data name='UseDefaultPins' value='1' />
+			<data name='WrapEnabled' value='1' />
+			<data name='CommsDelayOverridden' value='0' />
+			<data name='CommsDelay' value='9' />
+			<data name='CalculatedCommsDelay' value='9' />
+			<data name='AnalogEB2PrescaleValue' value='2' />
+			<data name='DigitalEB2SampleRate' value='100000' />
+		</ICD>
+		<pins >
+			<digital A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+			<analog A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+		</pins>
+	</ghost>
+	<components >
+		<settings autoimg='0' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='c8da67a7-fc7b-48c0-8c3f-3264c74f4024' vstate='40' vmin='0' vmaj='2' srcleaf='LED array.fcfx' visiblename='LED Array Template' description='Create an evenly spaced array of LED indicators.
+Each will be connected to sequential pins of a given I/O port.
+Set target object to point at any standard LED component to change the style.' category='LEDs' category2='' category3='' bIs2dOnly='0' bIs3dOnly='1' catenable='0' author='Matrix TSL' manuname='' manucode='' sysinfo='1053487' keywords='LEDs|matrix' dynamic='1' scadaCompatible='0' embeddedCompatible='1' showmacros='1' iconpath='..\..\icons\components\LED Array 2.png' />
+		<component class_type='root' codename='led_array' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='1' comp2dType='0' >
+			<resources />
+			<properties >
+				<property name='Count' target='count' typeid='21' hidden='0' locked='0' info='The number of LEDs in the array from 1 to 8.' />
+				<property name='Connections' folder='property_1' hidden='0' >
+					<property name='Output Mode' target='port' typeid='16' hidden='0' locked='0' info='Choose a single port for all LEDs, or to allocate them to arbitrary pins.' filter='000PORT
+011Custom pins' />
+					<property name='Port' target='PortByte' typeid='19' hidden='0' locked='0' info='' />
+					<property name='LED 0' target='pin0' typeid='5' hidden='1' locked='0' info='Chip pin connection for LED 0' />
+					<property name='LED 1' target='pin1' typeid='5' hidden='1' locked='0' info='Chip pin connection for LED 1' />
+					<property name='LED 2' target='pin2' typeid='5' hidden='1' locked='0' info='Chip pin connection for LED 2' />
+					<property name='LED 3' target='pin3' typeid='5' hidden='1' locked='0' info='Chip pin connection for LED 3' />
+					<property name='LED 4' target='pin4' typeid='5' hidden='1' locked='0' info='Chip pin connection for LED 4' />
+					<property name='LED 5' target='pin5' typeid='5' hidden='1' locked='0' info='Chip pin connection for LED 5' />
+					<property name='LED 6' target='pin6' typeid='5' hidden='1' locked='0' info='Chip pin connection for LED 6' />
+					<property name='LED 7' target='pin7' typeid='5' hidden='1' locked='0' info='Chip pin connection for LED 7' />
+					<property name='Polarity' target='polarity' typeid='16' hidden='0' locked='0' info='Active High = LEDs light when the chosen chip pin is ON
+Active Low = LEDs light when the chosen chip pin is OFF' filter='001Active High
+000Active Low' />
+					<property name='full_port' target='full_port' typeid='19' hidden='1' locked='0' info='' />
+				</property>
+				<property name='Simulation' folder='property_2' hidden='0' >
+					<property name='Alignment' target='align' typeid='16' hidden='0' locked='0' info='Which 3D axis to align the copies along.' filter='000X Axis
+001Y Axis
+002Z Axis' />
+					<property name='Spacing' target='spacing' typeid='15' hidden='0' locked='0' info='The distance between LEDs in the array.
+LEDs will be spaced symmetrically around the component centre.
+Use a negative value to reverse the order of the LEDs.' />
+					<property name='Reverse' target='reverse' typeid='7' hidden='0' locked='0' info='Reverse the direction of the LEDs.' />
+				</property>
+				<property name='Shape' folder='property_4' hidden='0' >
+					<property name='Target LED' target='target_object' typeid='17' hidden='0' locked='0' info='Drag any LED component based on the &apos;LED base&apos; onto the panel and
+select it here to use a custom LED design.
+When unconnected, you can choose a default geometric form instead.
+' />
+					<property name='Shape' target='shape' typeid='16' hidden='0' locked='0' info='Shape for the LED when no target is selected.' filter='000Cuboid
+007Dome
+004Cylinder' />
+					<property name='Width' target='width' typeid='15' hidden='0' locked='0' info='Width of the LED shape.' />
+					<property name='Height' target='height' typeid='15' hidden='0' locked='0' info='Height of the LED shape.' />
+					<property name='Depth' target='depth' typeid='15' hidden='0' locked='0' info='Depth of the LED shape.' />
+				</property>
+				<property name='Colors' folder='property_3' hidden='0' >
+					<property name='Same Color' target='color_same' typeid='7' hidden='0' locked='0' info='Choose whether all LEDs should be the same color, or to set them individually.' />
+					<property name='LED 0' target='color_led0' typeid='1' hidden='0' locked='0' info='The colour for LED 0 - or for all LEDs if that option is set.' />
+					<property name='LED 1' target='color_led1' typeid='1' hidden='1' locked='0' info='Color for LED 1.' />
+					<property name='LED 2' target='color_led2' typeid='1' hidden='1' locked='0' info='Color for LED 2' />
+					<property name='LED 3' target='color_led3' typeid='1' hidden='1' locked='0' info='Color for LED 3' />
+					<property name='LED 4' target='color_led4' typeid='1' hidden='1' locked='0' info='Color for LED 4' />
+					<property name='LED 5' target='color_led5' typeid='1' hidden='1' locked='0' info='Color for LED 5' />
+					<property name='LED 6' target='color_led6' typeid='1' hidden='1' locked='0' info='Color for LED 6' />
+					<property name='LED 7' target='color_led7' typeid='1' hidden='1' locked='0' info='Color for LED 7' />
+				</property>
+				<property name='Bitmask' target='bitmask' typeid='21' hidden='1' locked='0' info='Bitmask for bits used by the matrix.' />
+				<property name='Inverse Bitmask' target='inv_bitmask' typeid='21' hidden='1' locked='0' info='Mask for port pins NOT used by the matrix.' />
+				<property name='Label' folder='property_4_1' hidden='0' >
+					<property name='Show' target='show_label' typeid='16' hidden='0' locked='0' info='Decide what labels to show...
+None - no labels are displayed
+Name - shows each component&apos;s name
+Property - shows a particular property of each component (see &apos;property&apos; below.' filter='000None
+001Name
+002Property' />
+					<property name='Property' target='label_property' typeid='10' hidden='0' locked='0' info='Show a particular property of each object.  If a port or pin property is chosen, the label can be abbreviated
+to remove the &apos;$PORT&apos; text.' />
+					<property name='Color' target='label_color' typeid='1' hidden='0' locked='0' info='Color of the labels text.' />
+					<property name='Scale' target='label_scale' typeid='15' hidden='0' locked='0' info='Sets the basic size (text height) of the labels.' />
+					<property name='Follow Zoom' target='label_auto_scale' typeid='7' hidden='0' locked='0' info='Whether labels get bigger and smaller when the panel is zoomed in and out.' />
+					<property name='Position' target='label_position' typeid='16' hidden='0' locked='0' info='Set the position of the label relative to the component.' filter='003Above
+004Below
+005On top
+006Underneath' />
+				</property>
+			</properties>
+			<values >
+				<value target='count' data='8' />
+				<value target='port' data='000' />
+				<value target='PortByte' data='$PORTB0' />
+				<value target='pin0' data='$PORTB0.0' />
+				<value target='pin1' data='$PORTB0.1' />
+				<value target='pin2' data='$PORTB0.2' />
+				<value target='pin3' data='$PORTB0.3' />
+				<value target='pin4' data='$PORTB0.4' />
+				<value target='pin5' data='$PORTB0.5' />
+				<value target='pin6' data='$PORTB0.6' />
+				<value target='pin7' data='$PORTB0.7' />
+				<value target='polarity' data='000' />
+				<value target='full_port' data='$PORTB0' />
+				<value target='align' data='000' />
+				<value target='spacing' data='7.000000' />
+				<value target='reverse' data='0' />
+				<value target='target_object' data='' />
+				<value target='shape' data='007' />
+				<value target='width' data='5.000000' />
+				<value target='height' data='5.000000' />
+				<value target='depth' data='2.500000' />
+				<value target='color_same' data='1' />
+				<value target='color_led0' data='65280' />
+				<value target='color_led1' data='65280' />
+				<value target='color_led2' data='65280' />
+				<value target='color_led3' data='65280' />
+				<value target='color_led4' data='65535' />
+				<value target='color_led5' data='65535' />
+				<value target='color_led6' data='255' />
+				<value target='color_led7' data='255' />
+				<value target='bitmask' data='255' />
+				<value target='inv_bitmask' data='-256' />
+				<value target='show_label' data='002' />
+				<value target='label_property' data='pin' />
+				<value target='label_color' data='16777215' />
+				<value target='label_scale' data='1.000000' />
+				<value target='label_auto_scale' data='0' />
+				<value target='label_position' data='003' />
+			</values>
+			<events >
+				<event class='Components' event='Initialise' target='Ev_Initialise' />
+				<event class='Simulation' event='Start' target='Ev_Start' />
+				<event class='Components' event='Property' target='Ev_Property' />
+				<event class='Components' event='Resize' target='Ev_Resize' />
+			</events>
+			<apis >
+				<api name='BarGraph' alt='BarGraph' type='1' proto='1' />
+				<api name='LEDOn' alt='LEDOn' type='1' proto='1' />
+				<api name='AllOn' alt='AllOn' type='1' proto='1' />
+				<api name='LEDOff' alt='LEDOff' type='1' proto='1' />
+				<api name='PointGraph' alt='PointGraph' type='1' proto='1' />
+				<api name='GetHandle' alt='' type='2' proto='1' />
+				<api name='WriteValue' alt='WriteValue' type='1' proto='1' />
+				<api name='AllOff' alt='AllOff' type='1' proto='1' />
+			</apis>
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='current_target' type='h32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='tempCount' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='false' type='b1' description='' isconst='1' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='old_count' type='u8' description='0' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='old_target' type='h32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='object_handles' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' >
+						<array size='8' />
+					</def>
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='true' type='b1' description='' isconst='1' isHidden='0' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='BarGraph' description='Turns on the first N elements of the array - for generating bar graph metes etc.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Length' type='u8' description='How many items to light up.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='index' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.index = 0' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.index &lt; count' >
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.index &gt;= .length' swap='0' >
+									<flowline >
+										<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='LEDOff' >
+											<argument exp='.index' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='LEDOn' >
+											<argument exp='.index' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.index = .index + 1' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='LEDOn' description='Turn on the selected LED.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Index' type='u8' description='Index of the LED to turn on.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='switch' title='Switch' textarea='36,25,36,25' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Index' >
+							<case >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+								</flowline>
+							</case>
+							<case exp='0' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='count &gt; 0' swap='0' >
+										<flowline >
+											<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<exp exp='pin0 = polarity' />
+											</command>
+										</flowline>
+										<flowline />
+									</command>
+								</flowline>
+							</case>
+							<case exp='1' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='count &gt; 1' swap='0' >
+										<flowline >
+											<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<exp exp='pin1 = polarity' />
+											</command>
+										</flowline>
+										<flowline />
+									</command>
+								</flowline>
+							</case>
+							<case exp='2' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='count &gt; 2' swap='0' >
+										<flowline >
+											<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<exp exp='pin2 = polarity' />
+											</command>
+										</flowline>
+										<flowline />
+									</command>
+								</flowline>
+							</case>
+							<case exp='3' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='count &gt; 3' swap='0' >
+										<flowline >
+											<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<exp exp='pin3 = polarity' />
+											</command>
+										</flowline>
+										<flowline />
+									</command>
+								</flowline>
+							</case>
+							<case exp='4' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='count &gt; 4' swap='0' >
+										<flowline >
+											<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<exp exp='pin4 = polarity' />
+											</command>
+										</flowline>
+										<flowline />
+									</command>
+								</flowline>
+							</case>
+							<case exp='5' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='count &gt; 5' swap='0' >
+										<flowline >
+											<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<exp exp='pin5 = polarity' />
+											</command>
+										</flowline>
+										<flowline />
+									</command>
+								</flowline>
+							</case>
+							<case exp='6' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='count &gt; 6' swap='0' >
+										<flowline >
+											<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<exp exp='pin6 = polarity' />
+											</command>
+										</flowline>
+										<flowline />
+									</command>
+								</flowline>
+							</case>
+							<case exp='7' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='count &gt; 7' swap='0' >
+										<flowline >
+											<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<exp exp='pin7 = polarity' />
+											</command>
+										</flowline>
+										<flowline />
+									</command>
+								</flowline>
+							</case>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='AllOn' description='Turns on all elements' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<local name='index' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='port = 11' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.index = 0' />
+								</command>
+								<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.index &lt; count' >
+									<flowline >
+										<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='LEDOn' >
+											<argument exp='.index' />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.index = .index + 1' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='polarity = 1' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='full_port = bitmask' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='full_port = ~bitmask' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='LEDOff' description='Turn off the selected led.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Index' type='u8' description='Index of the LED to turn on.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='switch' title='Switch' textarea='36,25,36,25' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Index' >
+							<case >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+								</flowline>
+							</case>
+							<case exp='0' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='count &gt; 0' swap='0' >
+										<flowline >
+											<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<exp exp='pin0 = 1 - polarity' />
+											</command>
+										</flowline>
+										<flowline />
+									</command>
+								</flowline>
+							</case>
+							<case exp='1' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='count &gt; 1' swap='0' >
+										<flowline >
+											<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<exp exp='pin1 = 1 - polarity' />
+											</command>
+										</flowline>
+										<flowline />
+									</command>
+								</flowline>
+							</case>
+							<case exp='2' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='count &gt; 2' swap='0' >
+										<flowline >
+											<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<exp exp='pin2 = 1 - polarity' />
+											</command>
+										</flowline>
+										<flowline />
+									</command>
+								</flowline>
+							</case>
+							<case exp='3' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='count &gt; 3' swap='0' >
+										<flowline >
+											<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<exp exp='pin3 = 1 - polarity' />
+											</command>
+										</flowline>
+										<flowline />
+									</command>
+								</flowline>
+							</case>
+							<case exp='4' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='count &gt; 4' swap='0' >
+										<flowline >
+											<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<exp exp='pin4 = 1 - polarity' />
+											</command>
+										</flowline>
+										<flowline />
+									</command>
+								</flowline>
+							</case>
+							<case exp='5' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='count &gt; 5' swap='0' >
+										<flowline >
+											<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<exp exp='pin5 = 1 - polarity' />
+											</command>
+										</flowline>
+										<flowline />
+									</command>
+								</flowline>
+							</case>
+							<case exp='6' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='count &gt; 6' swap='0' >
+										<flowline >
+											<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<exp exp='pin6 = 1 - polarity' />
+											</command>
+										</flowline>
+										<flowline />
+									</command>
+								</flowline>
+							</case>
+							<case exp='7' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='count &gt; 7' swap='0' >
+										<flowline >
+											<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<exp exp='pin7 = 1 - polarity' />
+											</command>
+										</flowline>
+										<flowline />
+									</command>
+								</flowline>
+							</case>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Initialise' description='Initialisation routine for the component once the component is linked to its parent' statediag='0' >
+						<return name='Return' type='u32' description='Non-zero to prevent initialisation' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='old_count = 0' />
+							<exp exp='old_target = 0' />
+						</command>
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_Property' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_Start' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='PointGraph' description='Turns on the Indexed LED and turns all others off.
+Does nothing if the index is out of range.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Index' type='u8' description='The LED to show.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='idx' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.idx = 0' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.idx &lt; count' >
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.idx = .Index' swap='0' >
+									<flowline >
+										<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='LEDOn' >
+											<argument exp='.idx' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='LEDOff' >
+											<argument exp='.idx' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.idx = .idx + 1' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Property' description='Sent when a property has been changed by the User' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='tempstring' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<command class_type='comment' title='' comment='Constrain count' textarea='52,10,52,10' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='count &lt; 1' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<argument exp='this' />
+									<argument exp='&quot;count&quot;' />
+									<argument exp='1' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='count &gt; 8' swap='0' >
+									<flowline >
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+											<argument exp='this' />
+											<argument exp='&quot;count&quot;' />
+											<argument exp='8' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='comment' title='' comment='Trap &apos;delf target&apos; error' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='target_object = this' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<argument exp='this' />
+									<argument exp='&quot;target_object&quot;' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='target_object = 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='current_target = default_target' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='current_target = target_object' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='comment' title='' comment='Create the new clones only if they are required.' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_BuildClones' />
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+							<argument exp='this' />
+							<argument exp='&quot;label_property&quot;' />
+							<argument exp='show_label == 2' />
+						</command>
+						<command class_type='comment' title='' comment='Copy properties to clones' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='call' title='Set the visual properties of the LEDs' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_SetProperties' />
+						<command class_type='call' title='Set the pin properties of the clones' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_SetPins' />
+						<command class_type='call' title='Set up the pin labelling properties' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_set_labels' />
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetValue' >
+							<return exp='.tempstring' />
+							<argument exp='this' />
+							<argument exp='&quot;pin0&quot;' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='default_target' />
+							<argument exp='&quot;pin&quot;' />
+							<argument exp='.tempstring' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Prv_set_labels' description='Copy the properties for the led pin labels' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<local name='led_handle' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='idx' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.idx = 0' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.idx &lt; count' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.led_handle = object_handles[.idx]' />
+								</command>
+								<command class_type='sim' title='Simulation' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.StepNamedNext' >
+									<argument exp='.led_handle' />
+									<argument exp='&quot;component_label1&quot;' />
+								</command>
+								<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.CopyValue' >
+									<argument exp='this' />
+									<argument exp='.led_handle' />
+									<argument exp='&quot;show_label&quot;' />
+								</command>
+								<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.CopyValue' >
+									<argument exp='this' />
+									<argument exp='.led_handle' />
+									<argument exp='&quot;label_property&quot;' />
+								</command>
+								<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.CopyValue' >
+									<argument exp='this' />
+									<argument exp='.led_handle' />
+									<argument exp='&quot;label_color&quot;' />
+								</command>
+								<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.CopyValue' >
+									<argument exp='this' />
+									<argument exp='.led_handle' />
+									<argument exp='&quot;label_scale&quot;' />
+								</command>
+								<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.CopyValue' >
+									<argument exp='this' />
+									<argument exp='.led_handle' />
+									<argument exp='&quot;label_auto_scale&quot;' />
+								</command>
+								<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.CopyValue' >
+									<argument exp='this' />
+									<argument exp='.led_handle' />
+									<argument exp='&quot;label_position&quot;' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.idx = .idx + 1' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Prv_SetProperties' description='Set the properties that need copying from &apos;this&apos; to the clones' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<local name='index' type='u8' description='Temporary counter' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='temp_color' type='u32' description='Color reference' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='child_handle' type='h32' description='Temporary handle' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='led_string' type='T8' description='Identifier of a color property' isconst='0' isHidden='0' isinit='1' usrinit='&quot;&quot;' setinit='&quot;&quot;' >
+							<array size='20' />
+						</local>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.index = 0' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.index &lt; 8' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.child_handle = object_handles[.index]' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.child_handle != 0' swap='0' >
+									<flowline >
+										<command class_type='comment' title='' comment='Simulation properties' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.CopyValue' >
+											<argument exp='this' />
+											<argument exp='.child_handle' />
+											<argument exp='&quot;auto_off&quot;' />
+										</command>
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.CopyValue' >
+											<argument exp='this' />
+											<argument exp='.child_handle' />
+											<argument exp='&quot;polarity&quot;' />
+										</command>
+										<command class_type='comment' title='' comment='LED Colour' textarea='36,22,36,22' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.led_string = &quot;color_led&quot; + ToString$ (.index)' />
+										</command>
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='color_same &amp; (.index &gt; 0)' swap='0' >
+											<flowline >
+												<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+													<argument exp='this' />
+													<argument exp='.led_string' />
+													<argument exp='false' />
+												</command>
+												<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetValue' >
+													<return exp='.temp_color' />
+													<argument exp='this' />
+													<argument exp='&quot;color_led0&quot;' />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+													<argument exp='this' />
+													<argument exp='.led_string' />
+													<argument exp='true' />
+												</command>
+												<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetValue' >
+													<return exp='.temp_color' />
+													<argument exp='this' />
+													<argument exp='.led_string' />
+												</command>
+											</flowline>
+										</command>
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+											<argument exp='.child_handle' />
+											<argument exp='&quot;on_color&quot;' />
+											<argument exp='.temp_color' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='comment' title='' comment='Hide unused properties' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.led_string = &quot;color_led&quot; + ToString$ (.index)' />
+										</command>
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+											<argument exp='this' />
+											<argument exp='.led_string' />
+											<argument exp='false' />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='object_handles[.index] = 0' />
+											<exp exp='.index = .index + 1' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.index = .index + 1' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Prv_BuildClones' description='Rebuilds the panel clones when the number or target change.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<local name='index' type='u8' description='Temporary counter' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='child_handle' type='h32' description='Handle of the current item' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='temp_handle' type='h32' description='Temporary handle' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='position' type='h32' description='Handle for storing object position' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='this_scale' type='f32' description='Scale X,Y,Z of the current object' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' >
+							<array size='3' />
+						</local>
+						<local name='current_scale' type='f32' description='Scale X,Y,Z of the current target' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' >
+							<array size='3' />
+						</local>
+						<local name='euler' type='f32' description='Current target&apos;s rotation angles' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' >
+							<array size='3' />
+						</local>
+						<local name='distance' type='f32' description='Accumulates the distance along the array' isconst='0' isHidden='0' isinit='1' usrinit='0.0' setinit='0.0' />
+						<local name='step' type='f32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0.0' setinit='0.0' />
+						<local name='Rebuild' type='b1' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='0' swap='0' >
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='current_target = old_target &amp;&amp; count = old_count' swap='0' >
+									<flowline />
+									<flowline />
+								</command>
+								<command class_type='comment' title='' comment='Don&apos;t rebuild clones unless necessary' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Rebuild = false' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='comment' title='' comment='Clones need re-building' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Rebuild = true' />
+								</command>
+								<command class_type='comment' title='' comment='Delete current clones' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.GetChildHead' >
+									<return exp='.child_handle' />
+									<argument exp='comp_group' />
+								</command>
+								<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='1' exp='.child_handle = 0' >
+									<flowline >
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.GetNext' >
+											<return exp='.temp_handle' />
+											<argument exp='.child_handle' />
+										</command>
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Delete' >
+											<argument exp='.child_handle' />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.child_handle = .temp_handle' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='comment' title='' comment='Restore old target' textarea='36,12,36,92' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='current_target &gt; 0 &amp;&amp; current_target != default_target' swap='0' >
+									<flowline >
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+											<argument exp='current_target' />
+											<argument exp='true' />
+										</command>
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetSolid' >
+											<argument exp='current_target' />
+											<argument exp='true' />
+										</command>
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetInteractive' >
+											<argument exp='current_target' />
+											<argument exp='true' />
+										</command>
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+											<argument exp='current_target' />
+											<argument exp='&quot;pin&quot;' />
+											<argument exp='true' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='comment' title='' comment='Prepare Target' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Get' >
+							<return exp='.position' />
+							<argument exp='comp_group' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='current_target = default_target' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='current_target = default_target' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+									<argument exp='current_target' />
+									<argument exp='true' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetSolid' >
+									<argument exp='current_target' />
+									<argument exp='true' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetInteractive' >
+									<argument exp='current_target' />
+									<argument exp='true' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;Shape&quot;' />
+									<argument exp='true' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;width&quot;' />
+									<argument exp='true' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;height&quot;' />
+									<argument exp='true' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;depth&quot;' />
+									<argument exp='true' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.CopyValue' >
+									<argument exp='this' />
+									<argument exp='default_target' />
+									<argument exp='&quot;Shape&quot;' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.GetScale' >
+									<return exp='.current_scale' />
+									<argument exp='current_target' />
+									<argument exp='this' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<argument exp='current_target' />
+									<argument exp='&quot;width&quot;' />
+									<argument exp='width / .current_scale[0]' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<argument exp='current_target' />
+									<argument exp='&quot;height&quot;' />
+									<argument exp='height / .current_scale[1]' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<argument exp='current_target' />
+									<argument exp='&quot;depth&quot;' />
+									<argument exp='depth / .current_scale[2]' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='current_target = target_object' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;Shape&quot;' />
+									<argument exp='false' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;width&quot;' />
+									<argument exp='false' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;height&quot;' />
+									<argument exp='false' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;depth&quot;' />
+									<argument exp='false' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.GetScale' >
+									<return exp='.current_scale' />
+									<argument exp='current_target' />
+									<argument exp='this' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.GetScale' >
+									<return exp='.this_scale' />
+									<argument exp='this' />
+									<argument exp='this' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.ScaleTo' >
+									<argument exp='.position' />
+									<argument exp='.current_scale[0] * .this_scale[0]' />
+									<argument exp='.current_scale[1] * .this_scale[1]' />
+									<argument exp='.current_scale[2] * .this_scale[2]' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='comment' title='' comment='Copy Rotation' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.GetEuler' >
+							<return exp='.euler' />
+							<argument exp='current_target' />
+							<argument exp='comp_group' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.RotateTo' >
+							<argument exp='.position' />
+							<argument exp='.position' />
+							<argument exp='comp_group' />
+							<argument exp='.euler[0]' />
+							<argument exp='.euler[1]' />
+							<argument exp='.euler[2]' />
+						</command>
+						<command class_type='comment' title='' comment='Build Clones' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.index = 0' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='reverse ^ (align == 0)' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.step = -spacing' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.step = spacing' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.index &lt; count' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.SetCoords' >
+									<argument exp='.position' />
+									<argument exp='comp_group' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.distance = (.index - 0.5 * (count - 1)) * .step' />
+								</command>
+								<command class_type='switch' title='Switch' textarea='36,25,36,25' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='align' >
+									<case >
+										<flowline >
+											<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+											<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+											<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+											<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+											<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+											<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.MoveBy' >
+												<argument exp='.position' />
+												<argument exp='.distance' />
+												<argument exp='0' />
+												<argument exp='0' />
+											</command>
+											<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+										</flowline>
+									</case>
+									<case exp='1' >
+										<flowline >
+											<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+											<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+											<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+											<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+											<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+											<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.MoveBy' >
+												<argument exp='.position' />
+												<argument exp='0' />
+												<argument exp='.distance' />
+												<argument exp='0' />
+											</command>
+											<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+										</flowline>
+									</case>
+									<case exp='2' >
+										<flowline >
+											<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+											<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+											<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+											<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+											<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+											<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.MoveBy' >
+												<argument exp='.position' />
+												<argument exp='0' />
+												<argument exp='0' />
+												<argument exp='.distance' />
+											</command>
+											<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+										</flowline>
+									</case>
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Rebuild' swap='0' >
+									<flowline >
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Clone' >
+											<return exp='.child_handle' />
+											<argument exp='current_target' />
+											<argument exp='comp_group' />
+											<argument exp='.position' />
+										</command>
+										<command class_type='calculation' title='Store Handle' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='object_handles[.index] = .child_handle' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.child_handle = object_handles[.index]' />
+										</command>
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.Set' >
+											<argument exp='.child_handle' />
+											<argument exp='.position' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+									<argument exp='.child_handle' />
+									<argument exp='true' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetInteractive' >
+									<argument exp='.child_handle' />
+									<argument exp='true' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetSolid' >
+									<argument exp='.child_handle' />
+									<argument exp='true' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.index = .index + 1' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='comment' title='' comment='Clear unused handle slots' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.index &lt; 8' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='object_handles[.index] = 0' />
+									<exp exp='.index = .index + 1' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='comment' title='' comment='Hide prototype' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetInteractive' >
+							<argument exp='current_target' />
+							<argument exp='false' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+							<argument exp='current_target' />
+							<argument exp='false' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetSolid' >
+							<argument exp='current_target' />
+							<argument exp='false' />
+						</command>
+						<command class_type='comment' title='' comment='Set other constants according to count' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;bitmask&quot;' />
+							<argument exp='(1 &lt;&lt; count) - 1' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;inv_bitmask&quot;' />
+							<argument exp='~bitmask' />
+						</command>
+						<command class_type='comment' title='' comment='Remember current values for later comparison' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='old_count = count' />
+							<exp exp='old_target = target_object' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='GetHandle' description='Retrieves the object handle of the indexed clone.
+Returns zero for out of range indexes.' statediag='0' >
+						<return name='Return' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Index' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Index &gt;= 0 AND .Index &lt;= count' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = object_handles[.Index]' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = 0' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Prv_SetPins' description='Makes pins assignments using the &apos;Auto-port&apos; system - assigning them to the clones as required' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<local name='index' type='u8' description='temporary counter' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='port_string' type='T8' description='String descriptor of pin/port' isconst='0' isHidden='0' isinit='1' usrinit='&quot;&quot;' setinit='&quot;&quot;' >
+							<array size='20' />
+						</local>
+						<local name='pin_string' type='T8' description='String descriptor of pin/port' isconst='0' isHidden='0' isinit='1' usrinit='&quot;&quot;' setinit='&quot;&quot;' >
+							<array size='20' />
+						</local>
+						<local name='clone_handle' type='h32' description='handle of the current clone' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<command class_type='comment' title='' comment='Set ports and pins' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.index = 0' />
+						</command>
+						<command class_type='decision' title='Custom Pins or Port Byte' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='port = 11' swap='0' >
+							<flowline >
+								<command class_type='comment' title='' comment='Custom Pins
+' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;PortByte&quot;' />
+									<argument exp='0' />
+								</command>
+								<command class_type='comment' title='' comment='No port selected - allow user to populate pins.' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<argument exp='this' />
+									<argument exp='&quot;full_port&quot;' />
+									<argument exp='&quot;&quot;' />
+								</command>
+								<command class_type='comment' title='' comment='Unhide used pin connections' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+								<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.index &lt; count' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.pin_string = &quot;pin&quot; + ToString$ (.index)' />
+										</command>
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+											<argument exp='this' />
+											<argument exp='.pin_string' />
+											<argument exp='true' />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.clone_handle = object_handles[.index]' />
+										</command>
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.clone_handle != 0' swap='0' >
+											<flowline >
+												<command class_type='comment' title='' comment='Dereference the pin value' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+												<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetValue' >
+													<return exp='.pin_string' />
+													<argument exp='this' />
+													<argument exp='.pin_string' />
+												</command>
+												<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+													<argument exp='.clone_handle' />
+													<argument exp='&quot;pin&quot;' />
+													<argument exp='.pin_string' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.index = .index + 1' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='comment' title='' comment='Port Byte' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;PortByte&quot;' />
+									<argument exp='1' />
+								</command>
+								<command class_type='comment' title='' comment='Autopopulate pin connections
+but keep them hidden.' textarea='109,47,109,47' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetValue' >
+									<return exp='.port_string' />
+									<argument exp='this' />
+									<argument exp='&quot;PortByte&quot;' />
+								</command>
+								<command class_type='sim' title='Simulation' textarea='109,47,109,47' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<argument exp='this' />
+									<argument exp='&quot;full_port&quot;' />
+									<argument exp='.port_string' />
+								</command>
+								<command class_type='calculation' title='Calculation' textarea='109,47,109,47' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.port_string = .port_string + &quot;.&quot;' />
+								</command>
+								<command class_type='loop' title='Loop' textarea='109,47,109,47' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.index &lt; count' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' textarea='109,47,109,47' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.pin_string = .port_string + ToString$ (.index)' />
+										</command>
+										<command class_type='sim' title='Simulation' textarea='109,47,109,47' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+											<argument exp='this' />
+											<argument exp='&quot;pin&quot; + ToString$ (.index)' />
+											<argument exp='.pin_string' />
+										</command>
+										<command class_type='sim' title='Simulation' textarea='109,47,109,47' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+											<argument exp='this' />
+											<argument exp='&quot;pin&quot; + ToString$ (.index)' />
+											<argument exp='false' />
+										</command>
+										<command class_type='calculation' title='Calculation' textarea='109,47,109,47' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.clone_handle = object_handles[.index]' />
+										</command>
+										<command class_type='decision' title='Decision' textarea='109,47,109,47' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.clone_handle != 0' swap='0' >
+											<flowline >
+												<command class_type='sim' title='Simulation' textarea='109,47,109,47' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+													<argument exp='.clone_handle' />
+													<argument exp='&quot;pin&quot;' />
+													<argument exp='.pin_string' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+										<command class_type='calculation' title='Calculation' textarea='109,47,109,47' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.index = .index + 1' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+						<command class_type='comment' title='' comment='Hide unused pin connections' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.index &lt; 8' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.pin_string = &quot;pin&quot; + ToString$ (.index)' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='.pin_string' />
+									<argument exp='false' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.index = .index + 1' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='comment' title='' comment='Set hidden target to default pin
+to avoid compile error.' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='current_target != 0' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetValue' >
+									<return exp='.pin_string' />
+									<argument exp='this' />
+									<argument exp='&quot;pin0&quot;' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<argument exp='current_target' />
+									<argument exp='&quot;pin&quot;' />
+									<argument exp='.pin_string' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='current_target' />
+									<argument exp='&quot;pin&quot;' />
+									<argument exp='false' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='WriteValue' description='Write a number which is presented on the LEDs in binary.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Value' type='u8' description='Provide a value to be written to the LEDs in binary' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Count' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='TempValue' type='s16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='Mask' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.count = 0' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.count &lt; Count' >
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Value AND (1 &lt;&lt; .Count)' swap='0' >
+									<flowline >
+										<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='LEDOn' >
+											<argument exp='.Count' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='LEDOff' >
+											<argument exp='.Count' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Count = .Count + 1' />
+									<exp exp='' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Resize' description='Sent to the mouse target when the user has altered the position of a component child' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Component' type='h32' description='The component that has been altered' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='PrevPos' type='h32' description='The position of the object before the start of positioning' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Final' type='b1' description='True if this is the end of a drag operation' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='new_scale' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' >
+							<array size='3' />
+						</local>
+						<local name='old_scale' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' >
+							<array size='3' />
+						</local>
+						<local name='rescale' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<command class_type='decision' title='was &quot;if .Final&quot;' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='0' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.GetScale' >
+									<return exp='.new_scale' />
+									<argument exp='this' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.GetScale' >
+									<return exp='.old_scale' />
+									<argument exp='.PrevPos' />
+									<argument exp='0' />
+								</command>
+								<command class_type='decision' title='If the size has not changed' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.new_scale[0] = .old_scale[0] &amp;&amp; .new_scale[1] = .old_scale[1] &amp;&amp; .new_scale[2] = .old_scale[2]' swap='0' >
+									<flowline />
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.rescale = .new_scale[align] / .old_scale[align] * spacing' />
+										</command>
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+											<argument exp='this' />
+											<argument exp='&quot;spacing&quot;' />
+											<argument exp='.rescale' />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.rescale = .new_scale[0] / .old_scale[0] * width' />
+										</command>
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+											<argument exp='this' />
+											<argument exp='&quot;width&quot;' />
+											<argument exp='.rescale' />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.rescale = .new_scale[1] / .old_scale[1] * height' />
+										</command>
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+											<argument exp='this' />
+											<argument exp='&quot;height&quot;' />
+											<argument exp='.rescale' />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.rescale = .new_scale[2] / .old_scale[2] * depth' />
+										</command>
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+											<argument exp='this' />
+											<argument exp='&quot;depth&quot;' />
+											<argument exp='.rescale' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Start' description='Broadcast to all components that simulation is starting' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='port = 0' swap='0' >
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='polarity' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Write 0 - LEDs off' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='full_port = 0' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Write 0 - LEDs off' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='full_port = 0xFF' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='polarity' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Write 0 - LEDs off' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='pin0 = 0' />
+											<exp exp='pin1 = 0' />
+											<exp exp='pin2 = 0' />
+											<exp exp='pin3 = 0' />
+											<exp exp='pin4 = 0' />
+											<exp exp='pin5 = 0' />
+											<exp exp='pin6 = 0' />
+											<exp exp='pin7 = 0' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Write 0 - LEDs off' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='pin0 = 1' />
+											<exp exp='pin1 = 1' />
+											<exp exp='pin2 = 1' />
+											<exp exp='pin3 = 1' />
+											<exp exp='pin4 = 1' />
+											<exp exp='pin5 = 1' />
+											<exp exp='pin6 = 1' />
+											<exp exp='pin7 = 1' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='AllOff' description='Turns off all elements' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<local name='index' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='port = 11' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.index = 0' />
+								</command>
+								<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.index &lt; count' >
+									<flowline >
+										<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='LEDOff' >
+											<argument exp='.index' />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.index = .index + 1' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='polarity = 1' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='full_port = ~bitmask' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='full_port = bitmask' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_Initialise' />
+						<command class_type='call' title='User Macro' break='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='AllOn' />
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='1' >
+							<flowline >
+								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WriteValue' >
+									<argument exp='tempCount' />
+								</command>
+								<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='1' type='2' />
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='tempCount = tempCount + 1' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='group' codename='comp_group' panelId='-1' x='1.46574' y='-1.65298' z='-2.6078' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values />
+				<events />
+				<apis />
+				<variables />
+				<macros />
+				<component class_type='ref' guid='d92e8259-f3a8-4176-a8c4-fe7ca42b2c3f' vmin='1' vmaj='1' codename='default_target1' panelId='-1' x='24.5' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='pin' data='$PORTB0.0' />
+						<value target='polarity' data='000' />
+						<value target='on_color' data='65280' />
+						<value target='length' data='4.000000' />
+						<value target='show_label' data='002' />
+						<value target='label_property' data='pin' />
+						<value target='label_color' data='16777215' />
+						<value target='label_scale' data='1.000000' />
+						<value target='label_auto_scale' data='0' />
+						<value target='label_position' data='003' />
+					</values>
+					<events >
+						<event class='Components' event='Initialise' target='Ev_Property' />
+						<event class='Components' event='Property' target='Ev_Property' />
+					</events>
+					<apis >
+						<api name='TurnOn' alt='TurnOn' type='1' proto='1' />
+						<api name='TurnOff' alt='TurnOff' type='1' proto='1' />
+					</apis>
+					<variables />
+					<macros />
+				</component>
+				<component class_type='ref' guid='d92e8259-f3a8-4176-a8c4-fe7ca42b2c3f' vmin='1' vmaj='1' codename='default_target2' panelId='-1' x='17.5' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='pin' data='$PORTB0.1' />
+						<value target='polarity' data='000' />
+						<value target='on_color' data='65280' />
+						<value target='length' data='4.000000' />
+						<value target='show_label' data='002' />
+						<value target='label_property' data='pin' />
+						<value target='label_color' data='16777215' />
+						<value target='label_scale' data='1.000000' />
+						<value target='label_auto_scale' data='0' />
+						<value target='label_position' data='003' />
+					</values>
+					<events >
+						<event class='Components' event='Initialise' target='Ev_Property' />
+						<event class='Components' event='Property' target='Ev_Property' />
+					</events>
+					<apis >
+						<api name='TurnOn' alt='TurnOn' type='1' proto='1' />
+						<api name='TurnOff' alt='TurnOff' type='1' proto='1' />
+					</apis>
+					<variables />
+					<macros />
+				</component>
+				<component class_type='ref' guid='d92e8259-f3a8-4176-a8c4-fe7ca42b2c3f' vmin='1' vmaj='1' codename='default_target3' panelId='-1' x='10.5' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='pin' data='$PORTB0.2' />
+						<value target='polarity' data='000' />
+						<value target='on_color' data='65280' />
+						<value target='length' data='4.000000' />
+						<value target='show_label' data='002' />
+						<value target='label_property' data='pin' />
+						<value target='label_color' data='16777215' />
+						<value target='label_scale' data='1.000000' />
+						<value target='label_auto_scale' data='0' />
+						<value target='label_position' data='003' />
+					</values>
+					<events >
+						<event class='Components' event='Initialise' target='Ev_Property' />
+						<event class='Components' event='Property' target='Ev_Property' />
+					</events>
+					<apis >
+						<api name='TurnOn' alt='TurnOn' type='1' proto='1' />
+						<api name='TurnOff' alt='TurnOff' type='1' proto='1' />
+					</apis>
+					<variables />
+					<macros />
+				</component>
+				<component class_type='ref' guid='d92e8259-f3a8-4176-a8c4-fe7ca42b2c3f' vmin='1' vmaj='1' codename='default_target4' panelId='-1' x='3.5' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='pin' data='$PORTB0.3' />
+						<value target='polarity' data='000' />
+						<value target='on_color' data='65280' />
+						<value target='length' data='4.000000' />
+						<value target='show_label' data='002' />
+						<value target='label_property' data='pin' />
+						<value target='label_color' data='16777215' />
+						<value target='label_scale' data='1.000000' />
+						<value target='label_auto_scale' data='0' />
+						<value target='label_position' data='003' />
+					</values>
+					<events >
+						<event class='Components' event='Initialise' target='Ev_Property' />
+						<event class='Components' event='Property' target='Ev_Property' />
+					</events>
+					<apis >
+						<api name='TurnOn' alt='TurnOn' type='1' proto='1' />
+						<api name='TurnOff' alt='TurnOff' type='1' proto='1' />
+					</apis>
+					<variables />
+					<macros />
+				</component>
+				<component class_type='ref' guid='d92e8259-f3a8-4176-a8c4-fe7ca42b2c3f' vmin='1' vmaj='1' codename='default_target5' panelId='-1' x='-3.5' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='pin' data='$PORTB0.4' />
+						<value target='polarity' data='000' />
+						<value target='on_color' data='65280' />
+						<value target='length' data='4.000000' />
+						<value target='show_label' data='002' />
+						<value target='label_property' data='pin' />
+						<value target='label_color' data='16777215' />
+						<value target='label_scale' data='1.000000' />
+						<value target='label_auto_scale' data='0' />
+						<value target='label_position' data='003' />
+					</values>
+					<events >
+						<event class='Components' event='Initialise' target='Ev_Property' />
+						<event class='Components' event='Property' target='Ev_Property' />
+					</events>
+					<apis >
+						<api name='TurnOn' alt='TurnOn' type='1' proto='1' />
+						<api name='TurnOff' alt='TurnOff' type='1' proto='1' />
+					</apis>
+					<variables />
+					<macros />
+				</component>
+				<component class_type='ref' guid='d92e8259-f3a8-4176-a8c4-fe7ca42b2c3f' vmin='1' vmaj='1' codename='default_target6' panelId='-1' x='-10.5' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='pin' data='$PORTB0.5' />
+						<value target='polarity' data='000' />
+						<value target='on_color' data='65280' />
+						<value target='length' data='4.000000' />
+						<value target='show_label' data='002' />
+						<value target='label_property' data='pin' />
+						<value target='label_color' data='16777215' />
+						<value target='label_scale' data='1.000000' />
+						<value target='label_auto_scale' data='0' />
+						<value target='label_position' data='003' />
+					</values>
+					<events >
+						<event class='Components' event='Initialise' target='Ev_Property' />
+						<event class='Components' event='Property' target='Ev_Property' />
+					</events>
+					<apis >
+						<api name='TurnOn' alt='TurnOn' type='1' proto='1' />
+						<api name='TurnOff' alt='TurnOff' type='1' proto='1' />
+					</apis>
+					<variables />
+					<macros />
+				</component>
+				<component class_type='ref' guid='d92e8259-f3a8-4176-a8c4-fe7ca42b2c3f' vmin='1' vmaj='1' codename='default_target7' panelId='-1' x='-17.5' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='pin' data='$PORTB0.6' />
+						<value target='polarity' data='000' />
+						<value target='on_color' data='65280' />
+						<value target='length' data='4.000000' />
+						<value target='show_label' data='002' />
+						<value target='label_property' data='pin' />
+						<value target='label_color' data='16777215' />
+						<value target='label_scale' data='1.000000' />
+						<value target='label_auto_scale' data='0' />
+						<value target='label_position' data='003' />
+					</values>
+					<events >
+						<event class='Components' event='Initialise' target='Ev_Property' />
+						<event class='Components' event='Property' target='Ev_Property' />
+					</events>
+					<apis >
+						<api name='TurnOn' alt='TurnOn' type='1' proto='1' />
+						<api name='TurnOff' alt='TurnOff' type='1' proto='1' />
+					</apis>
+					<variables />
+					<macros />
+				</component>
+				<component class_type='ref' guid='d92e8259-f3a8-4176-a8c4-fe7ca42b2c3f' vmin='1' vmaj='1' codename='default_target8' panelId='-1' x='-24.5' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='pin' data='$PORTB0.7' />
+						<value target='polarity' data='000' />
+						<value target='on_color' data='65280' />
+						<value target='length' data='4.000000' />
+						<value target='show_label' data='002' />
+						<value target='label_property' data='pin' />
+						<value target='label_color' data='16777215' />
+						<value target='label_scale' data='1.000000' />
+						<value target='label_auto_scale' data='0' />
+						<value target='label_position' data='003' />
+					</values>
+					<events >
+						<event class='Components' event='Initialise' target='Ev_Property' />
+						<event class='Components' event='Property' target='Ev_Property' />
+					</events>
+					<apis >
+						<api name='TurnOn' alt='TurnOn' type='1' proto='1' />
+						<api name='TurnOff' alt='TurnOff' type='1' proto='1' />
+					</apis>
+					<variables />
+					<macros />
+				</component>
+			</component>
+			<component class_type='ref' guid='d92e8259-f3a8-4176-a8c4-fe7ca42b2c3f' vmin='1' vmaj='1' codename='default_target' panelId='-1' x='4.32225' y='-4.54487' z='-1.92192' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='0' solid='0' layer='0' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='pin' data='$PORTB0.0' />
+					<value target='polarity' data='001' />
+					<value target='on_color' data='10551200' />
+					<value target='length' data='4.000000' />
+					<value target='show_label' data='000' />
+					<value target='label_property' data='pin' />
+					<value target='label_color' data='16777215' />
+					<value target='label_scale' data='1.000000' />
+					<value target='label_auto_scale' data='0' />
+					<value target='label_position' data='003' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<scadaresourcelookup />
+	<keymap />
+	<panel2d shadows='0' lighting='0' brightness='0' >
+		<background rgb='3158064' img='' style='0' />
+		<camera xe='0' ye='0' ze='175.354' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='642' dy='419' zoom='443.002' fix_topleft='0' />
+		<page x='1000' y='1000' show='0' rgb='7360576' />
+		<winpos ID='7005' RectRecentFloat='761,807,1411,1257' RectRecentDocked='590,776,1232,1195' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+	</panel2d>
+	<panel3d shadows='0' lighting='0' brightness='0' perspective='1' >
+		<background rgb='8404224' img='' style='0' />
+		<table rgb='4294967295' img='' style='0' size='0' />
+		<camera xe='70.6169' ye='-87.7349' ze='80.5419' xt='0' yt='0' zt='0' xquat='-0.431324' yquat='-0.152021' zquat='-0.295611' wquat='0.838727' />
+		<camerakey0 xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey1 xe='-3.67394e-14' ye='0' ze='-300' xt='0' yt='0' zt='0' xquat='0' yquat='1' zquat='0' wquat='6.12323e-17' />
+		<camerakey2 xe='0' ye='-300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.707107' yquat='0' zquat='0' wquat='0.707107' />
+		<camerakey3 xe='-3.67394e-14' ye='300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-4.32978e-17' yquat='0.707107' zquat='0.707107' wquat='4.32978e-17' />
+		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
+		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
+		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
+		<winpos ID='7004' RectRecentFloat='-1097,326,-443,903' RectRecentDocked='-3397,1106,-2914,1652' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+	</panel3d>
+	<panels2d count='0' />
+	<layout >
+		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAwgMAADUCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Start' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAwgMAADUCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAwgMAADUCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_set_labels' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAwgMAADUCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAwgMAADUCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_BuildClones' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAwgMAADUCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_SetPins' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAwgMAADUCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LEDOn' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAwgMAADUCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='BarGraph' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAwgMAADUCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='WriteValue' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAwgMAADUCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_SetProperties' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAwgMAADUCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='AllOn' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAwgMAADUCAAA' zoom='100' scrollx='0' scrolly='124' flags='0' />
+	</layout>
+</document>
+</root>

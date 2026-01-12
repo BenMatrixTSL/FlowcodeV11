@@ -1,0 +1,70 @@
+<!-- CRC: 90CF26913586BBA787FE92D5537719331B92F11FE6C592734008B225660B44712B702871DF5ADABCC487AA0E0C74ACDB9A0D46BD3B6AACB92DE4D84759EBB5079CA9DA2D2BBCDAE2A4D1C56CD1580BF57509BB5DF96EEC8DF1FF2AA79179D2E30C71AF1B355814C1D5873C74D24840D439CAB92C9B34F21E5171139925C1117DAB049DD238A2787FA8A31915F4F1CCE14C6C401340774D757FC822C8CC4D8B5D22CB8C36879116A4086944AE325796A64F18551086296860658F2C118AB3CE415383FA32A396D7FE850400E5B608E745107C571680B732A8 -->
+<!-- REVISION: 1.0 -->
+<!-- GUID: F59934E0-5AFA-41A6-A625-B51830FB6484 -->
+<!-- DATE: 08\08\2022 -->
+<!-- DIR: FCD\PIC\10F202.fcdx -->
+<root>
+<device name='10F202' product='PIC' cal='PIC' family='10F' bits='8' >
+    <clock max_speed='4000000' master_divider='4' default='4000000' />
+    <memory >
+        <flash bytes='1024' />
+        <ram bytes='24' />
+    </memory>
+    <configuration address='1' mult='2' >
+	<format >
+	  <word value='0x3FFF' />
+        </format>
+        <setting />
+        <settings >
+            <setting name='WDT' offset='2' mask='1' bits='1' hint='Watchdog Timer' >
+                <option name='Enabled' value='1' />
+                <option name='Disabled' value='0' />
+            </setting>
+            <setting name='MCLRE' offset='4' mask='1' bits='1' hint='Master Clear Enable' >
+                <option name='External' value='1' />
+                <option name='Internal GP3 is I/O' value='0' />
+            </setting>
+            <setting name='CP' offset='3' mask='1' bits='1' hint='Code Protect' >
+                <option name='Disabled' value='1' />
+                <option name='Enabled' value='0' />
+            </setting>
+        </settings>
+    </configuration>
+    <pins sides='2' smd='0' >
+        <pin name='NC' />
+        <pin name='VDD' />
+        <pin name='GP2/T0CKI/COUT/FOSC4' port='0' bit='2' />
+        <pin name='GP1/PGC/CIN-' port='0' bit='1' />
+        <pin name='GP0/PGD/CIN+' port='0' bit='0' />
+        <pin name='NC' />
+        <pin name='VSS' />
+        <pin name='GP3/MCLR' port='0' bit='3' in_only="1" />
+    </pins>
+    <interrupts />
+</device>
+<inline >
+    <defines code="#define MX_10F_TRIS\n\n" />
+    <directives code="#include &lt;xc.h&gt;\n#include &lt;math.h&gt;\n\n" />
+    <main >
+        <start code='\nvoid main()\n{\n\t#ifdef INTOSCHELPER\n\t\tINTOSCHELPERCODE\n\t#endif\n\n' />
+        <end code='\tmainendloop: goto mainendloop;\n}\n\n' />
+        <init code='OSCCAL = OSCCAL &amp; 0xFE;\n\tasm(&quot;movlw 0xDF&quot;);\n\tasm(&quot;OPTION&quot;);\n' />
+    </main>
+    <interrupt >
+        <enable code='' />
+        <start code='' />
+        <end code='' />
+        <init code='' />
+    </interrupt>
+    <config >
+        <start code='' />
+        <body code='__PROG_CONFIG($(address), 0x$(value:x));\n' /> 
+    </config>
+</inline>
+<test >
+    <icd >
+        <clock port='0' pin='1' />
+        <data port='0' pin='0' />
+    </icd>
+</test>
+</root>

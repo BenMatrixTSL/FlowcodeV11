@@ -1,0 +1,26 @@
+REM CRC: 1CECFE3DB3A1BD5169AEA98AD43ADE631EF0A88FFA736FBD84BE44176323F4631AB141636ED489CBC69D111032FE57F4857485C9740DE0A18884855A80FD4903E9D6560191A7227F49703D72566EF0DA796EDD611F6757020C3CAEE8E7DA6987A36A3E61550268AD61D7D8AC44B06CC907B6F9CA4FD1C7C7EDF01B11844ECF8BD2E52A604702C3D006B816A9AB1BA7A4C2C37D3DC4B1C1168BE76012D0E3FD1CD827B78625A0D6471108894C2729F1BA53A882EE77714CCE2C3050DA273BE4EE981E405BD2727147F1446186B1872CA47FA42C174AD1E7B2BCC7899FCA2DDCC03543C1004297ACD4
+REM REVISION: 2.0
+REM GUID: 9E49A524-3A71-4543-82F6-C761A3A28AAF
+REM DATE: 28\02\2025
+REM DIR: FCD\ARM\batch\stm32progDFU.bat
+
+@REM Setup the build parameters 
+@set MX_LOCATION=%~1
+@set MX_PROJECT=%~2
+@set MX_STARM=%~3
+@set MX_PATH=%PATH%
+
+@set PATH=%PATH%;C:\Program Files\STMicroelectronics\STM32Cube\STM32CubeProgrammer\bin
+@STM32_Programmer_CLI.exe -version  > nul 2>&1
+@if %ERRORLEVEL% neq 0 (
+echo ************************************************************
+echo STM32_Programmer_CLI.exe not found
+echo Download and install STM32CubeProgrammer from www.st.com
+echo ************************************************************
+) else (
+echo ************************************************************
+echo Hold BOOT0 button and press NRST button on target board
+echo ************************************************************
+STM32_Programmer_CLI.exe -c port=usb1 -vb 1 -w "%MX_LOCATION%%MX_PROJECT%.hex"
+)
+@set PATH=%MX_PATH%

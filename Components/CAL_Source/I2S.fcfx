@@ -1,0 +1,553 @@
+<root>
+<document scada='0' schema='103' license='1,CompMaker,PWKUUN' title='' description='' fcversion='655360' target='ESP.ESP32.ESP32' >
+	<config data='' clkspd='240000000' simspd='1' usewdt='0' constif='1' Use3V3='0' />
+	<plugins >
+		<dll_models enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug />
+	<traces />
+	<ghost >
+		<FK2 >
+			<data name='FK2D0' port='4294967295' pin='4294967295' />
+			<data name='FK2D1' port='4294967295' pin='4294967295' />
+			<data name='FK2D2' port='4294967295' pin='4294967295' />
+			<data name='FK2D3' port='4294967295' pin='4294967295' />
+			<data name='FK2D4' port='4294967295' pin='4294967295' />
+			<data name='FK2D5' port='4294967295' pin='4294967295' />
+			<data name='FK2D6' port='4294967295' pin='4294967295' />
+			<data name='FK2D7' port='4294967295' pin='4294967295' />
+			<data name='FK2D8' port='4294967295' pin='4294967295' />
+			<data name='FK2D9' port='4294967295' pin='4294967295' />
+			<data name='FK2D10' port='4294967295' pin='4294967295' />
+			<data name='FK2D11' port='4294967295' pin='4294967295' />
+			<data name='FK2D12' port='4294967295' pin='4294967295' />
+			<data name='FK2D13' port='4294967295' pin='4294967295' />
+			<data name='FK2D14' port='4294967295' pin='4294967295' />
+			<data name='FK2D15' port='4294967295' pin='4294967295' />
+			<data name='FK2A0' port='4294967295' pin='4294967295' />
+			<data name='FK2A1' port='4294967295' pin='4294967295' />
+			<data name='FK2A2' port='4294967295' pin='4294967295' />
+			<data name='FK2A3' port='4294967295' pin='4294967295' />
+			<data name='FK2A4' port='4294967295' pin='4294967295' />
+			<data name='FK2A5' port='4294967295' pin='4294967295' />
+		</FK2>
+		<ICD >
+			<data name='AnalogPrescaleValue' value='19' />
+			<data name='DigitalSampleRate' value='100000' />
+			<data name='BreakpointCount' value='8' />
+			<data name='CallStackDepthCount' value='8' />
+			<data name='ClockPort' value='1' />
+			<data name='ClockPin' value='6' />
+			<data name='DataPort' value='1' />
+			<data name='DataPin' value='7' />
+			<data name='UseDefaultPins' value='1' />
+			<data name='WrapEnabled' value='1' />
+			<data name='CommsDelayOverridden' value='0' />
+			<data name='CommsDelay' value='1' />
+			<data name='CalculatedCommsDelay' value='1' />
+			<data name='AnalogEB2PrescaleValue' value='2' />
+			<data name='DigitalEB2SampleRate' value='100000' />
+		</ICD>
+		<pins >
+			<digital A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+			<analog A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+		</pins>
+	</ghost>
+	<components >
+		<settings autoimg='0' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='081af1a1-da0b-426d-9ca6-58d8313d1499' vstate='40' vmin='0' vmaj='2' srcleaf='I2S.fcfx' visiblename='I2S Master/Slave ESP32' description='Provides access to the onboard inter-IC sound (I2S) peripheras allowing for simple digital 
+audio input and output.' category='Comms: Interface' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' catenable='1' author='Matrix TSL' manuname='Matrix TSL' manucode='' sysinfo='9442131' keywords='' dynamic='1' scadaCompatible='0' embeddedCompatible='1' showmacros='1' iconpath='..\icons\components\speaker.png' />
+		<component class_type='root' codename='I2S' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+			<resources />
+			<properties >
+				<property name='Channel' target='CHANNEL' typeid='16' hidden='0' locked='0' info='DAC Channel number' filter='001Channel 1
+002Channel 2
+' expansion='MX_I2S_CHANNEL_$(instance)' initialiser='$(value)' />
+				<property name='Clock Pin' target='ClockPin' typeid='5' hidden='0' locked='0' info='I2S Clock Pin' expansion='MX_I2S_CK_PIN_$(instance)' initialiser='($(value))' />
+				<property name='Serial Data Pin' target='SerialDataPin' typeid='5' hidden='0' locked='0' info='I2S Serial Data (SD) Pin' expansion='MX_I2S_SD_PIN_$(instance)' initialiser='($(value))' />
+				<property name='Word Select Pin' target='WSPin' typeid='5' hidden='0' locked='0' info='I2S Word Select (WS) Pin' expansion='MX_I2S_WS_PIN_$(instance)' initialiser='($(value))' />
+				<property name='Mode' target='Mode' typeid='16' hidden='0' locked='0' info='Configures if the I2S peripheral is a master or slave on the bus.' filter='000Master
+001Slave' expansion='MX_I2S_MASTER_$(instance)' initialiser='($(value))' />
+				<property name='Data Direction' target='DataDirection' typeid='16' hidden='0' locked='0' info='Controls if the I2S data is coming in or out of the microcontroller' filter='000Output
+001Input' expansion='MX_I2S_DDR_$(instance)' initialiser='($(value))' />
+				<property name='Audio Channels' target='AudioChannels' typeid='16' hidden='0' locked='0' info='Number of distinct audio channels in the data stream' filter='000Right &amp; Left
+001All Right
+002All Left
+003Only Right
+004Only Left' expansion='MX_I2S_AUDIO_CHANNELS_$(instance)' initialiser='($(value))' />
+				<property name='Sample Rate' target='SampleRate' typeid='21' hidden='0' locked='0' info='Audio sample rate in Hz' expansion='MX_I2S_SAMPLE_RATE_$(instance)' initialiser='($(value))' />
+				<property name='Data Bits' target='DataBits' typeid='16' hidden='0' locked='0' info='Nmber of bits in each audio sample' filter='01616
+02424
+03232' expansion='MX_I2S_DATA_BITS_$(instance)' initialiser='($(value))' />
+				<property name='DMA Buffer Count' target='DMABuffCount' typeid='21' hidden='0' locked='0' info='I2S DMA Buffer Count ' expansion='MX_I2S_DMABUFFCOUNT_$(instance)' initialiser='($(value))' />
+				<property name='DMA Buffer Size' target='DMABuffSize' typeid='21' hidden='0' locked='0' info='I2S DMA Buffer Size' expansion='MX_I2S_DMABUFFSIZE_$(instance)' initialiser='($(value))' />
+				<property name='Type' target='TYPE' typeid='14' hidden='1' locked='1' info='' expansion='MX_I2S_TYPE_$(value)' initialiser='' />
+				<property name='Simulation' folder='property_1' hidden='0' >
+					<property name='Enabled' target='enabled' typeid='7' hidden='1' locked='1' info='' />
+				</property>
+				<property name='Instance' target='Instance' typeid='21' hidden='1' locked='1' info='' expansion='MX_I2S_REF$(value)' initialiser='' />
+			</properties>
+			<values >
+				<value target='CHANNEL' data='001' />
+				<value target='ClockPin' data='$PORTA.10' />
+				<value target='SerialDataPin' data='$PORTA.11' />
+				<value target='WSPin' data='$PORTA.12' />
+				<value target='Mode' data='000' />
+				<value target='DataDirection' data='000' />
+				<value target='AudioChannels' data='000' />
+				<value target='SampleRate' data='36000' />
+				<value target='DataBits' data='016' />
+				<value target='DMABuffCount' data='6' />
+				<value target='DMABuffSize' data='64' />
+				<value target='TYPE' data='1' />
+				<value target='enabled' data='0' />
+				<value target='Instance' data='0' />
+			</values>
+			<events >
+				<event class='Components' event='Initialise' target='Ev_Initialise' />
+				<event class='Connection' event='FCDChange' target='Ev_ChipChange' />
+				<event class='Connection' event='ChipChange' target='Ev_ChipChange' />
+				<event class='Compile' event='AddProperty' target='Ev_AddProperty' />
+				<event class='Components' event='Property' target='Ev_Property_Change' />
+				<event class='Components' event='Renamed' target='Ev_Renamed' />
+			</events>
+			<apis >
+				<api name='Stop' alt='FC_CAL_I2S_$(macro)_$(instance)' type='5' proto='1' />
+				<api name='Read' alt='FC_CAL_I2S_$(macro)_$(instance)' type='5' proto='1' />
+				<api name='CheckQueue' alt='FC_CAL_I2S_$(macro)_$(instance)' type='5' proto='1' />
+				<api name='Write' alt='FC_CAL_I2S_$(macro)_$(instance)' type='5' proto='1' />
+				<api name='Start' alt='FC_CAL_I2S_$(macro)_$(instance)' type='5' proto='1' />
+				<api name='Initialise' alt='FC_CAL_I2S_$(macro)_$(instance)' type='5' proto='1' />
+			</apis>
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='false' type='b1' description='' isconst='1' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='ScopeOld' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='out' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='10' setinit='10' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='ScopeStream' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='ScopeGroup' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='true' type='b1' description='' isconst='1' isHidden='0' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='Stop' description='Stops the I2S audio stream' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Initialise' description='Initialisation routine for the component once the component is linked to its parent' statediag='0' >
+						<return name='Return' type='u32' description='Non-zero to prevent initialisation' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='ParentName' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<local name='ObjectHandle' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Temp' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='LoadFcdProperties' />
+						<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.GetInstance' >
+							<return exp='.Temp' />
+							<argument exp='this' />
+						</command>
+						<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;instance&quot;' />
+							<argument exp='.temp' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Property_Change' description='Sent when a property has been changed by the User' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='LoadFcdProperties' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_AddProperty' description='Sent to a component to allow dynamic amendment of global property declarations' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='PropName' type='T8' description='The original Flowcode property' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</param>
+						<param name='Expansion' type='T8*' description='The expanded string to inline to the code' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</param>
+						<local name='Port' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<local name='Number' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<local name='Num' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = 1' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='Compare$ (.PropName,&quot;ClockPin&quot;,1) == 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Port = Mid$ (.Expansion,30,1)' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Number = Mid$ (.Expansion,32,2)' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Number[1] = &apos;)&apos;' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Number[1] = 0' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Num = StringToInt$ (.Number)' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Port[0] = &apos;B&apos;' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Num = .Num + 32' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Expansion = &quot;#define MX_I2S_CK_PIN_&quot; + ToString$ (Instance) + &quot; &quot; + ToString$ (.Num) + &quot;\n&quot;' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='Compare$ (.PropName,&quot;WSPin&quot;,1) == 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Port = Mid$ (.Expansion,30,1)' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Number = Mid$ (.Expansion,32,2)' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Number[1] = &apos;)&apos;' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Number[1] = 0' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Num = StringToInt$ (.Number)' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Port[0] = &apos;B&apos;' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Num = .Num + 32' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Expansion = &quot;#define MX_I2S_WS_PIN_&quot; + ToString$ (Instance) + &quot; &quot; + ToString$ (.Num) + &quot;\n&quot;' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='Compare$ (.PropName,&quot;SerialDataPin&quot;,1) == 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Port = Mid$ (.Expansion,30,1)' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Number = Mid$ (.Expansion,32,2)' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Number[1] = &apos;)&apos;' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Number[1] = 0' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Num = StringToInt$ (.Number)' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Port[0] = &apos;B&apos;' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Num = .Num + 32' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Expansion = &quot;#define MX_I2S_SD_PIN_&quot; + ToString$ (Instance) + &quot; &quot; + ToString$ (.Num) + &quot;\n&quot;' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_ChipChange' description='Sent when the target device has changed' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Target' type='T8' description='The name of the new target device' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</param>
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='LoadFcdProperties' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Read' description='Wait timeout ticks to receive length number of samples, returns samples received.
+24 and 32-bit data must be split into two integer values per sample.' statediag='0' >
+						<return name='Return' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Data' type='s16' description='Data array to populate with incoming data' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' >
+							<array size='10' />
+						</param>
+						<param name='Length' type='u16' description='Max number of samples to try and receive' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Timeout' type='u16' description='Max number of ticks to wait for incoming samples' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='LibraryComponent1' macro='FlashRx' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = .Length' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='GetChannelList' description='' statediag='0' >
+						<return name='Return' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;\x00&quot;' setinit='' >
+							<array size='2000' />
+						</return>
+						<local name='n' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='x' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='s' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<local name='fcd' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = &quot;&quot;' />
+							<exp exp='.x = 0' />
+						</command>
+						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='FCD.GetPathHandle' >
+							<return exp='.fcd' />
+							<argument exp='&quot;device.i2s&quot;' />
+							<argument exp='0' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.fcd' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.x = .x + 1' />
+									<exp exp='.s = &quot;Channel &quot; + ToString$ (.x)' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='fcdhelper' macro='GetIntListItem' >
+									<return exp='.s' />
+									<argument exp='.x' />
+									<argument exp='.s' />
+								</command>
+								<command class_type='calculation' title='Add to result' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = .Return + .s' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.StepNamedNext' >
+									<argument exp='.fcd' />
+									<argument exp='&quot;i2s&quot;' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='LoadSamples' description='Loads in a single or block of samples' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Left' type='s32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' >
+							<array size='1' />
+						</param>
+						<param name='Right' type='s32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' >
+							<array size='1' />
+						</param>
+						<param name='Count' type='u16' description='Number of samples to load' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Idx' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.idx &lt; .Count' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Idx = .Idx + 1' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='0' swap='0' >
+							<flowline />
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='CheckQueue' description='Checks the I2S Event queue for a DMA Buffer full or empty event.
+For an output returns true when there is an empty DMA buffer available.
+For an input return true when there is a full DMA buffer available.' statediag='0' >
+						<return name='Return' type='b1' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Renamed' description='' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Name' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<command class_type='sim' title='' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.GetName' >
+							<return exp='.Name' />
+							<argument exp='this' />
+						</command>
+						<command class_type='sim' title='' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='LibraryComponent1' />
+							<argument exp='&quot;Name&quot;' />
+							<argument exp='.Name' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Write' description='Wait timeout ticks to send length number of samples, returns samples sent
+24 and 32-bit data must be split into two integer values per sample.' statediag='0' >
+						<return name='Return' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Data' type='s16' description='Data array containing outgoing data' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' >
+							<array size='10' />
+						</param>
+						<param name='Length' type='u16' description='Max number of samples to try and send' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Timeout' type='u16' description='Max number of ticks to wait for space in the outgoing buffer' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='LibraryComponent1' macro='FlashTx' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = .Length' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='GetTypeValue' description='Gets the ADC type from the FCD for the target' statediag='0' >
+						<return name='Return' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;\x00&quot;' setinit='' >
+							<array size='2000' />
+						</return>
+						<local name='fcd_h' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='FCD.GetPathHandle' >
+							<return exp='.fcd_h' />
+							<argument exp='&quot;device.i2s&quot;' />
+							<argument exp='0' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.GetSubValue' >
+							<return exp='.Return' />
+							<argument exp='.fcd_h' />
+							<argument exp='&quot;type&quot;' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Start' description='Starts the I2S audio stream, auto started by the initialise function.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='LoadFcdProperties' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<local name='Multi' type='u32' description='' isconst='0' isHidden='0' isinit='1' usrinit='1' setinit='1' />
+						<local name='Count' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;TYPE&quot;' />
+							<argument exp='GetTypeValue()' />
+						</command>
+						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetFilter' >
+							<argument exp='this' />
+							<argument exp='&quot;CHANNEL&quot;' />
+							<argument exp='GetChannelList ()' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_Initialise' />
+						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Initialise' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Initialise' description='Configures the I2C peripheral ready for data.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='fc3c670c-502a-418f-a123-649179752383' vmin='0' vmaj='1' codename='fcdhelper' panelId='-1' x='0' y='0' z='0' xsz='0.01' ysz='0.01' zsz='0.01' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values />
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='58be670e-18fb-477e-ab09-61fde14b23ec' vmin='0' vmaj='1' codename='LibraryComponent1' panelId='-1' x='0' y='0' z='0' xsz='100' ysz='100' zsz='100' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Text::sText' data='Inter-IC
+Sound
+(I2S)' />
+					<value target='Name' data='' />
+					<value target='Peripheral::sText' data='' />
+					<value target='Text::nVerticalAlignment' data='002' />
+					<value target='ShowComms' data='1' />
+					<value target='InputIcon::CommsType' data='255' />
+					<value target='InputIcon::LinkTo' data='0' />
+					<value target='IconsOnRight' data='0' />
+					<value target='OutputIcon::CommsType' data='255' />
+					<value target='OutputIcon::LinkTo' data='0' />
+					<value target='ConsoleHandle' data='0' />
+					<value target='Upgraded' data='0' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<scadaresourcelookup />
+	<keymap />
+	<panel2d shadows='2' lighting='0' brightness='0' >
+		<background rgb='9737364' img='' style='0' />
+		<camera xe='-0.485221' ye='-7.53083' ze='382.677' xt='-0.485221' yt='-7.53083' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='622' dy='343' zoom='196.672' fix_topleft='0' />
+		<page x='1000' y='1000' show='0' rgb='15793151' />
+		<winpos ID='7005' RectRecentFloat='1270,427,1920,877' RectRecentDocked='0,0,642,413' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+	</panel2d>
+	<panel3d shadows='0' lighting='0' brightness='0' perspective='1' >
+		<background rgb='32768' img='' style='0' />
+		<table rgb='8404224' img='' style='0' size='0' />
+		<camera xe='1.02999' ye='1.05805' ze='93.2186' xt='1.02999' yt='1.05805' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey0 xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey1 xe='-3.67394e-14' ye='0' ze='-300' xt='0' yt='0' zt='0' xquat='0' yquat='1' zquat='0' wquat='6.12323e-17' />
+		<camerakey2 xe='0' ye='-300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.707107' yquat='0' zquat='0' wquat='0.707107' />
+		<camerakey3 xe='-3.67394e-14' ye='300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-4.32978e-17' yquat='0.707107' zquat='0.707107' wquat='4.32978e-17' />
+		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
+		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
+		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
+		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='40,4580,682,4993' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+	</panel3d>
+	<panels2d count='0' />
+	<layout >
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetTypeValue' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetChannelList' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_ChipChange' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property_Change' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LoadFcdProperties' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Write' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Read' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_AddProperty' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LoadSamples' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Start' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Stop' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CheckQueue' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAUwYAABoCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

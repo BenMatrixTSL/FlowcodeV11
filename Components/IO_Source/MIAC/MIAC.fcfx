@@ -1,0 +1,2012 @@
+<root>
+<document scada='0' schema='103' license='1,CompMaker,PWKUUN' title='' description='' fcversion='655360' target='PIC.18F.MIAC V2' >
+	<config data='' clkspd='48000000' simspd='1' usewdt='0' constif='0' Use3V3='0' />
+	<plugins >
+		<dll_models enabled='1' />
+	</plugins>
+	<supplement use='1' head='
+#define LCD_PORT    portd
+#define LCD_TRIS    trisd
+#define LCD_BIT0    5
+#define LCD_BIT1    4
+#define LCD_BIT2    3
+#define LCD_BIT3    0
+#define LCD_RS      1
+#define LCD_E       6
+
+#define LCD_DELAY  FCI_DELAYBYTE_US(100)
+
+void LCDRawSend(char nIn, char nMask);
+#define MX_ADC_SAMP_TIME 40
+MX_UINT8 InputANALOG_8Bit(MX_UINT8 InputID);
+
+void LCDRawSend(char nIn, char nMask)
+{
+	unsigned char pt;
+	unsigned char outVal;
+	outVal = LCD_PORT;
+	clear_bit(outVal, LCD_BIT0);
+	clear_bit(outVal, LCD_BIT1);
+	clear_bit(outVal, LCD_BIT2);
+	clear_bit(outVal, LCD_BIT3);
+	clear_bit(outVal, LCD_RS);
+	clear_bit(outVal, LCD_E);
+
+	pt = ((nIn &gt;&gt; 4) &amp; 0x0f);
+	if (pt &amp; 0x01)
+	    set_bit(outVal, LCD_BIT0);
+	if (pt &amp; 0x02)
+	    set_bit(outVal, LCD_BIT1);
+	if (pt &amp; 0x04)
+	    set_bit(outVal, LCD_BIT2);
+	if (pt &amp; 0x08)
+	    set_bit(outVal, LCD_BIT3);
+
+	if (nMask)
+	    set_bit(outVal, LCD_RS);
+
+	LCD_PORT = outVal;
+
+	LCD_DELAY;
+	set_bit (LCD_PORT, LCD_E);
+
+	LCD_DELAY;
+	clear_bit (LCD_PORT, LCD_E);
+
+	pt = (nIn &amp; 0x0f);
+	LCD_DELAY;
+	outVal = LCD_PORT;
+
+	clear_bit(outVal, LCD_BIT0);
+	clear_bit(outVal, LCD_BIT1);
+	clear_bit(outVal, LCD_BIT2);
+	clear_bit(outVal, LCD_BIT3);
+	clear_bit(outVal, LCD_RS);
+
+	clear_bit(outVal, LCD_E);
+
+	if (pt &amp; 0x01)
+	    set_bit(outVal, LCD_BIT0);
+	if (pt &amp; 0x02)
+	    set_bit(outVal, LCD_BIT1);
+	if (pt &amp; 0x04)
+	    set_bit(outVal, LCD_BIT2);
+	if (pt &amp; 0x08)
+	    set_bit(outVal, LCD_BIT3);
+
+	if (nMask)
+	    set_bit(outVal, LCD_RS);
+
+	LCD_PORT = outVal;
+
+	LCD_DELAY;
+	set_bit (LCD_PORT, LCD_E);
+
+	LCD_DELAY;
+	clear_bit (LCD_PORT, LCD_E);
+
+	LCD_DELAY;
+}
+
+MX_UINT8 InputANALOG_8Bit(MX_UINT8 InputID)
+{
+	//set up ADC conversion
+	char cnt, chan_id;
+
+	if(InputID &amp;&amp; (InputID &lt; 9))
+	{
+		chan_id = InputID;
+		if (InputID &gt;= 5) chan_id++;
+
+		ADCON2 = 0x03;
+		ADCON1 = 15 - chan_id;
+
+		//turn ADC on
+		ADCON0 = 0x01 | ((chan_id - 1) &lt;&lt; 2);
+
+		//wait the acquisition time
+		cnt = 0;
+		while (cnt &lt; MX_ADC_SAMP_TIME) cnt++;
+
+		//begin conversion and wait until it has finished
+		ADCON0 = ADCON0 | 0x02;
+		while (ADCON0 &amp; 0x02);
+
+		ADCON1 = 0x0f;
+		ADCON0 = 0x00;
+	}
+
+	return(ADRESH);
+}
+' body='' />
+	<debug />
+	<traces />
+	<ghost >
+		<FK2 >
+			<data name='FK2D0' port='4294967295' pin='4294967295' />
+			<data name='FK2D1' port='4294967295' pin='4294967295' />
+			<data name='FK2D2' port='4294967295' pin='4294967295' />
+			<data name='FK2D3' port='4294967295' pin='4294967295' />
+			<data name='FK2D4' port='4294967295' pin='4294967295' />
+			<data name='FK2D5' port='4294967295' pin='4294967295' />
+			<data name='FK2D6' port='4294967295' pin='4294967295' />
+			<data name='FK2D7' port='4294967295' pin='4294967295' />
+			<data name='FK2D8' port='4294967295' pin='4294967295' />
+			<data name='FK2D9' port='4294967295' pin='4294967295' />
+			<data name='FK2D10' port='4294967295' pin='4294967295' />
+			<data name='FK2D11' port='4294967295' pin='4294967295' />
+			<data name='FK2D12' port='4294967295' pin='4294967295' />
+			<data name='FK2D13' port='4294967295' pin='4294967295' />
+			<data name='FK2D14' port='4294967295' pin='4294967295' />
+			<data name='FK2D15' port='4294967295' pin='4294967295' />
+			<data name='FK2A0' port='4294967295' pin='4294967295' />
+			<data name='FK2A1' port='4294967295' pin='4294967295' />
+			<data name='FK2A2' port='4294967295' pin='4294967295' />
+			<data name='FK2A3' port='4294967295' pin='4294967295' />
+			<data name='FK2A4' port='4294967295' pin='4294967295' />
+			<data name='FK2A5' port='4294967295' pin='4294967295' />
+		</FK2>
+		<ICD >
+			<data name='AnalogPrescaleValue' value='19' />
+			<data name='DigitalSampleRate' value='100000' />
+			<data name='BreakpointCount' value='8' />
+			<data name='CallStackDepthCount' value='8' />
+			<data name='ClockPort' value='2' />
+			<data name='ClockPin' value='4' />
+			<data name='DataPort' value='0' />
+			<data name='DataPin' value='5' />
+			<data name='UseDefaultPins' value='1' />
+			<data name='WrapEnabled' value='1' />
+			<data name='CommsDelayOverridden' value='0' />
+			<data name='CommsDelay' value='4' />
+			<data name='CalculatedCommsDelay' value='4' />
+			<data name='AnalogEB2PrescaleValue' value='2' />
+			<data name='DigitalEB2SampleRate' value='100000' />
+		</ICD>
+		<pins >
+			<digital A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+			<analog A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+		</pins>
+	</ghost>
+	<components >
+		<settings autoimg='0' center='1' unitscale='1' fixedscale='0' fixedx='0' fixedy='0' fixedz='0' headcode='1' />
+		<definition guid='d69543a8-f38b-488a-b905-9fa2d5970beb' vstate='40' vmin='7' vmaj='1' srcleaf='MIAC.fcfx' visiblename='MIAC (PIC)' description='MIAC - Matrix Industrial Automotive Controller
+PLC type module based on a PIC18F4455 device, produced by Matrix
+Component includes functions to drive the functionality of the MIAC and MIAC system.' category='Misc' category2='' category3='' bIs2dOnly='0' bIs3dOnly='1' catenable='1' author='Matrix Ltd' manuname='' manucode='' sysinfo='1053167' keywords='' dynamic='1' scadaCompatible='0' embeddedCompatible='1' showmacros='1' iconpath='..\..\Icons\Components\MIAC.png' />
+		<component class_type='root' codename='miac' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+			<resources >
+				<file name='MIAC_body.mesh' source='..\..\models\MIAC_body.mesh' />
+			</resources>
+			<properties >
+				<property name='LCD_X' target='LCD_X' typeid='14' hidden='1' locked='0' info='' />
+				<property name='LCD_Y' target='LCD_Y' typeid='14' hidden='1' locked='0' info='' />
+			</properties>
+			<values >
+				<value target='LCD_X' data='0' />
+				<value target='LCD_Y' data='0' />
+			</values>
+			<events >
+				<event class='Simulation' event='Start' target='Ev_Sim_Start' />
+				<event class='Components' event='Property' target='Ev_Property' />
+			</events>
+			<apis >
+				<api name='InputANALOG_10Bit' alt='InputANALOG_10BitSim' type='1' proto='1' />
+				<api name='RelayOFF' alt='RelayOFF' type='1' proto='1' />
+				<api name='PrintString' alt='PrintString' type='1' proto='1' />
+				<api name='GetKeypad' alt='GetKeypadSim' type='1' proto='1' />
+				<api name='DisplayStart' alt='DisplayStartSim' type='1' proto='1' />
+				<api name='DisplayCommand' alt='DisplayCommand' type='1' proto='1' />
+				<api name='PrintASCII' alt='PrintASCII' type='1' proto='1' />
+				<api name='PrintNumber' alt='PrintNumber' type='1' proto='1' />
+				<api name='PrintFormattedNumber' alt='PrintFormattedNumber' type='1' proto='1' />
+				<api name='EvClick' alt='' type='2' proto='1' />
+				<api name='DisplayClear' alt='DisplayClearSim' type='1' proto='1' />
+				<api name='RelayON' alt='RelayON' type='1' proto='1' />
+				<api name='OutputOFF' alt='OutputOFF' type='1' proto='1' />
+				<api name='DisplayCursor' alt='DisplayCursor' type='1' proto='1' />
+				<api name='OutputON' alt='OutputON' type='1' proto='1' />
+				<api name='InputDIGITAL' alt='InputDIGITAL' type='1' proto='1' />
+				<api name='InputANALOG' alt='InputANALOGSim' type='1' proto='1' />
+			</apis>
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='false' type='b1' description='' isconst='1' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='true' type='b1' description='' isconst='1' isHidden='0' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='InputANALOG_10Bit' description='Returns the 10 bit value for the analogue input requested by parameter InputID 
+(Inputs 1 to 8)
+' statediag='0' >
+						<return name='Return' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='InputID' type='u8' description='The input to read from 1 to 8.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='native' title='C Code' textarea='36,0,734,0' ccode='FCR_RETVAL = InputANALOG_8Bit(FCL_INPUTID);
+FCR_RETVAL = FCR_RETVAL &lt;&lt; 2;
+FCR_RETVAL = FCR_RETVAL | (ADRESL &gt;&gt; 6);
+' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='InputANALOG_10BitSim' description='' statediag='0' >
+						<return name='Return' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='InputID' type='u8' description='The input to read.  From 1 to 8.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='ChId' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='VAL' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='ON' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' textarea='36,0,511,300' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.InputID &lt; 5' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.ChId = .InputID - 1' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.ChId = .InputID' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Connection.GetAn' >
+							<return exp='.VAL' />
+							<argument exp='.ChId' />
+							<argument exp='1' />
+						</command>
+						<command class_type='decision' title='' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.VAL &gt; 512' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.ON = 1' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.VAL = .VAL - 1' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.ON = 0' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='switch' title='Switch' textarea='36,25,511,325' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.InputID' >
+							<case >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+								</flowline>
+							</case>
+							<case exp='1' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='calculation' title='Calculation' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='$PORTA.0 = .ON' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='2' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='calculation' title='Calculation' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='$PORTA.1 = .ON' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='3' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='calculation' title='Calculation' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='$PORTA.2 = .ON' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='4' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='calculation' title='Calculation' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='$PORTA.3 = .ON' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='5' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='calculation' title='Calculation' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='$PORTE.0 = .ON' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='6' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='calculation' title='Calculation' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='$PORTE.1 = .ON' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='7' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='calculation' title='Calculation' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='$PORTE.2 = .ON' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='8' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='calculation' title='Calculation' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='$PORTB.2 = .ON' />
+									</command>
+								</flowline>
+							</case>
+						</command>
+						<command class_type='calculation' title='Calculation' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = .VAL' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='RelayOFF' description='Turns off the requested relay given by parameter RelayID, values 1 to 4' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='RelayID' type='u8' description='The relay to turn off. From 1 to 4.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='switch' title='Switch' textarea='36,25,511,325' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.RelayID' >
+							<case >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+								</flowline>
+							</case>
+							<case exp='1' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='calculation' title='Clear bit' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='$PORTB.4 = 0' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='2' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='calculation' title='Clear bit' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='$PORTB.5 = 0' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='3' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='calculation' title='Clear bit' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='$PORTB.6 = 0' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='4' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='calculation' title='Clear bit' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='$PORTB.7 = 0' />
+									</command>
+								</flowline>
+							</case>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='PrintString' description='Prints the given character string to the display at the current cursor position and moves the cursor position.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Str' type='T8*' description='The string to send to the display.' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</param>
+						<local name='idx' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='len' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.idx = 0' />
+							<exp exp='.len = Length$ (.Str)' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='(.Str[.idx] &lt;&gt; 0) AND (.idx &lt; .len)' >
+							<flowline >
+								<command class_type='call' title='Call Macro' textarea='36,0,511,300' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='PrintASCII' >
+									<argument exp='.Str[.idx]' />
+								</command>
+								<command class_type='calculation' title='Calculation' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.idx = .idx + 1' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='GetKeypad' description='Returns the key code of the key that is pressed, otherwise if nothing is pressed then returns 255' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='native' title='C Code' textarea='36,0,36,646' ccode='	//get matrices for rows and columns
+	char kpad_col_select = 0x08;
+	char kpad_col_mask = 0x38;
+	char kpad_row_mask = 0x07;
+	char trisd_temp = TRISD;
+	char iCol;
+	char iRow;
+	char c_ip;
+
+	//set up i/o of port (rows = inputs, columns = outputs)
+	TRISD = (TRISD | kpad_row_mask) &amp; ~kpad_col_mask;
+
+	for (iCol=0; iCol&lt;3; iCol++)
+	{
+		//output the appropriate column low
+		PORTD = (LATD | kpad_col_mask) &amp; ~(kpad_col_select);
+
+		//delay
+		delay_10us(2);
+
+		//read the port
+		c_ip = PORTD;
+
+		//check for a hit
+		for (iRow=0; iRow&lt;3; iRow++)
+		{
+			if ((c_ip &amp; 0x01) == 0)
+			{
+				//found it!
+				goto found_key;
+			}
+			c_ip &gt;&gt;= 1;
+		}
+		kpad_col_select &lt;&lt;= 1;
+	}
+
+	//if it gets here, it has not been found...
+	TRISD = trisd_temp;
+	return (255);
+
+  found_key:
+	TRISD = trisd_temp;
+	FCR_RETVAL = (iCol * 3 + iRow);
+' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='DisplayStart' description='Initialise the display ready for use' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='native' title='C Code' textarea='36,0,36,388' ccode='	clear_bit(LCD_TRIS, LCD_BIT0);
+	clear_bit(LCD_TRIS, LCD_BIT1);
+	clear_bit(LCD_TRIS, LCD_BIT2);
+	clear_bit(LCD_TRIS, LCD_BIT3);
+	clear_bit(LCD_TRIS, LCD_RS);
+	clear_bit(LCD_TRIS, LCD_E);
+
+	delay_ms(12);
+
+	LCDRawSend(0x33, 0);
+	delay_ms(2);
+	LCDRawSend(0x33, 0);
+	delay_ms(2);
+
+	LCDRawSend(0x32, 0);
+	delay_ms(2);
+	LCDRawSend(0x2c, 0);
+	delay_ms(2);
+	LCDRawSend(0x06, 0);
+	delay_ms(2);
+	LCDRawSend(0x0c, 0);
+	delay_ms(2);
+
+	//clear the display
+	LCDRawSend(0x01, 0);
+	delay_ms(2);
+	LCDRawSend(0x02, 0);
+	delay_ms(2);
+' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='DisplayCommand' description='Sends the given command to the display' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Cmd' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='native' title='C Code' textarea='36,0,511,300' ccode='
+	LCDRawSend(FCL_CMD, 0);
+	delay_ms(2);
+
+' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='PrintASCII' description='Prints the given character to the display at the current cursor position and increments the cursor position.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Char' type='u8' description='ASCII code of the character to print.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='native' title='C Code' ccode='
+	LCDRawSend(FCL_CHAR, 0x10);
+' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+						<command class_type='sim' title='Panel' textarea='36,0,511,300' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='ctrl_lcd' macro='AddChar' >
+							<argument exp='LCD_X' />
+							<argument exp='LCD_Y' />
+							<argument exp='.Char' />
+						</command>
+						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;LCD_X&quot;' />
+							<argument exp='LCD_X + 1' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='PrintNumber' description='Prints the given number to the display starting at the current cursor position and moves the cursor position.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='n' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='tmp_byte' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='tmp_int' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.tmp_byte = 0' />
+							<exp exp='.tmp_int = 0' />
+						</command>
+						<command class_type='decision' title='Decision' textarea='36,0,511,300' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.n &lt; 0' swap='0' >
+							<flowline >
+								<command class_type='call' title='Call Macro' textarea='36,0,511,300' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='PrintASCII' >
+									<argument exp='&apos;-&apos;' />
+								</command>
+								<command class_type='calculation' title='Calculation' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.n = 0 - .n' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='calculation' title='Calculation' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.tmp_int = .n' />
+						</command>
+						<command class_type='decision' title='Decision' textarea='36,0,511,300' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.n &gt;= 10000' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.tmp_byte = .tmp_int / 10000' />
+									<exp exp='.tmp_int = .tmp_int - (.tmp_byte * 10000)' />
+								</command>
+								<command class_type='call' title='Call Macro' textarea='36,0,511,300' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='PrintASCII' >
+									<argument exp='&apos;0&apos; + .tmp_byte' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Decision' textarea='36,0,511,300' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.n &gt;= 1000' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.tmp_byte = .tmp_int / 1000' />
+									<exp exp='.tmp_int = .tmp_int - (.tmp_byte * 1000)' />
+								</command>
+								<command class_type='call' title='Call Macro' textarea='36,0,511,300' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='PrintASCII' >
+									<argument exp='&apos;0&apos; + .tmp_byte' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Decision' textarea='36,0,511,300' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.n &gt;= 100' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.tmp_byte = .tmp_int / 100' />
+									<exp exp='.tmp_int = .tmp_int - (.tmp_byte * 100)' />
+								</command>
+								<command class_type='call' title='Call Macro' textarea='36,0,511,300' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='PrintASCII' >
+									<argument exp='&apos;0&apos; + .tmp_byte' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Decision' textarea='36,0,511,300' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.n &gt;= 10' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.tmp_byte = .tmp_int / 10' />
+									<exp exp='.tmp_int = .tmp_int - (.tmp_byte * 10)' />
+								</command>
+								<command class_type='call' title='Call Macro' textarea='36,0,511,300' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='PrintASCII' >
+									<argument exp='&apos;0&apos; + .tmp_byte' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='call' title='Call Macro' textarea='36,0,511,300' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='PrintASCII' >
+							<argument exp='&apos;0&apos; + .tmp_int' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='LCDRawSend' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='In' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Mask' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='native' title='C Code' textarea='36,0,36,959' ccode='
+	unsigned char pt;
+	unsigned char outVal;
+	outVal = LCD_PORT;
+	clear_bit(outVal, LCD_BIT0);
+	clear_bit(outVal, LCD_BIT1);
+	clear_bit(outVal, LCD_BIT2);
+	clear_bit(outVal, LCD_BIT3);
+	clear_bit(outVal, LCD_RS);
+	clear_bit(outVal, LCD_E);
+	pt = ((FCL_IN &gt;&gt; 4) &amp; 0x0f);
+	if (pt &amp; 0x01)
+	    set_bit(outVal, LCD_BIT0);
+	if (pt &amp; 0x02)
+	    set_bit(outVal, LCD_BIT1);
+	if (pt &amp; 0x04)
+	    set_bit(outVal, LCD_BIT2);
+	if (pt &amp; 0x08)
+	    set_bit(outVal, LCD_BIT3);
+	if (FCL_MASK)
+	    set_bit(outVal, LCD_RS);
+	LCD_PORT = outVal;
+	LCD_DELAY;
+	set_bit (LCD_PORT, LCD_E);
+	LCD_DELAY;
+	clear_bit (LCD_PORT, LCD_E);
+	pt = (FCL_IN &amp; 0x0f);
+	LCD_DELAY;
+	outVal = LCD_PORT;
+	clear_bit(outVal, LCD_BIT0);
+	clear_bit(outVal, LCD_BIT1);
+	clear_bit(outVal, LCD_BIT2);
+	clear_bit(outVal, LCD_BIT3);
+	clear_bit(outVal, LCD_RS);
+	clear_bit(outVal, LCD_E);
+	if (pt &amp; 0x01)
+	    set_bit(outVal, LCD_BIT0);
+	if (pt &amp; 0x02)
+	    set_bit(outVal, LCD_BIT1);
+	if (pt &amp; 0x04)
+	    set_bit(outVal, LCD_BIT2);
+	if (pt &amp; 0x08)
+	    set_bit(outVal, LCD_BIT3);
+	if (FCL_MASK)
+	    set_bit(outVal, LCD_RS);
+	LCD_PORT = outVal;
+	LCD_DELAY;
+	set_bit (LCD_PORT, LCD_E);
+	LCD_DELAY;
+	clear_bit (LCD_PORT, LCD_E);
+	LCD_DELAY;
+' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='PrintFormattedNumber' description='Will allow you to print a number up to 32-bits with signed or unsigned formatting.
+Signed = -2147483648 to 2147483647
+Unsigned = 0 to 4294967295' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Number' type='u32' description='Enter the number or variable to print to the LCD' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Format' type='b1' description='0=Signed, 1=Unsigned' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='s' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='15' />
+						</local>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Format = 1' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.s = STRING UNSIGNED .Number' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.s = STRING SIGNED .Number' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='call' title='Call Macro' textarea='36,0,511,300' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='PrintString' >
+							<argument exp='.s' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='LED_On' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Index' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='switch' title='Switch' textarea='36,25,511,325' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Index' >
+							<case >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+								</flowline>
+							</case>
+							<case exp='1' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='sim' title='Panel' textarea='36,0,511,300' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetColor' >
+										<argument exp='led_in1' />
+										<argument exp='255' />
+										<argument exp='0' />
+										<argument exp='0' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='2' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='sim' title='Panel' textarea='36,0,511,300' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetColor' >
+										<argument exp='led_in2' />
+										<argument exp='255' />
+										<argument exp='0' />
+										<argument exp='0' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='3' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='sim' title='Panel' textarea='36,0,511,300' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetColor' >
+										<argument exp='led_in3' />
+										<argument exp='255' />
+										<argument exp='0' />
+										<argument exp='0' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='4' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='sim' title='Panel' textarea='36,0,511,300' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetColor' >
+										<argument exp='led_in4' />
+										<argument exp='255' />
+										<argument exp='0' />
+										<argument exp='0' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='5' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='sim' title='Panel' textarea='36,0,511,300' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetColor' >
+										<argument exp='led_in5' />
+										<argument exp='255' />
+										<argument exp='0' />
+										<argument exp='0' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='6' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='sim' title='Panel' textarea='36,0,511,300' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetColor' >
+										<argument exp='led_in7' />
+										<argument exp='255' />
+										<argument exp='0' />
+										<argument exp='0' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='7' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='sim' title='Panel' textarea='36,0,511,300' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetColor' >
+										<argument exp='led_in8' />
+										<argument exp='255' />
+										<argument exp='0' />
+										<argument exp='0' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='8' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='sim' title='Panel' textarea='36,0,511,300' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetColor' >
+										<argument exp='led_in8' />
+										<argument exp='255' />
+										<argument exp='0' />
+										<argument exp='0' />
+									</command>
+								</flowline>
+							</case>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='DisplayClear' description='Clears the display to white space' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='native' title='C Code' ccode='	LCDRawSend(0x01, 0);
+	delay_ms(2);
+	LCDRawSend(0x02, 0);
+	delay_ms(2);
+' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='DisplayStartSim' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='call' title='Call Component Macro' textarea='36,0,511,300' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='ctrl_lcd' macro='Clear' />
+						<command class_type='sim' title='Panel' textarea='36,0,511,300' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;LCD_X&quot;' />
+							<argument exp='0' />
+						</command>
+						<command class_type='sim' title='Panel' textarea='36,0,511,300' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;LCD_Y&quot;' />
+							<argument exp='0' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Property' description='Sent when a property has been changed by the User' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='DisplayClearSim' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='sim' title='Call Component Macro' textarea='36,0,511,300' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='ctrl_lcd' macro='Clear' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DisplayCursor' >
+							<argument exp='0' />
+							<argument exp='0' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='LED_off' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Index' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='switch' title='Switch' textarea='36,25,511,325' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Index' >
+							<case >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+								</flowline>
+							</case>
+							<case exp='1' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='sim' title='Panel' textarea='36,0,511,300' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetColor' >
+										<argument exp='led_in1' />
+										<argument exp='60' />
+										<argument exp='0' />
+										<argument exp='0' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='2' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='sim' title='Panel' textarea='36,0,511,300' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetColor' >
+										<argument exp='led_in2' />
+										<argument exp='60' />
+										<argument exp='0' />
+										<argument exp='0' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='3' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='sim' title='Panel' textarea='36,0,511,300' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetColor' >
+										<argument exp='led_in3' />
+										<argument exp='60' />
+										<argument exp='0' />
+										<argument exp='0' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='4' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='sim' title='Panel' textarea='36,0,511,300' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetColor' >
+										<argument exp='led_in4' />
+										<argument exp='60' />
+										<argument exp='0' />
+										<argument exp='0' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='5' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='sim' title='Panel' textarea='36,0,511,300' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetColor' >
+										<argument exp='led_in5' />
+										<argument exp='60' />
+										<argument exp='0' />
+										<argument exp='0' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='6' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='sim' title='Panel' textarea='36,0,511,300' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetColor' >
+										<argument exp='led_in7' />
+										<argument exp='60' />
+										<argument exp='0' />
+										<argument exp='0' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='7' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='sim' title='Panel' textarea='36,0,511,300' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetColor' >
+										<argument exp='led_in8' />
+										<argument exp='60' />
+										<argument exp='0' />
+										<argument exp='0' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='8' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='sim' title='Panel' textarea='36,0,511,300' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetColor' >
+										<argument exp='led_in8' />
+										<argument exp='60' />
+										<argument exp='0' />
+										<argument exp='0' />
+									</command>
+								</flowline>
+							</case>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='RelayON' description='Turns on the requested relay given by parameter RelayID, values 1 to 4' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='RelayID' type='u8' description='The relay to turn on from 1 to 4.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='switch' title='Switch' textarea='36,25,511,325' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.RelayID' >
+							<case >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+								</flowline>
+							</case>
+							<case exp='1' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='calculation' title='Set bit' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='$PORTB.4 = 1' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='2' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='calculation' title='Set bit' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='$PORTB.5 = 1' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='3' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='calculation' title='Set bit' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='$PORTB.6 = 1' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='4' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='calculation' title='Set bit' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='$PORTB.7 = 1' />
+									</command>
+								</flowline>
+							</case>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='InputANALOGSim' description='' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='InputID' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='VAL' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Call Macro' textarea='36,0,511,300' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='InputANALOG_10BitSim' >
+							<return exp='.VAL' />
+							<argument exp='.InputID' />
+						</command>
+						<command class_type='calculation' title='Calculation' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = .VAL &gt;&gt; 2' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='OutputOFF' description='Outputs a digital low state on the output requested by parameter TransID 
+(Outputs 1 to 4)
+' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='TransID' type='u8' description='1 to 4 (Outputs A to D)' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='switch' title='Switch' textarea='36,25,511,325' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.TransID' >
+							<case >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+								</flowline>
+							</case>
+							<case exp='1' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='calculation' title='Clear bit' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='$PORTC.2 = 0' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='2' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='calculation' title='Clear bit' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='$PORTC.0 = 0' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='3' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='calculation' title='Clear bit' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='$PORTC.1 = 0' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='4' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='calculation' title='Clear bit' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='$PORTC.6 = 0' />
+									</command>
+								</flowline>
+							</case>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='DisplayCursor' description='Moves the display cursor to the given position.
+If the cursor is set to the origin at x=0, y=0, then the next character sent to the display will appear in the top left corner.
+' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='x' type='u8' description='Position of the cursor in characters from left to right.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='y' type='u8' description='The line to move the cursor to.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;LCD_X&quot;' />
+							<argument exp='.x' />
+						</command>
+						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;LCD_Y&quot;' />
+							<argument exp='.y' />
+						</command>
+						<command class_type='native' title='C Code' ccode='
+	if (FCL_Y==0)
+		FCL_Y=0x80;
+	else if (FCL_Y==1)
+		FCL_Y=0xc0;
+	else if (FCL_Y==2)
+		FCL_Y=0x90;
+	else
+		FCL_Y=0xd0;
+
+	LCDRawSend(FCL_Y + FCL_X, 0);
+	delay_ms(2);
+' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='OutputON' description='Outputs a digital high state on the output requested by parameter TransID 
+(Outputs 1 to 4)
+' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='TransID' type='u8' description='1 to 4 (Outputs A to D)' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='switch' title='Switch' textarea='36,25,511,325' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.TransID' >
+							<case >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+								</flowline>
+							</case>
+							<case exp='1' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='calculation' title='Set bit' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='$PORTC.2 = 1' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='2' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='calculation' title='Set bit' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='$PORTC.0 = 1' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='3' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='calculation' title='Set bit' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='$PORTC.1 = 1' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='4' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='calculation' title='Set bit' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='$PORTC.6 = 1' />
+									</command>
+								</flowline>
+							</case>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='InputDIGITAL' description='Returns the digital state of the input requested by parameter InputID 
+(Inputs 1 to 8)
+' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='InputID' type='u8' description='The input number from 1 to 8.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='switch' title='Switch' textarea='36,25,511,325' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.InputID' >
+							<case >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='calculation' title='Calculation' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='.Return = 255' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='1' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='calculation' title='Calculation' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='.Return = $PORTA.0' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='2' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='calculation' title='Calculation' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='.Return = $PORTA.1' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='3' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='calculation' title='Calculation' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='.Return = $PORTA.2' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='4' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='calculation' title='Calculation' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='.Return = $PORTA.3' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='5' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='calculation' title='Calculation' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='.Return = $PORTE.0' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='6' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='calculation' title='Calculation' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='.Return = $PORTE.1' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='7' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='calculation' title='Calculation' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='.Return = $PORTE.2' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='8' >
+								<flowline >
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
+									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='calculation' title='Calculation' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<exp exp='.Return = $PORTB.2' />
+									</command>
+								</flowline>
+							</case>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Sim_Start' description='Broadcast to all components that simulation is starting' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='dummy' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='comment' title='' comment='Outputs ABCD Off' textarea='12,0,487,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='calculation' title='Calculation' textarea='36,0,511,300' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='$PORTC.0 = 0' />
+							<exp exp='$PORTC.1 = 0' />
+							<exp exp='$PORTC.2 = 0' />
+							<exp exp='$PORTC.6 = 0' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<local name='KEY' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DisplayStartSim' />
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='1' >
+							<flowline >
+								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DisplayCursor' >
+									<argument exp='0' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='loop' title='Loop' textarea='36,0,511,300' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='1' >
+							<flowline >
+								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='PrintString' >
+									<argument exp='&quot;Hello&quot;' />
+								</command>
+								<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='1' type='2' />
+								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DisplayClearSim' />
+								<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='1' type='2' />
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='GetKeypadSim' description='' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='miac_keypad' macro='GetKeySim' >
+							<return exp='.Return' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='InputANALOG' description='Returns the 8 bit value for the analogue input requested by parameter InputID 
+(Inputs 1 to 8)' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='InputID' type='u8' description='The input to read from 1 to 8.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='native' title='C Code' ccode='
+FCR_RETVAL = InputANALOG_8Bit(FCL_INPUTID);
+
+' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='0506f9ed-0e0e-493f-a08b-e9e66052b13e' vmin='0' vmaj='1' codename='ctrl_lcd' panelId='-1' x='-38.5724' y='2.36045' z='1627.77' xsz='12.5738' ysz='16.1952' zsz='0.794014' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='CellX' data='16' />
+					<value target='CellY' data='4' />
+					<value target='WidthX' data='20' />
+					<value target='Base_GLCD1::ShowBackground' data='1' />
+					<value target='Base_GLCD1::ComponentLabel' data='001' />
+					<value target='Base_GLCD1::GdiText1::sText' data='' />
+					<value target='Base_GLCD1::GdiText1::dScale' data='2.5' />
+					<value target='TextColour' data='0' />
+					<value target='TextBg' data='14803425' />
+					<value target='DisplayBg' data='16777215' />
+					<value target='PWidth' data='456' />
+					<value target='PHeight' data='168' />
+					<value target='CharWidth' data='5' />
+					<value target='PixelHeight' data='7' />
+					<value target='Font' data='0' />
+					<value target='XCoord' data='2' />
+					<value target='YCoord' data='2' />
+					<value target='FontSpaceX' data='2' />
+					<value target='FontSpaceY' data='5' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='shape' codename='button_reset' panelId='-1' x='103.147' y='96.9487' z='1620.02' xsz='12.1846' ysz='5' zsz='6.09232' xang='-90' yang='0' zang='0' xquat='-0.707107' yquat='0' zquat='0' wquat='0.707107' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Shape' data='4' />
+					<value target='Color' data='10058393' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+					<value target='Model' data='' />
+					<value target='Unit' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='shape' codename='led_usb' panelId='-1' x='149.449' y='84.1548' z='1627.67' xsz='7.31079' ysz='7.31079' zsz='1.5' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Shape' data='7' />
+					<value target='Color' data='15360' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+					<value target='Model' data='' />
+					<value target='Unit' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='shape' codename='led_power' panelId='-1' x='-116.176' y='84.1548' z='1627.67' xsz='7.31079' ysz='7.31079' zsz='1.5' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Shape' data='7' />
+					<value target='Color' data='49152' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+					<value target='Model' data='' />
+					<value target='Unit' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='shape' codename='screen' panelId='-1' x='-36.976' y='4.10167' z='1622.42' xsz='168.148' ysz='77.9818' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Shape' data='101' />
+					<value target='Color' data='3835524' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+					<value target='Model' data='' />
+					<value target='Unit' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='shape' codename='body' panelId='-1' x='9.32569' y='4.10167' z='1599.17' xsz='324.112' ysz='240.038' zsz='55.5' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='0' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Shape' data='201' />
+					<value target='Color' data='255' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+					<value target='Model' data='this:MIAC_body.mesh' />
+					<value target='Unit' data='1' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='2be50c72-19be-43af-9435-c9c3de750b4b' vmin='0' vmaj='1' codename='miac_keypad' panelId='-1' x='117.769' y='6.5386' z='1627.92' xsz='87.2421' ysz='106.738' zsz='2.5' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values />
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='8cd39644-fe2d-4ba6-bef8-5c2fad51e8ff' vmin='1' vmaj='1' codename='led_q1' panelId='-1' x='-108.865' y='-75.9515' z='1627.67' xsz='1.46216' ysz='1.46216' zsz='0.1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='pin' data='$PORTB.4' />
+					<value target='polarity' data='001' />
+					<value target='on_color' data='10551200' />
+					<value target='length' data='4.000000' />
+					<value target='show_label' data='000' />
+					<value target='label_property' data='pin' />
+					<value target='label_color' data='16777215' />
+					<value target='label_scale' data='1.000000' />
+					<value target='label_auto_scale' data='0' />
+					<value target='label_position' data='003' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='8cd39644-fe2d-4ba6-bef8-5c2fad51e8ff' vmin='1' vmaj='1' codename='led_q2' panelId='-1' x='-72.3115' y='-75.9515' z='1627.67' xsz='1.46216' ysz='1.46216' zsz='0.1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='pin' data='$PORTB.5' />
+					<value target='polarity' data='001' />
+					<value target='on_color' data='10551200' />
+					<value target='length' data='4.000000' />
+					<value target='show_label' data='000' />
+					<value target='label_property' data='pin' />
+					<value target='label_color' data='16777215' />
+					<value target='label_scale' data='1.000000' />
+					<value target='label_auto_scale' data='0' />
+					<value target='label_position' data='003' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='8cd39644-fe2d-4ba6-bef8-5c2fad51e8ff' vmin='1' vmaj='1' codename='led_q3' panelId='-1' x='-35.7575' y='-75.9515' z='1627.67' xsz='1.46216' ysz='1.46216' zsz='0.1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='pin' data='$PORTB.6' />
+					<value target='polarity' data='001' />
+					<value target='on_color' data='10551200' />
+					<value target='length' data='4.000000' />
+					<value target='show_label' data='000' />
+					<value target='label_property' data='pin' />
+					<value target='label_color' data='16777215' />
+					<value target='label_scale' data='1.000000' />
+					<value target='label_auto_scale' data='0' />
+					<value target='label_position' data='003' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='8cd39644-fe2d-4ba6-bef8-5c2fad51e8ff' vmin='1' vmaj='1' codename='led_q5' panelId='-1' x='0.796439' y='-75.9515' z='1627.67' xsz='1.46216' ysz='1.46216' zsz='0.1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='pin' data='$PORTB.7' />
+					<value target='polarity' data='001' />
+					<value target='on_color' data='10551200' />
+					<value target='length' data='4.000000' />
+					<value target='show_label' data='000' />
+					<value target='label_property' data='pin' />
+					<value target='label_color' data='16777215' />
+					<value target='label_scale' data='1.000000' />
+					<value target='label_auto_scale' data='0' />
+					<value target='label_position' data='003' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='8cd39644-fe2d-4ba6-bef8-5c2fad51e8ff' vmin='1' vmaj='1' codename='led_a' panelId='-1' x='45.9284' y='-75.9515' z='1627.67' xsz='1.46216' ysz='1.46216' zsz='0.1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='pin' data='$PORTC.2' />
+					<value target='polarity' data='001' />
+					<value target='on_color' data='10551200' />
+					<value target='length' data='4.000000' />
+					<value target='show_label' data='000' />
+					<value target='label_property' data='pin' />
+					<value target='label_color' data='16777215' />
+					<value target='label_scale' data='1.000000' />
+					<value target='label_auto_scale' data='0' />
+					<value target='label_position' data='003' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='8cd39644-fe2d-4ba6-bef8-5c2fad51e8ff' vmin='1' vmaj='1' codename='led_b' panelId='-1' x='70.6876' y='-75.9515' z='1627.67' xsz='1.46216' ysz='1.46216' zsz='0.1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='pin' data='$PORTC.0' />
+					<value target='polarity' data='001' />
+					<value target='on_color' data='10551200' />
+					<value target='length' data='4.000000' />
+					<value target='show_label' data='000' />
+					<value target='label_property' data='pin' />
+					<value target='label_color' data='16777215' />
+					<value target='label_scale' data='1.000000' />
+					<value target='label_auto_scale' data='0' />
+					<value target='label_position' data='003' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='8cd39644-fe2d-4ba6-bef8-5c2fad51e8ff' vmin='1' vmaj='1' codename='led_c' panelId='-1' x='95.4468' y='-75.9515' z='1627.67' xsz='1.46216' ysz='1.46216' zsz='0.1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='pin' data='$PORTC.1' />
+					<value target='polarity' data='001' />
+					<value target='on_color' data='10551200' />
+					<value target='length' data='4.000000' />
+					<value target='show_label' data='000' />
+					<value target='label_property' data='pin' />
+					<value target='label_color' data='16777215' />
+					<value target='label_scale' data='1.000000' />
+					<value target='label_auto_scale' data='0' />
+					<value target='label_position' data='003' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='8cd39644-fe2d-4ba6-bef8-5c2fad51e8ff' vmin='1' vmaj='1' codename='led_d1' panelId='-1' x='120.206' y='-75.9515' z='1627.67' xsz='1.46216' ysz='1.46216' zsz='0.1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='pin' data='$PORTC.6' />
+					<value target='polarity' data='001' />
+					<value target='on_color' data='10551200' />
+					<value target='length' data='4.000000' />
+					<value target='show_label' data='000' />
+					<value target='label_property' data='pin' />
+					<value target='label_color' data='16777215' />
+					<value target='label_scale' data='1.000000' />
+					<value target='label_auto_scale' data='0' />
+					<value target='label_position' data='003' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='8cd39644-fe2d-4ba6-bef8-5c2fad51e8ff' vmin='1' vmaj='1' codename='led_in1' panelId='-1' x='-18.699' y='84.1548' z='1627.67' xsz='1.46216' ysz='1.46216' zsz='0.1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='pin' data='$PORTA.0' />
+					<value target='polarity' data='001' />
+					<value target='on_color' data='10551200' />
+					<value target='length' data='4.000000' />
+					<value target='show_label' data='000' />
+					<value target='label_property' data='pin' />
+					<value target='label_color' data='16777215' />
+					<value target='label_scale' data='1.000000' />
+					<value target='label_auto_scale' data='0' />
+					<value target='label_position' data='003' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='8cd39644-fe2d-4ba6-bef8-5c2fad51e8ff' vmin='1' vmaj='1' codename='led_in2' panelId='-1' x='-6.3194' y='84.1548' z='1627.67' xsz='1.46216' ysz='1.46216' zsz='0.1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='pin' data='$PORTA.1' />
+					<value target='polarity' data='001' />
+					<value target='on_color' data='10551200' />
+					<value target='length' data='4.000000' />
+					<value target='show_label' data='000' />
+					<value target='label_property' data='pin' />
+					<value target='label_color' data='16777215' />
+					<value target='label_scale' data='1.000000' />
+					<value target='label_auto_scale' data='0' />
+					<value target='label_position' data='003' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='8cd39644-fe2d-4ba6-bef8-5c2fad51e8ff' vmin='1' vmaj='1' codename='led_in3' panelId='-1' x='6.06021' y='84.1548' z='1627.67' xsz='1.46216' ysz='1.46216' zsz='0.1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='pin' data='$PORTA.2' />
+					<value target='polarity' data='001' />
+					<value target='on_color' data='10551200' />
+					<value target='length' data='4.000000' />
+					<value target='show_label' data='000' />
+					<value target='label_property' data='pin' />
+					<value target='label_color' data='16777215' />
+					<value target='label_scale' data='1.000000' />
+					<value target='label_auto_scale' data='0' />
+					<value target='label_position' data='003' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='8cd39644-fe2d-4ba6-bef8-5c2fad51e8ff' vmin='1' vmaj='1' codename='led_in4' panelId='-1' x='18.4398' y='84.1548' z='1627.67' xsz='1.46216' ysz='1.46216' zsz='0.1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='pin' data='$PORTA.3' />
+					<value target='polarity' data='001' />
+					<value target='on_color' data='10551200' />
+					<value target='length' data='4.000000' />
+					<value target='show_label' data='000' />
+					<value target='label_property' data='pin' />
+					<value target='label_color' data='16777215' />
+					<value target='label_scale' data='1.000000' />
+					<value target='label_auto_scale' data='0' />
+					<value target='label_position' data='003' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='8cd39644-fe2d-4ba6-bef8-5c2fad51e8ff' vmin='1' vmaj='1' codename='led_in5' panelId='-1' x='30.8194' y='84.1548' z='1627.67' xsz='1.46216' ysz='1.46216' zsz='0.1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='pin' data='$PORTE.0' />
+					<value target='polarity' data='001' />
+					<value target='on_color' data='10551200' />
+					<value target='length' data='4.000000' />
+					<value target='show_label' data='000' />
+					<value target='label_property' data='pin' />
+					<value target='label_color' data='16777215' />
+					<value target='label_scale' data='1.000000' />
+					<value target='label_auto_scale' data='0' />
+					<value target='label_position' data='003' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='8cd39644-fe2d-4ba6-bef8-5c2fad51e8ff' vmin='1' vmaj='1' codename='led_in6' panelId='-1' x='43.199' y='84.1548' z='1627.67' xsz='1.46216' ysz='1.46216' zsz='0.1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='pin' data='$PORTE.1' />
+					<value target='polarity' data='001' />
+					<value target='on_color' data='10551200' />
+					<value target='length' data='4.000000' />
+					<value target='show_label' data='000' />
+					<value target='label_property' data='pin' />
+					<value target='label_color' data='16777215' />
+					<value target='label_scale' data='1.000000' />
+					<value target='label_auto_scale' data='0' />
+					<value target='label_position' data='003' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='8cd39644-fe2d-4ba6-bef8-5c2fad51e8ff' vmin='1' vmaj='1' codename='led_in7' panelId='-1' x='55.5786' y='84.1548' z='1627.67' xsz='1.46216' ysz='1.46216' zsz='0.1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='pin' data='$PORTE.2' />
+					<value target='polarity' data='001' />
+					<value target='on_color' data='10551200' />
+					<value target='length' data='4.000000' />
+					<value target='show_label' data='000' />
+					<value target='label_property' data='pin' />
+					<value target='label_color' data='16777215' />
+					<value target='label_scale' data='1.000000' />
+					<value target='label_auto_scale' data='0' />
+					<value target='label_position' data='003' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='8cd39644-fe2d-4ba6-bef8-5c2fad51e8ff' vmin='1' vmaj='1' codename='led_in8' panelId='-1' x='67.9582' y='84.1548' z='1627.67' xsz='1.46216' ysz='1.46216' zsz='0.1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='pin' data='$PORTB.2' />
+					<value target='polarity' data='001' />
+					<value target='on_color' data='10551200' />
+					<value target='length' data='4.000000' />
+					<value target='show_label' data='000' />
+					<value target='label_property' data='pin' />
+					<value target='label_color' data='16777215' />
+					<value target='label_scale' data='1.000000' />
+					<value target='label_auto_scale' data='0' />
+					<value target='label_position' data='003' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<scadaresourcelookup />
+	<keymap />
+	<panel2d shadows='0' lighting='0' brightness='0' >
+		<background rgb='9737364' img='' style='0' />
+		<camera xe='-79.1897' ye='-57.2573' ze='1073.3' xt='-79.1897' yt='-57.2573' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='622' dy='352' zoom='70.1222' fix_topleft='0' />
+		<page x='1000' y='1000' show='0' rgb='7360576' />
+	</panel2d>
+	<panel3d shadows='0' lighting='0' brightness='-256' perspective='1' >
+		<background rgb='8409120' img='' style='0' />
+		<table rgb='8404224' img='' style='0' size='0' />
+		<camera xe='2.56357' ye='14.5255' ze='581.7' xt='2.56357' yt='14.5255' zt='38.7566' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey0 xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey1 xe='-3.67394e-14' ye='0' ze='-300' xt='0' yt='0' zt='0' xquat='0' yquat='1' zquat='0' wquat='6.12323e-17' />
+		<camerakey2 xe='0' ye='-300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.707107' yquat='0' zquat='0' wquat='0.707107' />
+		<camerakey3 xe='-3.67394e-14' ye='300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-4.32978e-17' yquat='0.707107' zquat='0.707107' wquat='4.32978e-17' />
+		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
+		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
+		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
+	</panel3d>
+	<panels2d count='0' />
+	<layout >
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAsQMAAF8CAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetKeypadSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAsQMAAF8CAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetKeypad' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAsQMAAF8CAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

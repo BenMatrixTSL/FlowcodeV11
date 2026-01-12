@@ -1,0 +1,353 @@
+<!-- CRC: 1473FCAE83707C2F4A7538AA09BE182801C8C21B26380225CBB51ACCCF5608817C4FBCAAACF461DE337BDABF81466B8EB85C44E63432D70BA3EBF4AE12885C322D8885D05ADD55789B2FF5E6B93AE5CB4D225E0B08B37720C6F9E24406DD2FF2A1AF37D737684A69711B8143522C2B6903BBCB80B3159E2120DA9A4E2F7D148A9AED67E4CC2DDACC6CACB7263EB498B6644D48E5998FE8DD72B13220D86BC6B002EB0B6B4E293152A6905168E77BBFA0AECF6AD2D10DA8AD5A4DFD246F7F04690C801192CBE6DCA6086944AE325796A6D8518B80BA1B02055B6E2A033CAA36E2F45589665EFB0E2CACA9CE2DF1EA8436E42CFE37638C9748 -->
+<!-- REVISION: 2.0 -->
+<!-- GUID: EDDAA949-6692-431D-B767-E8EC3ACE368B -->
+<!-- DATE: 04\08\2023 -->
+<!-- DIR: FCD\PIC32\ChipKIT|Uno32|Bootloader.fcdx -->
+<root>
+
+<build>
+    <compiler exe="$(compilerpic32)bin\xc32-gcc.exe" params="-O1 -G1024 -Wl,--gc-sections,-Map,&quot;$(target).map&quot; -nostartfiles -T &quot;$(compilerpic32)chipKit\chipKIT-application-32MX320F128.ld&quot; -T &quot;$(compilerpic32)chipKit\chipKIT-application-COMMON.ld&quot; &quot;$(compilerpic32)chipKit\cpp-startup.S&quot; -mprocessor=$(chipalt) -o &quot;$(target).elf&quot; &quot;$(target).c&quot; "/>
+    <linker exe="$(compilerpic32)bin\xc32-bin2hex.exe" params="&quot;$(target).elf&quot;" />
+    <programmer exe="$(compilerpic32)bin\pic32prog.exe" params="-d $(comport) &quot;$(target).hex&quot;" UsesComm="1" />
+</build>
+
+<device name='ChipKIT Uno32 Bootloader' namealt='32MX320F128H' product='PIC32' cal='PIC32BIT' family='32MX' bits='32' portbits='16' >
+
+    <clock max_speed='120000000' master_divider='1' fixed='120000000' />
+
+    <comminfo pid="6001"
+          vid="0403"
+          devdesc="USB Serial Port" />
+
+    <memory >
+        <flash bytes='131072' />
+        <ram bytes='16384' />
+    </memory>
+
+    <pins sides='2' smd='0' >
+        <pin name='U1RX/SDI1/RF2 (0)' port='5' bit='2' />
+        <pin name='U1TX/SDO1/RF3 (1)' port='5' bit='3' />
+        <pin name='RTCC/IC1/INT1/RD8 (2)' port='3' bit='8'/>
+        <pin name='OC1/RD0 (3)' port='3' bit='0' />
+        <pin name='RF1 (4)' port='5' bit='1'/>
+        <pin name='OC2/RD1 (5)' port='3' bit='1'/>
+        <pin name='OC3/RD2 (6)' port='3' bit='2'/>
+        <pin name='U1CTS/IC2/INT2/RD9 (7)' port='3' bit='9'/>
+        <pin name='IC3/PMCS2/PMA15/INT3/RD10 (8)' port='3' bit='10'/>
+        <pin name='OC4/RD3 (9)' port='3' bit='3'/>
+        <pin name='OC5/IC5/PMWR/CN13/RD4 (10)' port='3' bit='4'/>
+        <pin name='SDO2/PMA3/CN10/RG8 (11)' port='6' bit='8'/>
+        <pin name='SDI2/PMA4/CN9/RG7 (12)' port='6' bit='7'/>
+        <pin name='SCK2/PMA5/CN8/RG6 (LED LD6/13)' port='6' bit='6'/>
+    	<pin name='AN2/C2IN-/SS1/CN4/RB2 (A0/14)' port='1' bit='2' adc='2'/>
+    	<pin name='AN4/C1IN-/CN6/RB4 (A1/15)' port='1' bit='4' adc='4'/>
+        <pin name='AN8/U2CTS/C1OUT/RB8 (A2/16)' port='1' bit='8' adc='8'/>
+        <pin name='TMS/AN10/CVREFOUT/PMA13/RB10 (A3/17)' port='1' bit='10' adc='10'/>
+        <pin name='TCK/AN12/PMA11/RB12 (A4/18)' port='1' bit='12' adc='12'/>
+        <pin name='AN14/U2RTS/PMALH/PMA1/RB14 (A5/19)' port='1' bit='14' adc='14'/>
+        <pin name='AN3/C2IN+/CN5/RB3 (A6/20)' port='1' bit='3' adc='3'/>
+        <pin name='AN5/C1IN+/CN7/RB5 (A7/21)' port='1' bit='5' adc='5'/>
+        <pin name='AN9/C2OUT/PMA7/RB9 (A8/22)' port='1' bit='9' adc='9'/>
+        <pin name='TDO/AN11/PMA12/RB11 (A9/23)' port='1' bit='11' adc='11'/>
+        <pin name='TDI/AN13/PMA10/RB13 (A10/24)' port='1' bit='13' adc='13'/>
+        <pin name='AN15/OCFB/PMALL/PMA0/CN12/RB15 (A11/25)' port='1' bit='15' adc='15'/>
+        <pin name='PMD0/RE0 (26)' port='4' bit='0'/>
+        <pin name='PMD1/RE1 (27)' port='4' bit='1'/>
+        <pin name='PMD2/RE2 (28)' port='4' bit='2'/>
+        <pin name='PMD3/RE3 (29)' port='4' bit='3'/>
+        <pin name='PMD4/RE4 (30)' port='4' bit='4'/>    
+        <pin name='PMD5/RE5 (31)' port='4' bit='5'/>
+        <pin name='PMD6/RE6 (32)' port='4' bit='6'/>
+        <pin name='PMD7/RE7 (33)' port='4' bit='7'/>
+        <pin name='PMRD/CN14/RD5 (34)' port='3' bit='5'/>
+        <pin name='IC4/PMCS1/PMA14/INT4/RD11 (35)' port='3' bit='11'/>
+        <pin name='CN15/RD6 (36)' port='3' bit='6'/>
+        <pin name='CN16/RD7 (37)' port='3' bit='7'/>
+        <pin name='U1RTS/SCK1/INT0/RF6 (38)' port='5' bit='6'/>        
+        <pin name='SDA2/U2RX/PMA9/CN17/RF4 (39)' port='5' bit='4'/>
+        <pin name='SCL2/U2TX/PMA8/CN18/RF5 (40)' port='5' bit='5'/>
+        <pin name='PGEC1/AN1/VREF-/CVREF-/CN3/RB1 (41)' port='1' bit='1' adc='1'/>
+        <pin name='PGED1/AN0/VREF+/CVREF+/CN2/RB0 (42)' port='1' bit='0' adc='0'/>
+        <pin name='RF0 (LED LD5/43)' port='5' bit='0'/> 
+        <pin name='SS2/PMA2/CN11/RG9 (44)' port='6' bit='9'/>
+	<pin name='SDA1/RG3 (45)' port='6' bit='3'/>
+        <pin name='SCL1/RG2 (46)' port='6' bit='2'/>
+    </pins>
+    
+    <adc type='1' bits='10' >
+        <speed >
+            <option name='FRC' value='255' />
+            <option name='Tpb * 2' value='0' />
+            <option name='Tcy * 4' value='1' />
+            <option name='Tcy * 8' value='3' />
+            <option name='Tcy * 16' value='7' />
+            <option name='Tcy * 32' value='15' />
+            <option name='Tcy * 64' value='31' />
+            <option name='Tcy * 128' value='63' />
+            <option name='Tcy * 256' value='127' />
+            <option name='Tcy * 510' value='254' />
+        </speed>
+    </adc>
+    <eeprom type='1' bytes='1024' />
+    <spi >
+        <miso port='5' pin='2' />
+        <mosi port='5' pin='3' />
+        <clk port='5' pin='6' />
+    </spi>
+    <spi >
+        <miso port='6' pin='7' />
+        <mosi port='6' pin='8' />
+        <clk port='6' pin='6' />
+    </spi>
+    <uart >
+        <tx port='5' pin='3' />
+        <rx port='5' pin='2' />
+    </uart>
+    <uart >
+        <tx port='5' pin='5' />
+        <rx port='5' pin='4' />
+    </uart>
+    <i2c master='1' >
+        <sda port='6' pin='3' />
+        <scl port='6' pin='2' />
+    </i2c>
+    <i2c master='1' >
+        <sda port='5' pin='4' />
+        <scl port='5' pin='5' />
+    </i2c>
+    <pwm >
+        <timer>
+            <option name='Timer2' value='2' />
+            <option name='Timer3' value='3' />
+        </timer>
+        <prescaler >
+            <option name='1' value='0' />
+            <option name='8' value='1' />
+            <option name='64' value='2' />
+            <option name='256' value='3' />
+        </prescaler>
+        <out port='3' pin='0' />
+        <out port='3' pin='1' />
+        <out port='3' pin='2' />
+        <out port='3' pin='3' />
+        <out port='3' pin='4' />
+    </pwm>
+    <interrupts >
+        <interrupt ident='INT0' type='pin' name='INT0/RF6' handler='#ifndef MX_ISR_I0\n#define MX_ISR_I0\n void __ISR(_EXTERNAL_0_VECTOR, ipl2AUTO) _IntHandlerExternal_Interrupt0(void)\n{\n\tIFS0bits.INT0IF = 0;\n\tFCM_%n();\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='IEC0bits.INT0IE = 1;\nIPC0bits.INT0IP = 2;\nIPC0bits.INT0IS = 2;\nINTCONbits.MVEC = 1;\n__builtin_mtc0(12,0,(__builtin_mfc0(12,0) | 0x0001));\n' disable='IEC0bits.INT0IE = 0;\n' >
+            <options >
+                <edge name='Interrupt Edge Select' >
+                    <entry name='Rising edge of INT' value='INTCON = (INTCON &amp; 0xFFFFFFFE) | 0x1;\n' />
+                    <entry name='Falling edge of INT' value='INTCON = (INTCON &amp; 0xFFFFFFFE);\n' />
+                </edge>
+            </options>
+        </interrupt>
+        <interrupt ident='INT1' type='pin' name='INT1/RD8' handler='#ifndef MX_ISR_I1\n#define MX_ISR_I1\n void __ISR(_EXTERNAL_1_VECTOR, ipl2AUTO) _IntHandlerExternal_Interrupt1(void)\n{\n\tIFS0bits.INT1IF = 0;\n\tFCM_%n();\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='IEC0bits.INT1IE = 1;\nIPC1bits.INT1IP = 2;\nIPC1bits.INT1IS = 2;\nINTCONbits.MVEC = 1;\n__builtin_mtc0(12,0,(__builtin_mfc0(12,0) | 0x0001));\n' disable='IEC0bits.INT1IE = 0;\n' >
+            <options >
+                <edge name='Interrupt Edge Select' >
+                    <entry name='Rising edge of INT' value='INTCON = (INTCON &amp; 0xFFFFFFFD) | 0x2;\n' />
+                    <entry name='Falling edge of INT' value='INTCON = (INTCON &amp; 0xFFFFFFFD);\n' />
+                </edge>
+            </options>
+        </interrupt>
+        <interrupt ident='INT2' type='pin' name='INT2/RD9' handler='#ifndef MX_ISR_I2\n#define MX_ISR_I2\n void __ISR(_EXTERNAL_2_VECTOR, ipl2AUTO) _IntHandlerExternal_Interrupt2(void)\n{\n\tIFS0bits.INT2IF = 0;\n\tFCM_%n();\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='IEC0bits.INT2IE = 1;\nIPC2bits.INT2IP = 2;\nIPC2bits.INT2IS = 2;\nINTCONbits.MVEC = 1;\n__builtin_mtc0(12,0,(__builtin_mfc0(12,0) | 0x0001));\n' disable='IEC0bits.INT2IE = 0;\n' >
+            <options >
+                <edge name='Interrupt Edge Select' >
+                    <entry name='Rising edge of INT' value='INTCON = (INTCON &amp; 0xFFFFFFFB) | 0x4;\n' />
+                    <entry name='Falling edge of INT' value='INTCON = (INTCON &amp; 0xFFFFFFFB);\n' />
+                </edge>
+            </options>
+        </interrupt>
+        <interrupt ident='INT3' type='pin' name='INT3/RD10' handler='#ifndef MX_ISR_I3\n#define MX_ISR_I3\n void __ISR(_EXTERNAL_3_VECTOR, ipl2AUTO) _IntHandlerExternal_Interrupt3(void)\n{\n\tIFS0bits.INT3IF = 0;\n\tFCM_%n();\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='IEC0bits.INT3IE = 1;\nIPC3bits.INT3IP = 2;\nIPC3bits.INT3IS = 2;\nINTCONbits.MVEC = 1;\n__builtin_mtc0(12,0,(__builtin_mfc0(12,0) | 0x0001));\n' disable='IEC0bits.INT3IE = 0;\n' >
+            <options >
+                <edge name='Interrupt Edge Select' >
+                    <entry name='Rising edge of INT' value='INTCON = (INTCON &amp; 0xFFFFFFF7) | 0x8;\n' />
+                    <entry name='Falling edge of INT' value='INTCON = (INTCON &amp; 0xFFFFFFF7);\n' />
+                </edge>
+            </options>
+        </interrupt>
+        <interrupt ident='INT4' type='pin' name='INT4/RD11' handler='#ifndef MX_ISR_I4\n#define MX_ISR_I4\n void __ISR(_EXTERNAL_4_VECTOR, ipl2AUTO) _IntHandlerExternal_Interrupt4(void)\n{\n\tIFS0bits.INT4IF = 0;\n\tFCM_%n();\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='IEC0bits.INT4IE = 1;\nIPC4bits.INT4IP = 2;\nIPC4bits.INT4IS = 2;\nINTCONbits.MVEC = 1;\n__builtin_mtc0(12,0,(__builtin_mfc0(12,0) | 0x0001));\n' disable='IEC0bits.INT4IE = 0;\n' >
+            <options >
+                <edge name='Interrupt Edge Select' >
+                    <entry name='Rising edge of INT' value='INTCON = (INTCON &amp; 0xFFFFFFEF) | 0x1F;\n' />
+                    <entry name='Falling edge of INT' value='INTCON = (INTCON &amp; 0xFFFFFFEF);\n' />
+                </edge>
+            </options>
+        </interrupt>
+        <interrupt ident='IOC0' type='multipin' name='IOC PORT' handler='#ifndef MX_ISR_CN\n#define MX_ISR_CN\n void __ISR(_CHANGE_NOTICE_VECTOR, ipl2AUTO) _IntHandlerChangeNotification(void)\n{\n\tPORTB;\n\tPORTC;\n\tPORTD;\n\tPORTF;\n\tPORTG;\n\tIFS1bits.CNIF = 0;\n\tFCM_%n();\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='\nCNEN = %pA0v | (%pA1v &lt;&lt; 8)| (%pB0v &lt;&lt; 16) | (%pB1v &lt;&lt; 24);     \nCNPUE = 0;\nCNCONbits.ON = 1; \nIEC1bits.CNIE = 1;\nIPC6bits.CNIP = 2;\nIPC6bits.CNIS = 2;\nINTCONbits.MVEC = 1;\n__builtin_mtc0(12,0,(__builtin_mfc0(12,0) | 0x0001));\n' 
+        disable='\nIEC1bits.CNIE = 0;\nCNCONbits.ON = 0;\n' >
+            <map >
+                <pin port='2' bit='14' ident='0' />
+                <pin port='2' bit='13' ident='1' />
+                <pin port='1' bit='0'  ident='2' />
+                <pin port='1' bit='1'  ident='3' />
+                <pin port='1' bit='2'  ident='4' />
+                <pin port='1' bit='3'  ident='5' />
+                <pin port='1' bit='4'  ident='6' />
+                <pin port='1' bit='5'  ident='7' />
+                <pin port='6' bit='6'  ident='8' />
+                <pin port='6' bit='7'  ident='9' />
+                <pin port='6' bit='8'  ident='10' />
+                <pin port='6' bit='9'  ident='11' />
+                <pin port='1' bit='15' ident='12' />
+                <pin port='3' bit='4'  ident='13' />
+                <pin port='3' bit='5'  ident='14' />
+                <pin port='3' bit='6'  ident='15' />
+                <pin port='3' bit='7'  ident='16' />
+                <pin port='5' bit='4'  ident='17' />
+                <pin port='5' bit='5'  ident='18' />
+            </map>
+            <ioc config='0x0C' >
+                <rising port='1' mask='0x803F' />
+                <rising port='2' mask='0x6000' />
+                <rising port='3' mask='0xF0' />
+                <rising port='5' mask='0x30' />
+                <rising port='6' mask='0x3C0' />
+
+                <falling port='1' mask='0x803F' />
+                <falling port='2' mask='0x6000' />
+                <falling port='3' mask='0xF0' />
+                <falling port='5' mask='0x30' />
+                <falling port='6' mask='0x3C0' />
+            </ioc>
+        </interrupt>
+
+        <interrupt ident='RXINT0' type='comms' name='UART RXINT 1' handler='#ifndef MX_ISR_RX1\n#define MX_ISR_RX1\nvoid __ISR(_UART_1_VECTOR, ipl1AUTO) _IntHandlerDrvUsartReceiveInstance0(void)\n{\n\t\tFCM_%n();\n\tIFS0bits.U1RXIF = 0;\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='\n\tIEC0bits.U1RXIE = 1;\n\tIPC6bits.U1IP = 1;\n\tIPC6bits. U1IS = 0;\n\tINTCONbits.MVEC = 1;\n\t__builtin_mtc0(12,0,(__builtin_mfc0(12,0) | 0x0001));\n' disable='IEC0bits.U1RXIE = 0;\n\t' />
+
+        <interrupt ident='RXINT1' type='comms' name='UART RXINT 2' handler='#ifndef MX_ISR_RX2\n#define MX_ISR_RX2\nvoid __ISR(_UART_2_VECTOR, ipl1AUTO) _IntHandlerDrvUsartReceiveInstance1(void)\n{\n\t\tFCM_%n();\n\tIFS1bits.U2RXIF = 0;\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='\n\tIEC1bits.U2RXIE = 1;\n\tIPC8bits.U2IP = 1;\n\tIPC8bits. U2IS = 0;\n\tINTCONbits.MVEC = 1;\n\t__builtin_mtc0(12,0,(__builtin_mfc0(12,0) | 0x0001));\n' disable='IEC1bits.U2RXIE = 0;\n\t' />
+
+        <interrupt ident='TMR1' reg='TMR1' type='timer16' name='Timer 1' handler='#ifndef MX_ISR_T1\n#define MX_ISR_T1\nvoid __ISR(_TIMER_1_VECTOR, ipl1AUTO) _IntHandlerDrvTmrInstance0(void)\n{\n\t\tIFS0bits.T1IF = 0;\n\t\tFCM_%n();\n}\n\t#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='T1CON = T1CON | 0x8000;\nIEC0bits.T1IE = 1;\nIPC1bits.T1IP = 1;\nIPC1bits.T1IS = 0;\nTMR1 = 0;\nINTCONbits.MVEC = 1;\n__builtin_mtc0(12,0,(__builtin_mfc0(12,0) | 0x0001));\n' disable='IEC0bits.T1IE = 0;\nT1CON = 0;\n' >
+            <timer overflow='65536' extrange='0' />
+            <options >
+                <option name='Clock Source Select' >
+                    <entry name='Internal peripheral clock' clkdiv='2' value='T1CON = (T1CON &amp; 0xfffd);\n' />
+                    <entry name='External clock from TxCK pin' clkdiv='0' value='T1CON = ((T1CON &amp; 0xfffd) | 0x0002);\n' />
+                </option>
+                <prescale name='Prescaler Rate' >
+                    <entry name='1:1'   value='T1CON = ((T1CON &amp; 0xff0f) | 0x0000);\n' />
+                    <entry name='1:8'   value='T1CON = ((T1CON &amp; 0xff0f) | 0x0010);\n' />
+                    <entry name='1:64'   value='T1CON = ((T1CON &amp; 0xff0f) | 0x0020);\n' />
+                    <entry name='1:256'   value='T1CON = ((T1CON &amp; 0xff0f) | 0x0030);\n' />
+                </prescale>
+                <rollover name='Rollover Value' >
+                    <entry name='65536' min='1' max='65536' value='PR1=%d-1;\n' />
+                </rollover>
+            </options>
+        </interrupt>
+        
+        <interrupt ident='TMR2' reg='TMR2' type='timer16' name='Timer 2' handler='#ifndef MX_ISR_T2\n#define MX_ISR_T2\n void __ISR(_TIMER_2_VECTOR, ipl1AUTO) _IntHandlerDrvTmrInstance1(void)\n{\n\tIFS0bits.T2IF = 0;\n\tFCM_%n();\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='T2CON = T2CON | 0x8000;\nIEC0bits.T2IE = 1;\nIPC2bits.T2IP = 1;\nIPC2bits.T2IS = 0;\nTMR2 = 0;\nINTCONbits.MVEC = 1;\n__builtin_mtc0(12,0,(__builtin_mfc0(12,0) | 0x0001));\n' disable='IEC0bits.T2IE = 0;\nT2CON = 0;\n' >
+            <timer overflow='65536' extrange='0' />
+            <options >
+                <option name='Clock Source Select' >
+                    <entry name='Internal peripheral clock' clkdiv='1' value='T2CON = (T2CON &amp; 0xfffd);\n' />
+                    <entry name='External clock from TxCK pin' clkdiv='0' value='T2CON = ((T2CON &amp; 0xfffd) | 0x0002);\n' />
+                </option>
+                <prescale name='Prescaler Rate' >
+                    <entry name='1:1'   value='T2CON = ((T2CON &amp; 0xff0f) | 0x0000);\n' />
+                    <entry name='1:2'   value='T2CON = ((T2CON &amp; 0xff0f) | 0x0010);\n' />
+                    <entry name='1:4'   value='T2CON = ((T2CON &amp; 0xff0f) | 0x0020);\n' />
+                    <entry name='1:8'   value='T2CON = ((T2CON &amp; 0xff0f) | 0x0030);\n' />
+                    <entry name='1:16'  value='T2CON = ((T2CON &amp; 0xff0f) | 0x0040);\n' />
+                    <entry name='1:32'  value='T2CON = ((T2CON &amp; 0xff0f) | 0x0050);\n' />
+                    <entry name='1:64'  value='T2CON = ((T2CON &amp; 0xff0f) | 0x0060);\n' />
+                    <entry name='1:256' value='T2CON = ((T2CON &amp; 0xff0f) | 0x0070);\n' />
+                </prescale>
+                <rollover name='Rollover Value' >
+                    <entry name='65536' min='1' max='65536' value='PR2=%d-1;\n' />
+                </rollover>
+            </options>
+        </interrupt>
+        <interrupt ident='TMR3' reg='TMR3' type='timer16' name='Timer 3' handler='#ifndef MX_ISR_T3\n#define MX_ISR_T3\n void __ISR(_TIMER_3_VECTOR, ipl1AUTO) _IntHandlerDrvTmrInstance2(void)\n{\n\tIFS0bits.T3IF = 0;\n\tFCM_%n();\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='T3CON = T3CON | 0x8000;\nIEC0bits.T3IE = 1;\nIPC3bits.T3IP = 1;\nIPC3bits.T3IS = 0;\nTMR3 = 0;\nINTCONbits.MVEC = 1;\n__builtin_mtc0(12,0,(__builtin_mfc0(12,0) | 0x0001));\n' disable='IEC0bits.T2IE = 0;\nT3CON = 0;\n' >
+            <timer overflow='65536' extrange='0' />
+            <options >
+                <option name='Clock Source Select' >
+                    <entry name='Internal peripheral clock' clkdiv='2' value='T3CON = (T3CON &amp; 0xfffd);\n' />
+                    <entry name='External clock from TxCK pin' clkdiv='0' value='T3CON = ((T3CON &amp; 0xfffd) | 0x0002);\n' />
+                </option>
+                <prescale name='Prescaler Rate' >
+                    <entry name='1:1'   value='T3CON = ((T3CON &amp; 0xff0f) | 0x0000);\n' />
+                    <entry name='1:2'   value='T3CON = ((T3CON &amp; 0xff0f) | 0x0010);\n' />
+                    <entry name='1:4'   value='T3CON = ((T3CON &amp; 0xff0f) | 0x0020);\n' />
+                    <entry name='1:8'   value='T3CON = ((T3CON &amp; 0xff0f) | 0x0030);\n' />
+                    <entry name='1:16'  value='T3CON = ((T3CON &amp; 0xff0f) | 0x0040);\n' />
+                    <entry name='1:32'  value='T3CON = ((T3CON &amp; 0xff0f) | 0x0050);\n' />
+                    <entry name='1:64'  value='T3CON = ((T3CON &amp; 0xff0f) | 0x0060);\n' />
+                    <entry name='1:256' value='T3CON = ((T3CON &amp; 0xff0f) | 0x0070);\n' />
+                </prescale>
+                <rollover name='Rollover Value' >
+                    <entry name='65536' min='1' max='65536' value='PR3=%d-1;\n' />
+                </rollover>
+            </options>
+        </interrupt>
+        <interrupt ident='TMR4' reg='TMR4' type='timer16' name='Timer 4' handler='#ifndef MX_ISR_T4\n#define MX_ISR_T4\n void __ISR(_TIMER_4_VECTOR, ipl1AUTO) _IntHandlerDrvTmrInstance3(void)\n{\n\tIFS0bits.T4IF = 0;\n\tFCM_%n();\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='T4CON = T4CON | 0x8000;\nIEC0bits.T4IE = 1;\nIPC4bits.T4IP = 1;\nIPC4bits.T4IS = 0;\nTMR4 = 0;\nINTCONbits.MVEC = 1;\n__builtin_mtc0(12,0,(__builtin_mfc0(12,0) | 0x0001));\n' disable='IEC0bits.T4IE = 0;\nT4CON = 0;\n' >
+            <timer overflow='65536' extrange='0' />
+            <options >
+                <option name='Clock Source Select' >
+                    <entry name='Internal peripheral clock' clkdiv='2' value='T4CON = (T4CON &amp; 0xfffd);\n' />
+                    <entry name='External clock from TxCK pin' clkdiv='0' value='T4CON = ((T4CON &amp; 0xfffd) | 0x0002);\n' />
+                </option>
+                <prescale name='Prescaler Rate' >
+                    <entry name='1:1'   value='T4CON = ((T4CON &amp; 0xff0f) | 0x0000);\n' />
+                    <entry name='1:2'   value='T4CON = ((T4CON &amp; 0xff0f) | 0x0010);\n' />
+                    <entry name='1:4'   value='T4CON = ((T4CON &amp; 0xff0f) | 0x0020);\n' />
+                    <entry name='1:8'   value='T4CON = ((T4CON &amp; 0xff0f) | 0x0030);\n' />
+                    <entry name='1:16'  value='T4CON = ((T4CON &amp; 0xff0f) | 0x0040);\n' />
+                    <entry name='1:32'  value='T4CON = ((T4CON &amp; 0xff0f) | 0x0050);\n' />
+                    <entry name='1:64'  value='T4CON = ((T4CON &amp; 0xff0f) | 0x0060);\n' />
+                    <entry name='1:256' value='T4CON = ((T4CON &amp; 0xff0f) | 0x0070);\n' />
+                </prescale>
+                <rollover name='Rollover Value' >
+                    <entry name='65536' min='1' max='65536' value='PR4=%d-1;\n' />
+                </rollover>
+            </options>
+        </interrupt>
+        <interrupt ident='TMR5' reg='TMR5' type='timer16' name='Timer 5' handler='#ifndef MX_ISR_T5\n#define MX_ISR_T5\n void __ISR(_TIMER_5_VECTOR, ipl1AUTO) _IntHandlerDrvTmrInstance4(void)\n{\n\tIFS0bits.T5IF = 0;\n\tFCM_%n();\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='T5CON = T5CON | 0x8000;\nIEC0bits.T5IE = 1;\nIPC5bits.T5IP = 1;\nIPC5bits.T5IS = 0;\nTMR5 = 0;\nINTCONbits.MVEC = 1;\n__builtin_mtc0(12,0,(__builtin_mfc0(12,0) | 0x0001));\n' disable='IEC0bits.T5IE = 0;\nT5CON = 0;\n' >
+            <timer overflow='65536' extrange='0' />
+            <options >
+                <option name='Clock Source Select' >
+                    <entry name='Internal peripheral clock' clkdiv='2' value='T5CON = (T5CON &amp; 0xfffd);\n' />
+                    <entry name='External clock from TxCK pin' clkdiv='0' value='T5CON = ((T5CON &amp; 0xfffd) | 0x0002);\n' />
+                </option>
+                <prescale name='Prescaler Rate' >
+                    <entry name='1:1'   value='T5CON = ((T5CON &amp; 0xff0f) | 0x0000);\n' />
+                    <entry name='1:2'   value='T5CON = ((T5CON &amp; 0xff0f) | 0x0010);\n' />
+                    <entry name='1:4'   value='T5CON = ((T5CON &amp; 0xff0f) | 0x0020);\n' />
+                    <entry name='1:8'   value='T5CON = ((T5CON &amp; 0xff0f) | 0x0030);\n' />
+                    <entry name='1:16'  value='T5CON = ((T5CON &amp; 0xff0f) | 0x0040);\n' />
+                    <entry name='1:32'  value='T5CON = ((T5CON &amp; 0xff0f) | 0x0050);\n' />
+                    <entry name='1:64'  value='T5CON = ((T5CON &amp; 0xff0f) | 0x0060);\n' />
+                    <entry name='1:256' value='T5CON = ((T5CON &amp; 0xff0f) | 0x0070);\n' />
+                </prescale>
+                <rollover name='Rollover Value' >
+                    <entry name='65536' min='1' max='65536' value='PR5=%d-1;\n' />
+                </rollover>
+            </options>
+        </interrupt>
+    </interrupts>
+</device>
+<inline >
+    <defines code='#define MX_CLKS_PER_INST 4\n#define MX_SPI1CON\n#define MX_PIC32\n#define MX_CAL_PIC32\n\n// DEVCFG0\n#pragma config DEBUG = 3  //Debugger disabled\n#pragma config ICESEL = 1  //In-Circuit Emulator/Debugger Communication Channel PGEC2/PGED2 pair\n#pragma config PWP = 255 //Program Flash Write-Protect Disabled\n#pragma config BWP = 1  //Boot Flash Write-Protect Disabled\n#pragma config CP = 1  //Code-Protect disabled\n\n//DEVCFG1\n#pragma config FNOSC = 3\n#pragma config FSOSCEN = 0  //Disable Secondary Oscillator  \n#pragma config IESO = 0  //Internal External Switchover mode disabled  \n#pragma config POSCMOD = 2  //HS oscillator mode selected\n#pragma config OSCIOFNC = 1  //CLKO output enabled  \n#pragma config FPBDIV = 0  //PBCLK is SYSCLK divided by 1\n#pragma config FCKSM = 2  //Clock switching is disabled, Fail-Safe Clock Monitor is disabled \n#pragma config WDTPS = 0  //Watchdog Timer Postscale 1:1\n#pragma config FWDTEN = 0  //The WDT is not enabled\n\n//DEVCFG2\n#pragma config FPLLIDIV = 0\n#pragma config FPLLMUL = 0\n#pragma config FPLLODIV = 0\n\n' />
+    <directives code='#include &lt;xc.h&gt;\n#include &lt;math.h&gt;\n#include &lt;stdlib.h&gt;\n#include &lt;stdint.h&gt;\n#include &lt;stddef.h&gt;\n#include &lt;stdbool.h&gt;\n#include &lt;p32xxxx.h&gt;\n#include&lt;sys/attribs.h&gt;\n\nextern const uint32_t _verMPIDE_Stub;\nconst uint32_t __attribute__((section(&quot;.mpide_version&quot;))) _verMPIDE_Stub = 1;    // assigns the build number in the header section in the image\n\n' />
+    <main >
+        <start code='\nint main()\n{\n\t#ifdef INTOSCHELPER\n\t\tINTOSCHELPERCODE\n\t#endif\n\n' />
+        <end code='\tmainendloop: goto mainendloop;\n\treturn 0;\n}\n\n' />
+        <init code='AD1PCFG = 0xFFFF;\n' />
+    </main>
+    <interrupt >
+        <enable code='' />
+        <start code='' />
+        <end code='' />
+        <init code='' />
+    </interrupt>
+    <config >
+        <start code='' />
+        <body code='' />
+        <end code='' />
+    </config>
+</inline>
+<test >
+    <icd >
+        <clock port='1' pin='6' />
+        <data port='1' pin='7' />
+    </icd>
+</test>
+</root>

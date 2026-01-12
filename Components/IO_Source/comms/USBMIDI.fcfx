@@ -1,0 +1,2465 @@
+<root>
+<document scada='0' schema='103' license='10,BenR,C9TN1M' title='' description='' fcversion='655364' target='PIC.16F.16C716' >
+	<config data='!0,3fff%0,3%2,1%3,1%6,1%4,3f3' clkspd='19660800' simspd='1' usewdt='0' constif='0' Use3V3='0' />
+	<plugins >
+		<dll_models enabled='1' />
+	</plugins>
+	<supplement use='1' head='#define MX_VERSION ((major_version &lt;&lt; 8) | minor_version)
+
+#ifdef MX_CAL_PIC							//8-bit PIC specific
+
+	MX_UINT8 MX_USBNAME[dev_name_count] = {dev_name};		                    //Device name
+	MX_UINT8 MX_USBMFR[dev_manufacturer_count] = {dev_manufacturer};			//Manufacturer
+
+	// Global Defines
+	#define CDC_TX_BUFFER_SIZE 	64
+	#define CDC_RX_BUFFER_SIZE 	64
+	#define CDC_DATA_ENDPOINT	3
+	#define USB_HIGHEST_EP 		3
+	#define USB_BUS_POWERED
+
+	#ifdef MX_USB_TYPE1									//2455 Family
+		#define USB_DESCRIPTOR_BASE_ADDRESS	0x400
+		#define USB_EP0_OUT_ADDR 	0x0500
+		#define USB_EP0_IN_ADDR 	0x0508
+		#define USB_EP2_IN_ADDR		0x0510
+		#define USB_EP3_OUT_ADDR	0x0518
+		#define USB_EP3_IN_ADDR		0x0520
+		#define PIRREG  		pir2
+		#define PIEREG  		pie2
+	#endif
+
+	#ifdef MX_USB_TYPE2									//2450 Family
+		#define USB_DESCRIPTOR_BASE_ADDRESS	0x400
+		#define USB_EP0_OUT_ADDR 	0x0480
+		#define USB_EP0_IN_ADDR 	0x0488
+		#define USB_EP2_IN_ADDR		0x0490
+		#define USB_EP3_OUT_ADDR	0x0498
+		#define USB_EP3_IN_ADDR		0x04A0
+		#define PIRREG  		pir2
+		#define PIEREG  		pie2
+	#endif
+
+	#ifdef MX_USB_TYPE3									//14K50 Family
+		#define USB_DESCRIPTOR_BASE_ADDRESS	0x200
+		#define USB_EP0_OUT_ADDR 	0x0280
+		#define USB_EP0_IN_ADDR 	0x0288
+		#define USB_EP2_IN_ADDR		0x0290
+		#define USB_EP3_OUT_ADDR	0x0298
+		#define USB_EP3_IN_ADDR		0x02A0
+		#define PIRREG  		pir2
+		#define PIEREG  		pie2
+	#endif
+
+	#ifdef MX_USB_TYPE4									//24J53 Family
+		#define USB_DESCRIPTOR_BASE_ADDRESS	0xD00
+		#define USB_EP0_OUT_ADDR 	0x0E00
+		#define USB_EP0_IN_ADDR 	0x0E08
+		#define USB_EP2_IN_ADDR		0x0E10
+		#define USB_EP3_OUT_ADDR	0x0E18
+		#define USB_EP3_IN_ADDR		0x0E20
+		#define PIRREG  		pir2
+		#define PIEREG  		pie2
+	#endif
+	
+	#ifdef MX_USB_TYPE5                                                             //16f1455 Family
+		#define USB_DESCRIPTOR_BASE_ADDRESS     0x2000
+		#define USB_EP0_OUT_ADDR        0x2040
+		#define USB_EP0_IN_ADDR         0x2048
+		#define USB_EP2_IN_ADDR		    0x2050
+		#define USB_EP3_OUT_ADDR	    0x2058
+		#define USB_EP3_IN_ADDR		    0x2060
+		#define PIRREG  		pir2
+		#define PIEREG  		pie2
+	#endif
+
+	#ifdef MX_USB_TYPE6                                                             //18F45K50 Family
+		#define USB_DESCRIPTOR_BASE_ADDRESS     0x400
+		#define USB_EP0_OUT_ADDR        0x0500
+		#define USB_EP0_IN_ADDR         0x0508
+		#define USB_EP2_IN_ADDR		    0x0510
+		#define USB_EP3_OUT_ADDR	    0x0518
+		#define USB_EP3_IN_ADDR		    0x0520
+		#define PIRREG  		pir3
+		#define PIEREG  		pie3
+	#endif
+
+	#ifndef USB_DESCRIPTOR_BASE_ADDRESS
+		#error &quot;Target device does not have USB functionality&quot;
+	#endif
+
+	#ifdef HI_TECH_C
+		#error &quot;USB library only supported by the BoostC compiler&quot;
+	#endif
+
+	#define USB_EP0_OUT_SIZE 	8
+	#define USB_EP0_IN_SIZE 	8
+	#define USB_EP2_IN_SIZE		8
+	#define USB_EP3_OUT_SIZE	8
+	#define USB_EP3_IN_SIZE		8
+
+	#define USB_CALLBACK_ON_SOF
+	#define USB_CALLBACK_ON_DEVICE_CONFIGURED
+	#define USB_CALLBACK_ON_CTRL_CLASS
+	#define USB_EP_DATA_CALLBACK
+
+	//Serial Number
+	MX_UINT8 MX_SERIAL[10] = {10,3,&apos;0&apos;,0,&apos;0&apos;,0,&apos;0&apos;,0,&apos;1&apos;,0};
+
+	// USB library includes
+	#include &quot;C:/ProgramData/MatrixTSL/FlowcodeV10/CAL/PIC/USB/pic_utils.h&quot;
+	#include &quot;C:/ProgramData/MatrixTSL/FlowcodeV10/CAL/PIC/USB/pic_usb_buffer_mgt.c&quot;
+	#include &quot;C:/ProgramData/MatrixTSL/FlowcodeV10/CAL/PIC/USB/pic_usb.c&quot;
+	#include &quot;C:/ProgramData/MatrixTSL/FlowcodeV10/CAL/PIC/USB/usb_cdc_class.c&quot;
+	#include &quot;C:/ProgramData/MatrixTSL/FlowcodeV10/CAL/PIC/USB/usb_config_serial.c&quot;
+
+	// Variable to hold status of the USB connection
+	MX_UINT8 CDC_USB_status = 0;
+
+	// Variable to hold incoming data
+	MX_UINT8 CDC_USB_Rx_String[CDC_RX_BUFFER_SIZE];
+
+	void usb_device_configured_callback(void)
+	{
+		CDC_USB_status = 1;
+	}
+
+#endif
+
+#ifdef MX_CAL_PIC16					//16-bit PIC specific
+
+	#ifndef MX_USB_TYPE1
+		#error &quot;Your target device does not support USB components&quot;
+	#endif
+
+	// Global Defines
+	#define USB_BUS_SENSE       1
+	#define self_power          1
+	#define tris_usb_bus_sense	1
+	#define tris_self_power		1
+
+	#define USB_CONFIG	&quot;usb_midi_config.h&quot;
+
+	// USB library includes
+	#include &quot;C:/ProgramData/MatrixTSL/FlowcodeV10/CAL/PIC16BIT/USB/usb_midi_config.h&quot;
+	#include &quot;C:/ProgramData/MatrixTSL/FlowcodeV10/CAL/PIC16BIT/USB/usb.h&quot;
+	#include &quot;C:/ProgramData/MatrixTSL/FlowcodeV10/CAL/PIC16BIT/USB/usb_function_midi.h&quot;
+	#include &quot;C:/ProgramData/MatrixTSL/FlowcodeV10/CAL/PIC16BIT/USB/GenericTypeDefs.h&quot;
+	#include &quot;C:/ProgramData/MatrixTSL/FlowcodeV10/CAL/PIC16BIT/USB/Compiler.h&quot;
+	#include &quot;C:/ProgramData/MatrixTSL/FlowcodeV10/CAL/PIC16BIT/USB/usb_device.h&quot;
+	#include &quot;C:/ProgramData/MatrixTSL/FlowcodeV10/CAL/PIC16BIT/USB/usb_device.c&quot;
+	#include &quot;C:/ProgramData/MatrixTSL/FlowcodeV10/CAL/PIC16BIT/USB/usb_ch9.h&quot;
+    #if defined(__dsPIC33E__) 
+      #include &quot;C:/ProgramData/MatrixTSL/FlowcodeV10/CAL/PIC16BIT/USB/usb_hal_dspic33e.c&quot;
+    #elif defined(__PIC24E__)
+      #include &quot;C:/ProgramData/MatrixTSL/FlowcodeV10/CAL/PIC16BIT/USB/usb_hal_pic24e.c&quot;
+    #else
+      #include &quot;C:/ProgramData/MatrixTSL/FlowcodeV10/CAL/PIC16BIT/USB/usb_hal_pic24.c&quot;
+    #endif
+	//#include &quot;C:/ProgramData/MatrixTSL/FlowcodeV10/CAL/PIC16BIT/USB/usb_function_midi.c&quot;
+	#include &quot;C:/ProgramData/MatrixTSL/FlowcodeV10/CAL/PIC16BIT/USB/usb_common.h&quot;
+	#include &quot;C:/ProgramData/MatrixTSL/FlowcodeV10/CAL/PIC16BIT/USB/usb_hal.h&quot;
+    #if defined(__dsPIC33E__) 
+      #include &quot;C:/ProgramData/MatrixTSL/FlowcodeV10/CAL/PIC16BIT/USB/usb_hal_dspic33e.h&quot;
+    #elif defined(__PIC24E__)
+      #include &quot;C:/ProgramData/MatrixTSL/FlowcodeV10/CAL/PIC16BIT/USB/usb_hal_pic24e.h&quot;
+    #else
+      #include &quot;C:/ProgramData/MatrixTSL/FlowcodeV10/CAL/PIC16BIT/USB/usb_hal_pic24.h&quot;
+    #endif
+	
+	// Device name and manufacturer
+	ROM struct{BYTE bLength;BYTE bDscType;WORD string[dev_name_count_DS];}sd002={sizeof(sd002),USB_DESCRIPTOR_STRING,{dev_name_DS}};
+	ROM struct{BYTE bLength;BYTE bDscType;WORD string[dev_manufacturer_count_DS];}sd001={sizeof(sd001),USB_DESCRIPTOR_STRING,{dev_manufacturer_DS}};
+
+	#include &quot;C:/ProgramData/MatrixTSL/FlowcodeV10/CAL/PIC16BIT/USB/usb_midi_descriptors.c&quot;
+    #include &quot;C:/ProgramData/MatrixTSL/FlowcodeV10/CAL/PIC16BIT/USB/usb_midi_handler.c&quot;
+
+    USB_HANDLE USBTxHandle = 0;
+    USB_HANDLE USBRxHandle = 0;
+
+    #define RX_BUFFER_ADDRESS_TAG
+    #define TX_BUFFER_ADDRESS_TAG
+    #define MIDI_EVENT_ADDRESS_TAG
+
+    unsigned char ReceivedDataBuffer[64] RX_BUFFER_ADDRESS_TAG;
+    unsigned char ToSendDataBuffer[64] TX_BUFFER_ADDRESS_TAG;
+    USB_AUDIO_MIDI_EVENT_PACKET midiData MIDI_EVENT_ADDRESS_TAG;
+
+#endif
+' body='  ' />
+	<debug />
+	<traces />
+	<ghost >
+		<FK2 >
+			<data name='FK2D0' port='4294967295' pin='4294967295' />
+			<data name='FK2D1' port='4294967295' pin='4294967295' />
+			<data name='FK2D2' port='4294967295' pin='4294967295' />
+			<data name='FK2D3' port='4294967295' pin='4294967295' />
+			<data name='FK2D4' port='4294967295' pin='4294967295' />
+			<data name='FK2D5' port='4294967295' pin='4294967295' />
+			<data name='FK2D6' port='4294967295' pin='4294967295' />
+			<data name='FK2D7' port='4294967295' pin='4294967295' />
+			<data name='FK2D8' port='4294967295' pin='4294967295' />
+			<data name='FK2D9' port='4294967295' pin='4294967295' />
+			<data name='FK2D10' port='4294967295' pin='4294967295' />
+			<data name='FK2D11' port='4294967295' pin='4294967295' />
+			<data name='FK2D12' port='4294967295' pin='4294967295' />
+			<data name='FK2D13' port='4294967295' pin='4294967295' />
+			<data name='FK2D14' port='4294967295' pin='4294967295' />
+			<data name='FK2D15' port='4294967295' pin='4294967295' />
+			<data name='FK2A0' port='4294967295' pin='4294967295' />
+			<data name='FK2A1' port='4294967295' pin='4294967295' />
+			<data name='FK2A2' port='4294967295' pin='4294967295' />
+			<data name='FK2A3' port='4294967295' pin='4294967295' />
+			<data name='FK2A4' port='4294967295' pin='4294967295' />
+			<data name='FK2A5' port='4294967295' pin='4294967295' />
+		</FK2>
+		<ICD >
+			<data name='AnalogPrescaleValue' value='19' />
+			<data name='DigitalSampleRate' value='100000' />
+			<data name='BreakpointCount' value='8' />
+			<data name='CallStackDepthCount' value='8' />
+			<data name='ClockPort' value='1' />
+			<data name='ClockPin' value='6' />
+			<data name='DataPort' value='1' />
+			<data name='DataPin' value='7' />
+			<data name='UseDefaultPins' value='1' />
+			<data name='WrapEnabled' value='1' />
+			<data name='CommsDelayOverridden' value='0' />
+			<data name='CommsDelay' value='9' />
+			<data name='CalculatedCommsDelay' value='9' />
+			<data name='AnalogEB2PrescaleValue' value='2' />
+			<data name='DigitalEB2SampleRate' value='100000' />
+		</ICD>
+		<pins >
+			<digital A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+			<analog A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+		</pins>
+	</ghost>
+	<components >
+		<settings autoimg='0' center='1' unitscale='1' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='1' />
+		<definition guid='fdceef06-919a-405b-8d0b-6118cd0e104c' vstate='40' vmin='3' vmaj='1' srcleaf='USBMIDI.fcfx' visiblename='USB MIDI' description='Component to create and communicate using a standard MIDI connection.
+Compatible with simulation and USB enabled microcontroller devices.
+Currently only compatible with the 16-bit PIC range of devices.' category='Comms: USB' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' catenable='1' author='Matrix Ltd.' manuname='' manucode='' sysinfo='28316139' keywords='' dynamic='1' scadaCompatible='0' embeddedCompatible='1' showmacros='1' iconpath='..\..\Icons\Components\USB_midi.png' />
+		<component class_type='root' codename='USB_MIDI' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' macronames='$(type)_$(module)__$(macro)' >
+			<resources />
+			<properties >
+				<property name='USB Properties' hidden='0' >
+					<property name='Vendor ID' target='vendor_ID' typeid='14' hidden='0' locked='0' info='USB VID' expansion='MX_VID' initialiser='$(value)' />
+					<property name='Product ID' target='product_ID' typeid='14' hidden='0' locked='0' info='USB PID' expansion='MX_PID' initialiser='$(value)' />
+					<property name='Device Name' target='dev_name' typeid='10' hidden='0' locked='0' info='USB Device Name' expansion='$(variable)' initialiser='$(value)' />
+					<property name='Manufacturer' target='dev_manufacturer' typeid='10' hidden='0' locked='0' info='USB Manufacturer' expansion='$(variable)' initialiser='$(value)' />
+					<property name='Major Version' target='major_version' typeid='14' hidden='0' locked='0' info='USB Major Version Number' expansion='$(variable)' initialiser='$(value)' />
+					<property name='Minor Version' target='minor_version' typeid='14' hidden='0' locked='0' info='USB Minor Version Number' expansion='$(variable)' initialiser='$(value)' />
+					<property name='Enumeration Timeout' target='enumeration_tout' typeid='7' hidden='0' locked='0' info='Specifies if the enumeration (Initialise function) can timeout if taking too long.' expansion='$(variable)' initialiser='$(value)' />
+					<property name='Timeout (Seconds)' target='timeout' typeid='14' hidden='1' locked='0' info='Number of seconds to wait before allowing a timeout to occur' expansion='$(variable)' initialiser='$(value)' />
+					<property name='USB Type' target='usb_type' typeid='14' hidden='1' locked='0' info='' expansion='$(variable)' initialiser='$(value)' />
+				</property>
+				<property name='Simulation' hidden='0' >
+					<property name='Label' target='label' typeid='10' hidden='0' locked='0' info='Text displayed on the I/O flasher comms component.' />
+					<property name='Data Source' target='DataSource' typeid='16' hidden='0' locked='0' info='Simulation data source used to allow the component to connect to specific MIDI hardware or the the data injector components.' filter='000MIDI Interface
+001Data Injector' />
+					<property name='MIDI Port' target='Midi_Port' typeid='16' hidden='0' locked='0' info='' />
+					<property name='API' target='Injector' typeid='16' hidden='1' locked='0' info='Lists all the current injector components available on the user&apos;s panel' />
+					<property name='Injector Handle' target='InjectorHandle' typeid='21' hidden='1' locked='0' info='' />
+				</property>
+			</properties>
+			<values >
+				<value target='vendor_ID' data='4799' />
+				<value target='product_ID' data='60456' />
+				<value target='dev_name' data='Flowcode MIDI' />
+				<value target='dev_manufacturer' data='Matrix Multimedia Ltd.' />
+				<value target='major_version' data='1' />
+				<value target='minor_version' data='0' />
+				<value target='enumeration_tout' data='0' />
+				<value target='timeout' data='10' />
+				<value target='usb_type' data='0' />
+				<value target='label' data='USB MIDI' />
+				<value target='DataSource' data='000' />
+				<value target='Midi_Port' data='000' />
+				<value target='Injector' data='000' />
+				<value target='InjectorHandle' data='0' />
+			</values>
+			<events >
+				<event class='Connection' event='ChipChange' target='Ev_ChipChange' />
+				<event class='Compile' event='AddProperty' target='prv_process_properties' />
+				<event class='Components' event='Initialise' target='Ev_Initialise' />
+				<event class='Compile' event='AddInterrupts' target='Ev_AddInterrupts' />
+				<event class='Simulation' event='Stop' target='Ev_Stop' />
+				<event class='Components' event='Renamed' target='Ev_Renamed' />
+				<event class='Components' event='Property' target='Ev_Prop_Change' />
+				<event class='Simulation' event='Start' target='Ev_SimStart' />
+				<event class='Connection' event='FCDChange' target='Ev_ChipChange' />
+			</events>
+			<apis >
+				<api name='SendMIDI' alt='SendMIDI_Sim' type='1' proto='1' />
+				<api name='SendPitchChange' alt='SendPitchChange_Sim' type='1' proto='1' />
+				<api name='SendNoteOff' alt='SendNoteOff_Sim' type='1' proto='1' />
+				<api name='SendControl' alt='SendControl_Sim' type='1' proto='1' />
+				<api name='SendNoteOn' alt='SendNoteOn_Sim' type='1' proto='1' />
+				<api name='ReceiveMIDI' alt='ReceiveMIDI_Sim' type='1' proto='1' />
+				<api name='SendPolyPressure' alt='SendPolyPressure_Sim' type='1' proto='1' />
+				<api name='ReadData' alt='ReadData' type='1' proto='1' />
+				<api name='SendPatch' alt='SendPatch_Sim' type='1' proto='1' />
+				<api name='SendChannelPressure' alt='SendChannelPressure_Sim' type='1' proto='1' />
+				<api name='Initialise' alt='InitSim' type='1' proto='1' />
+			</apis>
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='false' type='b1' description='' isconst='1' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='Received_MIDI' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+						<array size='4' />
+					</def>
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='true' type='b1' description='' isconst='1' isHidden='0' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='Sim_Init' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='console_handle' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='DLL_CloseRxPort' description='' statediag='0' dllpath='$(appdir)API.DLL\MIDI.dll' dllcall='115' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Prop_Change' description='Sent when a property has been changed by the User' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='TempStr' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<local name='TempVal' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='enumeration_tout' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;timeout&quot;' />
+									<argument exp='1' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;timeout&quot;' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='FCD.GetItemValue' >
+							<return exp='.TempStr' />
+							<argument exp='&quot;device.usb&quot;' />
+							<argument exp='&quot;type&quot;' />
+							<argument exp='&quot;0&quot;' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.TempVal = StringToInt$ (.TempStr)' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;usb_type&quot;' />
+							<argument exp='.TempVal' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='DataSource = 1' swap='0' >
+							<flowline >
+								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='PopulateInjectorFilter' />
+								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetInjectorHandle' >
+									<argument exp='Injector' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='InjectorHandle &gt; 0' swap='0' >
+									<flowline >
+										<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.RedirectMacros' >
+											<argument exp='InjectorBase1' />
+											<argument exp='InjectorHandle' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;Midi_Port&quot;' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;Injector&quot;' />
+									<argument exp='1' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Parse_MIDI_Channels_Sim' />
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;Midi_Port&quot;' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;Injector&quot;' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='COMPort' macro='GetConsoleHandle' >
+							<return exp='console_handle' />
+						</command>
+						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='LibraryComponent1' macro='SetConsoleHandle' >
+							<argument exp='console_handle' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='GetInjectorHandle' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Index' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='ObjHandle' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='RootHandle' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='OldHandle' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Count' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='ObjName' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<local name='CmpName' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<local name='CmpStr' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.GetParent' >
+							<return exp='.ObjHandle' />
+							<argument exp='this' />
+						</command>
+						<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.GetCopy' >
+							<return exp='.RootHandle' />
+							<argument exp='.ObjHandle' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='.OldHandle != .ObjHandle' >
+							<flowline >
+								<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.GetCopy' >
+									<return exp='.OldHandle' />
+									<argument exp='.ObjHandle' />
+								</command>
+								<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.GetName' >
+									<return exp='.ObjName' />
+									<argument exp='.ObjHandle' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.CmpName = Left$ (.ObjName,8)' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.CmpStr = Compare$ (.CmpName,&quot;Injector&quot;,0)' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.CmpStr = 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.CmpName = Left$ (.ObjName,12)' />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.CmpStr = Compare$ (.CmpName,&quot;InjectorBase&quot;,0)' />
+										</command>
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.CmpStr &gt; 0' swap='0' >
+											<flowline >
+												<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Count = .Index' swap='0' >
+													<flowline >
+														<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+															<argument exp='this' />
+															<argument exp='&quot;InjectorHandle&quot;' />
+															<argument exp='.ObjHandle' />
+														</command>
+														<command class_type='goto' title='Goto Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' labelid='0' labelname='' />
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='.Count = .Count + 1' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.Traverse' >
+									<argument exp='.ObjHandle' />
+									<argument exp='.RootHandle' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='label' title='Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' labelid='0' labelname='A' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SendMIDI' description='Sends a MIDI packet consisting of up to three bytes of information,' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Status' type='u8' description='MIDI Status Byte - Used for commands such as NoteOn, NoteOff etc.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Data1' type='u8' description='MIDI Data Byte - Used as a parameter specific to the specified command' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Data2' type='u8' description='MIDI Data Byte - Used as a parameter specific to the specified command' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='native' title='C Code' ccode='#ifdef MX_CAL_PIC
+
+#else
+
+  if(!USBHandleBusy(USBTxHandle))
+  {
+     midiData.Val = 0;   //must set all unused values to 0
+     midiData.CableNumber = 0;
+     midiData.CodeIndexNumber = MIDI_CIN_NOTE_ON;
+     midiData.DATA_0 = FCL_STATUS;         //Note on
+     midiData.DATA_1 = FCL_DATA1;         //pitch
+     midiData.DATA_2 = FCL_DATA2;  //velocity
+     USBTxHandle = USBTxOnePacket(MIDI_EP,(BYTE*)&amp;midiData,4);
+  }
+
+#endif' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SendNoteOff_Sim' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Channel' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Note' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Velocity' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Channel &gt; 15' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Channel = 0' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='LibraryComponent1' macro='FlashTx' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='DataSource = 1' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='InjectorBase1' macro='TxByte' >
+									<argument exp='0x80 | .Channel' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='InjectorBase1' macro='TxByte' >
+									<argument exp='.Note' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='InjectorBase1' macro='TxByte' >
+									<argument exp='.Velocity' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DLL_TxData' >
+									<argument exp='0x80 | .Channel' />
+									<argument exp='.Note' />
+									<argument exp='.Velocity' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.SetOutputRGB' >
+							<argument exp='console_handle' />
+							<argument exp='0xFF0000' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot;Tx: Note Off -&quot;' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot; Channel:&quot; + STRING .Channel' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot; Note:&quot; + STRING .Note' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot; Velocity:&quot; + STRING .Velocity' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot;\n&quot;' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='prv_PIC_Strings' description='' statediag='0' >
+						<return name='Return' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;\x00&quot;' setinit='' >
+							<array size='2000' />
+						</return>
+						<param name='input' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='200' />
+						</param>
+						<param name='define' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</param>
+						<local name='idx' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='idx2' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='count' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='first' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='temp_string' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<local name='temp_define' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<command class_type='loop' title='Look for opening &quot;' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='.input[.idx] != 34' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.idx = .idx + 1' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.idx2 = .idx + 1' />
+							<exp exp='.idx = 0' />
+						</command>
+						<command class_type='loop' title='Look for closing &quot;' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='.input[.idx2] != 34' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.count = .count + 1' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.first = 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.first = 1' />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.temp_string[.idx] = &apos;\&apos;&apos;' />
+											<exp exp='.temp_string[.idx + 1] = .input[.idx2]' />
+											<exp exp='.temp_string[.idx + 2] = &apos;\&apos;&apos;' />
+											<exp exp='.temp_string[.idx + 3] = &apos;,&apos;' />
+											<exp exp='.temp_string[.idx + 4] = &apos;0&apos;' />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.idx = .idx + 5' />
+											<exp exp='.idx2 = .idx2 + 1' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.temp_string[.idx] = &apos;,&apos;' />
+											<exp exp='.temp_string[.idx + 1] = &apos;\&apos;&apos;' />
+											<exp exp='.temp_string[.idx + 2] = .input[.idx2]' />
+											<exp exp='.temp_string[.idx + 3] = &apos;\&apos;&apos;' />
+											<exp exp='.temp_string[.idx + 4] = &apos;,&apos;' />
+											<exp exp='.temp_string[.idx + 5] = &apos;0&apos;' />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.idx = .idx + 6' />
+											<exp exp='.idx2 = .idx2 + 1' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.count = (.count * 2) + 2' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.temp_define = ToString$ (.count)' />
+							<exp exp='.temp_define = .temp_define + &quot;,&quot;' />
+							<exp exp='.temp_define = .temp_define + &quot;3&quot;' />
+							<exp exp='.temp_define = .temp_define + &quot;,&quot;' />
+							<exp exp='.temp_string = .temp_define + .temp_string' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.temp_define = &quot;#define &quot; + .define + &quot; &quot;' />
+							<exp exp='.temp_string = .temp_define + .temp_string' />
+							<exp exp='.temp_string = .temp_string + &quot;\n&quot;' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.temp_define = &quot;#define &quot; + .define + &quot;_count &quot;' />
+							<exp exp='.temp_string = .temp_string + .temp_define' />
+							<exp exp='.temp_define = ToString$ (.count)' />
+							<exp exp='.temp_string = .temp_string + .temp_define' />
+							<exp exp='.temp_string = .temp_string + &quot;\n&quot;' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = .temp_string' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Stop' description='Broadcast to all components that simulation has stopped' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DLL_CloseTxPort' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DLL_CloseRxPort' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='prv_dsPIC_Strings' description='' statediag='0' >
+						<return name='Return' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;\x00&quot;' setinit='' >
+							<array size='2000' />
+						</return>
+						<param name='input' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='200' />
+						</param>
+						<param name='define' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</param>
+						<local name='idx' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='idx2' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='count' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='first' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='temp_string' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<local name='temp_define' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<command class_type='loop' title='Look for opening &quot;' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='.input[.idx] != 34' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.idx = .idx + 1' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.idx2 = .idx + 1' />
+							<exp exp='.idx = 0' />
+						</command>
+						<command class_type='loop' title='Look for closing &quot;' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='.input[.idx2] != 34' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.count = .count + 1' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.first = 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.first = 1' />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.temp_string[.idx] = &apos;\&apos;&apos;' />
+											<exp exp='.temp_string[.idx + 1] = .input[.idx2]' />
+											<exp exp='.temp_string[.idx + 2] = &apos;\&apos;&apos;' />
+											<exp exp='' />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.idx = .idx + 3' />
+											<exp exp='.idx2 = .idx2 + 1' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.temp_string[.idx] = &apos;,&apos;' />
+											<exp exp='.temp_string[.idx + 1] = &apos;\&apos;&apos;' />
+											<exp exp='.temp_string[.idx + 2] = .input[.idx2]' />
+											<exp exp='.temp_string[.idx + 3] = &apos;\&apos;&apos;' />
+											<exp exp='' />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.idx = .idx + 4' />
+											<exp exp='.idx2 = .idx2 + 1' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.temp_define = &quot;#define &quot; + .define + &quot;_DS &quot;' />
+							<exp exp='.temp_string = .temp_define + .temp_string' />
+							<exp exp='.temp_string = .temp_string + &quot;\n&quot;' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.temp_define = &quot;#define &quot; + .define + &quot;_count_DS &quot;' />
+							<exp exp='.temp_string = .temp_string + .temp_define' />
+							<exp exp='.temp_define = ToString$ (.count)' />
+							<exp exp='.temp_string = .temp_string + .temp_define' />
+							<exp exp='.temp_string = .temp_string + &quot;\n&quot;' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = .temp_string' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_AddInterrupts' description='Sent to a component to allow dynamic amendment of the interrupts for a component' statediag='0' >
+						<return name='Return' type='u32' description='Non-zero to block code insertion' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='HandlerCode' type='T8*' description='Text to amend for all component interrupts' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</param>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.HandlerCode = .HandlerCode + &quot;\n\n&quot;' />
+							<exp exp='.HandlerCode = .HandlerCode + &quot;#ifdef MX_CAL_PIC \n&quot;' />
+							<exp exp='.HandlerCode = .HandlerCode + &quot;  usb_handle_isr(); \n&quot;' />
+							<exp exp='.HandlerCode = .HandlerCode + &quot;#endif \n&quot;' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = 0' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='DLL_GetByteFromPortName' description='' statediag='0' dllpath='$(appdir)API.DLL\MIDI.dll' dllcall='115' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Index' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Parse_MIDI_Channels_Sim' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<local name='count' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='name' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<local name='idx' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='inner' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetFilter' >
+							<argument exp='this' />
+							<argument exp='&quot;Midi_Port&quot;' />
+							<argument exp='&quot;&quot;' />
+						</command>
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DLL_GetPortCount' >
+							<return exp='.count' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='.idx &lt; .count' >
+							<flowline >
+								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DLL_GetPortName' >
+									<argument exp='.idx' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.inner = 0' />
+								</command>
+								<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='.inner &lt; 32' >
+									<flowline >
+										<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DLL_GetByteFromPortName' >
+											<return exp='.name[.inner]' />
+											<argument exp='.inner' />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.inner = .inner + 1' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.AddListItem' >
+									<argument exp='this' />
+									<argument exp='&quot;Midi_Port&quot;' />
+									<argument exp='.idx' />
+									<argument exp='.name' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.idx = .idx + 1' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='PopulateInjectorFilter' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<local name='ObjHandle' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='RootHandle' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='OldHandle' type='h32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='ObjName' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<local name='CmpName' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<local name='CmpStr' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Index' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetFilter' >
+							<argument exp='this' />
+							<argument exp='&quot;Injector&quot;' />
+							<argument exp='&quot;&quot;' />
+						</command>
+						<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.GetParent' >
+							<return exp='.ObjHandle' />
+							<argument exp='this' />
+						</command>
+						<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.GetCopy' >
+							<return exp='.RootHandle' />
+							<argument exp='.ObjHandle' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='.OldHandle != .ObjHandle' >
+							<flowline >
+								<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.GetCopy' >
+									<return exp='.OldHandle' />
+									<argument exp='.ObjHandle' />
+								</command>
+								<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.GetName' >
+									<return exp='.ObjName' />
+									<argument exp='.ObjHandle' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.CmpName = Left$ (.ObjName,8)' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.CmpStr = Compare$ (.CmpName,&quot;Injector&quot;,0)' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.CmpStr = 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.CmpName = Left$ (.ObjName,12)' />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.CmpStr = Compare$ (.CmpName,&quot;InjectorBase&quot;,0)' />
+										</command>
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.CmpStr &gt; 0' swap='0' >
+											<flowline >
+												<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.AddListItem' >
+													<argument exp='this' />
+													<argument exp='&quot;Injector&quot;' />
+													<argument exp='.Index' />
+													<argument exp='.ObjName' />
+												</command>
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='.Index = .Index + 1' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.Traverse' >
+									<argument exp='.ObjHandle' />
+									<argument exp='.RootHandle' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SendPitchChange' description='Sends out a pitch change command on the specified channel.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Channel' type='u8' description='Channel to send the pitch change to' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Pitch_Change' type='u16' description='New pitch value to use, Default 0x2000' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Channel &gt; 15' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Channel = 0' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendMIDI' >
+							<argument exp='0xE0 | .Channel' />
+							<argument exp='.Pitch_Change &amp; 0xFF' />
+							<argument exp='.Pitch_Change &gt;&gt; 8' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SendNoteOn_Sim' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Channel' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Note' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Velocity' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Channel &gt; 15' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Channel = 0' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='LibraryComponent1' macro='FlashTx' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='DataSource = 1' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='InjectorBase1' macro='TxByte' >
+									<argument exp='0x90 | .Channel' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='InjectorBase1' macro='TxByte' >
+									<argument exp='.Note' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='InjectorBase1' macro='TxByte' >
+									<argument exp='.Velocity' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DLL_TxData' >
+									<argument exp='0x90 | .Channel' />
+									<argument exp='.Note' />
+									<argument exp='.Velocity' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.SetOutputRGB' >
+							<argument exp='console_handle' />
+							<argument exp='0xFF0000' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot;Tx: Note On -&quot;' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot; Channel:&quot; + STRING .Channel' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot; Note:&quot; + STRING .Note' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot; Velocity:&quot; + STRING .Velocity' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot;\n&quot;' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Sim_ReadString' description='' statediag='0' >
+						<return name='Return' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;\x00&quot;' setinit='' >
+							<array size='2000' />
+						</return>
+						<param name='Timeout_ms' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Length' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='retval' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='TOUT_retval' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='idx' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.SetOutputRGB' >
+							<argument exp='console_handle' />
+							<argument exp='0x0000FF' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='Sim_Init' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetValue' >
+									<return exp='.TOUT_retval' />
+									<argument exp='COMPort' />
+									<argument exp='&quot;Tout_Val&quot;' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+									<argument exp='console_handle' />
+									<argument exp='&quot;Rx: &quot;' />
+								</command>
+								<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='.retval != .TOUT_retval' >
+									<flowline >
+										<command class_type='sim' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='COMPort' macro='ReceiveByte' >
+											<return exp='.retval' />
+											<argument exp='.Timeout_ms' />
+										</command>
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.retval = .TOUT_retval' swap='0' >
+											<flowline >
+												<command class_type='goto' title='Goto Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' labelid='0' labelname='' />
+											</flowline>
+											<flowline >
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='.Return[.idx] = .retval' />
+												</command>
+												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='.idx = .idx + 1' />
+												</command>
+												<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='LibraryComponent1' macro='FlashRx' />
+											</flowline>
+										</command>
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.idx = .Length' swap='0' >
+											<flowline >
+												<command class_type='goto' title='Goto Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' labelid='0' labelname='' />
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='label' title='Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' labelid='0' labelname='A' />
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Idx &gt; 0' swap='0' >
+									<flowline >
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+											<argument exp='console_handle' />
+											<argument exp='.Return' />
+										</command>
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+											<argument exp='console_handle' />
+											<argument exp='&quot;\n&quot;' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+											<argument exp='console_handle' />
+											<argument exp='&quot;Timeout\n&quot;' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+									<argument exp='console_handle' />
+									<argument exp='&quot;Rx: Timeout\n&quot;' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return[.idx] = 0' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Initialise' description='Initialisation routine for the component once the component is linked to its parent' statediag='0' >
+						<return name='Return' type='u32' description='Non-zero to prevent initialisation' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='temp' type='T8' description='' isconst='0' isHidden='0' isinit='1' usrinit='&quot;&quot;' setinit='&quot;&quot;' >
+							<array size='20' />
+						</local>
+						<local name='idx' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='idx2' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='OutStr' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_SimStart' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.temp = dev_name' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.temp[0] = &apos;{&apos;' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.idx = 0' />
+									<exp exp='.idx2 = 0' />
+									<exp exp='.OutStr = &quot;&quot;' />
+								</command>
+								<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='.temp[.idx] != &apos;\&apos;&apos;' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.idx = .idx + 1' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.idx = .idx + 1' />
+								</command>
+								<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='.temp[.idx] != 0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.OutStr[.idx2] = .temp[.idx]' />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.idx = .idx + 1' />
+											<exp exp='.idx2 = .idx2 + 1' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.OutStr[.idx2] = 0' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<argument exp='this' />
+									<argument exp='&quot;dev_name&quot;' />
+									<argument exp='.OutStr' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.temp = dev_manufacturer' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.temp[0] = &apos;{&apos;' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.idx = 0' />
+									<exp exp='.idx2 = 0' />
+									<exp exp='.OutStr = &quot;&quot;' />
+								</command>
+								<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='.temp[.idx] != &apos;\&apos;&apos;' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.idx = .idx + 1' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.idx = .idx + 1' />
+								</command>
+								<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='.temp[.idx] != 0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.OutStr[.idx2] = .temp[.idx]' />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.idx = .idx + 1' />
+											<exp exp='.idx2 = .idx2 + 1' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.OutStr[.idx2] = 0' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<argument exp='this' />
+									<argument exp='&quot;dev_manufacturer&quot;' />
+									<argument exp='.OutStr' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='DLL_TxData' description='' statediag='0' dllpath='$(appdir)API.DLL\MIDI.dll' dllcall='115' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Status' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Data1' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Data2' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SendPolyPressure_Sim' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Channel' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Note' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Pressure' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Channel &gt; 15' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Channel = 0' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='LibraryComponent1' macro='FlashTx' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='DataSource = 1' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='InjectorBase1' macro='TxByte' >
+									<argument exp='0xA0 | .Channel' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='InjectorBase1' macro='TxByte' >
+									<argument exp='.Note' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='InjectorBase1' macro='TxByte' >
+									<argument exp='.Pressure' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DLL_TxData' >
+									<argument exp='0xA0 | .Channel' />
+									<argument exp='.Note' />
+									<argument exp='.Pressure' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.SetOutputRGB' >
+							<argument exp='console_handle' />
+							<argument exp='0xFF0000' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot;Tx: Poly Pressure -&quot;' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot; Channel:&quot; + STRING .Channel' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot; Note:&quot; + STRING .Note' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot; Pressure:&quot; + STRING .Pressure' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot;\n&quot;' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SendNoteOff' description='Sends a note off command using the channel, note and velocity specified.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Channel' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Note' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Velocity' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Channel &gt; 15' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Channel = 0' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendMIDI' >
+							<argument exp='0x80 | .Channel' />
+							<argument exp='.Note' />
+							<argument exp='.Velocity' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_ChipChange' description='Sent when the target device has changed' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Target' type='T8' description='The name of the new target device' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</param>
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_Prop_Change' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='InitSim' description='' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='delay_counter' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='count' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='DataSource = 1' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='InjectorBase1' macro='InitialiseInjector' >
+									<argument exp='&quot;MIDI&quot;' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DLL_GetPortCount' >
+									<return exp='.count' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.count &gt; Midi_Port' swap='0' >
+									<flowline >
+										<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DLL_OpenRxPort' >
+											<argument exp='Midi_Port' />
+										</command>
+										<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DLL_OpenTxPort' >
+											<argument exp='Midi_Port' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = 0' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SendControl' description='Sends a control command using the channel, controller and value specified.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Channel' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Controller' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Value' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Channel &gt; 15' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Channel = 0' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendMIDI' >
+							<argument exp='0xB0 | .Channel' />
+							<argument exp='.Controller' />
+							<argument exp='.Value' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='DLL_RxData' description='' statediag='0' dllpath='$(appdir)API.DLL\MIDI.dll' dllcall='115' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Sim_SendString' description='' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Data' type='T8*' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</param>
+						<local name='count' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='idx' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='Sim_Init' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.SetOutputRGB' >
+									<argument exp='console_handle' />
+									<argument exp='0xFF0000' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+									<argument exp='console_handle' />
+									<argument exp='&quot;Tx: &quot;' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = 0' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.count = Length$ (.Data)' />
+								</command>
+								<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='.idx &lt; .count' >
+									<flowline >
+										<command class_type='sim' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='COMPort' macro='SendByte' >
+											<argument exp='.Data[.idx]' />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.idx = .idx + 1' />
+										</command>
+										<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='LibraryComponent1' macro='FlashTx' />
+									</flowline>
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+									<argument exp='console_handle' />
+									<argument exp='.Data' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+									<argument exp='console_handle' />
+									<argument exp='&quot;\n&quot;' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = 1' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SendMIDI_Sim' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Status' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Data1' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Data2' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='ByteCount' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='ByteVal' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='DataSource = 1' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='InjectorBase1' macro='TxByte' >
+									<argument exp='.Status' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='InjectorBase1' macro='TxByte' >
+									<argument exp='.Data1' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='InjectorBase1' macro='TxByte' >
+									<argument exp='.Data2' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DLL_TxData' >
+									<argument exp='.Status' />
+									<argument exp='.Data1' />
+									<argument exp='.Data2' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='LibraryComponent1' macro='FlashTx' />
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.SetOutputRGB' >
+							<argument exp='console_handle' />
+							<argument exp='0xFF0000' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot;Tx:&quot;' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot; Status:&quot; + STRING .Status' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot; Data1:&quot; + STRING .Data1' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot; Data2:&quot; + STRING .Data2' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot;\n&quot;' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='DLL_OpenTxPort' description='' statediag='0' dllpath='$(appdir)API.DLL\MIDI.dll' dllcall='115' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Port' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Sim_SendByte' description='' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='data' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='timeout' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='buf' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='4' />
+						</local>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='Sim_Init' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.SetOutputRGB' >
+									<argument exp='console_handle' />
+									<argument exp='0xFF0000' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+									<argument exp='console_handle' />
+									<argument exp='&quot;Tx: &quot;' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.buf[0] = &apos;\&apos;&apos;' />
+									<exp exp='.buf[1] = .Data' />
+									<exp exp='.buf[2] = &apos;\&apos;&apos;' />
+									<exp exp='.buf[3] = &apos;\0&apos;' />
+								</command>
+								<command class_type='sim' title='.buf' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+									<argument exp='console_handle' />
+									<argument exp='.buf' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+									<argument exp='console_handle' />
+									<argument exp='&quot; - &quot;' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+									<argument exp='console_handle' />
+									<argument exp='STRING (.Data)' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+									<argument exp='console_handle' />
+									<argument exp='&quot; - &quot;' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+									<argument exp='console_handle' />
+									<argument exp='NumberToHex$ (.Data)' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+									<argument exp='console_handle' />
+									<argument exp='&quot;\n&quot;' />
+								</command>
+								<command class_type='sim' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='COMPort' macro='SendByte' >
+									<argument exp='.data' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = 0' />
+								</command>
+								<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='LibraryComponent1' macro='FlashTx' />
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = 1' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SendNoteOn' description='Sends a note on command using the channel, note and velocity specified.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Channel' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Note' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Velocity' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Channel &gt; 15' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Channel = 0' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendMIDI' >
+							<argument exp='0x90 | .Channel' />
+							<argument exp='.Note' />
+							<argument exp='.Velocity' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Renamed' description='' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Name' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<command class_type='sim' title='' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.GetName' >
+							<return exp='.Name' />
+							<argument exp='this' />
+						</command>
+						<command class_type='sim' title='' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='LibraryComponent1' />
+							<argument exp='&quot;Name&quot;' />
+							<argument exp='.Name' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='prv_process_properties' description='Sent to a component to allow dynamic ammendment of global property declarations' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='PropName' type='T8' description='The original Flowcode property' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</param>
+						<param name='Expansion' type='T8' description='The expanded string to inline to the code' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</param>
+						<local name='compare' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<local name='comparison' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='string2' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<local name='string3' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.compare = &quot;dev_name&quot;' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.comparison = Compare$ (.PropName, .compare,1)' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.comparison = 0' swap='0' >
+							<flowline >
+								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='prv_PIC_Strings' >
+									<return exp='.String2' />
+									<argument exp='.Expansion' />
+									<argument exp='.compare' />
+								</command>
+								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='prv_dsPIC_Strings' >
+									<return exp='.String3' />
+									<argument exp='.Expansion' />
+									<argument exp='.compare' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Expansion = .String2 + .string3' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.compare = &quot;dev_manufacturer&quot;' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.comparison = Compare$ (.PropName, .compare,1)' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.comparison = 0' swap='0' >
+							<flowline >
+								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='prv_PIC_Strings' >
+									<return exp='.String2' />
+									<argument exp='.Expansion' />
+									<argument exp='.compare' />
+								</command>
+								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='prv_dsPIC_Strings' >
+									<return exp='.String3' />
+									<argument exp='.Expansion' />
+									<argument exp='.compare' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Expansion = .String2 + .string3' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.compare = &quot;usb_type&quot;' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.comparison = Compare$ (.PropName, .compare,1)' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.comparison = 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Expansion = &quot;#define MX_USB_TYPE&quot;' />
+									<exp exp='.Expansion = .Expansion + ToString$ (usb_type)' />
+									<exp exp='.Expansion = .Expansion + &quot;\n&quot;' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = 1' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_SimStart' description='Initialisation routine for the component once the component is linked to its parent' statediag='0' >
+						<return name='Return' type='u32' description='Non-zero to prevent initialisation' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='PropStr' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<local name='Instance' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.GetInstance' >
+							<return exp='.instance' />
+							<argument exp='this' />
+						</command>
+						<command class_type='calculation' title='Calculation' textarea='36,0,36,52' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.PropStr = &quot;USB MIDI &quot; + ToString$ (.instance)' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.AddText' >
+							<return exp='console_handle' />
+							<argument exp='.PropStr' />
+							<argument exp='0' />
+						</command>
+						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='LibraryComponent1' macro='SetConsoleHandle' >
+							<argument exp='console_handle' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='DLL_OpenRxPort' description='' statediag='0' dllpath='$(appdir)API.DLL\MIDI.dll' dllcall='115' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Port' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SendControl_Sim' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Channel' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Controller' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Value' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Channel &gt; 15' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Channel = 0' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='LibraryComponent1' macro='FlashTx' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='DataSource = 1' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='InjectorBase1' macro='TxByte' >
+									<argument exp='0xB0 | .Channel' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='InjectorBase1' macro='TxByte' >
+									<argument exp='.Controller' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='InjectorBase1' macro='TxByte' >
+									<argument exp='.Value' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DLL_TxData' >
+									<argument exp='0xB0 | .Channel' />
+									<argument exp='.Controller' />
+									<argument exp='.Value' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.SetOutputRGB' >
+							<argument exp='console_handle' />
+							<argument exp='0xFF0000' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot;Tx: Control -&quot;' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot; Channel:&quot; + STRING .Channel' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot; Controller:&quot; + STRING .Controller' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot; Value:&quot; + STRING .Value' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot;\n&quot;' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SendPitchChange_Sim' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Channel' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Pitch_Change' type='u16' description='default 0x2000' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Channel &gt; 15' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Channel = 0' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='LibraryComponent1' macro='FlashTx' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='DataSource = 1' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='InjectorBase1' macro='TxByte' >
+									<argument exp='0xE0 | .Channel' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='InjectorBase1' macro='TxByte' >
+									<argument exp='.Pitch_Change &amp; 0xFF' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='InjectorBase1' macro='TxByte' >
+									<argument exp='.Pitch_Change &gt;&gt; 8' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DLL_TxData' >
+									<argument exp='0xE0 | .Channel' />
+									<argument exp='.Pitch_Change &amp; 0xFF' />
+									<argument exp='.Pitch_Change &gt;&gt; 8' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.SetOutputRGB' >
+							<argument exp='console_handle' />
+							<argument exp='0xFF0000' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot;Tx: Pitch Change -&quot;' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot; Channel:&quot; + STRING .Channel' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot; Pitch:&quot; + STRING .Pitch_Change' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot;\n&quot;' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='ReceiveMIDI_Sim' description='' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Timeout' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Idx' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='ByteVal' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='ToutVal' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='Received_MIDI[0] = 0' />
+							<exp exp='Received_MIDI[1] = 0xff' />
+							<exp exp='Received_MIDI[2] = 0xff' />
+							<exp exp='Received_MIDI[3] = 0' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='DataSource = 1' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='InjectorBase1' macro='RxByte' >
+									<return exp='.ByteVal' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.ToutVal = 255' />
+									<exp exp='' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='call' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DLL_RxData' >
+									<return exp='.ByteVal' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.ToutVal = 0' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.SetOutputRGB' >
+							<argument exp='console_handle' />
+							<argument exp='0x0000FF' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.ByteVal != .ToutVal' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='LibraryComponent1' macro='FlashRx' />
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='Received_MIDI[0] = .ByteVal' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='DataSource = 1' swap='0' >
+									<flowline >
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='InjectorBase1' macro='RxByte' >
+											<return exp='Received_MIDI[1]' />
+										</command>
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='InjectorBase1' macro='RxByte' >
+											<return exp='Received_MIDI[2]' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DLL_ReadByte' >
+											<return exp='Received_MIDI[1]' />
+											<argument exp='1' />
+										</command>
+										<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DLL_ReadByte' >
+											<return exp='Received_MIDI[2]' />
+											<argument exp='2' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+									<argument exp='console_handle' />
+									<argument exp='&quot;Rx:&quot;' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+									<argument exp='console_handle' />
+									<argument exp='&quot; Status:&quot; + STRING Received_MIDI[0]' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+									<argument exp='console_handle' />
+									<argument exp='&quot; Data1:&quot; + STRING Received_MIDI[1]' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+									<argument exp='console_handle' />
+									<argument exp='&quot; Data2:&quot; + STRING Received_MIDI[2]' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+									<argument exp='console_handle' />
+									<argument exp='&quot;\n&quot;' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+									<argument exp='console_handle' />
+									<argument exp='&quot;Rx: Timeout\n&quot;' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='ReceiveMIDI' description='Waits for the time specified in the timeout parameter for an incoming MIDI message.
+Returns 0 to indicate a timeout, otherwise returns the first value from the MIDI message.' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Timeout' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Data' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='4' />
+						</local>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = 0' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Data[0] = 0' />
+							<exp exp='.Data[1] = 0xff' />
+							<exp exp='.Data[2] = 0xff' />
+							<exp exp='.Data[3] = 0' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='(.Timeout &gt; 0) &amp;&amp; (.Return = 0)' >
+							<flowline >
+								<command class_type='native' title='C Code' ccode='#ifdef MX_CAL_PIC
+
+#else
+
+    if(!USBHandleBusy(USBRxHandle))
+    {
+        //We have received a MIDI packet from the host, process it and then
+        //  prepare to receive the next packet
+
+        FCR_RETVAL = 1;
+
+        FCL_DATA[0] = ReceivedDataBuffer[1];
+        FCL_DATA[1] = ReceivedDataBuffer[2];
+        FCL_DATA[2] = ReceivedDataBuffer[3];
+        FCL_DATA[3] = ReceivedDataBuffer[4]; 
+
+        //Get ready for next packet (this will overwrite the old data)
+        USBRxHandle = USBRxOnePacket(MIDI_EP,(BYTE*)&amp;ReceivedDataBuffer,64); 
+    }
+
+
+
+#endif' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Return = 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Timeout = .Timeout - 1' />
+										</command>
+										<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='1' type='1' />
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Return = 1' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='Received_MIDI[0] = .Data[0]' />
+									<exp exp='Received_MIDI[1] = .Data[1]' />
+									<exp exp='Received_MIDI[2] = .Data[2]' />
+									<exp exp='Received_MIDI[3] = .Data[3]' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SendPolyPressure' description='Sends a note press with an associated polyphonic pressure value.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Channel' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Note' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Pressure' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Channel &gt; 15' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Channel = 0' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendMIDI' >
+							<argument exp='0xA0 | .Channel' />
+							<argument exp='.Note' />
+							<argument exp='.Pressure' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='DLL_ReadByte' description='' statediag='0' dllpath='$(appdir)API.DLL\MIDI.dll' dllcall='115' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Index' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='ReadData' description='Reads a byte from the last received MIDI message' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Idx' type='u8' description='Byte to read 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Idx &lt; 4' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = Received_MIDI[.Idx]' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = 0' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SendPatch' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Channel' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Instrument' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Channel &gt; 15' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Channel = 0' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendMIDI' >
+							<argument exp='0xC0 | .Channel' />
+							<argument exp='.Instrument' />
+							<argument exp='0' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SendChannelPressure' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Channel' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Pressure' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Channel &gt; 15' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Channel = 0' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendMIDI' >
+							<argument exp='0xD0 | .Channel' />
+							<argument exp='.Pressure' />
+							<argument exp='0' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='DLL_GetPortName' description='' statediag='0' dllpath='$(appdir)API.DLL\MIDI.dll' dllcall='115' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Port' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='DLL_GetPortCount' description='' statediag='0' dllpath='$(appdir)API.DLL\MIDI.dll' dllcall='115' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SendChannelPressure_Sim' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Channel' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Pressure' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Channel &gt; 15' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Channel = 0' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='LibraryComponent1' macro='FlashTx' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='DataSource = 1' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='InjectorBase1' macro='TxByte' >
+									<argument exp='0xD0 | .Channel' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='InjectorBase1' macro='TxByte' >
+									<argument exp='.Pressure' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='InjectorBase1' macro='TxByte' >
+									<argument exp='0' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DLL_TxData' >
+									<argument exp='0xD0 | .Channel' />
+									<argument exp='.Pressure' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.SetOutputRGB' >
+							<argument exp='console_handle' />
+							<argument exp='0xFF0000' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot;Tx: Pressure -&quot;' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot; Channel:&quot; + STRING .Channel' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot; Pressure:&quot; + STRING .Pressure' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot;\n&quot;' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='DLL_CloseTxPort' description='' statediag='0' dllpath='$(appdir)API.DLL\MIDI.dll' dllcall='115' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_Initialise' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Sim_ReadByte' description='' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Timeout_ms' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Wait_Forever' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='TOUT_retval' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='buf' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='4' />
+						</local>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetValue' >
+							<return exp='.TOUT_retval' />
+							<argument exp='COMPort' />
+							<argument exp='&quot;Tout_Val&quot;' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.SetOutputRGB' >
+							<argument exp='console_handle' />
+							<argument exp='0x0000FF' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='Sim_Init' swap='0' >
+							<flowline >
+								<command class_type='call' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='COMPort' macro='ReceiveByte' >
+									<return exp='.Return' />
+									<argument exp='.Timeout_ms' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Return &lt; .TOUT_retval' swap='0' >
+									<flowline >
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+											<argument exp='console_handle' />
+											<argument exp='&quot;Rx: &quot;' />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.buf[0] = &apos;\&apos;&apos;' />
+											<exp exp='.buf[1] = .Return' />
+											<exp exp='.buf[2] = &apos;\&apos;&apos;' />
+											<exp exp='.buf[3] = &apos;\0&apos;' />
+										</command>
+										<command class_type='sim' title='.buf' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+											<argument exp='console_handle' />
+											<argument exp='.buf' />
+										</command>
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+											<argument exp='console_handle' />
+											<argument exp='&quot; - &quot;' />
+										</command>
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+											<argument exp='console_handle' />
+											<argument exp='STRING (.Return)' />
+										</command>
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+											<argument exp='console_handle' />
+											<argument exp='&quot; - &quot;' />
+										</command>
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+											<argument exp='console_handle' />
+											<argument exp='NumberToHex$ (.Return)' />
+										</command>
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+											<argument exp='console_handle' />
+											<argument exp='&quot;\n&quot;' />
+										</command>
+										<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='LibraryComponent1' macro='FlashRx' />
+									</flowline>
+									<flowline >
+										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+											<argument exp='console_handle' />
+											<argument exp='&quot;Rx: Timeout\n&quot;' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+									<argument exp='console_handle' />
+									<argument exp='&quot;Rx: Timeout\n&quot;' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = .TOUT_retval' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SendPatch_Sim' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Channel' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Instrument' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Channel &gt; 15' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Channel = 0' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='LibraryComponent1' macro='FlashTx' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='DataSource = 1' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='InjectorBase1' macro='TxByte' >
+									<argument exp='0xC0 | .Channel' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='InjectorBase1' macro='TxByte' >
+									<argument exp='.Instrument' />
+								</command>
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='InjectorBase1' macro='TxByte' >
+									<argument exp='0' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DLL_TxData' >
+									<argument exp='0xC0 | .Channel' />
+									<argument exp='.Instrument' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.SetOutputRGB' >
+							<argument exp='console_handle' />
+							<argument exp='0xFF0000' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot;Tx: Change Patch -&quot;' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot; Channel:&quot; + STRING .Channel' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot; Instrument:&quot; + STRING .Instrument' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+							<argument exp='console_handle' />
+							<argument exp='&quot;\n&quot;' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Initialise' description='Starts up the USB communications and attempts to enumerate.
+Returns 0 for a successful startup or 255 for a enumeration timeout.' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='delay_counter' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<command class_type='native' title='C Code' ccode='#ifdef MX_CAL_PIC                                //8-bit PIC specific
+  #if defined(P18F24J50) || defined(P18F25J55) || defined(P18F26J50) || defined(P18F44J50) || defined(P18F45J50) || defined(P18F46J55) || defined(P18F87J50) ||  defined(P18F86J55) || defined(P18F86J50) || defined(P18F85J50) || defined(P18F67J50) || defined(P18F66J55) || defined(P18F66J50) || defined(P18F65J50)
+  //On the PIC18F87J50 Family of USB microcontrollers, the PLL will not power up and be enabled
+  //by default, even if a PLL enabled oscillator configuration is selected (such as HS+PLL).
+  //This allows the device to power up at a lower initial operating frequency, which can be
+  //advantageous when powered from a source which is not gauranteed to be adequate for 48MHz
+  //operation.  On these devices, user firmware needs to manually set the OSCTUNE&amp;lt;PLLEN&amp;gt; bit to
+  //power up the PLL.
+  {
+      MX_UINT16 pll_startup_counter = 600;
+      OSCTUNEbits.PLLEN = 1;  //Enable the PLL and wait 2+ms until the PLL locks before enabling USB module
+      while(pll_startup_counter--);
+  }
+  //Device switches over automatically to PLL output after PLL is locked and ready.
+  #endif
+#endif
+
+#ifdef MX_CAL_PIC16                        //16-bit PIC specific
+  #if defined(P24FJ64GB004) || defined(P24FJ64GB002) || defined(P24FJ32GB004) || defined(P24FJ32GB002)
+  //On the PIC24FJ64GB004 Family of USB microcontrollers, the PLL will not power up and be enabled
+  //by default, even if a PLL enabled oscillator configuration is selected (such as HS+PLL).
+  //This allows the device to power up at a lower initial operating frequency, which can be
+  //advantageous when powered from a source which is not gauranteed to be adequate for 48MHz
+  //operation.  On these devices, user firmware needs to manually set the CLKDIV&amp;lt;PLLEN&amp;gt; bit to
+  //power up the PLL.
+  {
+      MX_UINT16 pll_startup_counter = 600;
+      CLKDIVbits.PLLEN = 1;
+      while(pll_startup_counter--);
+  }
+  #endif
+#endif' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+						<command class_type='native' title='C Code' ccode='#ifdef MX_CAL_PIC					//8-bit PIC specific
+	usb_configure_structures();
+	kill_interrupts();						//turn off interrupts just in case
+	usb_cdc_setup();
+	usb_setup();
+	turn_peripheral_ints_on();
+	turn_global_ints_on();
+	usb_enable_module();
+  #else							//16-bit PIC specific
+	USBDeviceInit();
+	if(USB_BUS_SENSE &amp;&amp; (USBGetDeviceState() == DETACHED_STATE))
+		USBDeviceAttach();
+  #endif' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='enumeration_tout' swap='0' >
+							<flowline >
+								<command class_type='native' title='C Code' ccode='#ifdef MX_CAL_PIC														//8-bit PIC specific
+		while(CDC_USB_status == 0 &amp;&amp; FCL_DELAY_COUNTER &lt; 1000)					//Wait for USB to startup and enumerate
+	  #else
+	  	while(USBDeviceState != CONFIGURED_STATE &amp;&amp; FCL_DELAY_COUNTER &lt; 1000)	//Wait for USB to startup and enumerate
+	  #endif
+		{' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+								<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='timeout' type='1' />
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.delay_counter = .delay_counter + 1' />
+								</command>
+								<command class_type='native' title='C Code' ccode='}
+
+	  #ifdef MX_CAL_PIC														//8-bit PIC specific
+		if (CDC_USB_status == 1)
+	  #else																	//16-bit PIC specific
+	  	if (USBDeviceState == CONFIGURED_STATE)
+	  #endif
+			return 0;' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = 255' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='native' title='C Code' ccode='#ifdef MX_CAL_PIC			//8-bit PIC specific
+  while(CDC_USB_status == 0);
+#else					//16-bit PIC specific
+  while(USBDeviceState != CONFIGURED_STATE);
+#endif' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = 0' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='cbb3c28e-2d73-4442-ac52-23a3b45d9870' vmin='0' vmaj='3' codename='COMPort' panelId='-1' x='0' y='0' z='0' xsz='0.0297619' ysz='0.0297619' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='COM_port' data='003' />
+					<value target='Refresh' data='0' />
+					<value target='baud_rate' data='9600' />
+					<value target='Tout_Val' data='255' />
+					<value target='ConsoleData' data='0' />
+					<value target='AutoClose' data='1' />
+					<value target='NewLineFormat' data='000' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='cc936c18-5d20-42c4-b940-d3c7ea7ca802' vmin='0' vmaj='1' codename='InjectorBase1' panelId='-1' x='-0.216325' y='2.88516' z='201.09' xsz='0.1' ysz='0.1' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='CircularBufferSize' data='100' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='58be670e-18fb-477e-ab09-61fde14b23ec' vmin='0' vmaj='1' codename='LibraryComponent1' panelId='-1' x='0' y='0' z='0' xsz='100' ysz='100' zsz='100' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Text::sText' data='USB
+MIDI' />
+					<value target='Name' data='' />
+					<value target='Peripheral::sText' data='' />
+					<value target='Text::nVerticalAlignment' data='002' />
+					<value target='ShowComms' data='1' />
+					<value target='InputIcon::CommsType' data='255' />
+					<value target='InputIcon::LinkTo' data='0' />
+					<value target='IconsOnRight' data='0' />
+					<value target='OutputIcon::CommsType' data='255' />
+					<value target='OutputIcon::LinkTo' data='0' />
+					<value target='ConsoleHandle' data='0' />
+					<value target='Upgraded' data='0' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<scadaresourcelookup />
+	<keymap />
+	<panel2d shadows='0' lighting='0' brightness='0' >
+		<background rgb='9737364' img='' style='0' />
+		<camera xe='0' ye='0' ze='1017.59' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='622' dy='352' zoom='73.9613' fix_topleft='0' />
+		<page x='1000' y='1000' show='0' rgb='0' />
+		<winpos ID='7005' RectRecentFloat='1270,427,1920,877' RectRecentDocked='0,0,520,419' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+	</panel2d>
+	<panel3d shadows='0' lighting='0' brightness='0' perspective='1' >
+		<background rgb='8409120' img='' style='0' />
+		<table rgb='7360576' img='' style='0' size='0' />
+		<camera xe='6.01345' ye='-0.551213' ze='136.823' xt='6.01345' yt='-0.551213' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey0 xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey1 xe='-3.67394e-14' ye='0' ze='-300' xt='0' yt='0' zt='0' xquat='0' yquat='1' zquat='0' wquat='6.12323e-17' />
+		<camerakey2 xe='0' ye='-300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.707107' yquat='0' zquat='0' wquat='0.707107' />
+		<camerakey3 xe='-3.67394e-14' ye='300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-4.32978e-17' yquat='0.707107' zquat='0.707107' wquat='4.32978e-17' />
+		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
+		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
+		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
+		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,517,880' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+	</panel3d>
+	<panels2d count='0' />
+	<layout >
+		<view type='0' name='Ev_ChipChange' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='InitSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Prop_Change' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SendPolyPressure_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SendPitchChange_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SendPatch_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SendNoteOn_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SendNoteOff_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SendControl_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SendChannelPressure_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SendChannelPressure' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReceiveMIDI_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SendMIDI_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_SimStart' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Stop' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetInjectorHandle' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='PopulateInjectorFilter' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Parse_MIDI_Channels_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DLL_CloseRxPort' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DLL_CloseTxPort' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DLL_GetByteFromPortName' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DLL_GetPortCount' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DLL_GetPortName' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DLL_OpenRxPort' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DLL_OpenTxPort' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DLL_ReadByte' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DLL_RxData' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DLL_TxData' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SendControl' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SendNoteOff' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SendNoteOn' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SendPatch' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SendPitchChange' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SendPolyPressure' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReceiveMIDI' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadData' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SendMIDI' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='prv_dsPIC_Strings' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='prv_process_properties' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_AddInterrupts' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='prv_PIC_Strings' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Sim_ReadByte' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Sim_SendByte' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Sim_SendString' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Sim_ReadString' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAaAAAADAQAAGEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

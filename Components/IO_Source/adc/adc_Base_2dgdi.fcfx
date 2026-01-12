@@ -1,0 +1,781 @@
+<root>
+<document scada='0' schema='103' license='10,BenR,C9TN1M' title='' description='' fcversion='655618' target='PIC.16F.16F877A' >
+	<config data='!0,3f72%0,2%2,0%3,0%6,1%7,0%9,3%b,1%8,1%d,1' clkspd='10000000' simspd='1' usewdt='0' constif='0' Use3V3='0' />
+	<plugins >
+		<dll_models enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug >
+		<watch expr='.adcspd' />
+		<watch expr='.adcspdlist' />
+		<watch expr='.optpart' />
+		<watch expr='.adcval' />
+		<watch expr='.voltmul' />
+	</debug>
+	<traces />
+	<ghost >
+		<FK2 >
+			<data name='FK2D0' port='4294967295' pin='4294967295' />
+			<data name='FK2D1' port='4294967295' pin='4294967295' />
+			<data name='FK2D2' port='4294967295' pin='4294967295' />
+			<data name='FK2D3' port='4294967295' pin='4294967295' />
+			<data name='FK2D4' port='4294967295' pin='4294967295' />
+			<data name='FK2D5' port='4294967295' pin='4294967295' />
+			<data name='FK2D6' port='4294967295' pin='4294967295' />
+			<data name='FK2D7' port='4294967295' pin='4294967295' />
+			<data name='FK2D8' port='4294967295' pin='4294967295' />
+			<data name='FK2D9' port='4294967295' pin='4294967295' />
+			<data name='FK2D10' port='4294967295' pin='4294967295' />
+			<data name='FK2D11' port='4294967295' pin='4294967295' />
+			<data name='FK2D12' port='4294967295' pin='4294967295' />
+			<data name='FK2D13' port='4294967295' pin='4294967295' />
+			<data name='FK2D14' port='4294967295' pin='4294967295' />
+			<data name='FK2D15' port='4294967295' pin='4294967295' />
+			<data name='FK2A0' port='4294967295' pin='4294967295' />
+			<data name='FK2A1' port='4294967295' pin='4294967295' />
+			<data name='FK2A2' port='4294967295' pin='4294967295' />
+			<data name='FK2A3' port='4294967295' pin='4294967295' />
+			<data name='FK2A4' port='4294967295' pin='4294967295' />
+			<data name='FK2A5' port='4294967295' pin='4294967295' />
+		</FK2>
+		<ICD >
+			<data name='AnalogPrescaleValue' value='19' />
+			<data name='DigitalSampleRate' value='100000' />
+			<data name='BreakpointCount' value='8' />
+			<data name='CallStackDepthCount' value='8' />
+			<data name='ClockPort' value='1' />
+			<data name='ClockPin' value='6' />
+			<data name='DataPort' value='1' />
+			<data name='DataPin' value='7' />
+			<data name='UseDefaultPins' value='1' />
+			<data name='WrapEnabled' value='1' />
+			<data name='CommsDelayOverridden' value='0' />
+			<data name='CommsDelay' value='17' />
+			<data name='CalculatedCommsDelay' value='17' />
+			<data name='AnalogEB2PrescaleValue' value='2' />
+			<data name='DigitalEB2SampleRate' value='100000' />
+		</ICD>
+		<pins >
+			<digital A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+			<analog A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+		</pins>
+	</ghost>
+	<components >
+		<settings autoimg='0' center='1' unitscale='1' fixedscale='0' fixedx='0' fixedy='0' fixedz='0' headcode='0' />
+		<definition guid='9b845489-48f5-4fa5-aace-2c97efdcede3' vstate='40' vmin='3' vmaj='1' srcleaf='adc_Base_2dgdi.fcfx' visiblename='ADC Template 2D' description='Base ADC component with no graphical interface.
+Contains all of the embedded side component calls to provide an ADC interface suitable for 
+wrapping with a new ADC style component.
+
+' category='Analog Input' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' catenable='0' author='Matrix Ltd' manuname='' manucode='' sysinfo='9442575' keywords='' dynamic='1' scadaCompatible='0' embeddedCompatible='1' showmacros='1' iconpath='..\..\Icons\Components\ADC.png' />
+		<component class_type='root' codename='adc_base_2d' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+			<resources />
+			<properties >
+				<property name='Connections' hidden='0' >
+					<property name='Channel' target='channel' typeid='6' hidden='0' locked='0' info='Analogue Input Channel - Which pin is the analogue input connected to?' />
+				</property>
+				<property name='Settings' hidden='0' >
+					<property name='VRef voltage' target='vrefvol' typeid='14' hidden='0' locked='0' info='Used by the GetVoltage or GetString component macros to take an ADC reading and convert it into a Voltage.
++VRef voltage x 10mV
+Default 500 = 5.0V
+' />
+					<property name='VRef option' target='vrefop' typeid='16' hidden='0' locked='0' info='Defines what is used as the ADC maximum reference. ADC Range = GND to VRef Voltage
+VDD - Defines the microcontrollers power supply pin as the max reference,
+VREF+ Pin - Dedicated pin on the microcontroller to allow for a variable reference voltage.' filter='000VDD
+001VRef+ Pin
+' />
+					<property name='Conversion speed' target='convspd' typeid='16' hidden='0' locked='0' info='Clock setting to select how fast the ADC peripheral will perform an ADC conversion.
+The FRC setting is based on a RC time base and so will vary with temperature and pressure.
+Other settings are generally based on divisions of the master clock.' filter='000Fosc / 2
+001Fosc / 8
+002Fosc / 32
+003FRC
+004Fosc / 4
+005Fosc / 16
+006Fosc / 64
+' />
+					<property name='Acquisition cycles' target='actime' typeid='14' hidden='0' locked='0' info='Number of micro seconds to wait for the ADC input to charge before starting the analogue sample.' />
+					<property name='Bit Depth' target='bits' typeid='14' hidden='0' locked='1' info='Maximum number of digital bits the ADC can sample.
+8 bit = ADC range 0 - 255
+10 bit = ADC range 0 - 1023 
+12 bit = ADC range 0 - 4095' />
+				</property>
+				<property name='Voltage multiplier' target='bitmul' typeid='15' hidden='1' locked='0' info='' />
+				<property name='Simulation' folder='property_1' hidden='0' >
+					<property name='Scope Traces' target='ScopeTraces' typeid='7' hidden='0' locked='0' info='Selects if the scope traces are automatically generated or not' />
+				</property>
+			</properties>
+			<values >
+				<value target='channel' data='0' />
+				<value target='vrefvol' data='500' />
+				<value target='vrefop' data='000' />
+				<value target='convspd' data='003' />
+				<value target='actime' data='40' />
+				<value target='bits' data='10' />
+				<value target='bitmul' data='0.004883' />
+				<value target='ScopeTraces' data='0' />
+			</values>
+			<events >
+				<event class='Components' event='Initialise' target='Ev_Initialise' />
+				<event class='Components' event='Property' target='Ev_Property' />
+				<event class='Connection' event='ChipChange' target='Ev_ChipChange' />
+			</events>
+			<apis >
+				<api name='RawSampleInt' alt='RawSampleInt' type='1' proto='1' />
+				<api name='RawAverageByte' alt='RawAverageByte' type='1' proto='1' />
+				<api name='GetSampleBits' alt='' type='2' proto='1' />
+				<api name='GetString' alt='GetString' type='1' proto='1' />
+				<api name='GetAverageByte' alt='GetAverageByte' type='1' proto='1' />
+				<api name='RawAverageInt' alt='RawAverageInt' type='1' proto='1' />
+				<api name='GetSpeedFilter' alt='' type='2' proto='1' />
+				<api name='GetAverageInt' alt='GetAverageInt' type='1' proto='1' />
+				<api name='SetProperties' alt='' type='2' proto='1' />
+				<api name='GetVoltage' alt='GetVoltage' type='1' proto='1' />
+				<api name='RawEnable' alt='RawEnable' type='1' proto='1' />
+				<api name='SetChannel' alt='' type='2' proto='1' />
+				<api name='RawSampleByte' alt='RawSampleByte' type='1' proto='1' />
+				<api name='GetInt' alt='GetInt' type='1' proto='1' />
+				<api name='RawDisable' alt='RawDisable' type='1' proto='1' />
+				<api name='GetByte' alt='GetByte' type='1' proto='1' />
+			</apis>
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='false' type='b1' description='' isconst='1' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='true' type='b1' description='' isconst='1' isHidden='0' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='RawSampleInt' description='Background call to read the ADC at full bit depth
+Call Enable() first' statediag='0' >
+						<return name='Return' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Perform Sample - Return as full' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_adc' macro='Sample' >
+							<return exp='.Return' />
+							<argument exp='cal_adc :: Sample_Full' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='RawAverageByte' description='Background call to read the ADC as a byte average sample over time
+Call Enable() before this' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='NumSamples' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='DelayUs' type='u8' description='Number of micro seconds in between taking each sample' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='average' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='count' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<command class_type='decision' title='If delaying' textarea='201,40,201,40' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.DelayUs &gt; 0' swap='0' >
+							<flowline >
+								<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.count &lt; .NumSamples' >
+									<flowline >
+										<command class_type='call' title='Configure &amp; Enable ADC Channel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_adc' macro='Enable' >
+											<argument exp='channel' />
+											<argument exp='convspd' />
+											<argument exp='vrefop' />
+											<argument exp='.DelayUs' />
+										</command>
+										<command class_type='calculation' title='Sample' textarea='36,0,2581,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.average = .average + cal_adc :: Sample (cal_adc :: Sample_Byte)' />
+											<exp exp='.count = .count + 1' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.count &lt; .NumSamples' >
+									<flowline >
+										<command class_type='call' title='Configure &amp; Enable ADC Channel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_adc' macro='Enable' >
+											<argument exp='channel' />
+											<argument exp='convspd' />
+											<argument exp='vrefop' />
+											<argument exp='actime' />
+										</command>
+										<command class_type='calculation' title='Sample' textarea='36,0,1141,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.average = .average + cal_adc :: Sample (cal_adc :: Sample_Byte)' />
+											<exp exp='.count = .count + 1' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+						<command class_type='calculation' title='Get average' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = .average / .count' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='GetSampleBits' description='Gets the number of bits per sample' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='FCD.GetItemValue' >
+							<return exp='.Return' />
+							<argument exp='&quot;device.adc&quot;' />
+							<argument exp='&quot;bits&quot;' />
+							<argument exp='&quot;8&quot;' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='GetString' description='Reads the ADC as a direct voltage and returns as a string' statediag='0' >
+						<return name='Return' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='2000' />
+						</return>
+						<local name='sample' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetVoltage' >
+							<return exp='.sample' />
+						</command>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = FloatToString$ (.sample)' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='GetAverageByte' description='Function call to read the ADC as a byte average sample over time
+' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='NumSamples' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='DelayUs' type='u8' description='Number of micro seconds in between taking each sample' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='RawAverageByte' >
+							<return exp='.Return' />
+							<argument exp='.NumSamples' />
+							<argument exp='.DelayUs' />
+						</command>
+						<command class_type='call' title='Close ADC down' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_adc' macro='Disable' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Initialise' description='Initialisation routine for the component' statediag='0' >
+						<return name='Return' type='u32' description='Non-zero to prevent initialisation' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='adcspd' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='adcspdlist' type='T8' description='A list of slots for the ADC speed' isconst='0' isHidden='0' isinit='1' usrinit='&quot;&quot;' setinit='&quot;&quot;' >
+							<array size='20' />
+						</local>
+						<local name='optpart' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<local name='adcval' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='digits' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='voltmul' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='tempstr' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_SetProperties' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DynamicLists' />
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='FCD.GetItemValue' >
+							<return exp='.tempstr' />
+							<argument exp='&quot;device&quot;' />
+							<argument exp='&quot;cal&quot;' />
+							<argument exp='&quot;&quot;' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='Compare$ (.tempstr,&quot;AVR&quot;,0) == 0' swap='0' >
+							<flowline >
+								<command class_type='sim' title='AVR Defaut to AVCC' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<argument exp='this' />
+									<argument exp='&quot;vrefop&quot;' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Conversion Speed Default to Fosc/64' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<argument exp='this' />
+									<argument exp='&quot;convspd&quot;' />
+									<argument exp='6' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='call' title='Call Macro' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_SetFCD' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='RawAverageInt' description='Background call to read the ADC as a full width average sample over time
+Call Enable() before this' statediag='0' >
+						<return name='Return' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='NumSamples' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='DelayUs' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='average' type='u32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='count' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<command class_type='decision' title='If delaying' textarea='201,40,201,40' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.DelayUs &gt; 0' swap='0' >
+							<flowline >
+								<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.count &lt; .NumSamples' >
+									<flowline >
+										<command class_type='call' title='Configure &amp; Enable ADC Channel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_adc' macro='Enable' >
+											<argument exp='channel' />
+											<argument exp='convspd' />
+											<argument exp='vrefop' />
+											<argument exp='.DelayUs' />
+										</command>
+										<command class_type='calculation' title='Sample' textarea='36,0,2581,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.average = .average + cal_adc :: Sample (cal_adc :: Sample_Full)' />
+											<exp exp='.count = .count + 1' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.count &lt; .NumSamples' >
+									<flowline >
+										<command class_type='call' title='Configure &amp; Enable ADC Channel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_adc' macro='Enable' >
+											<argument exp='channel' />
+											<argument exp='convspd' />
+											<argument exp='vrefop' />
+											<argument exp='actime' />
+										</command>
+										<command class_type='calculation' title='Sample' textarea='36,0,1141,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.average = .average + cal_adc :: Sample (cal_adc :: Sample_Full)' />
+											<exp exp='.count = .count + 1' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+						<command class_type='calculation' title='Get average' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = .average / .count' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='GetSpeedFilter' description='Gets the Conversion speed filter string
+Use in Component.Property.SetFilter()' statediag='0' >
+						<return name='Return' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='2000' />
+						</return>
+						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetFilter' >
+							<return exp='.Return' />
+							<argument exp='this' />
+							<argument exp='&quot;convspd&quot;' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='GetAverageInt' description='Function call to read the ADC as a full width average sample over time
+' statediag='0' >
+						<return name='Return' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='NumSamples' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='DelayUs' type='u8' description='Number of micro seconds in between taking each sample' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='RawAverageInt' >
+							<return exp='.Return' />
+							<argument exp='.NumSamples' />
+							<argument exp='.DelayUs' />
+						</command>
+						<command class_type='call' title='Close ADC down' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_adc' macro='Disable' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_ChipChange' description='Sent when the target device has changed' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Target' type='T8' description='The name of the new target device' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</param>
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_SetProperties' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DynamicLists' />
+						<command class_type='call' title='Call Macro' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_SetFCD' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SetProperties' description='Set the VRef options and voltage, ConvSpeed and AcqTime for the ADC component.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='VRef10Ms' type='s16' description='Voltage Reference x10 mV - Default 500 = 5V' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='VRefOpt' type='b1' description='External VRef 0=Disabled, 1=Enabled' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='ConvSpdOpt' type='s16' description='Conversion Speed Setting - Refer to numbered list' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Aquisitions' type='s16' description='Aquisition time in micro seconds to precharge before sampling' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Set property' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;vrefvol&quot;' />
+							<argument exp='.VRef10Ms' />
+						</command>
+						<command class_type='sim' title='Set property' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;vrefop&quot;' />
+							<argument exp='.VRefOpt' />
+						</command>
+						<command class_type='sim' title='Set property' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;convspd&quot;' />
+							<argument exp='.ConvSpdOpt' />
+						</command>
+						<command class_type='sim' title='Set property' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;actime&quot;' />
+							<argument exp='.Aquisitions' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='GetVoltage' description='Reads the ADC as a direct voltage' statediag='0' >
+						<return name='Return' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='sample' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Configure &amp; Enable ADC Channel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_adc' macro='Enable' >
+							<argument exp='channel' />
+							<argument exp='convspd' />
+							<argument exp='vrefop' />
+							<argument exp='actime' />
+						</command>
+						<command class_type='call' title='Perform Sample - Return as full' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_adc' macro='Sample' >
+							<return exp='.sample' />
+							<argument exp='cal_adc :: Sample_Full' />
+						</command>
+						<command class_type='calculation' title='Convert to voltage' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = .sample * bitmul' />
+						</command>
+						<command class_type='call' title='Close ADC down' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_adc' macro='Disable' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Property' description='Sent when a property has been changed by the User' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='tempstr' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_SetProperties' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DynamicLists' />
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetValue' >
+							<return exp='.tempstr' />
+							<argument exp='this' />
+							<argument exp='&quot;ScopeTraces&quot;' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='cal_adc' />
+							<argument exp='&quot;ScopeTraces&quot;' />
+							<argument exp='.tempstr' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='RawEnable' description='Enables and configures the ADC channel to be an analogue input.
+Only one ADC channel can be enabled at a time. Any RAW functions will reference the last enabled channel only.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='call' title='Configure &amp; Enable ADC Channel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_adc' macro='Enable' >
+							<argument exp='channel' />
+							<argument exp='convspd' />
+							<argument exp='vrefop' />
+							<argument exp='actime' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Prv_SetProperties' description='Updates the hidden properties based on public properties' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<local name='adcval' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='voltmul' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<command class_type='comment' title='' comment='Set bit depth in a property (so constant)' textarea='500,7,500,7' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='FCD.GetItemValue' >
+							<return exp='.adcval' />
+							<argument exp='&quot;device.adc&quot;' />
+							<argument exp='&quot;bits&quot;' />
+							<argument exp='&quot;8&quot;' />
+						</command>
+						<command class_type='sim' title='Commit the property' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;bits&quot;' />
+							<argument exp='.adcval' />
+						</command>
+						<command class_type='calculation' title='Convert reference voltage count to actual voltage (0 - 5)' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.voltmul = vrefvol * 0.01' />
+						</command>
+						<command class_type='decision' title='If sample bits not dividing by zero' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.adcval &gt; 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Divide by bit size' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.voltmul = .voltmul / (1 &lt;&lt; .adcval)' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='sim' title='Commit the property' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;bitmul&quot;' />
+							<argument exp='.voltmul' />
+						</command>
+						<command class_type='comment' title='' comment='Find the ADC speed options' textarea='500,7,500,7' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='comment' title='' comment='Copy the ADC contents to the ADC CAL' textarea='500,7,500,7' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='sim' title='Copy a property to the CAL' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.CopyValue' >
+							<argument exp='this' />
+							<argument exp='cal_adc' />
+							<argument exp='&quot;channel&quot;' />
+						</command>
+						<command class_type='sim' title='Copy a property to the CAL' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.CopyValue' >
+							<argument exp='this' />
+							<argument exp='cal_adc' />
+							<argument exp='&quot;vrefop&quot;' />
+						</command>
+						<command class_type='sim' title='Copy a property to the CAL' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.CopyValue' >
+							<argument exp='this' />
+							<argument exp='cal_adc' />
+							<argument exp='&quot;vrefvol&quot;' />
+						</command>
+						<command class_type='sim' title='Copy a property to the CAL' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.CopyValue' >
+							<argument exp='this' />
+							<argument exp='cal_adc' />
+							<argument exp='&quot;actime&quot;' />
+						</command>
+						<command class_type='sim' title='Copy a property to the CAL' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.CopyValue' >
+							<argument exp='this' />
+							<argument exp='cal_adc' />
+							<argument exp='&quot;convsp&quot;' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='DynamicLists' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<local name='Temp' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<command class_type='comment' title='' comment='Vref Options' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.CopyFilter' >
+							<argument exp='cal_adc' />
+							<argument exp='this' />
+							<argument exp='&quot;vrefop&quot;' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetValue' >
+							<return exp='.Temp' />
+							<argument exp='this' />
+							<argument exp='&quot;vrefop&quot;' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='cal_adc' />
+							<argument exp='&quot;vrefop&quot;' />
+							<argument exp='.Temp' />
+						</command>
+						<command class_type='comment' title='' comment='Conversion Speed Options' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetFilter' >
+							<return exp='.Temp' />
+							<argument exp='cal_adc' />
+							<argument exp='&quot;CONVSP&quot;' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetFilter' >
+							<argument exp='this' />
+							<argument exp='&quot;convspd&quot;' />
+							<argument exp='.Temp' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetValue' >
+							<return exp='.Temp' />
+							<argument exp='this' />
+							<argument exp='&quot;convspd&quot;' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='cal_adc' />
+							<argument exp='&quot;CONVSP&quot;' />
+							<argument exp='.Temp' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SetChannel' description='Sets the channel ID for the component' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='ChannelId' type='s16' description='Chaannel starting at 0, -1 is unconnected' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Set property' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;channel&quot;' />
+							<argument exp='.ChannelId' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='RawSampleByte' description='Background call to read the ADC as a byte
+Call Enable() before this' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Perform Sample - Return as byte' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_adc' macro='Sample' >
+							<return exp='.Return' />
+							<argument exp='cal_adc :: Sample_Byte' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Prv_SetFCD' description='Sets the details from the FCD file' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<local name='adcspd' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='adcspdlist' type='T8' description='A list of slots for the ADC speed' isconst='0' isHidden='0' isinit='1' usrinit='&quot;&quot;' setinit='&quot;&quot;' >
+							<array size='20' />
+						</local>
+						<local name='optpart' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<local name='adcval' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='digits' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='voltmul' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='FCD.GetPathHandle' >
+							<return exp='.adcspd' />
+							<argument exp='&quot;device.adc.speed.option&quot;' />
+							<argument exp='0' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.adcspd != 0' >
+							<flowline >
+								<command class_type='comment' title='' comment='Add the value as a 3-digit string to the text' textarea='500,7,500,7' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.GetSubValue' >
+									<return exp='.adcval' />
+									<argument exp='.adcspd' />
+									<argument exp='&quot;value&quot;' />
+								</command>
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.optpart = ToString$ (.adcval)' />
+									<exp exp='.digits = Length$ (.optpart)' />
+								</command>
+								<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.digits &lt; 3' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.optpart = &quot;0&quot; + .optpart' />
+											<exp exp='.digits = Length$ (.optpart)' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='calculation' title='Append value' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.adcspdlist = .adcspdlist + .optpart' />
+								</command>
+								<command class_type='comment' title='' comment='Add the value description and a newline' textarea='500,7,500,7' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.GetSubValue' >
+									<return exp='.optpart' />
+									<argument exp='.adcspd' />
+									<argument exp='&quot;name&quot;' />
+								</command>
+								<command class_type='calculation' title='Append value' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.adcspdlist = .adcspdlist + .optpart + &quot;\n&quot;' />
+								</command>
+								<command class_type='comment' title='' comment='Go to next' textarea='500,7,500,7' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.StepNext' >
+									<argument exp='.adcspd' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='sim' title='Commit the property' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetFilter' >
+							<argument exp='this' />
+							<argument exp='&quot;convspd&quot;' />
+							<argument exp='.adcspdlist' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='GetInt' description='Blocking call to read the ADC at full bit depth
+' statediag='0' >
+						<return name='Return' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Configure &amp; Enable ADC Channel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_adc' macro='Enable' >
+							<argument exp='channel' />
+							<argument exp='convspd' />
+							<argument exp='vrefop' />
+							<argument exp='actime' />
+						</command>
+						<command class_type='call' title='Perform Sample - Return as full' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_adc' macro='Sample' >
+							<return exp='.Return' />
+							<argument exp='cal_adc :: Sample_Full' />
+						</command>
+						<command class_type='call' title='Close ADC down' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_adc' macro='Disable' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='RawDisable' description='Disables the previously enabled ADC channel and converts back to digital mode.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='call' title='Configure &amp; Enable ADC Channel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_adc' macro='Disable' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='GetByte' description='Blocking call to read the ADC as a byte
+' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Configure &amp; Enable ADC Channel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_adc' macro='Enable' >
+							<argument exp='channel' />
+							<argument exp='convspd' />
+							<argument exp='vrefop' />
+							<argument exp='actime' />
+						</command>
+						<command class_type='call' title='Perform Sample - Return as byte' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_adc' macro='Sample' >
+							<return exp='.Return' />
+							<argument exp='cal_adc :: Sample_Byte' />
+						</command>
+						<command class_type='call' title='Close ADC down' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_adc' macro='Disable' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_Initialise' />
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='e77a4e40-e0df-431a-98f8-7ae4d8ebfbeb' vmin='0' vmaj='2' codename='cal_adc' panelId='-1' x='0' y='0' z='23.2787' xsz='0.1' ysz='0.1' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='0' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Peripheral' data='001' />
+					<value target='CHANNEL' data='0' />
+					<value target='ChannelCustom' data='000' />
+					<value target='VREFOP' data='000' />
+					<value target='VREFVOL' data='500' />
+					<value target='ACTIME' data='40' />
+					<value target='UseFRC' data='0' />
+					<value target='CONVSP' data='003' />
+					<value target='TYPE' data='1' />
+					<value target='BITS' data='10' />
+					<value target='CustomPins' data='0' />
+					<value target='HasDMA' data='0' />
+					<value target='UseDMA' data='0' />
+					<value target='DMATrigger' data='000' />
+					<value target='HasScanning' data='0' />
+					<value target='UseScanning' data='0' />
+					<value target='ScopeTraces' data='1' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='5c934fad-aebc-4d51-bb76-fc0c4fae27f1' vmin='0' vmaj='1' codename='LibraryComponent1' panelId='-1' x='0' y='0' z='0' xsz='100' ysz='100' zsz='100' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Text::sText' data='ADC
+Base' />
+					<value target='Text::nVerticalAlignment' data='002' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<scadaresourcelookup />
+	<keymap />
+	<panel2d shadows='1' lighting='0' brightness='0' >
+		<background rgb='9737364' img='' style='0' />
+		<camera xe='1.30781' ye='-10.3935' ze='580.942' xt='1.30781' yt='-10.3935' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='622' dy='352' zoom='129.552' fix_topleft='0' />
+		<page x='1000' y='1000' show='0' rgb='0' />
+		<winpos ID='7005' RectRecentFloat='1270,427,1920,877' RectRecentDocked='0,0,495,419' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+	</panel2d>
+	<panel3d shadows='2' lighting='0' brightness='0' perspective='1' >
+		<background rgb='8404224' img='D:\Dev\temp\fc_5plus\alpha_19_121210\demo_files\icons\solar\space.jpg' style='0' />
+		<table rgb='4294967295' img='' style='0' size='0' />
+		<camera xe='0.430213' ye='-0.689298' ze='82.5597' xt='0.430213' yt='-0.689298' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey0 xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey1 xe='-3.67394e-14' ye='0' ze='-300' xt='0' yt='0' zt='0' xquat='0' yquat='1' zquat='0' wquat='6.12323e-17' />
+		<camerakey2 xe='0' ye='-300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.707107' yquat='0' zquat='0' wquat='0.707107' />
+		<camerakey3 xe='-3.67394e-14' ye='300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-4.32978e-17' yquat='0.707107' zquat='0.707107' wquat='4.32978e-17' />
+		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
+		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
+		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
+		<winpos ID='7004' RectRecentFloat='153,370,807,947' RectRecentDocked='0,0,309,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+	</panel3d>
+	<panels2d count='0' />
+	<layout >
+		<view type='0' name='GetString' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2gMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='RawEnable' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2gMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='RawDisable' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2gMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetByte' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2gMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='RawAverageInt' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2gMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetAverageInt' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2gMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='RawAverageByte' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2gMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetAverageByte' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2gMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DynamicLists' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2gMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2gMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2gMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_ChipChange' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2gMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_SetFCD' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2gMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='RawSampleByte' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2gMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='RawSampleInt' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2gMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetProperties' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2gMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetChannel' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2gMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetVoltage' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2gMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetSpeedFilter' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2gMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetSampleBits' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2gMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetInt' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2gMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2gMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

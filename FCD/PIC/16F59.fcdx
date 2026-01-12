@@ -1,0 +1,105 @@
+<!-- CRC: 90CF26913586BBA787FE92D553771933B26A20E416E7E010421F126ACB7542C1F8B48017CEA9C3F928FAD4357B6CF5FF9A0D46BD3B6AACB92DE4D84759EBB5079CA9DA2D2BBCDAE2A4D1C56CD1580BF59F4AFAA70B24BD38559EA25C2C894BCF70D0B84413374826777CB888A14729A921766C4D56C75DF43412E999442904143E484D0F8AF33A624431A9D556810B7E0B5055E1EDBF08B64C3C433D14E655A0DB1EB3DD03A15BA1086944AE325796A6930CDF83AF2EC7173814A2B6F191F4AB785A25FF86E3779D674573756A3EC60527D03AB401F1B0EB -->
+<!-- REVISION: 1.0 -->
+<!-- GUID: F5E12082-2561-40EF-97C0-35BF8B6106CF -->
+<!-- DATE: 08\08\2022 -->
+<!-- DIR: FCD\PIC\16F59.fcdx -->
+<root>
+<device name='16F59' namealt="PIC16F59" product='PIC' cal='PIC' family='16F' bits='8' >
+    <clock max_speed='20000000' master_divider='4' default='19660800' />
+    <memory >
+        <flash bytes='3072' />
+        <ram bytes='134' />
+    </memory>
+    <configuration address='1' mult='2' >
+        <format >
+            <word value='0x3F72' />
+        </format>
+        <setting />
+        <settings >
+            <setting name='OSC' offset='0' mask='3' bits='2' hint='Oscillator' >
+                <option name='RC' value='3' />
+                <option name='LP' value='0' />
+                <option name='XT' value='1' />
+                <option name='HS' value='2' />
+            </setting>
+            <setting name='WDT' offset='2' mask='1' bits='1' hint='Watchdog Timer' >
+                <option name='On' value='1' />
+                <option name='Off' value='0' />
+            </setting>
+            <setting name='CP' offset='3' mask='1' bits='1' hint='Code Protect' >
+                <option name='Off' value='1' />
+                <option name='On' value='0' />
+            </setting>
+        </settings>
+    </configuration>
+    <pins sides='2' smd='0' >
+        <pin name='RA0' port='0' bit='0' />
+        <pin name='RA1' port='0' bit='1' />
+        <pin name='RA2' port='0' bit='2' />
+        <pin name='RA3' port='0' bit='3' />
+    	<pin name='VSS' />
+        <pin name='RB0' port='1' bit='0' />
+        <pin name='RB1' port='1' bit='1' />
+        <pin name='RB2' port='1' bit='2' />
+        <pin name='RB3' port='1' bit='3' />
+        <pin name='RB4' port='1' bit='4' />
+        <pin name='RB5' port='1' bit='5' />
+        <pin name='RB6/PGC' port='1' bit='6' />
+        <pin name='RB7/PGD' port='1' bit='7' />
+        <pin name='MCLR/VPP' />
+        <pin name='VDD' />
+        <pin name='RC0' port='2' bit='0' />
+        <pin name='RC1' port='2' bit='1' />
+        <pin name='RC2' port='2' bit='2' />
+        <pin name='RC3' port='2' bit='3' />
+        <pin name='RC4' port='2' bit='4' />
+        <pin name='RC5' port='2' bit='5' />
+        <pin name='RC6' port='2' bit='6' />
+        <pin name='RC7' port='2' bit='7' />
+        <pin name='RD0' port='3' bit='0' />
+        <pin name='VSS' />
+        <pin name='RD1' port='3' bit='1' />
+        <pin name='RD2' port='3' bit='2' />
+        <pin name='RD3' port='3' bit='3' />
+        <pin name='RD4' port='3' bit='4' />
+        <pin name='RD5' port='3' bit='5' />
+        <pin name='RD6' port='3' bit='6' />
+        <pin name='RD7' port='3' bit='7' />
+        <pin name='OSC2/CLKOUT' />
+        <pin name='OSC1/CLKIN' />
+	<pin name='VDD' />
+        <pin name='RE4' port='4' bit='4' />
+        <pin name='RE5' port='4' bit='5' />
+        <pin name='RE6' port='4' bit='6' />
+        <pin name='RE7' port='4' bit='7' />
+        <pin name='T0CKI' />
+    </pins>
+    <interrupts >
+    </interrupts>
+</device>
+<inline >
+    <defines code='#define MX_16F5x_TRIS\n#define MX_16F5x_TRISA\n#define MX_16F5x_TRISB\n#define MX_16F5x_TRISC\n#define MX_16F5x_TRISD\n#define MX_16F5x_TRISE\n' />
+    <directives code="#include &lt;xc.h&gt;\n#include &lt;math.h&gt;\n\n" />
+    <main >
+        <start code='\nvoid main()\n{\n\t#ifdef INTOSCHELPER\n\t\tINTOSCHELPERCODE\n\t#endif\n\n' />
+        <end code='\tmainendloop: goto mainendloop;\n}\n\n' />
+        <init code='' />
+    </main>
+    <interrupt >
+        <enable code='' />
+        <start code='' />
+        <end code='' />
+        <init code='' />
+    </interrupt>
+    <config >
+	<start code='//Chip Configuration Settings\n' />
+        <body code='__PROG_CONFIG($(address), 0x$(value:x));\n' /> 
+    </config>
+</inline>
+<test >
+    <icd >
+        <clock port='1' pin='6' />
+        <data port='1' pin='7' />
+    </icd>
+</test>
+</root>

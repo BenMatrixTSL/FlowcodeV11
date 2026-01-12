@@ -1,0 +1,976 @@
+<root>
+<document scada='0' schema='103' license='10,BenR,C9TN1M' title='' description='' fcversion='655364' target='PIC.16F.16F877A' >
+	<config data='!0,3f72%0,2%2,0%3,0%6,1%7,0%9,3%b,1%8,1%d,1' clkspd='19660800' simspd='1' usewdt='0' constif='0' Use3V3='0' />
+	<plugins >
+		<dll_models enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug />
+	<traces />
+	<ghost >
+		<FK2 >
+			<data name='FK2D0' port='4294967295' pin='4294967295' />
+			<data name='FK2D1' port='4294967295' pin='4294967295' />
+			<data name='FK2D2' port='4294967295' pin='4294967295' />
+			<data name='FK2D3' port='4294967295' pin='4294967295' />
+			<data name='FK2D4' port='4294967295' pin='4294967295' />
+			<data name='FK2D5' port='4294967295' pin='4294967295' />
+			<data name='FK2D6' port='4294967295' pin='4294967295' />
+			<data name='FK2D7' port='4294967295' pin='4294967295' />
+			<data name='FK2D8' port='4294967295' pin='4294967295' />
+			<data name='FK2D9' port='4294967295' pin='4294967295' />
+			<data name='FK2D10' port='4294967295' pin='4294967295' />
+			<data name='FK2D11' port='4294967295' pin='4294967295' />
+			<data name='FK2D12' port='4294967295' pin='4294967295' />
+			<data name='FK2D13' port='4294967295' pin='4294967295' />
+			<data name='FK2D14' port='4294967295' pin='4294967295' />
+			<data name='FK2D15' port='4294967295' pin='4294967295' />
+			<data name='FK2A0' port='4294967295' pin='4294967295' />
+			<data name='FK2A1' port='4294967295' pin='4294967295' />
+			<data name='FK2A2' port='4294967295' pin='4294967295' />
+			<data name='FK2A3' port='4294967295' pin='4294967295' />
+			<data name='FK2A4' port='4294967295' pin='4294967295' />
+			<data name='FK2A5' port='4294967295' pin='4294967295' />
+		</FK2>
+		<ICD >
+			<data name='AnalogPrescaleValue' value='19' />
+			<data name='DigitalSampleRate' value='100000' />
+			<data name='BreakpointCount' value='8' />
+			<data name='CallStackDepthCount' value='8' />
+			<data name='ClockPort' value='1' />
+			<data name='ClockPin' value='6' />
+			<data name='DataPort' value='1' />
+			<data name='DataPin' value='7' />
+			<data name='UseDefaultPins' value='1' />
+			<data name='WrapEnabled' value='1' />
+			<data name='CommsDelayOverridden' value='0' />
+			<data name='CommsDelay' value='9' />
+			<data name='CalculatedCommsDelay' value='9' />
+			<data name='AnalogEB2PrescaleValue' value='2' />
+			<data name='DigitalEB2SampleRate' value='100000' />
+		</ICD>
+		<pins >
+			<digital A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+			<analog A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+		</pins>
+	</ghost>
+	<components >
+		<settings autoimg='0' center='1' unitscale='1' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='fdef1c85-689b-4e44-81dc-7ab15dec21a6' vstate='40' vmin='2' vmaj='1' srcleaf='DSP_DataToBits.fcfx' visiblename='Data Queue to Bits' description='Allows data to be loaded into a buffer and then output a bit at a time into the DSP system.
+Useful for things like communications where data is modulated and sent out a bit at a time.' category='DSP Inputs' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' catenable='1' author='Matrix Ltd' manuname='' manucode='' sysinfo='1052939' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='1' showmacros='1' iconpath='.\images\dsp-ToBit.png' />
+		<component class_type='root' codename='DSP_Dat2Bit' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+			<resources />
+			<properties >
+				<property name='DSP Buffer Properties' hidden='0' >
+					<property name='Buffer Size' target='BuffSize' typeid='21' hidden='0' locked='0' info='Number of individual elements the buffer can store, default 1.' />
+					<property name='Buffer Type' target='BuffType' typeid='16' hidden='0' locked='0' info='Sets the buffer data type, data is automatically scaled to fit and make full use of the data type.' filter='000unsigned char
+001unsigned int
+002signed int
+003unsigned long
+004signed long
+005float' />
+				</property>
+				<property name='Data Queue Properties' hidden='0' >
+					<property name='Queue Size' target='CircularBuffer1::BufferSize' typeid='21' hidden='0' locked='0' info='Sets the number of byte elements inside the circular buffer.' />
+					<property name='Logic 1 Value' target='Logic1Val' typeid='14' hidden='0' locked='0' info='Value passed to the DSP buffer used to represent a set bit in the data queue.' />
+					<property name='Logic 1 Value' target='Logic1Valf' typeid='15' hidden='1' locked='0' info='Value passed to the DSP buffer used to represent a set bit in the data queue.' />
+					<property name='Logic 0 Value' target='Logic0Val' typeid='14' hidden='0' locked='0' info='Value passed to the DSP buffer used to represent a clear bit in the data queue.' />
+					<property name='Logic 0 Value' target='Logic0Valf' typeid='15' hidden='1' locked='0' info='Value passed to the DSP buffer used to represent a clear bit in the data queue.' />
+					<property name='Tick Divider' target='TickDivider' typeid='21' hidden='0' locked='0' info='Sometimes you will not want a new data bit every DSP tick.
+The Tick Divider property allow you to set how many DSP ticks to wait before fetching the next bit from the
+data buffer.' />
+					<property name='Data Order' target='DataOrder' typeid='16' hidden='0' locked='0' info='Selects the bit order to allow the most significant or least significant bit to be sent first.' filter='000MSB First
+001LSB First' />
+					<property name='Default State' target='DefaultState' typeid='16' hidden='0' locked='0' info='Value used when the data queue is empty' filter='000Clear
+001Set' />
+					<property name='Data Format' target='DataFormat' typeid='16' hidden='0' locked='0' info='Decides if each byte is sent out as 8-bit, 9-bit or 10-bit packets.
+
+The 9-bit and 10-bit packet types will include a start bit that is opposite to the default state. 
+The 10-bit packet types will also include a stop bit that is the same as the default state. ' filter='0088-bit Data Only
+0099-bit Data + Start
+01010-bit Data + Start + Stop' />
+				</property>
+			</properties>
+			<values >
+				<value target='BuffSize' data='1' />
+				<value target='BuffType' data='002' />
+				<value target='CircularBuffer1::BufferSize' data='128' />
+				<value target='Logic1Val' data='1' />
+				<value target='Logic1Valf' data='1' />
+				<value target='Logic0Val' data='0' />
+				<value target='Logic0Valf' data='0' />
+				<value target='TickDivider' data='1' />
+				<value target='DataOrder' data='000' />
+				<value target='DefaultState' data='001' />
+				<value target='DataFormat' data='010' />
+			</values>
+			<events >
+				<event class='Components' event='Property' target='Ev_Property' />
+				<event class='Compile' event='AddVar' target='Ev_AddVar' />
+				<event class='Components' event='Resize' target='Ev_Resize' />
+			</events>
+			<apis >
+				<api name='QueueIntArray' alt='QueueIntArray' type='1' proto='1' />
+				<api name='QueueInt' alt='QueueInt' type='1' proto='1' />
+				<api name='QueueFloatArray' alt='QueueFloatArray' type='1' proto='1' />
+				<api name='CountQueueData' alt='CountQueueData' type='1' proto='1' />
+				<api name='QueueByteArray' alt='QueueByteArray' type='1' proto='1' />
+				<api name='QueueLongArray' alt='QueueLongArray' type='1' proto='1' />
+				<api name='QueueLong' alt='QueueLong' type='1' proto='1' />
+				<api name='QueueFloat' alt='QueueFloat' type='1' proto='1' />
+				<api name='QueueString' alt='QueueString' type='1' proto='1' />
+				<api name='QueueByte' alt='QueueByte' type='1' proto='1' />
+				<api name='FetchNextDataBit' alt='FetchNextDataBit' type='1' proto='1' />
+			</apis>
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='BitPosition' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='Index' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='TickCounter' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='CurrentByte' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='ByteLoaded' type='b1' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='QueueIntArray' description='Adds an array of integer values to the data buffer.
+A 16-bit integer value occupies 2-bytes in the buffer.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Data' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' >
+							<array size='20' />
+						</param>
+						<param name='Count' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Idx' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.Idx &lt; .Count' >
+							<flowline >
+								<command class_type='call' title='Add Byte to Buffer' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='QueueInt' >
+									<argument exp='.Data[.Idx]' />
+								</command>
+								<command class_type='calculation' title='Increment Index' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Idx = .Idx + 1' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='QueueInt' description='Adds a single integer value to the data buffer.
+A 16-bit integer value occupies 2-bytes in the buffer.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Data' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='MSB' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='LSB' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='TypeConversions1' macro='SetInt' >
+							<argument exp='0' />
+							<argument exp='.Data' />
+						</command>
+						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='TypeConversions1' macro='GetByte' >
+							<return exp='.LSB' />
+							<argument exp='0' />
+						</command>
+						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='TypeConversions1' macro='GetByte' >
+							<return exp='.MSB' />
+							<argument exp='1' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='DataOrder' swap='0' >
+							<flowline >
+								<command class_type='comment' title='' comment='LSB First' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+								<command class_type='call' title='Add Value to buffer' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='CircularBuffer1' macro='PutByte' >
+									<argument exp='.LSB' />
+								</command>
+								<command class_type='call' title='Add Value to buffer' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='CircularBuffer1' macro='PutByte' >
+									<argument exp='.MSB' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='comment' title='' comment='MSB First' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+								<command class_type='call' title='Add Value to buffer' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='CircularBuffer1' macro='PutByte' >
+									<argument exp='.MSB' />
+								</command>
+								<command class_type='call' title='Add Value to buffer' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='CircularBuffer1' macro='PutByte' >
+									<argument exp='.LSB' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='QueueFloatArray' description='Adds an array of float values to the data buffer.
+A 32-bit Float value occupies 4-bytes in the buffer.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Data' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' >
+							<array size='20' />
+						</param>
+						<param name='Count' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Idx' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.Idx &lt; .Count' >
+							<flowline >
+								<command class_type='call' title='Add Long to Buffer' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='QueueFloat' >
+									<argument exp='.Data[.Idx]' />
+								</command>
+								<command class_type='calculation' title='Increment Index' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Idx = .Idx + 1' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='ValToDSP' description='Takes a logic value 0 or not 0 and outputs the corresponding value to the DSP buffer.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Value' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='BuffSize &gt; 1' swap='0' >
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value' swap='0' >
+									<flowline >
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='BuffType = 5' swap='0' >
+											<flowline >
+												<command class_type='call' title='Add Value to buffer' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='Buff1' macro='put_float' >
+													<argument exp='Index' />
+													<argument exp='Logic1Valf' />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='call' title='Add Value to buffer' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='Buff1' macro='put' >
+													<argument exp='Index' />
+													<argument exp='Logic1Val' />
+												</command>
+											</flowline>
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='BuffType = 5' swap='0' >
+											<flowline >
+												<command class_type='call' title='Add Value to buffer' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='Buff1' macro='put_float' >
+													<argument exp='Index' />
+													<argument exp='Logic0Valf' />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='call' title='Add Value to buffer' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='Buff1' macro='put' >
+													<argument exp='Index' />
+													<argument exp='Logic0Val' />
+												</command>
+											</flowline>
+										</command>
+									</flowline>
+								</command>
+								<command class_type='calculation' title='Increment Buffer Index' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='Index = Index + 1' />
+								</command>
+								<command class_type='decision' title='Out of bounds?' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='Index = BuffSize' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Wrap Buffer Index' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='Index = 0' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value' swap='0' >
+									<flowline >
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='BuffType = 5' swap='0' >
+											<flowline >
+												<command class_type='call' title='Add Value to buffer' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='Buff1' macro='put_float' >
+													<argument exp='0' />
+													<argument exp='Logic1Valf' />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='call' title='Add Value to buffer' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='Buff1' macro='put' >
+													<argument exp='0' />
+													<argument exp='Logic1Val' />
+												</command>
+											</flowline>
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='BuffType = 5' swap='0' >
+											<flowline >
+												<command class_type='call' title='Add Value to buffer' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='Buff1' macro='put_float' >
+													<argument exp='0' />
+													<argument exp='Logic0Valf' />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='call' title='Add Value to buffer' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='Buff1' macro='put' >
+													<argument exp='0' />
+													<argument exp='Logic0Val' />
+												</command>
+											</flowline>
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='CountQueueData' description='Returns the number of data bytes/bits remaining in the queue.
+The bit count includes start/stop bits.' statediag='0' >
+						<return name='Return' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='CountBits' type='b1' description='0=Return Byte Count, 1=Return Bit Count' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='CircularBuffer1' macro='GetNumberBytes' >
+							<return exp='.Return' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.CountBits' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Return = .Return * DataFormat' />
+								</command>
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='ByteLoaded' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Additional Byte being processed' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Return = .Return + (DataFormat - BitPosition)' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='ByteLoaded' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Additional Byte being processed' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Return = .Return + 1' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Property' description='Sent when a property has been changed by the User' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='temp_str' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.GetName' >
+							<return exp='.temp_str' />
+							<argument exp='this' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='GdiText2' />
+							<argument exp='&quot;sText&quot;' />
+							<argument exp='.temp_str' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='BuffSize &lt; 1' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<argument exp='this' />
+									<argument exp='&quot;BuffSize&quot;' />
+									<argument exp='1' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.CopyValue' >
+							<argument exp='this' />
+							<argument exp='Buff1' />
+							<argument exp='&quot;BuffSize&quot;' />
+						</command>
+						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.CopyValue' >
+							<argument exp='this' />
+							<argument exp='Buff1' />
+							<argument exp='&quot;BuffType&quot;' />
+						</command>
+						<command class_type='decision' title='Tick Divider cannot be 0' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='TickDivider = 0' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<argument exp='this' />
+									<argument exp='&quot;TickDivider&quot;' />
+									<argument exp='1' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='BuffType = 5' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;Logic0Val&quot;' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;Logic1Val&quot;' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;Logic0Valf&quot;' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;Logic1Valf&quot;' />
+									<argument exp='1' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;Logic0Val&quot;' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;Logic1Val&quot;' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;Logic0Valf&quot;' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;Logic1Valf&quot;' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='QueueByteArray' description='Adds an array of byte values to the data buffer.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Data' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</param>
+						<param name='Count' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Idx' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.Idx &lt; .Count' >
+							<flowline >
+								<command class_type='call' title='Add Byte to Buffer' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='QueueByte' >
+									<argument exp='.Data[.Idx]' />
+								</command>
+								<command class_type='calculation' title='Increment Index' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Idx = .Idx + 1' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='QueueLongArray' description='Adds an array of long values to the data buffer.
+A 32-bit integer value occupies 4-bytes in the buffer.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Data' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' >
+							<array size='20' />
+						</param>
+						<param name='Count' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Idx' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.Idx &lt; .Count' >
+							<flowline >
+								<command class_type='call' title='Add Long to Buffer' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='QueueLong' >
+									<argument exp='.Data[.Idx]' />
+								</command>
+								<command class_type='calculation' title='Increment Index' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Idx = .Idx + 1' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='QueueLong' description='Adds a single long value to the data buffer.
+A 32-bit integer value occupies 4-bytes in the buffer.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Data' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Bytes' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='4' />
+						</local>
+						<local name='ix' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='TypeConversions1' macro='SetLong' >
+							<argument exp='.Data' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='2' forvar='.ix' exp='4' >
+							<flowline >
+								<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='TypeConversions1' macro='GetByte' >
+									<return exp='.Bytes[.ix]' />
+									<argument exp='.ix' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='DataOrder' swap='0' >
+							<flowline >
+								<command class_type='comment' title='' comment='LSB First' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+								<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='2' forvar='.ix' exp='4' >
+									<flowline >
+										<command class_type='call' title='Add Value to buffer' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='CircularBuffer1' macro='PutByte' >
+											<argument exp='.Bytes[.ix]' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='comment' title='' comment='MSB First' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+								<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='2' forvar='.ix' exp='4' >
+									<flowline >
+										<command class_type='call' title='Add Value to buffer' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='CircularBuffer1' macro='PutByte' >
+											<argument exp='.Bytes[3 - .ix]' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='QueueFloat' description='Adds a single float value to the buffer.
+A 32-bit Float value occupies 4-bytes in the buffer.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Data' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='Bytes' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='4' />
+						</local>
+						<local name='ix' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='TypeConversions1' macro='SetFloat' >
+							<argument exp='.Data' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='2' forvar='.ix' exp='4' >
+							<flowline >
+								<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='TypeConversions1' macro='GetByte' >
+									<return exp='.Bytes[.ix]' />
+									<argument exp='.ix' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='DataOrder' swap='0' >
+							<flowline >
+								<command class_type='comment' title='' comment='LSB First' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+								<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='2' forvar='.ix' exp='4' >
+									<flowline >
+										<command class_type='call' title='Add Value to buffer' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='CircularBuffer1' macro='PutByte' >
+											<argument exp='.Bytes[.ix]' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='comment' title='' comment='MSB First' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+								<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='2' forvar='.ix' exp='4' >
+									<flowline >
+										<command class_type='call' title='Add Value to buffer' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='CircularBuffer1' macro='PutByte' >
+											<argument exp='.Bytes[3 - .ix]' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_AddVar' description='Sent to a component to allow dynamic amendment of global constant declarations' statediag='0' >
+						<return name='Return' type='u32' description='Non-zero to include definition - initialised on call' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='VarName' type='T8' description='The original Flowcode variable' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</param>
+						<param name='ExpandName' type='T8' description='The expanded variable name' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</param>
+						<param name='Expansion' type='T8*' description='The expanded string to inline to the code' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</param>
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Return = 1' />
+						</command>
+						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='Compare$ (&quot;Index&quot;, .VarName,1) == 0' swap='0' >
+							<flowline >
+								<command class_type='decision' title='Single Value Buffer?' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='BuffSize = 1' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Don&apos;t add variable to C gen - Unused' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='.Return = 0' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Resize' description='Sent to the mouse target when the user has altered the position of a component child' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Component' type='h32' description='The component that has been altered' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='PrevPos' type='h32' description='The position of the object before the start of positioning' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Final' type='b1' description='True if this is the end of a drag operation' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.Forward' >
+							<argument exp='Buff1' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='QueueString' description='Adds an string of characters to the data buffer.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Data' type='T8*' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</param>
+						<local name='Idx' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='Length' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+							<exp exp='.Length = Length$(.Data)' />
+						</command>
+						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.Idx &lt; .Length' >
+							<flowline >
+								<command class_type='call' title='Add Character to Buffer' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='QueueByte' >
+									<argument exp='.Data[.Idx]' />
+								</command>
+								<command class_type='calculation' title='Increment Index' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<exp exp='.Idx = .Idx + 1' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='QueueByte' description='Adds a single byte value to the data buffer.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Data' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Add Value to buffer' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='CircularBuffer1' macro='PutByte' >
+							<argument exp='.Data' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='FetchNextDataBit' description='Gets the next stored bit from the data queue.
+If the data queue is empty then returns the default state.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='decision' title='Do we need to try and load a byte' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='ByteLoaded = 0' swap='0' >
+							<flowline >
+								<command class_type='decision' title='Data available in buffer?' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='CircularBuffer1::GetNumberBytes()' swap='0' >
+									<flowline >
+										<command class_type='call' title='Load a byte from the buffer' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='CircularBuffer1' macro='GetByte' >
+											<return exp='CurrentByte' />
+										</command>
+										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='ByteLoaded = 1' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Have we loaded a data byte' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='ByteLoaded' swap='0' >
+							<flowline >
+								<command class_type='decision' title='9-bit or 10-bit packets?' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='DataFormat &gt; 8' swap='0' >
+									<flowline >
+										<command class_type='decision' title='Start Bit?' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='BitPosition = 0' swap='0' >
+											<flowline >
+												<command class_type='call' title='Inverted Default State' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ValToDSP' >
+													<argument exp='1 - DefaultState' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+										<command class_type='decision' title='Data Bit?' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='(BitPosition &gt; 0) &amp;&amp; (BitPosition &lt; 9)' swap='0' >
+											<flowline >
+												<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='DataOrder' swap='0' >
+													<flowline >
+														<command class_type='comment' title='' comment='LSB First' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+														<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ValToDSP' >
+															<argument exp='CurrentByte &amp; (1 &lt;&lt; (BitPosition - 1))' />
+														</command>
+													</flowline>
+													<flowline >
+														<command class_type='comment' title='' comment='MSB First' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+														<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ValToDSP' >
+															<argument exp='CurrentByte &amp; (128 &gt;&gt; (BitPosition - 1))' />
+														</command>
+													</flowline>
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+										<command class_type='decision' title='Stop Bit?' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='BitPosition = 9' swap='0' >
+											<flowline >
+												<command class_type='call' title='Default State' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ValToDSP' >
+													<argument exp='DefaultState' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='DataOrder' swap='0' >
+											<flowline >
+												<command class_type='comment' title='' comment='LSB First' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+												<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ValToDSP' >
+													<argument exp='CurrentByte &amp; (1 &lt;&lt; BitPosition)' />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='comment' title='' comment='MSB First' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+												<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ValToDSP' >
+													<argument exp='CurrentByte &amp; (128 &gt;&gt; BitPosition)' />
+												</command>
+											</flowline>
+										</command>
+									</flowline>
+								</command>
+								<command class_type='decision' title='Check to see if we are ready to load the next bit' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='TickCounter = 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Reload tick counter' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='TickCounter = TickDivider - 1' />
+										</command>
+										<command class_type='calculation' title='Increment Bit Position' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='BitPosition = BitPosition + 1' />
+										</command>
+										<command class_type='decision' title='End of packet?' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='BitPosition = DataFormat' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='End of packet' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+													<exp exp='BitPosition = 0' />
+													<exp exp='ByteLoaded = 0' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Decrement tick counter' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+											<exp exp='TickCounter = TickCounter - 1' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='comment' title='' comment='No data available at the moment
+Output default state' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
+								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ValToDSP' >
+									<argument exp='DefaultState' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;buffer_manager&quot;' />
+							<argument exp='0' />
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='08d7f73a-6b9f-47fa-aa34-b306613d1e51' vmin='0' vmaj='1' codename='Buff1' panelId='-1' x='40' y='0' z='1' xsz='24' ysz='24' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Val' data='' />
+					<value target='ParentName' data='DSP_Dat2Bit' />
+					<value target='BuffSize' data='1' />
+					<value target='BuffType' data='002' />
+					<value target='DRTrace' data='1' />
+					<value target='DRTOld' data='1' />
+					<value target='Console' data='611' />
+					<value target='ConsoleSize' data='17' />
+					<value target='Text' data='Out' />
+					<value target='Orientation' data='000' />
+					<value target='Enabled' data='1' />
+					<value target='DSPBuffer' data='1' />
+					<value target='PanelIdx' data='-1' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+				<connection0 >
+					<conncomp source='DSP_Dat2Bit.Buff1.Connection1' target='' />
+				</connection0>
+			</component>
+			<component class_type='GdiShape' codename='GdiShape1' panelId='-1' x='0' y='0' z='0' xsz='20' ysz='20' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='8' comp2dType='46' >
+				<resources />
+				<properties />
+				<values >
+					<value target='nType' data='  1' />
+					<value target='colFill' data='16777215' />
+					<value target='colFillGradient' data='16777215' />
+					<value target='nGradientStyle' data='0' />
+					<value target='nFillOpacity' data='1.0' />
+					<value target='nStyle' data='0' />
+					<value target='bFixedScale' data='0' />
+					<value target='fThickness' data='1.00000' />
+					<value target='iOutlineSize' data='1' />
+					<value target='colOutline' data='0' />
+					<value target='colOutlineGradient' data='0' />
+					<value target='nOutlineStyle' data='0' />
+					<value target='nOutlineOpacity' data='1.0' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='GdiComplexShape' codename='GdiComplexShape1' panelId='-1' x='0' y='0' z='2.1' xsz='10' ysz='10' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='8' comp2dType='46' >
+				<resources />
+				<properties />
+				<values >
+					<value target='sCode' data='SS,-50,-100
+AL,-100,-100
+AL,-100,100
+AL,-50,100
+SP
+SS,50,-100
+AL,100,-100
+AL,100,100
+AL,50,100' />
+					<value target='bClosed' data='0' />
+					<value target='nStyle' data='0' />
+					<value target='bFixedScale' data='0' />
+					<value target='fThickness' data='1.00000' />
+					<value target='iOutlineSize' data='1' />
+					<value target='colOutline' data='0' />
+					<value target='colOutlineGradient' data='0' />
+					<value target='nOutlineStyle' data='0' />
+					<value target='nOutlineOpacity' data='1.0' />
+					<value target='colFill' data='16777215' />
+					<value target='colFillGradient' data='16777215' />
+					<value target='nGradientStyle' data='3' />
+					<value target='nFillOpacity' data='1.0' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='GdiShape' codename='GdiShape2' panelId='-1' x='0' y='-25' z='-1.1' xsz='20' ysz='15' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='8' comp2dType='46' >
+				<resources />
+				<properties />
+				<values >
+					<value target='nType' data='  0' />
+					<value target='colFill' data='3552822' />
+					<value target='colFillGradient' data='16777215' />
+					<value target='nGradientStyle' data='0' />
+					<value target='nFillOpacity' data='1.0' />
+					<value target='nStyle' data='0' />
+					<value target='bFixedScale' data='0' />
+					<value target='fThickness' data='1.00000' />
+					<value target='iOutlineSize' data='1' />
+					<value target='colOutline' data='7895160' />
+					<value target='colOutlineGradient' data='16777215' />
+					<value target='nOutlineStyle' data='  3' />
+					<value target='nOutlineOpacity' data='1.0' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='GdiText' codename='GdiText2' panelId='-1' x='0' y='-40' z='0' xsz='10' ysz='1' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='8' comp2dType='46' >
+				<resources />
+				<properties />
+				<values >
+					<value target='sText' data='DSP_Dat2Bit' />
+					<value target='bWordWrap' data='0' />
+					<value target='nHorizontalAlignment' data='2' />
+					<value target='nVerticalAlignment' data='2' />
+					<value target='nAngle' data='0' />
+					<value target='fntFamily' data='Calibri' />
+					<value target='bFixedScale' data='0' />
+					<value target='dScale' data='1.6' />
+					<value target='bScaleWidth' data='1' />
+					<value target='iFontSize' data='12' />
+					<value target='bBold' data='0' />
+					<value target='bItalic' data='0' />
+					<value target='bUnderline' data='0' />
+					<value target='bStrikethrough' data='0' />
+					<value target='colTextColour' data='16777215' />
+					<value target='colTextGradient' data='9868950' />
+					<value target='nGradient' data='0' />
+					<value target='nTextOpacity' data='1.0' />
+					<value target='colBackgroundColour' data='-1' />
+					<value target='colBackgroundGradient' data='-1' />
+					<value target='nBackgroundGradient' data='0' />
+					<value target='nBackgroundOpacity' data='1.0' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='6508c7be-063a-4f9f-bae5-4a41cf977a86' vmin='0' vmaj='1' codename='TypeConversions1' panelId='-1' x='0' y='0' z='0' xsz='5' ysz='5' zsz='5' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='0' solid='0' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='GenCode' data='1' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='c34f9b8a-a915-4f75-ad0c-87f2ad670a8a' vmin='5' vmaj='1' codename='CircularBuffer1' panelId='-1' x='0' y='0' z='0' xsz='0.2' ysz='0.2' zsz='0.2' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='0' solid='0' layer='1' poslock='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='BufferSize' data='128' />
+					<value target='StorageType' data='000' />
+					<value target='MemType' data='000' />
+					<value target='RETURN' data='000' />
+					<value target='Console' data='1' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<scadaresourcelookup />
+	<keymap />
+	<panel2d shadows='0' lighting='0' brightness='0' >
+		<background rgb='9737364' img='' style='0' />
+		<camera xe='5.14007' ye='-7.34173' ze='136.145' xt='5.14007' yt='-7.34173' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='292' dy='302' zoom='259.517' fix_topleft='0' />
+		<page x='1000' y='1000' show='0' rgb='0' />
+		<winpos ID='7005' RectRecentFloat='1278,-612,1598,-212' RectRecentDocked='0,0,309,360' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+	</panel2d>
+	<panel3d shadows='0' lighting='0' brightness='0' perspective='1' >
+		<background rgb='8409120' img='' style='0' />
+		<table rgb='7360576' img='' style='0' size='25' />
+		<camera xe='-0.330648' ye='0.251033' ze='76.7476' xt='-0.330648' yt='0.251033' zt='1.58436' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey0 xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey1 xe='-3.67394e-14' ye='0' ze='-300' xt='0' yt='0' zt='0' xquat='0' yquat='1' zquat='0' wquat='6.12323e-17' />
+		<camerakey2 xe='0' ye='-300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.707107' yquat='0' zquat='0' wquat='0.707107' />
+		<camerakey3 xe='-3.67394e-14' ye='300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-4.32978e-17' yquat='0.707107' zquat='0.707107' wquat='4.32978e-17' />
+		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
+		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
+		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
+		<winpos ID='7004' RectRecentFloat='927,365,1413,740' RectRecentDocked='0,0,564,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+	</panel3d>
+	<panels2d count='0' />
+	<layout >
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAdgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='QueueByteArray' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAdgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAdgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='QueueLongArray' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAdgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='QueueIntArray' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAdgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='QueueByte' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAdgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='QueueInt' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAdgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='QueueLong' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAdgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_AddVar' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAdgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='QueueFloat' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAdgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='QueueFloatArray' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAdgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Resize' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAdgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CountQueueData' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAdgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='FetchNextDataBit' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAdgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ValToDSP' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAdgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='QueueString' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAdgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>
