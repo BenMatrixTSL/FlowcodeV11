@@ -1,5 +1,5 @@
 <root>
-<document scada='1' panel2DSCADA='0' panel3DSCADA='6' panelPropsSCADA='0' panelConsoleSCADA='0' panelDataRecorderSCADA='0' panel2DCount='0' playbackSCADA='0' ShouldAutoStartSCADA='0' ShouldLockCameraSCADA='0' ShouldBundleSCADA='1' SCADAProgramTitle='' buildnumber='0' schema='103' license='10,BenR,C9TN1M' title='App Developer Project' description='' fcversion='655618' target='SCADA.SCADA.GENERIC' >
+<document scada='1' projtype='3' panel2DSCADA='0' panel3DSCADA='6' panelPropsSCADA='0' panelConsoleSCADA='0' panelDataRecorderSCADA='0' panel2DCount='0' playbackSCADA='0' ShouldAutoStartSCADA='0' ShouldLockCameraSCADA='0' ShouldBundleSCADA='1' SCADAProgramTitle='PropertyManager' buildnumber='0' schema='103' license='1,82702381,95CJQR' title='App Developer Project' description='' fcversion='720896' target='SCADA.SCADA.GENERIC' >
 	<config data='' clkspd='100000000' simspd='1' usewdt='0' constif='0' Use3V3='0' />
 	<plugins >
 		<dll_models enabled='1' />
@@ -58,25 +58,25 @@
 		<settings autoimg='0' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
 		<definition guid='819d0c05-aaa2-4431-84dc-d40f3eee1b54' vstate='40' vmin='0' vmaj='1' srcleaf='PropertyManager.fcsx' visiblename='Property Manager' description='Allows property values exposed to the user to be saved and loaded using an external file.
 Simplifies the process of storing and retreiving the property values.
-Also works with nested properties using the &quot;::&quot; syntax.' category='Utility ' category2='Runtime Tools' category3='' bIs2dOnly='1' bIs3dOnly='0' catenable='1' author='Matrix TSL' manuname='' manucode='' sysinfo='1052935' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='1' showmacros='1' iconpath='..\..\icons\components\Property Manager.png' />
-		<component class_type='root' codename='PropertyManager' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+Also works with nested properties using the &quot;::&quot; syntax.' category='Utility ' category2='Runtime Tools' category3='' bIs2dOnly='1' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='Matrix TSL' manuname='' manucode='' sysinfo='17830151' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='1' showmacros='1' iconpath='..\..\icons\components\Property Manager.png' />
+		<component class_type='root' codename='PropertyManager' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 			<resources />
 			<properties >
-				<property name='File Path' target='FileSCADA1::root_dir' typeid='20' hidden='0' locked='0' info='Sets the path of the file to write to.
-$(srcdir) default sets the path to be the same as the Flowcode project path.' />
+				<property name='Filepath' target='Filepath' typeid='10' hidden='0' locked='0' info='Directory path on the system of where to store the file.
+$(srcdir) is the Flowcode project directory.' />
 				<property name='Filename' target='Filename' typeid='10' hidden='0' locked='0' info='' />
 				<property name='Show Dialogue On Load' target='DialogueOnLoad' typeid='7' hidden='0' locked='0' info='Forces the user to check if they are sure before loading saved values.' />
 				<property name='Show Dialogue On Save' target='DialogueOnSave' typeid='7' hidden='0' locked='0' info='Forces the user to check if they are sure before overwriting previous values.' />
 			</properties>
 			<values >
-				<value target='FileSCADA1::root_dir' data='$(srcdir)' />
+				<value target='Filepath' data='$(srcdir)' />
 				<value target='Filename' data='config.cfg' />
 				<value target='DialogueOnLoad' data='1' />
 				<value target='DialogueOnSave' data='1' />
 			</values>
 			<events >
-				<event class='Simulation' event='Start' target='Ev_Start' />
 				<event class='Components' event='Renamed' target='Ev_Renamed' />
+				<event class='Simulation' event='Start' target='Ev_Start' />
 			</events>
 			<apis >
 				<api name='Save' alt='' type='2' proto='1' />
@@ -108,42 +108,96 @@ $(srcdir) default sets the path to be the same as the Flowcode project path.' />
 							<array size='50' />
 						</local>
 						<local name='Go' type='b1' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='DialogueOnSave' swap='0' >
+						<local name='FullFilePath' type='T8' description='' isconst='0' isHidden='0' isinit='1' usrinit='&quot;&quot;' setinit='&quot;&quot;' >
+							<array size='20' />
+						</local>
+						<local name='FileHandle' type='h32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<command class_type='decision' title='Decision' exp='DialogueOnSave' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='UI.YesNoMsgBox' >
+								<command class_type='sim' title='Simulation' macro='UI.YesNoMsgBox' >
 									<return exp='.Go' />
 									<argument exp='&quot;Are you sure you want to save the current property settings.\nAny existing settings will be overwritten.&quot;' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Go = 1' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='.Go' swap='0' >
+						<command class_type='decision' title='Decision' exp='.Go' swap='0' >
 							<flowline >
-								<command class_type='call' title='Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='CSV_ReadWrite1' macro='OpenFile' >
-									<argument exp='Filename' />
-									<argument exp='1' />
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.FullFilePath = Filepath + Filename' />
 								</command>
-								<command class_type='loop' title='Loop' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' type='0' exp='.Idx &lt; NumProps' >
+								<command class_type='sim' title='Built-in Function' macro='File.Delete' >
+									<argument exp='.FullFilePath' />
+								</command>
+								<command class_type='sim' title='Built-in Function' macro='File.Create' >
+									<return exp='.FileHandle' />
+									<argument exp='.FullFilePath' />
+									<argument exp='0' />
+									<argument exp='0' />
+								</command>
+								<command class_type='loop' title='Loop' type='0' exp='.Idx &lt; NumProps' >
 									<flowline >
-										<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.GetValue' >
+										<command class_type='comment' title='' comment='Store Component name' textarea='12,0,12,0' />
+										<command class_type='decision' title='Decision' exp='Handles[.idx] == this' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='.Value = &quot;this&quot;' />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='sim' title='Simulation' macro='Tree.GetName' >
+													<return exp='.Value' />
+													<argument exp='Handles[.Idx]' />
+												</command>
+											</flowline>
+										</command>
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.Value = .Value + &quot;::&quot;' />
+										</command>
+										<command class_type='sim' title='Component Macro' macro='File.WriteArray' >
+											<argument exp='.FileHandle' />
+											<argument exp='.Value' />
+											<argument exp='Length$(.Value)' />
+										</command>
+										<command class_type='comment' title='' comment='Store Component Property Variable' textarea='12,0,12,0' />
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.Value = VarName[.idx] + &quot;,&quot;' />
+										</command>
+										<command class_type='sim' title='Component Macro' macro='File.WriteArray' >
+											<argument exp='.FileHandle' />
+											<argument exp='.Value' />
+											<argument exp='Length$(.Value)' />
+										</command>
+										<command class_type='comment' title='' comment='Store Component Property Value' textarea='12,0,12,0' />
+										<command class_type='sim' title='Simulation' macro='Component.Property.GetValue' >
 											<return exp='.Value' />
 											<argument exp='Handles[.Idx]' />
 											<argument exp='VarName[.Idx]' />
 										</command>
-										<command class_type='call' title='Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='CSV_ReadWrite1' macro='AddString' >
-											<argument exp='.Value' />
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.Value = .Value + &quot;\r\n&quot;' />
 										</command>
-										<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+										<command class_type='sim' title='Component Macro' macro='File.WriteArray' >
+											<argument exp='.FileHandle' />
+											<argument exp='.Value' />
+											<argument exp='Length$(.Value)' />
+										</command>
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Idx = .Idx + 1' />
 										</command>
-										<command class_type='sim' title='Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='LibraryComponent1' macro='FlashTx' />
+										<command class_type='sim' title='Component Macro' component='LibraryComponent1' macro='FlashTx' />
 									</flowline>
 								</command>
-								<command class_type='sim' title='Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='CSV_ReadWrite1' macro='CloseFile' />
+								<command class_type='sim' title='Finish Writes' macro='File.Flush' >
+									<argument exp='.FileHandle' />
+								</command>
+								<command class_type='calculation' title='Close File' >
+									<exp exp='.FileHandle = 0' />
+								</command>
 							</flowline>
 							<flowline />
 						</command>
@@ -153,53 +207,175 @@ $(srcdir) default sets the path to be the same as the Flowcode project path.' />
 					<flowline name='Load' description='Loads the registered property values from the config file.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<local name='Idx' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
-						<local name='Value' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
-							<array size='50' />
-						</local>
 						<local name='Go' type='b1' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='DialogueOnLoad' swap='0' >
+						<local name='FullFilePath' type='T8' description='' isconst='0' isHidden='0' isinit='1' usrinit='&quot;&quot;' setinit='&quot;&quot;' >
+							<array size='20' />
+						</local>
+						<local name='FileHandle' type='h32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='FileData' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='&quot; 0 &quot;' setinit='{0}' >
+							<array size='1000' />
+						</local>
+						<local name='Length' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='PropName' type='T8' description='' isconst='0' isHidden='0' isinit='1' usrinit='&quot;&quot;' setinit='&quot;&quot;' >
+							<array size='20' />
+						</local>
+						<local name='SubStr' type='T8' description='' isconst='0' isHidden='0' isinit='1' usrinit='&quot;&quot;' setinit='&quot;&quot;' >
+							<array size='20' />
+						</local>
+						<local name='SubStrIdx' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='Handle' type='h32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='Name' type='T8' description='' isconst='0' isHidden='0' isinit='1' usrinit='&quot;&quot;' setinit='&quot;&quot;' >
+							<array size='20' />
+						</local>
+						<command class_type='decision' title='Decision' exp='DialogueOnLoad' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='UI.YesNoMsgBox' >
+								<command class_type='sim' title='Simulation' macro='UI.YesNoMsgBox' >
 									<return exp='.Go' />
 									<argument exp='&quot;Are you sure you want to load the property settings.\nYour current settings will be overwritten.&quot;' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Go = 1' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='.Go' swap='0' >
+						<command class_type='decision' title='Decision' exp='.Go' swap='0' >
 							<flowline >
-								<command class_type='call' title='Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='CSV_ReadWrite1' macro='OpenFile' >
-									<argument exp='Filename' />
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.FullFilePath = Filepath + Filename' />
+								</command>
+								<command class_type='sim' title='Built-in Function' macro='File.Open' >
+									<return exp='.FileHandle' />
+									<argument exp='.FullFilePath' />
+									<argument exp='1' />
+									<argument exp='0' />
 									<argument exp='0' />
 								</command>
-								<command class_type='loop' title='Loop' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' type='0' exp='.Idx &lt; NumProps' >
+								<command class_type='sim' title='Built-in Function' macro='File.SetPos' >
+									<argument exp='.FileHandle' />
+									<argument exp='0' />
+									<argument exp='::File.Seek_Begin' />
+								</command>
+								<command class_type='sim' title='Built-in Function' macro='File.ReadArray' >
+									<argument exp='.FileHandle' />
+									<argument exp='.FileData' />
+									<argument exp='1000' />
+								</command>
+								<command class_type='calculation' title='Get Length of Input string' >
+									<exp exp='.Length = Length$(.FileData)' />
+								</command>
+								<command class_type='sim' title='Jump up to Panel Root' macro='Component.GetRoot' >
+									<return exp='.Handle' />
+								</command>
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.Name = &quot;&quot;' />
+								</command>
+								<command class_type='loop' title='Loop' type='0' exp='.Idx &lt; .Length' >
 									<flowline >
-										<command class_type='call' title='Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='CSV_ReadWrite1' macro='SequentialReadString' >
-											<return exp='.Value' />
+										<command class_type='decision' title='Decision' exp='.FileData[.Idx] = &apos;:&apos;' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Terminate string' >
+													<exp exp='.SubStr[.SubStrIdx] = 0' />
+												</command>
+												<command class_type='calculation' title='Clear sub string counter' >
+													<exp exp='.SubStrIdx = 0' />
+												</command>
+												<command class_type='calculation' title='Skip over double ::' >
+													<exp exp='.Idx = .Idx + 1' />
+												</command>
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='.Name = .Name + .SubStr + &quot;::&quot;' />
+												</command>
+												<command class_type='decision' title='Decision' exp='.SubStr != &quot;this&quot;' swap='0' >
+													<flowline >
+														<command class_type='sim' title='Copy child handle to handle var' macro='Component.FindChild' >
+															<return exp='.Handle' />
+															<argument exp='.Handle' />
+															<argument exp='.SubStr' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='decision' title='Decision' exp='.FileData[.Idx] = &apos;,&apos;' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Terminate string' >
+															<exp exp='.SubStr[.SubStrIdx] = 0' />
+														</command>
+														<command class_type='calculation' title='Calculation' >
+															<exp exp='.PropName = .SubStr' />
+														</command>
+														<command class_type='calculation' title='Clear sub string counter' >
+															<exp exp='.SubStrIdx = 0' />
+														</command>
+													</flowline>
+													<flowline >
+														<command class_type='decision' title='Decision' exp='.FileData[.Idx] = &apos;\r&apos;' swap='0' >
+															<flowline >
+																<command class_type='calculation' title='Terminate string' >
+																	<exp exp='.SubStr[.SubStrIdx] = 0' />
+																</command>
+																<command class_type='calculation' title='Clear sub string counter' >
+																	<exp exp='.SubStrIdx = 0' />
+																</command>
+																<command class_type='calculation' title='Skip over &quot;\r\n&quot;' >
+																	<exp exp='.Idx = .Idx + 1' />
+																</command>
+																<command class_type='sim' title='Copy child handle to handle var' macro='Component.Property.SetValue' >
+																	<argument exp='.Handle' />
+																	<argument exp='.PropName' />
+																	<argument exp='.SubStr' />
+																</command>
+																<command class_type='sim' title='Built-in Function' disable='1' macro='Debug.PrintLn' >
+																	<argument exp='.Name + .PropName + &quot; = &quot; + .SubStr' />
+																</command>
+																<command class_type='sim' title='Built-in Function' disable='1' macro='Tree.GetName' >
+																	<return exp='.Name' />
+																	<argument exp='.Handle' />
+																</command>
+																<command class_type='sim' title='Built-in Function' disable='1' macro='Debug.PrintLn' >
+																	<argument exp='&quot;HandleName: &quot; + .Name' />
+																</command>
+																<command class_type='calculation' title='Calculation' >
+																	<exp exp='.Name = &quot;&quot;' />
+																</command>
+																<command class_type='sim' title='Jump up to Panel Root' macro='Component.GetRoot' >
+																	<return exp='.Handle' />
+																</command>
+															</flowline>
+															<flowline >
+																<command class_type='calculation' title='Add current char to Sub String' >
+																	<exp exp='.SubStr[.SubStrIdx] = .FileData[.Idx]' />
+																</command>
+																<command class_type='calculation' title='Increment sub string counter' >
+																	<exp exp='.SubStrIdx = .SubStrIdx + 1' />
+																</command>
+															</flowline>
+														</command>
+													</flowline>
+												</command>
+											</flowline>
 										</command>
-										<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
-											<argument exp='Handles[.Idx]' />
-											<argument exp='VarName[.Idx]' />
-											<argument exp='.Value' />
-										</command>
-										<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Idx = .Idx + 1' />
 										</command>
-										<command class_type='sim' title='Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='LibraryComponent1' macro='FlashRx' />
 									</flowline>
 								</command>
-								<command class_type='sim' title='Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='CSV_ReadWrite1' macro='CloseFile' />
+								<command class_type='calculation' title='Close File' >
+									<exp exp='.FileHandle = 0' />
+								</command>
 							</flowline>
 							<flowline />
 						</command>
 					</flowline>
 				</macro>
 				<macro >
-					<flowline name='RegisterProperty' description='Registers a property to be saved or loaded' statediag='0' >
+					<flowline name='RegisterProperty' description='Registers a property to be saved or loaded.
+The property name should also include the component name e.g. 
+Top level property - &quot;PropVarName&quot;
+Component property - &quot;ComponentName::PropVarName&quot;' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<param name='PropertyVariable' type='T8*' description='Property variable exposed to the user, highlight property and variable is shown at the bottom of the window.' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
@@ -211,54 +387,53 @@ $(srcdir) default sets the path to be the same as the Flowcode project path.' />
 						</local>
 						<local name='SubStrIdx' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
 						<local name='Handle' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='sim' title='Jump up to Panel Root' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.GetParent' >
+						<command class_type='sim' title='Jump up to Panel Root' macro='Component.GetRoot' >
 							<return exp='.Handle' />
-							<argument exp='this' />
 						</command>
-						<command class_type='calculation' title='Get Length of Input string' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+						<command class_type='calculation' title='Get Length of Input string' >
 							<exp exp='.Length = Length$ (.PropertyVariable)' />
 						</command>
-						<command class_type='loop' title='Loop' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' type='0' exp='.Idx &lt; .Length' >
+						<command class_type='loop' title='Loop' type='0' exp='.Idx &lt; .Length' >
 							<flowline >
-								<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='.PropertyVariable[.Idx] = &apos;:&apos;' swap='0' >
+								<command class_type='decision' title='Decision' exp='.PropertyVariable[.Idx] = &apos;:&apos;' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Terminate string' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+										<command class_type='calculation' title='Terminate string' >
 											<exp exp='.SubStr[.SubStrIdx] = 0' />
 										</command>
-										<command class_type='calculation' title='Clear sub string counter' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+										<command class_type='calculation' title='Clear sub string counter' >
 											<exp exp='.SubStrIdx = 0' />
 										</command>
-										<command class_type='calculation' title='Skip over double ::' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+										<command class_type='calculation' title='Skip over double ::' >
 											<exp exp='.Idx = .Idx + 1' />
 										</command>
-										<command class_type='sim' title='Copy child handle to handle var' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.FindChild' >
+										<command class_type='sim' title='Copy child handle to handle var' macro='Component.FindChild' >
 											<return exp='.Handle' />
 											<argument exp='.Handle' />
 											<argument exp='.SubStr' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='calculation' title='Add current char to Sub String' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+										<command class_type='calculation' title='Add current char to Sub String' >
 											<exp exp='.SubStr[.SubStrIdx] = .PropertyVariable[.Idx]' />
 										</command>
-										<command class_type='calculation' title='Increment sub string counter' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+										<command class_type='calculation' title='Increment sub string counter' >
 											<exp exp='.SubStrIdx = .SubStrIdx + 1' />
 										</command>
 									</flowline>
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Idx = .Idx + 1' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='calculation' title='Terminate string' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+						<command class_type='calculation' title='Terminate string' >
 							<exp exp='.SubStr[.SubStrIdx] = 0' />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='Handles[NumProps] = .Handle' />
 							<exp exp='VarName[NumProps] = .SubStr' />
 						</command>
-						<command class_type='calculation' title='Increment Property Manager Counter' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+						<command class_type='calculation' title='Increment Property Manager Counter' >
 							<exp exp='NumProps = NumProps + 1' />
 						</command>
 					</flowline>
@@ -269,11 +444,11 @@ $(srcdir) default sets the path to be the same as the Flowcode project path.' />
 						<local name='Name' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
 						</local>
-						<command class_type='sim' title='' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Tree.GetName' >
+						<command class_type='sim' title='' macro='Tree.GetName' >
 							<return exp='.Name' />
 							<argument exp='this' />
 						</command>
-						<command class_type='sim' title='' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='' macro='Component.Property.SetValue' >
 							<argument exp='LibraryComponent1' />
 							<argument exp='&quot;Name&quot;' />
 							<argument exp='.Name' />
@@ -283,7 +458,7 @@ $(srcdir) default sets the path to be the same as the Flowcode project path.' />
 				<macro >
 					<flowline name='Ev_Start' description='Broadcast to all components that simulation is starting' statediag='0' >
 						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='NumProps = 0' />
 						</command>
 					</flowline>
@@ -294,19 +469,7 @@ $(srcdir) default sets the path to be the same as the Flowcode project path.' />
 					</flowline>
 				</macro>
 			</macros>
-			<component class_type='ref' guid='7d0c33a1-0aaa-4250-84bb-f96fc113abac' vmin='0' vmaj='1' codename='CSV_ReadWrite1' panelId='-1' x='-1.88364' y='-3.14253' z='-10' xsz='0.01' ysz='0.01' zsz='0.01' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='0' solid='0' layer='1' poslock='0' comp2dType='0' >
-				<resources />
-				<properties />
-				<values >
-					<value target='FileComponent' data='' />
-					<value target='LibraryComponent1::OutputIcon::LinkTo' data='001' />
-				</values>
-				<events />
-				<apis />
-				<variables />
-				<macros />
-			</component>
-			<component class_type='ref' guid='58be670e-18fb-477e-ab09-61fde14b23ec' vmin='0' vmaj='1' codename='LibraryComponent1' panelId='-1' x='0' y='0' z='0' xsz='100' ysz='100' zsz='100' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' comp2dType='0' >
+			<component class_type='ref' guid='58be670e-18fb-477e-ab09-61fde14b23ec' vmin='0' vmaj='1' codename='LibraryComponent1' panelId='-1' x='0' y='0' z='0' xsz='100' ysz='100' zsz='100' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
@@ -330,19 +493,6 @@ $(srcdir) default sets the path to be the same as the Flowcode project path.' />
 				<variables />
 				<macros />
 			</component>
-			<component class_type='ref' guid='9cb6d9da-5555-4e1c-a65c-93b299b6011c' vmin='0' vmaj='1' codename='FileSCADA1' panelId='-1' x='0' y='0' z='0' xsz='0.196702' ysz='0.193379' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='0' solid='0' layer='1' poslock='0' comp2dType='0' >
-				<resources />
-				<properties />
-				<values >
-					<value target='max_concurrent_files' data='10' />
-					<value target='EOFtype' data='000' />
-					<value target='root_dir' data='$(srcdir)' />
-				</values>
-				<events />
-				<apis />
-				<variables />
-				<macros />
-			</component>
 		</component>
 	</components>
 	<scadaresourcelookup />
@@ -352,7 +502,7 @@ $(srcdir) default sets the path to be the same as the Flowcode project path.' />
 		<camera xe='0' ye='0' ze='603.913' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
 		<viewport dx='622' dy='352' zoom='124.624' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='0' />
-		<winpos ID='7005' RectRecentFloat='1270,272,1920,722' RectRecentDocked='0,0,454,843' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+		<winpos ID='7005' RectRecentFloat='-916,-610,-266,-160' RectRecentDocked='1015,-583,1657,-164' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel2d>
 	<panel3d shadows='0' lighting='2' brightness='0' perspective='1' >
 		<background rgb='8409120' img='' style='0' />
@@ -365,15 +515,15 @@ $(srcdir) default sets the path to be the same as the Flowcode project path.' />
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,285,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,317,864' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='0' />
 	<layout >
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAfAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Load' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAfAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Save' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAfAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='RegisterProperty' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAfAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Start' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAfAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAQQQAADgCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Load' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAQQQAADgCAAA' zoom='75' scrollx='547' scrolly='761' flags='0' />
+		<view type='0' name='Save' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAQQQAADgCAAA' zoom='75' scrollx='0' scrolly='870' flags='0' />
+		<view type='0' name='RegisterProperty' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAQQQAADgCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Start' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAQQQAADgCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>
