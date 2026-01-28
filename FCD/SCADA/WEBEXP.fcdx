@@ -1,12 +1,13 @@
-<!-- CRC: 64F301B2D3D2FA130323F115F9295B0329E6FD4BF48DA7CFF6764899D3338C6FDA6183FD7E79AA9B6577EF8789F001E8E441021FDBFC16B5AAD2846EA6E883CBE03F672FC344567ED8DA408700E5719BE5291BBDC019EE4AC5BF1443D4F29059C584141681A532EA0A718AFED5C5AC430C307CF18AF19E4C81E05870F80274EC67F1AC984C25BC40BD7A893763A5E0BAAED0795FA96E131DA7638D5A2D1A926CEC4492B606F8A309086944AE325796A65FD6E68F0051B3DA82F7C6557735C4979F56A5FE058745CA76D3E34736BD7539F516F4BDFF4A1CBE -->
-<!-- REVISION: 14.0 -->
+<!-- CRC: 64F301B2D3D2FA130323F115F9295B0329E6FD4BF48DA7CFF6764899D3338C6FDA6183FD7E79AA9B6577EF8789F001E84632351310DEB60C3BFED9C3CECF35AAC3A4007C072069AFA9B11F738DF98E152553A85582F7C02BC5BF1443D4F29059C584141681A532EA0A718AFED5C5AC430C307CF18AF19E4C81E05870F80274EC67F1AC984C25BC40BD7A893763A5E0BAAED0795FA96E131DA7638D5A2D1A926CEC4492B606F8A309086944AE325796A6C97A504D0FFB434C9C2B5CEE38D6BC4ADAD3F930D1E1DA86FFCF1C90B393605E9F32B96E9FC2F3A9 -->
+<!-- REVISION: 15.0 -->
 <!-- GUID: B112FF61-E66E-47E7-87B0-447CC318947B -->
-<!-- DATE: 05\11\2024 -->
+<!-- DATE: 27\01\2026 -->
 <!-- DIR: FCD\SCADA\WEBEXP.fcdx -->
 
 <root>
 <!-- Version Information;
 13, , 20-06-24, ST, Fixed ceil, round and floor functions;
+15, , 27-01-25, ST, Added more internal functions and consolidated chart/gauge loading;
 -->
   <build>
     <generator file="reformer_html.xml" />
@@ -25,7 +26,7 @@
 <inline >
   <defines code='' />
   <directives code='<!-- WEBEXP: add any includes, etc, at the start of the file here-->
-      <script>
+  <script>
     function sin(a)                 { return Math.sin(a); }
     function cos(a)                 { return Math.cos(a); }
     function tan(a)                 { return Math.tan(a); }
@@ -39,15 +40,15 @@
     function asinh(a)               { return Math.asinh(a); }
     function acosh(a)               { return Math.acosh(a); }
     function atanh(a)               { return Math.atanh(a); }
-    function fact(a)                { TODO; }
+    function fact(a)                { var retval = 1; for (var i = 2; i <= a; i++) { retval = retval * i; } return retval; }
     function log(a)                 { return Math.log(a); }
     function log10(a)               { return Math.log10(a); }
     function float32_sqrt(a)        { return Math.sqrt(a); }  //same as float32_sqrt
     function sqrt(a)                { return Math.sqrt(a); }
     function cbrt(a)                { return Math.cbrt(a); }
     function exp(a)                 { return Math.exp(a); }
-    function flt_rem(a)             { TODO; }
-    function fmod(a)                { TODO; }  //same as flt_rem
+    function flt_rem(a, b)          { return a % b; }
+    function fmod(a, b)             { return a % b; }  //same as flt_rem
     function fabs(a)                { return Math.abs(a); }
     function rand(a)                { return Math.round(65535 * Math.random(a)); }
     function random(a)              { return Math.round(65535 * Math.random(a)); }  //same as rand
@@ -115,8 +116,8 @@
     function FCI_EXPLODETOFLOATARRAY(a,b,c)      { return a.split(b).map(Number); }
     function FCI_IMPLODEFROMINTARRAY(a,b,c)    	 { let sRetval = ""; for (i=0;i<c;i++) {sRetval = sRetval + a[i].toString(10); if(i<(c - 1)) {sRetval = sRetval + b;} } return sRetval; }
     function FCI_IMPLODEFROMFLOATARRAY(a,b,c,d)  { let sRetval = ""; for (i=0;i<c;i++) {sRetval = sRetval + a[i].toPrecision(d).toString(); if(i<(c - 1)) {sRetval = sRetval + b;} } return sRetval; }
-    function FCI_INTTOFORMATTEDSTRING(a,b,c)     { TODO ; }
-    function FCI_FLOATTOFORMATTEDSTRING(a,b,c)   { TODO ; }
+    function FCI_INTTOFORMATTEDSTRING(a,b,c)     { let sRetval = a.toString(); if (sRetval.length < b) { sRetval = c.repeat(b - sRetval.length) + sRetval; } return sRetval; }
+    function FCI_FLOATTOFORMATTEDSTRING(a,b,c)   { let sRetval = a.toString(); if (sRetval.length < b) { sRetval = c.repeat(b - sRetval.length) + sRetval; } return sRetval; }
     function FCI_INSERTSTRING(a,b,c)             { return a.slice(0,c)+b+a.slice(c); }
     function FCI_REMOVEFROMSTRING(a,b,c)         { return a.slice(0,b)+a.slice(b+c); }
     function FCI_SEARCHANDREPLACE(a,b,c)         { return a.replace(b,c); }
@@ -131,8 +132,9 @@
     async function FCI_DELAYINT_S(a)      { await resolveAfterMs(1000*a); }
 
     const MxDelayedObjects = [ ];
-
-   </script>
+    const MxChartLoadFunctions = [ ];
+    
+  </script>
    ' />
   <main >
     <start code='\n<!-- WEBEXP: customise the <main> function here-->\n<script>\nasync function MyMainFunction()\n{\n' />
@@ -141,7 +143,7 @@
   </main>
   <interrupt >
     <enable code='' />
-    <start code='\n<!-- WEBEXP: put any code at the bottom of the file here-->\n<script>\n  function StartupCheck(obj)\n  {\n    let i = MxDelayedObjects.indexOf(obj);\n    MxDelayedObjects.splice(i,1);\n    if (MxDelayedObjects.length == 0)\n    {\n      MyMainFunction();\n    }\n  }\n\n  //Check delay-start objects and start immediately if there are none\n  if (MxDelayedObjects.length == 0)\n  {\n    MyMainFunction();\n  }\n</script>\n\n' />
+    <start code="\n<!-- WEBEXP: put any code at the bottom of the file here-->\n<script>\n  function StartupCheck(obj)\n  {\n    let i = MxDelayedObjects.indexOf(obj);\n    MxDelayedObjects.splice(i,1);\n    if (MxDelayedObjects.length == 0)\n    {\n      MyMainFunction();\n    }\n  }\n\n  //load charts and gauges\n  if (MxChartLoadFunctions.length > 0)\n  {\n    google.charts.load('current', {'packages':['corechart', 'gauge']}).then(function()\n    {\n      for (var i = 0; i < MxChartLoadFunctions.length; i++)\n      {\n        MxChartLoadFunctions[i]();\n      }\n    } );\n  }\n\n  //Check delay-start objects and start immediately if there are none\n  if (MxDelayedObjects.length == 0)\n  {\n    MyMainFunction();\n  }\n</script>\n\n" />
     <end code='' />
     <init code='' />
   </interrupt>
@@ -151,3 +153,7 @@
   </config>
 </inline>
 </root>
+
+
+
+
