@@ -56,15 +56,14 @@
 	</ghost>
 	<components >
 		<settings autoimg='0' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
-		<definition guid='7b03c836-c1f9-4ab5-8bf2-787a55e792e0' vstate='40' vmin='0' vmaj='2' srcleaf='ST3215.fcfx' visiblename='ST3215 Servo Motor' description='Control ST3215 servo motors via serial UART communication using the STS protocol.' category='Mechatronics' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='Matrix TSL' manuname='' manucode='' sysinfo='4875' keywords='ST3215|servo|motor|STS|protocol|serial' dynamic='1' scadaCompatible='0' embeddedCompatible='1' showmacros='1' iconpath='..\..\Icons\Components\Servo.png' />
+		<definition guid='7b03c836-c1f9-4ab5-8bf2-787a55e792e0' vstate='40' vmin='0' vmaj='2' srcleaf='ST3215.fcfx' visiblename='ST3215 Servo Motor' description='Control ST3215 servo motors via serial UART communication using the STS protocol.' category='Mechatronics' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='Matrix TSL' manuname='' manucode='' sysinfo='1053451' keywords='ST3215|servo|motor|STS|protocol|serial' dynamic='1' scadaCompatible='0' embeddedCompatible='1' showmacros='1' iconpath='..\..\Icons\Components\Servo.png' />
 		<component class_type='root' codename='ST3215' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 			<resources />
 			<properties >
 				<property name='Connections' hidden='0' >
 					<property name='Channel' target='cal_uart::CHANNEL' typeid='16' hidden='0' locked='0' info='UART Channel selector
 Software channels are bit banged using generic I/O pins but are not as reliable as hardware channels.
-Hardware channels use the selected peripheral on-board the target microcontroller.' filter='000Software
-001Channel 1
+Hardware channels use the selected peripheral on-board the target microcontroller.' filter='001Channel 1
 ' />
 					<property name='TX' target='cal_uart::TX' typeid='5' hidden='0' locked='1' info='Pin to be used for Transmit data' />
 					<property name='TX Remap Pin' target='cal_uart::OutputPins' typeid='16' hidden='1' locked='0' info='Allows the hardware transmit pin to be configured from a list of available pins based on your target device,' filter='000$PORTC.0
@@ -160,6 +159,7 @@ Hardware channels use the selected peripheral on-board the target microcontrolle
 			<events >
 				<event class='Components' event='Property' target='Ev_Property' />
 				<event class='Components' event='Initialise' target='Ev_Initialise' />
+				<event class='Compile' event='AddInterrupts' target='Ev_AddInterrupts' />
 			</events>
 			<apis >
 				<api name='ReadTemperature' alt='ReadTemperature' type='1' proto='1' />
@@ -368,6 +368,44 @@ Hardware channels use the selected peripheral on-board the target microcontrolle
 					</flowline>
 				</macro>
 				<macro >
+					<flowline name='Ev_AddInterrupts' description='Sent to a component to allow dynamic amendment of the interrupts for a component' statediag='0' >
+						<return name='Return' type='u32' description='Non-zero to block code insertion' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='HandlerCode' type='T8*' description='Text to amend for all component interrupts' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</param>
+						<local name='ISR_Macro' type='T8' description='' isconst='0' isHidden='0' isinit='1' usrinit='&quot;&quot;' setinit='&quot;&quot;' >
+							<array size='20' />
+						</local>
+						<local name='UART_Str' type='T8' description='' isconst='0' isHidden='0' isinit='1' usrinit='&quot;&quot;' setinit='&quot;&quot;' >
+							<array size='20' />
+						</local>
+						<command class_type='sim' title='Simulation' macro='Expand.MacroBody' >
+							<return exp='.ISR_Macro' />
+							<argument exp='&quot;Uart_isr&quot;' />
+							<argument exp='this' />
+							<argument exp='0' />
+						</command>
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.UART_Str = &quot;MX_UART_INT_CH&quot; + STRING UARTidx + &quot;_FUNC\n\n&quot;' />
+							<exp exp='.UART_Str = .UART_Str + &quot;MX_UINT8 FCL_RX;\n\n&quot;' />
+							<exp exp='.UART_Str = .UART_Str + &quot;if (MX_UART_INT_CH&quot; + STRING UARTidx + &quot;_DET)\n{\n\n&quot;' />
+						</command>
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.ISR_Macro = .UART_Str + .ISR_Macro' />
+						</command>
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.ISR_Macro = .ISR_Macro + &quot;MX_UART_INT_CH&quot; + STRING UARTidx + &quot;_CLR;&quot;' />
+							<exp exp='.ISR_Macro = .ISR_Macro + &quot;\n\n}\n\nMX_UART_INT_FUNC_END\n&quot;' />
+						</command>
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.HandlerCode = .HandlerCode + &quot;\n\n&quot; + .ISR_Macro' />
+						</command>
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.Return = 0' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
 					<flowline name='SetAcceleration' description='Set servo acceleration in steps per second squared.' statediag='0' >
 						<return name='Return' type='b1' description='True if successful' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='ServoID' type='u8' description='Servo ID' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
@@ -404,10 +442,6 @@ Hardware channels use the selected peripheral on-board the target microcontrolle
 				<macro >
 					<flowline name='Ev_Initialise' description='Initialisation routine for the component once the component is linked to its parent' statediag='0' >
 						<return name='Return' type='u32' description='Non-zero to prevent initialisation' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='0' />
-						<command class_type='call' title='Call Macro' component='cal_uart' macro='Init' />
-						<command class_type='calculation' title='Calculation' >
-							<exp exp='.Return = 0' />
-						</command>
 					</flowline>
 				</macro>
 				<macro >
@@ -571,10 +605,13 @@ Returns number of servos found.' statediag='0' >
 							<exp exp='PacketBuffer[1] = 0' />
 						</command>
 						<command class_type='call' title='Send write packet' macro='Prv_SendPacket' >
-							<return exp='.Return' />
 							<argument exp='.ServoID' />
 							<argument exp='ST3215_CMD_WRITE' />
 							<argument exp='2' />
+						</command>
+						<command class_type='call' title='Receive and verify response' macro='Prv_ReceiveResponse' >
+							<return exp='.Return' />
+							<argument exp='100' />
 						</command>
 					</flowline>
 				</macro>
@@ -652,6 +689,19 @@ Returns number of servos found.' statediag='0' >
 				<macro >
 					<flowline name='Ev_Property' description='Sent when a property has been changed by the User' statediag='0' >
 						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='0' />
+						<local name='TempStr' type='T8' description='' isconst='0' isHidden='0' isinit='1' usrinit='&quot;&quot;' setinit='&quot;&quot;' >
+							<array size='20' />
+						</local>
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
+							<return exp='.TempStr' />
+							<argument exp='cal_uart' />
+							<argument exp='&quot;CHANNEL&quot;' />
+						</command>
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;UARTidx&quot;' />
+							<argument exp='.TempStr' />
+						</command>
 					</flowline>
 				</macro>
 				<macro >
@@ -668,52 +718,81 @@ Returns number of servos found.' statediag='0' >
 						</command>
 						<command class_type='loop' title='Wait for header byte 1' type='0' exp='(.Header1 != ST3215_HEADER1) &amp;&amp; (.TimeoutCount &lt; .Timeout)' >
 							<flowline >
-								<command class_type='call' title='Check for received byte' component='cal_uart' macro='Receive' >
-									<return exp='.Header1' />
-									<argument exp='1' />
-								</command>
-								<command class_type='calculation' title='Increment timeout' >
-									<exp exp='.TimeoutCount = .TimeoutCount + 1' />
+								<command class_type='decision' title='Decision' exp='CircularBuffer1::GetNumberBytes()' swap='0' >
+									<flowline >
+										<command class_type='call' title='Check for received byte' component='CircularBuffer1' macro='GetByte' >
+											<return exp='.Header1' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='delay' title='Delay' exp='1' type='1' />
+										<command class_type='calculation' title='Increment timeout' >
+											<exp exp='.TimeoutCount = .TimeoutCount + 1' />
+										</command>
+									</flowline>
 								</command>
 							</flowline>
 						</command>
 						<command class_type='decision' title='Check if header 1 received' exp='.Header1 = ST3215_HEADER1' swap='0' >
 							<flowline >
-								<command class_type='call' title='Receive header byte 2' component='cal_uart' macro='Receive' >
-									<return exp='.Header2' />
-									<argument exp='100' />
+								<command class_type='loop' title='Wait for header byte 2' type='0' exp='(.Header2 = 0) &amp;&amp; (.TimeoutCount &lt; .Timeout)' >
+									<flowline >
+										<command class_type='decision' title='Decision' exp='CircularBuffer1::GetNumberBytes() &gt;= 3' swap='0' >
+											<flowline >
+												<command class_type='call' title='Check for received byte' component='CircularBuffer1' macro='GetByte' >
+													<return exp='.Header2' />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='delay' title='Delay' exp='1' type='1' />
+												<command class_type='calculation' title='Increment timeout' >
+													<exp exp='.TimeoutCount = .TimeoutCount + 1' />
+												</command>
+											</flowline>
+										</command>
+									</flowline>
 								</command>
 								<command class_type='decision' title='Check if header 2 is correct' exp='.Header2 = ST3215_HEADER2' swap='0' >
 									<flowline >
-										<command class_type='call' title='Receive ID' component='cal_uart' macro='Receive' >
+										<command class_type='call' title='Receive ID' component='CircularBuffer1' macro='GetByte' >
 											<return exp='ResponseBuffer[0]' />
-											<argument exp='100' />
 										</command>
-										<command class_type='call' title='Receive length' component='cal_uart' macro='Receive' >
+										<command class_type='call' title='Receive Length' component='CircularBuffer1' macro='GetByte' >
 											<return exp='ResponseBuffer[1]' />
-											<argument exp='100' />
 										</command>
 										<command class_type='calculation' title='Calculate number of data bytes' >
 											<exp exp='ResponseLength = ResponseBuffer[1] - 2' />
 										</command>
 										<command class_type='loop' title='Receive all data bytes' type='0' exp='.Idx &lt; ResponseLength' >
 											<flowline >
-												<command class_type='call' title='Receive data byte' component='cal_uart' macro='Receive' >
-													<return exp='ResponseBuffer[.Idx + 2]' />
-													<argument exp='100' />
-												</command>
-												<command class_type='calculation' title='Increment index' >
-													<exp exp='.Idx = .Idx + 1' />
+												<command class_type='decision' title='Decision' exp='CircularBuffer1::GetNumberBytes() &gt;= 3' swap='0' >
+													<flowline >
+														<command class_type='call' title='Receive Length' component='CircularBuffer1' macro='GetByte' >
+															<return exp='ResponseBuffer[.Idx + 2]' />
+														</command>
+														<command class_type='calculation' title='Increment index' >
+															<exp exp='.Idx = .Idx + 1' />
+														</command>
+														<command class_type='decision' title='Decision' exp='.Idx &gt; 17' swap='0' >
+															<flowline >
+																<command class_type='goto' title='Goto Connection Point' labelid='0' labelname='' />
+															</flowline>
+															<flowline />
+														</command>
+													</flowline>
+													<flowline >
+														<command class_type='delay' title='Delay' exp='1' type='1' />
+														<command class_type='calculation' title='Increment timeout' >
+															<exp exp='.TimeoutCount = .TimeoutCount + 1' />
+														</command>
+													</flowline>
 												</command>
 											</flowline>
-										</command>
-										<command class_type='call' title='Receive checksum' component='cal_uart' macro='Receive' >
-											<return exp='ResponseBuffer[ResponseLength + 2]' />
-											<argument exp='100' />
 										</command>
 										<command class_type='calculation' title='Mark as successful' >
 											<exp exp='.Return = 1' />
 										</command>
+										<command class_type='label' title='Declare Connection Point' labelid='0' labelname='A' />
 									</flowline>
 									<flowline />
 								</command>
@@ -780,10 +859,16 @@ Returns number of servos found.' statediag='0' >
 							<exp exp='PacketBuffer[2] = .Speed &gt;&gt; 8' />
 						</command>
 						<command class_type='call' title='Send write packet' macro='Prv_SendPacket' >
-							<return exp='.Return' />
 							<argument exp='.ServoID' />
 							<argument exp='ST3215_CMD_WRITE' />
 							<argument exp='3' />
+						</command>
+						<command class_type='call' title='Receive and verify response' macro='Prv_ReceiveResponse' >
+							<return exp='.Return' />
+							<argument exp='100' />
+						</command>
+						<command class_type='calculation' title='Calculation' disable='1' >
+							<exp exp='.Return = 1' />
 						</command>
 					</flowline>
 				</macro>
@@ -863,7 +948,7 @@ Returns number of servos found.' statediag='0' >
 						</command>
 						<command class_type='call' title='Receive response' macro='Prv_ReceiveResponse' >
 							<return exp='.Return' />
-							<argument exp='100' />
+							<argument exp='20' />
 						</command>
 					</flowline>
 				</macro>
@@ -914,6 +999,7 @@ Returns number of servos found.' statediag='0' >
 						<command class_type='call' title='Send checksum' component='cal_uart' macro='Send' >
 							<argument exp='.Checksum' />
 						</command>
+						<command class_type='call' title='Component Macro' component='CircularBuffer1' macro='FlushBuffer' />
 						<command class_type='calculation' title='Return success' >
 							<exp exp='.Return = 1' />
 						</command>
@@ -1081,6 +1167,19 @@ Returns number of servos found.' statediag='0' >
 						</command>
 					</flowline>
 				</macro>
+				<macro keep='1' >
+					<flowline name='Uart_isr' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<local name='rx' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<command class_type='call' title='Call Component Macro' component='cal_uart' macro='Receive' >
+							<return exp='.rx' />
+							<argument exp='0' />
+						</command>
+						<command class_type='call' title='Component Macro' component='CircularBuffer1' macro='PutByte' >
+							<argument exp='.rx' />
+						</command>
+					</flowline>
+				</macro>
 				<macro >
 					<flowline name='Prv_CalculateChecksum' description='Calculate checksum for STS protocol packet. Checksum is NOT of sum of ID, Length, Instruction, and Parameters.' statediag='0' >
 						<return name='Return' type='u8' description='Calculated checksum value' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
@@ -1166,7 +1265,7 @@ Returns number of servos found.' statediag='0' >
 					<value target='DBITS' data='008' />
 					<value target='RETURN' data='001' />
 					<value target='ECHO' data='000' />
-					<value target='INT' data='000' />
+					<value target='INT' data='001' />
 					<value target='ScopeTraces' data='0' />
 					<value target='ConsoleData' data='0' />
 					<value target='ConsoleFormat' data='000' />
@@ -1247,16 +1346,31 @@ Servo' />
 				<variables />
 				<macros />
 			</component>
+			<component class_type='ref' guid='c34f9b8a-a915-4f75-ad0c-87f2ad670a8a' vmin='6' vmaj='1' codename='CircularBuffer1' panelId='-1' x='0' y='0' z='0' xsz='0.178571' ysz='0.178571' zsz='0.0622665' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='0' solid='0' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='BufferSize' data='32' />
+					<value target='StorageType' data='001' />
+					<value target='MemType' data='000' />
+					<value target='RETURN' data='000' />
+					<value target='Console' data='1' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
 		</component>
 	</components>
 	<scadaresourcelookup />
 	<keymap />
 	<panel2d shadows='0' lighting='0' brightness='0' >
 		<background rgb='3158064' img='' style='0' />
-		<camera xe='-12.5318' ye='8.59532' ze='712.964' xt='-12.5318' yt='8.59532' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
-		<viewport dx='369' dy='782' zoom='62.6245' fix_topleft='0' />
+		<camera xe='12.8076' ye='-12.8307' ze='348.911' xt='12.8076' yt='-12.8307' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='478' dy='782' zoom='165.767' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='0' />
-		<winpos ID='7005' RectRecentFloat='1398,402,1920,959' RectRecentDocked='1100,141,1489,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+		<winpos ID='7005' RectRecentFloat='794,0,1444,576' RectRecentDocked='991,141,1489,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel2d>
 	<panel3d shadows='0' lighting='0' brightness='0' perspective='1' >
 		<background rgb='16760992' img='' style='0' />
@@ -1269,30 +1383,36 @@ Servo' />
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='1249,-786,1920,-130' RectRecentDocked='991,141,1489,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+		<winpos ID='7004' RectRecentFloat='1249,-786,1920,-130' RectRecentDocked='0,0,494,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='0' />
 	<layout >
-		<view type='0' name='IsMoving' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='PingServo' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Prv_ReceiveResponse' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Prv_SendPacket' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='StartServo' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='MoveTo' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadTemperature' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadPosition' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadVoltage' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadLoad' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadSpeed' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadCurrent' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ListServos' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadStatus' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadTorqueLimit' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadMode' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadCorrection' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadAcceleration' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='MoveToAngle' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='IsMoving' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='PingServo' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_ReceiveResponse' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='100' scrollx='0' scrolly='1458' flags='0' />
+		<view type='0' name='Prv_SendPacket' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='100' scrollx='0' scrolly='203' flags='0' />
+		<view type='0' name='StartServo' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='MoveTo' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadTemperature' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadPosition' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadVoltage' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadLoad' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadSpeed' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadCurrent' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ListServos' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='100' scrollx='0' scrolly='11' flags='0' />
+		<view type='0' name='ReadStatus' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadTorqueLimit' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadMode' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadCorrection' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadAcceleration' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='MoveToAngle' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='StopServo' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetSpeed' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Uart_isr' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_AddInterrupts' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>
