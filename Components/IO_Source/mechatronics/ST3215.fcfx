@@ -1241,6 +1241,19 @@ Returns number of servos found.' statediag='0' >
 						</command>
 					</flowline>
 				</macro>
+				<macro >
+					<flowline name='Main' description='Main macro for testing the ST3215 component' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<local name='TestServoID' type='u8' description='Test servo ID' isconst='0' isHidden='0' isinit='1' usrinit='1' setinit='1' />
+						<local name='PingResult' type='b1' description='Result of ping' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<command class_type='call' title='Initialize component' macro='Ev_Initialise' />
+						<command class_type='call' title='Initialize UART' macro='Initialise' />
+						<command class_type='call' title='Ping servo' macro='PingServo' >
+							<return exp='.PingResult' />
+							<argument exp='.TestServoID' />
+						</command>
+					</flowline>
+				</macro>
 			</macros>
 			<component class_type='ref' guid='91b64b1d-b8b2-40f1-b073-e953a91fa234' vmin='3' vmaj='19' codename='cal_uart' panelId='-1' x='0' y='0' z='10.811' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
@@ -1413,6 +1426,7 @@ Servo' />
 		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 		<view type='0' name='Ev_AddInterrupts' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>

@@ -1,7 +1,7 @@
-<!-- CRC: 90CF26913586BBA787FE92D5537719331BE4D29D63F622BD7DF31C904D5836F42B702871DF5ADABCC487AA0E0C74ACDB9A0D46BD3B6AACB92DE4D84759EBB5079CA9DA2D2BBCDAE2A4D1C56CD1580BF524CDCCAA27101809B2D339E8A0D057DBCFDA7EADFF91BFE4E6152F3F65F4286879CB97679A9EA159CDDCEC88DA6D695AC4CD1AFDA4CE733F6927D61A014BBAD9C03A88E60D062F4F6AD2A9332CA6902DB756D7BAE790CB60086944AE325796A671E0FAD3C63388115886228B5B821476F5F86FC35A77AF4819F5A1519A28222137BBA28BD2FD4C2E -->
-<!-- REVISION: 1.0 -->
+<!-- CRC: 90CF26913586BBA787FE92D5537719331BE4D29D63F622BD7DF31C904D5836F42B702871DF5ADABCC487AA0E0C74ACDBA177FF338C7EBB1626DD71A5CDBC84B1D5EC1178E7B1FA23A9B11F738DF98E158FD19FD1D5C090F7B2D339E8A0D057DBCFDA7EADFF91BFE4E6152F3F65F4286879CB97679A9EA159CDDCEC88DA6D695AC4CD1AFDA4CE733F6927D61A014BBAD9C03A88E60D062F4F6AD2A9332CA6902DB756D7BAE790CB60086944AE325796A616BA4EBC82F23AB61F0D751631916DB3197CE5597173D276F34ED282F28D61111344DA344566B5AD -->
+<!-- REVISION: 2.0 -->
 <!-- GUID: 07D7F6BB-09A9-4162-B735-D9C12AFAF538 -->
-<!-- DATE: 08\08\2022 -->
+<!-- DATE: 10\02\2026 -->
 <!-- DIR: FCD\PIC\12F629.fcdx -->
 <root>
 <device name='12F629' product='PIC' cal='PIC' family='12F' bits='8' >
@@ -12,12 +12,11 @@
     </memory>
     <configuration address='1' mult='2' >
         <format >
-	  <word value='0x3FFF' />
-	  <word value='0x3FFF' />
+			<word value='0x3FFF' />
         </format>
         <setting />
         <settings >
-            <setting name='FOSC' offset='0' mask='0xFFFF' bits='16' hint='Oscillator Selection bits' >
+            <setting name='FOSC' offset='0' mask='7' bits='3' hint='Oscillator Selection bits' >
                 <option name='RC oscillator:CLKOUT function on GP4/OSC2/CLKOUT pin, RC on GP5/OSC1/CLKIN' value='0x7' />
                 <option name='RC oscillator:I/O function on GP4/OSC2/CLKOUT pin, RC on GP5/OSC1/CLKIN' value='0x6' />
                 <option name='INTOSC oscillator:CLKOUT function on GP4/OSC2/CLKOUT pin, I/O function on GP5/OSC1/CLKIN' value='0x5' />
@@ -27,27 +26,27 @@
                 <option name='XT oscillator:Crystal/resonator on GP4/OSC2/CLKOUT and GP5/OSC1/CLKIN' value='0x1' />
                 <option name='LP oscillator:Low power crystal on GP4/OSC2/CLKOUT and GP5/OSC1/CLKIN' value='0x0' />
             </setting>
-            <setting name='WDTE' offset='16' mask='0xFFFF' bits='16' hint='Watchdog Timer Enable bit' >
+            <setting name='WDTE' offset='3' mask='1' bits='1' hint='Watchdog Timer Enable bit' >
                 <option name='WDT enabled' value='0x1' />
                 <option name='WDT disabled' value='0x0' />
             </setting>
-            <setting name='PWRTE' offset='32' mask='0xFFFF' bits='16' hint='Power-Up Timer Enable bit' >
+            <setting name='PWRTE' offset='4' mask='1' bits='1' hint='Power-Up Timer Enable bit' >
                 <option name='PWRT disabled' value='0x1' />
                 <option name='PWRT enabled' value='0x0' />
             </setting>
-            <setting name='MCLRE' offset='48' mask='0xFFFF' bits='16' hint='GP3/MCLR pin function select' >
+            <setting name='MCLRE' offset='5' mask='1' bits='1' hint='GP3/MCLR pin function select' >
                 <option name='GP3/MCLR pin function is MCLR' value='0x1' />
                 <option name='GP3/MCLR pin function is digital I/O, MCLR internally tied to VDD' value='0x0' />
             </setting>
-            <setting name='BOREN' offset='64' mask='0xFFFF' bits='16' hint='Brown-out Detect Enable bit' >
+            <setting name='BOREN' offset='6' mask='1' bits='1' hint='Brown-out Detect Enable bit' >
                 <option name='BOD enabled' value='0x1' />
                 <option name='BOD disabled' value='0x0' />
             </setting>
-            <setting name='CP' offset='80' mask='0xFFFF' bits='16' hint='Code Protection bit' >
+            <setting name='CP' offset='7' mask='1' bits='1' hint='Code Protection bit' >
                 <option name='Program Memory code protection is disabled' value='0x1' />
                 <option name='Program Memory code protection is enabled' value='0x0' />
             </setting>
-            <setting name='CPD' offset='96' mask='0xFFFF' bits='16' hint='Data Code Protection bit' >
+            <setting name='CPD' offset='8' mask='1' bits='1' hint='Data Code Protection bit' >
                 <option name='Data memory code protection is disabled' value='0x1' />
                 <option name='Data memory code protection is enabled' value='0x0' />
             </setting>
@@ -141,7 +140,7 @@
     </interrupt>
     <config >
 	<start code='//Chip Configuration Settings\n' />
-        <body code='#pragma config $(address) = 0x$(value:x);\n' /> 
+        <body code='__PROG_CONFIG($(address), 0x$(value:x));\n' />  
     </config>
 </inline>
 <test >
