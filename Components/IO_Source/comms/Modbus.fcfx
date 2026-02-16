@@ -1,5 +1,5 @@
 <root>
-<document scada='0' schema='103' license='1,MartinW,JAK2JB' title='' description='' fcversion='655616' target='PIC.16F.16F1937' >
+<document scada='0' projtype='1' schema='103' license='1,82702381,95CJQR' title='' description='' fcversion='720896' target='PIC.16F.16F1937' >
 	<config data='!0,fe2!10,1eff%0,2%3,0%5,1%6,1%7,1%8,1%9,3%b,1%c,0%d,0%10,3%14,3%18,0%19,1%1a,1%1c,1%1d,0' clkspd='19660800' simspd='0' usewdt='0' constif='0' Use3V3='0' />
 	<plugins >
 		<dll_models enabled='1' />
@@ -56,8 +56,8 @@
 	</ghost>
 	<components >
 		<settings autoimg='0' center='1' unitscale='1' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
-		<definition guid='47f6b39b-ead7-40f5-9931-8a79aa54014a' vstate='40' vmin='1' vmaj='2' srcleaf='Modbus.fcfx' visiblename='Modbus Master' description='Modbus component for talking to Modbus compatible hardware via RS232 or RS485. ' category='Comms: System' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' catenable='1' author='Matrix Ltd.' manuname='' manucode='' sysinfo='3150603' keywords='' dynamic='1' scadaCompatible='0' embeddedCompatible='1' showmacros='1' iconpath='..\..\Icons\Components\Modbus.png' />
-		<component class_type='root' codename='ModbusMaster' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+		<definition guid='47f6b39b-ead7-40f5-9931-8a79aa54014a' vstate='40' vmin='1' vmaj='2' srcleaf='Modbus.fcfx' visiblename='Modbus Master' description='Modbus component for talking to Modbus compatible hardware via RS232 or RS485. ' category='Comms: System' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='Matrix Ltd.' manuname='' manucode='' sysinfo='3150603' keywords='' dynamic='1' scadaCompatible='0' embeddedCompatible='1' showmacros='1' iconpath='..\..\Icons\Components\Modbus.png' />
+		<component class_type='root' codename='ModbusMaster' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 			<resources />
 			<properties >
 				<property name='UART Properties' folder='property_1' hidden='0' >
@@ -142,7 +142,14 @@ Range: 0 - 255
     API - Routes the communication data via a data API component on the Panel.' filter='000Nothing
 001COM Port
 002Data API' />
-					<property name='COM Port' target='cal_uart::com_port' typeid='16' hidden='0' locked='0' info='Lists all the current available COM port hardware on your PC.' filter='001COM1 Communications Port' />
+					<property name='COM Port' target='cal_uart::com_port' typeid='16' hidden='0' locked='0' info='Lists all the current available COM port hardware on your PC.' filter='006COM6 Standard Serial over Bluetooth link
+007COM7 Standard Serial over Bluetooth link
+008COM8 Standard Serial over Bluetooth link
+009COM9 Standard Serial over Bluetooth link
+010COM10 Standard Serial over Bluetooth link
+011COM11 Standard Serial over Bluetooth link
+012COM12 Standard Serial over Bluetooth link
+014COM14 Standard Serial over Bluetooth link' />
 					<property name='API' target='cal_uart::Injector' typeid='16' hidden='1' locked='0' info='Selects which API component to route the communication data via.
 Add API components to the panel before they will be available in this list.
 API components are available from the Comms component category.' filter='000' />
@@ -191,10 +198,10 @@ API components are available from the Comms component category.' filter='000' />
 				<value target='cal_uart::APIRTSPin' data='' />
 			</values>
 			<events >
-				<event class='Components' event='Initialise' target='Ev_Initialise' />
 				<event class='Components' event='Renamed' target='Ev_Renamed' />
 				<event class='Compile' event='GetVarSize' target='Ev_GetVarSize' />
 				<event class='Components' event='Property' target='Ev_Property' />
+				<event class='Components' event='Initialise' target='Ev_Initialise' />
 			</events>
 			<apis >
 				<api name='ReadHoldingRegister' alt='ReadHoldingRegister' type='1' proto='1' />
@@ -239,46 +246,46 @@ Returns 0 for success, 1 for CRC fail and 255 for no reply.' statediag='0' >
 						<param name='SlaveID' type='u16' description='The ID of the MODBUS slave' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='RegAddress' type='u16' description='Address: 0=40001, 1=40002, ...' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='RegCount' type='u16' description='Number of consecutive registers to read, starting from RegAddress' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.SetOutputRGB' >
+						<command class_type='sim' title='Simulation' macro='Console.SetOutputRGB' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='0xFF0000' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+						<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='&quot;ReadHoldingRegister -&gt; SlaveID:&quot; + STRING .SlaveID + &quot; FunctionCode:&quot; + STRING 0x03' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+						<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='&quot; Address:&quot; + STRING (.RegAddress + 40001)' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+						<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='&quot; RegisterCount:&quot; + STRING .RegCount' />
 						</command>
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TxStart' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='AddressBytes &gt; 1' swap='0' >
+						<command class_type='call' title='User Macro' macro='TxStart' />
+						<command class_type='decision' title='Decision' exp='AddressBytes &gt; 1' swap='0' >
 							<flowline >
-								<command class_type='call' title='Send Slave ID' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendInt' >
+								<command class_type='call' title='Send Slave ID' macro='SendInt' >
 									<argument exp='.SlaveID' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='call' title='Send Slave ID' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendByte' >
+								<command class_type='call' title='Send Slave ID' macro='SendByte' >
 									<argument exp='.SlaveID' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='call' title='Read Holding Register' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendByte' >
+						<command class_type='call' title='Read Holding Register' macro='SendByte' >
 							<argument exp='0x03' />
 						</command>
-						<command class_type='call' title='Data address of first register' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendInt' >
+						<command class_type='call' title='Data address of first register' macro='SendInt' >
 							<argument exp='.RegAddress' />
 						</command>
-						<command class_type='call' title='Number of registers to read' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendInt' >
+						<command class_type='call' title='Number of registers to read' macro='SendInt' >
 							<argument exp='.RegCount' />
 						</command>
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TxEnd' />
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetResponse' >
+						<command class_type='call' title='User Macro' macro='TxEnd' />
+						<command class_type='call' title='Call Macro' macro='GetResponse' >
 							<return exp='.Return' />
 							<argument exp='.RegCount * 2' />
 						</command>
@@ -290,13 +297,13 @@ Returns 0 for success, 1 for CRC fail and 255 for no reply.' statediag='0' >
 						<local name='TempStr' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
 						</local>
-						<command class_type='comment' title='' comment='Setup Modbus Console Tab' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.AddText' >
+						<command class_type='comment' title='' comment='Setup Modbus Console Tab' textarea='12,0,12,0' />
+						<command class_type='sim' title='Simulation' macro='Console.AddText' >
 							<return exp='ConsoleHandle' />
 							<argument exp='&quot;Modbus Data&quot;' />
 							<argument exp='0' />
 						</command>
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_Property' />
+						<command class_type='call' title='Call Macro' macro='Ev_Property' />
 					</flowline>
 				</macro>
 				<macro >
@@ -307,58 +314,58 @@ Returns 0 for success, 1 for CRC fail and 255 for no reply.' statediag='0' >
 						<param name='CoilAddress' type='u16' description='Coil Address: 0=Coil1, 1=Coil2, 2=Coil3, ...' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='CoilCount' type='u16' description='Number of consecutive coils to try and read' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='ByteCount' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Count is a multiple of 8' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='(.CoilCount &amp; 0x07) = 0' swap='0' >
+						<command class_type='decision' title='Count is a multiple of 8' exp='(.CoilCount &amp; 0x07) = 0' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.ByteCount = .CoilCount &gt;&gt; 3' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.ByteCount = (.CoilCount &gt;&gt; 3) + 1' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.SetOutputRGB' >
+						<command class_type='sim' title='Simulation' macro='Console.SetOutputRGB' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='0xFF0000' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+						<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='&quot;ReadCoil -&gt; SlaveID:&quot; + STRING .SlaveID + &quot; FunctionCode:&quot; + STRING 0x01' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+						<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='&quot; Address:&quot; + STRING .CoilAddress' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+						<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='&quot; CoilCount:&quot; + STRING .CoilCount' />
 						</command>
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TxStart' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='AddressBytes &gt; 1' swap='0' >
+						<command class_type='call' title='User Macro' macro='TxStart' />
+						<command class_type='decision' title='Decision' exp='AddressBytes &gt; 1' swap='0' >
 							<flowline >
-								<command class_type='call' title='Send Slave ID' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendInt' >
+								<command class_type='call' title='Send Slave ID' macro='SendInt' >
 									<argument exp='.SlaveID' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='call' title='Send Slave ID' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendByte' >
+								<command class_type='call' title='Send Slave ID' macro='SendByte' >
 									<argument exp='.SlaveID' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='call' title='Read Coil Status' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendByte' >
+						<command class_type='call' title='Read Coil Status' macro='SendByte' >
 							<argument exp='0x01' />
 						</command>
-						<command class_type='call' title='Data address of first coil' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendInt' >
+						<command class_type='call' title='Data address of first coil' macro='SendInt' >
 							<argument exp='.CoilAddress' />
 						</command>
-						<command class_type='call' title='Number of coils to read' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendInt' >
+						<command class_type='call' title='Number of coils to read' macro='SendInt' >
 							<argument exp='.CoilCount' />
 						</command>
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TxEnd' />
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetResponse' >
+						<command class_type='call' title='User Macro' macro='TxEnd' />
+						<command class_type='call' title='Call Macro' macro='GetResponse' >
 							<return exp='.Return' />
 							<argument exp='.ByteCount' />
 						</command>
@@ -371,59 +378,59 @@ Returns 0 for success, 1 for CRC fail and 255 for no reply.' statediag='0' >
 						<param name='SlaveID' type='u16' description='The ID of the MODBUS slave' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='CoilAddress' type='u16' description='Coil Address: 0=Coil1, 1=Coil2, 2=Coil3, ...' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='CoilState' type='u8' description='0=Off, 1=On' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.SetOutputRGB' >
+						<command class_type='sim' title='Simulation' macro='Console.SetOutputRGB' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='0xFF0000' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+						<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='&quot;SetCoil -&gt; SlaveID:&quot; + STRING .SlaveID + &quot; FunctionCode:&quot; + STRING 0x05' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+						<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='&quot; Address:&quot; + STRING .CoilAddress' />
 						</command>
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TxStart' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='AddressBytes &gt; 1' swap='0' >
+						<command class_type='call' title='User Macro' macro='TxStart' />
+						<command class_type='decision' title='Decision' exp='AddressBytes &gt; 1' swap='0' >
 							<flowline >
-								<command class_type='call' title='Send Slave ID' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendInt' >
+								<command class_type='call' title='Send Slave ID' macro='SendInt' >
 									<argument exp='.SlaveID' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='call' title='Send Slave ID' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendByte' >
+								<command class_type='call' title='Send Slave ID' macro='SendByte' >
 									<argument exp='.SlaveID' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='call' title='Force Single Coil' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendByte' >
+						<command class_type='call' title='Force Single Coil' macro='SendByte' >
 							<argument exp='0x05' />
 						</command>
-						<command class_type='call' title='Data address of first coil' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendInt' >
+						<command class_type='call' title='Data address of first coil' macro='SendInt' >
 							<argument exp='.CoilAddress' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.CoilState' swap='0' >
+						<command class_type='decision' title='Decision' exp='.CoilState' swap='0' >
 							<flowline >
-								<command class_type='call' title='On = 0xFF00' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendInt' >
+								<command class_type='call' title='On = 0xFF00' macro='SendInt' >
 									<argument exp='0xFF00' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+								<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 									<argument exp='ConsoleHandle' />
 									<argument exp='&quot; State:On&quot;' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='call' title='Off = 0x0000' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendInt' >
+								<command class_type='call' title='Off = 0x0000' macro='SendInt' >
 									<argument exp='0x0000' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+								<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 									<argument exp='ConsoleHandle' />
 									<argument exp='&quot; State:Off&quot;' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TxEnd' />
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetResponse' >
+						<command class_type='call' title='User Macro' macro='TxEnd' />
+						<command class_type='call' title='Call Macro' macro='GetResponse' >
 							<return exp='.Return' />
 							<argument exp='3' />
 						</command>
@@ -444,176 +451,177 @@ Return value indicates validity of incoming CRC. 0 = OK, 1 = CRC fail, 255 = No 
 						<local name='Str' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='2' />
 						</local>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+						<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='&quot;\n  &quot;' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.SetOutputRGB' >
+						<command class_type='sim' title='Simulation' macro='Console.SetOutputRGB' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='0xFF' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+						<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='&quot;Reply -&gt; &quot;' />
 						</command>
-						<command class_type='calculation' title='Make room for Slave Address and Command Code bytes' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Make room for Slave Address and Command Code bytes' >
 							<exp exp='.NumBytes = .NumBytes + AddressBytes + 1' />
 						</command>
-						<command class_type='decision' title='If ASCII Mode' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='FrameTypeVar' swap='0' >
+						<command class_type='decision' title='If ASCII Mode' exp='FrameTypeVar' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Make room for additional RX bytes, :, Sum, CR, LF' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Make room for additional RX bytes, :, Sum, CR, LF' >
 									<exp exp='.NumBytes = (.NumBytes * 2) + 7' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='calculation' title='Make room for CRC bytes' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Make room for CRC bytes' >
 									<exp exp='.NumBytes = .NumBytes + AddressBytes + 2' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Check we have room in the RX buffer' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.NumBytes &gt; ReceiveBufferSize' swap='0' >
+						<command class_type='decision' title='Check we have room in the RX buffer' exp='.NumBytes &gt; ReceiveBufferSize' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.NumBytes = ReceiveBufferSize' />
 								</command>
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='BusType = 1' swap='0' >
+						<command class_type='decision' title='Decision' exp='BusType = 1' swap='0' >
 							<flowline >
-								<command class_type='delay' title='Delay to ensure last byte is sent before we switch the R/W state' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='BaudByteDelay' type='0' />
-								<command class_type='delay' title='Delay to ensure last byte is sent before we switch the R/W state' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='BaudByteDelay' type='0' />
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='UARTIdx = 1' swap='0' >
+								<command class_type='delay' title='Delay to ensure last byte is sent before we switch the R/W state' exp='BaudByteDelay' type='0' />
+								<command class_type='delay' title='Delay to ensure last byte is sent before we switch the R/W state' exp='BaudByteDelay' type='0' />
+								<command class_type='decision' title='Decision' exp='UARTIdx = 1' swap='0' >
 									<flowline >
 										<command class_type='native' title='C Code' ccode='#ifdef MX_CAL_PIC16
 while (U1STAbits.UTXBF != 0);
 while (U1STAbits.TRMT != 1);
-#endif' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+#endif' language='C' />
 										<command class_type='native' title='C Code' ccode='#ifdef MX_CAL_PIC32
 while (U1STAbits.UTXBF != 0);
 while (U1STAbits.TRMT != 1);
-#endif' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+#endif' language='C' />
 										<command class_type='native' title='C Code' ccode='#ifdef MX_CAL_ESP
 uart_wait_tx_done(UART_NUM_0, 1000);
-#endif' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+#endif' language='C' />
 									</flowline>
 									<flowline />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='UARTIdx = 2' swap='0' >
+								<command class_type='decision' title='Decision' exp='UARTIdx = 2' swap='0' >
 									<flowline >
 										<command class_type='native' title='C Code' ccode='#ifdef MX_CAL_PIC16
 while (U2STAbits.UTXBF != 0);
 while (U2STAbits.TRMT != 1);
-#endif' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+#endif' language='C' />
 										<command class_type='native' title='C Code' ccode='#ifdef MX_CAL_PIC32
 while (U2STAbits.UTXBF != 0);
 while (U2STAbits.TRMT != 1);
-#endif' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+#endif' language='C' />
 										<command class_type='native' title='C Code' ccode='#ifdef MX_CAL_ESP
 uart_wait_tx_done(UART_NUM_1, 1000);
-#endif' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+#endif' language='C' />
 									</flowline>
 									<flowline />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='UARTIdx = 3' swap='0' >
+								<command class_type='decision' title='Decision' exp='UARTIdx = 3' swap='0' >
 									<flowline >
 										<command class_type='native' title='C Code' ccode='#ifdef MX_CAL_PIC16
 while (U3STAbits.UTXBF != 0);
 while (U3STAbits.TRMT != 1);
-#endif' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+#endif' language='C' />
 										<command class_type='native' title='C Code' ccode='#ifdef MX_CAL_PIC32
 while (U3STAbits.UTXBF != 0);
 while (U3STAbits.TRMT != 1);
-#endif' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+#endif' language='C' />
 										<command class_type='native' title='C Code' ccode='#ifdef MX_CAL_ESP
 uart_wait_tx_done(UART_NUM_2, 1000);
-#endif' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+#endif' language='C' />
 									</flowline>
 									<flowline />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='UARTIdx = 4' swap='0' >
+								<command class_type='decision' title='Decision' exp='UARTIdx = 4' swap='0' >
 									<flowline >
 										<command class_type='native' title='C Code' ccode='#ifdef MX_CAL_PIC16
 while (U4STAbits.UTXBF != 0);
 while (U4STAbits.TRMT != 1);
-#endif' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+#endif' language='C' />
 										<command class_type='native' title='C Code' ccode='#ifdef MX_CAL_PIC32
 while (U4STAbits.UTXBF != 0);
 while (U4STAbits.TRMT != 1);
-#endif' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+#endif' language='C' />
 									</flowline>
 									<flowline />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='UARTIdx = 5' swap='0' >
+								<command class_type='decision' title='Decision' exp='UARTIdx = 5' swap='0' >
 									<flowline >
 										<command class_type='native' title='C Code' ccode='#ifdef MX_CAL_PIC32
 while (U5STAbits.UTXBF != 0);
 while (U5STAbits.TRMT != 1);
-#endif' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+#endif' language='C' />
 									</flowline>
 									<flowline />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='UARTIdx = 6' swap='0' >
+								<command class_type='decision' title='Decision' exp='UARTIdx = 6' swap='0' >
 									<flowline >
 										<command class_type='native' title='C Code' ccode='#ifdef MX_CAL_PIC32
 while (U6STAbits.UTXBF != 0);
 while (U6STAbits.TRMT != 1);
-#endif' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+#endif' language='C' />
 									</flowline>
 									<flowline />
 								</command>
-								<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='10' type='0' />
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='ReadDDRState = 1' swap='0' >
+								<command class_type='delay' title='Delay' exp='10' type='0' />
+								<command class_type='decision' title='Decision' exp='ReadDDRState = 1' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Read DDR Mode' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Read DDR Mode' >
 											<exp exp='DDRP = 1' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='calculation' title='Read DDR Mode' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Read DDR Mode' >
 											<exp exp='DDRP = 0' />
 										</command>
 									</flowline>
 								</command>
+								<command class_type='delay' title='Allow time for driver to switch' exp='20' type='0' />
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='calculation' title='No Data Received Yet' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='No Data Received Yet' >
 							<exp exp='ResponseBuffer[0] = 0' />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.TCnt = 0' />
 						</command>
-						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.Index &lt; .NumBytes' >
+						<command class_type='loop' title='Loop' type='0' exp='.Index &lt; .NumBytes' >
 							<flowline >
-								<command class_type='call' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart' macro='Receive' >
+								<command class_type='call' title='Call Component Macro' component='cal_uart' macro='Receive' >
 									<return exp='.in' />
 									<argument exp='RXTOUT' />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.in &lt; 256' swap='0' >
+								<command class_type='decision' title='Decision' exp='.in &lt; 256' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='LibraryComponent1' macro='FlashRx' />
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='sim' title='Component Macro' component='LibraryComponent1' macro='FlashRx' />
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.TCnt = 0' />
 										</command>
-										<command class_type='calculation' title='Increment data received counter' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Increment data received counter' >
 											<exp exp='ResponseBuffer[0] = ResponseBuffer[0] + 1' />
 										</command>
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Index = .Index + 1' />
 										</command>
-										<command class_type='calculation' title='Add received data to buffer' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Add received data to buffer' >
 											<exp exp='ResponseBuffer[.Index] = .in' />
 										</command>
-										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='FrameTypeVar' swap='0' >
+										<command class_type='decision' title='Decision' exp='FrameTypeVar' swap='0' >
 											<flowline >
-												<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.in &gt; 13' swap='0' >
+												<command class_type='decision' title='Decision' exp='.in &gt; 13' swap='0' >
 													<flowline >
-														<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+														<command class_type='calculation' title='Calculation' >
 															<exp exp='.Str[0] = .in' />
 															<exp exp='.Str[1] = 0' />
 														</command>
-														<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+														<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 															<argument exp='ConsoleHandle' />
 															<argument exp='.str' />
 														</command>
@@ -622,7 +630,7 @@ while (U6STAbits.TRMT != 1);
 												</command>
 											</flowline>
 											<flowline >
-												<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+												<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 													<argument exp='ConsoleHandle' />
 													<argument exp='STRING .in + &quot;,&quot;' />
 												</command>
@@ -630,16 +638,16 @@ while (U6STAbits.TRMT != 1);
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+										<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 											<argument exp='ConsoleHandle' />
 											<argument exp='&quot;TOUT&quot;' />
 										</command>
-										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.TCnt = TOUTCNT' swap='0' >
+										<command class_type='decision' title='Decision' exp='.TCnt = TOUTCNT' swap='0' >
 											<flowline >
-												<command class_type='goto' title='Goto Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' labelid='0' labelname='' />
+												<command class_type='goto' title='Goto Connection Point' labelid='0' labelname='' />
 											</flowline>
 											<flowline >
-												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<command class_type='calculation' title='Calculation' >
 													<exp exp='.TCnt = .TCnt + 1' />
 												</command>
 											</flowline>
@@ -648,87 +656,87 @@ while (U6STAbits.TRMT != 1);
 								</command>
 							</flowline>
 						</command>
-						<command class_type='label' title='Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' labelid='0' labelname='A' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='FrameTypeVar' swap='0' >
+						<command class_type='label' title='Connection Point' labelid='0' labelname='A' />
+						<command class_type='decision' title='Decision' exp='FrameTypeVar' swap='0' >
 							<flowline >
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='ResponseBuffer[0] &gt;= 4' swap='0' >
+								<command class_type='decision' title='Decision' exp='ResponseBuffer[0] &gt;= 4' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Remove &apos;:&apos; and Line End from incoming data size' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Remove &apos;:&apos; and Line End from incoming data size' >
 											<exp exp='ResponseBuffer[0] = ResponseBuffer[0] - 2' />
 											<exp exp='ResponseBuffer[0] = (ResponseBuffer[0] / 2) + 1' />
 											<exp exp='' />
 										</command>
-										<command class_type='calculation' title='Skip over &apos;:&apos;' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Skip over &apos;:&apos;' >
 											<exp exp='.Index = 2' />
 											<exp exp='.Index2 = 1' />
 											<exp exp='.Bit = 0' />
 										</command>
-										<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.Index2 &lt; ResponseBuffer[0]' >
+										<command class_type='loop' title='Loop' type='0' exp='.Index2 &lt; ResponseBuffer[0]' >
 											<flowline >
-												<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='ResponseBuffer[.Index] &gt; &apos;9&apos;' swap='0' >
+												<command class_type='decision' title='Decision' exp='ResponseBuffer[.Index] &gt; &apos;9&apos;' swap='0' >
 													<flowline >
-														<command class_type='calculation' title='' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+														<command class_type='calculation' title='' >
 															<exp exp='ResponseBuffer[.Index2] = ResponseBuffer[.Index] - &apos;A&apos;' />
 															<exp exp='ResponseBuffer[.Index2] = ResponseBuffer[.Index2] + 10' />
 														</command>
 													</flowline>
 													<flowline >
-														<command class_type='calculation' title='' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+														<command class_type='calculation' title='' >
 															<exp exp='ResponseBuffer[.Index2] = ResponseBuffer[.Index] - &apos;0&apos;' />
 														</command>
 													</flowline>
 												</command>
-												<command class_type='calculation' title='' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<command class_type='calculation' title='' >
 													<exp exp='ResponseBuffer[.Index2] = ResponseBuffer[.Index2] &lt;&lt; 4' />
 												</command>
-												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<command class_type='calculation' title='Calculation' >
 													<exp exp='.Index = .Index + 1' />
 												</command>
-												<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='ResponseBuffer[.Index] &gt; &apos;9&apos;' swap='0' >
+												<command class_type='decision' title='Decision' exp='ResponseBuffer[.Index] &gt; &apos;9&apos;' swap='0' >
 													<flowline >
-														<command class_type='calculation' title='' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+														<command class_type='calculation' title='' >
 															<exp exp='ResponseBuffer[.Index2] = ResponseBuffer[.Index2] | (ResponseBuffer[.Index] - &apos;A&apos;)' />
 															<exp exp='ResponseBuffer[.Index2] = ResponseBuffer[.Index2] + 10' />
 														</command>
 													</flowline>
 													<flowline >
-														<command class_type='calculation' title='' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+														<command class_type='calculation' title='' >
 															<exp exp='ResponseBuffer[.Index2] = ResponseBuffer[.Index2] | (ResponseBuffer[.Index] - &apos;0&apos;)' />
 														</command>
 													</flowline>
 												</command>
-												<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Index2 &lt; (ResponseBuffer[0] - 1)' swap='0' >
+												<command class_type='decision' title='Decision' exp='.Index2 &lt; (ResponseBuffer[0] - 1)' swap='0' >
 													<flowline >
-														<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+														<command class_type='calculation' title='Calculation' >
 															<exp exp='.Bit = .Bit + ResponseBuffer[.Index2]' />
 														</command>
 													</flowline>
 													<flowline />
 												</command>
-												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<command class_type='calculation' title='Calculation' >
 													<exp exp='.Index = .Index + 1' />
 													<exp exp='.Index2 = .Index2 + 1' />
 												</command>
 											</flowline>
 										</command>
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Bit = (~ .Bit) + 1' />
 										</command>
-										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Bit = ResponseBuffer[.Index2 - 1]' swap='0' >
+										<command class_type='decision' title='Decision' exp='.Bit = ResponseBuffer[.Index2 - 1]' swap='0' >
 											<flowline >
-												<command class_type='calculation' title='CRC Correct' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<command class_type='calculation' title='CRC Correct' >
 													<exp exp='.Return = 0' />
 												</command>
-												<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+												<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 													<argument exp='ConsoleHandle' />
 													<argument exp='&quot; LRC:OK&quot;' />
 												</command>
 											</flowline>
 											<flowline >
-												<command class_type='calculation' title='CRC Fail' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<command class_type='calculation' title='CRC Fail' >
 													<exp exp='.Return = 1' />
 												</command>
-												<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+												<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 													<argument exp='ConsoleHandle' />
 													<argument exp='&quot; LRC:Fail &quot; + NumberToHex$(.Bit) + &quot;:&quot; + NumberToHex$(ResponseBuffer[.Index])' />
 												</command>
@@ -736,10 +744,10 @@ while (U6STAbits.TRMT != 1);
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Return = 255' />
 										</command>
-										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+										<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 											<argument exp='ConsoleHandle' />
 											<argument exp='&quot;Timeout&quot;' />
 										</command>
@@ -747,33 +755,33 @@ while (U6STAbits.TRMT != 1);
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='ResponseBuffer[0] &gt;= 2' swap='0' >
+								<command class_type='decision' title='Decision' exp='ResponseBuffer[0] &gt;= 2' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Remove CRC from incoming data size' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Remove CRC from incoming data size' >
 											<exp exp='ResponseBuffer[0] = ResponseBuffer[0] - 2' />
 										</command>
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Index = 0' />
 										</command>
-										<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.Index &lt; ResponseBuffer[0]' >
+										<command class_type='loop' title='Loop' type='0' exp='.Index &lt; ResponseBuffer[0]' >
 											<flowline >
-												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<command class_type='calculation' title='Calculation' >
 													<exp exp='.Index = .Index + 1' />
 												</command>
-												<command class_type='calculation' title='XOR DataByte with CRC' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<command class_type='calculation' title='XOR DataByte with CRC' >
 													<exp exp='.CRC = .CRC ^ ResponseBuffer[.Index]' />
 												</command>
-												<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='2' exp='8' >
+												<command class_type='loop' title='Loop' type='2' exp='8' >
 													<flowline >
-														<command class_type='calculation' title='Read LS bit' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+														<command class_type='calculation' title='Read LS bit' >
 															<exp exp='.Bit = .CRC &amp; 0x01' />
 														</command>
-														<command class_type='calculation' title='Shift CRC by one place' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+														<command class_type='calculation' title='Shift CRC by one place' >
 															<exp exp='.CRC = .CRC &gt;&gt; 1' />
 														</command>
-														<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Bit' swap='0' >
+														<command class_type='decision' title='Decision' exp='.Bit' swap='0' >
 															<flowline >
-																<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+																<command class_type='calculation' title='Calculation' >
 																	<exp exp='.CRC = .CRC ^ 0xA001' />
 																</command>
 															</flowline>
@@ -783,24 +791,24 @@ while (U6STAbits.TRMT != 1);
 												</command>
 											</flowline>
 										</command>
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.CRCTest = (ResponseBuffer[.Index] &lt;&lt; 8) + ResponseBuffer[.Index + 1]' />
 										</command>
-										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='(.CRCTest &amp; 0xFF) = (.CRC &amp; 0xFF)' swap='0' >
+										<command class_type='decision' title='Decision' exp='(.CRCTest &amp; 0xFF) = (.CRC &amp; 0xFF)' swap='0' >
 											<flowline >
-												<command class_type='calculation' title='CRC Correct' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<command class_type='calculation' title='CRC Correct' >
 													<exp exp='.Return = 0' />
 												</command>
-												<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+												<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 													<argument exp='ConsoleHandle' />
 													<argument exp='&quot; CRC:OK&quot;' />
 												</command>
 											</flowline>
 											<flowline >
-												<command class_type='calculation' title='CRC Fail' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<command class_type='calculation' title='CRC Fail' >
 													<exp exp='.Return = 1' />
 												</command>
-												<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+												<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 													<argument exp='ConsoleHandle' />
 													<argument exp='&quot; CRC:Fail &quot; + NumberToHex$(.CRCTest) + &quot;:&quot; + NumberToHex$(.CRC)' />
 												</command>
@@ -808,10 +816,10 @@ while (U6STAbits.TRMT != 1);
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Return = 255' />
 										</command>
-										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+										<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 											<argument exp='ConsoleHandle' />
 											<argument exp='&quot;Timeout&quot;' />
 										</command>
@@ -819,20 +827,20 @@ while (U6STAbits.TRMT != 1);
 								</command>
 							</flowline>
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+						<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='&quot;\n&quot;' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='BusType = 1' swap='0' >
+						<command class_type='decision' title='Decision' exp='BusType = 1' swap='0' >
 							<flowline >
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='ReadDDRState = 1' swap='0' >
+								<command class_type='decision' title='Decision' exp='ReadDDRState = 1' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Write DDR Mode' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Write DDR Mode' >
 											<exp exp='DDRP = 0' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='calculation' title='Write DDR Mode' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Write DDR Mode' >
 											<exp exp='DDRP = 1' />
 										</command>
 									</flowline>
@@ -840,9 +848,9 @@ while (U6STAbits.TRMT != 1);
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='SilentInterval &gt; 0' swap='0' >
+						<command class_type='decision' title='Decision' exp='SilentInterval &gt; 0' swap='0' >
 							<flowline >
-								<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='SilentInterval' type='1' />
+								<command class_type='delay' title='Delay' exp='SilentInterval' type='1' />
 							</flowline>
 							<flowline />
 						</command>
@@ -860,82 +868,82 @@ Returns 0 for success, 1 for CRC fail and 255 for no reply.' statediag='0' >
 						</param>
 						<local name='ByteCount' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Index' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
-						<command class_type='decision' title='Count is a multiple of 8' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='(.CoilCount &amp; 0x07) = 0' swap='0' >
+						<command class_type='decision' title='Count is a multiple of 8' exp='(.CoilCount &amp; 0x07) = 0' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.ByteCount = .CoilCount &gt;&gt; 3' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.ByteCount = (.CoilCount &gt;&gt; 3) + 1' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.SetOutputRGB' >
+						<command class_type='sim' title='Simulation' macro='Console.SetOutputRGB' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='0xFF0000' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+						<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='&quot;SetCoils -&gt; SlaveID:&quot; + STRING .SlaveID + &quot; FunctionCode:&quot; + STRING 0x0F' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+						<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='&quot; Address:&quot; + STRING .CoilAddress' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+						<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='&quot; CoilCount:&quot; + STRING .CoilCount' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+						<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='&quot; ByteCount:&quot; + STRING .ByteCount' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+						<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='&quot; Data:&quot;' />
 						</command>
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TxStart' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='AddressBytes &gt; 1' swap='0' >
+						<command class_type='call' title='User Macro' macro='TxStart' />
+						<command class_type='decision' title='Decision' exp='AddressBytes &gt; 1' swap='0' >
 							<flowline >
-								<command class_type='call' title='Send Slave ID' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendInt' >
+								<command class_type='call' title='Send Slave ID' macro='SendInt' >
 									<argument exp='.SlaveID' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='call' title='Send Slave ID' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendByte' >
+								<command class_type='call' title='Send Slave ID' macro='SendByte' >
 									<argument exp='.SlaveID' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='call' title='Force Multiple Coils' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendByte' >
+						<command class_type='call' title='Force Multiple Coils' macro='SendByte' >
 							<argument exp='0x0F' />
 						</command>
-						<command class_type='call' title='Data address of first coil' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendInt' >
+						<command class_type='call' title='Data address of first coil' macro='SendInt' >
 							<argument exp='.CoilAddress' />
 						</command>
-						<command class_type='call' title='Number of Coils' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendInt' >
+						<command class_type='call' title='Number of Coils' macro='SendInt' >
 							<argument exp='.CoilCount' />
 						</command>
-						<command class_type='call' title='Send Byte Count' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendByte' >
+						<command class_type='call' title='Send Byte Count' macro='SendByte' >
 							<argument exp='.ByteCount' />
 						</command>
-						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.Index &lt; .ByteCount' >
+						<command class_type='loop' title='Loop' type='0' exp='.Index &lt; .ByteCount' >
 							<flowline >
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+								<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 									<argument exp='ConsoleHandle' />
 									<argument exp='NumberToHex$(.CoilData[.Index])' />
 								</command>
-								<command class_type='call' title='Send Byte Count' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendByte' >
+								<command class_type='call' title='Send Byte Count' macro='SendByte' >
 									<argument exp='.CoilData[.Index]' />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Index = .Index + 1' />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Index &lt; .ByteCount' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Index &lt; .ByteCount' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+										<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 											<argument exp='ConsoleHandle' />
 											<argument exp='&quot;,&quot;' />
 										</command>
@@ -944,8 +952,8 @@ Returns 0 for success, 1 for CRC fail and 255 for no reply.' statediag='0' >
 								</command>
 							</flowline>
 						</command>
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TxEnd' />
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetResponse' >
+						<command class_type='call' title='User Macro' macro='TxEnd' />
+						<command class_type='call' title='Call Macro' macro='GetResponse' >
 							<return exp='.Return' />
 							<argument exp='3' />
 						</command>
@@ -956,7 +964,7 @@ Returns 0 for success, 1 for CRC fail and 255 for no reply.' statediag='0' >
 ' statediag='0' >
 						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Index' type='u8' description='0=NumBytes, 1=SlaveAddress, 2=FunctionCode/ExceptionCode, 3=DataBytes, 4=data0, 5=data1, ..' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Return = ResponseBuffer[.Index]' />
 						</command>
 					</flowline>
@@ -966,40 +974,40 @@ Returns 0 for success, 1 for CRC fail and 255 for no reply.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<param name='DataByte' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Bit' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='LibraryComponent1' macro='FlashTx' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='FrameTypeVar = 1' swap='0' >
+						<command class_type='sim' title='Component Macro' component='LibraryComponent1' macro='FlashTx' />
+						<command class_type='decision' title='Decision' exp='FrameTypeVar = 1' swap='0' >
 							<flowline >
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendValueAsASCII' >
+								<command class_type='call' title='Call Macro' macro='SendValueAsASCII' >
 									<argument exp='.DataByte' />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='Sum = Sum + .DataByte' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='calculation' title='XOR DataByte with CRC' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='XOR DataByte with CRC' >
 									<exp exp='CRC = CRC XOR .DataByte' />
 								</command>
-								<command class_type='call' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart' macro='Send' >
+								<command class_type='call' title='Call Component Macro' component='cal_uart' macro='Send' >
 									<argument exp='.DataByte' />
 								</command>
-								<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='2' exp='8' >
+								<command class_type='loop' title='Loop' type='2' exp='8' >
 									<flowline >
-										<command class_type='calculation' title='Read LS bit' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Read LS bit' >
 											<exp exp='.Bit = CRC &amp; 0x01' />
 										</command>
-										<command class_type='calculation' title='Shift CRC by one place' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Shift CRC by one place' >
 											<exp exp='CRC = CRC &gt;&gt; 1' />
 										</command>
-										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Bit' swap='0' >
+										<command class_type='decision' title='Decision' exp='.Bit' swap='0' >
 											<flowline >
-												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<command class_type='calculation' title='Calculation' >
 													<exp exp='CRC = CRC &amp; 0x7FFF' />
 													<exp exp='CRC = CRC XOR 0xA001' />
 												</command>
 											</flowline>
 											<flowline >
-												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<command class_type='calculation' title='Calculation' >
 													<exp exp='CRC = CRC &amp; 0x7FFF' />
 												</command>
 											</flowline>
@@ -1014,25 +1022,25 @@ Returns 0 for success, 1 for CRC fail and 255 for no reply.' statediag='0' >
 					<flowline name='TxStart' description='' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<local name='in' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
-						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.in &lt; 256' >
+						<command class_type='loop' title='Loop' type='0' exp='.in &lt; 256' >
 							<flowline >
-								<command class_type='call' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart' macro='Receive' >
+								<command class_type='call' title='Call Component Macro' component='cal_uart' macro='Receive' >
 									<return exp='.in' />
 									<argument exp='0' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='FrameTypeVar = 1' swap='0' >
+						<command class_type='decision' title='Decision' exp='FrameTypeVar = 1' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='Sum = 0' />
 								</command>
-								<command class_type='call' title='Send ASCII Start' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart' macro='Send' >
+								<command class_type='call' title='Send ASCII Start' component='cal_uart' macro='Send' >
 									<argument exp='&apos;:&apos;' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='CRC = 0xFFFF' />
 								</command>
 							</flowline>
@@ -1043,10 +1051,10 @@ Returns 0 for success, 1 for CRC fail and 255 for no reply.' statediag='0' >
 					<flowline name='SendInt' description='' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<param name='Data' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='call' title='Most Significant Byte' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendByte' >
+						<command class_type='call' title='Most Significant Byte' macro='SendByte' >
 							<argument exp='.Data &gt;&gt; 8' />
 						</command>
-						<command class_type='call' title='Least Significant Byte' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendByte' >
+						<command class_type='call' title='Least Significant Byte' macro='SendByte' >
 							<argument exp='.Data' />
 						</command>
 					</flowline>
@@ -1058,15 +1066,15 @@ Returns 0 for success, 1 for CRC fail and 255 for no reply.' statediag='0' >
 							<array size='20' />
 						</local>
 						<local name='Bval' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart' macro='GetConsoleHandle' >
+						<command class_type='sim' title='Component Macro' component='cal_uart' macro='GetConsoleHandle' >
 							<return exp='ConsoleHandle' />
 						</command>
-						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='LibraryComponent1' macro='SetConsoleHandle' >
+						<command class_type='sim' title='Component Macro' component='LibraryComponent1' macro='SetConsoleHandle' >
 							<argument exp='ConsoleHandle' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='AddressBytes &lt; 1' swap='0' >
+						<command class_type='decision' title='Decision' exp='AddressBytes &lt; 1' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Call Macro' macro='Component.Property.SetValue' >
 									<argument exp='this' />
 									<argument exp='&quot;AddressBytes&quot;' />
 									<argument exp='1' />
@@ -1074,9 +1082,9 @@ Returns 0 for success, 1 for CRC fail and 255 for no reply.' statediag='0' >
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='AddressBytes &gt; 2' swap='0' >
+						<command class_type='decision' title='Decision' exp='AddressBytes &gt; 2' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Call Macro' macro='Component.Property.SetValue' >
 									<argument exp='this' />
 									<argument exp='&quot;AddressBytes&quot;' />
 									<argument exp='2' />
@@ -1084,53 +1092,53 @@ Returns 0 for success, 1 for CRC fail and 255 for no reply.' statediag='0' >
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='BusType = 1' swap='0' >
+						<command class_type='decision' title='Decision' exp='BusType = 1' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 									<argument exp='this' />
 									<argument exp='&quot;DDRP&quot;' />
 									<argument exp='1' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 									<argument exp='this' />
 									<argument exp='&quot;ReadDDRState&quot;' />
 									<argument exp='1' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 									<argument exp='this' />
 									<argument exp='&quot;DDRP&quot;' />
 									<argument exp='0' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 									<argument exp='this' />
 									<argument exp='&quot;ReadDDRState&quot;' />
 									<argument exp='0' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='comment' title='' comment='Work out delay for a byte at current BAUD' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetValue' >
+						<command class_type='comment' title='' comment='Work out delay for a byte at current BAUD' textarea='12,0,12,0' />
+						<command class_type='sim' title='Simulation' macro='Component.Property.GetValue' >
 							<return exp='.Temp_Str' />
 							<argument exp='cal_uart' />
 							<argument exp='&quot;BAUD&quot;' />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Bval = StringToInt$ (.Temp_Str)' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 							<argument exp='this' />
 							<argument exp='&quot;BaudByteDelay&quot;' />
 							<argument exp='(1000000 / .BVal) * 10' />
 						</command>
-						<command class_type='comment' title='' comment='Record current UART channel' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetValue' >
+						<command class_type='comment' title='' comment='Record current UART channel' textarea='12,0,12,0' />
+						<command class_type='sim' title='Simulation' macro='Component.Property.GetValue' >
 							<return exp='.Temp_Str' />
 							<argument exp='cal_uart' />
 							<argument exp='&quot;CHANNEL&quot;' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 							<argument exp='this' />
 							<argument exp='&quot;UARTidx&quot;' />
 							<argument exp='.Temp_Str' />
@@ -1141,7 +1149,7 @@ Returns 0 for success, 1 for CRC fail and 255 for no reply.' statediag='0' >
 					<flowline name='ChangeFrameType' description='Default frame type is the type set in the component properties.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<param name='Type' type='u8' description='0 = Modbus RTU / 1 = Modbus ASCII' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='FrameTypeVar = .Type' />
 						</command>
 					</flowline>
@@ -1149,33 +1157,33 @@ Returns 0 for success, 1 for CRC fail and 255 for no reply.' statediag='0' >
 				<macro >
 					<flowline name='TxEnd' description='' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='FrameTypeVar = 1' swap='0' >
+						<command class_type='decision' title='Decision' exp='FrameTypeVar = 1' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Convert Sum to Two&apos;s compliment' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Convert Sum to Two&apos;s compliment' >
 									<exp exp='Sum = (~Sum) + 1' />
 								</command>
-								<command class_type='call' title='Send LRC' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendValueAsASCII' >
+								<command class_type='call' title='Send LRC' macro='SendValueAsASCII' >
 									<argument exp='Sum' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+								<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 									<argument exp='ConsoleHandle' />
 									<argument exp='&quot; LRC:&quot; + STRING Sum' />
 								</command>
-								<command class_type='call' title='Send LRC' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart' macro='Send' >
+								<command class_type='call' title='Send LRC' component='cal_uart' macro='Send' >
 									<argument exp='&apos;\r&apos;' />
 								</command>
-								<command class_type='call' title='Send LRC' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart' macro='Send' >
+								<command class_type='call' title='Send LRC' component='cal_uart' macro='Send' >
 									<argument exp='&apos;\n&apos;' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='call' title='Send CRC' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart' macro='Send' >
+								<command class_type='call' title='Send CRC' component='cal_uart' macro='Send' >
 									<argument exp='CRC &amp; 0xFF' />
 								</command>
-								<command class_type='call' title='Send CRC' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart' macro='Send' >
+								<command class_type='call' title='Send CRC' component='cal_uart' macro='Send' >
 									<argument exp='CRC &gt;&gt; 8' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+								<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 									<argument exp='ConsoleHandle' />
 									<argument exp='&quot; CRC:&quot; + NumberToHex$(CRC)' />
 								</command>
@@ -1189,11 +1197,11 @@ Returns 0 for success, 1 for CRC fail and 255 for no reply.' statediag='0' >
 						<local name='Name' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
 						</local>
-						<command class_type='sim' title='' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.GetName' >
+						<command class_type='sim' title='' macro='Tree.GetName' >
 							<return exp='.Name' />
 							<argument exp='this' />
 						</command>
-						<command class_type='sim' title='' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='' macro='Component.Property.SetValue' >
 							<argument exp='LibraryComponent1' />
 							<argument exp='&quot;Name&quot;' />
 							<argument exp='.Name' />
@@ -1205,42 +1213,42 @@ Returns 0 for success, 1 for CRC fail and 255 for no reply.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<param name='Value' type='u8' description='Value to break up into ASCII characters' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Character' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Character = (.Value &amp; 0xF0) &gt;&gt; 4' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Character &gt; 9' swap='0' >
+						<command class_type='decision' title='Decision' exp='.Character &gt; 9' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Character = .Character - 10' />
 									<exp exp='.Character = .Character + &apos;A&apos;' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Character = .Character + &apos;0&apos;' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='call' title='Send MS bits' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart' macro='Send' >
+						<command class_type='call' title='Send MS bits' component='cal_uart' macro='Send' >
 							<argument exp='.Character' />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Character = .Value &amp; 0x0F' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Character &gt; 9' swap='0' >
+						<command class_type='decision' title='Decision' exp='.Character &gt; 9' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Character = .Character - 10' />
 									<exp exp='.Character = .Character + &apos;A&apos;' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Character = .Character + &apos;0&apos;' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='call' title='Send LS bits' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart' macro='Send' >
+						<command class_type='call' title='Send LS bits' component='cal_uart' macro='Send' >
 							<argument exp='.Character' />
 						</command>
 					</flowline>
@@ -1253,12 +1261,12 @@ Returns 0 for success, 1 for CRC fail and 255 for no reply.' statediag='0' >
 						</param>
 						<param name='Elements' type='u32*' description='The number of elements in the array' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='comp' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.comp = Compare$ (.VarName,&quot;ResponseBuffer&quot;,1)' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.comp = 0' swap='0' >
+						<command class_type='decision' title='Decision' exp='.comp = 0' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Elements = ReceiveBufferSize' />
 								</command>
 							</flowline>
@@ -1272,7 +1280,7 @@ The Index parametes specifies the byte index of the value to read back.
 ' statediag='0' >
 						<return name='Return' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Index' type='u8' description='4=data0, 6=data1, 8=data2, ..' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Return = ResponseBuffer[.Index] &lt;&lt; 8' />
 							<exp exp='.Return = .Return | ResponseBuffer[.Index + 1]' />
 						</command>
@@ -1290,69 +1298,69 @@ Returns 0 for success, 1 for CRC fail and 255 for no reply.' statediag='0' >
 						</param>
 						<local name='ByteCount' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Index' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.SetOutputRGB' >
+						<command class_type='sim' title='Simulation' macro='Console.SetOutputRGB' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='0xFF0000' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+						<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='&quot;SetHoldingRegisters -&gt; SlaveID:&quot; + STRING .SlaveID + &quot; FunctionCode:&quot; + STRING 0x10' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+						<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='&quot; RegCount:&quot; + STRING .RegCount' />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.ByteCount = .RegCount * 2' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+						<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='&quot; ByteCount:&quot; + STRING .ByteCount' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+						<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='&quot; Data:&quot;' />
 						</command>
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TxStart' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='AddressBytes &gt; 1' swap='0' >
+						<command class_type='call' title='User Macro' macro='TxStart' />
+						<command class_type='decision' title='Decision' exp='AddressBytes &gt; 1' swap='0' >
 							<flowline >
-								<command class_type='call' title='Send Slave ID' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendInt' >
+								<command class_type='call' title='Send Slave ID' macro='SendInt' >
 									<argument exp='.SlaveID' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='call' title='Send Slave ID' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendByte' >
+								<command class_type='call' title='Send Slave ID' macro='SendByte' >
 									<argument exp='.SlaveID' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='call' title='Preset Multiple Registers' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendByte' >
+						<command class_type='call' title='Preset Multiple Registers' macro='SendByte' >
 							<argument exp='0x10' />
 						</command>
-						<command class_type='call' title='Register addres' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendInt' >
+						<command class_type='call' title='Register addres' macro='SendInt' >
 							<argument exp='.RegAddress' />
 						</command>
-						<command class_type='call' title='Register Count' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendInt' >
+						<command class_type='call' title='Register Count' macro='SendInt' >
 							<argument exp='.RegCount' />
 						</command>
-						<command class_type='call' title='Byte Count' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendByte' >
+						<command class_type='call' title='Byte Count' macro='SendByte' >
 							<argument exp='.ByteCount' />
 						</command>
-						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.Index &lt; .RegCount' >
+						<command class_type='loop' title='Loop' type='0' exp='.Index &lt; .RegCount' >
 							<flowline >
-								<command class_type='call' title='Send Data' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendInt' >
+								<command class_type='call' title='Send Data' macro='SendInt' >
 									<argument exp='.RegValue[.Index]' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+								<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 									<argument exp='ConsoleHandle' />
 									<argument exp='STRING .RegValue[.Index]' />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Index = .Index + 1' />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Index &lt; .RegCount' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Index &lt; .RegCount' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+										<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 											<argument exp='ConsoleHandle' />
 											<argument exp='&quot;,&quot;' />
 										</command>
@@ -1361,8 +1369,8 @@ Returns 0 for success, 1 for CRC fail and 255 for no reply.' statediag='0' >
 								</command>
 							</flowline>
 						</command>
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TxEnd' />
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetResponse' >
+						<command class_type='call' title='User Macro' macro='TxEnd' />
+						<command class_type='call' title='Call Macro' macro='GetResponse' >
 							<return exp='.Return' />
 							<argument exp='3' />
 						</command>
@@ -1375,46 +1383,46 @@ Returns 0 for success, 1 for CRC fail and 255 for no reply.' statediag='0' >
 						<param name='SlaveID' type='u16' description='The ID of the MODBUS slave' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='RegAddress' type='u16' description='Input Address: 0=10001, 1=10002, 2=10003, ...' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='RegCount' type='u16' description='Number of consecutive inputs to read, starting from RegAddress' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.SetOutputRGB' >
+						<command class_type='sim' title='Simulation' macro='Console.SetOutputRGB' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='0xFF0000' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+						<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='&quot;ReadAnalogInput -&gt; SlaveID: &quot; + STRING .SlaveID + &quot; FunctionCode:&quot; + STRING 0x04' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+						<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='&quot; Address:&quot; + STRING (.RegAddress + 30001)' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+						<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='&quot; RegCount:&quot; + STRING .RegCount' />
 						</command>
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TxStart' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='AddressBytes &gt; 1' swap='0' >
+						<command class_type='call' title='User Macro' macro='TxStart' />
+						<command class_type='decision' title='Decision' exp='AddressBytes &gt; 1' swap='0' >
 							<flowline >
-								<command class_type='call' title='Send Slave ID' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendInt' >
+								<command class_type='call' title='Send Slave ID' macro='SendInt' >
 									<argument exp='.SlaveID' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='call' title='Send Slave ID' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendByte' >
+								<command class_type='call' title='Send Slave ID' macro='SendByte' >
 									<argument exp='.SlaveID' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='call' title='Read Input Register' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendByte' >
+						<command class_type='call' title='Read Input Register' macro='SendByte' >
 							<argument exp='0x04' />
 						</command>
-						<command class_type='call' title='Data address of first register' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendInt' >
+						<command class_type='call' title='Data address of first register' macro='SendInt' >
 							<argument exp='.RegAddress' />
 						</command>
-						<command class_type='call' title='Number of registers to read' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendInt' >
+						<command class_type='call' title='Number of registers to read' macro='SendInt' >
 							<argument exp='.RegCount' />
 						</command>
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TxEnd' />
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetResponse' >
+						<command class_type='call' title='User Macro' macro='TxEnd' />
+						<command class_type='call' title='Call Macro' macro='GetResponse' >
 							<return exp='.Return' />
 							<argument exp='(.RegCount &lt;&lt; 1)' />
 						</command>
@@ -1427,46 +1435,46 @@ Returns 0 for success, 1 for CRC fail and 255 for no reply.' statediag='0' >
 						<param name='SlaveID' type='u16' description='The ID of the MODBUS slave' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='RegAddress' type='u16' description='Address: 0=40001, 1=40002, ...' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='RegValue' type='u16' description='Value to send to the selected register' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.SetOutputRGB' >
+						<command class_type='sim' title='Simulation' macro='Console.SetOutputRGB' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='0xFF0000' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+						<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='&quot;SetHoldingRegister -&gt; SlaveID:&quot; + STRING .SlaveID + &quot; FunctionCode:&quot; + STRING 0x06' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+						<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='&quot; Address:&quot; + STRING (.RegAddress + 40001)' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+						<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='&quot; Data:&quot; + STRING .RegValue' />
 						</command>
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TxStart' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='AddressBytes &gt; 1' swap='0' >
+						<command class_type='call' title='User Macro' macro='TxStart' />
+						<command class_type='decision' title='Decision' exp='AddressBytes &gt; 1' swap='0' >
 							<flowline >
-								<command class_type='call' title='Send Slave ID' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendInt' >
+								<command class_type='call' title='Send Slave ID' macro='SendInt' >
 									<argument exp='.SlaveID' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='call' title='Send Slave ID' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendByte' >
+								<command class_type='call' title='Send Slave ID' macro='SendByte' >
 									<argument exp='.SlaveID' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='call' title='Preset Single Register' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendByte' >
+						<command class_type='call' title='Preset Single Register' macro='SendByte' >
 							<argument exp='0x06' />
 						</command>
-						<command class_type='call' title='Register addres' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendInt' >
+						<command class_type='call' title='Register addres' macro='SendInt' >
 							<argument exp='.RegAddress' />
 						</command>
-						<command class_type='call' title='Register Value' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendInt' >
+						<command class_type='call' title='Register Value' macro='SendInt' >
 							<argument exp='.RegValue' />
 						</command>
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TxEnd' />
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetResponse' >
+						<command class_type='call' title='User Macro' macro='TxEnd' />
+						<command class_type='call' title='Call Macro' macro='GetResponse' >
 							<return exp='.Return' />
 							<argument exp='3' />
 						</command>
@@ -1478,7 +1486,7 @@ Returns 0 for success, 1 for CRC fail and 255 for no reply.' statediag='0' >
 7 = 38400 / 8 = 57600 / 9 = 115200' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<param name='Baud' type='u8' description='The new baud rate (0=1200, 9=115200)' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='call' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart' macro='UpdateBaud' >
+						<command class_type='call' title='Call Component Macro' component='cal_uart' macro='UpdateBaud' >
 							<argument exp='.Baud' />
 						</command>
 					</flowline>
@@ -1491,58 +1499,58 @@ Returns 0 for success, 1 for CRC fail and 255 for no reply.' statediag='0' >
 						<param name='DataAddress' type='u16' description='Input Address: 0=10001, 1=10002, 2=10003, ...' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='DataCount' type='u16' description='Number of consecutive inputs to read, starting from RegAddress' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='ByteCount' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Count is a multiple of 8' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='(.DataCount &amp; 0x07) = 0' swap='0' >
+						<command class_type='decision' title='Count is a multiple of 8' exp='(.DataCount &amp; 0x07) = 0' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.ByteCount = .DataCount &gt;&gt; 3' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.ByteCount = (.DataCount &gt;&gt; 3) + 1' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.SetOutputRGB' >
+						<command class_type='sim' title='Simulation' macro='Console.SetOutputRGB' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='0xFF0000' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+						<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='&quot;ReadDigitalInput -&gt; SlaveID:&quot; + STRING .SlaveID + &quot; FunctionCode:&quot; + STRING 0x02' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+						<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='&quot; Address:&quot; + STRING (.DataAddress + 10001)' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.WriteText' >
+						<command class_type='sim' title='Simulation' macro='Console.WriteText' >
 							<argument exp='ConsoleHandle' />
 							<argument exp='&quot; InputCount:&quot; + STRING .DataCount' />
 						</command>
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TxStart' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='AddressBytes &gt; 1' swap='0' >
+						<command class_type='call' title='User Macro' macro='TxStart' />
+						<command class_type='decision' title='Decision' exp='AddressBytes &gt; 1' swap='0' >
 							<flowline >
-								<command class_type='call' title='Send Slave ID' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendInt' >
+								<command class_type='call' title='Send Slave ID' macro='SendInt' >
 									<argument exp='.SlaveID' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='call' title='Send Slave ID' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendByte' >
+								<command class_type='call' title='Send Slave ID' macro='SendByte' >
 									<argument exp='.SlaveID' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='call' title='Read Input Status' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendByte' >
+						<command class_type='call' title='Read Input Status' macro='SendByte' >
 							<argument exp='0x02' />
 						</command>
-						<command class_type='call' title='Data address of first coil' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendInt' >
+						<command class_type='call' title='Data address of first coil' macro='SendInt' >
 							<argument exp='.DataAddress' />
 						</command>
-						<command class_type='call' title='Number of coils to read' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SendInt' >
+						<command class_type='call' title='Number of coils to read' macro='SendInt' >
 							<argument exp='.DataCount' />
 						</command>
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TxEnd' />
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetResponse' >
+						<command class_type='call' title='User Macro' macro='TxEnd' />
+						<command class_type='call' title='Call Macro' macro='GetResponse' >
 							<return exp='.Return' />
 							<argument exp='.ByteCount' />
 						</command>
@@ -1560,11 +1568,11 @@ Returns 0 for success, 1 for CRC fail and 255 for no reply.' statediag='0' >
 						<local name='TU' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' >
 							<array size='16' />
 						</local>
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_Initialise' />
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Initialise' />
-						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='2' exp='2' >
+						<command class_type='call' title='User Macro' macro='Ev_Initialise' />
+						<command class_type='call' title='User Macro' macro='Initialise' />
+						<command class_type='loop' title='Loop' type='2' exp='2' >
 							<flowline >
-								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetCoils' >
+								<command class_type='call' title='User Macro' macro='SetCoils' >
 									<argument exp='0' />
 									<argument exp='0' />
 									<argument exp='16' />
@@ -1577,16 +1585,16 @@ Returns 0 for success, 1 for CRC fail and 255 for no reply.' statediag='0' >
 				<macro >
 					<flowline name='Initialise' description='Starts up the UART to allow communications' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='BusType = 1' swap='0' >
+						<command class_type='decision' title='Decision' exp='BusType = 1' swap='0' >
 							<flowline >
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='ReadDDRState = 1' swap='0' >
+								<command class_type='decision' title='Decision' exp='ReadDDRState = 1' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Write DDR Mode' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Write DDR Mode' >
 											<exp exp='DDRP = 0' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='calculation' title='Write DDR Mode' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Write DDR Mode' >
 											<exp exp='DDRP = 1' />
 										</command>
 									</flowline>
@@ -1594,19 +1602,20 @@ Returns 0 for success, 1 for CRC fail and 255 for no reply.' statediag='0' >
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='FrameTypeVar = FrameType' />
 						</command>
-						<command class_type='call' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart' macro='Init' />
+						<command class_type='call' title='Call Component Macro' component='cal_uart' macro='Init' />
 					</flowline>
 				</macro>
 			</macros>
-			<component class_type='ref' guid='91b64b1d-b8b2-40f1-b073-e953a91fa234' vmin='2' vmaj='2' codename='cal_uart' panelId='-1' x='0.465264' y='-0.310176' z='17.6425' xsz='0.0005' ysz='0.0005' zsz='0.0005' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+			<component class_type='ref' guid='91b64b1d-b8b2-40f1-b073-e953a91fa234' vmin='3' vmaj='19' codename='cal_uart' panelId='-1' x='0.465264' y='-0.310176' z='17.6425' xsz='0.0005' ysz='0.0005' zsz='0.0005' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
 					<value target='UseUART' data='1' />
 					<value target='CHANNEL' data='001' />
+					<value target='Filter' data='' />
 					<value target='UseTX' data='1' />
 					<value target='TX' data='$PORTC.6' />
 					<value target='OutputPins' data='000' />
@@ -1672,13 +1681,14 @@ Returns 0 for success, 1 for CRC fail and 255 for no reply.' statediag='0' >
 					<value target='BitDelay' data='8' />
 					<value target='ParentName' data='ModbusMaster' />
 					<value target='CompName' data='' />
+					<value target='Sorted' data='0' />
 				</values>
 				<events />
 				<apis />
 				<variables />
 				<macros />
 			</component>
-			<component class_type='ref' guid='58be670e-18fb-477e-ab09-61fde14b23ec' vmin='0' vmaj='1' codename='LibraryComponent1' panelId='-1' x='0' y='0' z='0' xsz='100' ysz='100' zsz='100' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' comp2dType='0' >
+			<component class_type='ref' guid='58be670e-18fb-477e-ab09-61fde14b23ec' vmin='0' vmaj='1' codename='LibraryComponent1' panelId='-1' x='0' y='0' z='0' xsz='100' ysz='100' zsz='100' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
@@ -1692,7 +1702,8 @@ Returns 0 for success, 1 for CRC fail and 255 for no reply.' statediag='0' >
 					<value target='IconsOnRight' data='0' />
 					<value target='OutputIcon::CommsType' data='006' />
 					<value target='OutputIcon::LinkTo' data='0' />
-					<value target='ConsoleHandle' data='739' />
+					<value target='InputIcon1::CommsType' data='255' />
+					<value target='ConsoleHandle' data='747' />
 					<value target='Upgraded' data='0' />
 				</values>
 				<events />
@@ -1709,7 +1720,7 @@ Returns 0 for success, 1 for CRC fail and 255 for no reply.' statediag='0' >
 		<camera xe='30.645' ye='-9.40743' ze='595.955' xt='30.645' yt='-9.40743' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
 		<viewport dx='622' dy='352' zoom='126.288' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='0' />
-		<winpos ID='7005' RectRecentFloat='0,0,650,450' RectRecentDocked='0,0,298,419' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+		<winpos ID='7005' RectRecentFloat='309,-538,959,-88' RectRecentDocked='0,0,494,864' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
 	</panel2d>
 	<panel3d shadows='0' lighting='2' brightness='0' perspective='1' >
 		<background rgb='8409120' img='' style='4' />
@@ -1722,33 +1733,33 @@ Returns 0 for success, 1 for CRC fail and 255 for no reply.' statediag='0' >
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,269,546' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,371,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='0' />
 	<layout >
-		<view type='0' name='GetResponse' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetCoils' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SendByte' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetResponseInt' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetCoil' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadAnalogInput' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadDigitalInput' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadCoil' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetHoldingRegisters' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ChangeBaud' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetResponseByte' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SendValueAsASCII' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadHoldingRegister' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetHoldingRegister' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_GetVarSize' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ChangeFrameType' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='TxStart' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='TxEnd' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SendInt' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAUAIAAMwCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetResponse' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAFQQAAGMDAAA' zoom='75' scrollx='0' scrolly='52' flags='0' />
+		<view type='0' name='SetCoils' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAFQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SendByte' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAFQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAFQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetResponseInt' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAFQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetCoil' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAFQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadAnalogInput' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAFQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadDigitalInput' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAFQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadCoil' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAFQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetHoldingRegisters' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAFQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ChangeBaud' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAFQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAFQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAFQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetResponseByte' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAFQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAFQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SendValueAsASCII' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAFQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadHoldingRegister' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAFQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetHoldingRegister' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAFQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_GetVarSize' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAFQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ChangeFrameType' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAFQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='TxStart' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAFQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='TxEnd' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAFQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SendInt' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAFQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>
