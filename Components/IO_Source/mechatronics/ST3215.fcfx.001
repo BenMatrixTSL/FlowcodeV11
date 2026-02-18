@@ -185,7 +185,6 @@ Hardware channels use the selected peripheral on-board the target microcontrolle
 				<api name='ReadCorrection' alt='ReadCorrection' type='1' proto='1' />
 				<api name='PingServo' alt='PingServo' type='1' proto='1' />
 				<api name='ReadID' alt='ReadID' type='1' proto='1' />
-				<api name='ReadAngle' alt='ReadAngle' type='1' proto='1' />
 				<api name='ReadLoad' alt='ReadLoad' type='1' proto='1' />
 				<api name='UnlockEEPROM' alt='UnlockEEPROM' type='1' proto='1' />
 				<api name='ReadSpeed' alt='ReadSpeed' type='1' proto='1' />
@@ -577,8 +576,8 @@ Returns number of servos found.' statediag='0' >
 						</command>
 						<command class_type='decision' title='Check if response received' exp='ResponseLength &gt;= 2' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Combine bytes - Python library sts_makeword uses data[0] as low byte, data[1] as high byte. ResponseBuffer[2] is first data byte (low), ResponseBuffer[3] is second data byte (high).' >
-									<exp exp='.RawPosition = ResponseBuffer[2] + (ResponseBuffer[3] &lt;&lt; 8)' />
+								<command class_type='calculation' title='Combine bytes - Python library sts_makeword uses data[0] as low byte, data[1] as high byte. Our ResponseBuffer[2] appears to be high byte, ResponseBuffer[3] is low byte, so swap them.' >
+									<exp exp='.RawPosition = ResponseBuffer[3] + (ResponseBuffer[2] &lt;&lt; 8)' />
 								</command>
 								<command class_type='calculation' title='Mask to 12 bits (0-4095) as per ST3215 specification' >
 									<exp exp='.Return = .RawPosition &amp; 0x0FFF' />
@@ -787,7 +786,6 @@ Returns number of servos found.' statediag='0' >
 						<local name='Header2' type='u8' description='Second header byte' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
 						<local name='Idx' type='u8' description='Loop index' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
 						<local name='TimeoutCount' type='u16' description='Timeout counter' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
-						<local name='ErrorByte' type='u8' description='Error byte from response packet' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
 						<command class_type='calculation' title='Initialize response length' >
 							<exp exp='ResponseLength = 0' />
 							<exp exp='.Return = 0' />
@@ -830,63 +828,45 @@ Returns number of servos found.' statediag='0' >
 								</command>
 								<command class_type='decision' title='Check if header 2 is correct' exp='.Header2 = ST3215_HEADER2' swap='0' >
 									<flowline >
-										<command class_type='decision' title='Check if ID byte available' exp='CircularBuffer1::GetNumberBytes() &gt;= 1' swap='0' >
+										<command class_type='call' title='Receive ID' component='CircularBuffer1' macro='GetByte' >
+											<return exp='ResponseBuffer[0]' />
+										</command>
+										<command class_type='call' title='Receive Length' component='CircularBuffer1' macro='GetByte' >
+											<return exp='ResponseBuffer[1]' />
+										</command>
+										<command class_type='calculation' title='Calculate number of data bytes' >
+											<exp exp='ResponseLength = ResponseBuffer[1] - 2' />
+										</command>
+										<command class_type='loop' title='Receive all data bytes' type='0' exp='.Idx &lt; ResponseLength' >
 											<flowline >
-												<command class_type='call' title='Receive ID' component='CircularBuffer1' macro='GetByte' >
-													<return exp='ResponseBuffer[0]' />
-												</command>
-												<command class_type='decision' title='Check if Length byte available' exp='CircularBuffer1::GetNumberBytes() &gt;= 1' swap='0' >
+												<command class_type='decision' title='Decision' exp='CircularBuffer1::GetNumberBytes() &gt;= 3' swap='0' >
 													<flowline >
 														<command class_type='call' title='Receive Length' component='CircularBuffer1' macro='GetByte' >
-															<return exp='ResponseBuffer[1]' />
+															<return exp='ResponseBuffer[.Idx + 2]' />
 														</command>
-														<command class_type='decision' title='Check if Error byte available' exp='CircularBuffer1::GetNumberBytes() &gt;= 1' swap='0' >
+														<command class_type='calculation' title='Increment index' >
+															<exp exp='.Idx = .Idx + 1' />
+														</command>
+														<command class_type='decision' title='Decision' exp='.Idx &gt; 17' swap='0' >
 															<flowline >
-																<command class_type='call' title='Receive Error byte (skip it - not used in data extraction)' component='CircularBuffer1' macro='GetByte' >
-																	<return exp='.ErrorByte' />
-																</command>
-																<command class_type='calculation' title='Calculate number of data bytes (Length - 2 for ID and Length bytes)' >
-																	<exp exp='ResponseLength = ResponseBuffer[1] - 2' />
-																</command>
-																<command class_type='loop' title='Receive all data bytes' type='0' exp='.Idx &lt; ResponseLength' >
-																	<flowline >
-																		<command class_type='decision' title='Decision' exp='CircularBuffer1::GetNumberBytes() &gt;= 1' swap='0' >
-																			<flowline >
-																				<command class_type='call' title='Receive data byte' component='CircularBuffer1' macro='GetByte' >
-																					<return exp='ResponseBuffer[.Idx + 2]' />
-																				</command>
-																				<command class_type='calculation' title='Increment index' >
-																					<exp exp='.Idx = .Idx + 1' />
-																				</command>
-																				<command class_type='decision' title='Decision' exp='.Idx &gt; 17' swap='0' >
-																					<flowline >
-																						<command class_type='goto' title='Goto Connection Point' labelid='0' labelname='' />
-																					</flowline>
-																					<flowline />
-																				</command>
-																			</flowline>
-																			<flowline >
-																				<command class_type='delay' title='Delay' exp='1' type='1' />
-																				<command class_type='calculation' title='Increment timeout' >
-																					<exp exp='.TimeoutCount = .TimeoutCount + 1' />
-																				</command>
-																			</flowline>
-																		</command>
-																	</flowline>
-																</command>
-																<command class_type='calculation' title='Mark as successful' >
-																	<exp exp='.Return = 1' />
-																</command>
-																<command class_type='label' title='Declare Connection Point' labelid='0' labelname='A' />
+																<command class_type='goto' title='Goto Connection Point' labelid='0' labelname='' />
 															</flowline>
 															<flowline />
 														</command>
 													</flowline>
-													<flowline />
+													<flowline >
+														<command class_type='delay' title='Delay' exp='1' type='1' />
+														<command class_type='calculation' title='Increment timeout' >
+															<exp exp='.TimeoutCount = .TimeoutCount + 1' />
+														</command>
+													</flowline>
 												</command>
 											</flowline>
-											<flowline />
 										</command>
+										<command class_type='calculation' title='Mark as successful' >
+											<exp exp='.Return = 1' />
+										</command>
+										<command class_type='label' title='Declare Connection Point' labelid='0' labelname='A' />
 									</flowline>
 									<flowline />
 								</command>
@@ -1501,7 +1481,7 @@ Servo' />
 		<camera xe='12.8076' ye='-12.8307' ze='395.479' xt='12.8076' yt='-12.8307' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
 		<viewport dx='501' dy='782' zoom='153.285' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='0' />
-		<winpos ID='7005' RectRecentFloat='794,0,1444,576' RectRecentDocked='968,141,1489,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7005' RectRecentFloat='794,0,1444,576' RectRecentDocked='968,141,1489,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
 	</panel2d>
 	<panel3d shadows='0' lighting='0' brightness='0' perspective='1' >
 		<background rgb='16760992' img='' style='0' />
