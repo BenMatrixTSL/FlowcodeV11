@@ -1,5 +1,5 @@
 <root>
-<document scada='1' projtype='2' schema='103' license='1,82702381,95CJQR' title='Blank Web' description='A blank Web App Developer project suitable for creating apps that run in a browser' fcversion='720896' target='SCADA.SCADA.WEBEXP' >
+<document scada='1' projtype='2' schema='103' license='1,88169790,XQ5X1V' title='Blank Web' description='A blank Web App Developer project suitable for creating apps that run in a browser' fcversion='720896' target='SCADA.SCADA.WEBEXP' >
 	<config data='' clkspd='100000000' simspd='0' usewdt='0' constif='0' Use3V3='0' />
 	<plugins >
 		<dll_models enabled='1' />
@@ -56,7 +56,7 @@
 	</ghost>
 	<components >
 		<settings autoimg='0' center='1' unitscale='1' fixedscale='1' fixedx='25' fixedy='25' fixedz='25' headcode='0' />
-		<definition guid='8572e90c-bb9d-4d3c-8350-a68d412af899' vstate='30' vmin='1' vmaj='0' srcleaf='WEBEXP_Label.fcsx' visiblename='Label' description='Creates a Javascript compatible label object.' category=' Web Primitives' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='MatrixTSL' manuname='' manucode='' sysinfo='1052939' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='0' showmacros='1' iconpath='..\..\icons\components\comp3d_text.png' />
+		<definition guid='8572e90c-bb9d-4d3c-8350-a68d412af899' vstate='30' vmin='0' vmaj='1' srcleaf='WEBEXP_Label.fcsx' visiblename='Label' description='Creates a Javascript compatible label object.' category=' Web Primitives' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='MatrixTSL' manuname='' manucode='' sysinfo='1052939' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='0' showmacros='1' iconpath='..\..\icons\components\comp3d_text.png' />
 		<component class_type='root' codename='Label' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' varnames='$(type)_$(module)__$(variable:u)' >
 			<resources />
 			<properties >
@@ -95,10 +95,10 @@
 				<value target='sCustomAttributes' data='' />
 			</values>
 			<events >
-				<event class='Compile' event='HtmlScriptHeader' target='Ev_HtmlScriptHeader' />
+				<event class='Components' event='PropertyEx' target='Ev_PropertyEx' />
 				<event class='Compile' event='HtmlBodyInfo' target='Ev_HtmlBodyInfo' />
 				<event class='Components' event='Initialising' target='Ev_Initialising' />
-				<event class='Components' event='PropertyEx' target='Ev_PropertyEx' />
+				<event class='Compile' event='HtmlScriptHeader' target='Ev_HtmlScriptHeader' />
 			</events>
 			<apis >
 				<api name='SetText' alt='SetText' type='1' proto='1' />
@@ -496,43 +496,15 @@
 							<array size='20' />
 						</local>
 						<local name='iNew' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='comment' title='' comment='Check to see if fixed font for text primitive exists' textarea='12,0,12,0' />
+						<command class_type='comment' title='' comment='Fixed font for text primitive exists in v11' textarea='40,3,40,3' />
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='bHasFixedFont = 1' />
+						</command>
+						<command class_type='comment' title='' comment='Update the label and font size as this is not updated when a project is loaded' textarea='40,3,40,3' />
 						<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
 							<return exp='.sCurrent' />
-							<argument exp='GdiText1' />
+							<argument exp='this' />
 							<argument exp='&quot;iFontSize&quot;' />
-						</command>
-						<command class_type='decision' title='Decision' exp='Length$(.sCurrent) == 0' swap='0' >
-							<flowline >
-								<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
-									<return exp='.sCurrent' />
-									<argument exp='this' />
-									<argument exp='&quot;iFontSize&quot;' />
-								</command>
-							</flowline>
-							<flowline />
-						</command>
-						<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
-							<argument exp='GdiText1' />
-							<argument exp='&quot;iFontSize&quot;' />
-							<argument exp='100' />
-						</command>
-						<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
-							<return exp='.iNew' />
-							<argument exp='GdiText1' />
-							<argument exp='&quot;iFontSize&quot;' />
-						</command>
-						<command class_type='decision' title='Decision' exp='.iNew == 100' swap='0' >
-							<flowline >
-								<command class_type='calculation' title='Calculation' >
-									<exp exp='bHasFixedFont = 1' />
-								</command>
-							</flowline>
-							<flowline >
-								<command class_type='calculation' title='Calculation' >
-									<exp exp='bHasFixedFont = 0' />
-								</command>
-							</flowline>
 						</command>
 						<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 							<argument exp='GdiText1' />
@@ -543,21 +515,6 @@
 							<argument exp='GdiText1' />
 							<argument exp='&quot;sText&quot;' />
 							<argument exp='sLabel' />
-						</command>
-						<command class_type='sim' title='Built-in Function' disable='1' macro='Component.Property.SetVisible' >
-							<argument exp='this' />
-							<argument exp='&quot;iFontSize&quot;' />
-							<argument exp='!bHasFixedFont' />
-						</command>
-						<command class_type='sim' title='Built-in Function' disable='1' macro='Component.Property.SetVisible' >
-							<argument exp='this' />
-							<argument exp='&quot;GdiText1::iFontSize&quot;' />
-							<argument exp='bHasFixedFont' />
-						</command>
-						<command class_type='sim' title='Built-in Function' disable='1' macro='Component.Property.SetVisible' >
-							<argument exp='GdiText1' />
-							<argument exp='&quot;iFontSize&quot;' />
-							<argument exp='bHasFixedFont' />
 						</command>
 					</flowline>
 				</macro>
@@ -606,6 +563,9 @@
 				<macro >
 					<flowline name='Main' description='' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='comment' title='' comment='Component Version Information
+2, 0.1, 13-02-26, BR, Added a command in Ev_Initialising to set the value of the GdiText1 to sLabel;
+3, 1.0, 19-02-26, ST, Fixed font size property during Ev_Initialising;' textarea='12,0,12,0' />
 					</flowline>
 				</macro>
 			</macros>
@@ -647,10 +607,10 @@
 	<keymap />
 	<panel2d shadows='0' lighting='2' brightness='0' >
 		<background rgb='7292207' img='' style='0' />
-		<camera xe='0' ye='0' ze='736.395' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
-		<viewport dx='494' dy='841' zoom='81.1711' fix_topleft='0' />
+		<camera xe='0' ye='0' ze='474.036' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='318' dy='396' zoom='81.1711' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='7360576' />
-		<winpos ID='7005' RectRecentFloat='272,148,1255,722' RectRecentDocked='0,0,494,864' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7005' RectRecentFloat='272,148,1255,722' RectRecentDocked='0,0,318,419' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel2d>
 	<panel3d shadows='0' lighting='2' brightness='0' perspective='1' >
 		<background rgb='8409120' img='' style='0' />
@@ -663,22 +623,22 @@
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='-657,630,-7,1080' RectRecentDocked='0,0,371,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='-657,630,-7,1080' RectRecentDocked='0,0,318,805' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='1' >
 		<panel2d_0 id='0' name='NewPanel' type='0' >
-			<winpos ID='1171' RectRecentFloat='352,680,834,1080' RectRecentDocked='964,141,1489,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+			<winpos ID='1171' RectRecentFloat='352,680,834,1080' RectRecentDocked='714,141,1045,946' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 			<background fill='288230376151053813' showgrid='1' gridstyle='1' gridsize='10' gridbrush='71776119075691740' snaptogrid='1' fitcomp='0' disp_x='300' disp_y='400' scale='100' disp_col='16777215' />
 		</panel2d_0>
 	</panels2d>
 	<layout >
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAFQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetText' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAFQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_HtmlBodyInfo' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAFQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='PickerToHex' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAFQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_HtmlScriptHeader' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAFQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_PropertyEx' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAFQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Initialising' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAFQQAAGMDAAA' zoom='100' scrollx='0' scrolly='241' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAkgIAACADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetText' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAkgIAACADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_HtmlBodyInfo' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAkgIAACADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='PickerToHex' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAkgIAACADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_HtmlScriptHeader' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAkgIAACADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_PropertyEx' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAkgIAACADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Initialising' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAkgIAACADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>

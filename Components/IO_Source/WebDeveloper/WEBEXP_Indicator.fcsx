@@ -1,5 +1,5 @@
 <root>
-<document scada='1' panel2DSCADA='0' panel3DSCADA='0' panelPropsSCADA='0' panelConsoleSCADA='0' panelDataRecorderSCADA='0' panel2DCount='1' panel2DSCADA_0='6' playbackSCADA='0' ShouldAutoStartSCADA='0' ShouldLockCameraSCADA='0' ShouldBundleSCADA='1' SCADAProgramTitle='' buildnumber='0' schema='103' license='10,BenR,C9TN1M' title='Blank Web' description='A blank Web App Developer project suitable for creating apps that run in a browser' fcversion='655364' target='SCADA.SCADA.WEBEXP' >
+<document scada='1' projtype='2' schema='103' license='1,88169790,XQ5X1V' title='Blank Web' description='A blank Web App Developer project suitable for creating apps that run in a browser' fcversion='720896' target='SCADA.SCADA.WEBEXP' >
 	<config data='' clkspd='100000000' simspd='1' usewdt='0' constif='0' Use3V3='0' />
 	<plugins >
 		<dll_models enabled='1' />
@@ -56,8 +56,8 @@
 	</ghost>
 	<components >
 		<settings autoimg='0' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
-		<definition guid='1b25bcf6-4e20-4646-9eda-8565971d5724' vstate='40' vmin='0' vmaj='1' srcleaf='' visiblename='Indicator' description='Creates an LED style on/off indicator' category=' Indicator' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' catenable='1' author='MatrixTSL' manuname='' manucode='' sysinfo='0' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='1' showmacros='1' iconpath='..\..\icons\components\Custom Images.png' />
-		<component class_type='root' codename='Indicator' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+		<definition guid='1b25bcf6-4e20-4646-9eda-8565971d5724' vstate='40' vmin='1' vmaj='1' srcleaf='' visiblename='Indicator' description='Creates an LED style on/off indicator' category=' Indicator' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='MatrixTSL' manuname='' manucode='' sysinfo='0' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='1' showmacros='1' iconpath='..\..\icons\components\Custom Images.png' />
+		<component class_type='root' codename='Indicator' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 			<resources />
 			<properties >
 				<property name='Colour' target='cColour' typeid='1' hidden='0' locked='0' info='The colour of the indicator' />
@@ -77,6 +77,7 @@
 			</values>
 			<events >
 				<event class='Components' event='Property' target='Ev_Property' />
+				<event class='Components' event='Initialising' target='Ev_Initialising' />
 				<event class='Components' event='PropertyEx' target='Ev_PropertyEx' />
 			</events>
 			<apis >
@@ -97,7 +98,7 @@
 					<flowline name='FlashEnable' description='Sets the indicator to flash at the selected rate' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<param name='Rate' type='s32' description='The flash speed (in ms)' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='Timer1' macro='Start' >
+						<command class_type='call' title='Component Macro' component='Timer1' macro='Start' >
 							<argument exp='.Rate' />
 						</command>
 					</flowline>
@@ -107,11 +108,11 @@
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<local name='hOn' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='hOff' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.GetHtmlElement' >
+						<command class_type='sim' title='Built-in Function' macro='WebDeveloper.GetHtmlElement' >
 							<return exp='.hOn' />
 							<argument exp='ShapeOn' />
 						</command>
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.GetHtmlElement' >
+						<command class_type='sim' title='Built-in Function' macro='WebDeveloper.GetHtmlElement' >
 							<return exp='.hOff' />
 							<argument exp='ShapeOff' />
 						</command>
@@ -125,7 +126,7 @@ else
   FCL_HON.children[1].style.visibility = &apos;hidden&apos;;
   FCL_HOFF.children[1].style.visibility = &apos;visible&apos;;
 }
-' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+' language='C' />
 					</flowline>
 				</macro>
 				<macro >
@@ -138,6 +139,23 @@ else
 					</flowline>
 				</macro>
 				<macro >
+					<flowline name='Ev_Initialising' description='Initialisation routine before the component is linked to its parent' statediag='0' >
+						<return name='Return' type='u32' description='Non-zero to prevent initialisation' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='User Macro' macro='Pvr_EnsurePropUpdated' >
+							<argument exp='&quot;cColour&quot;' />
+							<argument exp='&quot;-1&quot;' />
+						</command>
+						<command class_type='call' title='User Macro' macro='Pvr_EnsurePropUpdated' >
+							<argument exp='&quot;iShape&quot;' />
+							<argument exp='&quot;-1&quot;' />
+						</command>
+						<command class_type='call' title='User Macro' macro='Pvr_EnsurePropUpdated' >
+							<argument exp='&quot;iBorder&quot;' />
+							<argument exp='&quot;-1&quot;' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
 					<flowline name='Ev_PropertyEx' description='Sent when a property has been changed by the User (specific property and value identified)' statediag='0' >
 						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Property' type='T8' description='The name of the property being changed' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
@@ -146,14 +164,14 @@ else
 						<param name='Value' type='T8' description='The new value for the property' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
 						</param>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='Compare$(.Property,&quot;cColour&quot;,1) == 0' swap='0' >
+						<command class_type='decision' title='Decision' exp='Compare$(.Property,&quot;cColour&quot;,1) == 0' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 									<argument exp='ShapeOn' />
 									<argument exp='&quot;GdiShape1::colFill&quot;' />
 									<argument exp='.Value' />
 								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 									<argument exp='ShapeOff' />
 									<argument exp='&quot;GdiShape1::colFillGradient&quot;' />
 									<argument exp='.Value' />
@@ -161,14 +179,14 @@ else
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='Compare$(.Property,&quot;iShape&quot;,1) == 0' swap='0' >
+						<command class_type='decision' title='Decision' exp='Compare$(.Property,&quot;iShape&quot;,1) == 0' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 									<argument exp='ShapeOn' />
 									<argument exp='&quot;GdiShape1::nType&quot;' />
 									<argument exp='.Value' />
 								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 									<argument exp='ShapeOff' />
 									<argument exp='&quot;GdiShape1::nType&quot;' />
 									<argument exp='.Value' />
@@ -176,14 +194,14 @@ else
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='Compare$(.Property,&quot;iBorder&quot;,1) == 0' swap='0' >
+						<command class_type='decision' title='Decision' exp='Compare$(.Property,&quot;iBorder&quot;,1) == 0' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 									<argument exp='ShapeOn' />
 									<argument exp='&quot;GdiShape1::iOutlineSize&quot;' />
 									<argument exp='.Value' />
 								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 									<argument exp='ShapeOff' />
 									<argument exp='&quot;GdiShape1::iOutlineSize&quot;' />
 									<argument exp='.Value' />
@@ -196,7 +214,7 @@ else
 				<macro >
 					<flowline name='FlashDisable' description='Stops the indicator flashing' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='Timer1' macro='Stop' />
+						<command class_type='call' title='Component Macro' component='Timer1' macro='Stop' />
 					</flowline>
 				</macro>
 				<macro >
@@ -205,11 +223,11 @@ else
 						<param name='State' type='b1' description='1 = on, 0 = off' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='hOn' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='hOff' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.GetHtmlElement' >
+						<command class_type='sim' title='Built-in Function' macro='WebDeveloper.GetHtmlElement' >
 							<return exp='.hOn' />
 							<argument exp='ShapeOn' />
 						</command>
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.GetHtmlElement' >
+						<command class_type='sim' title='Built-in Function' macro='WebDeveloper.GetHtmlElement' >
 							<return exp='.hOff' />
 							<argument exp='ShapeOff' />
 						</command>
@@ -223,19 +241,50 @@ else
   FCL_HON.children[1].style.visibility = &apos;hidden&apos;;
   FCL_HOFF.children[1].style.visibility = &apos;visible&apos;;
 }
-' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+' language='C' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Pvr_EnsurePropUpdated' description='Ensures a property is updated correctly by switching values' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='sProperty' type='T8' description='The property to update' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='2000' />
+						</param>
+						<param name='sTempVal' type='T8' description='A temporary value to use' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='2000' />
+						</param>
+						<local name='sVal' type='T8' description='' isconst='0' isHidden='0' isinit='1' usrinit='&quot;&quot;' setinit='&quot;&quot;' >
+							<array size='2000' />
+						</local>
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
+							<return exp='.sVal' />
+							<argument exp='this' />
+							<argument exp='.sProperty' />
+						</command>
+						<command class_type='sim' title='Force to an unusual value so that the change is registered' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='.sProperty' />
+							<argument exp='.sTempVal' />
+						</command>
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='.sProperty' />
+							<argument exp='.sVal' />
+						</command>
 					</flowline>
 				</macro>
 				<macro >
 					<flowline name='Main' description='' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='FlashEnable' >
+						<command class_type='comment' title='' comment='Component Version Information
+2, 1.1, 19-02-26, ST, Added Ev_Initialising to correctly set properties when loading;' textarea='12,0,12,0' />
+						<command class_type='call' title='User Macro' macro='FlashEnable' >
 							<argument exp='1000' />
 						</command>
 					</flowline>
 				</macro>
 			</macros>
-			<component class_type='ref' guid='2b8bf5a1-2d66-44fe-8023-cb41c33d1add' vmin='1' vmaj='0' codename='ShapeOn' panelId='0' x='30' y='-30' z='1' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='2' poslock='0' comp2dType='0' >
+			<component class_type='ref' guid='2b8bf5a1-2d66-44fe-8023-cb41c33d1add' vmin='1' vmaj='0' codename='ShapeOn' panelId='0' x='30' y='-30' z='1' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='2' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
@@ -256,7 +305,7 @@ else
 				<variables />
 				<macros />
 			</component>
-			<component class_type='ref' guid='30f0236a-7777-4c6f-8ceb-a29b8d5294d1' vmin='1' vmaj='0' codename='Timer1' panelId='0' x='80' y='-90' z='2' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='1' solid='1' layer='2' poslock='0' comp2dType='0' >
+			<component class_type='ref' guid='30f0236a-7777-4c6f-8ceb-a29b8d5294d1' vmin='1' vmaj='0' codename='Timer1' panelId='0' x='80' y='-90' z='2' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='1' solid='1' layer='2' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
@@ -268,7 +317,7 @@ else
 				<variables />
 				<macros />
 			</component>
-			<component class_type='ref' guid='2e5d477d-7e43-4691-95e1-becf96fed02d' vmin='1' vmaj='0' codename='Object1' panelId='0' x='30' y='-90' z='3' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='1' solid='1' layer='2' poslock='0' comp2dType='0' >
+			<component class_type='ref' guid='2e5d477d-7e43-4691-95e1-becf96fed02d' vmin='1' vmaj='0' codename='Object1' panelId='0' x='30' y='-90' z='3' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='1' solid='1' layer='2' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values />
@@ -277,7 +326,7 @@ else
 				<variables />
 				<macros />
 			</component>
-			<component class_type='ref' guid='2b8bf5a1-2d66-44fe-8023-cb41c33d1add' vmin='1' vmaj='0' codename='ShapeOff' panelId='0' x='30' y='-30' z='0' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='2' poslock='0' comp2dType='0' >
+			<component class_type='ref' guid='2b8bf5a1-2d66-44fe-8023-cb41c33d1add' vmin='1' vmaj='0' codename='ShapeOff' panelId='0' x='30' y='-30' z='0' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='2' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
@@ -304,10 +353,10 @@ else
 	<keymap />
 	<panel2d shadows='0' lighting='2' brightness='0' >
 		<background rgb='7292207' img='' style='0' />
-		<camera xe='0' ye='0' ze='678.81' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
-		<viewport dx='561' dy='396' zoom='100' fix_topleft='0' />
+		<camera xe='0' ye='0' ze='384.78' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='318' dy='396' zoom='100' fix_topleft='0' />
 		<page x='1000' y='1000' show='1' rgb='16777215' />
-		<winpos ID='7005' RectRecentFloat='476,78,1930,1080' RectRecentDocked='0,0,561,419' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7005' RectRecentFloat='476,78,1930,1080' RectRecentDocked='0,0,318,419' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel2d>
 	<panel3d shadows='0' lighting='2' brightness='0' perspective='1' >
 		<background rgb='8409120' img='' style='0' />
@@ -320,22 +369,24 @@ else
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='607,298,1930,1080' RectRecentDocked='0,0,250,870' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='607,298,1930,1080' RectRecentDocked='0,0,318,805' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='1' >
-		<panel2d_0 id='0' name='Webpage Design' >
-			<winpos ID='1171' RectRecentFloat='37,680,637,1080' RectRecentDocked='891,141,1455,1021' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
-			<background fill='288230376151053813' showgrid='1' gridstyle='1' gridsize='10' gridbrush='71776119075691740' snaptogrid='1' />
+		<panel2d_0 id='0' name='Webpage Design' type='0' >
+			<winpos ID='1171' RectRecentFloat='37,680,637,1080' RectRecentDocked='714,141,1045,946' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+			<background fill='288230376151053813' showgrid='1' gridstyle='1' gridsize='10' gridbrush='71776119075691740' snaptogrid='1' fitcomp='0' disp_x='300' disp_y='400' scale='100' disp_col='16777215' />
 		</panel2d_0>
 	</panels2d>
 	<layout >
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAYwQAAGsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='FlashMe' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAYwQAAGsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='FlashEnable' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAYwQAAGsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='FlashDisable' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAYwQAAGsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAYwQAAGsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetState' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAYwQAAGsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_PropertyEx' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAYwQAAGsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAkgIAACADAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='FlashMe' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAkgIAACADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='FlashEnable' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAkgIAACADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='FlashDisable' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAkgIAACADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAkgIAACADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetState' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAkgIAACADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_PropertyEx' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAkgIAACADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Initialising' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAkgIAACADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Pvr_EnsurePropUpdated' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAkgIAACADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>

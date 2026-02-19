@@ -1,5 +1,5 @@
 <root>
-<document scada='1' panel2DSCADA='0' panel3DSCADA='0' panelPropsSCADA='0' panelConsoleSCADA='0' panelDataRecorderSCADA='0' panel2DCount='1' panel2DSCADA_0='6' playbackSCADA='0' ShouldAutoStartSCADA='0' ShouldLockCameraSCADA='0' ShouldBundleSCADA='1' SCADAProgramTitle='' buildnumber='0' schema='103' license='10,STEVET,X4QE0C' title='Blank Web' description='A blank Web App Developer project suitable for creating apps that run in a browser' fcversion='655616' target='SCADA.SCADA.WEBEXP' >
+<document scada='1' projtype='2' schema='103' license='1,88169790,XQ5X1V' title='Blank Web' description='A blank Web App Developer project suitable for creating apps that run in a browser' fcversion='720896' target='SCADA.SCADA.WEBEXP' >
 	<config data='' clkspd='100000000' simspd='0' usewdt='0' constif='0' Use3V3='0' />
 	<plugins >
 		<dll_models enabled='1' />
@@ -56,8 +56,8 @@
 	</ghost>
 	<components >
 		<settings autoimg='0' center='1' unitscale='1' fixedscale='1' fixedx='25' fixedy='25' fixedz='25' headcode='0' />
-		<definition guid='7e6b63bd-8cda-4b3d-bf64-ec66e9055a25' vstate='30' vmin='2' vmaj='0' srcleaf='WEBEXP_Slider.fcsx' visiblename='Slider' description='Creates an analogue slide control' category=' Control' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' catenable='1' author='MatrixTSL' manuname='' manucode='' sysinfo='1052939' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='0' showmacros='1' iconpath='..\..\icons\components\Slider.png' />
-		<component class_type='root' codename='Slider' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' varnames='$(type)_$(module)__$(variable:u)' >
+		<definition guid='7e6b63bd-8cda-4b3d-bf64-ec66e9055a25' vstate='30' vmin='0' vmaj='1' srcleaf='WEBEXP_Slider.fcsx' visiblename='Slider' description='Creates an analogue slide control' category=' Control' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='MatrixTSL' manuname='' manucode='' sysinfo='1052939' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='0' showmacros='1' iconpath='..\..\icons\components\Slider.png' />
+		<component class_type='root' codename='Slider' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' varnames='$(type)_$(module)__$(variable:u)' >
 			<resources />
 			<properties >
 				<property name='Scale' hidden='0' >
@@ -134,12 +134,13 @@
 				<value target='sCustomAttributes' data='' />
 			</values>
 			<events >
-				<event class='Compile' event='HtmlBodyInfo' target='Ev_HtmlBodyInfo' />
-				<event class='Components' event='PropertyEx' target='Ev_PropertyEx' />
-				<event class='Components' event='Resize' target='Ev_Resize' />
 				<event class='Components' event='Initialise' target='Ev_Initialise' />
 				<event class='Compile' event='HtmlScriptHeader' target='Ev_HtmlScriptHeader' />
+				<event class='Components' event='Resize' target='Ev_Resize' />
+				<event class='Compile' event='HtmlBodyInfo' target='Ev_HtmlBodyInfo' />
 				<event class='Components' event='Property' target='Ev_Property' />
+				<event class='Components' event='Initialising' target='Ev_Initialising' />
+				<event class='Components' event='PropertyEx' target='Ev_PropertyEx' />
 			</events>
 			<apis >
 				<api name='GetValue' alt='GetValue' type='1' proto='1' />
@@ -154,28 +155,28 @@
 						<param name='sHex' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
 						</param>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='(.sHex[0] &gt;= &apos;0&apos;) &amp;&amp; (.sHex[0] &lt;= &apos;9&apos;)' swap='0' >
+						<command class_type='decision' title='Decision' exp='(.sHex[0] &gt;= &apos;0&apos;) &amp;&amp; (.sHex[0] &lt;= &apos;9&apos;)' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Return = .sHex[0] - &apos;0&apos;' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='(.sHex[0] &gt;= &apos;a&apos;) &amp;&amp; (.sHex[0] &lt;= &apos;f&apos;)' swap='0' >
+								<command class_type='decision' title='Decision' exp='(.sHex[0] &gt;= &apos;a&apos;) &amp;&amp; (.sHex[0] &lt;= &apos;f&apos;)' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Return = .sHex[0] - &apos;a&apos; + 10' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='(.sHex[0] &gt;= &apos;A&apos;) &amp;&amp; (.sHex[0] &lt;= &apos;F&apos;)' swap='0' >
+										<command class_type='decision' title='Decision' exp='(.sHex[0] &gt;= &apos;A&apos;) &amp;&amp; (.sHex[0] &lt;= &apos;F&apos;)' swap='0' >
 											<flowline >
-												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<command class_type='calculation' title='Calculation' >
 													<exp exp='.Return = .sHex[0] - &apos;A&apos; + 10' />
 												</command>
 											</flowline>
 											<flowline >
-												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<command class_type='calculation' title='Calculation' >
 													<exp exp='.Return = 0' />
 												</command>
 											</flowline>
@@ -184,26 +185,26 @@
 								</command>
 							</flowline>
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Return = 16 * .Return' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='(.sHex[1] &gt;= &apos;0&apos;) &amp;&amp; (.sHex[1] &lt;= &apos;9&apos;)' swap='0' >
+						<command class_type='decision' title='Decision' exp='(.sHex[1] &gt;= &apos;0&apos;) &amp;&amp; (.sHex[1] &lt;= &apos;9&apos;)' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Return = .Return + .sHex[1] - &apos;0&apos;' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='(.sHex[1] &gt;= &apos;a&apos;) &amp;&amp; (.sHex[1] &lt;= &apos;f&apos;)' swap='0' >
+								<command class_type='decision' title='Decision' exp='(.sHex[1] &gt;= &apos;a&apos;) &amp;&amp; (.sHex[1] &lt;= &apos;f&apos;)' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Return = .Return + .sHex[1] - &apos;a&apos; + 10' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='(.sHex[1] &gt;= &apos;A&apos;) &amp;&amp; (.sHex[1] &lt;= &apos;F&apos;)' swap='0' >
+										<command class_type='decision' title='Decision' exp='(.sHex[1] &gt;= &apos;A&apos;) &amp;&amp; (.sHex[1] &lt;= &apos;F&apos;)' swap='0' >
 											<flowline >
-												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<command class_type='calculation' title='Calculation' >
 													<exp exp='.Return = .Return + .sHex[1] - &apos;A&apos; + 10' />
 												</command>
 											</flowline>
@@ -224,22 +225,22 @@
 						<local name='sTemp' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
 						</local>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.iColourVal == -1' swap='0' >
+						<command class_type='decision' title='Decision' exp='.iColourVal == -1' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Return = &quot;transparent&quot;' />
 									<exp exp='' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.sTemp = NumberToHex$(.iColourVal)' />
 								</command>
-								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='PickerToHex' >
+								<command class_type='call' title='User Macro' macro='PickerToHex' >
 									<return exp='.sTemp' />
 									<argument exp='.sTemp' />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Return = &quot;#&quot; + .sTemp' />
 									<exp exp='' />
 								</command>
@@ -252,13 +253,13 @@
 						<return name='Return' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='native' title='Javascript' ccode='var obj = document.getElementById(FC_THIS);
 FCR_RETVAL = parseInt(obj.value);
-' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+' language='C' />
 					</flowline>
 				</macro>
 				<macro >
 					<flowline name='Ev_Initialise' description='Initialisation routine for the component once the component is linked to its parent' statediag='0' >
 						<return name='Return' type='u32' description='Non-zero to prevent initialisation' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_ResizeThumb' />
+						<command class_type='call' title='User Macro' macro='Prv_ResizeThumb' />
 					</flowline>
 				</macro>
 				<macro >
@@ -267,53 +268,53 @@ FCR_RETVAL = parseInt(obj.value);
 						<local name='f' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' >
 							<array size='3' />
 						</local>
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.GetWorldSize' >
+						<command class_type='sim' title='Built-in Function' macro='Panel.Position.GetWorldSize' >
 							<return exp='.f' />
 							<argument exp='shapeTrack' />
 						</command>
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.SetWorldSize' >
+						<command class_type='sim' title='Built-in Function' macro='Panel.Position.SetWorldSize' >
 							<argument exp='shapeThumb1' />
 							<argument exp='.f[1]*1.6' />
 							<argument exp='.f[1]*1.6' />
 							<argument exp='.f[2]' />
 						</command>
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.SetWorldSize' >
+						<command class_type='sim' title='Built-in Function' macro='Panel.Position.SetWorldSize' >
 							<argument exp='shapeShadow1' />
 							<argument exp='.f[1]*1.6' />
 							<argument exp='.f[1]*1.6' />
 							<argument exp='.f[2]' />
 						</command>
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.SetWorldSize' >
+						<command class_type='sim' title='Built-in Function' macro='Panel.Position.SetWorldSize' >
 							<argument exp='shapeThumb2' />
 							<argument exp='.f[1]*3.2' />
 							<argument exp='.f[1]*3.2' />
 							<argument exp='.f[2]' />
 						</command>
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.SetWorldSize' >
+						<command class_type='sim' title='Built-in Function' macro='Panel.Position.SetWorldSize' >
 							<argument exp='shapeShadow2' />
 							<argument exp='.f[1]*3.2' />
 							<argument exp='.f[1]*3.2' />
 							<argument exp='.f[2]' />
 						</command>
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.SetWorldSize' >
+						<command class_type='sim' title='Built-in Function' macro='Panel.Position.SetWorldSize' >
 							<argument exp='shapeThumb3' />
 							<argument exp='.f[1]*1.6' />
 							<argument exp='.f[1]*3.2' />
 							<argument exp='.f[2]' />
 						</command>
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.SetWorldSize' >
+						<command class_type='sim' title='Built-in Function' macro='Panel.Position.SetWorldSize' >
 							<argument exp='shapeShadow3' />
 							<argument exp='.f[1]*1.6' />
 							<argument exp='.f[1]*3.2' />
 							<argument exp='.f[2]' />
 						</command>
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.SetWorldSize' >
+						<command class_type='sim' title='Built-in Function' macro='Panel.Position.SetWorldSize' >
 							<argument exp='shapeThumb4' />
 							<argument exp='.f[1]*3.2' />
 							<argument exp='.f[1]*2.0' />
 							<argument exp='.f[2]' />
 						</command>
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.SetWorldSize' >
+						<command class_type='sim' title='Built-in Function' macro='Panel.Position.SetWorldSize' >
 							<argument exp='shapeShadow4' />
 							<argument exp='.f[1]*3.2' />
 							<argument exp='.f[1]*2.0' />
@@ -331,18 +332,18 @@ FCR_RETVAL = parseInt(obj.value);
 						</param>
 						<local name='StrDiff' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='StrLen' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Str = Mid$ (.Str,2,8)' />
 							<exp exp='.StrLen = Length$ (.Str)' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.StrLen &lt; 8' swap='0' >
+						<command class_type='decision' title='Decision' exp='.StrLen &lt; 8' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.StrDiff = 8 - .StrLen' />
 								</command>
-								<command class_type='loop' title='Loop' textarea='106,62,106,62' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='2' exp='.StrDiff' >
+								<command class_type='loop' title='Loop' textarea='106,62,106,62' type='2' exp='.StrDiff' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Str = &quot;0&quot; + .Str' />
 										</command>
 									</flowline>
@@ -350,10 +351,10 @@ FCR_RETVAL = parseInt(obj.value);
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Str = Right$ (.Str,6)' />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Return = Mid$ (.Str,4,2) + Mid$ (.Str,2,2) + Mid$ (.Str,0,2)' />
 						</command>
 					</flowline>
@@ -361,17 +362,17 @@ FCR_RETVAL = parseInt(obj.value);
 				<macro >
 					<flowline name='Ev_Property' description='Sent when a property has been changed by the User' statediag='0' >
 						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetWritable' >
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.SetWritable' >
 							<argument exp='this' />
 							<argument exp='&quot;colHover&quot;' />
 							<argument exp='(bAutoColour == 0)' />
 						</command>
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetWritable' >
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.SetWritable' >
 							<argument exp='this' />
 							<argument exp='&quot;colFocus&quot;' />
 							<argument exp='(bAutoColour == 0)' />
 						</command>
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetWritable' >
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.SetWritable' >
 							<argument exp='this' />
 							<argument exp='&quot;colShadow&quot;' />
 							<argument exp='(bAutoColour == 0)' />
@@ -415,14 +416,14 @@ FCR_RETVAL = parseInt(obj.value);
 						<local name='sBorderGrey' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
 						</local>
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.GetWorldSize' >
+						<command class_type='sim' title='Built-in Function' macro='Panel.Position.GetWorldSize' >
 							<return exp='.fSize' />
 							<argument exp='this' />
 						</command>
-						<command class_type='switch' title='Switch' textarea='36,25,36,25' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='iThumbStyle' >
+						<command class_type='switch' title='Switch' textarea='36,25,36,25' exp='iThumbStyle' >
 							<case >
 								<flowline >
-									<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<command class_type='calculation' title='Calculation' >
 										<exp exp='.fSize[1] = .fSize[1] * 0.75' />
 										<exp exp='.sSizeX = FloatToString$(.fSize[1],2)' />
 										<exp exp='.sSizeY = .sSizeX' />
@@ -432,7 +433,7 @@ FCR_RETVAL = parseInt(obj.value);
 							</case>
 							<case exp='1' >
 								<flowline >
-									<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<command class_type='calculation' title='Calculation' >
 										<exp exp='.fSize[1] = .fSize[1] * 1.5' />
 										<exp exp='.sSizeX = FloatToString$(.fSize[1],2)' />
 										<exp exp='.sSizeY = .sSizeX' />
@@ -442,7 +443,7 @@ FCR_RETVAL = parseInt(obj.value);
 							</case>
 							<case exp='2' >
 								<flowline >
-									<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<command class_type='calculation' title='Calculation' >
 										<exp exp='.fSize[0] = .fSize[1] * 0.7' />
 										<exp exp='.fSize[1] = .fSize[1] * 1.5' />
 										<exp exp='.sSizeX = FloatToString$(.fSize[0],2)' />
@@ -453,7 +454,7 @@ FCR_RETVAL = parseInt(obj.value);
 							</case>
 							<case exp='3' >
 								<flowline >
-									<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+									<command class_type='calculation' title='Calculation' >
 										<exp exp='.fSize[0] = .fSize[1] * 1.5' />
 										<exp exp='.fSize[1] = .fSize[1] * 1.0' />
 										<exp exp='.sSizeX = FloatToString$(.fSize[0],2)' />
@@ -463,45 +464,45 @@ FCR_RETVAL = parseInt(obj.value);
 								</flowline>
 							</case>
 						</command>
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetValue' >
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
 							<return exp='.iTemp' />
 							<argument exp='shapeThumb1' />
 							<argument exp='&quot;colOutline&quot;' />
 						</command>
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WebColourFromValue' >
+						<command class_type='call' title='User Macro' macro='WebColourFromValue' >
 							<return exp='.sBorder' />
 							<argument exp='.iTemp' />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.sBorderGrey = .sBorder' />
 						</command>
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetHoverColour' >
+						<command class_type='call' title='User Macro' macro='GetHoverColour' >
 							<return exp='.sBorderGrey' />
 							<argument exp='.sBorderGrey' />
 							<argument exp='0' />
 							<argument exp='1' />
 						</command>
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetValue' >
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
 							<return exp='.iTemp' />
 							<argument exp='shapeThumb1' />
 							<argument exp='&quot;iOutlineSize&quot;' />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.sBorder = ToString$(.iTemp) + &quot;px solid &quot; + .sBorder' />
 							<exp exp='.sBorderGrey = ToString$(.iTemp) + &quot;px solid &quot; + .sBorderGrey' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='bAutoColour' swap='0' >
+						<command class_type='decision' title='Decision' exp='bAutoColour' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetValue' >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
 									<return exp='.iTemp' />
 									<argument exp='shapeThumb1' />
 									<argument exp='&quot;colOutline&quot;' />
 								</command>
-								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WebColourFromValue' >
+								<command class_type='call' title='User Macro' macro='WebColourFromValue' >
 									<return exp='.sColour' />
 									<argument exp='.iTemp' />
 								</command>
-								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetHoverColour' >
+								<command class_type='call' title='User Macro' macro='GetHoverColour' >
 									<return exp='.sTemp' />
 									<argument exp='.sTemp' />
 									<argument exp='1' />
@@ -509,34 +510,34 @@ FCR_RETVAL = parseInt(obj.value);
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetValue' >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
 									<return exp='.iTemp' />
 									<argument exp='this' />
 									<argument exp='&quot;colShadow&quot;' />
 								</command>
-								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WebColourFromValue' >
+								<command class_type='call' title='User Macro' macro='WebColourFromValue' >
 									<return exp='.sTemp' />
 									<argument exp='.iTemp' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.sShadow = ToString$(iThumbShadow) + &quot;px &quot; + ToString$(iThumbShadow) + &quot;px &quot; + ToString$(iThumbShadow) + &quot;px &quot; + .sTemp' />
 						</command>
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetValue' >
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
 							<return exp='.iTemp' />
 							<argument exp='shapeThumb1' />
 							<argument exp='&quot;colFill&quot;' />
 						</command>
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WebColourFromValue' >
+						<command class_type='call' title='User Macro' macro='WebColourFromValue' >
 							<return exp='.sColour' />
 							<argument exp='.iTemp' />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.HeaderScript = &quot;&lt;/script&gt;\n&lt;style&gt;\n&quot;' />
 							<exp exp='' />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.HeaderScript = .HeaderScript + &quot;.obj&quot; + .CompID + &quot; {\n&quot;' />
 							<exp exp='.HeaderScript = .HeaderScript + &quot;    -webkit-appearance: none;\n&quot;' />
 							<exp exp='.HeaderScript = .HeaderScript + &quot;    width: inherit;\n&quot;' />
@@ -547,7 +548,7 @@ FCR_RETVAL = parseInt(obj.value);
 							<exp exp='.HeaderScript = .HeaderScript + &quot;}\n&quot;' />
 							<exp exp='' />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.HeaderScript = .HeaderScript + &quot;.obj&quot; + .CompID + &quot;::-webkit-slider-thumb {\n&quot;' />
 							<exp exp='.HeaderScript = .HeaderScript + &quot;    -webkit-appearance: none;\n&quot;' />
 							<exp exp='.HeaderScript = .HeaderScript + &quot;    appearance: none;\n&quot;' />
@@ -561,7 +562,7 @@ FCR_RETVAL = parseInt(obj.value);
 							<exp exp='.HeaderScript = .HeaderScript + &quot;}\n&quot;' />
 							<exp exp='' />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.HeaderScript = .HeaderScript + &quot;.obj&quot; + .CompID + &quot;::-moz-range-thumb {\n&quot;' />
 							<exp exp='.HeaderScript = .HeaderScript + &quot;    width: &quot; + .sSizeX + &quot;px;\n&quot;' />
 							<exp exp='.HeaderScript = .HeaderScript + &quot;    height: &quot; + .sSizeY + &quot;px;\n&quot;' />
@@ -573,9 +574,9 @@ FCR_RETVAL = parseInt(obj.value);
 							<exp exp='.HeaderScript = .HeaderScript + &quot;}\n&quot;' />
 							<exp exp='' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='bAutoColour' swap='0' >
+						<command class_type='decision' title='Decision' exp='bAutoColour' swap='0' >
 							<flowline >
-								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetHoverColour' >
+								<command class_type='call' title='User Macro' macro='GetHoverColour' >
 									<return exp='.sTemp' />
 									<argument exp='.sColour' />
 									<argument exp='0' />
@@ -583,60 +584,60 @@ FCR_RETVAL = parseInt(obj.value);
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetValue' >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
 									<return exp='.iTemp' />
 									<argument exp='this' />
 									<argument exp='&quot;colHover&quot;' />
 								</command>
-								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WebColourFromValue' >
+								<command class_type='call' title='User Macro' macro='WebColourFromValue' >
 									<return exp='.sTemp' />
 									<argument exp='.iTemp' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='calculation' title='Calculation' textarea='36,12,36,12' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' textarea='36,12,36,12' >
 							<exp exp='.HeaderScript = .HeaderScript + &quot;.obj&quot; + .CompID + &quot;:hover::-webkit-slider-thumb {\n&quot;' />
 							<exp exp='.HeaderScript = .HeaderScript + &quot;    background: &quot; + .sTemp + &quot;;\n&quot;' />
 							<exp exp='.HeaderScript = .HeaderScript + &quot;}\n&quot;' />
 							<exp exp='' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='bAutoColour' swap='0' >
+						<command class_type='decision' title='Decision' exp='bAutoColour' swap='0' >
 							<flowline >
-								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetHoverColour' >
+								<command class_type='call' title='User Macro' macro='GetHoverColour' >
 									<return exp='.sTemp' />
 									<argument exp='.sColour' />
 									<argument exp='0' />
 									<argument exp='0' />
 								</command>
-								<command class_type='calculation' title='Calculation' disable='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' disable='1' >
 									<exp exp='.sTemp = .sColour' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetValue' >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
 									<return exp='.iTemp' />
 									<argument exp='this' />
 									<argument exp='&quot;colHover&quot;' />
 								</command>
-								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='WebColourFromValue' >
+								<command class_type='call' title='User Macro' macro='WebColourFromValue' >
 									<return exp='.sTemp' />
 									<argument exp='.iTemp' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='calculation' title='Calculation' textarea='36,12,36,12' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' textarea='36,12,36,12' >
 							<exp exp='.HeaderScript = .HeaderScript + &quot;.obj&quot; + .CompID + &quot;:focus::-webkit-slider-thumb {\n&quot;' />
 							<exp exp='.HeaderScript = .HeaderScript + &quot;    background: &quot; + .sTemp + &quot;;\n&quot;' />
 							<exp exp='.HeaderScript = .HeaderScript + &quot;}\n&quot;' />
 							<exp exp='' />
 						</command>
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetHoverColour' >
+						<command class_type='call' title='User Macro' macro='GetHoverColour' >
 							<return exp='.sTemp' />
 							<argument exp='.sColour' />
 							<argument exp='0' />
 							<argument exp='1' />
 						</command>
-						<command class_type='calculation' title='Calculation' textarea='36,12,36,12' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' textarea='36,12,36,12' >
 							<exp exp='.HeaderScript = .HeaderScript + &quot;.obj&quot; + .CompID + &quot;:disabled::-webkit-slider-thumb {\n&quot;' />
 							<exp exp='.HeaderScript = .HeaderScript + &quot;    background: &quot; + .sColour + &quot;;\n&quot;' />
 							<exp exp='.HeaderScript = .HeaderScript + &quot;    //background: &quot; + .sTemp + &quot;;\n&quot; //grey the thumb' />
@@ -645,17 +646,17 @@ FCR_RETVAL = parseInt(obj.value);
 							<exp exp='.HeaderScript = .HeaderScript + &quot;}\n&quot;' />
 							<exp exp='' />
 						</command>
-						<command class_type='calculation' title='Calculation' textarea='36,12,36,12' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' textarea='36,12,36,12' >
 							<exp exp='.HeaderScript = .HeaderScript + &quot;.obj&quot; + .CompID + &quot;:disabled {\n&quot;' />
 							<exp exp='.HeaderScript = .HeaderScript + &quot;    cursor: not-allowed;\n&quot;' />
 							<exp exp='.HeaderScript = .HeaderScript + &quot;}\n&quot;' />
 							<exp exp='' />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.HeaderScript = .HeaderScript + &quot;&lt;/style&gt;\n&lt;script&gt;\n&quot;' />
 							<exp exp='' />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Return = 0' />
 						</command>
 					</flowline>
@@ -666,7 +667,7 @@ FCR_RETVAL = parseInt(obj.value);
 						<param name='Value' type='s32' description='The value for the slider' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='native' title='Javascript' ccode='var obj = document.getElementById(FC_THIS);
 obj.value = FCL_VALUE;
-' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+' language='C' />
 					</flowline>
 				</macro>
 				<macro >
@@ -691,66 +692,76 @@ obj.value = FCL_VALUE;
 							<array size='20' />
 						</local>
 						<local name='iTemp' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='1' setinit='1' />
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.GetWorldPosition' >
+						<command class_type='sim' title='Built-in Function' macro='Panel.Position.GetWorldPosition' >
 							<return exp='.fPos' />
 							<argument exp='this' />
 						</command>
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.GetWorldSize' >
+						<command class_type='sim' title='Built-in Function' macro='Panel.Position.GetWorldSize' >
 							<return exp='.fSize' />
 							<argument exp='this' />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.fSize[0] = .fSize[0] * 8.0' />
 							<exp exp='.fSize[1] = .fSize[1] * 0.8' />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.fPos[0] = .fPos[0] - (.fSize[0] / 2.0)' />
 							<exp exp='.fPos[1] = 0.0 - .fPos[1] - (.fSize[1] / 2.0)' />
 						</command>
-						<command class_type='comment' title='' comment='Comment' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='comment' title='' comment='Comment' textarea='12,0,12,0' />
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.BodyInfo = &quot;  &lt;div style=&apos;position:absolute; left:&quot; + FloatToString$ (.fPos[0],0) + &quot;px; top:&quot; + FloatToString$ (.fPos[1],0) + &quot;px;&quot;' />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.BodyInfo = .BodyInfo + &quot; width:&quot; + FloatToString$ (.fSize[0],0) + &quot;px; height:&quot; + FloatToString$ (.fSize[1],0) + &quot;px;&apos;&gt;\n&quot;' />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.sInfo = &quot; max=&apos;&quot; + ToString$ (iMax) + &quot;&apos; min=&apos;&quot; + ToString$ (iMin) + &quot;&apos; step=&apos;&quot; + ToString$ (iStep) + &quot;&apos; value=&apos;&quot; + ToString$ (iDefault) + &quot;&apos;&quot;' />
 						</command>
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.GetInteractive' >
+						<command class_type='sim' title='Built-in Function' macro='Component.GetInteractive' >
 							<return exp='.iTemp' />
 							<argument exp='this' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.iTemp' swap='1' >
+						<command class_type='decision' title='Decision' exp='.iTemp' swap='1' >
 							<flowline >
-								<command class_type='calculation' title='Set up information for the label' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Set up information for the label' >
 									<exp exp='.sInfo = .sInfo + &quot; disabled=true&quot;' />
 								</command>
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='calculation' title='Set up information for the label' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Set up information for the label' >
 							<exp exp='.BodyInfo = .BodyInfo + &quot;    &lt;input type=&apos;range&apos; id=&apos;&quot; + .CompID + &quot;&apos; name=&apos;&quot; + .CompID + &quot;&apos; class=&apos;obj&quot; + .CompID + &quot;&apos;&quot; + .sInfo' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='Length$ (sCustomAttributes) &gt; 0' swap='0' >
+						<command class_type='decision' title='Decision' exp='Length$ (sCustomAttributes) &gt; 0' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Set up information for the button and its OnClick event' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Set up information for the button and its OnClick event' >
 									<exp exp='.BodyInfo = .BodyInfo + &quot; &quot; + sCustomAttributes' />
 									<exp exp='' />
 								</command>
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='calculation' title='Set up information for the label' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Set up information for the label' >
 							<exp exp='.BodyInfo = .BodyInfo + &quot;&gt;\n&quot;' />
 							<exp exp='' />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.BodyInfo = .BodyInfo + &quot;  &lt;/div&gt;&quot;' />
 						</command>
-						<command class_type='calculation' title='Set return to zero to ensure text is added to html file' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Set return to zero to ensure text is added to html file' >
 							<exp exp='.Return = 0' />
 						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Initialising' description='Initialisation routine before the component is linked to its parent' statediag='0' >
+						<return name='Return' type='u32' description='Non-zero to prevent initialisation' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='User Macro' macro='Pvr_EnsurePropUpdated' >
+							<argument exp='&quot;iThumbStyle&quot;' />
+							<argument exp='&quot;-1&quot;' />
+						</command>
+						<command class_type='call' title='User Macro' macro='Prv_RecolourThumb' />
 					</flowline>
 				</macro>
 				<macro >
@@ -771,41 +782,41 @@ obj.value = FCL_VALUE;
 						<local name='sTemp' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
 						</local>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.iRedrawThumb = 0' />
 							<exp exp='.bRecolourThumb = 0' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='Compare$(.Property,&quot;shapeThumb1::colFill&quot;,0) == 0' swap='0' >
+						<command class_type='decision' title='Decision' exp='Compare$(.Property,&quot;shapeThumb1::colFill&quot;,0) == 0' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.bRecolourThumb = 1' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='Compare$(.Property,&quot;shapeThumb1::colOutline&quot;,0) == 0' swap='0' >
+								<command class_type='decision' title='Decision' exp='Compare$(.Property,&quot;shapeThumb1::colOutline&quot;,0) == 0' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.bRecolourThumb = 1' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='Compare$(.Property,&quot;colShadow&quot;,0) == 0' swap='0' >
+										<command class_type='decision' title='Decision' exp='Compare$(.Property,&quot;colShadow&quot;,0) == 0' swap='0' >
 											<flowline >
-												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<command class_type='calculation' title='Calculation' >
 													<exp exp='.bRecolourThumb = 1' />
 												</command>
 											</flowline>
 											<flowline >
-												<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='Compare$(.Property,&quot;bAutoColour&quot;,0) == 0' swap='0' >
+												<command class_type='decision' title='Decision' exp='Compare$(.Property,&quot;bAutoColour&quot;,0) == 0' swap='0' >
 													<flowline >
-														<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+														<command class_type='calculation' title='Calculation' >
 															<exp exp='.bRecolourThumb = 1' />
 														</command>
 													</flowline>
 													<flowline >
-														<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='Compare$(.Property,&quot;shapeThumb1::iOutlineSize&quot;,0) == 0' swap='0' >
+														<command class_type='decision' title='Decision' exp='Compare$(.Property,&quot;shapeThumb1::iOutlineSize&quot;,0) == 0' swap='0' >
 															<flowline >
-																<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+																<command class_type='calculation' title='Calculation' >
 																	<exp exp='.bRecolourThumb = 1' />
 																</command>
 															</flowline>
@@ -819,21 +830,21 @@ obj.value = FCL_VALUE;
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' totalfolded='1' exp='Compare$(.Property,&quot;iThumbStyle&quot;,0) == 0' swap='0' >
+						<command class_type='decision' title='Decision' totalfolded='1' exp='Compare$(.Property,&quot;iThumbStyle&quot;,0) == 0' swap='0' >
 							<flowline folded='1' totalfolded='1' >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' >
+								<command class_type='calculation' title='Calculation' hiddenFromFold='1' >
 									<exp exp='.iRedrawThumb = StringToInt$(.Value) + 1' />
 								</command>
 							</flowline>
 							<flowline folded='1' totalfolded='1' >
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' exp='Compare$(.Property,&quot;iThumbShadow&quot;,0) == 0' swap='0' >
+								<command class_type='decision' title='Decision' hiddenFromFold='1' exp='Compare$(.Property,&quot;iThumbShadow&quot;,0) == 0' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Component.Property.GetValue' >
+										<command class_type='sim' title='Built-in Function' hiddenFromFold='1' macro='Component.Property.GetValue' >
 											<return exp='.iVal' />
 											<argument exp='this' />
 											<argument exp='&quot;iThumbStyle&quot;' />
 										</command>
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' >
+										<command class_type='calculation' title='Calculation' hiddenFromFold='1' >
 											<exp exp='.iRedrawThumb = .iVal + 1' />
 										</command>
 									</flowline>
@@ -841,77 +852,77 @@ obj.value = FCL_VALUE;
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' totalfolded='1' exp='.iRedrawThumb &gt; 0' swap='0' >
+						<command class_type='decision' title='Decision' totalfolded='1' exp='.iRedrawThumb &gt; 0' swap='0' >
 							<flowline folded='1' totalfolded='1' >
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Component.SetVisible' >
+								<command class_type='sim' title='Built-in Function' hiddenFromFold='1' macro='Component.SetVisible' >
 									<argument exp='shapeThumb1' />
 									<argument exp='.iRedrawThumb == 1' />
 								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Component.SetVisible' >
+								<command class_type='sim' title='Built-in Function' hiddenFromFold='1' macro='Component.SetVisible' >
 									<argument exp='shapeThumb2' />
 									<argument exp='.iRedrawThumb == 2' />
 								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Component.SetVisible' >
+								<command class_type='sim' title='Built-in Function' hiddenFromFold='1' macro='Component.SetVisible' >
 									<argument exp='shapeThumb3' />
 									<argument exp='.iRedrawThumb == 3' />
 								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Component.SetVisible' >
+								<command class_type='sim' title='Built-in Function' hiddenFromFold='1' macro='Component.SetVisible' >
 									<argument exp='shapeThumb4' />
 									<argument exp='.iRedrawThumb == 4' />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' totalfolded='1' hiddenFromFold='1' exp='iThumbShadow &gt; 0' swap='0' >
+								<command class_type='decision' title='Decision' totalfolded='1' hiddenFromFold='1' exp='iThumbShadow &gt; 0' swap='0' >
 									<flowline folded='1' totalfolded='1' >
-										<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Component.SetVisible' >
+										<command class_type='sim' title='Built-in Function' hiddenFromFold='1' macro='Component.SetVisible' >
 											<argument exp='shapeShadow1' />
 											<argument exp='.iRedrawThumb == 1' />
 										</command>
-										<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Component.SetVisible' >
+										<command class_type='sim' title='Built-in Function' hiddenFromFold='1' macro='Component.SetVisible' >
 											<argument exp='shapeShadow2' />
 											<argument exp='.iRedrawThumb == 2' />
 										</command>
-										<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Component.SetVisible' >
+										<command class_type='sim' title='Built-in Function' hiddenFromFold='1' macro='Component.SetVisible' >
 											<argument exp='shapeShadow3' />
 											<argument exp='.iRedrawThumb == 3' />
 										</command>
-										<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Component.SetVisible' >
+										<command class_type='sim' title='Built-in Function' hiddenFromFold='1' macro='Component.SetVisible' >
 											<argument exp='shapeShadow4' />
 											<argument exp='.iRedrawThumb == 4' />
 										</command>
-										<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Panel.Position.GetWorldPosition' >
+										<command class_type='sim' title='Built-in Function' hiddenFromFold='1' macro='Panel.Position.GetWorldPosition' >
 											<return exp='.f' />
 											<argument exp='shapeThumb1' />
 										</command>
-										<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Panel.Position.SetWorldPosition' >
+										<command class_type='sim' title='Built-in Function' hiddenFromFold='1' macro='Panel.Position.SetWorldPosition' >
 											<argument exp='shapeShadow1' />
 											<argument exp='.f[0]+iThumbShadow' />
 											<argument exp='.f[1]-iThumbShadow' />
 											<argument exp='.f[2]' />
 										</command>
-										<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Panel.Position.GetWorldPosition' >
+										<command class_type='sim' title='Built-in Function' hiddenFromFold='1' macro='Panel.Position.GetWorldPosition' >
 											<return exp='.f' />
 											<argument exp='shapeThumb2' />
 										</command>
-										<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Panel.Position.SetWorldPosition' >
+										<command class_type='sim' title='Built-in Function' hiddenFromFold='1' macro='Panel.Position.SetWorldPosition' >
 											<argument exp='shapeShadow2' />
 											<argument exp='.f[0]+iThumbShadow' />
 											<argument exp='.f[1]-iThumbShadow' />
 											<argument exp='.f[2]' />
 										</command>
-										<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Panel.Position.GetWorldPosition' >
+										<command class_type='sim' title='Built-in Function' hiddenFromFold='1' macro='Panel.Position.GetWorldPosition' >
 											<return exp='.f' />
 											<argument exp='shapeThumb3' />
 										</command>
-										<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Panel.Position.SetWorldPosition' >
+										<command class_type='sim' title='Built-in Function' hiddenFromFold='1' macro='Panel.Position.SetWorldPosition' >
 											<argument exp='shapeShadow3' />
 											<argument exp='.f[0]+iThumbShadow' />
 											<argument exp='.f[1]-iThumbShadow' />
 											<argument exp='.f[2]' />
 										</command>
-										<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Panel.Position.GetWorldPosition' >
+										<command class_type='sim' title='Built-in Function' hiddenFromFold='1' macro='Panel.Position.GetWorldPosition' >
 											<return exp='.f' />
 											<argument exp='shapeThumb4' />
 										</command>
-										<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Panel.Position.SetWorldPosition' >
+										<command class_type='sim' title='Built-in Function' hiddenFromFold='1' macro='Panel.Position.SetWorldPosition' >
 											<argument exp='shapeShadow4' />
 											<argument exp='.f[0]+iThumbShadow' />
 											<argument exp='.f[1]-iThumbShadow' />
@@ -919,19 +930,19 @@ obj.value = FCL_VALUE;
 										</command>
 									</flowline>
 									<flowline folded='1' totalfolded='1' >
-										<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Component.SetVisible' >
+										<command class_type='sim' title='Built-in Function' hiddenFromFold='1' macro='Component.SetVisible' >
 											<argument exp='shapeShadow1' />
 											<argument exp='0' />
 										</command>
-										<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Component.SetVisible' >
+										<command class_type='sim' title='Built-in Function' hiddenFromFold='1' macro='Component.SetVisible' >
 											<argument exp='shapeShadow2' />
 											<argument exp='0' />
 										</command>
-										<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Component.SetVisible' >
+										<command class_type='sim' title='Built-in Function' hiddenFromFold='1' macro='Component.SetVisible' >
 											<argument exp='shapeShadow3' />
 											<argument exp='0' />
 										</command>
-										<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Component.SetVisible' >
+										<command class_type='sim' title='Built-in Function' hiddenFromFold='1' macro='Component.SetVisible' >
 											<argument exp='shapeShadow4' />
 											<argument exp='0' />
 										</command>
@@ -940,120 +951,11 @@ obj.value = FCL_VALUE;
 							</flowline>
 							<flowline folded='1' totalfolded='1' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' totalfolded='1' exp='.bRecolourThumb' swap='0' >
-							<flowline folded='1' totalfolded='1' >
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Component.Property.GetValue' >
-									<return exp='.sTemp' />
-									<argument exp='shapeThumb1' />
-									<argument exp='&quot;colOutline&quot;' />
-								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Component.Property.SetValue' >
-									<argument exp='shapeThumb2' />
-									<argument exp='&quot;colOutline&quot;' />
-									<argument exp='.sTemp' />
-								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Component.Property.SetValue' >
-									<argument exp='shapeThumb3' />
-									<argument exp='&quot;colOutline&quot;' />
-									<argument exp='.sTemp' />
-								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Component.Property.SetValue' >
-									<argument exp='shapeThumb4' />
-									<argument exp='&quot;colOutline&quot;' />
-									<argument exp='.sTemp' />
-								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Component.Property.GetValue' >
-									<return exp='.sTemp' />
-									<argument exp='shapeThumb1' />
-									<argument exp='&quot;colFill&quot;' />
-								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Component.Property.SetValue' >
-									<argument exp='shapeThumb2' />
-									<argument exp='&quot;colFill&quot;' />
-									<argument exp='.sTemp' />
-								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Component.Property.SetValue' >
-									<argument exp='shapeThumb3' />
-									<argument exp='&quot;colFill&quot;' />
-									<argument exp='.sTemp' />
-								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Component.Property.SetValue' >
-									<argument exp='shapeThumb4' />
-									<argument exp='&quot;colFill&quot;' />
-									<argument exp='.sTemp' />
-								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Component.Property.GetValue' >
-									<return exp='.sTemp' />
-									<argument exp='shapeThumb1' />
-									<argument exp='&quot;iOutlineSize&quot;' />
-								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Component.Property.SetValue' >
-									<argument exp='shapeThumb2' />
-									<argument exp='&quot;iOutlineSize&quot;' />
-									<argument exp='.sTemp' />
-								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Component.Property.SetValue' >
-									<argument exp='shapeThumb3' />
-									<argument exp='&quot;iOutlineSize&quot;' />
-									<argument exp='.sTemp' />
-								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Component.Property.SetValue' >
-									<argument exp='shapeThumb4' />
-									<argument exp='&quot;iOutlineSize&quot;' />
-									<argument exp='.sTemp' />
-								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' exp='bAutoColour' swap='0' >
-									<flowline >
-										<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Component.Property.GetValue' >
-											<return exp='.iVal' />
-											<argument exp='shapeThumb1' />
-											<argument exp='&quot;colOutline&quot;' />
-										</command>
-										<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='WebColourFromValue' >
-											<return exp='.sTemp' />
-											<argument exp='.iVal' />
-										</command>
-										<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='GetHoverColour' >
-											<return exp='.sTemp' />
-											<argument exp='.sTemp' />
-											<argument exp='1' />
-											<argument exp='0' />
-										</command>
-										<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='GetColFromWebCol' >
-											<return exp='.sTemp' />
-											<argument exp='.sTemp' />
-										</command>
-									</flowline>
-									<flowline >
-										<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Component.Property.GetValue' >
-											<return exp='.sTemp' />
-											<argument exp='this' />
-											<argument exp='&quot;colShadow&quot;' />
-										</command>
-									</flowline>
-								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Component.Property.SetValue' >
-									<argument exp='shapeShadow1' />
-									<argument exp='&quot;colFill&quot;' />
-									<argument exp='.sTemp' />
-								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Component.Property.SetValue' >
-									<argument exp='shapeShadow2' />
-									<argument exp='&quot;colFill&quot;' />
-									<argument exp='.sTemp' />
-								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Component.Property.SetValue' >
-									<argument exp='shapeShadow3' />
-									<argument exp='&quot;colFill&quot;' />
-									<argument exp='.sTemp' />
-								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' macro='Component.Property.SetValue' >
-									<argument exp='shapeShadow4' />
-									<argument exp='&quot;colFill&quot;' />
-									<argument exp='.sTemp' />
-								</command>
+						<command class_type='decision' title='Decision' exp='.bRecolourThumb' swap='0' >
+							<flowline >
+								<command class_type='call' title='User Macro' macro='Prv_RecolourThumb' />
 							</flowline>
-							<flowline folded='1' totalfolded='1' />
+							<flowline />
 						</command>
 					</flowline>
 				</macro>
@@ -1070,7 +972,7 @@ else
 {
   obj.disabled = true;
 }
-' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+' language='C' />
 					</flowline>
 				</macro>
 				<macro >
@@ -1091,32 +993,32 @@ else
 						</local>
 						<local name='i' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='fTemp' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.sBaseCol[0] == &apos;#&apos;' swap='0' >
+						<command class_type='decision' title='Decision' exp='.sBaseCol[0] == &apos;#&apos;' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.s = Mid$(.sBaseCol,1,2)' />
 								</command>
-								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='HexToByte' >
+								<command class_type='call' title='User Macro' macro='HexToByte' >
 									<return exp='.rgb[0]' />
 									<argument exp='.s' />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.s = Mid$(.sBaseCol,3,2)' />
 								</command>
-								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='HexToByte' >
+								<command class_type='call' title='User Macro' macro='HexToByte' >
 									<return exp='.rgb[1]' />
 									<argument exp='.s' />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.s = Mid$(.sBaseCol,5,2)' />
 								</command>
-								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='HexToByte' >
+								<command class_type='call' title='User Macro' macro='HexToByte' >
 									<return exp='.rgb[2]' />
 									<argument exp='.s' />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.bGreyScale' swap='0' >
+								<command class_type='decision' title='Decision' exp='.bGreyScale' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.fTemp = (.rgb[0] * 0.3) + (.rgb[1] * 0.59) + (.rgb[2] * 0.11)' />
 											<exp exp='.rgb[0] = .fTemp' />
 											<exp exp='.rgb[1] = .fTemp' />
@@ -1124,49 +1026,49 @@ else
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.i = 0' />
 										</command>
-										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' totalfolded='1' exp='.bShadow || (((.rgb[0] + .rgb[1] + .rgb[2]) / 3) &gt;= 0x80)' swap='0' >
+										<command class_type='decision' title='Decision' totalfolded='1' exp='.bShadow || (((.rgb[0] + .rgb[1] + .rgb[2]) / 3) &gt;= 0x80)' swap='0' >
 											<flowline folded='1' totalfolded='1' >
-												<command class_type='comment' title='' comment='Make darker' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' />
-												<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' type='0' exp='.i &lt; 3' >
+												<command class_type='comment' title='' comment='Make darker' textarea='12,0,12,0' hiddenFromFold='1' />
+												<command class_type='loop' title='Loop' hiddenFromFold='1' type='0' exp='.i &lt; 3' >
 													<flowline >
-														<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' exp='.rgb[.i] &gt; 32' swap='0' >
+														<command class_type='decision' title='Decision' hiddenFromFold='1' exp='.rgb[.i] &gt; 32' swap='0' >
 															<flowline >
-																<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' >
+																<command class_type='calculation' title='Calculation' hiddenFromFold='1' >
 																	<exp exp='.rgb[.i] = .rgb[.i] - 32' />
 																</command>
 															</flowline>
 															<flowline >
-																<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' >
+																<command class_type='calculation' title='Calculation' hiddenFromFold='1' >
 																	<exp exp='.rgb[.i] = 0' />
 																</command>
 															</flowline>
 														</command>
-														<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' >
+														<command class_type='calculation' title='Calculation' hiddenFromFold='1' >
 															<exp exp='.i = .i + 1' />
 														</command>
 													</flowline>
 												</command>
 											</flowline>
 											<flowline folded='1' totalfolded='1' >
-												<command class_type='comment' title='' comment='Make lighter' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' />
-												<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' type='0' exp='.i &lt; 3' >
+												<command class_type='comment' title='' comment='Make lighter' textarea='12,0,12,0' hiddenFromFold='1' />
+												<command class_type='loop' title='Loop' hiddenFromFold='1' type='0' exp='.i &lt; 3' >
 													<flowline >
-														<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' exp='.rgb[.i] &lt; 191' swap='0' >
+														<command class_type='decision' title='Decision' hiddenFromFold='1' exp='.rgb[.i] &lt; 191' swap='0' >
 															<flowline >
-																<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' >
+																<command class_type='calculation' title='Calculation' hiddenFromFold='1' >
 																	<exp exp='.rgb[.i] = .rgb[.i] + 64' />
 																</command>
 															</flowline>
 															<flowline >
-																<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' >
+																<command class_type='calculation' title='Calculation' hiddenFromFold='1' >
 																	<exp exp='.rgb[.i] = 255' />
 																</command>
 															</flowline>
 														</command>
-														<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' hiddenFromFold='1' >
+														<command class_type='calculation' title='Calculation' hiddenFromFold='1' >
 															<exp exp='.i = .i + 1' />
 														</command>
 													</flowline>
@@ -1175,31 +1077,31 @@ else
 										</command>
 									</flowline>
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.i = 0' />
 									<exp exp='.Return = &quot;#&quot;' />
 								</command>
-								<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.i &lt; 3' >
+								<command class_type='loop' title='Loop' type='0' exp='.i &lt; 3' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.s = NumberToHex$ (.rgb[.i])' />
 											<exp exp='.Return = .Return + Right$ (.s,2)' />
 										</command>
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.i = .i + 1' />
 										</command>
 									</flowline>
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.bShadow' swap='0' >
+								<command class_type='decision' title='Decision' exp='.bShadow' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Return = &quot;#404040&quot;' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Return = .sBaseCol' />
 										</command>
 									</flowline>
@@ -1223,61 +1125,180 @@ else
 						</local>
 						<local name='char' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='mult' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.sWebColour[0] == &apos;#&apos;' swap='0' >
+						<command class_type='decision' title='Decision' exp='.sWebColour[0] == &apos;#&apos;' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Return = Mid$(.sWebColour,5,2) + Mid$(.sWebColour,3,2) + Mid$(.sWebColour,1,2)' />
 									<exp exp='.Return = ToUpper$(.Return)' />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.i = 5' />
 									<exp exp='.mult = 1' />
 									<exp exp='.iWorking = 0' />
 								</command>
-								<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='2' exp='6' >
+								<command class_type='loop' title='Loop' type='2' exp='6' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.char = .Return[.i]' />
 										</command>
-										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='(.char &gt;= &apos;A&apos;) &amp;&amp; (.char &lt;= &apos;F&apos;)' swap='0' >
+										<command class_type='decision' title='Decision' exp='(.char &gt;= &apos;A&apos;) &amp;&amp; (.char &lt;= &apos;F&apos;)' swap='0' >
 											<flowline >
-												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<command class_type='calculation' title='Calculation' >
 													<exp exp='.char = .char - &apos;A&apos; + 10' />
 												</command>
 											</flowline>
 											<flowline >
-												<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='(.char &gt;= &apos;0&apos;) &amp;&amp; (.char &lt;= &apos;9&apos;)' swap='0' >
+												<command class_type='decision' title='Decision' exp='(.char &gt;= &apos;0&apos;) &amp;&amp; (.char &lt;= &apos;9&apos;)' swap='0' >
 													<flowline >
-														<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+														<command class_type='calculation' title='Calculation' >
 															<exp exp='.char = .char - &apos;0&apos;' />
 														</command>
 													</flowline>
 													<flowline >
-														<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+														<command class_type='calculation' title='Calculation' >
 															<exp exp='.char = 0 //Error!' />
 														</command>
 													</flowline>
 												</command>
 											</flowline>
 										</command>
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.iWorking = .iWorking + (.char * .mult)' />
 										</command>
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.i = .i - 1' />
 											<exp exp='.mult = .mult * 16' />
 										</command>
 									</flowline>
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Return = ToString$(.iWorking)' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Return = &quot;-1&quot; //assume transparent' />
 								</command>
 							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Prv_RecolourThumb' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<local name='sTemp' type='T8' description='' isconst='0' isHidden='0' isinit='1' usrinit='&quot;&quot;' setinit='&quot;&quot;' >
+							<array size='2000' />
+						</local>
+						<local name='iVal' type='s32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
+							<return exp='.sTemp' />
+							<argument exp='shapeThumb1' />
+							<argument exp='&quot;colOutline&quot;' />
+						</command>
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+							<argument exp='shapeThumb2' />
+							<argument exp='&quot;colOutline&quot;' />
+							<argument exp='.sTemp' />
+						</command>
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+							<argument exp='shapeThumb3' />
+							<argument exp='&quot;colOutline&quot;' />
+							<argument exp='.sTemp' />
+						</command>
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+							<argument exp='shapeThumb4' />
+							<argument exp='&quot;colOutline&quot;' />
+							<argument exp='.sTemp' />
+						</command>
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
+							<return exp='.sTemp' />
+							<argument exp='shapeThumb1' />
+							<argument exp='&quot;colFill&quot;' />
+						</command>
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+							<argument exp='shapeThumb2' />
+							<argument exp='&quot;colFill&quot;' />
+							<argument exp='.sTemp' />
+						</command>
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+							<argument exp='shapeThumb3' />
+							<argument exp='&quot;colFill&quot;' />
+							<argument exp='.sTemp' />
+						</command>
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+							<argument exp='shapeThumb4' />
+							<argument exp='&quot;colFill&quot;' />
+							<argument exp='.sTemp' />
+						</command>
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
+							<return exp='.sTemp' />
+							<argument exp='shapeThumb1' />
+							<argument exp='&quot;iOutlineSize&quot;' />
+						</command>
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+							<argument exp='shapeThumb2' />
+							<argument exp='&quot;iOutlineSize&quot;' />
+							<argument exp='.sTemp' />
+						</command>
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+							<argument exp='shapeThumb3' />
+							<argument exp='&quot;iOutlineSize&quot;' />
+							<argument exp='.sTemp' />
+						</command>
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+							<argument exp='shapeThumb4' />
+							<argument exp='&quot;iOutlineSize&quot;' />
+							<argument exp='.sTemp' />
+						</command>
+						<command class_type='decision' title='Decision' exp='bAutoColour' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
+									<return exp='.iVal' />
+									<argument exp='shapeThumb1' />
+									<argument exp='&quot;colOutline&quot;' />
+								</command>
+								<command class_type='call' title='User Macro' macro='WebColourFromValue' >
+									<return exp='.sTemp' />
+									<argument exp='.iVal' />
+								</command>
+								<command class_type='call' title='User Macro' macro='GetHoverColour' >
+									<return exp='.sTemp' />
+									<argument exp='.sTemp' />
+									<argument exp='1' />
+									<argument exp='0' />
+								</command>
+								<command class_type='call' title='User Macro' macro='GetColFromWebCol' >
+									<return exp='.sTemp' />
+									<argument exp='.sTemp' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
+									<return exp='.sTemp' />
+									<argument exp='this' />
+									<argument exp='&quot;colShadow&quot;' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+							<argument exp='shapeShadow1' />
+							<argument exp='&quot;colFill&quot;' />
+							<argument exp='.sTemp' />
+						</command>
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+							<argument exp='shapeShadow2' />
+							<argument exp='&quot;colFill&quot;' />
+							<argument exp='.sTemp' />
+						</command>
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+							<argument exp='shapeShadow3' />
+							<argument exp='&quot;colFill&quot;' />
+							<argument exp='.sTemp' />
+						</command>
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+							<argument exp='shapeShadow4' />
+							<argument exp='&quot;colFill&quot;' />
+							<argument exp='.sTemp' />
 						</command>
 					</flowline>
 				</macro>
@@ -1287,20 +1308,51 @@ else
 						<param name='Component' type='h32' description='The component that has been altered' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='PrevPos' type='h32' description='The position of the object before the start of positioning' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Final' type='b1' description='True if this is the end of a drag operation' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_ResizeThumb' />
+						<command class_type='call' title='User Macro' macro='Prv_ResizeThumb' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Pvr_EnsurePropUpdated' description='Ensures a property is updated correctly by switching values' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='sProperty' type='T8' description='The property to update' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='2000' />
+						</param>
+						<param name='sTempVal' type='T8' description='A temporary value to use' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='2000' />
+						</param>
+						<local name='sVal' type='T8' description='' isconst='0' isHidden='0' isinit='1' usrinit='&quot;&quot;' setinit='&quot;&quot;' >
+							<array size='2000' />
+						</local>
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
+							<return exp='.sVal' />
+							<argument exp='this' />
+							<argument exp='.sProperty' />
+						</command>
+						<command class_type='sim' title='Force to an unusual value so that the change is registered' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='.sProperty' />
+							<argument exp='.sTempVal' />
+						</command>
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='.sProperty' />
+							<argument exp='.sVal' />
+						</command>
 					</flowline>
 				</macro>
 				<macro >
 					<flowline name='Main' description='' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_PropertyEx' >
+						<command class_type='comment' title='' comment='Component Version Information
+2, 1.0, 19-02-26, ST, Fixed font size property during Ev_Initialising;' textarea='12,0,12,0' />
+						<command class_type='call' title='User Macro' macro='Ev_PropertyEx' >
 							<argument exp='&quot;bAutoColour&quot;' />
 							<argument exp='&quot;&quot;' />
 						</command>
 					</flowline>
 				</macro>
 			</macros>
-			<component class_type='GdiShape' codename='shapeThumb1' panelId='0' x='90' y='-20' z='5' xsz='6.25' ysz='6.25' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='2' poslock='9' comp2dType='46' >
+			<component class_type='GdiShape' codename='shapeThumb1' panelId='0' x='90' y='-20' z='5' xsz='6.25' ysz='6.25' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='2' poslock='9' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='46' >
 				<resources />
 				<properties />
 				<values >
@@ -1319,13 +1371,16 @@ else
 					<value target='colOutlineGradient' data='0' />
 					<value target='nOutlineStyle' data='0' />
 					<value target='nOutlineOpacity' data='1.0' />
+					<value target='bTooltipEnable' data='0' />
+					<value target='sTooltipText' data='' />
+					<value target='sTooltipDesc' data='' />
 				</values>
 				<events />
 				<apis />
 				<variables />
 				<macros />
 			</component>
-			<component class_type='ref' guid='2b8bf5a1-2d66-44fe-8023-cb41c33d1add' vmin='1' vmaj='0' codename='shapeTrack' panelId='0' x='110' y='-20' z='0' xsz='125' ysz='12.5' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='2' poslock='0' comp2dType='0' >
+			<component class_type='ref' guid='2b8bf5a1-2d66-44fe-8023-cb41c33d1add' vmin='1' vmaj='0' codename='shapeTrack' panelId='0' x='110' y='-20' z='0' xsz='125' ysz='12.5' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='2' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
@@ -1346,7 +1401,7 @@ else
 				<variables />
 				<macros />
 			</component>
-			<component class_type='GdiShape' codename='shapeThumb3' panelId='0' x='90' y='-20' z='6' xsz='6.25' ysz='12.5' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='1' solid='1' layer='2' poslock='8' comp2dType='46' >
+			<component class_type='GdiShape' codename='shapeThumb3' panelId='0' x='90' y='-20' z='6' xsz='6.25' ysz='12.5' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='1' solid='1' layer='2' poslock='8' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='46' >
 				<resources />
 				<properties />
 				<values >
@@ -1365,13 +1420,16 @@ else
 					<value target='colOutlineGradient' data='0' />
 					<value target='nOutlineStyle' data='0' />
 					<value target='nOutlineOpacity' data='1.0' />
+					<value target='bTooltipEnable' data='0' />
+					<value target='sTooltipText' data='' />
+					<value target='sTooltipDesc' data='' />
 				</values>
 				<events />
 				<apis />
 				<variables />
 				<macros />
 			</component>
-			<component class_type='GdiShape' codename='shapeThumb4' panelId='0' x='90' y='-20' z='7' xsz='12.5' ysz='7.8125' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='1' solid='1' layer='2' poslock='8' comp2dType='46' >
+			<component class_type='GdiShape' codename='shapeThumb4' panelId='0' x='90' y='-20' z='7' xsz='12.5' ysz='7.8125' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='1' solid='1' layer='2' poslock='8' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='46' >
 				<resources />
 				<properties />
 				<values >
@@ -1390,13 +1448,16 @@ else
 					<value target='colOutlineGradient' data='0' />
 					<value target='nOutlineStyle' data='0' />
 					<value target='nOutlineOpacity' data='1.0' />
+					<value target='bTooltipEnable' data='0' />
+					<value target='sTooltipText' data='' />
+					<value target='sTooltipDesc' data='' />
 				</values>
 				<events />
 				<apis />
 				<variables />
 				<macros />
 			</component>
-			<component class_type='GdiShape' codename='shapeThumb2' panelId='0' x='90' y='-20' z='8' xsz='12.5' ysz='12.5' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='1' solid='1' layer='2' poslock='9' comp2dType='46' >
+			<component class_type='GdiShape' codename='shapeThumb2' panelId='0' x='90' y='-20' z='8' xsz='12.5' ysz='12.5' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='1' solid='1' layer='2' poslock='9' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='46' >
 				<resources />
 				<properties />
 				<values >
@@ -1415,13 +1476,16 @@ else
 					<value target='colOutlineGradient' data='0' />
 					<value target='nOutlineStyle' data='0' />
 					<value target='nOutlineOpacity' data='1.0' />
+					<value target='bTooltipEnable' data='0' />
+					<value target='sTooltipText' data='' />
+					<value target='sTooltipDesc' data='' />
 				</values>
 				<events />
 				<apis />
 				<variables />
 				<macros />
 			</component>
-			<component class_type='GdiShape' codename='shapeShadow4' panelId='0' x='91' y='-21' z='1' xsz='12.5' ysz='7.8125' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='1' solid='1' layer='2' poslock='8' comp2dType='46' >
+			<component class_type='GdiShape' codename='shapeShadow4' panelId='0' x='91' y='-21' z='1' xsz='12.5' ysz='7.8125' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='1' solid='1' layer='2' poslock='8' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='46' >
 				<resources />
 				<properties />
 				<values >
@@ -1440,13 +1504,16 @@ else
 					<value target='colOutlineGradient' data='0' />
 					<value target='nOutlineStyle' data='0' />
 					<value target='nOutlineOpacity' data='1.0' />
+					<value target='bTooltipEnable' data='0' />
+					<value target='sTooltipText' data='' />
+					<value target='sTooltipDesc' data='' />
 				</values>
 				<events />
 				<apis />
 				<variables />
 				<macros />
 			</component>
-			<component class_type='GdiShape' codename='shapeShadow2' panelId='0' x='91' y='-21' z='2' xsz='12.5' ysz='12.5' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='1' solid='1' layer='2' poslock='9' comp2dType='46' >
+			<component class_type='GdiShape' codename='shapeShadow2' panelId='0' x='91' y='-21' z='2' xsz='12.5' ysz='12.5' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='1' solid='1' layer='2' poslock='9' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='46' >
 				<resources />
 				<properties />
 				<values >
@@ -1465,13 +1532,16 @@ else
 					<value target='colOutlineGradient' data='0' />
 					<value target='nOutlineStyle' data='0' />
 					<value target='nOutlineOpacity' data='1.0' />
+					<value target='bTooltipEnable' data='0' />
+					<value target='sTooltipText' data='' />
+					<value target='sTooltipDesc' data='' />
 				</values>
 				<events />
 				<apis />
 				<variables />
 				<macros />
 			</component>
-			<component class_type='GdiShape' codename='shapeShadow3' panelId='0' x='91' y='-21' z='3' xsz='6.25' ysz='12.5' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='1' solid='1' layer='2' poslock='8' comp2dType='46' >
+			<component class_type='GdiShape' codename='shapeShadow3' panelId='0' x='91' y='-21' z='3' xsz='6.25' ysz='12.5' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='1' solid='1' layer='2' poslock='8' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='46' >
 				<resources />
 				<properties />
 				<values >
@@ -1490,13 +1560,16 @@ else
 					<value target='colOutlineGradient' data='0' />
 					<value target='nOutlineStyle' data='0' />
 					<value target='nOutlineOpacity' data='1.0' />
+					<value target='bTooltipEnable' data='0' />
+					<value target='sTooltipText' data='' />
+					<value target='sTooltipDesc' data='' />
 				</values>
 				<events />
 				<apis />
 				<variables />
 				<macros />
 			</component>
-			<component class_type='GdiShape' codename='shapeShadow1' panelId='0' x='91' y='-21' z='4' xsz='6.25' ysz='6.25' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='1' solid='1' layer='2' poslock='9' comp2dType='46' >
+			<component class_type='GdiShape' codename='shapeShadow1' panelId='0' x='91' y='-21' z='4' xsz='6.25' ysz='6.25' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='1' solid='1' layer='2' poslock='9' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='46' >
 				<resources />
 				<properties />
 				<values >
@@ -1515,6 +1588,9 @@ else
 					<value target='colOutlineGradient' data='0' />
 					<value target='nOutlineStyle' data='0' />
 					<value target='nOutlineOpacity' data='1.0' />
+					<value target='bTooltipEnable' data='0' />
+					<value target='sTooltipText' data='' />
+					<value target='sTooltipDesc' data='' />
 				</values>
 				<events />
 				<apis />
@@ -1527,10 +1603,10 @@ else
 	<keymap />
 	<panel2d shadows='0' lighting='2' brightness='0' >
 		<background rgb='7292207' img='' style='0' />
-		<camera xe='0' ye='0' ze='310.061' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
-		<viewport dx='208' dy='653' zoom='81.1711' fix_topleft='0' />
+		<camera xe='0' ye='0' ze='474.036' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='318' dy='396' zoom='81.1711' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='7360576' />
-		<winpos ID='7005' RectRecentFloat='272,148,1255,722' RectRecentDocked='0,0,208,682' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7005' RectRecentFloat='272,148,1255,722' RectRecentDocked='0,0,318,419' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel2d>
 	<panel3d shadows='0' lighting='2' brightness='0' perspective='1' >
 		<background rgb='8409120' img='' style='0' />
@@ -1543,26 +1619,22 @@ else
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='-657,630,-7,1080' RectRecentDocked='0,0,350,682' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='-657,630,-7,1080' RectRecentDocked='0,0,318,805' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='1' >
-		<panel2d_0 id='0' name='NewPanel' >
-			<winpos ID='1171' RectRecentFloat='71,891,693,1080' RectRecentDocked='781,183,1238,865' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
-			<background fill='288230376151053813' showgrid='1' gridstyle='1' gridsize='10' gridbrush='71776119075691740' snaptogrid='1' />
+		<panel2d_0 id='0' name='NewPanel' type='0' >
+			<winpos ID='1171' RectRecentFloat='71,891,693,1080' RectRecentDocked='714,141,1045,946' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+			<background fill='288230376151053813' showgrid='1' gridstyle='1' gridsize='10' gridbrush='71776119075691740' snaptogrid='1' fitcomp='0' disp_x='300' disp_y='400' scale='100' disp_col='16777215' />
 		</panel2d_0>
 	</panels2d>
 	<layout >
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAjQMAAKUCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_HtmlBodyInfo' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAjQMAAKUCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetValue' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAjQMAAKUCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetValue' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAjQMAAKUCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetEnabled' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAjQMAAKUCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_HtmlScriptHeader' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAjQMAAKUCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_PropertyEx' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAjQMAAKUCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetColFromWebCol' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAjQMAAKUCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetHoverColour' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAjQMAAKUCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAjQMAAKUCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAjQMAAKUCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAkgIAACADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAkgIAACADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Initialising' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAkgIAACADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Pvr_EnsurePropUpdated' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAkgIAACADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAkgIAACADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_PropertyEx' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAkgIAACADAAA' zoom='100' scrollx='0' scrolly='731' flags='0' />
+		<view type='0' name='Prv_RecolourThumb' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAkgIAACADAAA' zoom='100' scrollx='217' scrolly='624' flags='0' />
 	</layout>
 </document>
 </root>
