@@ -1,5 +1,5 @@
 <root>
-<document scada='0' schema='103' license='10,CompMaker,WNV3JN' title='' description='' fcversion='655617' target='PIC.16F.16F1937' >
+<document scada='0' projtype='1' schema='103' license='1,82702381,95CJQR' title='' description='' fcversion='720896' target='PIC.16F.16F1937' >
 	<config data='!0,fe2!10,1eff%0,2%3,0%5,1%6,1%7,1%8,1%9,3%b,1%c,0%d,0%10,3%14,3%18,0%19,1%1a,1%1c,1%1d,0' clkspd='19660800' simspd='1' usewdt='0' constif='0' Use3V3='0' />
 	<plugins >
 		<dll_models enabled='1' />
@@ -59,8 +59,8 @@
 		<definition guid='b52758bf-4466-48c0-8054-33ee4b11e82b' vstate='40' vmin='0' vmaj='8' srcleaf='Barometer Grove BMP280.fcfx' visiblename='Barometer (BMP280 / Grove 101020192)' description='Barometric pressure sensor with a I2C bus interface.
 
 Pressure range 300 to 1100 hPa. 
-Temperature range -40 to +85 ?C.' category='Environmental' category2='API Environmental' category3='E-blocks 2 Sensors' bIs2dOnly='1' bIs3dOnly='0' catenable='1' author='Matrix TSL' manuname='Seeed Studio' manucode='101020192' sysinfo='1061643' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='1' showmacros='1' iconpath='..\..\icons\components\Science-Pressure-icon-32.png' />
-		<component class_type='root' codename='GroveBarometerSensorBMP280' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+Temperature range -40 to +85 ?C.' category='Environmental' category2='API Environmental' category3='E-blocks 2 Sensors' bIs2dOnly='1' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='Matrix TSL' manuname='Seeed Studio' manucode='101020192' sysinfo='1061643' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='1' showmacros='1' iconpath='..\..\icons\components\Science-Pressure-icon-32.png' />
+		<component class_type='root' codename='GroveBarometerSensorBMP280' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 			<resources />
 			<properties >
 				<property name='I2C Properties' folder='property_1' hidden='0' >
@@ -181,9 +181,9 @@ I2C communications. ' />
 			</values>
 			<events >
 				<event class='Components' event='Property' target='Ev_Property' />
-				<event class='Components' event='Renamed' target='Ev_Renamed' />
 				<event class='Components' event='Initialise' target='Ev_Initialise' />
 				<event class='System' event='Timer' target='Ev_Timer' />
+				<event class='Components' event='Renamed' target='Ev_Renamed' />
 			</events>
 			<apis >
 				<api name='ReadPressureFloat' alt='ReadPressureFloatSim' type='1' proto='1' />
@@ -257,14 +257,14 @@ Calls the ReadPressureRaw function and then converts to a meaningful value.' sta
 						<local name='P8' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='P9' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='TFINE' type='s32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadTemperatureFloat' />
-						<command class_type='call' title='BME280_REGISTER_PRESSUREDATA' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='I2C_Read3_Register' >
+						<command class_type='call' title='Call Macro' macro='ReadTemperatureFloat' />
+						<command class_type='call' title='BME280_REGISTER_PRESSUREDATA' macro='I2C_Read3_Register' >
 							<return exp='.adc_P' />
 							<argument exp='0xF7' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.adc_P != 0x800000' swap='0' >
+						<command class_type='decision' title='Decision' exp='.adc_P != 0x800000' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.P1 = P1' />
 									<exp exp='.P2 = P2' />
 									<exp exp='.P3 = P3' />
@@ -276,10 +276,10 @@ Calls the ReadPressureRaw function and then converts to a meaningful value.' sta
 									<exp exp='.P9 = P9' />
 									<exp exp='.TFINE = TFINE' />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.adc_P = .adc_P &gt;&gt; 4' />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='Compensation = 1' swap='0' >
+								<command class_type='decision' title='Decision' exp='Compensation = 1' swap='0' >
 									<flowline >
 										<command class_type='native' title='C Code' ccode='//Returns pressure in Pa as double. Output value of “96386.2” equals 96386.2 Pa = 963.862 hPa
 //BME280 Datasheet Page 49
@@ -301,7 +301,7 @@ p = (p - (var2 / 4096.0)) * 6250.0 / var1;
 var1 = ((double)FCL_P9) * p * p / 2147483648.0;
 var2 = p * ((double)FCL_P8) / 32768.0;
 p = p + (var1 + var2 + ((double)FCL_P7)) / 16.0;
-return p/100;' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+return p/100;' language='C' />
 									</flowline>
 									<flowline >
 										<command class_type='native' title='C Code' ccode='//Returns pressure in Pa as unsigned 32 bit integer. Output value of &quot;96386&quot; equals 96386 Pa = 963.86 hPa
@@ -336,12 +336,12 @@ var1 = (((BME280_S32_t)FCL_P9) * ((BME280_S32_t)(((p&gt;&gt;3) * (p&gt;&gt;3))&g
 var2 = (((BME280_S32_t)(p&gt;&gt;2)) * ((BME280_S32_t)FCL_P8))&gt;&gt;13;
 p = (BME280_U32_t)((BME280_S32_t)p + ((var1 + var2 + FCL_P7) &gt;&gt; 4));
 //return p;
-FCR_RETVAL = p/100.0;' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+FCR_RETVAL = p/100.0;' language='C' />
 									</flowline>
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Return = 0.0' />
 								</command>
 							</flowline>
@@ -355,14 +355,14 @@ Returns 0 for a failed startup or no device detected.' statediag='0' >
 						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='temp' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='PROM' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='SimComms' swap='0' >
+						<command class_type='decision' title='Decision' exp='SimComms' swap='0' >
 							<flowline >
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Initialise' >
+								<command class_type='call' title='Call Macro' macro='Initialise' >
 									<return exp='.Return' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Return = 1' />
 								</command>
 							</flowline>
@@ -372,16 +372,16 @@ Returns 0 for a failed startup or no device detected.' statediag='0' >
 				<macro >
 					<flowline name='Reset' description='Resets the device' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='buffer[0] = 0xE0' />
 							<exp exp='buffer[1] = 0xB6' />
 						</command>
-						<command class_type='call' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Transaction_Write' >
+						<command class_type='call' title='Call Component Macro' component='cal_i2c1' macro='Transaction_Write' >
 							<argument exp='buffer' />
 							<argument exp='2' />
 						</command>
-						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='Barometer1' macro='FlashTx' />
-						<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='10' type='1' />
+						<command class_type='sim' title='Component Macro' component='Barometer1' macro='FlashTx' />
+						<command class_type='delay' title='Delay' exp='10' type='1' />
 					</flowline>
 				</macro>
 				<macro >
@@ -389,51 +389,51 @@ Returns 0 for a failed startup or no device detected.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<local name='b1' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='b2' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='I2C_Read_LSB_MSB' >
+						<command class_type='call' title='Call Macro' macro='I2C_Read_LSB_MSB' >
 							<return exp='T1' />
 							<argument exp='0x88' />
 						</command>
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='I2C_Read_LSB_MSB' >
+						<command class_type='call' title='Call Macro' macro='I2C_Read_LSB_MSB' >
 							<return exp='T2' />
 							<argument exp='0x8A' />
 						</command>
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='I2C_Read_LSB_MSB' >
+						<command class_type='call' title='Call Macro' macro='I2C_Read_LSB_MSB' >
 							<return exp='T3' />
 							<argument exp='0x8C' />
 						</command>
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='I2C_Read_LSB_MSB' >
+						<command class_type='call' title='Call Macro' macro='I2C_Read_LSB_MSB' >
 							<return exp='P1' />
 							<argument exp='0x8E' />
 						</command>
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='I2C_Read_LSB_MSB' >
+						<command class_type='call' title='Call Macro' macro='I2C_Read_LSB_MSB' >
 							<return exp='P2' />
 							<argument exp='0x90' />
 						</command>
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='I2C_Read_LSB_MSB' >
+						<command class_type='call' title='Call Macro' macro='I2C_Read_LSB_MSB' >
 							<return exp='P3' />
 							<argument exp='0x92' />
 						</command>
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='I2C_Read_LSB_MSB' >
+						<command class_type='call' title='Call Macro' macro='I2C_Read_LSB_MSB' >
 							<return exp='P4' />
 							<argument exp='0x94' />
 						</command>
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='I2C_Read_LSB_MSB' >
+						<command class_type='call' title='Call Macro' macro='I2C_Read_LSB_MSB' >
 							<return exp='P5' />
 							<argument exp='0x96' />
 						</command>
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='I2C_Read_LSB_MSB' >
+						<command class_type='call' title='Call Macro' macro='I2C_Read_LSB_MSB' >
 							<return exp='P6' />
 							<argument exp='0x98' />
 						</command>
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='I2C_Read_LSB_MSB' >
+						<command class_type='call' title='Call Macro' macro='I2C_Read_LSB_MSB' >
 							<return exp='P7' />
 							<argument exp='0x9A' />
 						</command>
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='I2C_Read_LSB_MSB' >
+						<command class_type='call' title='Call Macro' macro='I2C_Read_LSB_MSB' >
 							<return exp='P8' />
 							<argument exp='0x9C' />
 						</command>
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='I2C_Read_LSB_MSB' >
+						<command class_type='call' title='Call Macro' macro='I2C_Read_LSB_MSB' >
 							<return exp='P9' />
 							<argument exp='0x9E' />
 						</command>
@@ -444,42 +444,42 @@ Returns 0 for a failed startup or no device detected.' statediag='0' >
 						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='TimerID' type='u32' description='The identifier passed to the System.TimerStart panel command' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Handle' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='sim' title='Comms Flashers' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Comms Flashers' macro='Component.Property.SetValue' >
 							<argument exp='Barometer1' />
 							<argument exp='&quot;ShowComms&quot;' />
 							<argument exp='SimComms' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='SimComms' swap='0' >
+						<command class_type='decision' title='Decision' exp='SimComms' swap='0' >
 							<flowline >
-								<command class_type='sim' title='I2C Icon' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='I2C Icon' macro='Component.Property.SetValue' >
 									<argument exp='Barometer1' />
 									<argument exp='&quot;OutputIcon::CommsType&quot;' />
 									<argument exp='4' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 									<argument exp='this' />
 									<argument exp='&quot;property_4&quot;' />
 									<argument exp='1' />
 								</command>
-								<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='GetConsoleHandle' >
+								<command class_type='sim' title='Component Macro' component='cal_i2c1' macro='GetConsoleHandle' >
 									<return exp='.Handle' />
 								</command>
-								<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='Barometer1' macro='SetConsoleHandle' >
+								<command class_type='sim' title='Component Macro' component='Barometer1' macro='SetConsoleHandle' >
 									<argument exp='.Handle' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='No Icon' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='No Icon' macro='Component.Property.SetValue' >
 									<argument exp='Barometer1' />
 									<argument exp='&quot;OutputIcon::CommsType&quot;' />
 									<argument exp='255' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 									<argument exp='this' />
 									<argument exp='&quot;property_4&quot;' />
 									<argument exp='0' />
 								</command>
-								<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='Barometer1' macro='SetConsoleHandle' >
+								<command class_type='sim' title='Component Macro' component='Barometer1' macro='SetConsoleHandle' >
 									<argument exp='0' />
 								</command>
 							</flowline>
@@ -492,18 +492,18 @@ Returns 0 for a failed startup or no device detected.' statediag='0' >
 						<return name='Return' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
 						<local name='P0' type='f32' description='The pressure at sea level 1013.25 hPa' isconst='1' isHidden='0' isinit='1' usrinit='1013.25' setinit='1013.25' />
 						<local name='P' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='SimComms' swap='0' >
+						<command class_type='decision' title='Decision' exp='SimComms' swap='0' >
 							<flowline >
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='CalculateAltitudeOrg' >
+								<command class_type='call' title='Call Macro' macro='CalculateAltitudeOrg' >
 									<return exp='.Return' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='comment' title='' comment='This does not work too well, so removed from API for now' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadPressureFloatSim' >
+								<command class_type='comment' title='' comment='This does not work too well, so removed from API for now' textarea='12,0,12,0' />
+								<command class_type='call' title='Call Macro' macro='ReadPressureFloatSim' >
 									<return exp='.P' />
 								</command>
-								<command class_type='calculation' title='Using the pressue results, calculate altitude in ft' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Using the pressue results, calculate altitude in ft' >
 									<exp exp='.Return = (.P / 1013.25)' />
 									<exp exp='.Return = 1 - pow (.Return, (0.190284))' />
 									<exp exp='.Return = .Return * 145366.45' />
@@ -517,20 +517,20 @@ Returns 0 for a failed startup or no device detected.' statediag='0' >
 						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Address' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='nak' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='buffer[0] = .Address' />
 						</command>
-						<command class_type='call' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Transaction_Write' >
+						<command class_type='call' title='Call Component Macro' component='cal_i2c1' macro='Transaction_Write' >
 							<argument exp='buffer' />
 							<argument exp='1' />
 						</command>
-						<command class_type='call' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Transaction_Read' >
+						<command class_type='call' title='Call Component Macro' component='cal_i2c1' macro='Transaction_Read' >
 							<argument exp='buffer' />
 							<argument exp='1' />
 						</command>
-						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='Barometer1' macro='FlashRx' />
-						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='Barometer1' macro='FlashTx' />
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='sim' title='Component Macro' component='Barometer1' macro='FlashRx' />
+						<command class_type='sim' title='Component Macro' component='Barometer1' macro='FlashTx' />
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Return = buffer[0]' />
 						</command>
 					</flowline>
@@ -538,7 +538,7 @@ Returns 0 for a failed startup or no device detected.' statediag='0' >
 				<macro >
 					<flowline name='Ev_Initialise' description='Initialisation routine for the component once the component is linked to its parent' statediag='0' >
 						<return name='Return' type='u32' description='Non-zero to prevent initialisation' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='Barometer1' macro='SetValue' >
+						<command class_type='sim' title='Component Macro' component='Barometer1' macro='SetValue' >
 							<argument exp='1' />
 							<argument exp='300' />
 						</command>
@@ -554,21 +554,21 @@ Calls the ReadTemperatureRaw function and then converts to a meaningful value.' 
 						<local name='T1' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='T2' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='T3' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='call' title='BME280_REGISTER_TEMPDATA' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='I2C_Read3_Register' >
+						<command class_type='call' title='BME280_REGISTER_TEMPDATA' macro='I2C_Read3_Register' >
 							<return exp='.adc_T' />
 							<argument exp='0xFA' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.adc_T != 0x800000' swap='0' >
+						<command class_type='decision' title='Decision' exp='.adc_T != 0x800000' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.T1 = T1' />
 									<exp exp='.T2 = T2' />
 									<exp exp='.T3 = T3' />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.adc_T = .adc_T &gt;&gt; 4' />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='Compensation = 1' swap='0' >
+								<command class_type='decision' title='Decision' exp='Compensation = 1' swap='0' >
 									<flowline >
 										<command class_type='native' title='C Code' ccode='//Returns temperature in DegC, double precision. Output value of w51.23&quot; equals 51.23 DegC.
 //t_fine carries fine temperature as global value
@@ -581,11 +581,11 @@ var1 = (((double)FCL_ADC_T)/16384.0 - ((double)FCL_T1)/1024.0) * ((double)FCL_T2
 var2 = ((((double)FCL_ADC_T)/131072.0 - ((double)FCL_T1)/8192.0) *
 (((double)FCL_ADC_T)/131072.0 - ((double) FCL_T1)/8192.0)) * ((double)FCL_T3);
 FCL_TFINE = (BME280_S32_t)(var1 + var2);
-T = (var1 + var2) / 5120.0;' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+T = (var1 + var2) / 5120.0;' language='C' />
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='TFINE = .TFINE' />
 										</command>
-										<command class_type='native' title='C Code' ccode='return T;' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+										<command class_type='native' title='C Code' ccode='return T;' language='C' />
 									</flowline>
 									<flowline >
 										<command class_type='native' title='C Code' ccode='//Returns temperature in DegC, resolution is 0.01 DegC. Output value of &quot;5123&quot; equals 51.23 DegC.
@@ -598,17 +598,17 @@ BME280_S32_t var1, var2, T;
 var1 = ((((FCL_ADC_T&gt;&gt;3) - ((BME280_S32_t)FCL_T1 &lt;&lt;1))) * ((BME280_S32_t)FCL_T2)) &gt;&gt; 11;           
 var2 = (((((FCL_ADC_T&gt;&gt;4) - ((BME280_S32_t)FCL_T1)) * ((FCL_ADC_T&gt;&gt;4) - ((BME280_S32_t)FCL_T1))) &gt;&gt; 12) * ((BME280_S32_t)FCL_T3)) &gt;&gt; 14;
 FCL_TFINE = var1 + var2;
-T = (FCL_TFINE * 5 + 128) &gt;&gt; 8;' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+T = (FCL_TFINE * 5 + 128) &gt;&gt; 8;' language='C' />
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='TFINE = .TFINE' />
 										</command>
 										<command class_type='native' title='C Code' ccode='//return T;
-FCR_RETVAL = T/100.0;' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' language='C' />
+FCR_RETVAL = T/100.0;' language='C' />
 									</flowline>
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Return = 0.0' />
 								</command>
 							</flowline>
@@ -622,18 +622,18 @@ Altitude = 44330 * (1 - (pow ((P / P0),1 / 5.255)))' statediag='0' >
 						<return name='Return' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
 						<local name='P0' type='f32' description='The pressure at sea level 1013.25 hPa' isconst='1' isHidden='0' isinit='1' usrinit='1013.25' setinit='1013.25' />
 						<local name='P' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='SimComms' swap='0' >
+						<command class_type='decision' title='Decision' exp='SimComms' swap='0' >
 							<flowline >
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='CalculateAltitudeOrg' >
+								<command class_type='call' title='Call Macro' macro='CalculateAltitudeOrg' >
 									<return exp='.Return' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='comment' title='' comment='This does not work too well, so removed from API for now' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadPressureFloatSim' >
+								<command class_type='comment' title='' comment='This does not work too well, so removed from API for now' textarea='12,0,12,0' />
+								<command class_type='call' title='Call Macro' macro='ReadPressureFloatSim' >
 									<return exp='.P' />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Return = 44330 * (1 - (pow ((.P / .P0),1 / 5.255)))' />
 								</command>
 							</flowline>
@@ -647,11 +647,11 @@ Altitude = 44330 * (1 - (pow ((P / P0),1 / 5.255)))' statediag='0' >
 						<local name='P0' type='f32' description='The pressure at sea level 1013.25 hPa' isconst='1' isHidden='0' isinit='1' usrinit='1013.25' setinit='1013.25' />
 						<local name='P' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
 						<command class_type='comment' title='' comment='Removed fro API as does not work too well.
-' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadPressureFloat' >
+' textarea='12,0,12,0' />
+						<command class_type='call' title='Call Macro' macro='ReadPressureFloat' >
 							<return exp='.P' />
 						</command>
-						<command class_type='calculation' title='Using the pressue results, calculate altitude in ft' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Using the pressue results, calculate altitude in ft' >
 							<exp exp='.Return = (.P / 1013.25)' />
 							<exp exp='.Return = 1 - pow (.Return, (0.190284))' />
 							<exp exp='.Return = .Return * 145366.45' />
@@ -662,7 +662,7 @@ Altitude = 44330 * (1 - (pow ((P / P0),1 / 5.255)))' statediag='0' >
 					<flowline name='Ev_Property' description='Sent when a property has been changed by the User' statediag='0' >
 						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Handle' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.TimerStart' >
+						<command class_type='sim' title='Built-in Function' macro='System.TimerStart' >
 							<argument exp='0' />
 							<argument exp='200' />
 						</command>
@@ -673,20 +673,20 @@ Altitude = 44330 * (1 - (pow ((P / P0),1 / 5.255)))' statediag='0' >
 						<return name='Return' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Address' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='temp' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='buffer[0] = .Address' />
 						</command>
-						<command class_type='call' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Transaction_Write' >
+						<command class_type='call' title='Call Component Macro' component='cal_i2c1' macro='Transaction_Write' >
 							<argument exp='buffer' />
 							<argument exp='1' />
 						</command>
-						<command class_type='call' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Transaction_Read' >
+						<command class_type='call' title='Call Component Macro' component='cal_i2c1' macro='Transaction_Read' >
 							<argument exp='buffer' />
 							<argument exp='2' />
 						</command>
-						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='Barometer1' macro='FlashTx' />
-						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='Barometer1' macro='FlashRx' />
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='sim' title='Component Macro' component='Barometer1' macro='FlashTx' />
+						<command class_type='sim' title='Component Macro' component='Barometer1' macro='FlashRx' />
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Return = (buffer[0] &lt;&lt; 8) | buffer[1]' />
 						</command>
 					</flowline>
@@ -695,15 +695,15 @@ Altitude = 44330 * (1 - (pow ((P / P0),1 / 5.255)))' statediag='0' >
 					<flowline name='Forced_Read' description='' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<local name='temp' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
-						<command class_type='call' title='BME280_REGISTER_CONTROL' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='I2C_Write_Register' >
+						<command class_type='call' title='BME280_REGISTER_CONTROL' macro='I2C_Write_Register' >
 							<argument exp='0xF4' />
 							<argument exp='TO|PO|Mode' />
 						</command>
-						<command class_type='call' title='is busy reading cal data?' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='I2C_Read_Register' >
+						<command class_type='call' title='is busy reading cal data?' macro='I2C_Read_Register' >
 							<return exp='.temp' />
 							<argument exp='0xF3' />
 						</command>
-						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='(.temp &amp; 0x08) != 0' >
+						<command class_type='loop' title='Loop' type='0' exp='(.temp &amp; 0x08) != 0' >
 							<flowline />
 						</command>
 					</flowline>
@@ -714,11 +714,11 @@ Altitude = 44330 * (1 - (pow ((P / P0),1 / 5.255)))' statediag='0' >
 						<local name='Name' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
 						</local>
-						<command class_type='sim' title='' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.GetName' >
+						<command class_type='sim' title='' macro='Tree.GetName' >
 							<return exp='.Name' />
 							<argument exp='this' />
 						</command>
-						<command class_type='sim' title='' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='' macro='Component.Property.SetValue' >
 							<argument exp='Barometer1' />
 							<argument exp='&quot;Name&quot;' />
 							<argument exp='.Name' />
@@ -730,15 +730,15 @@ Altitude = 44330 * (1 - (pow ((P / P0),1 / 5.255)))' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<param name='Address' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Value' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='buffer[0] = .Address' />
 							<exp exp='buffer[1] = .Value' />
 						</command>
-						<command class_type='call' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Transaction_Write' >
+						<command class_type='call' title='Call Component Macro' component='cal_i2c1' macro='Transaction_Write' >
 							<argument exp='buffer' />
 							<argument exp='2' />
 						</command>
-						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='Barometer1' macro='FlashTx' />
+						<command class_type='sim' title='Component Macro' component='Barometer1' macro='FlashTx' />
 					</flowline>
 				</macro>
 				<macro >
@@ -749,11 +749,11 @@ Altitude = 44330 * (1 - (pow ((P / P0),1 / 5.255)))' statediag='0' >
 						<local name='P0' type='f32' description='The pressure at sea level 1013.25 hPa' isconst='1' isHidden='0' isinit='1' usrinit='1013.25' setinit='1013.25' />
 						<local name='P' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
 						<command class_type='comment' title='' comment='Removed fro API as does not work too well.
-' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadPressureFloat' >
+' textarea='12,0,12,0' />
+						<command class_type='call' title='Call Macro' macro='ReadPressureFloat' >
 							<return exp='.P' />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Return = 44330 * (1 - (pow ((.P / .P0),1 / 5.255)))' />
 						</command>
 					</flowline>
@@ -768,18 +768,18 @@ Calls the ReadTemperatureRaw function and then converts to a meaningful value.' 
 						<local name='T1' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='T2' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='T3' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='SimComms' swap='0' >
+						<command class_type='decision' title='Decision' exp='SimComms' swap='0' >
 							<flowline >
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadTemperatureFloat' >
+								<command class_type='call' title='Call Macro' macro='ReadTemperatureFloat' >
 									<return exp='.Return' />
 								</command>
-								<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='Barometer1' macro='SetValue' >
+								<command class_type='sim' title='Component Macro' component='Barometer1' macro='SetValue' >
 									<argument exp='0' />
 									<argument exp='.Return' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='Barometer1' macro='GetValue' >
+								<command class_type='sim' title='Component Macro' component='Barometer1' macro='GetValue' >
 									<return exp='.Return' />
 									<argument exp='0' />
 								</command>
@@ -792,20 +792,20 @@ Calls the ReadTemperatureRaw function and then converts to a meaningful value.' 
 						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Address' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='temp' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='buffer[0] = .Address' />
 						</command>
-						<command class_type='call' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Transaction_Write' >
+						<command class_type='call' title='Call Component Macro' component='cal_i2c1' macro='Transaction_Write' >
 							<argument exp='buffer' />
 							<argument exp='1' />
 						</command>
-						<command class_type='call' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Transaction_Read' >
+						<command class_type='call' title='Call Component Macro' component='cal_i2c1' macro='Transaction_Read' >
 							<argument exp='buffer' />
 							<argument exp='3' />
 						</command>
-						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='Barometer1' macro='FlashRx' />
-						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='Barometer1' macro='FlashTx' />
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='sim' title='Component Macro' component='Barometer1' macro='FlashRx' />
+						<command class_type='sim' title='Component Macro' component='Barometer1' macro='FlashTx' />
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Return = buffer[0]' />
 							<exp exp='.Return = (.Return &lt;&lt; 8) | (buffer[1])' />
 							<exp exp='.Return = (.Return &lt;&lt; 8) | (buffer[2])' />
@@ -819,8 +819,8 @@ Calls the ReadTemperatureRaw function and then converts to a meaningful value.' 
 						<command class_type='comment' title='' comment='Component Version Information;
 7,7.0, 27-06-24, MW, Fixed ReadPressureFloatSim as Get and Read value was set to (2).;
 7,7.0, 27-06-24, MW, Removed all  references to humidity as not present within BMP280.;
-8,8.0, 27-06-24, MW, Added Ev_initialise API, setting the pressure of the library sensor to an inital value of 300.;' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
-						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='1' >
+8,8.0, 27-06-24, MW, Added Ev_initialise API, setting the pressure of the library sensor to an inital value of 300.;' textarea='12,0,12,0' />
+						<command class_type='loop' title='Loop' type='0' exp='1' >
 							<flowline />
 						</command>
 					</flowline>
@@ -830,20 +830,20 @@ Calls the ReadTemperatureRaw function and then converts to a meaningful value.' 
 						<return name='Return' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Address' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='temp' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='buffer[0] = .Address' />
 						</command>
-						<command class_type='call' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Transaction_Write' >
+						<command class_type='call' title='Call Component Macro' component='cal_i2c1' macro='Transaction_Write' >
 							<argument exp='buffer' />
 							<argument exp='1' />
 						</command>
-						<command class_type='call' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Transaction_Read' >
+						<command class_type='call' title='Call Component Macro' component='cal_i2c1' macro='Transaction_Read' >
 							<argument exp='buffer' />
 							<argument exp='2' />
 						</command>
-						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='Barometer1' macro='FlashTx' />
-						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='Barometer1' macro='FlashRx' />
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='sim' title='Component Macro' component='Barometer1' macro='FlashTx' />
+						<command class_type='sim' title='Component Macro' component='Barometer1' macro='FlashRx' />
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Return = (buffer[1] &lt;&lt; 8) | buffer[0]' />
 						</command>
 					</flowline>
@@ -858,51 +858,51 @@ Returns 0 for a failed startup or no device detected.' statediag='0' >
 						<local name='TmpString' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='3' />
 						</local>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Return = 0' />
 						</command>
-						<command class_type='call' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Transaction_Initialise' >
+						<command class_type='call' title='Call Component Macro' component='cal_i2c1' macro='Transaction_Initialise' >
 							<argument exp='SlaveAddress &gt;&gt; 1' />
 						</command>
-						<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='10' type='1' />
-						<command class_type='call' title='Read Chip ID' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='I2C_Read_Register' >
+						<command class_type='delay' title='Delay' exp='10' type='1' />
+						<command class_type='call' title='Read Chip ID' macro='I2C_Read_Register' >
 							<return exp='.temp' />
 							<argument exp='0xD0' />
 						</command>
-						<command class_type='decision' title='Check device is correct' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.temp = 0x58' swap='0' >
+						<command class_type='decision' title='Check device is correct' exp='.temp = 0x58' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Return = 1' />
 								</command>
-								<command class_type='call' title='reset the device using soft-reset' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='I2C_Write_Register' >
+								<command class_type='call' title='reset the device using soft-reset' macro='I2C_Write_Register' >
 									<argument exp='0xE0' />
 									<argument exp='0xB6' />
 								</command>
-								<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='300' type='1' />
-								<command class_type='call' title='is busy reading cal data?' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='I2C_Read_Register' >
+								<command class_type='delay' title='Delay' exp='300' type='1' />
+								<command class_type='call' title='is busy reading cal data?' macro='I2C_Read_Register' >
 									<return exp='.temp' />
 									<argument exp='0xF3' />
 								</command>
-								<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='(.temp &amp; 0x01) != 0' >
+								<command class_type='loop' title='Loop' type='0' exp='(.temp &amp; 0x01) != 0' >
 									<flowline >
-										<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='100' type='1' />
-										<command class_type='call' title='is busy reading cal data?' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='I2C_Read_Register' >
+										<command class_type='delay' title='Delay' exp='100' type='1' />
+										<command class_type='call' title='is busy reading cal data?' macro='I2C_Read_Register' >
 											<return exp='.temp' />
 											<argument exp='0xF3' />
 										</command>
 									</flowline>
 								</command>
-								<command class_type='comment' title='' comment='Read Coefficients' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadCalibData' />
-								<command class_type='call' title='BME280_REGISTER_CONFIG' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='I2C_Write_Register' >
+								<command class_type='comment' title='' comment='Read Coefficients' textarea='12,0,12,0' />
+								<command class_type='call' title='Call Macro' macro='ReadCalibData' />
+								<command class_type='call' title='BME280_REGISTER_CONFIG' macro='I2C_Write_Register' >
 									<argument exp='0xF5' />
 									<argument exp='Stby|FC' />
 								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetValue' >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
 									<argument exp='.TmpString' />
 									<argument exp='&quot;   &quot;' />
 								</command>
-								<command class_type='call' title='BME280_REGISTER_CONTROL' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='I2C_Write_Register' >
+								<command class_type='call' title='BME280_REGISTER_CONTROL' macro='I2C_Write_Register' >
 									<argument exp='0xF4' />
 									<argument exp='TO|PO|Mode' />
 								</command>
@@ -926,18 +926,18 @@ Calls the ReadPressureRaw function and then converts to a meaningful value.' sta
 						<local name='P8' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='P9' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='TFINE' type='s32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='SimComms' swap='0' >
+						<command class_type='decision' title='Decision' exp='SimComms' swap='0' >
 							<flowline >
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadPressureFloat' >
+								<command class_type='call' title='Call Macro' macro='ReadPressureFloat' >
 									<return exp='.Return' />
 								</command>
-								<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='Barometer1' macro='SetValue' >
+								<command class_type='sim' title='Component Macro' component='Barometer1' macro='SetValue' >
 									<argument exp='1' />
 									<argument exp='.Return' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='Barometer1' macro='GetValue' >
+								<command class_type='sim' title='Component Macro' component='Barometer1' macro='GetValue' >
 									<return exp='.Return' />
 									<argument exp='1' />
 								</command>
@@ -946,7 +946,7 @@ Calls the ReadPressureRaw function and then converts to a meaningful value.' sta
 					</flowline>
 				</macro>
 			</macros>
-			<component class_type='ref' guid='960e433c-1295-4aeb-ac84-04d75422119e' vmin='0' vmaj='1' codename='Barometer1' panelId='-1' x='0' y='0' z='0' xsz='100' ysz='100' zsz='100' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' comp2dType='0' >
+			<component class_type='ref' guid='960e433c-1295-4aeb-ac84-04d75422119e' vmin='0' vmaj='1' codename='Barometer1' panelId='-1' x='0' y='0' z='0' xsz='100' ysz='100' zsz='100' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
@@ -1019,7 +1019,7 @@ mb/hPa' />
 				<variables />
 				<macros />
 			</component>
-			<component class_type='ref' guid='ed3a5141-43bb-43e0-86b0-2243fd1147ca' vmin='0' vmaj='2' codename='cal_i2c1' panelId='-1' x='0' y='0' z='0' xsz='0.001' ysz='0.001' zsz='0.001' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+			<component class_type='ref' guid='ed3a5141-43bb-43e0-86b0-2243fd1147ca' vmin='0' vmaj='2' codename='cal_i2c1' panelId='-1' x='0' y='0' z='0' xsz='0.001' ysz='0.001' zsz='0.001' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='0' solid='0' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
@@ -1040,9 +1040,11 @@ mb/hPa' />
 					<value target='BMODE' data='0' />
 					<value target='SDA_PORT' data='$PORTC.4' />
 					<value target='SDA_TRIS' data='$PORTC.4' />
+					<value target='SDA_ODC' data='' />
 					<value target='SDA_PIN' data='4' />
 					<value target='SCL_PORT' data='$PORTC.3' />
 					<value target='SCL_TRIS' data='$PORTC.3' />
+					<value target='SCL_ODC' data='' />
 					<value target='SCL_PIN' data='3' />
 					<value target='MASTER' data='1' />
 					<value target='ScopeTraces' data='1' />
@@ -1050,7 +1052,7 @@ mb/hPa' />
 					<value target='Injector' data='000' />
 					<value target='InjectorHandle' data='0' />
 					<value target='InjectorChannel' data='0' />
-					<value target='Loading' data='0' />
+					<value target='Loading' data='1' />
 					<value target='REMAPPABLE' data='' />
 					<value target='SDABank' data='b' />
 					<value target='SDABank2' data='c' />
@@ -1069,6 +1071,7 @@ mb/hPa' />
 					<value target='SCLAlts' data='000' />
 					<value target='SDAAlt' data='0' />
 					<value target='SCLAlt' data='0' />
+					<value target='Sorted' data='0' />
 				</values>
 				<events />
 				<apis />
@@ -1081,10 +1084,10 @@ mb/hPa' />
 	<keymap />
 	<panel2d shadows='0' lighting='2' brightness='0' >
 		<background rgb='2105930' img='' style='0' />
-		<camera xe='57.8881' ye='-6.93417' ze='568.237' xt='57.8881' yt='-6.93417' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
-		<viewport dx='433' dy='754' zoom='92.2027' fix_topleft='0' />
+		<camera xe='57.8881' ye='-6.93417' ze='553.802' xt='57.8881' yt='-6.93417' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='422' dy='774' zoom='92.2027' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='0' />
-		<winpos ID='7005' RectRecentFloat='591,566,1241,1016' RectRecentDocked='843,141,1296,985' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+		<winpos ID='7005' RectRecentFloat='914,416,1364,908' RectRecentDocked='1039,141,1481,1005' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
 	</panel2d>
 	<panel3d shadows='1' lighting='2' brightness='0' perspective='1' >
 		<background rgb='7895160' img='' style='0' />
@@ -1097,33 +1100,33 @@ mb/hPa' />
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,224,844' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,261,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='0' />
 	<layout >
-		<view type='0' name='ReadTemperatureFloatSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuwEAAEcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadPressureFloatSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuwEAAEcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='InitialiseSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuwEAAEcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuwEAAEcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='CalculateAltitudeSimOrg' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuwEAAEcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='CalculateAltitudeOrg' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuwEAAEcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Forced_Read' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuwEAAEcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Reset' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuwEAAEcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadTemperatureFloat' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuwEAAEcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadPressureFloat' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuwEAAEcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuwEAAEcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuwEAAEcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadCalibData' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuwEAAEcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='I2C_Write_Register' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuwEAAEcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='I2C_Read2_Register' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuwEAAEcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='I2C_Read3_Register' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuwEAAEcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='I2C_Read_LSB_MSB' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuwEAAEcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='I2C_Read_Register' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuwEAAEcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Timer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuwEAAEcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='AltitudeSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuwEAAEcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Altitude' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuwEAAEcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Renamed' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuwEAAEcDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAuwEAAEcDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadTemperatureFloatSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAMAIAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadPressureFloatSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAMAIAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='InitialiseSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAMAIAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAMAIAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CalculateAltitudeSimOrg' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAMAIAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CalculateAltitudeOrg' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAMAIAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Forced_Read' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAMAIAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Reset' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAMAIAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadTemperatureFloat' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAMAIAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadPressureFloat' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAMAIAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAMAIAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAMAIAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadCalibData' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAMAIAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='I2C_Write_Register' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAMAIAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='I2C_Read2_Register' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAMAIAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='I2C_Read3_Register' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAMAIAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='I2C_Read_LSB_MSB' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAMAIAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='I2C_Read_Register' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAMAIAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Timer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAMAIAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='AltitudeSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAMAIAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Altitude' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAMAIAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Renamed' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAMAIAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAMAIAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>

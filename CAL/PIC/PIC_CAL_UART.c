@@ -125,251 +125,167 @@
 #ifndef MX_HARD_BAUD_CHANGE_DEFS
 	#define MX_HARD_BAUD_CHANGE_DEFS
 
-	#ifdef UALTREG
+	#if defined(UALTREG) || defined(UALTREG1)
 
-		#define MX_HARD_BAUD_1200	(((MX_CLK_SPEED / 1200) - 2) / 4)		//Was - 16 but had issues with rounding down
+		#define MX_HARD_BAUD_1200	(((MX_CLK_SPEED / 1200) - 2) / 4)
 		#if (MX_HARD_BAUD_1200 > 65535)
 			#undef MX_HARD_BAUD_1200
-			#define MX_HARD_BAUD_1200	(((MX_CLK_SPEED / 1200) - 8) / 16)		//Was - 16 but had issues with rounding down
+			#define MX_HARD_BAUD_1200	(((MX_CLK_SPEED / 1200) - 8) / 16)
 			#define MX_HARD_SLOW_1200	1
 		#else
 			#define MX_HARD_SLOW_1200	0
 		#endif
 
-		#define MX_HARD_BAUD_2400	(((MX_CLK_SPEED / 2400) - 2) / 4)		//Was - 16 but had issues with rounding down
+		#define MX_HARD_BAUD_2400	(((MX_CLK_SPEED / 2400) - 2) / 4)
 		#if (MX_HARD_BAUD_2400 > 65535)
 			#undef MX_HARD_BAUD_2400
-			#define MX_HARD_BAUD_2400	(((MX_CLK_SPEED / 2400) - 8) / 16)		//Was - 16 but had issues with rounding down
+			#define MX_HARD_BAUD_2400	(((MX_CLK_SPEED / 2400) - 8) / 16)
 			#define MX_HARD_SLOW_2400	1
 		#else
 			#define MX_HARD_SLOW_2400	0
 		#endif
 
-		#define MX_HARD_BAUD_4800	(((MX_CLK_SPEED / 4800) - 2) / 4)		//Was - 16 but had issues with rounding down
+		#define MX_HARD_BAUD_4800	(((MX_CLK_SPEED / 4800) - 2) / 4)
 		#if (MX_HARD_BAUD_4800 > 65535)
 			#undef MX_HARD_BAUD_4800
-			#define MX_HARD_BAUD_4800	(((MX_CLK_SPEED / 4800) - 8) / 16)		//Was - 16 but had issues with rounding down
+			#define MX_HARD_BAUD_4800	(((MX_CLK_SPEED / 4800) - 8) / 16)
 			#define MX_HARD_SLOW_4800	1
 		#else
 			#define MX_HARD_SLOW_4800	0
 		#endif
 
-		#define MX_HARD_BAUD_9600	(((MX_CLK_SPEED / 9600) - 2) / 4)		//Was - 16 but had issues with rounding down
+		#define MX_HARD_BAUD_9600	(((MX_CLK_SPEED / 9600) - 2) / 4)
 		#if (MX_HARD_BAUD_9600 > 65535)
 			#undef MX_HARD_BAUD_9600
-			#define MX_HARD_BAUD_9600	(((MX_CLK_SPEED / 9600) - 8) / 16)		//Was - 16 but had issues with rounding down
+			#define MX_HARD_BAUD_9600	(((MX_CLK_SPEED / 9600) - 8) / 16)
 			#define MX_HARD_SLOW_9600	1
 		#else
 			#define MX_HARD_SLOW_9600	0
 		#endif
 
-		#define MX_HARD_BAUD_19200	(((MX_CLK_SPEED / 19200) - 2) / 4)		//Was - 16 but had issues with rounding down
+		#define MX_HARD_BAUD_19200	(((MX_CLK_SPEED / 19200) - 2) / 4)
 		#if (MX_HARD_BAUD_19200 > 65535)
 			#undef MX_HARD_BAUD_19200
-			#define MX_HARD_BAUD_19200	(((MX_CLK_SPEED / 19200) - 8) / 16)		//Was - 16 but had issues with rounding down
+			#define MX_HARD_BAUD_19200	(((MX_CLK_SPEED / 19200) - 8) / 16)
 			#define MX_HARD_SLOW_19200	1
 		#else
 			#define MX_HARD_SLOW_19200	0
 		#endif
 
-		#define MX_HARD_BAUD_38400	(((MX_CLK_SPEED / 38400) - 2) / 4)		//Was - 16 but had issues with rounding down
+		#define MX_HARD_BAUD_38400	(((MX_CLK_SPEED / 38400) - 2) / 4)
 		#if (MX_HARD_BAUD_38400 > 65535)
 			#undef MX_HARD_BAUD_38400
-			#define MX_HARD_BAUD_38400	(((MX_CLK_SPEED / 38400) - 8) / 16)		//Was - 16 but had issues with rounding down
+			#define MX_HARD_BAUD_38400	(((MX_CLK_SPEED / 38400) - 8) / 16)
 			#define MX_HARD_SLOW_38400	1
 		#else
 			#define MX_HARD_SLOW_38400	0
 		#endif
 
-		#define MX_HARD_BAUD_57600	(((MX_CLK_SPEED / 57600) - 2) / 4)		//Was - 16 but had issues with rounding down
+		#define MX_HARD_BAUD_57600	(((MX_CLK_SPEED / 57600) - 2) / 4)
 		#if (MX_HARD_BAUD_57600 > 65535)
 			#undef MX_HARD_BAUD_57600
-			#define MX_HARD_BAUD_57600	(((MX_CLK_SPEED / 57600) - 8) / 16)		//Was - 16 but had issues with rounding down
+			#define MX_HARD_BAUD_57600	(((MX_CLK_SPEED / 57600) - 8) / 16)
 			#define MX_HARD_SLOW_57600	1
 		#else
 			#define MX_HARD_SLOW_57600	0
 		#endif
 
-		#define MX_HARD_BAUD_115200	(((MX_CLK_SPEED / 115200) - 2) / 4)		//Was - 16 but had issues with rounding down
+		#define MX_HARD_BAUD_115200	(((MX_CLK_SPEED / 115200) - 2) / 4)
 		#if (MX_HARD_BAUD_115200 > 65535)
 			#undef MX_HARD_BAUD_115200
-			#define MX_HARD_BAUD_115200	(((MX_CLK_SPEED / 115200) - 8) / 16)		//Was - 16 but had issues with rounding down
+			#define MX_HARD_BAUD_115200	(((MX_CLK_SPEED / 115200) - 8) / 16)
 			#define MX_HARD_SLOW_115200	1
 		#else
 			#define MX_HARD_SLOW_115200	0
 		#endif
 
-		#define MX_HARD_BAUD_250000	(((MX_CLK_SPEED / 250000) - 2) / 4)		//Was - 16 but had issues with rounding down
+		#define MX_HARD_BAUD_250000	(((MX_CLK_SPEED / 250000) - 2) / 4)
 		#if (MX_HARD_BAUD_250000 > 65535)
 			#undef MX_HARD_BAUD_250000
-			#define MX_HARD_BAUD_250000	(((MX_CLK_SPEED / 250000) - 8) / 16)		//Was - 16 but had issues with rounding down
+			#define MX_HARD_BAUD_250000	(((MX_CLK_SPEED / 250000) - 8) / 16)
 			#define MX_HARD_SLOW_250000	1
 		#else
 			#define MX_HARD_SLOW_250000	0
 		#endif
-
-	#elif defined(UALTREG1)
-
-		#define MX_HARD_BAUD_1200	(((MX_CLK_SPEED / 1200) - 2) / 4)		//Was - 16 but had issues with rounding down
-		#if (MX_HARD_BAUD_1200 > 65535)
-			#undef MX_HARD_BAUD_1200
-			#define MX_HARD_BAUD_1200	(((MX_CLK_SPEED / 1200) - 8) / 16)		//Was - 16 but had issues with rounding down
-			#define MX_HARD_SLOW_1200	1
-		#else
-			#define MX_HARD_SLOW_1200	0
-		#endif
-
-		#define MX_HARD_BAUD_2400	(((MX_CLK_SPEED / 2400) - 2) / 4)		//Was - 16 but had issues with rounding down
-		#if (MX_HARD_BAUD_2400 > 65535)
-			#undef MX_HARD_BAUD_2400
-			#define MX_HARD_BAUD_2400	(((MX_CLK_SPEED / 2400) - 8) / 16)		//Was - 16 but had issues with rounding down
-			#define MX_HARD_SLOW_2400	1
-		#else
-			#define MX_HARD_SLOW_2400	0
-		#endif
-
-		#define MX_HARD_BAUD_4800	(((MX_CLK_SPEED / 4800) - 2) / 4)		//Was - 16 but had issues with rounding down
-		#if (MX_HARD_BAUD_4800 > 65535)
-			#undef MX_HARD_BAUD_4800
-			#define MX_HARD_BAUD_4800	(((MX_CLK_SPEED / 4800) - 8) / 16)		//Was - 16 but had issues with rounding down
-			#define MX_HARD_SLOW_4800	1
-		#else
-			#define MX_HARD_SLOW_4800	0
-		#endif
-
-		#define MX_HARD_BAUD_9600	(((MX_CLK_SPEED / 9600) - 2) / 4)		//Was - 16 but had issues with rounding down
-		#if (MX_HARD_BAUD_9600 > 65535)
-			#undef MX_HARD_BAUD_9600
-			#define MX_HARD_BAUD_9600	(((MX_CLK_SPEED / 9600) - 8) / 16)		//Was - 16 but had issues with rounding down
-			#define MX_HARD_SLOW_9600	1
-		#else
-			#define MX_HARD_SLOW_9600	0
-		#endif
-
-		#define MX_HARD_BAUD_19200	(((MX_CLK_SPEED / 19200) - 2) / 4)		//Was - 16 but had issues with rounding down
-		#if (MX_HARD_BAUD_19200 > 65535)
-			#undef MX_HARD_BAUD_19200
-			#define MX_HARD_BAUD_19200	(((MX_CLK_SPEED / 19200) - 8) / 16)		//Was - 16 but had issues with rounding down
-			#define MX_HARD_SLOW_19200	1
-		#else
-			#define MX_HARD_SLOW_19200	0
-		#endif
-
-		#define MX_HARD_BAUD_38400	(((MX_CLK_SPEED / 38400) - 2) / 4)		//Was - 16 but had issues with rounding down
-		#if (MX_HARD_BAUD_38400 > 65535)
-			#undef MX_HARD_BAUD_38400
-			#define MX_HARD_BAUD_38400	(((MX_CLK_SPEED / 38400) - 8) / 16)		//Was - 16 but had issues with rounding down
-			#define MX_HARD_SLOW_38400	1
-		#else
-			#define MX_HARD_SLOW_38400	0
-		#endif
-
-		#define MX_HARD_BAUD_57600	(((MX_CLK_SPEED / 57600) - 2) / 4)		//Was - 16 but had issues with rounding down
-		#if (MX_HARD_BAUD_57600 > 65535)
-			#undef MX_HARD_BAUD_57600
-			#define MX_HARD_BAUD_57600	(((MX_CLK_SPEED / 57600) - 8) / 16)		//Was - 16 but had issues with rounding down
-			#define MX_HARD_SLOW_57600	1
-		#else
-			#define MX_HARD_SLOW_57600	0
-		#endif
-
-		#define MX_HARD_BAUD_115200	(((MX_CLK_SPEED / 115200) - 2) / 4)		//Was - 16 but had issues with rounding down
-		#if (MX_HARD_BAUD_115200 > 65535)
-			#undef MX_HARD_BAUD_115200
-			#define MX_HARD_BAUD_115200	(((MX_CLK_SPEED / 115200) - 8) / 16)		//Was - 16 but had issues with rounding down
-			#define MX_HARD_SLOW_115200	1
-		#else
-			#define MX_HARD_SLOW_115200	0
-		#endif
-
-		#define MX_HARD_BAUD_250000	(((MX_CLK_SPEED / 250000) - 2) / 4)		//Was - 16 but had issues with rounding down
-		#if (MX_HARD_BAUD_250000 > 65535)
-			#undef MX_HARD_BAUD_250000
-			#define MX_HARD_BAUD_250000	(((MX_CLK_SPEED / 250000) - 8) / 16)		//Was - 16 but had issues with rounding down
-			#define MX_HARD_SLOW_250000	1
-		#else
-			#define MX_HARD_SLOW_250000	0
-		#endif
-
 
 	#else
 
-		#define MX_HARD_BAUD_1200	(((MX_CLK_SPEED / 1200) - 8) / 16)		//Was - 16 but had issues with rounding down
+		#define MX_HARD_BAUD_1200	(((MX_CLK_SPEED / 1200) - 8) / 16)
 		#if (MX_HARD_BAUD_1200 > 255)
 			#undef MX_HARD_BAUD_1200
-			#define MX_HARD_BAUD_1200	(((MX_CLK_SPEED / 1200) - 8) / 64)		//Was - 16 but had issues with rounding down
+			#define MX_HARD_BAUD_1200	(((MX_CLK_SPEED / 1200) - 8) / 64)
 			#define MX_HARD_SLOW_1200	1
 		#else
 			#define MX_HARD_SLOW_1200	0
 		#endif
 
-		#define MX_HARD_BAUD_2400	(((MX_CLK_SPEED / 2400) - 8) / 16)		//Was - 16 but had issues with rounding down
+		#define MX_HARD_BAUD_2400	(((MX_CLK_SPEED / 2400) - 8) / 16)
 		#if (MX_HARD_BAUD_2400 > 255)
 			#undef MX_HARD_BAUD_2400
-			#define MX_HARD_BAUD_2400	(((MX_CLK_SPEED / 2400) - 8) / 64)		//Was - 16 but had issues with rounding down
+			#define MX_HARD_BAUD_2400	(((MX_CLK_SPEED / 2400) - 8) / 64)
 			#define MX_HARD_SLOW_2400	1
 		#else
 			#define MX_HARD_SLOW_2400	0
 		#endif
 
-		#define MX_HARD_BAUD_4800	(((MX_CLK_SPEED / 4800) - 8) / 16)		//Was - 16 but had issues with rounding down
+		#define MX_HARD_BAUD_4800	(((MX_CLK_SPEED / 4800) - 8) / 16)
 		#if (MX_HARD_BAUD_4800 > 255)
 			#undef MX_HARD_BAUD_4800
-			#define MX_HARD_BAUD_4800	(((MX_CLK_SPEED / 4800) - 8) / 64)		//Was - 16 but had issues with rounding down
+			#define MX_HARD_BAUD_4800	(((MX_CLK_SPEED / 4800) - 8) / 64)
 			#define MX_HARD_SLOW_4800	1
 		#else
 			#define MX_HARD_SLOW_4800	0
 		#endif
 
-		#define MX_HARD_BAUD_9600	(((MX_CLK_SPEED / 9600) - 8) / 16)		//Was - 16 but had issues with rounding down
+		#define MX_HARD_BAUD_9600	(((MX_CLK_SPEED / 9600) - 8) / 16)
 		#if (MX_HARD_BAUD_9600 > 255)
 			#undef MX_HARD_BAUD_9600
-			#define MX_HARD_BAUD_9600	(((MX_CLK_SPEED / 9600) - 8) / 64)		//Was - 16 but had issues with rounding down
+			#define MX_HARD_BAUD_9600	(((MX_CLK_SPEED / 9600) - 8) / 64)
 			#define MX_HARD_SLOW_9600	1
 		#else
 			#define MX_HARD_SLOW_9600	0
 		#endif
 
-		#define MX_HARD_BAUD_19200	(((MX_CLK_SPEED / 19200) - 8) / 16)		//Was - 16 but had issues with rounding down
+		#define MX_HARD_BAUD_19200	(((MX_CLK_SPEED / 19200) - 8) / 16)
 		#if (MX_HARD_BAUD_19200 > 255)
 			#undef MX_HARD_BAUD_19200
-			#define MX_HARD_BAUD_19200	(((MX_CLK_SPEED / 19200) - 8) / 64)		//Was - 16 but had issues with rounding down
+			#define MX_HARD_BAUD_19200	(((MX_CLK_SPEED / 19200) - 8) / 64)
 			#define MX_HARD_SLOW_19200	1
 		#else
 			#define MX_HARD_SLOW_19200	0
 		#endif
 
-		#define MX_HARD_BAUD_38400	(((MX_CLK_SPEED / 38400) - 8) / 16)		//Was - 16 but had issues with rounding down
+		#define MX_HARD_BAUD_38400	(((MX_CLK_SPEED / 38400) - 8) / 16)
 		#if (MX_HARD_BAUD_38400 > 255)
 			#undef MX_HARD_BAUD_38400
-			#define MX_HARD_BAUD_38400	(((MX_CLK_SPEED / 38400) - 8) / 64)		//Was - 16 but had issues with rounding down
+			#define MX_HARD_BAUD_38400	(((MX_CLK_SPEED / 38400) - 8) / 64)
 			#define MX_HARD_SLOW_38400	1
 		#else
 			#define MX_HARD_SLOW_38400	0
 		#endif
 
-		#define MX_HARD_BAUD_57600	(((MX_CLK_SPEED / 57600) - 8) / 16)		//Was - 16 but had issues with rounding down
+		#define MX_HARD_BAUD_57600	(((MX_CLK_SPEED / 57600) - 8) / 16)
 		#if (MX_HARD_BAUD_57600 > 255)
 			#undef MX_HARD_BAUD_57600
-			#define MX_HARD_BAUD_57600	(((MX_CLK_SPEED / 57600) - 8) / 64)		//Was - 16 but had issues with rounding down
+			#define MX_HARD_BAUD_57600	(((MX_CLK_SPEED / 57600) - 8) / 64)
 			#define MX_HARD_SLOW_57600	1
 		#else
 			#define MX_HARD_SLOW_57600	0
 		#endif
 
-		#define MX_HARD_BAUD_115200	(((MX_CLK_SPEED / 115200) - 8) / 16)		//Was - 16 but had issues with rounding down
+		#define MX_HARD_BAUD_115200	(((MX_CLK_SPEED / 115200) - 8) / 16)
 		#if (MX_HARD_BAUD_115200 > 255)
 			#undef MX_HARD_BAUD_115200
-			#define MX_HARD_BAUD_115200	(((MX_CLK_SPEED / 115200) - 8) / 64)		//Was - 16 but had issues with rounding down
+			#define MX_HARD_BAUD_115200	(((MX_CLK_SPEED / 115200) - 8) / 64)
 			#define MX_HARD_SLOW_115200	1
 		#else
 			#define MX_HARD_SLOW_115200	0
 		#endif
 
-		#define MX_HARD_BAUD_250000	(((MX_CLK_SPEED / 250000) - 8) / 16)		//Was - 16 but had issues with rounding down
+		#define MX_HARD_BAUD_250000	(((MX_CLK_SPEED / 250000) - 8) / 16)
 		#if (MX_HARD_BAUD_250000 > 255)
 			#undef MX_HARD_BAUD_250000
-			#define MX_HARD_BAUD_250000	(((MX_CLK_SPEED / 250000) - 8) / 64)		//Was - 16 but had issues with rounding down
+			#define MX_HARD_BAUD_250000	(((MX_CLK_SPEED / 250000) - 8) / 64)
 			#define MX_HARD_SLOW_250000	1
 		#else
 			#define MX_HARD_SLOW_250000	0

@@ -1,5 +1,5 @@
 <root>
-<document scada='0' schema='103' license='10,BenR,C9TN1M' title='' description='' fcversion='655617' target='ARD.ATMEGA.Arduino Uno R3 SMD' >
+<document scada='0' projtype='1' schema='103' license='1,82702381,95CJQR' title='' description='' fcversion='720896' target='ARD.ATMEGA.Arduino Uno R3 SMD' >
 	<config data='' clkspd='16000000' simspd='0' usewdt='0' constif='0' Use3V3='0' />
 	<plugins >
 		<dll_models enabled='1' />
@@ -58,8 +58,8 @@
 		<settings autoimg='0' center='1' unitscale='0' fixedscale='0' fixedx='25' fixedy='25' fixedz='25' headcode='0' />
 		<definition guid='2e0f3546-f0f7-4644-b126-545f4c32984c' vstate='40' vmin='0' vmaj='1' srcleaf='ModifiedMovingAverage.fcfx' visiblename='Modified Moving Average 16-bit' description='Allows a value from a sensor to be averaged out filtering out high frequencies and removing noise.
 Modified moving average means we maintain a sum of the last n number of samples.
-On each new sample we subtract the previous result and then add in the latest raw sample.' category='Calculation' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' catenable='1' author='Matrix TSL' manuname='' manucode='' sysinfo='11' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='1' showmacros='1' iconpath='..\..\Icons\Components\comp2d_basechart.png' />
-		<component class_type='root' codename='ModifiedMovingAverage' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+On each new sample we subtract the previous result and then add in the latest raw sample.' category='Calculation' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='Matrix TSL' manuname='' manucode='' sysinfo='11' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='1' showmacros='1' iconpath='..\..\Icons\Components\comp2d_basechart.png' />
+		<component class_type='root' codename='ModifiedMovingAverage' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 			<resources />
 			<properties />
 			<values />
@@ -83,18 +83,18 @@ On each new sample we subtract the previous result and then add in the latest ra
 				<macro >
 					<flowline name='Filter' description='Performs the filtering function, passing in the latest sampled value and outputting the
 latest filtered value.' statediag='0' >
-						<return name='Return' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
-						<param name='Value' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='calculation' title='Subtract last value from sum' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+						<return name='Return' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Value' type='s16' description='Latest sample to add to the filter' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Subtract last value from sum' >
 							<exp exp='FilterSum = FilterSum - LastValue' />
 						</command>
-						<command class_type='calculation' title='Add new value to sum' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+						<command class_type='calculation' title='Add new value to sum' >
 							<exp exp='FilterSum = FilterSum + .Value' />
 						</command>
-						<command class_type='calculation' title='Work out average' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+						<command class_type='calculation' title='Work out average' >
 							<exp exp='.Return = FilterSum / NumSamples' />
 						</command>
-						<command class_type='calculation' title='Record the new last value' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+						<command class_type='calculation' title='Record the new last value' >
 							<exp exp='LastValue = .Return' />
 						</command>
 					</flowline>
@@ -103,18 +103,18 @@ latest filtered value.' statediag='0' >
 					<flowline name='InitialiseFilter' description='Preload the filter with the specified value and sets the number of samples to average over.
 Must be called before calling the filter macro.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<param name='FilterValue' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='FilterValue' type='s16' description='Initial value to load into the filter, e.g. 0' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='NumSamples' type='u16' description='Specifies the number of samples to average over.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='NumSamples = .NumSamples' />
 						</command>
-						<command class_type='calculation' title='Initialise Values' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+						<command class_type='calculation' title='Initialise Values' >
 							<exp exp='FilterSum = 0' />
 							<exp exp='LastValue = .FilterValue' />
 						</command>
-						<command class_type='loop' title='Loop' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' type='2' exp='NumSamples' >
+						<command class_type='loop' title='Loop' type='2' exp='NumSamples' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='FilterSum = FilterSum + .FilterValue' />
 								</command>
 							</flowline>
@@ -127,13 +127,13 @@ Must be called before calling the filter macro.' statediag='0' >
 					</flowline>
 				</macro>
 			</macros>
-			<component class_type='ref' guid='58be670e-18fb-477e-ab09-61fde14b23ec' vmin='0' vmaj='1' codename='LibraryComponent1' panelId='0' x='67' y='-65.5' z='0' xsz='100.707' ysz='100.893' zsz='100' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='0' layer='2' poslock='1' comp2dType='0' >
+			<component class_type='ref' guid='58be670e-18fb-477e-ab09-61fde14b23ec' vmin='0' vmaj='1' codename='LibraryComponent1' panelId='0' x='67' y='-65.5' z='0' xsz='100.707' ysz='100.893' zsz='100' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='0' layer='2' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
-					<value target='Text::sText' data='Running
-Average
-Float' />
+					<value target='Text::sText' data='Modified
+Moving
+Average 16-bit' />
 					<value target='Name' data='' />
 					<value target='Peripheral::sText' data='' />
 					<value target='Text::nVerticalAlignment' data='002' />
@@ -158,10 +158,10 @@ Float' />
 	<keymap />
 	<panel2d shadows='0' lighting='2' brightness='0' >
 		<background rgb='7292207' img='' style='0' />
-		<camera xe='0' ye='0' ze='1858.14' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
-		<viewport dx='642' dy='419' zoom='41.8063' fix_topleft='0' />
+		<camera xe='0' ye='0' ze='887.467' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='510' dy='561' zoom='69.535' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='0' />
-		<winpos ID='7005' RectRecentFloat='-1686,105,-1036,555' RectRecentDocked='0,0,430,419' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7005' RectRecentFloat='70,239,893,854' RectRecentDocked='0,0,510,584' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel2d>
 	<panel3d shadows='0' lighting='2' brightness='0' perspective='1' >
 		<background rgb='8409120' img='' style='0' />
@@ -174,18 +174,18 @@ Float' />
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,250,880' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,261,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='1' >
-		<panel2d_0 id='0' name='2D Panel' >
-			<winpos ID='1171' RectRecentFloat='-1188,483,-538,933' RectRecentDocked='1004,141,1434,1021' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
-			<background fill='72057594037927935' showgrid='1' gridstyle='1' gridsize='10' gridbrush='71776119075691740' snaptogrid='1' />
+		<panel2d_0 id='0' name='2D Panel' type='0' >
+			<winpos ID='1171' RectRecentFloat='-994,485,-707,741' RectRecentDocked='979,141,1489,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+			<background fill='72057594037927935' showgrid='1' gridstyle='1' gridsize='10' gridbrush='71776119075691740' snaptogrid='1' fitcomp='0' disp_x='300' disp_y='400' scale='100' disp_col='16777215' />
 		</panel2d_0>
 	</panels2d>
 	<layout >
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZQQAAGsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Filter' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZQQAAGsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='InitialiseFilter' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZQQAAGsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA.AMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='InitialiseFilter' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA.AMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Filter' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA.AMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>
