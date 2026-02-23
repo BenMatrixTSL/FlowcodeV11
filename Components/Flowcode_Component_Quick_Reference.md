@@ -222,6 +222,7 @@ When creating a new component, ensure you have:
 - [ ] `<variables>` for global state
 - [ ] `<macros>` implementing each API
 - [ ] Event handler macros (e.g., `Ev_Initialise`)
+- [ ] **`Main` macro** - Required entry point macro that demonstrates component usage
 
 ## Naming Conventions
 
@@ -233,14 +234,15 @@ When creating a new component, ensure you have:
 
 ## Common Mistakes to Avoid
 
-1. **Missing Event Handlers**: If you declare an event, you must implement the macro
-2. **Type Mismatches**: Ensure variable types match their usage
-3. **Missing Return Values**: APIs that return values must have `<return>` in macro
-4. **Incorrect API Types**: Use type 5 for code generation, type 1 for simulation-only
-5. **Property Without Default**: Always provide default values in `<values>` section
-6. **Using Pointers/Objects**: Flowcode handles instances automatically - remove all `this->`, `->`, and object instance code
-7. **Missing Instance Numbers**: Always include `$(instance)` in API `alt` attributes for type 5 APIs
-8. **Trying to Manage Instances Manually**: Don't create instance management code - Flowcode does this automatically
+1. **Missing Main Macro**: **REQUIRED** - Every Flowcode component source project must include a `Main` macro as the program entry point. This macro typically demonstrates component usage.
+2. **Missing Event Handlers**: If you declare an event, you must implement the macro
+3. **Type Mismatches**: Ensure variable types match their usage
+4. **Missing Return Values**: APIs that return values must have `<return>` in macro
+5. **Incorrect API Types**: Use type 5 for code generation, type 1 for simulation-only
+6. **Property Without Default**: Always provide default values in `<values>` section
+7. **Using Pointers/Objects**: Flowcode handles instances automatically - remove all `this->`, `->`, and object instance code
+8. **Missing Instance Numbers**: Always include `$(instance)` in API `alt` attributes for type 5 APIs
+9. **Trying to Manage Instances Manually**: Don't create instance management code - Flowcode does this automatically
 
 ## Embedded Components
 

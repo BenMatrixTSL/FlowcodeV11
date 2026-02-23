@@ -56,17 +56,20 @@
 	</ghost>
 	<components >
 		<settings autoimg='0' center='1' unitscale='1' fixedscale='1' fixedx='25' fixedy='25' fixedz='25' headcode='0' />
-		<definition guid='cb997a87-2257-4fed-917f-89732d879150' vstate='30' vmin='1' vmaj='0' srcleaf='WEBEXP_Bluetooth.fcweb' visiblename='Bluetooth' description='Allows connection to a bluetooth device from the browser.' category=' Comms' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='MatrixTSL' manuname='' manucode='' sysinfo='1052939' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='0' showmacros='1' iconpath='..\..\icons\components\COM.png' />
+		<definition guid='cb997a87-2257-4fed-917f-89732d879150' vstate='30' vmin='1' vmaj='0' srcleaf='WEBEXP_Bluetooth.fcweb' visiblename='Bluetooth' description='Allows connection to a bluetooth device from the browser.' category=' Comms' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='MatrixTSL' manuname='' manucode='' sysinfo='1052939' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='0' showmacros='1' iconpath='..\..\Icons\Components\Bluetooth.png' />
 		<component class_type='root' codename='Bluetooth' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' varnames='$(type)_$(module)__$(variable:u)' >
 			<resources />
 			<properties >
 				<property name='Filters' target='sFilters' typeid='11' hidden='0' locked='0' info='Limits the list of available Bluetooth devices, for example:
 
-    { services: [0x1802, 0x1803] }
+    filters: [ { services: [0x1802, 0x1803] } ]
 
-    { name: &quot;My Cool Device&quot; }
+    filters: [ { name: &quot;My Cool Device&quot; } ]
 
-    { namePrefix: &quot;Mtx&quot; }
+    filters: [ { namePrefix: &quot;Mtx&quot; } ]
+
+    filters: [ { services: [&quot;heart_rate&quot;] } ],
+    optionalServices: [&quot;battery_service&quot;]
 
 (leave blank for all devices)
 ' />
@@ -180,7 +183,7 @@ ParsText|STRING|The characteristic value as text' />
 						<command class_type='decision' title='Decision' exp='Length$(sFilters) &gt; 0' swap='0' >
 							<flowline >
 								<command class_type='calculation' title='Calculation' >
-									<exp exp='.HeaderScript = .HeaderScript + &quot;var FCFLTR_&quot; + .CompID + &quot; = { filters: [&quot; + sFilters + &quot;] }&apos;;\n&quot;' />
+									<exp exp='.HeaderScript = .HeaderScript + &quot;var FCFLTR_&quot; + .CompID + &quot; = { &quot; + sFilters + &quot; };\n&quot;' />
 								</command>
 							</flowline>
 							<flowline >
@@ -275,10 +278,10 @@ ParsText|STRING|The characteristic value as text' />
       //Request BLE device
       console.log(&apos;Requesting BLE device&apos;);
       const filter = window[&apos;FCFLTR_&apos; + FC_THIS];
-      window[&apos;FCDEVICE_&apos; + FC_THIS] = await navigator.bluetooth.requestDevice({ filters: [filter] });
+      window[&apos;FCDEVICE_&apos; + FC_THIS] = await navigator.bluetooth.requestDevice( filter );
       
       //Add a handler for disconnection
-      window[&apos;FCDEVICE_&apos; + FC_THIS].addEventListener(&apos;gattserverdisconnected&apos;, &apos;OnDisconnect_&apos; + FC_THIS);
+      window[&apos;FCDEVICE_&apos; + FC_THIS].addEventListener(&apos;gattserverdisconnected&apos;, window[&apos;OnDisconnect_&apos; + FC_THIS]);
       
       //Connect to GATT server
       console.log(&apos;Connecting to GATT server&apos;);
@@ -295,7 +298,7 @@ ParsText|STRING|The characteristic value as text' />
       //Subscribe to notifications
       console.log(&apos;Subscribing to notifications&apos;);
       await window[&apos;FCCHARAC_&apos; + FC_THIS].startNotifications();
-      window[&apos;FCCHARAC_&apos; + FC_THIS].addEventListener(&apos;characteristicvaluechanged&apos;, &apos;CharacteristicChanged_&apos; + FC_THIS);
+      window[&apos;FCCHARAC_&apos; + FC_THIS].addEventListener(&apos;characteristicvaluechanged&apos;, window[&apos;CharacteristicChanged_&apos; + FC_THIS]);
 
       FCR_RETVAL = true;
     }
@@ -331,10 +334,10 @@ ParsText|STRING|The characteristic value as text' />
 	<keymap />
 	<panel2d shadows='0' lighting='2' brightness='0' >
 		<background rgb='7292207' img='' style='0' />
-		<camera xe='0' ye='0' ze='298.136' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
-		<viewport dx='200' dy='562' zoom='81.1711' fix_topleft='0' />
+		<camera xe='0' ye='0' ze='474.036' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='318' dy='396' zoom='81.1711' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='7360576' />
-		<winpos ID='7005' RectRecentFloat='272,148,1255,722' RectRecentDocked='0,0,200,585' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7005' RectRecentFloat='272,148,1255,722' RectRecentDocked='0,0,318,419' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel2d>
 	<panel3d shadows='0' lighting='2' brightness='0' perspective='1' >
 		<background rgb='8409120' img='' style='0' />
@@ -347,19 +350,19 @@ ParsText|STRING|The characteristic value as text' />
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='-657,630,-7,1080' RectRecentDocked='0,0,210,484' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='-657,630,-7,1080' RectRecentDocked='0,0,318,805' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='1' >
 		<panel2d_0 id='0' name='NewPanel' type='0' >
-			<winpos ID='1171' RectRecentFloat='126,73,592,361' RectRecentDocked='633,141,948,751' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+			<winpos ID='1171' RectRecentFloat='126,73,592,361' RectRecentDocked='714,141,1045,946' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
 			<background fill='288230376151053813' showgrid='1' gridstyle='1' gridsize='10' gridbrush='71776119075691740' snaptogrid='1' fitcomp='0' disp_x='300' disp_y='400' scale='64' disp_col='16777215' />
 		</panel2d_0>
 	</panels2d>
 	<layout >
-		<view type='0' name='Ev_HtmlScriptHeader' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAcgIAAF0CAAA' zoom='100' scrollx='136' scrolly='153' flags='0' />
-		<view type='0' name='RequestDevice' mode='2' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAcgIAAF0CAAA' zoom='100' scrollx='0' scrolly='6' flags='0' />
-		<view type='0' name='WriteString' mode='2' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAcgIAAF0CAAA' zoom='125' scrollx='0' scrolly='42' flags='0' />
-		<view type='0' name='Disconnect' mode='2' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAcgIAAF0CAAA' zoom='140' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_HtmlScriptHeader' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAkgIAACADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='RequestDevice' mode='2' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAkgIAACADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='WriteString' mode='2' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAkgIAACADAAA' zoom='125' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Disconnect' mode='2' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAkgIAACADAAA' zoom='140' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>

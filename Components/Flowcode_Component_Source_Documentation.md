@@ -1039,6 +1039,7 @@ Convert each Arduino function to a Flowcode macro. Use Flowcode's visual program
 - [ ] Create properties for user configuration
 - [ ] Implement macros for each API function
 - [ ] Add event handlers (Initialise, Property Change, etc.)
+- [ ] **Add Main macro** - Required entry point that demonstrates component usage
 - [ ] Test component in Flowcode
 
 ### Common Patterns
@@ -1182,6 +1183,16 @@ Here's a minimal example showing all sections:
             <flowline name='Ev_Initialise' description='Initialize component'>
               <return name='Return' type='u32' />
               <!-- Initialization code here -->
+            </flowline>
+          </macro>
+          
+          <!-- Main macro is REQUIRED - serves as program entry point and demonstrates component usage -->
+          <macro>
+            <flowline name='Main' description='Main program entry point'>
+              <return name='Return' type='v0' />
+              <!-- Example usage of component APIs -->
+              <command class_type='call' title='Initialize' macro='Initialise' />
+              <command class_type='call' title='Read Value' macro='Read' />
             </flowline>
           </macro>
         </macros>
@@ -1608,6 +1619,7 @@ Flowcode component source files use XML to define:
 - **Properties**: User-configurable options
 - **Events**: System callback handlers
 - **Embedded Components**: References to other components (CAL, LUT, etc.)
+- **Main Macro**: **REQUIRED** - A `Main` macro must be included as the program entry point. This macro typically demonstrates component usage by calling initialization and sample APIs.
 
 Converting Arduino libraries involves:
 1. Mapping functions → APIs
