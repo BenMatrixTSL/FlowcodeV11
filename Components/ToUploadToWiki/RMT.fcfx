@@ -117,13 +117,13 @@ Pulses longer then this period will not be received.' expansion='MX_RMT_IDLETHRE
 				<value target='RxIdleThresh' data='2' />
 			</values>
 			<events >
-				<event class='Components' event='Initialise' target='Ev_Initialise' />
-				<event class='Components' event='Property' target='Ev_Property_Change' />
-				<event class='Compile' event='AddHeader' target='Ev_AddHeader' />
 				<event class='Connection' event='ChipChange' target='Ev_ChipChange' />
 				<event class='Components' event='Renamed' target='Ev_Renamed' />
 				<event class='Compile' event='AddProperty' target='Ev_AddProperty' />
+				<event class='Components' event='Property' target='Ev_Property_Change' />
 				<event class='Connection' event='FCDChange' target='Ev_ChipChange' />
+				<event class='Compile' event='AddHeader' target='Ev_AddHeader' />
+				<event class='Components' event='Initialise' target='Ev_Initialise' />
 			</events>
 			<apis >
 				<api name='TransmitBusy' alt='FC_CAL_RMT_TXBusy_$(instance)' type='5' proto='1' />
@@ -481,6 +481,9 @@ Returns 1 if transmitting and 0 if transmission is complete.' statediag='0' >
 							<array size='20' />
 						</local>
 						<local name='Calc' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='TempStr' type='T8' description='' isconst='0' isHidden='0' isinit='1' usrinit='&quot;&quot;' setinit='&quot;&quot;' >
+							<array size='20' />
+						</local>
 						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Return = 0' />
 						</command>
@@ -496,15 +499,46 @@ Returns 1 if transmitting and 0 if transmission is complete.' statediag='0' >
 							<argument exp='this' />
 							<argument exp='&quot;Pin&quot;' />
 						</command>
-						<command class_type='calculation' title='Calculate pin for 8-bit E-blocks type ports' >
-							<exp exp='.Calc = (.PinSTring[5] - &apos;A&apos;) * 8' />
-							<exp exp='.Calc = .Calc + (.PinSTring[7] - &apos;0&apos;)' />
-						</command>
 						<command class_type='calculation' title='Calculation' >
-							<exp exp='.HeadCode = .HeadCode + &quot;\n#if defined(MX_BL0058_PINMAP) || defined(MX_BL6390_PINMAP)\n&quot;' />
-							<exp exp='.HeadCode = .HeadCode + &quot;  #undef MX_RMT_PIN_&quot; + ToString$(Instance) + &quot;\n&quot;' />
-							<exp exp='.HeadCode = .HeadCode + &quot;  #define MX_RMT_PIN_&quot; + ToString$(Instance) + &quot; &quot; + ToString$(.Calc) + &quot;\n&quot;' />
-							<exp exp='.HeadCode = .HeadCode + &quot;#endif\n&quot;' />
+							<exp exp='.TempStr = Left$(.PinSTring,5)' />
+						</command>
+						<command class_type='decision' title='Decision' exp='Compare$(.TempStr,&quot;$PORT&quot;,0) == 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculate pin for 8-bit E-blocks type ports' >
+									<exp exp='.Calc = (.PinSTring[5] - &apos;A&apos;) * 8' />
+									<exp exp='.Calc = .Calc + (.PinSTring[7] - &apos;0&apos;)' />
+								</command>
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.HeadCode = .HeadCode + &quot;\n#if defined(MX_BL0058_PINMAP) || defined(MX_BL6390_PINMAP)\n&quot;' />
+									<exp exp='.HeadCode = .HeadCode + &quot;  #undef MX_RMT_PIN_&quot; + ToString$(Instance) + &quot;\n&quot;' />
+									<exp exp='.HeadCode = .HeadCode + &quot;  #define MX_RMT_PIN_&quot; + ToString$(Instance) + &quot; &quot; + ToString$(.Calc) + &quot;\n&quot;' />
+									<exp exp='.HeadCode = .HeadCode + &quot;#endif\n&quot;' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='decision' title='Decision' exp='Compare$(.TempStr,&quot;$GPIO&quot;,0) == 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculate pin for 32-bit GPIO type ports' >
+											<exp exp='.Calc = (.PinSTring[5] - &apos;0&apos;)' />
+										</command>
+										<command class_type='decision' title='Decision' exp='Length$(.PinSTring) &gt; 6' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculate pin for 32-bit GPIO type ports' >
+													<exp exp='.Calc = .Calc * 10' />
+													<exp exp='.Calc = .Calc + (.PinSTring[6] - &apos;0&apos;)' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.HeadCode = .HeadCode + &quot;#undef MX_RMT_PIN_&quot; + ToString$(Instance) + &quot;\n&quot;' />
+											<exp exp='.HeadCode = .HeadCode + &quot;#define MX_RMT_PIN_&quot; + ToString$(Instance) + &quot; &quot; + ToString$(.Calc) + &quot;\n&quot;' />
+											<exp exp='' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
 						</command>
 					</flowline>
 				</macro>
@@ -554,7 +588,7 @@ RMT' />
 		<camera xe='17.568' ye='-10.3144' ze='314.573' xt='17.568' yt='-10.3144' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
 		<viewport dx='622' dy='352' zoom='239.251' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='0' />
-		<winpos ID='7005' RectRecentFloat='1270,427,1920,877' RectRecentDocked='0,0,547,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+		<winpos ID='7005' RectRecentFloat='1270,427,1920,877' RectRecentDocked='0,0,494,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
 	</panel2d>
 	<panel3d shadows='0' lighting='0' brightness='0' perspective='1' >
 		<background rgb='32768' img='' style='0' />
@@ -567,21 +601,21 @@ RMT' />
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,309,864' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,494,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='0' />
 	<layout >
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjwQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_ChipChange' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjwQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Property_Change' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjwQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjwQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_AddProperty' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjwQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjwQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Transmit' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjwQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Receive' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjwQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetBuffer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjwQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_AddHeader' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjwQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='TransmitBusy' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjwQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAF0CAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_ChipChange' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAF0CAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property_Change' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAF0CAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAF0CAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_AddProperty' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAF0CAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAF0CAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Transmit' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAF0CAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Receive' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAF0CAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetBuffer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAF0CAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_AddHeader' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAF0CAAA' zoom='75' scrollx='0' scrolly='207' flags='0' />
+		<view type='0' name='TransmitBusy' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAF0CAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>

@@ -1,10 +1,12 @@
 """
-Script to copy recently modified files from CAL_Source and IO_Source to ToUploadToWiki.
+Script to copy recently modified Flowcode files from CAL_Source and IO_Source to ToUploadToWiki.
 
 This script:
 1. Scans CAL_Source and IO_Source directories recursively
-2. Finds files modified in the last 2 months OR since the last script run
-3. Copies those files to ToUploadToWiki folder in a flat format (no subdirectories)
+2. On first run, finds files modified in the last 2 months
+3. On subsequent runs, finds files modified since the last script run
+4. Copies those files to ToUploadToWiki folder in a flat format (no subdirectories)
+5. Only includes files with extensions: .fcfx, .fcsx, .fcweb, .fcpcd
 """
 
 import os
@@ -19,8 +21,11 @@ IO_SOURCE_DIR = "IO_Source"
 TARGET_DIR = "ToUploadToWiki"
 STATE_FILE = "copy_script_state.json"  # File to remember last run time
 
-# Number of months to look back (2 months)
+# Number of months to look back on FIRST run (2 months)
 MONTHS_TO_CHECK = 2
+
+# Only copy these Flowcode-related file types
+ALLOWED_EXTENSIONS = {".fcfx", ".fcsx", ".fcweb", ".fcpcd"}
 
 
 def load_last_run_time():
@@ -60,27 +65,22 @@ def save_last_run_time():
 def should_copy_file(file_path, last_run_time):
     """
     Check if a file should be copied.
-    Returns True if the file was modified:
-    - In the last 2 months, OR
-    - Since the last script run (if we have a last run time)
+
+    Behaviour:
+    - If this is the first run (no last_run_time), copy files modified in the last 2 months.
+    - On subsequent runs, only copy files modified since the last script run.
     """
     try:
         # Get when the file was last modified
         file_mod_time = datetime.fromtimestamp(os.path.getmtime(file_path))
-        
-        # Calculate the cutoff date (2 months ago)
-        two_months_ago = datetime.now() - timedelta(days=MONTHS_TO_CHECK * 30)
-        
-        # Check if file was modified in the last 2 months
-        if file_mod_time >= two_months_ago:
-            return True
-        
-        # If we have a last run time, also check if file was modified since then
-        if last_run_time is not None:
-            if file_mod_time >= last_run_time:
-                return True
-        
-        return False
+
+        if last_run_time is None:
+            # First run: use a 2‑month window
+            two_months_ago = datetime.now() - timedelta(days=MONTHS_TO_CHECK * 30)
+            return file_mod_time >= two_months_ago
+
+        # Subsequent runs: only files modified after the last run
+        return file_mod_time > last_run_time
     except Exception as e:
         print(f"Warning: Could not check file {file_path}: {e}")
         return False
@@ -135,19 +135,24 @@ def scan_and_copy_directory(source_dir, target_dir, last_run_time):
         return 0
     
     files_copied = 0
-    
+
     # Walk through all files and subdirectories
     for root, dirs, files in os.walk(source_dir):
         for file_name in files:
+            # Filter by allowed extensions
+            _, ext = os.path.splitext(file_name)
+            if ext.lower() not in ALLOWED_EXTENSIONS:
+                continue
+
             source_file_path = os.path.join(root, file_name)
-            
+
             # Check if this file should be copied
             if should_copy_file(source_file_path, last_run_time):
                 # Copy the file directly to the target directory (flat structure)
                 if copy_file_to_target(source_file_path, target_dir):
                     files_copied += 1
                     print(f"Copied: {source_file_path}")
-    
+
     return files_copied
 
 

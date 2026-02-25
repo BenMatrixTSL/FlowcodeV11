@@ -8,6 +8,7 @@
 	<debug >
 		<watch expr='.HeadCode' />
 		<watch expr='.intlist[7]' />
+		<watch expr='FloatFixedList' />
 	</debug>
 	<traces />
 	<ghost >
@@ -69,12 +70,12 @@ The LUT data is accessed directly allowing very low overhead when collecting the
 00116-Bit
 00232-Bit
 003Float' />
-				<property name='Storage Sign' target='Sign' typeid='16' hidden='0' locked='0' info='Controls if the integer numbers are allowed to be negative.
+				<property name='Storage Sign' target='Sign' typeid='16' hidden='1' locked='0' info='Controls if the integer numbers are allowed to be negative.
 Unsigned = Numbers are positive only.
 Signed = Numbers can be positive and negative.' filter='000Unsigned
 001Signed' />
-				<property name='Integers' target='intfixed' typeid='11' hidden='0' locked='0' info='Comma seperated integer data which is used to create the C code which is inserted into the ROM.' />
-				<property name='Floats' target='floatfixed' typeid='11' hidden='1' locked='0' info='Comma seperated float data which is used to create the C code which is inserted into the ROM.' />
+				<property name='Integers' target='intfixed' typeid='11' hidden='1' locked='0' info='Comma seperated integer data which is used to create the C code which is inserted into the ROM.' />
+				<property name='Floats' target='floatfixed' typeid='11' hidden='0' locked='0' info='Comma seperated float data which is used to create the C code which is inserted into the ROM.' />
 				<property name='Num Values' target='NumVals' typeid='21' hidden='0' locked='1' info='' />
 				<property name='Embed Into C' target='EmbedIntoC' typeid='7' hidden='0' locked='0' info='Flag to decide if code should be generated to C or not
 If this is false then the LUT is simulation only
@@ -82,20 +83,21 @@ If this is false then the LUT is simulation only
 			</properties>
 			<values >
 				<value target='Enabled' data='1' />
-				<value target='StorageType' data='000' />
+				<value target='StorageType' data='003' />
 				<value target='Sign' data='000' />
 				<value target='intfixed' data='1, 2, 3, 4, 5' />
-				<value target='floatfixed' data='' />
-				<value target='NumVals' data='5' />
+				<value target='floatfixed' data='1.2,2.3,3.4
+4.5' />
+				<value target='NumVals' data='4' />
 				<value target='EmbedIntoC' data='1' />
 			</values>
 			<events >
-				<event class='Components' event='Renamed' target='Ev_Renamed' />
+				<event class='Components' event='Property' target='Ev_Property' />
 				<event class='Compile' event='GetVarSize' target='Ev_GetVarSize' />
+				<event class='Components' event='Renamed' target='Ev_Renamed' />
 				<event class='Components' event='Initialise' target='Ev_SimStart' />
 				<event class='Simulation' event='Start' target='Ev_SimStart' />
 				<event class='Compile' event='AddVar' target='Ev_AddVar' />
-				<event class='Components' event='Property' target='Ev_Property' />
 			</events>
 			<apis >
 				<api name='GetFloat' alt='$(type)_$(module)__FLOATFIXEDLIST' type='5' proto='0' />
@@ -150,6 +152,11 @@ If this is false then the LUT is simulation only
 						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Vals' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Version' type='u32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='Temp' type='T8' description='' isconst='0' isHidden='0' isinit='1' usrinit='&quot;&quot;' setinit='&quot;&quot;' >
+							<array size='10000' />
+						</local>
+						<local name='T1' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='T2' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
 						<command class_type='decision' title='Decision' exp='StorageType &lt; 3' swap='0' >
 							<flowline >
 								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
@@ -193,6 +200,27 @@ If this is false then the LUT is simulation only
 							<flowline >
 								<command class_type='decision' title='Decision' exp='StorageType &lt; 3' swap='0' >
 									<flowline >
+										<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
+											<return exp='.Temp' />
+											<argument exp='this' />
+											<argument exp='&quot;intfixed&quot;' />
+										</command>
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.T1 = SearchAndReplace$(.Temp,&quot;,\r\n&quot;,&quot;\r\n&quot;)' />
+										</command>
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.T2 = SearchAndReplace$(.Temp,&quot;,\n&quot;,&quot;\r\n&quot;)' />
+										</command>
+										<command class_type='decision' title='Decision' exp='.T1 | .T2' swap='0' >
+											<flowline >
+												<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+													<argument exp='this' />
+													<argument exp='&quot;floatfixed&quot;' />
+													<argument exp='.Temp' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
 										<command class_type='sim' title='Built-in Function' macro='Component.Property.GetArrayFromListProp' >
 											<return exp='.Vals' />
 											<argument exp='this' />
@@ -203,7 +231,28 @@ If this is false then the LUT is simulation only
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='sim' title='This doesn&apos;t work with floats' disable='1' macro='Component.Property.GetArrayFromListProp' >
+										<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
+											<return exp='.Temp' />
+											<argument exp='this' />
+											<argument exp='&quot;floatfixed&quot;' />
+										</command>
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.T1 = SearchAndReplace$(.Temp,&quot;,\r\n&quot;,&quot;\r\n&quot;)' />
+										</command>
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.T2 = SearchAndReplace$(.Temp,&quot;,\n&quot;,&quot;\r\n&quot;)' />
+										</command>
+										<command class_type='decision' title='Decision' exp='.T1 | .T2' swap='0' >
+											<flowline >
+												<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+													<argument exp='this' />
+													<argument exp='&quot;floatfixed&quot;' />
+													<argument exp='.Temp' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+										<command class_type='sim' title='This does work ok' macro='Component.Property.GetArrayFromListProp' >
 											<return exp='.Vals' />
 											<argument exp='this' />
 											<argument exp='&quot;floatfixed&quot;' />
@@ -211,13 +260,13 @@ If this is false then the LUT is simulation only
 											<argument exp='FloatFixedList' />
 											<argument exp='-1' />
 										</command>
-										<command class_type='sim' title='Ignore Watchdog Warnings for Large LUT' macro='System.WDTEnable' >
+										<command class_type='sim' title='Ignore Watchdog Warnings for Large LUT' disable='1' macro='System.WDTEnable' >
 											<argument exp='0' />
 										</command>
-										<command class_type='call' title='User Macro' macro='Prv_GetNumValueCount' >
+										<command class_type='call' title='User Macro' disable='1' macro='Prv_GetNumValueCount' >
 											<return exp='.Vals' />
 										</command>
-										<command class_type='sim' title='Re-Enable Watchdog' macro='System.WDTEnable' >
+										<command class_type='sim' title='Re-Enable Watchdog' disable='1' macro='System.WDTEnable' >
 											<argument exp='1' />
 										</command>
 									</flowline>
@@ -688,6 +737,10 @@ Invalid values will read as zero' textarea='348,6,348,6' />
 						<local name='tempString' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
 						</local>
+						<local name='Temp' type='T8' description='' isconst='0' isHidden='0' isinit='1' usrinit='&quot;&quot;' setinit='&quot;&quot;' >
+							<array size='10000' />
+						</local>
+						<local name='T1' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
 						<command class_type='decision' title='Decision' exp='(EmbedIntoC) &amp;&amp; (Enabled)' swap='0' >
 							<flowline >
 								<command class_type='decision' title='Decision' exp='StorageType &lt; 3' swap='0' >
@@ -800,8 +853,23 @@ Invalid values will read as zero' textarea='348,6,348,6' />
 														</command>
 													</flowline>
 												</command>
+												<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
+													<return exp='.Temp' />
+													<argument exp='this' />
+													<argument exp='&quot;intfixed&quot;' />
+												</command>
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='.T1 = SearchAndReplace$(.Temp,&quot;\r\n&quot;,&quot;,\r\n&quot;)' />
+												</command>
+												<command class_type='loop' title='Loop' type='0' exp='.T1' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' >
+															<exp exp='.T1 = SearchAndReplace$(.Temp,&quot;,\r\n,\r\n&quot;,&quot;,\r\n&quot;)' />
+														</command>
+													</flowline>
+												</command>
 												<command class_type='calculation' title='Insert the copy' >
-													<exp exp='.Expansion = .Expansion + intfixed' />
+													<exp exp='.Expansion = .Expansion + .Temp' />
 												</command>
 												<command class_type='calculation' title='Get lead-in' >
 													<exp exp='.subtxt = &quot;\n};\n&quot;' />
@@ -843,8 +911,23 @@ Invalid values will read as zero' textarea='348,6,348,6' />
 														</command>
 													</flowline>
 												</command>
+												<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
+													<return exp='.Temp' />
+													<argument exp='this' />
+													<argument exp='&quot;floatfixed&quot;' />
+												</command>
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='.T1 = SearchAndReplace$(.Temp,&quot;\r\n&quot;,&quot;,\r\n&quot;)' />
+												</command>
+												<command class_type='loop' title='Loop' type='0' exp='.T1' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' >
+															<exp exp='.T1 = SearchAndReplace$(.Temp,&quot;,\r\n,\r\n&quot;,&quot;,\r\n&quot;)' />
+														</command>
+													</flowline>
+												</command>
 												<command class_type='calculation' title='Insert the copy' >
-													<exp exp='.Expansion = .Expansion + floatfixed' />
+													<exp exp='.Expansion = .Expansion + .Temp' />
 												</command>
 												<command class_type='calculation' title='Get lead-in' >
 													<exp exp='.subtxt = &quot;\n};\n&quot;' />
@@ -966,6 +1049,9 @@ Invalid values will read as zero' textarea='348,6,348,6' />
 						<command class_type='sim' title='Built-in Function' macro='Debug.Print' >
 							<argument exp='STRING .Version' />
 						</command>
+						<command class_type='loop' title='Loop' type='3' exp='1' >
+							<flowline />
+						</command>
 					</flowline>
 				</macro>
 			</macros>
@@ -989,10 +1075,10 @@ Table' />
 	<keymap />
 	<panel2d shadows='1' lighting='0' brightness='0' >
 		<background rgb='9737364' img='..\icons\textures\grass.jpg' style='0' />
-		<camera xe='-13.9228' ye='21.4776' ze='235.813' xt='-13.9228' yt='21.4776' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
-		<viewport dx='248' dy='782' zoom='127.254' fix_topleft='0' />
+		<camera xe='-13.9228' ye='21.4776' ze='216.795' xt='-13.9228' yt='21.4776' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='228' dy='782' zoom='127.254' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='0' />
-		<winpos ID='7005' RectRecentFloat='1270,427,1920,877' RectRecentDocked='1221,141,1489,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7005' RectRecentFloat='1270,427,1920,877' RectRecentDocked='1241,141,1489,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel2d>
 	<panel3d shadows='1' lighting='2' brightness='0' perspective='1' >
 		<background rgb='8409120' img='' style='5' />
@@ -1005,23 +1091,23 @@ Table' />
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,410,864' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='991,141,1489,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='0' />
 	<layout >
-		<view type='0' name='Ev_AddVar' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAQQQAAGMDAAA' zoom='75' scrollx='0' scrolly='108' flags='0' />
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAQQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_SimStart' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAQQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_GetVarSize' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAQQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetInt' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAQQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAQQQAAGMDAAA' zoom='75' scrollx='0' scrolly='40' flags='0' />
-		<view type='0' name='Prv_ReadFixedList' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAQQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetLUTCount' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAQQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetFloat' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAQQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Prv_GetNumValueCount' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAQQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Prv_HexToNum' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAQQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Prv_BinToNum' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAQQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Renamed' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAQQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_AddVar' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='75' scrollx='984' scrolly='587' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_SimStart' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='75' scrollx='549' scrolly='0' flags='0' />
+		<view type='0' name='Ev_GetVarSize' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetInt' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='75' scrollx='225' scrolly='342' flags='0' />
+		<view type='0' name='Prv_ReadFixedList' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetLUTCount' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetFloat' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_GetNumValueCount' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_HexToNum' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_BinToNum' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Renamed' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA3wMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>
