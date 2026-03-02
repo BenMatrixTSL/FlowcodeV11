@@ -584,16 +584,16 @@ Each Widget theme requires 12 bytes of RAM to store the colour channels.' filter
 				<value target='YPixels' data='240' />
 			</values>
 			<events >
-				<event class='Components' event='Property' target='Ev_Property' />
 				<event class='System' event='Timer' target='Ev_Timer' />
 				<event class='Components' event='PostInitialise' target='Ev_PostInitialise' />
 				<event class='Components' event='Renamed' target='Ev_Renamed' />
-				<event class='System' event='LoadComplete' target='Ev_LoadComplete' />
-				<event class='Simulation' event='Start' target='Ev_SimStart' />
 				<event class='Compile' event='GetVarSize' target='Ev_GetVarSize' />
+				<event class='System' event='LoadComplete' target='Ev_LoadComplete' />
+				<event class='Compile' event='AddHeader' target='Ev_AddHeader' />
+				<event class='Simulation' event='Start' target='Ev_SimStart' />
+				<event class='Components' event='Property' target='Ev_Property' />
 				<event class='Compile' event='Start' target='Ev_CompileStart' />
 				<event class='Components' event='Initialise' target='Ev_Initialise' />
-				<event class='Compile' event='AddHeader' target='Ev_AddHeader' />
 			</events>
 			<apis >
 				<api name='DrawScene' alt='DrawScene' type='1' proto='1' />
@@ -615,6 +615,7 @@ Each Widget theme requires 12 bytes of RAM to store the colour channels.' filter
 				<api name='ModifyBitmap' alt='ModifyBitmap' type='1' proto='1' />
 				<api name='NoTouch' alt='NoTouch' type='1' proto='1' />
 				<api name='CreateWidgetArray' alt='CreateWidgetArray' type='1' proto='1' />
+				<api name='GetSceneIdx' alt='GetSceneIdx' type='1' proto='1' />
 				<api name='CreateObject' alt='CreateObject' type='1' proto='1' />
 				<api name='Initialise' alt='Initialise' type='1' proto='1' />
 			</apis>
@@ -8208,6 +8209,15 @@ Returns the ID of the first button, the following buttons have incremental IDs g
 					</flowline>
 				</macro>
 				<macro >
+					<flowline name='GetSceneIdx' description='Gets the index of the current drawn scene allowing for variable behaviour 
+based on the scene.' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.Return = SceneIdx' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
 					<flowline name='Main' description='' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<command class_type='comment' title='' comment='Component Version Information;
@@ -8534,10 +8544,10 @@ Manager' />
 	<keymap />
 	<panel2d shadows='0' lighting='2' brightness='0' >
 		<background rgb='255' img='' style='0' />
-		<camera xe='4.05886' ye='-6.64744' ze='230.289' xt='4.05886' yt='-6.64744' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
-		<viewport dx='543' dy='396' zoom='285.307' fix_topleft='0' />
+		<camera xe='4.05886' ye='-6.64744' ze='214.597' xt='4.05886' yt='-6.64744' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='506' dy='820' zoom='285.307' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='0' />
-		<winpos ID='7005' RectRecentFloat='1437,641,1920,982' RectRecentDocked='0,0,268,419' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7005' RectRecentFloat='1437,641,1920,982' RectRecentDocked='0,0,506,843' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel2d>
 	<panel3d shadows='0' lighting='2' brightness='0' perspective='1' >
 		<background rgb='8409120' img='' style='0' />
@@ -8550,58 +8560,59 @@ Manager' />
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='938,141,1481,1005' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,261,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='2' >
 		<panel2d_0 id='0' name='Panel' type='0' >
-			<winpos ID='1171' RectRecentFloat='1133,210,1496,498' RectRecentDocked='938,141,1481,1005' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+			<winpos ID='1171' RectRecentFloat='1133,210,1496,498' RectRecentDocked='933,141,1489,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 			<background fill='72057594035033043' showgrid='1' gridstyle='1' gridsize='10' gridbrush='71776119075691740' snaptogrid='1' fitcomp='0' disp_x='320' disp_y='240' scale='100' disp_col='16752832' />
 		</panel2d_0>
 		<panel2d_1 id='1' name='Scene0' type='1' >
-			<winpos ID='1172' RectRecentFloat='0,454,650,904' RectRecentDocked='938,141,1481,1005' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+			<winpos ID='1172' RectRecentFloat='0,454,650,904' RectRecentDocked='933,141,1489,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 			<background fill='288230376151053813' showgrid='0' gridstyle='0' gridsize='5' gridbrush='71776119075691740' snaptogrid='1' fitcomp='0' disp_x='320' disp_y='240' scale='100' disp_col='8388626' />
 		</panel2d_1>
 	</panels2d>
 	<layout >
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_GetVarSize' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ModifyPosition' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='CreateObject' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='90' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ModifyScale' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DrawAll' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DrawItem' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='65' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetTextLabel' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_LoadComplete' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='CreateWidget' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ModifyColour' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='CheckForTouch' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='70' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetLastTouchID' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='NoTouch' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetSliderValue' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetSliderValue' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='CheckCollision' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ClearAll' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_SimStart' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_CompileStart' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='CreateTextField' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetPanelHandle' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DrawScene' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Prv_SetupDCScenes' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='CreateWidgetArray' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Prv_EncodeDCComps' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_AddHeader' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Prv_EncodeDCLayoutString' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Prv_GetDCArray' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='CreateObjectArray' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Prv_UpdateDCObjects' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Prv_FindSceneCompCallback' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_PostInitialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Timer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ModifyBitmap' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Prv_BoundsCheck' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_GetVarSize' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ModifyPosition' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CreateObject' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='90' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ModifyScale' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DrawAll' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DrawItem' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='65' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetTextLabel' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_LoadComplete' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CreateWidget' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ModifyColour' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CheckForTouch' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='70' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetLastTouchID' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='NoTouch' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetSliderValue' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetSliderValue' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CheckCollision' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ClearAll' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_SimStart' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_CompileStart' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CreateTextField' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetPanelHandle' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DrawScene' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_SetupDCScenes' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CreateWidgetArray' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_EncodeDCComps' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_AddHeader' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_EncodeDCLayoutString' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_GetDCArray' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CreateObjectArray' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_UpdateDCObjects' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_FindSceneCompCallback' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_PostInitialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Timer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ModifyBitmap' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_BoundsCheck' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetSceneIdx' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>

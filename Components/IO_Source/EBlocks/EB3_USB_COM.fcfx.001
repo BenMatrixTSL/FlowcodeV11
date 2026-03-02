@@ -58,10 +58,8 @@
 	</ghost>
 	<components >
 		<settings autoimg='0' center='1' unitscale='1' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
-		<definition guid='c73616d1-7ad0-45d9-aada-69ccfa4c5efc' vstate='40' vmin='0' vmaj='3' srcleaf='RS232.fcfx' visiblename='UART (RS232)' description='Low level routines for controlling or interacting with a standard asyncronous serial interface.
-On a microcontroller the interface will be the onboard UART which will need voltage level shifting using a max2323 to become RS232 compatible.
-See the EB015 RS232 E-block for details.' category='Comms: Interface' category2='API Comms' category3='' bIs2dOnly='1' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='Matrix Ltd' manuname='' manucode='' sysinfo='1061643' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='1' showmacros='1' iconpath='..\..\Icons\Components\RS232.png' />
-		<component class_type='root' codename='UART' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+		<definition guid='e4eb4f03-eaa4-4f2e-9920-3cbe11e4acab' vstate='40' vmin='0' vmaj='3' srcleaf='EB3_USB_COM.fcfx' visiblename='E-Blocks 3 (USB Comms)' description='Low level routines for connecting the E-blocks 3 hardware to the computer using a USB COM port serial data connection.' category='Comms: Interface' category2='API Comms' category3='' bIs2dOnly='1' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='Matrix Ltd' manuname='' manucode='' sysinfo='1061643' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='1' showmacros='1' iconpath='..\..\Icons\Components\RS232.png' />
+		<component class_type='root' codename='EB3_USB_Comms' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 			<resources />
 			<properties >
 				<property name='Comms Settings' folder='property_1' hidden='0' >
@@ -72,16 +70,6 @@ Hardware channels use the selected peripheral on-board the target microcontrolle
 002Channel 2
 003Channel 3
 ' />
-					<property name='Baud Options' target='cal_uart::BAUD_LIST' typeid='16' hidden='0' locked='0' info='Baud rate option selector' filter='000Custom
-0011200
-0022400
-0034800
-0049600
-00519200
-00631250
-00738400
-00857600
-009115200' />
 					<property name='Baud Rate' target='cal_uart::BAUD' typeid='14' hidden='0' locked='1' info='' />
 					<property name='Data Bits' target='cal_uart::DBITS' typeid='16' hidden='0' locked='0' info='Number of data bits' filter='0077 Bits
 0088 Bits
@@ -191,8 +179,7 @@ API components are available from the Comms component category.' filter='000' />
 			</properties>
 			<values >
 				<value target='cal_uart::CHANNEL' data='002' />
-				<value target='cal_uart::BAUD_LIST' data='004' />
-				<value target='cal_uart::BAUD' data='9600' />
+				<value target='cal_uart::BAUD' data='115200' />
 				<value target='cal_uart::DBITS' data='008' />
 				<value target='cal_uart::RETURN' data='001' />
 				<value target='cal_uart::ECHO' data='000' />
@@ -1584,7 +1571,7 @@ will be the serial comms UART back to the computer.' textarea='12,0,12,0' />
 				<values >
 					<value target='UseUART' data='1' />
 					<value target='CHANNEL' data='002' />
-					<value target='Filter' data='' />
+					<value target='Filter' data='USB' />
 					<value target='UseTX' data='1' />
 					<value target='TX' data='$PORTB.0' />
 					<value target='OutputPins' data='000' />
@@ -1596,8 +1583,8 @@ will be the serial comms UART back to the computer.' textarea='12,0,12,0' />
 					<value target='FLOWEN' data='000' />
 					<value target='RTS' data='$PORTB.2' />
 					<value target='CTS' data='$PORTB.1' />
-					<value target='BAUD_LIST' data='004' />
-					<value target='BAUD' data='9600' />
+					<value target='BAUD_LIST' data='009' />
+					<value target='BAUD' data='115200' />
 					<value target='DBITS' data='008' />
 					<value target='RETURN' data='001' />
 					<value target='ECHO' data='000' />
@@ -1647,8 +1634,8 @@ will be the serial comms UART back to the computer.' textarea='12,0,12,0' />
 					<value target='RXBank2' data='' />
 					<value target='TX_ALT' data='' />
 					<value target='RX_ALT' data='' />
-					<value target='BitDelay' data='104' />
-					<value target='ParentName' data='UART' />
+					<value target='BitDelay' data='8' />
+					<value target='ParentName' data='EB3_USB_Comms' />
 					<value target='CompName' data='' />
 					<value target='Sorted' data='0' />
 				</values>
@@ -1672,7 +1659,9 @@ will be the serial comms UART back to the computer.' textarea='12,0,12,0' />
 				<resources />
 				<properties />
 				<values >
-					<value target='Text::sText' data='UART' />
+					<value target='Text::sText' data='E-Blocks 3
+USB Serial
+Comms' />
 					<value target='Name' data='' />
 					<value target='Peripheral::sText' data='(UART CH2)' />
 					<value target='Text::nVerticalAlignment' data='002' />
