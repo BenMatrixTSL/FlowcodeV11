@@ -1,5 +1,5 @@
 <root>
-<document scada='0' projtype='1' schema='103' license='50,22911366,CK7018' title='' description='' fcversion='720896' target='ARD.ATMEGA.E-Blocks3 ArdMega Programmer' >
+<document scada='0' projtype='1' schema='103' license='1,82702381,95CJQR' title='' description='' fcversion='720896' target='ARD.ATMEGA.E-Blocks3 ArdMega Programmer' >
 	<config data='' clkspd='16000000' simspd='0' usewdt='0' constif='0' Use3V3='0' />
 	<plugins >
 		<dll_models enabled='1' />
@@ -143,7 +143,7 @@ Try to keep this as low as possible to avoid slowing down the system with excess
 							<return exp='.port' />
 							<argument exp='this' />
 						</command>
-						<command class_type='decision' title='Decision' exp='.port &gt;= 0' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+						<command class_type='decision' title='Decision' exp='.port &gt;= 0' swap='0' >
 							<flowline >
 								<command class_type='sim' title='Built-in Function' macro='Connection.GetAutodetectedPortName' >
 									<return exp='.Str' />
@@ -267,7 +267,7 @@ Try to keep this as low as possible to avoid slowing down the system with excess
 							<argument exp='&quot;Max1&quot;' />
 							<argument exp='Resolution' />
 						</command>
-						<command class_type='decision' title='Decision' exp='Mode' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+						<command class_type='decision' title='Decision' exp='Mode' swap='0' >
 							<flowline >
 								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 									<argument exp='SensorLibraryComponent1' />
@@ -295,12 +295,12 @@ Try to keep this as low as possible to avoid slowing down the system with excess
 Only applies to the Full Bridge mode. ' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<param name='Direction' type='b1' description='0=Forwards, 1=Reverse' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Decision' exp='Mode = 0' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+						<command class_type='decision' title='Decision' exp='Mode = 0' swap='0' >
 							<flowline >
 								<command class_type='calculation' title='Calculation' >
 									<exp exp='Direction = .Direction' />
 								</command>
-								<command class_type='decision' title='Decision' exp='Direction' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+								<command class_type='decision' title='Decision' exp='Direction' swap='0' >
 									<flowline >
 										<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 											<argument exp='SensorLibraryComponent1' />
@@ -343,7 +343,7 @@ Only applies to the Full Bridge mode. ' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<param name='Channel' type='u8' description='0=A, 1=B' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Duty' type='u16' description='Range: 0 to Resolution - 1' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Decision' exp='.Channel' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+						<command class_type='decision' title='Decision' exp='.Channel' swap='0' >
 							<flowline >
 								<command class_type='sim' title='Component Macro' component='SensorLibraryComponent1' macro='SetValue' >
 									<argument exp='1' />
@@ -358,7 +358,7 @@ Only applies to the Full Bridge mode. ' statediag='0' >
 									<argument exp='0' />
 									<argument exp='.Duty' />
 								</command>
-								<command class_type='decision' title='Decision' exp='Direction' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+								<command class_type='decision' title='Decision' exp='Direction' swap='0' >
 									<flowline >
 										<command class_type='calculation' title='Calculation' >
 											<exp exp='DutyB = .Duty' />
@@ -383,14 +383,14 @@ Only applies to the Full Bridge mode. ' statediag='0' >
 						<command class_type='calculation' title='Calculation' >
 							<exp exp='Count = Count + 1' />
 						</command>
-						<command class_type='decision' title='Decision' exp='Count = Resolution' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+						<command class_type='decision' title='Decision' exp='Count = Resolution' swap='0' >
 							<flowline >
 								<command class_type='calculation' title='Calculation' >
 									<exp exp='Count = 0' />
 								</command>
-								<command class_type='decision' title='Decision' exp='Mode' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+								<command class_type='decision' title='Decision' exp='Mode' swap='0' >
 									<flowline >
-										<command class_type='decision' title='Decision' exp='DutyA' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+										<command class_type='decision' title='Decision' exp='DutyA' swap='0' >
 											<flowline >
 												<command class_type='calculation' title='Calculation' >
 													<exp exp='PinA = 1' />
@@ -399,7 +399,7 @@ Only applies to the Full Bridge mode. ' statediag='0' >
 											</flowline>
 											<flowline />
 										</command>
-										<command class_type='decision' title='Decision' exp='DutyB' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+										<command class_type='decision' title='Decision' exp='DutyB' swap='0' >
 											<flowline >
 												<command class_type='calculation' title='Calculation' >
 													<exp exp='PinB = 1' />
@@ -410,9 +410,9 @@ Only applies to the Full Bridge mode. ' statediag='0' >
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='decision' title='Decision' exp='Direction' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+										<command class_type='decision' title='Decision' exp='Direction' swap='0' >
 											<flowline >
-												<command class_type='decision' title='Decision' exp='DutyB' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+												<command class_type='decision' title='Decision' exp='DutyB' swap='0' >
 													<flowline >
 														<command class_type='calculation' title='Calculation' >
 															<exp exp='PinB = 1' />
@@ -423,7 +423,7 @@ Only applies to the Full Bridge mode. ' statediag='0' >
 												</command>
 											</flowline>
 											<flowline >
-												<command class_type='decision' title='Decision' exp='DutyA' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+												<command class_type='decision' title='Decision' exp='DutyA' swap='0' >
 													<flowline >
 														<command class_type='calculation' title='Calculation' >
 															<exp exp='PinA = 1' />
@@ -438,9 +438,9 @@ Only applies to the Full Bridge mode. ' statediag='0' >
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='decision' title='Decision' exp='Mode' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+								<command class_type='decision' title='Decision' exp='Mode' swap='0' >
 									<flowline >
-										<command class_type='decision' title='Decision' exp='Count = DutyA' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+										<command class_type='decision' title='Decision' exp='Count = DutyA' swap='0' >
 											<flowline >
 												<command class_type='calculation' title='Calculation' >
 													<exp exp='PinA = 0' />
@@ -449,7 +449,7 @@ Only applies to the Full Bridge mode. ' statediag='0' >
 											</flowline>
 											<flowline />
 										</command>
-										<command class_type='decision' title='Decision' exp='DutyB' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+										<command class_type='decision' title='Decision' exp='Count = DutyB' swap='0' >
 											<flowline >
 												<command class_type='calculation' title='Calculation' >
 													<exp exp='PinB = 0' />
@@ -460,9 +460,9 @@ Only applies to the Full Bridge mode. ' statediag='0' >
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='decision' title='Decision' exp='Direction' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+										<command class_type='decision' title='Decision' exp='Direction' swap='0' >
 											<flowline >
-												<command class_type='decision' title='Decision' exp='Count = DutyB' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+												<command class_type='decision' title='Decision' exp='Count = DutyB' swap='0' >
 													<flowline >
 														<command class_type='calculation' title='Calculation' >
 															<exp exp='PinB = 0' />
@@ -473,7 +473,7 @@ Only applies to the Full Bridge mode. ' statediag='0' >
 												</command>
 											</flowline>
 											<flowline >
-												<command class_type='decision' title='Decision' exp='Count = DutyA' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+												<command class_type='decision' title='Decision' exp='Count = DutyA' swap='0' >
 													<flowline >
 														<command class_type='calculation' title='Calculation' >
 															<exp exp='PinA = 0' />
@@ -612,10 +612,10 @@ Only applies to the Full Bridge mode. ' statediag='0' >
 	<keymap />
 	<panel2d shadows='0' lighting='2' brightness='0' >
 		<background rgb='2105930' img='' style='0' />
-		<camera xe='0' ye='0' ze='1812.66' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
-		<viewport dx='569' dy='849' zoom='37.9822' fix_topleft='0' />
+		<camera xe='0' ye='0' ze='1236.05' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='388' dy='820' zoom='37.9822' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='0' />
-		<winpos ID='7005' RectRecentFloat='1270,427,1920,877' RectRecentDocked='0,0,569,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7005' RectRecentFloat='1270,427,1920,877' RectRecentDocked='0,0,388,843' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel2d>
 	<panel3d shadows='1' lighting='2' brightness='0' perspective='1' >
 		<background rgb='7895160' img='' style='0' />
@@ -628,23 +628,23 @@ Only applies to the Full Bridge mode. ' statediag='0' >
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='153,370,807,947' RectRecentDocked='0,0,281,450' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='153,370,807,947' RectRecentDocked='0,0,261,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='1' >
 		<panel2d_0 id='0' name='2D Panel' type='0' >
-			<winpos ID='1171' RectRecentFloat='2050,429,2320,855' RectRecentDocked='865,141,1434,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
-			<background fill='288230376149408988' showgrid='1' gridstyle='1' gridsize='10' gridbrush='71776119075691740' snaptogrid='1' fitcomp='0' disp_x='300' disp_y='400' scale='100' />
+			<winpos ID='1171' RectRecentFloat='1650,429,1920,855' RectRecentDocked='933,141,1489,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+			<background fill='288230376149408988' showgrid='1' gridstyle='1' gridsize='10' gridbrush='71776119075691740' snaptogrid='1' fitcomp='0' disp_x='300' disp_y='400' scale='100' disp_col='16777215' />
 		</panel2d_0>
 	</panels2d>
 	<layout >
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='TimerRoutine' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Enable' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Disable' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='54' flags='0' />
-		<view type='0' name='SetDuty' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetDirection' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_AutoIdEBlock' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAbQQAAGMDAAA' zoom='100' scrollx='18' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='TimerRoutine' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='1511' scrolly='108' flags='0' />
+		<view type='0' name='Enable' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Disable' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetDuty' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetDirection' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_AutoIdEBlock' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>
