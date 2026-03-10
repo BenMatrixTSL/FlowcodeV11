@@ -102,10 +102,10 @@ Try to keep this as low as possible to avoid slowing down the system with excess
 				<event class='Components' event='Property' target='Ev_Property' />
 			</events>
 			<apis >
-				<api name='Disable' alt='Disable' type='1' proto='1' />
-				<api name='Enable' alt='Enable' type='1' proto='1' />
+				<api name='StartPWM' alt='StartPWM' type='1' proto='1' />
 				<api name='SetDirection' alt='SetDirection' type='1' proto='1' />
 				<api name='SetDuty' alt='SetDuty' type='1' proto='1' />
+				<api name='StopPWM' alt='StopPWM' type='1' proto='1' />
 			</apis>
 			<variables >
 				<variable public='0' >
@@ -115,10 +115,16 @@ Try to keep this as low as possible to avoid slowing down the system with excess
 					<def class_type='variable' name='DutyB' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 				</variable>
 				<variable public='0' >
+					<def class_type='variable' name='PWMEnabled' type='b1' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
 					<def class_type='variable' name='DutyA' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 				</variable>
 				<variable public='0' >
 					<def class_type='variable' name='false' type='b1' description='' isconst='1' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='PWMMode' type='b1' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
 				</variable>
 				<variable public='0' >
 					<def class_type='variable' name='Direction' type='b1' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
@@ -200,22 +206,13 @@ Try to keep this as low as possible to avoid slowing down the system with excess
 					</flowline>
 				</macro>
 				<macro >
-					<flowline name='Disable' description='' statediag='0' >
-						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<command class_type='call' title='Component Macro' component='TimedInterval1' macro='StopTimerInterval' />
-						<command class_type='calculation' title='Calculation' >
-							<exp exp='PinA = 0' />
-							<exp exp='EnableA = 1' />
-							<exp exp='PinB = 0' />
-							<exp exp='EnableB = 1' />
-						</command>
-					</flowline>
-				</macro>
-				<macro >
-					<flowline name='Enable' description='' statediag='0' >
+					<flowline name='StartPWM' description='' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<command class_type='calculation' title='Calculation' >
 							<exp exp='Count = Resolution - 1' />
+						</command>
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='PWMEnabled = 1' />
 						</command>
 						<command class_type='call' title='Component Macro' component='TimedInterval1' macro='StartTimerInterval' />
 					</flowline>
@@ -287,6 +284,16 @@ Try to keep this as low as possible to avoid slowing down the system with excess
 									<argument exp='&quot;FW&quot;' />
 								</command>
 							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SetMode' description='Specify what to do on the none active part of the PWM output.
+Default - Coast.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Mode' type='b1' description='0=Coast, 1=Brake' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='PWMMode = .Mode' />
 						</command>
 					</flowline>
 				</macro>
@@ -377,6 +384,21 @@ Only applies to the Full Bridge mode. ' statediag='0' >
 						</command>
 					</flowline>
 				</macro>
+				<macro >
+					<flowline name='StopPWM' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='call' title='Component Macro' component='TimedInterval1' macro='StopTimerInterval' />
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='PWMEnabled = 0' />
+						</command>
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='PinA = 0' />
+							<exp exp='EnableA = 1' />
+							<exp exp='PinB = 0' />
+							<exp exp='EnableB = 1' />
+						</command>
+					</flowline>
+				</macro>
 				<macro keep='1' >
 					<flowline name='TimerRoutine' description='' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
@@ -442,18 +464,38 @@ Only applies to the Full Bridge mode. ' statediag='0' >
 									<flowline >
 										<command class_type='decision' title='Decision' exp='Count = DutyA' swap='0' >
 											<flowline >
-												<command class_type='calculation' title='Calculation' >
-													<exp exp='PinA = 0' />
-													<exp exp='EnableA = 0' />
+												<command class_type='decision' title='Decision' exp='PWMMode' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Output Low' >
+															<exp exp='PinA = 0' />
+															<exp exp='EnableA = 0' />
+														</command>
+													</flowline>
+													<flowline >
+														<command class_type='calculation' title='High Impedance' >
+															<exp exp='PinA = 0' />
+															<exp exp='EnableA = 1' />
+														</command>
+													</flowline>
 												</command>
 											</flowline>
 											<flowline />
 										</command>
-										<command class_type='decision' title='Decision' exp='Count = DutyB' swap='0' >
+										<command class_type='decision' title='Decision' exp='DutyB' swap='0' >
 											<flowline >
-												<command class_type='calculation' title='Calculation' >
-													<exp exp='PinB = 0' />
-													<exp exp='EnableB = 0' />
+												<command class_type='decision' title='Decision' exp='PWMMode' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Output Low' >
+															<exp exp='PinB = 0' />
+															<exp exp='EnableB = 0' />
+														</command>
+													</flowline>
+													<flowline >
+														<command class_type='calculation' title='High Impedance' >
+															<exp exp='PinB = 0' />
+															<exp exp='EnableB = 1' />
+														</command>
+													</flowline>
 												</command>
 											</flowline>
 											<flowline />
@@ -464,9 +506,19 @@ Only applies to the Full Bridge mode. ' statediag='0' >
 											<flowline >
 												<command class_type='decision' title='Decision' exp='Count = DutyB' swap='0' >
 													<flowline >
-														<command class_type='calculation' title='Calculation' >
-															<exp exp='PinB = 0' />
-															<exp exp='EnableB = 0' />
+														<command class_type='decision' title='Decision' exp='PWMMode' swap='0' >
+															<flowline >
+																<command class_type='calculation' title='Output Low' >
+																	<exp exp='PinB = 0' />
+																	<exp exp='EnableB = 0' />
+																</command>
+															</flowline>
+															<flowline >
+																<command class_type='calculation' title='High Impedance' >
+																	<exp exp='PinB = 0' />
+																	<exp exp='EnableB = 1' />
+																</command>
+															</flowline>
 														</command>
 													</flowline>
 													<flowline />
@@ -475,9 +527,19 @@ Only applies to the Full Bridge mode. ' statediag='0' >
 											<flowline >
 												<command class_type='decision' title='Decision' exp='Count = DutyA' swap='0' >
 													<flowline >
-														<command class_type='calculation' title='Calculation' >
-															<exp exp='PinA = 0' />
-															<exp exp='EnableA = 0' />
+														<command class_type='decision' title='Decision' exp='PWMMode' swap='0' >
+															<flowline >
+																<command class_type='calculation' title='Output Low' >
+																	<exp exp='PinA = 0' />
+																	<exp exp='EnableA = 0' />
+																</command>
+															</flowline>
+															<flowline >
+																<command class_type='calculation' title='High Impedance' >
+																	<exp exp='PinA = 0' />
+																	<exp exp='EnableA = 1' />
+																</command>
+															</flowline>
 														</command>
 													</flowline>
 													<flowline />
@@ -493,6 +555,79 @@ Only applies to the Full Bridge mode. ' statediag='0' >
 				<macro >
 					<flowline name='Main' description='' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SetOverride' description='Drives the output to a specific state - no PWM' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Channel' type='b1' description='0=A, 1=B' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='State' type='u8' description='0=Low, 1=High, 2=High Impedance' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' exp='PWMEnabled' swap='0' >
+							<flowline >
+								<command class_type='call' title='User Macro' macro='StopPWM' />
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Decision' exp='.Channel' swap='0' >
+							<flowline >
+								<command class_type='decision' title='Decision' exp='.State = 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Output Low' >
+											<exp exp='PinB = 0' />
+											<exp exp='EnableB = 0' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='decision' title='Decision' exp='.State = 1' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Output High' >
+											<exp exp='PinB = 1' />
+											<exp exp='EnableB = 1' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='decision' title='Decision' exp='.State = 2' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='High Impedance' >
+											<exp exp='PinB = 0' />
+											<exp exp='EnableB = 1' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='decision' title='Decision' exp='.State = 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Output Low' >
+											<exp exp='PinA = 0' />
+											<exp exp='EnableA = 0' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='decision' title='Decision' exp='.State = 1' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Output High' >
+											<exp exp='PinA = 1' />
+											<exp exp='EnableA = 1' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='decision' title='Decision' exp='.State = 2' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='High Impedance' >
+											<exp exp='PinA = 0' />
+											<exp exp='EnableA = 1' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+						</command>
 					</flowline>
 				</macro>
 			</macros>
@@ -612,10 +747,10 @@ Only applies to the Full Bridge mode. ' statediag='0' >
 	<keymap />
 	<panel2d shadows='0' lighting='2' brightness='0' >
 		<background rgb='2105930' img='' style='0' />
-		<camera xe='0' ye='0' ze='1236.05' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
-		<viewport dx='388' dy='820' zoom='37.9822' fix_topleft='0' />
+		<camera xe='0' ye='0' ze='1685.24' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='642' dy='419' zoom='46.0956' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='0' />
-		<winpos ID='7005' RectRecentFloat='1270,427,1920,877' RectRecentDocked='0,0,388,843' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7005' RectRecentFloat='717,360,1367,810' RectRecentDocked='0,0,549,419' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel2d>
 	<panel3d shadows='1' lighting='2' brightness='0' perspective='1' >
 		<background rgb='7895160' img='' style='0' />
@@ -628,23 +763,25 @@ Only applies to the Full Bridge mode. ' statediag='0' >
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='153,370,807,947' RectRecentDocked='0,0,261,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='153,370,807,947' RectRecentDocked='0,0,292,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='1' >
 		<panel2d_0 id='0' name='2D Panel' type='0' >
-			<winpos ID='1171' RectRecentFloat='1650,429,1920,855' RectRecentDocked='933,141,1489,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+			<winpos ID='1171' RectRecentFloat='2050,429,2320,855' RectRecentDocked='921,141,1470,707' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 			<background fill='288230376149408988' showgrid='1' gridstyle='1' gridsize='10' gridbrush='71776119075691740' snaptogrid='1' fitcomp='0' disp_x='300' disp_y='400' scale='100' disp_col='16777215' />
 		</panel2d_0>
 	</panels2d>
 	<layout >
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='TimerRoutine' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='1511' scrolly='108' flags='0' />
-		<view type='0' name='Enable' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Disable' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetDuty' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetDirection' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_AutoIdEBlock' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAVAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAARgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='TimerRoutine' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAARgQAAGMDAAA' zoom='100' scrollx='0' scrolly='270' flags='0' />
+		<view type='0' name='StartPWM' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAARgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='StopPWM' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAARgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAARgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetDuty' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAARgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetDirection' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAARgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_AutoIdEBlock' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAARgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetMode' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAARgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetOverride' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAARgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>
