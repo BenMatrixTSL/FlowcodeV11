@@ -1,5 +1,5 @@
 <root>
-<document scada='0' projtype='1' schema='103' license='1,65920724,5Q78FW' title='' description='' fcversion='720896' target='PIC.16F.16F877A' >
+<document scada='0' projtype='1' schema='103' license='1,88169790,XQ5X1V' title='' description='' fcversion='720896' target='PIC.16F.16F877A' >
 	<config data='!0,3f72%0,2%2,0%3,0%6,1%7,0%9,3%b,1%8,1%d,1' clkspd='19660800' simspd='0' usewdt='0' constif='0' Use3V3='0' />
 	<plugins >
 		<dll_models enabled='1' />
@@ -61,7 +61,7 @@
 	</ghost>
 	<components >
 		<settings autoimg='0' center='1' unitscale='1' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
-		<definition guid='cd8da0fe-80cf-4532-bb50-69f0d1730e70' vstate='40' vmin='13' vmaj='13' srcleaf='Switch Array Push 2dgi.fcfx' visiblename='Switch Array (Push)' description='An array of up to eight push switches.
+		<definition guid='cd8da0fe-80cf-4532-bb50-69f0d1730e70' vstate='40' vmin='0' vmaj='14' srcleaf='Switch Array Push 2dgi.fcfx' visiblename='Switch Array (Push)' description='An array of up to eight push switches.
 In embedded mode each switch is connected to a single pin of the specified port.' category='Switches' category2='Digital Control ' category3='' bIs2dOnly='1' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='MatrixTSL' manuname='' manucode='' sysinfo='9442059' keywords='switches|matrix|array|push' dynamic='1' scadaCompatible='1' embeddedCompatible='1' showmacros='1' iconpath='..\..\Icons\Components\Switch Array Push 2dgi.png' />
 		<component class_type='root' codename='SwitchArrayPush' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 			<resources />
@@ -122,15 +122,15 @@ Default = 55' />
 001Silver 
 002Gold
 003Custom Colours' />
-					<property name='Type' target='Type' typeid='16' hidden='0' locked='0' info='' filter='000Rectangular (wide)
+					<property name='Type' target='nType' typeid='16' hidden='0' locked='0' info='' filter='000Rectangular (wide)
 001Rectangular (narrow)
 002Rounded (wide)
 003Rounded (narrow)
 004Circular (wide)
 005Circular (narrow)' />
-					<property name='On Label' target='OnLabel' typeid='10' hidden='0' locked='0' info='' />
-					<property name='Off Label' target='OffLabel' typeid='10' hidden='0' locked='0' info='' />
-					<property name='Label Colour' target='LabelCOlour' typeid='1' hidden='0' locked='0' info='' />
+					<property name='On Label' target='sLabelOn' typeid='10' hidden='0' locked='0' info='' />
+					<property name='Off Label' target='sLabelOff' typeid='10' hidden='0' locked='0' info='' />
+					<property name='Label Colour' target='LabelColour' typeid='1' hidden='0' locked='0' info='' />
 					<property name='Show Connection Label' target='ShowConnectionLabel' typeid='7' hidden='0' locked='0' info='' />
 					<property name='Show Pin Value' target='ShowPinValue' typeid='7' hidden='0' locked='0' info='' />
 				</property>
@@ -164,19 +164,19 @@ Default = 55' />
 				<value target='SwitchLayout' data='000' />
 				<value target='DistanceBetweenSwitches' data='60' />
 				<value target='Style' data='000' />
-				<value target='Type' data='002' />
-				<value target='OnLabel' data='On' />
-				<value target='OffLabel' data='Off' />
-				<value target='LabelCOlour' data='3947580' />
+				<value target='nType' data='002' />
+				<value target='sLabelOn' data='On' />
+				<value target='sLabelOff' data='Off' />
+				<value target='LabelColour' data='3947580' />
 				<value target='ShowConnectionLabel' data='1' />
 				<value target='ShowPinValue' data='0' />
 			</values>
 			<events >
-				<event class='Simulation' event='Stop' target='Ev_Stop' />
 				<event class='Components' event='Renamed' target='Ev_Renamed' />
-				<event class='Simulation' event='Start' target='Ev_Start' />
-				<event class='Components' event='Property' target='Ev_Property' />
 				<event class='Components' event='Initialise' target='Ev_Initialise' />
+				<event class='Simulation' event='Stop' target='Ev_Stop' />
+				<event class='Components' event='Property' target='Ev_Property' />
+				<event class='Simulation' event='Start' target='Ev_Start' />
 			</events>
 			<apis >
 				<api name='ReadState' alt='ReadState' type='1' proto='1' />
@@ -747,6 +747,9 @@ Default = 55' />
 						<local name='TmpString' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
 						</local>
+						<local name='sProp' type='T8' description='' isconst='0' isHidden='0' isinit='1' usrinit='&quot;&quot;' setinit='&quot;&quot;' >
+							<array size='50' />
+						</local>
 						<command class_type='sim' title='Built-in Function' macro='Component.GetParent' >
 							<return exp='.ParentHandle' />
 							<argument exp='this' />
@@ -850,20 +853,52 @@ Default = 55' />
 									<argument exp='.ChildHandle' />
 									<argument exp='&quot;Style&quot;' />
 								</command>
-								<command class_type='sim' title='Built-in Function' macro='Component.Property.CopyValue' >
+								<command class_type='sim' title='Built-in Function' disable='1' macro='Component.Property.CopyValue' >
 									<argument exp='this' />
 									<argument exp='.ChildHandle' />
-									<argument exp='&quot;Type&quot;' />
+									<argument exp='&quot;nType&quot;' />
 								</command>
-								<command class_type='sim' title='Built-in Function' macro='Component.Property.CopyValue' >
+								<command class_type='sim' title='Built-in Function' disable='1' macro='Component.Property.CopyValue' >
 									<argument exp='this' />
 									<argument exp='.ChildHandle' />
-									<argument exp='&quot;OnLabel&quot;' />
+									<argument exp='&quot;sLabelOn&quot;' />
 								</command>
-								<command class_type='sim' title='Built-in Function' macro='Component.Property.CopyValue' >
+								<command class_type='sim' title='Built-in Function' disable='1' macro='Component.Property.CopyValue' >
 									<argument exp='this' />
 									<argument exp='.ChildHandle' />
-									<argument exp='&quot;OffLabel&quot;' />
+									<argument exp='&quot;sLabelOff&quot;' />
+								</command>
+								<command class_type='comment' title='' comment='The above 3 are exposed properties and 
+these need to be dealt with as below' textarea='12,0,12,0' />
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
+									<return exp='.sProp' />
+									<argument exp='this' />
+									<argument exp='&quot;nType&quot;' />
+								</command>
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+									<argument exp='.ChildHandle' />
+									<argument exp='&quot;GdiSwitch1::nType&quot;' />
+									<argument exp='.sProp' />
+								</command>
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
+									<return exp='.sProp' />
+									<argument exp='this' />
+									<argument exp='&quot;sLabelOff&quot;' />
+								</command>
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+									<argument exp='.ChildHandle' />
+									<argument exp='&quot;GdiSwitch1::sLabelOff&quot;' />
+									<argument exp='.sProp' />
+								</command>
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
+									<return exp='.sProp' />
+									<argument exp='this' />
+									<argument exp='&quot;sLabelOn&quot;' />
+								</command>
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+									<argument exp='.ChildHandle' />
+									<argument exp='&quot;GdiSwitch1::sLabelOn&quot;' />
+									<argument exp='.sProp' />
 								</command>
 								<command class_type='sim' title='Built-in Function' macro='Component.Property.CopyValue' >
 									<argument exp='this' />
@@ -1326,12 +1361,13 @@ switch.' statediag='0' >
 					<flowline name='Main' description='' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<local name='State' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='comment' title='' comment='Component Version Information;
+						<command class_type='comment' title='' comment='Component Version Information
 11, 11.0, 25-06-24, MW, Added option to customise appearance of individual or all switches;
 12, 11.0, 26-06-24, MW, Removed [2D] from the component name;
 13, 13.0, 16-04-25, MW, Corrected bug when sim stopped Switch changed from on to off, but pin remained at VCC;
 13, 13.0, 16-04-25, MW, Fixed bug so individual customisation now works; 
-13, 13.0, 16-04-25, MW, Created a new component icon
+13, 13.0, 16-04-25, MW, Created a new component icon;
+14, 14.0, 10-03-26, ST, Type, Label On/Off and Colour now transferred correctly;
 ' textarea='12,0,12,0' />
 						<command class_type='call' title='Call Macro' macro='Ev_Initialise' />
 						<command class_type='loop' title='Loop' type='0' exp='1' >
@@ -1345,7 +1381,7 @@ switch.' statediag='0' >
 					</flowline>
 				</macro>
 			</macros>
-			<component class_type='ref' guid='e2698f3e-1168-4f25-9c50-24a74ea7e34a' vmin='0' vmaj='20' codename='Switch_Push8' panelId='-1' x='-280' y='0' z='0' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+			<component class_type='ref' guid='e2698f3e-1168-4f25-9c50-24a74ea7e34a' vmin='0' vmaj='21' codename='Switch_Push8' panelId='-1' x='-280' y='0' z='0' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
@@ -1389,7 +1425,7 @@ switch.' statediag='0' >
 				<variables />
 				<macros />
 			</component>
-			<component class_type='ref' guid='e2698f3e-1168-4f25-9c50-24a74ea7e34a' vmin='0' vmaj='20' codename='Switch_Push1' panelId='-1' x='140' y='0' z='0' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+			<component class_type='ref' guid='e2698f3e-1168-4f25-9c50-24a74ea7e34a' vmin='0' vmaj='21' codename='Switch_Push1' panelId='-1' x='140' y='0' z='0' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
@@ -1433,7 +1469,7 @@ switch.' statediag='0' >
 				<variables />
 				<macros />
 			</component>
-			<component class_type='ref' guid='e2698f3e-1168-4f25-9c50-24a74ea7e34a' vmin='0' vmaj='20' codename='Switch_Push2' panelId='-1' x='80' y='0' z='0' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+			<component class_type='ref' guid='e2698f3e-1168-4f25-9c50-24a74ea7e34a' vmin='0' vmaj='21' codename='Switch_Push2' panelId='-1' x='80' y='0' z='0' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
@@ -1477,7 +1513,7 @@ switch.' statediag='0' >
 				<variables />
 				<macros />
 			</component>
-			<component class_type='ref' guid='e2698f3e-1168-4f25-9c50-24a74ea7e34a' vmin='0' vmaj='20' codename='Switch_Push3' panelId='-1' x='20' y='0' z='0' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+			<component class_type='ref' guid='e2698f3e-1168-4f25-9c50-24a74ea7e34a' vmin='0' vmaj='21' codename='Switch_Push3' panelId='-1' x='20' y='0' z='0' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
@@ -1521,7 +1557,7 @@ switch.' statediag='0' >
 				<variables />
 				<macros />
 			</component>
-			<component class_type='ref' guid='e2698f3e-1168-4f25-9c50-24a74ea7e34a' vmin='0' vmaj='20' codename='Switch_Push4' panelId='-1' x='-40' y='0' z='0' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+			<component class_type='ref' guid='e2698f3e-1168-4f25-9c50-24a74ea7e34a' vmin='0' vmaj='21' codename='Switch_Push4' panelId='-1' x='-40' y='0' z='0' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
@@ -1565,7 +1601,7 @@ switch.' statediag='0' >
 				<variables />
 				<macros />
 			</component>
-			<component class_type='ref' guid='e2698f3e-1168-4f25-9c50-24a74ea7e34a' vmin='0' vmaj='20' codename='Switch_Push5' panelId='-1' x='-100' y='0' z='0' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+			<component class_type='ref' guid='e2698f3e-1168-4f25-9c50-24a74ea7e34a' vmin='0' vmaj='21' codename='Switch_Push5' panelId='-1' x='-100' y='0' z='0' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
@@ -1609,7 +1645,7 @@ switch.' statediag='0' >
 				<variables />
 				<macros />
 			</component>
-			<component class_type='ref' guid='e2698f3e-1168-4f25-9c50-24a74ea7e34a' vmin='0' vmaj='20' codename='Switch_Push6' panelId='-1' x='-160' y='0' z='0' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+			<component class_type='ref' guid='e2698f3e-1168-4f25-9c50-24a74ea7e34a' vmin='0' vmaj='21' codename='Switch_Push6' panelId='-1' x='-160' y='0' z='0' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
@@ -1653,7 +1689,7 @@ switch.' statediag='0' >
 				<variables />
 				<macros />
 			</component>
-			<component class_type='ref' guid='e2698f3e-1168-4f25-9c50-24a74ea7e34a' vmin='0' vmaj='20' codename='Switch_Push7' panelId='-1' x='-220' y='0' z='0' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+			<component class_type='ref' guid='e2698f3e-1168-4f25-9c50-24a74ea7e34a' vmin='0' vmaj='21' codename='Switch_Push7' panelId='-1' x='-220' y='0' z='0' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
@@ -1703,10 +1739,10 @@ switch.' statediag='0' >
 	<keymap />
 	<panel2d shadows='0' lighting='0' brightness='0' >
 		<background rgb='16777215' img='' style='0' />
-		<camera xe='-343.19' ye='-44.1312' ze='718.75' xt='-343.19' yt='-44.1312' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camera xe='202.763' ye='-44.1312' ze='718.75' xt='202.763' yt='-44.1312' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
 		<viewport dx='624' dy='652' zoom='105.049' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='16777215' />
-		<winpos ID='7005' RectRecentFloat='1863,706,2515,1456' RectRecentDocked='663,141,1313,889' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+		<winpos ID='7005' RectRecentFloat='1863,706,2515,1456' RectRecentDocked='0,0,332,507' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
 	</panel2d>
 	<panel3d shadows='0' lighting='0' brightness='0' perspective='1' >
 		<background rgb='8404224' img='' style='0' />
@@ -1719,20 +1755,12 @@ switch.' statediag='0' >
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='0,239,654,816' RectRecentDocked='0,0,367,450' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='0,239,654,816' RectRecentDocked='0,0,331,805' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='0' />
 	<layout >
-		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA9AMAAOcCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='WaitUntilLow' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA9AMAAOcCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='WaitUntilHigh' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA9AMAAOcCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadState' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA9AMAAOcCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadAll' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA9AMAAOcCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA9AMAAOcCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Start' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA9AMAAOcCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Stop' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA9AMAAOcCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Renamed' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA9AMAAOcCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA9AMAAOcCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAkwIAACADAAA' zoom='100' scrollx='0' scrolly='1584' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAkwIAACADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>

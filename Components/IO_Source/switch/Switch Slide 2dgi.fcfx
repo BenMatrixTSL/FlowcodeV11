@@ -1,5 +1,5 @@
 <root>
-<document scada='0' schema='103' license='10,CompMaker,WNV3JN' title='' description='' fcversion='655618' target='PIC.16F.16F18877' >
+<document scada='0' projtype='1' schema='103' license='1,88169790,XQ5X1V' title='' description='' fcversion='720896' target='PIC.16F.16F18877' >
 	<config data='!0,3f8c!10,37fd!20,3f92!30,1fff!40,3fff%0,4%4,0%8,1%b,1%d,1%10,1%11,0%15,1%16,3%19,1%1a,1%1b,0%1c,1%1d,1%20,12%25,0%28,7%2b,7%30,3%3c,1%3d,0%40,1%41,1' clkspd='32000000' simspd='0' usewdt='0' constif='0' Use3V3='0' />
 	<plugins >
 		<dll_models enabled='1' />
@@ -63,9 +63,9 @@
 	</ghost>
 	<components >
 		<settings autoimg='0' center='1' unitscale='1' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
-		<definition guid='1df1ea9a-6983-4014-aba5-f5144ea4e053' vstate='40' vmin='1' vmaj='19' srcleaf='Switch Slide 2dgi.fcfx' visiblename='Switch Slide' description='A simple digital slide switch allowing latched and none latched operation.
-In embedded mode displays the connecting pin and pin status.' category='Switch' category2='Digital Control ' category3='' bIs2dOnly='1' bIs3dOnly='0' catenable='1' author='Matrix TSL' manuname='' manucode='' sysinfo='9458443' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='1' showmacros='1' iconpath='..\..\Icons\Components\Switch Slide.png' />
-		<component class_type='root' codename='SwitchSlide' panelId='-1' x='0' y='0' z='20' xsz='46.1722' ysz='11.543' zsz='11.543' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' varnames='$(type)_$(module)__$(variable:u)' >
+		<definition guid='1df1ea9a-6983-4014-aba5-f5144ea4e053' vstate='40' vmin='2' vmaj='20' srcleaf='Switch Slide 2dgi.fcfx' visiblename='Switch Slide' description='A simple digital slide switch allowing latched and none latched operation.
+In embedded mode displays the connecting pin and pin status.' category='Switch' category2='Digital Control ' category3='' bIs2dOnly='1' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='Matrix TSL' manuname='' manucode='' sysinfo='9458443' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='1' showmacros='1' iconpath='..\..\Icons\Components\Switch Slide.png' />
+		<component class_type='root' codename='SwitchSlide' panelId='-1' x='0' y='0' z='20' xsz='46.1722' ysz='11.543' zsz='11.543' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' varnames='$(type)_$(module)__$(variable:u)' >
 			<resources />
 			<properties >
 				<property name='AppDevDetected' target='AppDevDetected' typeid='7' hidden='1' locked='1' info='' />
@@ -175,14 +175,14 @@ NB)  Debouncing is only used when reading the button state using the component m
 				<value target='GdiSwitch1::brLabelOff' data='0' />
 			</values>
 			<events >
+				<event class='Components' event='PropertyEx' target='Ev_PropertyEx' />
+				<event class='Mouse' event='Click' target='Ev_Click' />
 				<event class='Simulation' event='Start' target='Ev_Start' />
 				<event class='Components' event='Renamed' target='Ev_Renamed' />
+				<event class='Components' event='PostInitialise' target='Ev_PostInitialise' />
+				<event class='Mouse' event='Release' target='Ev_Release' />
 				<event class='Simulation' event='Stop' target='Ev_Stop' />
 				<event class='Connection' event='PinChange' target='Ev_PinChange' />
-				<event class='Mouse' event='Click' target='Ev_Click' />
-				<event class='Components' event='PostInitialise' target='Ev_PostInitialise' />
-				<event class='Components' event='PropertyEx' target='Ev_PropertyEx' />
-				<event class='Mouse' event='Release' target='Ev_Release' />
 				<event class='Components' event='Initialise' target='Ev_Initialise' />
 			</events>
 			<apis >
@@ -191,7 +191,11 @@ NB)  Debouncing is only used when reading the button state using the component m
 				<api name='SetState' alt='SetState' type='1' proto='1' />
 				<api name='WaitUntilLow' alt='WaitUntilLow' type='1' proto='1' />
 			</apis>
-			<variables />
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='TMR_VAL' type='u32' description='' isconst='1' isHidden='0' isinit='1' usrinit='211' setinit='211' />
+				</variable>
+			</variables>
 			<macros >
 				<macro >
 					<flowline name='ReadState' description='Reads the button state as 0 for released or 1 for pressed
@@ -199,59 +203,59 @@ Performs debounce if required' statediag='0' >
 						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='del_count' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='old_switchval' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Embedded Only' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='AppDevDetected' swap='0' >
+						<command class_type='decision' title='Embedded Only' exp='AppDevDetected' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='GdiSwitch1' macro='GetState' >
+								<command class_type='sim' title='Component Macro' component='GdiSwitch1' macro='GetState' >
 									<return exp='.Return' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='decision' title='Invert logic if required' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='polarity != pin' swap='0' >
+								<command class_type='decision' title='Invert logic if required' exp='polarity != pin' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Active' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Active' >
 											<exp exp='.Return = 1' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='calculation' title='Not Active' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Not Active' >
 											<exp exp='.Return = 0' />
 										</command>
 									</flowline>
 								</command>
-								<command class_type='calculation' title='Init debounce state' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Init debounce state' >
 									<exp exp='.del_count = 0' />
 									<exp exp='.old_switchval = .Return' />
 								</command>
-								<command class_type='decision' title='If debounce enabled' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='debounce &gt; 0' swap='0' >
+								<command class_type='decision' title='If debounce enabled' exp='debounce &gt; 0' swap='0' >
 									<flowline >
-										<command class_type='loop' title='Debounce input' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='.del_count &lt; debounce' >
+										<command class_type='loop' title='Debounce input' type='0' exp='.del_count &lt; debounce' >
 											<flowline >
-												<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='1' type='1' />
-												<command class_type='decision' title='Invert logic if required' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='polarity != pin' swap='0' >
+												<command class_type='delay' title='Delay' exp='1' type='1' />
+												<command class_type='decision' title='Invert logic if required' exp='polarity != pin' swap='0' >
 													<flowline >
-														<command class_type='calculation' title='Invert' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+														<command class_type='calculation' title='Invert' >
 															<exp exp='.Return = 1' />
 														</command>
 													</flowline>
 													<flowline >
-														<command class_type='calculation' title='Invert' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+														<command class_type='calculation' title='Invert' >
 															<exp exp='.Return = 0' />
 														</command>
 													</flowline>
 												</command>
-												<command class_type='decision' title='Is switch the same state?' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Return == .old_switchval' swap='0' >
+												<command class_type='decision' title='Is switch the same state?' exp='.Return == .old_switchval' swap='0' >
 													<flowline >
-														<command class_type='calculation' title='Increment counter' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+														<command class_type='calculation' title='Increment counter' >
 															<exp exp='.del_count = .del_count + 1' />
 														</command>
 													</flowline>
 													<flowline >
-														<command class_type='calculation' title='Else reset counter' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+														<command class_type='calculation' title='Else reset counter' >
 															<exp exp='.del_count = 0' />
 														</command>
 													</flowline>
 												</command>
-												<command class_type='calculation' title='Update the old state' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<command class_type='calculation' title='Update the old state' >
 													<exp exp='.old_switchval = .Return' />
 												</command>
 											</flowline>
@@ -266,16 +270,16 @@ Performs debounce if required' statediag='0' >
 				<macro >
 					<flowline name='Ev_Stop' description='Broadcast to all components that simulation has stopped' statediag='0' >
 						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='GdiSwitch1' macro='SetState' >
+						<command class_type='sim' title='Component Macro' component='GdiSwitch1' macro='SetState' >
 							<argument exp='0' />
 						</command>
-						<command class_type='decision' title='Embedded Only' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='AppDevDetected' swap='0' >
+						<command class_type='decision' title='Embedded Only' exp='AppDevDetected' swap='0' >
 							<flowline />
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='pin = polarity' />
 								</command>
-								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowPinValue' >
+								<command class_type='call' title='User Macro' macro='ShowPinValue' >
 									<argument exp='Pin' />
 								</command>
 							</flowline>
@@ -285,7 +289,7 @@ Performs debounce if required' statediag='0' >
 				<macro >
 					<flowline name='Ev_PinChange' description='Sent during simulation if a connected port pin changes' statediag='0' >
 						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowPinValue' >
+						<command class_type='call' title='User Macro' macro='ShowPinValue' >
 							<argument exp='Pin' />
 						</command>
 					</flowline>
@@ -296,110 +300,129 @@ Performs debounce if required' statediag='0' >
 						<local name='TmpStr' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
 						</local>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='FCD.GetItemValue' >
+						<local name='fc_ver' type='u32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<command class_type='sim' title='Built-in Function' macro='System.GetFCVersion' >
+							<return exp='.fc_ver' />
+						</command>
+						<command class_type='decision' title='v11.0.1 and later' exp='.fc_ver &gt;= 0x0b0001' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Set the inactive style to &apos;normal&apos;' macro='Component.Property.SetValue' >
+									<argument exp='GdiSwitch1' />
+									<argument exp='&quot;nInactiveStyle&quot;' />
+									<argument exp='&quot;1&quot;' />
+								</command>
+								<command class_type='sim' title='Set the interactive off' macro='Component.Property.SetValue' >
+									<argument exp='GdiSwitch1' />
+									<argument exp='&quot;%Interactive%&quot;' />
+									<argument exp='&quot;0&quot;' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='sim' title='Simulation' macro='FCD.GetItemValue' >
 							<return exp='.TmpStr' />
 							<argument exp='&quot;device&quot;' />
 							<argument exp='&quot;product&quot;' />
 							<argument exp='&quot;&quot;' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='Compare$ (.TmpStr,&quot;SCADA&quot;,0) == 0' swap='0' >
+						<command class_type='decision' title='Decision' exp='Compare$ (.TmpStr,&quot;SCADA&quot;,0) == 0' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 									<argument exp='this' />
 									<argument exp='&quot;AppDevDetected&quot;' />
 									<argument exp='1' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 									<argument exp='this' />
 									<argument exp='&quot;AppDevDetected&quot;' />
 									<argument exp='0' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetValue' >
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
 							<return exp='.TmpStr' />
 							<argument exp='this' />
 							<argument exp='&quot;LabelColour&quot;' />
 						</command>
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_PropertyEx' >
+						<command class_type='call' title='User Macro' macro='Ev_PropertyEx' >
 							<argument exp='&quot;LabelColour&quot;' />
 							<argument exp='.TmpStr' />
 						</command>
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetValue' >
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
 							<return exp='.TmpStr' />
 							<argument exp='this' />
 							<argument exp='&quot;Style&quot;' />
 						</command>
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_PropertyEx' >
+						<command class_type='call' title='User Macro' macro='Ev_PropertyEx' >
 							<argument exp='&quot;Style&quot;' />
 							<argument exp='.TmpStr' />
 						</command>
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetValue' >
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
 							<return exp='.TmpStr' />
 							<argument exp='this' />
 							<argument exp='&quot;ComponentLabel&quot;' />
 						</command>
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_PropertyEx' >
+						<command class_type='call' title='User Macro' macro='Ev_PropertyEx' >
 							<argument exp='&quot;ComponentLabel&quot;' />
 							<argument exp='.TmpStr' />
 						</command>
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetValue' >
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
 							<return exp='.TmpStr' />
 							<argument exp='this' />
 							<argument exp='&quot;ComponentLabelPosition&quot;' />
 						</command>
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_PropertyEx' >
+						<command class_type='call' title='User Macro' macro='Ev_PropertyEx' >
 							<argument exp='&quot;ComponentLabelPosition&quot;' />
 							<argument exp='.TmpStr' />
 						</command>
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetValue' >
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
 							<return exp='.TmpStr' />
 							<argument exp='this' />
 							<argument exp='&quot;PinLabelPosition&quot;' />
 						</command>
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_PropertyEx' >
+						<command class_type='call' title='User Macro' macro='Ev_PropertyEx' >
 							<argument exp='&quot;PinLabelPosition&quot;' />
 							<argument exp='.TmpStr' />
 						</command>
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetValue' >
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
 							<return exp='.TmpStr' />
 							<argument exp='this' />
 							<argument exp='&quot;FontType&quot;' />
 						</command>
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_PropertyEx' >
+						<command class_type='call' title='User Macro' macro='Ev_PropertyEx' >
 							<argument exp='&quot;FontType&quot;' />
 							<argument exp='.TmpStr' />
 						</command>
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetValue' >
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
 							<return exp='.TmpStr' />
 							<argument exp='this' />
 							<argument exp='&quot;Pin&quot;' />
 						</command>
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_PropertyEx' >
+						<command class_type='call' title='User Macro' macro='Ev_PropertyEx' >
 							<argument exp='&quot;Pin&quot;' />
 							<argument exp='.TmpStr' />
 						</command>
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetValue' >
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
 							<return exp='.TmpStr' />
 							<argument exp='this' />
 							<argument exp='&quot;other_props&quot;' />
 						</command>
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_PropertyEx' >
+						<command class_type='call' title='User Macro' macro='Ev_PropertyEx' >
 							<argument exp='&quot;other_props&quot;' />
 							<argument exp='.TmpStr' />
 						</command>
-						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='GdiSwitch1' macro='SetState' >
+						<command class_type='sim' title='Component Macro' component='GdiSwitch1' macro='SetState' >
 							<argument exp='0' />
 						</command>
-						<command class_type='decision' title='Embedded Only' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='AppDevDetected' swap='0' >
+						<command class_type='decision' title='Embedded Only' exp='AppDevDetected' swap='0' >
 							<flowline />
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='pin = polarity' />
 								</command>
-								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowPinValue' >
+								<command class_type='call' title='User Macro' macro='ShowPinValue' >
 									<argument exp='Pin' />
 								</command>
 							</flowline>
@@ -416,9 +439,9 @@ Performs debounce if required' statediag='0' >
 The interpretation of &apos;high&apos; depends on the polarity' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<local name='switchval' type='u8' description='The state of the pin' isconst='0' isHidden='0' isinit='1' usrinit='255' setinit='255' />
-						<command class_type='loop' title='While state not active' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='.switchval = 0' start='0' >
+						<command class_type='loop' title='While state not active' type='0' exp='.switchval = 0' start='0' >
 							<flowline >
-								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadState' >
+								<command class_type='call' title='User Macro' macro='ReadState' >
 									<return exp='.switchval' />
 								</command>
 							</flowline>
@@ -431,15 +454,15 @@ The interpretation of &apos;high&apos; depends on the polarity' statediag='0' >
 						<local name='TempStr' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
 						</local>
-						<command class_type='switch' title='Switch' textarea='36,25,36,25' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='ComponentLabel' >
+						<command class_type='switch' title='Switch' textarea='36,25,36,25' exp='ComponentLabel' >
 							<case >
 								<flowline >
-									<command class_type='comment' title='' comment='Same as Handle' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
-									<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.GetName' >
+									<command class_type='comment' title='' comment='Same as Handle' textarea='12,0,12,0' />
+									<command class_type='sim' title='Built-in Function' macro='Tree.GetName' >
 										<return exp='.TempStr' />
 										<argument exp='this' />
 									</command>
-									<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 										<argument exp='GdiText2' />
 										<argument exp='&quot;sText&quot;' />
 										<argument exp='.TempStr' />
@@ -462,48 +485,48 @@ The interpretation of &apos;high&apos; depends on the polarity' statediag='0' >
 						<local name='Str' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
 						</local>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='ShowConnectionLabel' swap='0' >
+						<command class_type='decision' title='Decision' exp='ShowConnectionLabel' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetValue' >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
 									<return exp='.Str' />
 									<argument exp='this' />
 									<argument exp='&quot;Pin&quot;' />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='ShowPinValue' swap='0' >
+								<command class_type='decision' title='Decision' exp='ShowPinValue' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Str = .Str + &quot;\nV=&quot;' />
 										</command>
-										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='Polarity' swap='0' >
+										<command class_type='decision' title='Decision' exp='Polarity' swap='0' >
 											<flowline >
-												<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='Pin' swap='0' >
+												<command class_type='decision' title='Decision' exp='Pin' swap='0' >
 													<flowline >
-														<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+														<command class_type='calculation' title='Calculation' >
 															<exp exp='.Str = .Str + &quot;VCC&quot;' />
 														</command>
 													</flowline>
 													<flowline >
-														<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+														<command class_type='calculation' title='Calculation' >
 															<exp exp='.Str = .Str + &quot;GND&quot;' />
 														</command>
 													</flowline>
 												</command>
 											</flowline>
 											<flowline >
-												<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.State' swap='0' >
+												<command class_type='decision' title='Decision' exp='.State' swap='0' >
 													<flowline >
-														<command class_type='sim' title='Built-in Function' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Debug.PrintLn' >
+														<command class_type='sim' title='Built-in Function' disable='1' macro='Debug.PrintLn' >
 															<argument exp='&quot;Pin Changed to VCC&quot;' />
 														</command>
-														<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+														<command class_type='calculation' title='Calculation' >
 															<exp exp='.Str = .Str + &quot;VCC&quot;' />
 														</command>
 													</flowline>
 													<flowline >
-														<command class_type='sim' title='Built-in Function' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Debug.PrintLn' >
+														<command class_type='sim' title='Built-in Function' disable='1' macro='Debug.PrintLn' >
 															<argument exp='&quot;Pin Changed to GND&quot;' />
 														</command>
-														<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+														<command class_type='calculation' title='Calculation' >
 															<exp exp='.Str = .Str + &quot;GND&quot;' />
 														</command>
 													</flowline>
@@ -513,7 +536,7 @@ The interpretation of &apos;high&apos; depends on the polarity' statediag='0' >
 									</flowline>
 									<flowline />
 								</command>
-								<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='GdiText1' macro='SetText' >
+								<command class_type='sim' title='Component Macro' component='GdiText1' macro='SetText' >
 									<argument exp='.Str' />
 								</command>
 							</flowline>
@@ -538,79 +561,83 @@ The interpretation of &apos;high&apos; depends on the polarity' statediag='0' >
 						<local name='div' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
 						<local name='temp_handle' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='SimOnly' type='b1' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.GetPanel' >
+						<local name='fc_ver' type='u32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<command class_type='sim' title='Built-in Function' macro='System.GetFCVersion' >
+							<return exp='.fc_ver' />
+						</command>
+						<command class_type='sim' title='Built-in Function' macro='Component.GetPanel' >
 							<return exp='.PanelType' />
 							<argument exp='this' />
 						</command>
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.GetParent' >
+						<command class_type='sim' title='Built-in Function' macro='Component.GetParent' >
 							<return exp='.temp_handle' />
 							<argument exp='this' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='SimulationOnly' swap='0' >
+						<command class_type='decision' title='Decision' exp='SimulationOnly' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.SimOnly = 1' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.SimOnly = 0' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.temp_handle' swap='0' >
+						<command class_type='decision' title='Decision' exp='.temp_handle' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.div = 25.0' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.div = 1.0' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
 							<argument exp='this' />
 							<argument exp='&quot;Function&quot;' />
 							<argument exp='!AppDevDetected' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='Compare$(.Property,&quot;LabelColour&quot;,0) = 0' swap='0' >
+						<command class_type='decision' title='Decision' exp='Compare$(.Property,&quot;LabelColour&quot;,0) = 0' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetValue' >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
 									<return exp='.LabelColour' />
 									<argument exp='this' />
 									<argument exp='&quot;LabelColour&quot;' />
 								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 									<argument exp='GdiText1' />
 									<argument exp='&quot;colTextColour&quot;' />
 									<argument exp='.LabelColour' />
 								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 									<argument exp='GdiText2' />
 									<argument exp='&quot;colTextColour&quot;' />
 									<argument exp='.LabelColour' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='Compare$ (.Property,&quot;Style&quot;,0) = 0' swap='0' >
+								<command class_type='decision' title='Decision' exp='Compare$ (.Property,&quot;Style&quot;,0) = 0' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Built-in Function' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Debug.PrintLn' >
+										<command class_type='sim' title='Built-in Function' disable='1' macro='Debug.PrintLn' >
 											<argument exp='&quot;Ev PropertyEX Style&quot;' />
 										</command>
-										<command class_type='switch' title='Switch' textarea='36,25,36,25' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='Style' >
+										<command class_type='switch' title='Switch' textarea='36,25,36,25' exp='Style' >
 											<case >
 												<flowline />
 											</case>
 											<case exp='0' >
 												<flowline >
-													<command class_type='sim' title='Blue' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+													<command class_type='sim' title='Blue' macro='Component.Property.SetValue' >
 														<argument exp='GdiSwitch1' />
 														<argument exp='&quot;nStyle&quot;' />
 														<argument exp='&quot;0&quot;' />
 													</command>
-													<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+													<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
 														<argument exp='GdiSwitch1' />
 														<argument exp='&quot;dirCustom&quot;' />
 														<argument exp='0' />
@@ -619,12 +646,12 @@ The interpretation of &apos;high&apos; depends on the polarity' statediag='0' >
 											</case>
 											<case exp='1' >
 												<flowline >
-													<command class_type='sim' title='Silver' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+													<command class_type='sim' title='Silver' macro='Component.Property.SetValue' >
 														<argument exp='GdiSwitch1' />
 														<argument exp='&quot;nStyle&quot;' />
 														<argument exp='&quot;1&quot;' />
 													</command>
-													<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+													<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
 														<argument exp='GdiSwitch1' />
 														<argument exp='&quot;dirCustom&quot;' />
 														<argument exp='0' />
@@ -633,12 +660,12 @@ The interpretation of &apos;high&apos; depends on the polarity' statediag='0' >
 											</case>
 											<case exp='2' >
 												<flowline >
-													<command class_type='sim' title='Gold' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+													<command class_type='sim' title='Gold' macro='Component.Property.SetValue' >
 														<argument exp='GdiSwitch1' />
 														<argument exp='&quot;nStyle&quot;' />
 														<argument exp='&quot;2&quot;' />
 													</command>
-													<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+													<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
 														<argument exp='GdiSwitch1' />
 														<argument exp='&quot;dirCustom&quot;' />
 														<argument exp='0' />
@@ -647,12 +674,12 @@ The interpretation of &apos;high&apos; depends on the polarity' statediag='0' >
 											</case>
 											<case exp='3' >
 												<flowline >
-													<command class_type='sim' title='Custom Colours' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+													<command class_type='sim' title='Custom Colours' macro='Component.Property.SetValue' >
 														<argument exp='GdiSwitch1' />
 														<argument exp='&quot;nStyle&quot;' />
 														<argument exp='&quot;100&quot;' />
 													</command>
-													<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+													<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
 														<argument exp='GdiSwitch1' />
 														<argument exp='&quot;dirCustom&quot;' />
 														<argument exp='1' />
@@ -662,26 +689,26 @@ The interpretation of &apos;high&apos; depends on the polarity' statediag='0' >
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='Compare$ (.Property,&quot;ComponentLabel&quot;,0) = 0' swap='0' >
+										<command class_type='decision' title='Decision' exp='Compare$ (.Property,&quot;ComponentLabel&quot;,0) = 0' swap='0' >
 											<flowline >
-												<command class_type='switch' title='Switch' textarea='36,25,36,25' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='ComponentLabel' >
+												<command class_type='switch' title='Switch' textarea='36,25,36,25' exp='ComponentLabel' >
 													<case >
 														<flowline >
-															<command class_type='comment' title='' comment='Same as Handle' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
-															<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+															<command class_type='comment' title='' comment='Same as Handle' textarea='12,0,12,0' />
+															<command class_type='sim' title='Built-in Function' macro='Component.SetVisible' >
 																<argument exp='GdiText2' />
 																<argument exp='1' />
 															</command>
-															<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+															<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
 																<argument exp='this' />
 																<argument exp='&quot;GdiText2::sText&quot;' />
 																<argument exp='0' />
 															</command>
-															<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.GetName' >
+															<command class_type='sim' title='Built-in Function' macro='Tree.GetName' >
 																<return exp='.TempStr' />
 																<argument exp='this' />
 															</command>
-															<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+															<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 																<argument exp='GdiText2' />
 																<argument exp='&quot;sText&quot;' />
 																<argument exp='.TempStr' />
@@ -690,11 +717,11 @@ The interpretation of &apos;high&apos; depends on the polarity' statediag='0' >
 													</case>
 													<case exp='1' >
 														<flowline >
-															<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+															<command class_type='sim' title='Built-in Function' macro='Component.SetVisible' >
 																<argument exp='GdiText2' />
 																<argument exp='1' />
 															</command>
-															<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+															<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
 																<argument exp='this' />
 																<argument exp='&quot;GdiText2::sText&quot;' />
 																<argument exp='1' />
@@ -703,7 +730,7 @@ The interpretation of &apos;high&apos; depends on the polarity' statediag='0' >
 													</case>
 													<case exp='2' >
 														<flowline >
-															<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+															<command class_type='sim' title='Built-in Function' macro='Component.SetVisible' >
 																<argument exp='GdiText2' />
 																<argument exp='0' />
 															</command>
@@ -712,61 +739,61 @@ The interpretation of &apos;high&apos; depends on the polarity' statediag='0' >
 												</command>
 											</flowline>
 											<flowline >
-												<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='(Compare$(.Property,&quot;PinLabelPosition&quot;,0) = 0) || (Compare$(.Property,&quot;PinLabelXPostion&quot;,0) = 0) || ((Compare$(.Property,&quot;PinLabelYPostion&quot;,0) = 0))' swap='0' >
+												<command class_type='decision' title='Decision' exp='(Compare$(.Property,&quot;PinLabelPosition&quot;,0) = 0) || (Compare$(.Property,&quot;PinLabelXPostion&quot;,0) = 0) || ((Compare$(.Property,&quot;PinLabelYPostion&quot;,0) = 0))' swap='0' >
 													<flowline >
-														<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='PinLabelPosition &lt; 4' swap='0' >
+														<command class_type='decision' title='Decision' exp='PinLabelPosition &lt; 4' swap='0' >
 															<flowline >
-																<command class_type='comment' title='' comment='Set pin lable custom values to default postion' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
-																<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+																<command class_type='comment' title='' comment='Set pin lable custom values to default postion' textarea='12,0,12,0' />
+																<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
 																	<argument exp='this' />
 																	<argument exp='&quot;PinLabelXPostion&quot;' />
 																	<argument exp='0' />
 																</command>
-																<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+																<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
 																	<argument exp='this' />
 																	<argument exp='&quot;PinLabelYPostion&quot;' />
 																	<argument exp='0' />
 																</command>
-																<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+																<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 																	<argument exp='this' />
 																	<argument exp='&quot;PinLabelXPostion&quot;' />
 																	<argument exp='0' />
 																</command>
-																<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+																<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 																	<argument exp='this' />
 																	<argument exp='&quot;PinLabelYPostion&quot;' />
 																	<argument exp='-25 / .div' />
 																</command>
 															</flowline>
 															<flowline >
-																<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+																<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
 																	<argument exp='this' />
 																	<argument exp='&quot;PinLabelXPostion&quot;' />
 																	<argument exp='1' />
 																</command>
-																<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+																<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
 																	<argument exp='this' />
 																	<argument exp='&quot;PinLabelYPostion&quot;' />
 																	<argument exp='1' />
 																</command>
 															</flowline>
 														</command>
-														<command class_type='switch' title='Switch' textarea='36,25,36,25' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='PinLabelPosition' >
+														<command class_type='switch' title='Switch' textarea='36,25,36,25' exp='PinLabelPosition' >
 															<case >
 																<flowline >
-																	<command class_type='comment' title='' comment='Top' textarea='165,4,165,4' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
-																	<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.MoveTo' >
+																	<command class_type='comment' title='' comment='Top' textarea='165,4,165,4' />
+																	<command class_type='sim' title='Built-in Function' macro='Panel.Position.MoveTo' >
 																		<argument exp='GdiText1' />
 																		<argument exp='0' />
 																		<argument exp='15/.div' />
 																		<argument exp='0' />
 																	</command>
-																	<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+																	<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 																		<argument exp='GdiText1' />
 																		<argument exp='&quot;nHorizontalAlignment&quot;' />
 																		<argument exp='2' />
 																	</command>
-																	<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+																	<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 																		<argument exp='GdiText1' />
 																		<argument exp='&quot;nVerticalAlignment&quot;' />
 																		<argument exp='1' />
@@ -775,19 +802,19 @@ The interpretation of &apos;high&apos; depends on the polarity' statediag='0' >
 															</case>
 															<case exp='1' >
 																<flowline >
-																	<command class_type='comment' title='' comment='Bottom' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
-																	<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.MoveTo' >
+																	<command class_type='comment' title='' comment='Bottom' textarea='12,0,12,0' />
+																	<command class_type='sim' title='Built-in Function' macro='Panel.Position.MoveTo' >
 																		<argument exp='GdiText1' />
 																		<argument exp='0' />
 																		<argument exp='-35 / .div' />
 																		<argument exp='0' />
 																	</command>
-																	<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+																	<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 																		<argument exp='GdiText1' />
 																		<argument exp='&quot;nHorizontalAlignment&quot;' />
 																		<argument exp='2' />
 																	</command>
-																	<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+																	<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 																		<argument exp='GdiText1' />
 																		<argument exp='&quot;nVerticalAlignment&quot;' />
 																		<argument exp='0' />
@@ -796,19 +823,19 @@ The interpretation of &apos;high&apos; depends on the polarity' statediag='0' >
 															</case>
 															<case exp='2' >
 																<flowline >
-																	<command class_type='comment' title='' comment='Left' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
-																	<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.MoveTo' >
+																	<command class_type='comment' title='' comment='Left' textarea='12,0,12,0' />
+																	<command class_type='sim' title='Built-in Function' macro='Panel.Position.MoveTo' >
 																		<argument exp='GdiText1' />
 																		<argument exp='-70/.div' />
 																		<argument exp='-8/.div' />
 																		<argument exp='0' />
 																	</command>
-																	<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+																	<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 																		<argument exp='GdiText1' />
 																		<argument exp='&quot;nHorizontalAlignment&quot;' />
 																		<argument exp='1' />
 																	</command>
-																	<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+																	<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 																		<argument exp='GdiText1' />
 																		<argument exp='&quot;nVerticalAlignment&quot;' />
 																		<argument exp='2' />
@@ -817,19 +844,19 @@ The interpretation of &apos;high&apos; depends on the polarity' statediag='0' >
 															</case>
 															<case exp='3' >
 																<flowline >
-																	<command class_type='comment' title='' comment='Right' textarea='82,26,82,26' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
-																	<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.MoveTo' >
+																	<command class_type='comment' title='' comment='Right' textarea='82,26,82,26' />
+																	<command class_type='sim' title='Built-in Function' macro='Panel.Position.MoveTo' >
 																		<argument exp='GdiText1' />
 																		<argument exp='70/.div' />
 																		<argument exp='-8/.div' />
 																		<argument exp='0' />
 																	</command>
-																	<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+																	<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 																		<argument exp='GdiText1' />
 																		<argument exp='&quot;nHorizontalAlignment&quot;' />
 																		<argument exp='0' />
 																	</command>
-																	<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+																	<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 																		<argument exp='GdiText1' />
 																		<argument exp='&quot;nVerticalAlignment&quot;' />
 																		<argument exp='2' />
@@ -838,12 +865,12 @@ The interpretation of &apos;high&apos; depends on the polarity' statediag='0' >
 															</case>
 															<case exp='4' >
 																<flowline >
-																	<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+																	<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 																		<argument exp='GdiText1' />
 																		<argument exp='&quot;nVerticalAlignment&quot;' />
 																		<argument exp='2' />
 																	</command>
-																	<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.MoveTo' >
+																	<command class_type='sim' title='Built-in Function' macro='Panel.Position.MoveTo' >
 																		<argument exp='GdiText1' />
 																		<argument exp='PinLabelXPostion/.div' />
 																		<argument exp='PinLabelYPostion/.div' />
@@ -854,61 +881,61 @@ The interpretation of &apos;high&apos; depends on the polarity' statediag='0' >
 														</command>
 													</flowline>
 													<flowline >
-														<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='(Compare$(.Property,&quot;ComponentLabelPosition&quot;,0) = 0) || (Compare$(.Property,&quot;ComponentLabelXPostion&quot;,0) = 0) || ((Compare$(.Property,&quot;ComponentLabelYPostion&quot;,0) = 0))' swap='0' >
+														<command class_type='decision' title='Decision' exp='(Compare$(.Property,&quot;ComponentLabelPosition&quot;,0) = 0) || (Compare$(.Property,&quot;ComponentLabelXPostion&quot;,0) = 0) || ((Compare$(.Property,&quot;ComponentLabelYPostion&quot;,0) = 0))' swap='0' >
 															<flowline >
-																<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='ComponentLabelPosition &lt; 4' swap='0' >
+																<command class_type='decision' title='Decision' exp='ComponentLabelPosition &lt; 4' swap='0' >
 																	<flowline >
-																		<command class_type='comment' title='' comment='Set Component lable custom values to default postion' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
-																		<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+																		<command class_type='comment' title='' comment='Set Component lable custom values to default postion' textarea='12,0,12,0' />
+																		<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
 																			<argument exp='this' />
 																			<argument exp='&quot;ComponentLabelXPostion&quot;' />
 																			<argument exp='0' />
 																		</command>
-																		<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+																		<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
 																			<argument exp='this' />
 																			<argument exp='&quot;ComponentLabelYPostion&quot;' />
 																			<argument exp='0' />
 																		</command>
-																		<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+																		<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 																			<argument exp='this' />
 																			<argument exp='&quot;ComponentLabelXPostion&quot;' />
 																			<argument exp='0' />
 																		</command>
-																		<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+																		<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 																			<argument exp='this' />
 																			<argument exp='&quot;ComponentLabelYPostion&quot;' />
 																			<argument exp='20 / .div' />
 																		</command>
 																	</flowline>
 																	<flowline >
-																		<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+																		<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
 																			<argument exp='this' />
 																			<argument exp='&quot;ComponentLabelXPostion&quot;' />
 																			<argument exp='1' />
 																		</command>
-																		<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+																		<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
 																			<argument exp='this' />
 																			<argument exp='&quot;ComponentLabelYPostion&quot;' />
 																			<argument exp='1' />
 																		</command>
 																	</flowline>
 																</command>
-																<command class_type='switch' title='Switch' textarea='36,25,36,25' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='ComponentLabelPosition' >
+																<command class_type='switch' title='Switch' textarea='36,25,36,25' exp='ComponentLabelPosition' >
 																	<case >
 																		<flowline >
-																			<command class_type='comment' title='' comment='Top' textarea='165,4,165,4' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
-																			<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.MoveTo' >
+																			<command class_type='comment' title='' comment='Top' textarea='165,4,165,4' />
+																			<command class_type='sim' title='Built-in Function' macro='Panel.Position.MoveTo' >
 																				<argument exp='GdiText2' />
 																				<argument exp='0' />
 																				<argument exp='13/ .div' />
 																				<argument exp='0' />
 																			</command>
-																			<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+																			<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 																				<argument exp='GdiText2' />
 																				<argument exp='&quot;nHorizontalAlignment&quot;' />
 																				<argument exp='2' />
 																			</command>
-																			<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+																			<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 																				<argument exp='GdiText2' />
 																				<argument exp='&quot;nVerticalAlignment&quot;' />
 																				<argument exp='1' />
@@ -917,19 +944,19 @@ The interpretation of &apos;high&apos; depends on the polarity' statediag='0' >
 																	</case>
 																	<case exp='1' >
 																		<flowline >
-																			<command class_type='comment' title='' comment='Bottom' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
-																			<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.MoveTo' >
+																			<command class_type='comment' title='' comment='Bottom' textarea='12,0,12,0' />
+																			<command class_type='sim' title='Built-in Function' macro='Panel.Position.MoveTo' >
 																				<argument exp='GdiText2' />
 																				<argument exp='0' />
 																				<argument exp='-27 / .div' />
 																				<argument exp='0' />
 																			</command>
-																			<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+																			<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 																				<argument exp='GdiText2' />
 																				<argument exp='&quot;nHorizontalAlignment&quot;' />
 																				<argument exp='2' />
 																			</command>
-																			<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+																			<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 																				<argument exp='GdiText2' />
 																				<argument exp='&quot;nVerticalAlignment&quot;' />
 																				<argument exp='0' />
@@ -938,19 +965,19 @@ The interpretation of &apos;high&apos; depends on the polarity' statediag='0' >
 																	</case>
 																	<case exp='2' >
 																		<flowline >
-																			<command class_type='comment' title='' comment='Left' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
-																			<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.MoveTo' >
+																			<command class_type='comment' title='' comment='Left' textarea='12,0,12,0' />
+																			<command class_type='sim' title='Built-in Function' macro='Panel.Position.MoveTo' >
 																				<argument exp='GdiText2' />
 																				<argument exp='-80/.div' />
 																				<argument exp='-10/.div' />
 																				<argument exp='0' />
 																			</command>
-																			<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+																			<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 																				<argument exp='GdiText2' />
 																				<argument exp='&quot;nHorizontalAlignment&quot;' />
 																				<argument exp='1' />
 																			</command>
-																			<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+																			<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 																				<argument exp='GdiText2' />
 																				<argument exp='&quot;nVerticalAlignment&quot;' />
 																				<argument exp='2' />
@@ -959,19 +986,19 @@ The interpretation of &apos;high&apos; depends on the polarity' statediag='0' >
 																	</case>
 																	<case exp='3' >
 																		<flowline >
-																			<command class_type='comment' title='' comment='Right' textarea='82,26,82,26' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
-																			<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.MoveTo' >
+																			<command class_type='comment' title='' comment='Right' textarea='82,26,82,26' />
+																			<command class_type='sim' title='Built-in Function' macro='Panel.Position.MoveTo' >
 																				<argument exp='GdiText2' />
 																				<argument exp='80/.div' />
 																				<argument exp='-10/.div' />
 																				<argument exp='0' />
 																			</command>
-																			<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+																			<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 																				<argument exp='GdiText2' />
 																				<argument exp='&quot;nHorizontalAlignment&quot;' />
 																				<argument exp='0' />
 																			</command>
-																			<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+																			<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 																				<argument exp='GdiText2' />
 																				<argument exp='&quot;nVerticalAlignment&quot;' />
 																				<argument exp='2' />
@@ -980,7 +1007,7 @@ The interpretation of &apos;high&apos; depends on the polarity' statediag='0' >
 																	</case>
 																	<case exp='4' >
 																		<flowline >
-																			<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Panel.Position.MoveTo' >
+																			<command class_type='sim' title='Built-in Function' macro='Panel.Position.MoveTo' >
 																				<argument exp='GdiText2' />
 																				<argument exp='ComponentLabelXPostion/.div' />
 																				<argument exp='ComponentLabelYPostion/.div' />
@@ -991,19 +1018,19 @@ The interpretation of &apos;high&apos; depends on the polarity' statediag='0' >
 																</command>
 															</flowline>
 															<flowline >
-																<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='Compare$(.Property,&quot;FontType&quot;,0)' swap='0' >
+																<command class_type='decision' title='Decision' exp='Compare$(.Property,&quot;FontType&quot;,0)' swap='0' >
 																	<flowline >
-																		<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+																		<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 																			<argument exp='this' />
 																			<argument exp='&quot;GdiSwitch1::fntFamily&quot;' />
 																			<argument exp='FontType' />
 																		</command>
-																		<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+																		<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 																			<argument exp='this' />
 																			<argument exp='&quot;GdiText1::fntFamily&quot;' />
 																			<argument exp='FontType' />
 																		</command>
-																		<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+																		<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 																			<argument exp='this' />
 																			<argument exp='&quot;GdiText2::fntFamily&quot;' />
 																			<argument exp='FontType' />
@@ -1021,99 +1048,99 @@ The interpretation of &apos;high&apos; depends on the polarity' statediag='0' >
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='AppDevDetected || .SimOnly' swap='0' >
+						<command class_type='decision' title='Decision' exp='AppDevDetected || .SimOnly' swap='0' >
 							<flowline >
-								<command class_type='comment' title='' comment='App Developer' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+								<command class_type='comment' title='' comment='App Developer' textarea='12,0,12,0' />
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
 									<argument exp='this' />
 									<argument exp='&quot;Pin&quot;' />
 									<argument exp='0' />
 								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
 									<argument exp='this' />
 									<argument exp='&quot;ShowPinValue&quot;' />
 									<argument exp='0' />
 								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+								<command class_type='sim' title='Built-in Function' macro='Component.SetVisible' >
 									<argument exp='GdiText1' />
 									<argument exp='0' />
 								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
 									<argument exp='this' />
 									<argument exp='&quot;ShowConnectionLabel&quot;' />
 									<argument exp='0' />
 								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
 									<argument exp='this' />
 									<argument exp='&quot;Polarity&quot;' />
 									<argument exp='0' />
 								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
 									<argument exp='this' />
 									<argument exp='&quot;debounce&quot;' />
 									<argument exp='0' />
 								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
 									<argument exp='&quot;this&quot;' />
 									<argument exp='&quot;Latching&quot;' />
 									<argument exp='0' />
 								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
 									<argument exp='this' />
 									<argument exp='&quot;PinLabelPosition&quot;' />
 									<argument exp='0' />
 								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
 									<argument exp='this' />
 									<argument exp='&quot;PinLabelXPostion&quot;' />
 									<argument exp='0' />
 								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
 									<argument exp='this' />
 									<argument exp='&quot;PinLabelYPostion&quot;' />
 									<argument exp='0' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Built-in Function' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Debug.PrintLn' >
+								<command class_type='sim' title='Built-in Function' disable='1' macro='Debug.PrintLn' >
 									<argument exp='&quot;Embedded&quot;' />
 								</command>
-								<command class_type='comment' title='' comment='Embedded' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+								<command class_type='comment' title='' comment='Embedded' textarea='12,0,12,0' />
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
 									<argument exp='this' />
 									<argument exp='&quot;ShowConnectionLabel&quot;' />
 									<argument exp='1' />
 								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
 									<argument exp='this' />
 									<argument exp='&quot;Pin&quot;' />
 									<argument exp='1' />
 								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+								<command class_type='sim' title='Built-in Function' macro='Component.SetVisible' >
 									<argument exp='GdiText1' />
 									<argument exp='ShowConnectionLabel' />
 								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
 									<argument exp='this' />
 									<argument exp='&quot;ShowPinValue&quot;' />
 									<argument exp='1' />
 								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
 									<argument exp='this' />
 									<argument exp='&quot;Polarity&quot;' />
 									<argument exp='1' />
 								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
 									<argument exp='this' />
 									<argument exp='&quot;debounce&quot;' />
 									<argument exp='1' />
 								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
 									<argument exp='&quot;this&quot;' />
 									<argument exp='&quot;Latching&quot;' />
 									<argument exp='1' />
 								</command>
-								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowPinValue' >
+								<command class_type='call' title='User Macro' macro='ShowPinValue' >
 									<argument exp='Pin' />
 								</command>
 							</flowline>
@@ -1124,20 +1151,20 @@ The interpretation of &apos;high&apos; depends on the polarity' statediag='0' >
 					<flowline name='SetState' description='Sets the switch to be on or off.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<param name='State' type='b1' description='The new state of the switch (true=on, false=off)' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='GdiSwitch1' macro='SetState' >
+						<command class_type='sim' title='Component Macro' component='GdiSwitch1' macro='SetState' >
 							<argument exp='.State' />
 						</command>
-						<command class_type='decision' title='Embedded Only' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='AppDevDetected' swap='0' >
+						<command class_type='decision' title='Embedded Only' exp='AppDevDetected' swap='0' >
 							<flowline />
 							<flowline >
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.State' swap='0' >
+								<command class_type='decision' title='Decision' exp='.State' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='On State' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='On State' >
 											<exp exp='Pin = 1 - Polarity' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='calculation' title='Off State' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Off State' >
 											<exp exp='Pin = Polarity' />
 										</command>
 									</flowline>
@@ -1151,9 +1178,9 @@ The interpretation of &apos;high&apos; depends on the polarity' statediag='0' >
 The interpretation of &apos;high&apos; depends on the polarity' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<local name='switchval' type='u8' description='The state of the pin' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='loop' title='While state not active' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='.switchval = 1' start='0' >
+						<command class_type='loop' title='While state not active' type='0' exp='.switchval = 1' start='0' >
 							<flowline >
-								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadState' >
+								<command class_type='call' title='User Macro' macro='ReadState' >
 									<return exp='.switchval' />
 								</command>
 							</flowline>
@@ -1165,26 +1192,26 @@ The interpretation of &apos;high&apos; depends on the polarity' statediag='0' >
 Performs debounce if required' statediag='0' >
 						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='del_count' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='GdiSwitch1' macro='GetState' >
+						<command class_type='sim' title='Component Macro' component='GdiSwitch1' macro='GetState' >
 							<return exp='.Return' />
 						</command>
-						<command class_type='decision' title='Embedded Only' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='AppDevDetected' swap='0' >
+						<command class_type='decision' title='Embedded Only' exp='AppDevDetected' swap='0' >
 							<flowline />
 							<flowline >
-								<command class_type='calculation' title='Init debounce state' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Init debounce state' >
 									<exp exp='.del_count = 0' />
 								</command>
-								<command class_type='decision' title='If debounce enabled' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='debounce &gt; 0' swap='0' >
+								<command class_type='decision' title='If debounce enabled' exp='debounce &gt; 0' swap='0' >
 									<flowline >
-										<command class_type='loop' title='Debounce input' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='.del_count &lt; debounce' >
+										<command class_type='loop' title='Debounce input' type='0' exp='.del_count &lt; debounce' >
 											<flowline >
-												<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='1' type='1' />
-												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<command class_type='delay' title='Delay' exp='1' type='1' />
+												<command class_type='calculation' title='Calculation' >
 													<exp exp='.del_count = .del_count + 1' />
 												</command>
 											</flowline>
 										</command>
-										<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='GdiSwitch1' macro='GetState' >
+										<command class_type='sim' title='Component Macro' component='GdiSwitch1' macro='GetState' >
 											<return exp='.Return' />
 										</command>
 									</flowline>
@@ -1204,19 +1231,20 @@ Performs debounce if required' statediag='0' >
 						<local name='Str' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
 						</local>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='Latching' swap='0' >
+						<local name='fc_ver' type='u32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<command class_type='decision' title='Decision' exp='Latching' swap='0' >
 							<flowline />
 							<flowline >
-								<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='GdiSwitch1' macro='SetState' >
+								<command class_type='sim' title='Component Macro' component='GdiSwitch1' macro='SetState' >
 									<argument exp='0' />
 								</command>
-								<command class_type='decision' title='Embedded Only' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='AppDevDetected' swap='0' >
+								<command class_type='decision' title='Embedded Only' exp='AppDevDetected' swap='0' >
 									<flowline />
 									<flowline >
-										<command class_type='calculation' title='Off State' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Off State' >
 											<exp exp='Pin = Polarity' />
 										</command>
-										<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowPinValue' >
+										<command class_type='call' title='User Macro' macro='ShowPinValue' >
 											<argument exp='Pin' />
 										</command>
 									</flowline>
@@ -1228,16 +1256,16 @@ Performs debounce if required' statediag='0' >
 				<macro >
 					<flowline name='Ev_Start' description='Broadcast to all components that simulation is starting' statediag='0' >
 						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='GdiSwitch1' macro='SetState' >
+						<command class_type='sim' title='Component Macro' component='GdiSwitch1' macro='SetState' >
 							<argument exp='0' />
 						</command>
-						<command class_type='decision' title='Embedded Only' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='AppDevDetected' swap='0' >
+						<command class_type='decision' title='Embedded Only' exp='AppDevDetected' swap='0' >
 							<flowline />
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='pin = polarity' />
 								</command>
-								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowPinValue' >
+								<command class_type='call' title='User Macro' macro='ShowPinValue' >
 									<argument exp='Pin' />
 								</command>
 							</flowline>
@@ -1248,7 +1276,7 @@ Performs debounce if required' statediag='0' >
 					<flowline name='Main' description='' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<local name='Temp' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
-						<command class_type='comment' title='' comment='Component Version Information;
+						<command class_type='comment' title='' comment='Component Version Information
 10, 10.0, 23-09-24, MW, Fixed a bug that prevent pin status teext from changing to the correct GND or VCC;
 10, 10.0, 23-09-24, MW, Fixed a bug to  make sure switch starts in the off position;
 10, 10.0, 23-09-24, MW, Added option for simulation only;
@@ -1261,14 +1289,15 @@ Performs debounce if required' statediag='0' >
 13, 18.0, 01-05-25, MW, Corrected pin label properties;
 14, 19.0, 01-05-25, BR, Added option to hide label;
 14, 19.0, 01-05-25, BR, Fixed SameAsHandle label to update on rename event;
-15, 19.1, 14-05-25, MW, Corrected switch properties;' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_Initialise' />
-						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='1' >
+15, 19.1, 14-05-25, MW, Corrected switch properties;
+16, 20.0, 10-03-26, ST, Updated for v11.0.1 mouse event change;' textarea='12,0,12,0' />
+						<command class_type='call' title='User Macro' macro='Ev_Initialise' />
+						<command class_type='loop' title='Loop' type='0' exp='1' >
 							<flowline >
-								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReadState_Sim' >
+								<command class_type='call' title='User Macro' macro='ReadState_Sim' >
 									<return exp='.Temp' />
 								</command>
-								<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='100' type='1' />
+								<command class_type='delay' title='Delay' exp='100' type='1' />
 							</flowline>
 						</command>
 					</flowline>
@@ -1281,43 +1310,47 @@ Performs debounce if required' statediag='0' >
 						<param name='Y' type='f32' description='Y coordinate relative to &apos;Component&apos;' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
 						<param name='Z' type='f32' description='Z coordinate relative to &apos;Component&apos;' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
 						<local name='State' type='b1' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='Latching' swap='0' >
+						<local name='fc_ver' type='u32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<command class_type='sim' title='Built-in Function' macro='System.GetFCVersion' >
+							<return exp='.fc_ver' />
+						</command>
+						<command class_type='decision' title='Decision' exp='Latching' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='GdiSwitch1' macro='GetState' >
+								<command class_type='sim' title='Component Macro' component='GdiSwitch1' macro='GetState' >
 									<return exp='.State' />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.State = ! .State' />
 								</command>
-								<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='GdiSwitch1' macro='SetState' >
+								<command class_type='sim' title='Component Macro' component='GdiSwitch1' macro='SetState' >
 									<argument exp='.State' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='GdiSwitch1' macro='SetState' >
+								<command class_type='sim' title='Component Macro' component='GdiSwitch1' macro='SetState' >
 									<argument exp='1' />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.State = 1' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Embedded Only' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='AppDevDetected' swap='0' >
+						<command class_type='decision' title='Embedded Only' exp='AppDevDetected' swap='0' >
 							<flowline />
 							<flowline >
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.State' swap='0' >
+								<command class_type='decision' title='Decision' exp='.State' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='On State' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='On State' >
 											<exp exp='Pin = 1 - Polarity' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='calculation' title='Off State' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Off State' >
 											<exp exp='Pin = Polarity' />
 										</command>
 									</flowline>
 								</command>
-								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowPinValue' >
+								<command class_type='call' title='User Macro' macro='ShowPinValue' >
 									<argument exp='Pin' />
 								</command>
 							</flowline>
@@ -1325,7 +1358,7 @@ Performs debounce if required' statediag='0' >
 					</flowline>
 				</macro>
 			</macros>
-			<component class_type='GdiSwitch' codename='GdiSwitch1' panelId='-1' x='0' y='0' z='-1' xsz='29.6875' ysz='28.125' zsz='-1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='8' comp2dType='46' >
+			<component class_type='GdiSwitch' codename='GdiSwitch1' panelId='-1' x='0' y='0' z='-1' xsz='29.6875' ysz='28.125' zsz='-1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='8' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='46' >
 				<resources />
 				<properties />
 				<values >
@@ -1336,7 +1369,7 @@ Performs debounce if required' statediag='0' >
 					<value target='bDrawThumb' data='1' />
 					<value target='sFilenameThumb' data='' />
 					<value target='nAnimationTime' data='200' />
-					<value target='nAutoReturn' data='0' />
+					<value target='nAutoReturn' data='  0' />
 					<value target='nReturnTime' data='400' />
 					<value target='sLabelOn' data='On' />
 					<value target='sLabelOff' data='Off' />
@@ -1361,7 +1394,7 @@ Performs debounce if required' statediag='0' >
 				<variables />
 				<macros />
 			</component>
-			<component class_type='GdiText' codename='GdiText1' panelId='-1' x='0' y='-24' z='0' xsz='22.0156' ysz='14.8902' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='0' solid='0' layer='1' poslock='8' comp2dType='46' >
+			<component class_type='GdiText' codename='GdiText1' panelId='-1' x='0' y='-24' z='0' xsz='22.0156' ysz='14.8902' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='0' solid='0' layer='1' poslock='8' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='46' >
 				<resources />
 				<properties />
 				<values >
@@ -1394,7 +1427,7 @@ V=GND' />
 				<variables />
 				<macros />
 			</component>
-			<component class_type='GdiText' codename='GdiText2' panelId='-1' x='0' y='25' z='0' xsz='27.9535' ysz='7.53869' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='0' solid='0' layer='1' poslock='8' comp2dType='46' >
+			<component class_type='GdiText' codename='GdiText2' panelId='-1' x='0' y='25' z='0' xsz='27.9535' ysz='7.53869' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='0' solid='0' layer='1' poslock='8' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='46' >
 				<resources />
 				<properties />
 				<values >
@@ -1418,7 +1451,7 @@ V=GND' />
 					<value target='nTextOpacity' data='1.0' />
 					<value target='colBackgroundColour' data='-1' />
 					<value target='colBackgroundGradient' data='-1' />
-					<value target='nBackgroundGradient' data='  0' />
+					<value target='nBackgroundGradient' data='  2' />
 					<value target='nBackgroundOpacity' data='1.0' />
 				</values>
 				<events />
@@ -1426,7 +1459,7 @@ V=GND' />
 				<variables />
 				<macros />
 			</component>
-			<component class_type='GdiShape' codename='GdiShape1' panelId='-1' x='0' y='0' z='1' xsz='14.8438' ysz='7.03125' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='8' comp2dType='46' >
+			<component class_type='GdiShape' codename='GdiShape1' panelId='-1' x='0' y='0' z='1' xsz='14.8438' ysz='7.03125' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='8' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='46' >
 				<resources />
 				<properties />
 				<values >
@@ -1436,7 +1469,7 @@ V=GND' />
 					<value target='colFill' data='-1' />
 					<value target='colFillGradient' data='-1' />
 					<value target='nGradientStyle' data='  0' />
-					<value target='nFillOpacity' data='1.0' />
+					<value target='nFillOpacity' data='1' />
 					<value target='nStyle' data='0' />
 					<value target='bFixedScale' data='0' />
 					<value target='fThickness' data='1.00000' />
@@ -1463,7 +1496,7 @@ V=GND' />
 		<camera xe='8.96926' ye='-1.53602' ze='170.577' xt='8.96926' yt='-1.53602' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
 		<viewport dx='336' dy='247' zoom='238.344' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='7360576' />
-		<winpos ID='7005' RectRecentFloat='3111,735,3475,1080' RectRecentDocked='0,0,374,300' RecentFrameAlignment='8192' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+		<winpos ID='7005' RectRecentFloat='3111,735,3475,1080' RectRecentDocked='0,0,332,314' RecentFrameAlignment='8192' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
 	</panel2d>
 	<panel3d shadows='0' lighting='2' brightness='0' perspective='1' >
 		<background rgb='8409120' img='' style='0' />
@@ -1476,26 +1509,15 @@ V=GND' />
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='0,239,654,816' RectRecentDocked='0,0,210,601' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='0,239,654,816' RectRecentDocked='0,0,331,805' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='0' />
 	<layout >
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAANgIAAFQCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='WaitUntilLow' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAANgIAAFQCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='WaitUntilHigh' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAANgIAAFQCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadState' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAANgIAAFQCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Click' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAANgIAAFQCAAA' zoom='80' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_PinChange' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAANgIAAFQCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Start' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAANgIAAFQCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetState' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAANgIAAFQCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAANgIAAFQCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Release' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAANgIAAFQCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ShowPinValue' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAANgIAAFQCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_PropertyEx' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAANgIAAFQCAAA' zoom='85' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadState_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAANgIAAFQCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_PostInitialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAANgIAAFQCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Stop' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAANgIAAFQCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Renamed' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAANgIAAFQCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Release' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAkwIAACADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Click' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAkwIAACADAAA' zoom='100' scrollx='0' scrolly='53' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAkwIAACADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAkwIAACADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_PropertyEx' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAkwIAACADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>
