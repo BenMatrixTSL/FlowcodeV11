@@ -1,7 +1,7 @@
-// CRC: 20C35A1E87BE6D5C727502197CD041A7B491451D5915BA6B046B33DA966607B876C6BA0AD4FE2B3B61BD43C22CF2822657B57B0F0B0A43C64F754F99A1A736FEA4BAF1B34E38B68E0C3CAEE8E7DA69873B84BFC7369D0C813326A1D80471644ECB3CB34C04D2A63E98D9DCD7029CF78240048F1713FCA1AE030ED5EB0B4F33F49A1D6DFFA7D3586526366EEC8D956E7163F4877774BB576E872A7EDDE4C4E652A1B93B6F26A46D89549D34A0D5AD11F3A5E0B536F06CDA2965BA772AED3EA6329FA1AA6A61B8A3A4BCC7899FCA2DDCC03543C1004297ACD4
-// REVISION: 9.0
+// CRC: 20C35A1E87BE6D5C727502197CD041A7B491451D5915BA6B046B33DA966607B876C6BA0AD4FE2B3B61BD43C22CF2822676991F974804DEB83FDD3941B9214F9EB6D800DB0061DE71A9B11F738DF98E155C4B66CDA609FA073326A1D80471644ECB3CB34C04D2A63E98D9DCD7029CF78240048F1713FCA1AE030ED5EB0B4F33F49A1D6DFFA7D3586526366EEC8D956E7163F4877774BB576E872A7EDDE4C4E652A1B93B6F26A46D89549D34A0D5AD11F327B119E7CF587F07056376FD5E134911028678BD2FCAB8ABAFA22E870078457321B85372DCE0C3F0
+// REVISION: 10.0
 // GUID: 9370A094-0DF3-444C-BE6F-C9993077BBDD
-// DATE: 17\06\2025
+// DATE: 16\03\2026
 // DIR: CAL\PIC\PIC_CAL_String.c
 /*********************************************************************
  *                  Flowcode CAL String File
@@ -50,6 +50,7 @@
  * 300524 | MW | Added advance string functions created by ST
  * 300524 | MW | Fixed bug within FCI_STRING_TO_INT modified by ST
  * 300524 | MW | Fixed bug within FCI_STRING_TO_FLOAT modified by ST
+ * 130326 | ST | Added FCI_STRING_TO_INT_EX
  */
 
 
@@ -111,6 +112,7 @@ MX_UINT8 FCI_COMPARE(MX_STRING sSrc1, MX_UINT16 iSrc1_len, MX_STRING sSrc2, MX_U
 MX_STRING FCI_FLOAT_TO_STRING(MX_FLOAT Number, MX_UINT8 Precision, MX_STRING String, MX_UINT16 MSZ_String);
 MX_STRING FCI_NUMBER_TO_HEX(MX_ULONG Number, MX_STRING String, MX_UINT16 MSZ_String);
 MX_SINT32 FCI_STRING_TO_INT(MX_STRING String, MX_UINT16 MSZ_String);
+MX_SINT32 FCI_STRING_TO_INT_EX(MX_STRING String, MX_UINT16 MSZ_String, MX_UINT8 iBase);
 MX_FLOAT FCI_STRING_TO_FLOAT(MX_STRING String, MX_UINT16 MSZ_String);
 
 // Functions for contatenation
@@ -736,6 +738,99 @@ MX_SINT32 FCI_STRING_TO_INT(MX_STRING String, MX_UINT16 MSZ_String)
     //Pull character from string and add to running total
     RetVal = (long) RetVal * 10;
     RetVal = (long) RetVal + (String[idx] - '0');
+    idx = idx + 1;
+  }
+
+  if (bNegative)
+  {
+    RetVal = (long)(0 - RetVal);
+  }
+
+  return RetVal;
+}
+
+
+
+
+MX_SINT32 FCI_STRING_TO_INT_EX(MX_STRING String, MX_UINT16 MSZ_String, MX_UINT8 iBase)
+{
+  //As FCI_STRING_TO_INT but with an optional number base
+  MX_UINT8 bNegative = 0;
+  MX_UINT8 idx = 0;
+  MX_SINT32 RetVal = 0;
+
+  //Skip any initial white space
+  while ((idx < MSZ_String) && ((String[idx] == ' ') || (String[idx] == '\t')))
+  {
+    idx = idx + 1;
+  }
+
+  if ((idx < MSZ_String) && (String[idx] == '-'))
+  {
+    bNegative = 1;
+    idx = idx + 1;
+  }
+
+  //set default base to decimal, octal or hexadecimal accordingly
+  if (iBase == 0)
+  {
+    iBase = 10;  //assume decimal
+    if ((idx < MSZ_String) && (String[idx] == '0'))
+    {
+      iBase = 8;      //assume octal (but check for hex)
+      idx = idx + 1;
+
+      if (idx < MSZ_String)
+      {
+        if ((String[idx] == 'x') || (String[idx] == 'X'))
+        {
+          iBase = 16;
+          idx = idx + 1;
+        }
+      }
+    }
+  }
+  else if (((iBase == 8) || (iBase == 16)) && (idx < MSZ_String) && (String[idx] == '0'))
+  {
+    //move past any initial "0" or "0x"
+    idx = idx + 1;
+    if ((iBase == 16) && (idx < MSZ_String) && ((String[idx] == 'x') || (String[idx] == 'X')))
+    {
+      idx = idx + 1;
+    }
+  }
+
+  MX_UINT8 iMaxNumChar = '9';
+  MX_UINT8 iMaxHexChar = 'F';
+  if (iBase < 10)
+  {
+    iMaxNumChar = '0' + iBase - 1;
+  }
+  if (iBase > 10)
+  {
+    iMaxHexChar = 'A' + iBase - 11;
+  }
+
+  //While string contains a valid digit
+  while (idx < MSZ_String)
+  {
+    long iCharVal;
+    if ((String[idx] >= '0') && (String[idx] <= iMaxNumChar))
+    {
+      iCharVal = (String[idx] - '0');
+    } else if ((String[idx] >= 'A') && (String[idx] <= iMaxHexChar))
+    {
+      iCharVal = (String[idx] - 'A' + 10);
+    } else if ((String[idx] >= 'a') && (String[idx] <= (iMaxHexChar + 0x20)))  //the =0x20 converts to lowercase
+    {
+      iCharVal = (String[idx] - 'a' + 10);
+    } else {
+      break;  //no longer a valid digit
+    }
+
+    //Pull character from string and add to running total
+    RetVal = (long) RetVal * iBase;
+    RetVal = (long) RetVal + iCharVal;
     idx = idx + 1;
   }
 

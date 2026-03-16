@@ -1,7 +1,7 @@
-// CRC: 77485F5F6A861F9125D47827B4DE492656C5431E478E8046055FD2257F64F1F376C6BA0AD4FE2B3B61BD43C22CF28226E5692F76D658C38B8E817910D72F5A57275AD8A0418324DB0C3CAEE8E7DA69877549D1902EEFF251ECA820AC05B6D91F7766A5C22ECD65B974388C2AA254DF947FEEE0BC75E140404E4887DAFEE4093E34F271877483C0FC152E7A405DE9B01E84AF36D1A0E209AFBC9CB76A09AEAA054B066FE0AF5B7B80549D34A0D5AD11F376825946F63240AC10D33D132DB942E1604F9ADA267CD8F627A8E1A814A6FBB04A61C0D2CB77CF29
-// REVISION: 6.0
+// CRC: 77485F5F6A861F9125D47827B4DE492656C5431E478E8046055FD2257F64F1F376C6BA0AD4FE2B3B61BD43C22CF2822676991F974804DEB83FDD3941B9214F9EB6D800DB0061DE71A9B11F738DF98E15F685D1997DD57840ECA820AC05B6D91F7766A5C22ECD65B974388C2AA254DF947FEEE0BC75E140404E4887DAFEE4093E34F271877483C0FC152E7A405DE9B01E84AF36D1A0E209AFBC9CB76A09AEAA054B066FE0AF5B7B80549D34A0D5AD11F308370B4734C694EC280D51985AAE055E5ECC40835A1AF53211F33536FF4271682E83591212429612
+// REVISION: 7.0
 // GUID: 49FE8FFE-F04F-4E20-8E92-D4585D519B00
-// DATE: 01\04\2025
+// DATE: 16\03\2026
 // DIR: CAL\AVR\AVR_CAL_String.c
 /*********************************************************************
  *                  Flowcode CAL String File
@@ -50,6 +50,7 @@
  * 300524 | MW | Added advance string functions created by ST
  * 300524 | MW | Fixed bug within FCI_STRING_TO_INT modified by ST
  * 300524 | MW | Fixed bug within FCI_STRING_TO_FLOAT modified by ST
+ * 130326 | ST | Added FCI_STRING_TO_INT_EX
  */
 
 
@@ -111,6 +112,7 @@ static MX_UINT8 FCI_COMPARE(MX_STRING sSrc1, MX_UINT16 iSrc1_len, MX_STRING sSrc
 static MX_STRING FCI_FLOAT_TO_STRING(MX_FLOAT Number, MX_UINT8 Precision, MX_STRING String, MX_UINT16 MSZ_String);
 static MX_STRING FCI_NUMBER_TO_HEX(MX_ULONG Number, MX_STRING String, MX_UINT16 MSZ_String);
 static MX_SINT32 FCI_STRING_TO_INT(MX_STRING String, MX_UINT16 MSZ_String);
+static MX_SINT32 FCI_STRING_TO_INT_EX(MX_STRING String, MX_UINT16 MSZ_String, MX_UINT8 iBase);
 static MX_FLOAT FCI_STRING_TO_FLOAT(MX_STRING String, MX_UINT16 MSZ_String);
 
 // Functions for contatenation
@@ -723,6 +725,101 @@ static MX_SINT32 FCI_STRING_TO_INT(MX_STRING String, MX_UINT16 MSZ_String)
 
 	return RetVal;
 }
+
+
+
+
+static MX_SINT32 FCI_STRING_TO_INT_EX(MX_STRING String, MX_UINT16 MSZ_String, MX_UINT8 iBase)
+{
+  //As FCI_STRING_TO_INT but with an optional number base
+  MX_UINT8 bNegative = 0;
+  MX_UINT8 idx = 0;
+  MX_SINT32 RetVal = 0;
+
+  //Skip any initial white space
+  while ((idx < MSZ_String) && ((String[idx] == ' ') || (String[idx] == '\t')))
+  {
+    idx = idx + 1;
+  }
+
+  if ((idx < MSZ_String) && (String[idx] == '-'))
+  {
+    bNegative = 1;
+    idx = idx + 1;
+  }
+
+  //set default base to decimal, octal or hexadecimal accordingly
+  if (iBase == 0)
+  {
+    iBase = 10;  //assume decimal
+    if ((idx < MSZ_String) && (String[idx] == '0'))
+    {
+      iBase = 8;      //assume octal (but check for hex)
+      idx = idx + 1;
+
+      if (idx < MSZ_String)
+      {
+        if ((String[idx] == 'x') || (String[idx] == 'X'))
+        {
+          iBase = 16;
+          idx = idx + 1;
+        }
+      }
+    }
+  }
+  else if (((iBase == 8) || (iBase == 16)) && (idx < MSZ_String) && (String[idx] == '0'))
+  {
+    //move past any initial "0" or "0x"
+    idx = idx + 1;
+    if ((iBase == 16) && (idx < MSZ_String) && ((String[idx] == 'x') || (String[idx] == 'X')))
+    {
+      idx = idx + 1;
+    }
+  }
+
+  MX_UINT8 iMaxNumChar = '9';
+  MX_UINT8 iMaxHexChar = 'F';
+  if (iBase < 10)
+  {
+    iMaxNumChar = '0' + iBase - 1;
+  }
+  if (iBase > 10)
+  {
+    iMaxHexChar = 'A' + iBase - 11;
+  }
+
+  //While string contains a valid digit
+  while (idx < MSZ_String)
+  {
+    long iCharVal;
+    if ((String[idx] >= '0') && (String[idx] <= iMaxNumChar))
+    {
+      iCharVal = (String[idx] - '0');
+    } else if ((String[idx] >= 'A') && (String[idx] <= iMaxHexChar))
+    {
+      iCharVal = (String[idx] - 'A' + 10);
+    } else if ((String[idx] >= 'a') && (String[idx] <= (iMaxHexChar + 0x20)))  //the =0x20 converts to lowercase
+    {
+      iCharVal = (String[idx] - 'a' + 10);
+    } else {
+      break;  //no longer a valid digit
+    }
+
+    //Pull character from string and add to running total
+    RetVal = (long) RetVal * iBase;
+    RetVal = (long) RetVal + iCharVal;
+    idx = idx + 1;
+  }
+
+  if (bNegative)
+  {
+    RetVal = (long)(0 - RetVal);
+  }
+
+  return RetVal;
+}
+
+
 
 
 
