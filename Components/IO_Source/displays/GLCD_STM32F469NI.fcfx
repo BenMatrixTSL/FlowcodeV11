@@ -563,6 +563,7 @@ The point cloud should run faster but may use more memory.
 				<api name='SetForegroundColour' alt='SetFGColourSim' type='1' proto='1' />
 				<api name='DrawRectangle' alt='DrawRectangleSim' type='1' proto='1' />
 				<api name='Initialise' alt='InitSim' type='1' proto='1' />
+				<api name='DrawBezier' alt='DrawBezierSim' type='1' proto='1' />
 			</apis>
 			<variables >
 				<variable public='0' >
@@ -2978,6 +2979,147 @@ BSP_LCD_LayerDefaultInit(LTDC_BG, LCD_BG_LAYER);' language='C' />
 						</command>
 						<command class_type='native' title='Initialise Touchscreen' ccode='// Initialise Touchscreen
 BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetYSize());' language='C' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='DrawBezier' description='Draws a quadratic Bezier curve with the current foreground colour from pixel location X0, Y0 to pixel location X2, Y2 using control point CX, CY.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='X0' type='u16' description='Start X coordinate' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Y0' type='u16' description='Start Y coordinate' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='CX' type='u16' description='Control point X coordinate' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='CY' type='u16' description='Control point Y coordinate' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='X2' type='u16' description='End X coordinate' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Y2' type='u16' description='End Y coordinate' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Resolution' type='u16' description='Number of segments to approximate the curve, 0 chooses an automatic value based on curve size.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='i' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='t' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='step' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='one_minus_t' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='fx' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='fy' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='Xp' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Yp' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='dx' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='dy' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='dist1' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='dist2' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='CurveSize' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Default resolution if zero' exp='.Resolution = 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Estimate curve size' >
+									<exp exp='.dx = .CX - .X0' />
+									<exp exp='.dy = .CY - .Y0' />
+								</command>
+								<command class_type='decision' title='abs(dx)' exp='.dx &lt; 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.dx = 0 - .dx' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='decision' title='abs(dy)' exp='.dy &lt; 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.dy = 0 - .dy' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.dist1 = .dx + .dy' />
+									<exp exp='.dx = .X2 - .CX' />
+									<exp exp='.dy = .Y2 - .CY' />
+								</command>
+								<command class_type='decision' title='abs(dx)' exp='.dx &lt; 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.dx = 0 - .dx' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='decision' title='abs(dy)' exp='.dy &lt; 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.dy = 0 - .dy' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.dist2 = .dx + .dy' />
+									<exp exp='.CurveSize = .dist1 + .dist2' />
+									<exp exp='.Resolution = .CurveSize / 3' />
+								</command>
+								<command class_type='decision' title='Clamp minimum resolution' exp='.Resolution &lt; 8' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.Resolution = 8' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='decision' title='Clamp maximum resolution' exp='.Resolution &gt; 128' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.Resolution = 128' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='calculation' title='Initialise t and step' >
+							<exp exp='.t = 0.0' />
+							<exp exp='.step = 1.0 / FLOAT .Resolution' />
+						</command>
+						<command class_type='loop' title='Loop' type='2' forvar='.i' exp='.Resolution + 1' >
+							<flowline >
+								<command class_type='calculation' title='Bezier calculation' >
+									<exp exp='.one_minus_t = 1.0 - .t' />
+									<exp exp='.fx = (.one_minus_t * .one_minus_t * FLOAT .X0) + (2.0 * .one_minus_t * .t * FLOAT .CX) + (.t * .t * FLOAT .X2)' />
+									<exp exp='.fy = (.one_minus_t * .one_minus_t * FLOAT .Y0) + (2.0 * .one_minus_t * .t * FLOAT .CY) + (.t * .t * FLOAT .Y2)' />
+									<exp exp='.Xp = round(.fx)' />
+									<exp exp='.Yp = round(.fy)' />
+								</command>
+								<command class_type='call' title='Plot point' macro='DrawLine' >
+									<argument exp='.X0' />
+									<argument exp='.Y0' />
+									<argument exp='.Xp' />
+									<argument exp='.Yp' />
+								</command>
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.X0 = .Xp' />
+									<exp exp='.Y0 = .Yp' />
+								</command>
+								<command class_type='calculation' title='Increment t' >
+									<exp exp='.t = .t + .step' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='DrawBezierSim' description='Draws a quadratic Bezier curve with the current foreground colour from pixel location X0, Y0 to pixel location X2, Y2 using control point CX, CY.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='X0' type='u16' description='Start X coordinate' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Y0' type='u16' description='Start Y coordinate' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='CX' type='u16' description='Control point X coordinate' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='CY' type='u16' description='Control point Y coordinate' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='X2' type='u16' description='End X coordinate' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Y2' type='u16' description='End Y coordinate' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Resolution' type='u16' description='Number of segments to approximate the curve, 0 chooses an automatic value based on curve size.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Component Macro' component='Base_GLCD' macro='DrawBezier' >
+							<argument exp='.X0' />
+							<argument exp='.Y0' />
+							<argument exp='.CX' />
+							<argument exp='.CY' />
+							<argument exp='.X2' />
+							<argument exp='.Y2' />
+							<argument exp='.Resolution' />
+						</command>
 					</flowline>
 				</macro>
 			</macros>

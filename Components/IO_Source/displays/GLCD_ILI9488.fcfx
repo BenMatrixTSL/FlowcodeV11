@@ -1,6 +1,6 @@
 <root>
-<document scada='0' projtype='1' schema='103' license='1,82702381,95CJQR' title='' description='' fcversion='720896' target='ESP.ESP32.ESP32-S3_WROOM' >
-	<config data='' clkspd='240000000' simspd='1' usewdt='0' constif='0' commport='17' Use3V3='0' />
+<document scada='0' projtype='1' schema='103' license='1,82702381,95CJQR' title='' description='' fcversion='720897' target='ESP.ESP32.ESP32-S3_WROOM' >
+	<config data='' clkspd='240000000' simspd='1' usewdt='0' constif='0' Use3V3='0' />
 	<plugins >
 		<dll_models enabled='1' />
 	</plugins>
@@ -789,10 +789,10 @@ May take some time to complete, resets back to no when complete.' />
 				<value target='Base_GLCD::ExportBinFonts' data='0' />
 			</values>
 			<events >
-				<event class='Components' event='Resize' target='Ev_Resize' />
 				<event class='Components' event='Initialise' target='Ev_Initialise' />
 				<event class='Components' event='Property' target='Ev_Property' />
 				<event class='Simulation' event='Start' target='Ev_Initialise' />
+				<event class='Components' event='Resize' target='Ev_Resize' />
 			</events>
 			<apis >
 				<api name='ReadFontWidth' alt='ReadFontWidth' type='5' proto='0' />
@@ -820,6 +820,7 @@ May take some time to complete, resets back to no when complete.' />
 				<api name='SetForegroundColour' alt='SetFGColourSim' type='1' proto='1' />
 				<api name='DrawRectangle' alt='DrawRectangleSim' type='1' proto='1' />
 				<api name='Initialise' alt='InitSim' type='1' proto='1' />
+				<api name='DrawBezier' alt='DrawBezierSim' type='1' proto='1' />
 			</apis>
 			<variables >
 				<variable public='0' >
@@ -1104,9 +1105,9 @@ Not compatible with orientations other than 0.' statediag='0' >
 										</command>
 										<command class_type='decision' title='Decision' exp='ESP_OPT' swap='0' >
 											<flowline >
-												<command class_type='native' title='Code' ccode='GPIO.out_w1ts = FCL_DAT;
-FCL_DAT = ~FCL_DAT;
-GPIO.out_w1tc = FCL_DAT;' language='C' />
+												<command class_type='native' title='Code' ccode='        GPIO.out_w1ts = FCL_DAT;
+        FCL_DAT = ~FCL_DAT;
+        GPIO.out_w1tc = FCL_DAT;' language='C' />
 											</flowline>
 											<flowline >
 												<command class_type='decision' title='Decision' exp='UsePorts' swap='0' >
@@ -4162,7 +4163,7 @@ Switching the backlight on and off at high speed allow the light to be dimmed.' 
 23, 23.0, 28-11-24, MW, Fixed error trap for lines when y = 0;
 23, 23.0, 28-11-24, MW, Fixed shapes colour background  not working;
 23, 23.0, 29-11-24, MW, Fixed initial background colour not working; 
-
+24, 23.0, 18-03-26, BR, Added DrawBezier function; 
 ' textarea='12,0,12,0' />
 						<command class_type='call' title='Call Macro' macro='Initialise' />
 						<command class_type='call' title='Call Macro' macro='Print' >
@@ -4572,9 +4573,9 @@ Switching the backlight on and off at high speed allow the light to be dimmed.' 
 									<flowline >
 										<command class_type='decision' title='Decision' exp='ESP_OPT' swap='0' >
 											<flowline >
-												<command class_type='native' title='Code' ccode='GPIO.out_w1ts = FCL_DATA;
-FCL_DATA = ~FCL_DATA;
-GPIO.out_w1tc = FCL_DATA;' language='C' />
+												<command class_type='native' title='Code' ccode='        GPIO.out_w1ts = FCL_DATA;
+        FCL_DATA = ~FCL_DATA;
+        GPIO.out_w1tc = FCL_DATA;' language='C' />
 											</flowline>
 											<flowline >
 												<command class_type='decision' title='Decision' exp='UsePorts' swap='0' >
@@ -4617,6 +4618,147 @@ GPIO.out_w1tc = FCL_DATA;' language='C' />
 								</command>
 							</flowline>
 							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='DrawBezier' description='Draws a quadratic Bezier curve with the current foreground colour from pixel location X0, Y0 to pixel location X2, Y2 using control point CX, CY.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='X0' type='u16' description='Start X coordinate' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Y0' type='u16' description='Start Y coordinate' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='CX' type='u16' description='Control point X coordinate' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='CY' type='u16' description='Control point Y coordinate' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='X2' type='u16' description='End X coordinate' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Y2' type='u16' description='End Y coordinate' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Resolution' type='u16' description='Number of segments to approximate the curve, 0 chooses an automatic value based on curve size.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='i' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='t' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='step' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='one_minus_t' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='fx' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='fy' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='Xp' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Yp' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='dx' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='dy' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='dist1' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='dist2' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='CurveSize' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Default resolution if zero' exp='.Resolution = 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Estimate curve size' >
+									<exp exp='.dx = .CX - .X0' />
+									<exp exp='.dy = .CY - .Y0' />
+								</command>
+								<command class_type='decision' title='abs(dx)' exp='.dx &lt; 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.dx = 0 - .dx' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='decision' title='abs(dy)' exp='.dy &lt; 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.dy = 0 - .dy' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.dist1 = .dx + .dy' />
+									<exp exp='.dx = .X2 - .CX' />
+									<exp exp='.dy = .Y2 - .CY' />
+								</command>
+								<command class_type='decision' title='abs(dx)' exp='.dx &lt; 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.dx = 0 - .dx' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='decision' title='abs(dy)' exp='.dy &lt; 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.dy = 0 - .dy' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.dist2 = .dx + .dy' />
+									<exp exp='.CurveSize = .dist1 + .dist2' />
+									<exp exp='.Resolution = .CurveSize / 3' />
+								</command>
+								<command class_type='decision' title='Clamp minimum resolution' exp='.Resolution &lt; 8' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.Resolution = 8' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='decision' title='Clamp maximum resolution' exp='.Resolution &gt; 128' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.Resolution = 128' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='calculation' title='Initialise t and step' >
+							<exp exp='.t = 0.0' />
+							<exp exp='.step = 1.0 / FLOAT .Resolution' />
+						</command>
+						<command class_type='loop' title='Loop' type='2' forvar='.i' exp='.Resolution + 1' >
+							<flowline >
+								<command class_type='calculation' title='Bezier calculation' >
+									<exp exp='.one_minus_t = 1.0 - .t' />
+									<exp exp='.fx = (.one_minus_t * .one_minus_t * FLOAT .X0) + (2.0 * .one_minus_t * .t * FLOAT .CX) + (.t * .t * FLOAT .X2)' />
+									<exp exp='.fy = (.one_minus_t * .one_minus_t * FLOAT .Y0) + (2.0 * .one_minus_t * .t * FLOAT .CY) + (.t * .t * FLOAT .Y2)' />
+									<exp exp='.Xp = round(.fx)' />
+									<exp exp='.Yp = round(.fy)' />
+								</command>
+								<command class_type='call' title='Plot point' macro='DrawLine' >
+									<argument exp='.X0' />
+									<argument exp='.Y0' />
+									<argument exp='.Xp' />
+									<argument exp='.Yp' />
+								</command>
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.X0 = .Xp' />
+									<exp exp='.Y0 = .Yp' />
+								</command>
+								<command class_type='calculation' title='Increment t' >
+									<exp exp='.t = .t + .step' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='DrawBezierSim' description='Draws a quadratic Bezier curve with the current foreground colour from pixel location X0, Y0 to pixel location X2, Y2 using control point CX, CY.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='X0' type='u16' description='Start X coordinate' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Y0' type='u16' description='Start Y coordinate' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='CX' type='u16' description='Control point X coordinate' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='CY' type='u16' description='Control point Y coordinate' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='X2' type='u16' description='End X coordinate' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Y2' type='u16' description='End Y coordinate' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Resolution' type='u16' description='Number of segments to approximate the curve, 0 chooses an automatic value based on curve size.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Component Macro' component='Base_GLCD' macro='DrawBezier' >
+							<argument exp='.X0' />
+							<argument exp='.Y0' />
+							<argument exp='.CX' />
+							<argument exp='.CY' />
+							<argument exp='.X2' />
+							<argument exp='.Y2' />
+							<argument exp='.Resolution' />
 						</command>
 					</flowline>
 				</macro>
@@ -4728,10 +4870,10 @@ GPIO.out_w1tc = FCL_DATA;' language='C' />
 	<keymap />
 	<panel2d shadows='0' lighting='0' brightness='0' >
 		<background rgb='9737364' img='' style='0' />
-		<camera xe='1.12941' ye='7.19306' ze='1127.47' xt='1.12941' yt='7.19306' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
-		<viewport dx='527' dy='782' zoom='56.5574' fix_topleft='0' />
+		<camera xe='1.12941' ye='7.19306' ze='1138.17' xt='1.12941' yt='7.19306' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='532' dy='774' zoom='56.5574' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='0' />
-		<winpos ID='7005' RectRecentFloat='760,466,1410,916' RectRecentDocked='942,141,1489,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+		<winpos ID='7005' RectRecentFloat='1055,-952,1920,-78' RectRecentDocked='929,141,1481,1005' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel2d>
 	<panel3d shadows='0' lighting='2' brightness='0' perspective='1' >
 		<background rgb='8409120' img='' style='0' />
@@ -4744,43 +4886,46 @@ GPIO.out_w1tc = FCL_DATA;' language='C' />
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,309,864' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,273,531' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='0' />
 	<layout >
-		<view type='0' name='FastBPlot' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadASCIILUT' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='BacklightOn' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='BacklightOff' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='FastPlot_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Window_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SendByte' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='InitSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZgIAAGMDAAA' zoom='75' scrollx='1229' scrolly='540' flags='0' />
-		<view type='0' name='Print' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LCD_Write_Bus8' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LCD_Write_Data8' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LCD_Write_Reg' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LCD_Write_Bus16' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Plot' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='BPlot' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='FastPlot' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Window' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ClearDisplay' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZgIAAGMDAAA' zoom='75' scrollx='0' scrolly='588' flags='0' />
-		<view type='0' name='DrawRectangle' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetFontScaler' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetBackgroundColour' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetForegroundColour' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DrawLine' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZgIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DrawRoundedRectangleSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZgIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DrawArcSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZgIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DrawRoundedRectangle' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZgIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DrawEllipse' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZgIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DrawCircle' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZgIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetExternalFont' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAZgIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='FastBPlot' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadASCIILUT' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='BacklightOn' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='BacklightOff' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='FastPlot_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Window_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SendByte' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='InitSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Print' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LCD_Write_Bus8' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LCD_Write_Data8' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LCD_Write_Reg' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LCD_Write_Bus16' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Plot' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='BPlot' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='FastPlot' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Window' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ClearDisplay' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DrawRectangle' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetFontScaler' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetBackgroundColour' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetForegroundColour' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DrawLine' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DrawRoundedRectangleSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DrawArcSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DrawRoundedRectangle' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DrawEllipse' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DrawCircle' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetExternalFont' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DrawBezier' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='100' scrollx='0' scrolly='1489' flags='0' />
+		<view type='0' name='DrawBezierSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DrawCircleSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAATAQAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>
