@@ -381,6 +381,11 @@ CALFUNCTION(MX_UINT8, FC_CAL_USB_Serial_SendString_, (MX_CHAR *FCL_DATA, MX_UINT
 					putUSBUSART(&FCL_DATA[FCL_POINTER], 64);
 					FCL_LENGTH -= 64;
 					FCL_POINTER += 64;
+
+					while (mUSBUSARTIsTxTrfReady() == 0)		//Wait for outgoing buffer to empty
+	    				CDCTxService();
+
+	    			CDCTxService();		//Required or every other send fails
 				}
 				else
 				{
