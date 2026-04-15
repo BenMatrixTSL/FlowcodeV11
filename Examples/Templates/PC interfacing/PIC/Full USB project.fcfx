@@ -1,16 +1,16 @@
-<!-- CRC: C09139DD0A75D64CECB6A655701556ECB273EE8EC09AB083F5C6EBD2AB1B7959604702D19E430DA318C7E74A07D2EA0E3C2187C3B0C0C055115341C7EE922A2294A859D96654604A02C2F5A19D74A189C7F0C7235229546B661D7E9FDCB6FF89893CFC70FC057E8B612C839BCE6A980C3948EDCF2EFC20DF69FC2739D61F102ACEA43D2EA9B55EC4A9B11F738DF98E15C8591E1D35DDD139671C70F92FEE2C3123F8822A384D0973EBD445D918958A80BEA9ED53B53B1523816131840A5F9478656686166829C6C418E1A6B6569064ECB0AEBC2127D5BA9B3612F2A7E0D5A8371D717A4E8410ACA2086944AE325796A67B1226D86D6B49D30A33E02A4086AC8138FDD6EBCE93B7415C705324202ABA0CC88A103EBA5EA7CE -->
-<!-- REVISION: 4.0 -->
-<!-- GUID: B217AED9-6760-474E-9EE2-DAE92C8D1193 -->
-<!-- DATE: 20\02\2026 -->
+<!-- CRC: C09139DD0A75D64CECB6A655701556ECB273EE8EC09AB083F5C6EBD2AB1B7959604702D19E430DA318C7E74A07D2EA0E3C2187C3B0C0C055115341C7EE922A2294A859D96654604A02C2F5A19D74A189C7F0C7235229546B661D7E9FDCB6FF89893CFC70FC057E8B612C839BCE6A980C01A925883771221418FDCB50104E7DAA2BBB7B1CC80F12CBA9B11F738DF98E1575C88593DED04AF130170B0984BDE741C68125AB7844D611FB54929075AED4BCC4337FB33A3803672850BB3063DE258A63B2EB839F6CCC995BC0F78189E0F7ABCD8EAF7E56D5E7508A5A10389AB0E861C751CAEFD2479E9D086944AE325796A6F4578FFAD28CFB5786E7FD8B87C2F651FF6F509FB07A7B34A00A18B8526AEFB14B8DFBE9D4D641FD -->
+<!-- REVISION: 1.0 -->
+<!-- GUID: AE3F475F-540F-4510-B3F0-82194BA1FB91 -->
+<!-- DATE: 15\04\2026 -->
 <!-- DIR: Misc\Templates\PC|interfacing\PIC\Full|USB|project.fcfx -->
 <root>
-<document scada='0' projtype='1' schema='103' license='1,65060919,MNBNUH' title='04 - Full USB project' description='Once you understand JSON then larger bidirectional control and monitoring projects are just larger programs.
+<document scada='0' projtype='1' schema='103' license='1,82702381,95CJQR' title='04 - Full USB project' description='Once you understand JSON then larger bidirectional control and monitoring projects are just larger programs.
 
 In this worksheet / project you establish quite a significant PC control and monitoring system that you can adapt for your own projects.
 
 PC Interfacing, Worksheet 4.
-' fcversion='720896' target='PIC.18F.E-blocks3 8-bit PIC Programmer' >
-	<config data='' clkspd='64000000' simspd='0' usewdt='0' constif='0' commport='3' SSH_IP='DD6171BB7AD97877' SSH_User='DD6171BB7AD97877' SSH_Pass='DD6171BB7AD97877' Use3V3='0' />
+' fcversion='720897' target='PIC.18F.E-blocks3 8-bit PIC Programmer' >
+	<config data='' clkspd='64000000' simspd='0' usewdt='0' constif='0' SSH_IP='DD6171BB7AD97877' SSH_User='DD6171BB7AD97877' SSH_Pass='DD6171BB7AD97877' Use3V3='0' />
 	<plugins >
 		<dll_models enabled='1' />
 	</plugins>
@@ -149,7 +149,7 @@ curly bracket &quot;{&quot;
 							<flowline >
 								<command class_type='call' title='Component Macro' component='UART1' macro='ReceiveChar' >
 									<return exp='.rx' />
-									<argument exp='10' />
+									<argument exp='100' />
 								</command>
 							</flowline>
 						</command>
@@ -160,11 +160,7 @@ curly bracket &quot;{&quot;
 							<flowline >
 								<command class_type='call' title='Component Macro' component='UART1' macro='ReceiveChar' >
 									<return exp='.rx' />
-									<argument exp='10' />
-								</command>
-								<command class_type='calculation' title='Create string with single character' disable='1' >
-									<exp exp='.data[0] = receive_character' />
-									<exp exp='.data[1] = 0' />
+									<argument exp='100' />
 								</command>
 								<command class_type='calculation' title='Add to received string' >
 									<exp exp='RxString[.rxidx] = .rx' />
@@ -525,6 +521,7 @@ curly bracket &quot;{&quot;
 					<value target='BitmapsFolder' data='$(srcdir)' />
 					<value target='Base_GLCD::ExportBinFonts' data='0' />
 					<value target='EB3_Display' data='1' />
+					<value target='UARTidx' data='2' />
 				</values>
 				<events />
 				<apis />
@@ -558,7 +555,7 @@ curly bracket &quot;{&quot;
 				<resources />
 				<properties />
 				<values >
-					<value target='cal_uart::CHANNEL' data='005' />
+					<value target='cal_uart::CHANNEL' data='5' />
 					<value target='cal_uart::BAUD_LIST' data='009' />
 					<value target='cal_uart::BAUD' data='115200' />
 					<value target='cal_uart::DBITS' data='008' />
@@ -600,6 +597,7 @@ curly bracket &quot;{&quot;
 				<properties />
 				<values >
 					<value target='DataBytes' data='200' />
+					<value target='AppendNewline' data='1' />
 				</values>
 				<events />
 				<apis />
@@ -843,7 +841,7 @@ Where: XX.XX and YY.YY are Floats and NN is an integer – value 0 to 255
 				<variables />
 				<macros />
 			</component>
-			<component class_type='ref' guid='e2698f3e-1168-4f25-9c50-24a74ea7e34a' vmin='0' vmaj='20' codename='Switch_1' panelId='0' x='664.5' y='-378.423' z='11' xsz='25.4329' ysz='25.5156' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='2' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+			<component class_type='ref' guid='e2698f3e-1168-4f25-9c50-24a74ea7e34a' vmin='0' vmaj='21' codename='Switch_1' panelId='0' x='664.5' y='-378.423' z='11' xsz='25.4329' ysz='25.5156' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='2' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
@@ -887,7 +885,7 @@ Where: XX.XX and YY.YY are Floats and NN is an integer – value 0 to 255
 				<variables />
 				<macros />
 			</component>
-			<component class_type='ref' guid='e2698f3e-1168-4f25-9c50-24a74ea7e34a' vmin='0' vmaj='20' codename='Switch_2' panelId='0' x='765' y='-378.423' z='12' xsz='25.7123' ysz='25.5156' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='2' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+			<component class_type='ref' guid='e2698f3e-1168-4f25-9c50-24a74ea7e34a' vmin='0' vmaj='21' codename='Switch_2' panelId='0' x='765' y='-378.423' z='12' xsz='25.7123' ysz='25.5156' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='2' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
@@ -995,10 +993,10 @@ Where: XX.XX and YY.YY are Floats and NN is an integer – value 0 to 255
 	<keymap />
 	<panel2d shadows='0' lighting='2' brightness='0' >
 		<background rgb='7292207' img='' style='0' />
-		<camera xe='0' ye='0' ze='578.531' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
-		<viewport dx='200' dy='514' zoom='41.8301' fix_topleft='0' />
+		<camera xe='0' ye='0' ze='1133.92' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='392' dy='542' zoom='41.8301' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='7360576' />
-		<winpos ID='7005' RectRecentFloat='1270,427,1920,877' RectRecentDocked='0,0,200,537' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7005' RectRecentFloat='1270,427,1920,877' RectRecentDocked='0,0,392,565' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel2d>
 	<panel3d shadows='0' lighting='2' brightness='0' perspective='1' >
 		<background rgb='8409120' img='' style='0' />
@@ -1011,19 +1009,19 @@ Where: XX.XX and YY.YY are Floats and NN is an integer – value 0 to 255
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='153,370,807,947' RectRecentDocked='0,0,210,593' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='153,370,807,947' RectRecentDocked='0,0,392,565' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='1' >
 		<panel2d_0 id='0' name='2D Panel' type='0' >
-			<winpos ID='1171' RectRecentFloat='2642,285,3381,927' RectRecentDocked='944,141,1539,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+			<winpos ID='1171' RectRecentFloat='1181,285,1920,927' RectRecentDocked='970,141,1489,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
 			<background fill='288230376151053813' showgrid='1' gridstyle='1' gridsize='10' gridbrush='71776119075691740' snaptogrid='1' fitcomp='0' disp_x='300' disp_y='400' scale='80' disp_col='16777215' />
 		</panel2d_0>
 	</panels2d>
 	<layout >
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAogQAAGMDAAA' zoom='90' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Transmit_data_Via_USB' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAogQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Receive_data_via_USB' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAogQAAGMDAAA' zoom='95' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAogQAAGMDAAA' zoom='95' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAGMDAAA' zoom='90' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Transmit_data_Via_USB' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Receive_data_via_USB' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAGMDAAA' zoom='95' scrollx='0' scrolly='1610' flags='0' />
+		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAGMDAAA' zoom='95' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>
