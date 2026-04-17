@@ -262,7 +262,7 @@ No: Do not show the pin signals on the data recorder window.' />
 				<value target='cal_spi1::MOSI' data='$PORTD.5' />
 				<value target='cal_spi1::MOSIPins' data='012' />
 				<value target='cal_spi1::MISO' data='' />
-				<value target='cal_spi1::MISOPins' data='020' />
+				<value target='cal_spi1::MISOPins' data='070' />
 				<value target='cal_spi1::CLK' data='$PORTD.7' />
 				<value target='cal_spi1::CLKPins' data='014' />
 				<value target='cal_spi1::SS' data='$PORTC.2' />
@@ -289,12 +289,12 @@ No: Do not show the pin signals on the data recorder window.' />
 				<value target='cal_spi1::Injector' data='000' />
 			</values>
 			<events >
-				<event class='Simulation' event='Start' target='Ev_SimStart' />
-				<event class='System' event='Timer' target='Ev_Timer' />
-				<event class='Compile' event='Start' target='Ev_CompileStart' />
-				<event class='Components' event='Property' target='Ev_Property' />
 				<event class='Components' event='Initialise' target='Ev_Initialise' />
 				<event class='Components' event='Renamed' target='Ev_Renamed' />
+				<event class='Components' event='Property' target='Ev_Property' />
+				<event class='System' event='Timer' target='Ev_Timer' />
+				<event class='Compile' event='Start' target='Ev_CompileStart' />
+				<event class='Simulation' event='Start' target='Ev_SimStart' />
 			</events>
 			<apis >
 				<api name='SampleDiffVolts' alt='SampleDiffVolts' type='1' proto='1' />
@@ -423,7 +423,7 @@ No: Do not show the pin signals on the data recorder window.' />
 							<argument exp='.ChannelB' />
 							<argument exp='.Gain' />
 						</command>
-						<command class_type='switch' title='Switch' exp='.Gain' >
+						<command class_type='switch' title='Switch' exp='.Gain &amp; 0x07' >
 							<case >
 								<flowline >
 									<command class_type='calculation' title='Calculation' >
@@ -892,12 +892,13 @@ No: Do not show the pin signals on the data recorder window.' />
 							<flowline >
 								<command class_type='calculation' title='Work out channel' >
 									<exp exp='.temp = 0x80 | ((.Channel &amp; 0x03) &lt;&lt; 4)' />
+									<exp exp='.temp = .temp | ((.Gain &amp; 0x07) &lt;&lt; 1)' />
 								</command>
-								<command class_type='decision' title='Is the channel already set correctly?' exp='(ConfigReg0 &amp; 0xF0) = .temp' swap='0' >
+								<command class_type='decision' title='Is the channel already set correctly?' exp='ConfigReg0 = .temp' swap='0' >
 									<flowline />
 									<flowline >
 										<command class_type='calculation' title='Calculation' >
-											<exp exp='ConfigReg0 = (ConfigReg0 &amp; 0x0F) | .temp' />
+											<exp exp='ConfigReg0 = .temp' />
 										</command>
 										<command class_type='call' title='CS Pin Low' component='cal_spi1' macro='Master_Enable_CS' />
 										<command class_type='calculation' title='Build Write Command' >
@@ -1170,11 +1171,14 @@ Returns 0 if the channel selection is invalid.' statediag='0' >
 									</flowline>
 									<flowline />
 								</command>
-								<command class_type='decision' title='Is the channel already set correctly?' exp='(ConfigReg0 &amp; 0xF0) = .temp' swap='0' >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.temp = .temp | ((.Gain &amp; 0x07) &lt;&lt; 1)' />
+								</command>
+								<command class_type='decision' title='Is the channel already set correctly?' exp='ConfigReg0 = .temp' swap='0' >
 									<flowline />
 									<flowline >
 										<command class_type='calculation' title='Calculation' >
-											<exp exp='ConfigReg0 = (ConfigReg0 &amp; 0x0F) | .temp' />
+											<exp exp='ConfigReg0 = .temp' />
 										</command>
 										<command class_type='call' title='CS Pin Low' component='cal_spi1' macro='Master_Enable_CS' />
 										<command class_type='calculation' title='Build Write Command' >
@@ -1292,7 +1296,7 @@ Returns 0 if the channel selection is invalid.' statediag='0' >
 					<value target='MOSI' data='$PORTD.5' />
 					<value target='MOSIPins' data='012' />
 					<value target='MISO' data='' />
-					<value target='MISOPins' data='020' />
+					<value target='MISOPins' data='070' />
 					<value target='CLK' data='$PORTD.7' />
 					<value target='CLKPins' data='014' />
 					<value target='UseAutoCS' data='1' />
@@ -1449,7 +1453,7 @@ Returns 0 if the channel selection is invalid.' statediag='0' >
 		<camera xe='103.355' ye='36.1584' ze='749.109' xt='103.355' yt='36.1584' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
 		<viewport dx='563' dy='776' zoom='90.9387' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='0' />
-		<winpos ID='7005' RectRecentFloat='1134,71,1725,945' RectRecentDocked='0,0,392,565' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+		<winpos ID='7005' RectRecentFloat='1134,71,1725,945' RectRecentDocked='-1619,-1171,-1121,-752' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
 	</panel2d>
 	<panel3d shadows='0' lighting='2' brightness='0' perspective='1' >
 		<background rgb='8409120' img='' style='0' />
@@ -1462,26 +1466,26 @@ Returns 0 if the channel selection is invalid.' statediag='0' >
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='1270,373,1920,823' RectRecentDocked='0,0,392,565' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='1270,373,1920,823' RectRecentDocked='0,0,375,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='0' />
 	<layout >
-		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='75' scrollx='0' scrolly='130' flags='0' />
-		<view type='0' name='SampleSglRaw' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SampleSglVolts' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SampleDiffRAW' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SampleDiffVolts' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Timer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Renamed' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='WriteConfigRegisters' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadRTDResistance' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadRTDTemperature' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadSample' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_SimStart' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_CompileStart' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SampleSglRaw' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SampleSglVolts' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SampleDiffRAW' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='75' scrollx='0' scrolly='1171' flags='0' />
+		<view type='0' name='SampleDiffVolts' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Timer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Renamed' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='WriteConfigRegisters' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadRTDResistance' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadRTDTemperature' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadSample' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='100' scrollx='0' scrolly='1104' flags='0' />
+		<view type='0' name='Ev_SimStart' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_CompileStart' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>
