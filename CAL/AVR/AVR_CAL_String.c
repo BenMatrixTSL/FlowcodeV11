@@ -1,7 +1,7 @@
-// CRC: 77485F5F6A861F9125D47827B4DE492656C5431E478E8046055FD2257F64F1F376C6BA0AD4FE2B3B61BD43C22CF2822676991F974804DEB83FDD3941B9214F9EB6D800DB0061DE71A9B11F738DF98E15F685D1997DD57840ECA820AC05B6D91F7766A5C22ECD65B974388C2AA254DF947FEEE0BC75E140404E4887DAFEE4093E34F271877483C0FC152E7A405DE9B01E84AF36D1A0E209AFBC9CB76A09AEAA054B066FE0AF5B7B80549D34A0D5AD11F308370B4734C694EC280D51985AAE055E5ECC40835A1AF53211F33536FF4271682E83591212429612
-// REVISION: 7.0
+// CRC: 77485F5F6A861F9125D47827B4DE492656C5431E478E8046055FD2257F64F1F376C6BA0AD4FE2B3B61BD43C22CF28226E2386DF130D1CE2BC55ADF1BBD570577B6D800DB0061DE71A9B11F738DF98E15F685D1997DD57840ECA820AC05B6D91F7766A5C22ECD65B974388C2AA254DF947FEEE0BC75E140404E4887DAFEE4093E34F271877483C0FC152E7A405DE9B01E84AF36D1A0E209AFBC9CB76A09AEAA054B066FE0AF5B7B80549D34A0D5AD11F3A41384AB29E6CBC8B1C721AE454274F8D8F381D36057DE3E3B2CD482BC0EE54D2A52B2CE0373A37B
+// REVISION: 8.0
 // GUID: 49FE8FFE-F04F-4E20-8E92-D4585D519B00
-// DATE: 16\03\2026
+// DATE: 20\04\2026
 // DIR: CAL\AVR\AVR_CAL_String.c
 /*********************************************************************
  *                  Flowcode CAL String File
@@ -108,7 +108,7 @@ static MX_UINT8 FCI_TOSTRU32(MX_UINT32 iSrc1, MX_STRING sDst, MX_UINT16 iDst_len
 
 static void FCI_TOLOWER(MX_STRING sSrc, MX_UINT16 iSrc_len, MX_STRING sDst, MX_UINT16 iDst_len);
 static void FCI_TOUPPER(MX_STRING sSrc, MX_UINT16 iSrc_len, MX_STRING sDst, MX_UINT16 iDst_len);
-static MX_UINT8 FCI_COMPARE(MX_STRING sSrc1, MX_UINT16 iSrc1_len, MX_STRING sSrc2, MX_UINT16 iSrc2_len, MX_UINT8 iNoCase);
+static MX_SINT16 FCI_COMPARE(MX_STRING sSrc1, MX_UINT16 iSrc1_len, MX_STRING sSrc2, MX_UINT16 iSrc2_len, MX_UINT8 iNoCase);
 static MX_STRING FCI_FLOAT_TO_STRING(MX_FLOAT Number, MX_UINT8 Precision, MX_STRING String, MX_UINT16 MSZ_String);
 static MX_STRING FCI_NUMBER_TO_HEX(MX_ULONG Number, MX_STRING String, MX_UINT16 MSZ_String);
 static MX_SINT32 FCI_STRING_TO_INT(MX_STRING String, MX_UINT16 MSZ_String);
@@ -503,7 +503,7 @@ static void FCI_TOUPPER(MX_STRING sSrc, MX_UINT16 iSrc_len, MX_STRING sDst, MX_U
 }
 
 
-static MX_UINT8 FCI_COMPARE(MX_STRING sSrc1, MX_UINT16 iSrc1_len, MX_STRING sSrc2, MX_UINT16 iSrc2_len, MX_UINT8 iNoCase)
+static MX_SINT16 FCI_COMPARE(MX_STRING sSrc1, MX_UINT16 iSrc1_len, MX_STRING sSrc2, MX_UINT16 iSrc2_len, MX_UINT8 iNoCase)
 {
 	MX_UINT16 idx = 0;
 	MX_UINT8 ch1, ch2;
@@ -530,7 +530,7 @@ static MX_UINT8 FCI_COMPARE(MX_STRING sSrc1, MX_UINT16 iSrc1_len, MX_STRING sSrc
 				return (1);				//reached the end of iSrc2, but still more of iSrc1
 		}
 		else if (ch1 == 0)
-			return (255);				//end of iSrc1 but not at end of iSrc2, so return -1
+			return (-1);				//end of iSrc1 but not at end of iSrc2, so return -1
 		else if (ch1 < ch2)
 			return(255);
 		else if (ch1 > ch2)
@@ -552,7 +552,7 @@ static MX_UINT8 FCI_COMPARE(MX_STRING sSrc1, MX_UINT16 iSrc1_len, MX_STRING sSrc
 		if (sSrc2[idx] == 0)
 			return (0);
 		else
-			return (255);
+			return (-1);
 	}
 	return (0);						// the two buffers are the same size and contain the same data
 }
@@ -1078,33 +1078,33 @@ static void FCI_SPLITSTRING(MX_CHAR *FCL_STRINGINPUT, MX_UINT16 FCLsz_STRINGINPU
     MX_SINT16 FCL_END = 0;    // Changed from MX_UINT16 to MX_SINT16
     FCL_RETVAL[0] = 0;
     MX_UINT16 FCL_ELEMENT_COUNT = 0;
-    
+
     // Count total number of elements first
     MX_SINT16 temp_pos = 0;
     MX_UINT16 element_count = 1;  // Start with 1 for the first element
     while (temp_pos >= 0) {
-	 
+
         temp_pos = FCI_CONTAINS(FCL_STRINGINPUT, FCLsz_STRINGINPUT, FCL_DELIMITER, FCLsz_DELIMITER, temp_pos);
         if (temp_pos >= 0) {
             element_count++;
             temp_pos += FCL_LEN_DELIM;
-				  
+
         }
-		 
-	  
-					
-   
+
+
+
+
     }
-    
+
     // Reset for actual processing
     FCL_START = 0;
-    
+
     // If we're looking for an element beyond what exists, return empty
     if (FCL_INDEX >= element_count) {
         FCL_RETVAL[0] = '\0';
         return;
     }
-    
+
     // Find the start position of our target element
     while (FCL_ELEMENT_COUNT < FCL_INDEX) {
         FCL_START = FCI_CONTAINS(FCL_STRINGINPUT, FCLsz_STRINGINPUT, FCL_DELIMITER, FCLsz_DELIMITER, FCL_START);
@@ -1117,10 +1117,10 @@ static void FCI_SPLITSTRING(MX_CHAR *FCL_STRINGINPUT, MX_UINT16 FCLsz_STRINGINPU
             return;
         }
     }
-    
+
     // Now find the end of our target element
     FCL_END = FCI_CONTAINS(FCL_STRINGINPUT, FCLsz_STRINGINPUT, FCL_DELIMITER, FCLsz_DELIMITER, FCL_START);
-    
+
     if (FCL_END > 0) {  // FCL_END is signed, so this check is meaningful
         // Found another delimiter - extract element up to delimiter
         FCI_MIDSTRING(FCL_STRINGINPUT, FCLsz_STRINGINPUT, FCL_START, (FCL_END - FCL_START), FCL_RETVAL, FCLsz_RETVAL);
@@ -1152,7 +1152,7 @@ static void FCI_EXPLODETOINTARRAY(MX_STRING sSrc, MX_UINT16 iSrc_len, MX_STRING 
   MX_CHAR sTemp[20];
   int iSourceCharIdx = 0;
   int iTempCharIdx = 0;
-  
+
   while ((iSourceCharIdx < iStringLen) && (iTempCharIdx < 20) && (iArrayIdx < iMaxCount) && (iArrayIdx < pArraySize))
   {
     if (sSrc[iSourceCharIdx] == sDelimiters[0])
@@ -1167,10 +1167,10 @@ static void FCI_EXPLODETOINTARRAY(MX_STRING sSrc, MX_UINT16 iSrc_len, MX_STRING 
       sTemp[iTempCharIdx] = sSrc[iSourceCharIdx];
       iTempCharIdx++;
     }
-    
+
     iSourceCharIdx++;
   }
-  
+
   if ((iTempCharIdx < 20) && (iArrayIdx < iMaxCount) && (iArrayIdx < pArraySize))
   {
     sTemp[iTempCharIdx] = 0; //string terminator
@@ -1200,7 +1200,7 @@ static void FCI_EXPLODETOFLOATARRAY(MX_STRING sSrc, MX_UINT16 iSrc_len, MX_STRIN
   MX_CHAR sTemp[20];
   int iSourceCharIdx = 0;
   int iTempCharIdx = 0;
-  
+
   while ((iSourceCharIdx < iStringLen) && (iTempCharIdx < 20) && (iArrayIdx < iMaxCount) && (iArrayIdx < iArraySize))
   {
     if (sSrc[iSourceCharIdx] == sDelimiters[0])
@@ -1215,10 +1215,10 @@ static void FCI_EXPLODETOFLOATARRAY(MX_STRING sSrc, MX_UINT16 iSrc_len, MX_STRIN
       sTemp[iTempCharIdx] = sSrc[iSourceCharIdx];
       iTempCharIdx++;
     }
-    
+
     iSourceCharIdx++;
   }
-  
+
   if ((iTempCharIdx < 20) && (iArrayIdx < iMaxCount) && (iArrayIdx < iArraySize))
   {
     sTemp[iTempCharIdx] = 0; //string terminator
@@ -1245,7 +1245,7 @@ static void FCI_IMPLODEFROMFLOATARRAY(MX_FLOAT fArray[], MX_UINT16 iArraySize, M
   int iArrayIdx = 0;
   MX_CHAR sTemp[20];
   sReturn[0] = 0;
-  
+
   while ((iArrayIdx < iMaxCount) && (iArrayIdx < iArraySize))
   {
     if (iArrayIdx != 0)
@@ -1280,7 +1280,7 @@ static void FCI_IMPLODEFROMINTARRAY(MX_SINT16 iArray[], MX_UINT8 pArraySize, MX_
   int iArrayIdx = 0;
   MX_CHAR sTemp[20];
   sReturn[0] = 0;
-  
+
   while ((iArrayIdx < iMaxCount) && (iArrayIdx < pArraySize))
   {
     if (iArrayIdx != 0)
@@ -1297,7 +1297,7 @@ static void FCI_IMPLODEFROMINTARRAY(MX_SINT16 iArray[], MX_UINT8 pArraySize, MX_
 
 /*=----------------------------------------------------------------------=*\
    Use :Takes a main string and inserts a string into the main string at the index position.
-       :e.g. main string = "Hello test1", string to be inserted " World", 
+       :e.g. main string = "Hello test1", string to be inserted " World",
 	   :index = 5, main string will be "Hello World test1"
        :
        :Parameters for macro InsertString:
@@ -1314,43 +1314,43 @@ static void FCI_INSERTSTRING(MX_STRING sMain, MX_UINT16 iMainLen, MX_STRING sSub
   // Get actual string lengths
   MX_UINT16 iMainActualLen = FCI_GETLENGTH(sMain, iMainLen);
   MX_UINT16 iSubActualLen = FCI_GETLENGTH(sSub, iSubLen);
-  
+
   // Ensure position is within bounds
   if (iPos > iMainActualLen) {
     iPos = iMainActualLen;
   }
-  
+
   // Calculate total required length and check if it fits
   MX_UINT16 iTotalLen = iMainActualLen + iSubActualLen;
   if (iTotalLen >= iReturnLen) {
     iTotalLen = iReturnLen - 1; // Leave room for null terminator
   }
-  
+
   if (sMain == sReturn) {
     // Case 1: Main string is same as return buffer
     // Need to work backwards to avoid overwriting data
-    
+
     // Make sure we have enough space in the return buffer
     if (iReturnLen <= (iMainActualLen + iSubActualLen)) {
       // Not enough space, truncate
       iMainActualLen = iReturnLen - iSubActualLen - 1;
-				   
+
     }
-    
+
     // Move the second part of the main string to make room for the substring
     MX_UINT16 i;
     for (i = iMainActualLen; i >= iPos && i < iReturnLen; i--) {
       if (i + iSubActualLen < iReturnLen) {
         sReturn[i + iSubActualLen] = sReturn[i];
       }
-				
+
     }
-    
+
     // Insert the substring
     for (i = 0; i < iSubActualLen && (iPos + i) < iReturnLen; i++) {
       sReturn[iPos + i] = sSub[i];
     }
-    
+
     // Ensure null termination
     if (iMainActualLen + iSubActualLen < iReturnLen) {
       sReturn[iMainActualLen + iSubActualLen] = '\0';
@@ -1363,37 +1363,37 @@ static void FCI_INSERTSTRING(MX_STRING sMain, MX_UINT16 iMainLen, MX_STRING sSub
     // Need to create a temporary copy of the substring
     MX_CHAR tempSub[256]; // Assume a reasonable maximum size
     MX_UINT16 tempLen = iSubActualLen < 256 ? iSubActualLen : 255;
-    
+
     // Copy substring to temp buffer
     MX_UINT16 i;
     for (i = 0; i < tempLen; i++) {
       tempSub[i] = sSub[i];
     }
     tempSub[tempLen] = '\0';
-    
+
     // Clear return buffer
     sReturn[0] = '\0';
-    
+
     // Copy first part of main string
     for (i = 0; i < iPos && i < iMainActualLen && i < iReturnLen; i++) {
       sReturn[i] = sMain[i];
     }
-    
+
     // Copy substring from temp buffer
     MX_UINT16 returnPos = i;
-						 
+
     for (i = 0; i < tempLen && returnPos < iReturnLen; i++, returnPos++) {
       sReturn[returnPos] = tempSub[i];
-			   
+
     }
-    
+
     // Copy rest of main string
     for (i = iPos; i < iMainActualLen && returnPos < iReturnLen; i++, returnPos++) {
       sReturn[returnPos] = sMain[i];
-			   
-	   
+
+
     }
-    
+
     // Ensure null termination
     if (returnPos < iReturnLen) {
       sReturn[returnPos] = '\0';
@@ -1405,36 +1405,36 @@ static void FCI_INSERTSTRING(MX_STRING sMain, MX_UINT16 iMainLen, MX_STRING sSub
     // Case 3: All buffers are different
     // Clear return buffer
     MX_UINT16 returnPos = 0;
-    
+
     // Copy first part of main string
     MX_UINT16 i;
     for (i = 0; i < iPos && i < iMainActualLen && returnPos < iReturnLen; i++, returnPos++) {
-	   
-			  
-	   
+
+
+
       sReturn[returnPos] = sMain[i];
-				 
+
     }
-    
+
     // Copy substring
     for (i = 0; i < iSubActualLen && returnPos < iReturnLen; i++, returnPos++) {
-	 
+
       sReturn[returnPos] = sSub[i];
-				   
-				
+
+
     }
-    
+
     // Copy rest of main string
     for (i = iPos; i < iMainActualLen && returnPos < iReturnLen; i++, returnPos++) {
       sReturn[returnPos] = sMain[i];
-							   
-	   
-			  
-	   
-				   
-				 
+
+
+
+
+
+
     }
-    
+
     // Ensure null termination
     if (returnPos < iReturnLen) {
       sReturn[returnPos] = '\0';
@@ -1450,7 +1450,7 @@ static void FCI_INSERTSTRING(MX_STRING sMain, MX_UINT16 iMainLen, MX_STRING sSub
 	   :Pad char = '0', Float value will be 001234.5
        :
        :Parameters for macro FloatToFormattedString:
-       :fVal : Initial float e.g 1234.56 
+       :fVal : Initial float e.g 1234.56
        :iMinLen: Minging length of the required floatincludung the decimal point.
 	   :cPad: Char required for padding.
        :iPrecision: precision of the float value within the retuned string.
@@ -1465,22 +1465,22 @@ static void FCI_FLOATTOFORMATTEDSTRING(MX_FLOAT fVal, MX_UINT8 iMinLen, MX_CHAR 
   MX_UINT8 iIdx = 0;
   MX_UINT8 iIdx2 = 0;
   sReturn[0] = 0;
-  
+
   if (iMinLen > iReturnLen)
   {
     iMinLen = iReturnLen;
   }
-  
+
   FCI_FLOAT_TO_STRING(fVal, iPrecision, sTemp, 20);
   MX_UINT8 iFloatLen = FCI_GETLENGTH(sTemp, 20);
-  
+
   //padding
   while (iIdx < (iMinLen - iFloatLen))
   {
     sReturn[iIdx] = cPad;
     iIdx++;
   }
-  
+
   //copy the value
   while ((iIdx < iReturnLen) && (iIdx2 < iFloatLen))
   {
@@ -1488,7 +1488,7 @@ static void FCI_FLOATTOFORMATTEDSTRING(MX_FLOAT fVal, MX_UINT8 iMinLen, MX_CHAR 
     iIdx++;
     iIdx2++;
   }
-  
+
   if (iIdx < iReturnLen)
   {
     sReturn[iIdx] = 0;
@@ -1501,7 +1501,7 @@ static void FCI_FLOATTOFORMATTEDSTRING(MX_FLOAT fVal, MX_UINT8 iMinLen, MX_CHAR 
 	   :Pad char = '0', Int value will be 01234
        :
        :  Parameters for macro IntToFormattedString:
-       :  iVal : Initial Int e.g 1234 
+       :  iVal : Initial Int e.g 1234
        :  iMinLen: Minimum length of the required Int includung the padding char.
 	   :  cPad: Char required for padding.
        :  sReturn: String with paaded values to return.
@@ -1515,22 +1515,22 @@ static void FCI_INTTOFORMATTEDSTRING(MX_UINT16 iVal, MX_UINT8 iMinLen, MX_CHAR c
   MX_UINT8 iIdx = 0;
   MX_UINT8 iIdx2 = 0;
   sReturn[0] = 0;
-  
+
   if (iMinLen > iReturnLen)
   {
     iMinLen = iReturnLen;
   }
-  
+
   FCI_TOSTRING(iVal, sTemp, 20);
   MX_UINT8 iIntLen = FCI_GETLENGTH(sTemp, 20);
-  
+
   //padding
   while (iIdx < (iMinLen - iIntLen))
   {
     sReturn[iIdx] = cPad;
     iIdx++;
   }
-  
+
   //copy the value
   while ((iIdx < iReturnLen) && (iIdx2 < iIntLen))
   {
@@ -1538,7 +1538,7 @@ static void FCI_INTTOFORMATTEDSTRING(MX_UINT16 iVal, MX_UINT8 iMinLen, MX_CHAR c
     iIdx++;
     iIdx2++;
   }
-  
+
   if (iIdx < iReturnLen)
   {
     sReturn[iIdx] = 0;
@@ -1566,18 +1566,18 @@ static MX_UINT16 FCI_SEARCHANDREPLACE(MX_STRING sMain, MX_UINT16 iMainLen, MX_ST
   MX_UINT16 iRealSearchLen = FCI_GETLENGTH(sSearch, iSearchLen);
   MX_UINT16 iRealReplaceLen = FCI_GETLENGTH(sReplace, iReplaceLen);
   MX_SINT16 iDiff = iRealReplaceLen - iRealSearchLen;
-  
+
   while ((iIdx < iMainLen) && (sMain[iIdx] != 0))
   {
     if (sMain[iIdx] == sSearch[iSearchIdx])
     {
       iSearchIdx++;
-    
+
       if (iSearchIdx == iRealSearchLen)
       {
         //found it
         iCount++;
-        
+
         if (iDiff > 0)
         {
           //replacement is larger, so make room first
@@ -1588,7 +1588,7 @@ static MX_UINT16 FCI_SEARCHANDREPLACE(MX_STRING sMain, MX_UINT16 iMainLen, MX_ST
             iSearchIdx++;
           }
         }
-        
+
         //replace the string
         iSearchIdx = 0;
         while ((iSearchIdx < iRealReplaceLen) && (iIdx - iRealSearchLen + iSearchIdx + 1 < iMainLen))
@@ -1596,7 +1596,7 @@ static MX_UINT16 FCI_SEARCHANDREPLACE(MX_STRING sMain, MX_UINT16 iMainLen, MX_ST
           sMain[iIdx - iRealSearchLen + iSearchIdx + 1] = sReplace[iSearchIdx];
           iSearchIdx++;
         }
-        
+
         if (iDiff < 0)
         {
           //replacement is smaller, so reduce
@@ -1615,7 +1615,7 @@ static MX_UINT16 FCI_SEARCHANDREPLACE(MX_STRING sMain, MX_UINT16 iMainLen, MX_ST
             iSearchIdx++;
           }
         }
-        
+
         //adjust the indexes
         iIdx = iIdx + iDiff;
         iSearchIdx = 0;
@@ -1627,13 +1627,13 @@ static MX_UINT16 FCI_SEARCHANDREPLACE(MX_STRING sMain, MX_UINT16 iMainLen, MX_ST
     }
     iIdx++;
   }
-  
+
   return iCount;
 }
 
 /*=----------------------------------------------------------------------=*\
    Use :Takes a main string and removes chars from it starting at the index position.
-       :e.g. main string = "Hello test1", chars to be remove =  "test", 
+       :e.g. main string = "Hello test1", chars to be remove =  "test",
 	   :Total chars to be removed = 4, index will be 6, main string will be "Hello 1"
        :
        :Parameters for macro RemoveFromString:
@@ -1663,7 +1663,7 @@ MX_UINT16 FCI_GETUTF8LEN(MX_STRING sMain, MX_UINT16 iMainLen)
 {
   MX_UINT16 iCount = 0;
   MX_SINT16 iIdx = 0;
-  
+
   while ((iIdx < iMainLen) && (sMain[iIdx] != 0))
   {
     if ((sMain[iIdx] & 0xC0) != 0x80)
@@ -1672,6 +1672,6 @@ MX_UINT16 FCI_GETUTF8LEN(MX_STRING sMain, MX_UINT16 iMainLen)
     }
     iIdx++;
   }
-  
+
   return iCount;
 }
