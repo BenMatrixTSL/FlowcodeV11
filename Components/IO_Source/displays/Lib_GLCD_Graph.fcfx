@@ -1,5 +1,5 @@
 <root>
-<document scada='0' schema='103' license='10,BenR,C9TN1M' title='' description='' fcversion='655618' target='PIC.16F.16F1789' >
+<document scada='0' projtype='1' schema='103' license='1,82702381,95CJQR' title='' description='' fcversion='720897' target='PIC.16F.16F1789' >
 	<config data='!0,7c2!10,1633%0,2%3,0%5,0%6,1%7,1%8,1%9,3%b,0%c,0%d,0%10,3%15,1%18,0%19,1%1a,1%1b,0%1c,1%1d,0' clkspd='19660800' simspd='1' usewdt='0' constif='0' Use3V3='0' />
 	<plugins >
 		<dll_models enabled='1' />
@@ -56,8 +56,8 @@
 	</ghost>
 	<components >
 		<settings autoimg='0' center='1' unitscale='1' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
-		<definition guid='d4994410-ca95-4d1c-8d57-542d48a21d58' vstate='40' vmin='2' vmaj='1' srcleaf='Lib_GLCD_Graph.fcfx' visiblename='GLCD Graph Creator' description='A component to simplify the process of drawing graphs and charts using a graphical LCD.' category='Graphical Library' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' catenable='1' author='Matrix TSL' manuname='' manucode='' sysinfo='1052939' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='1' showmacros='1' iconpath='..\..\icons\components\glcdlib.png' />
-		<component class_type='root' codename='GraphCreator' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='1' comp2dType='0' >
+		<definition guid='d4994410-ca95-4d1c-8d57-542d48a21d58' vstate='40' vmin='2' vmaj='1' srcleaf='Lib_GLCD_Graph.fcfx' visiblename='GLCD Graph Creator' description='A component to simplify the process of drawing graphs and charts using a graphical LCD.' category='Graphical Library' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='Matrix TSL' manuname='' manucode='' sysinfo='1052939' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='1' showmacros='1' iconpath='..\..\icons\components\glcdlib.png' />
+		<component class_type='root' codename='GraphCreator' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 			<resources />
 			<properties >
 				<property name='Display Properties' folder='property_3' hidden='0' >
@@ -170,15 +170,15 @@ Line - Draws a line from the last point to the new point' filter='000Point
 				<value target='P8Col' data='16760832' />
 			</values>
 			<events >
-				<event class='Simulation' event='Stop' target='Ev_Pause' />
 				<event class='System' event='LoadComplete' target='Ev_LoadComplete' />
-				<event class='Compile' event='GetVarSize' target='Ev_GetVarSize' />
+				<event class='Simulation' event='Stop' target='Ev_Pause' />
 				<event class='Compile' event='AddVar' target='Ev_AddVar' />
-				<event class='Components' event='Property' target='Ev_Property' />
-				<event class='Components' event='Renamed' target='Ev_Renamed' />
-				<event class='Components' event='Initialise' target='Ev_Initialise' />
 				<event class='Simulation' event='Pause' target='Ev_Pause' />
+				<event class='Components' event='Initialise' target='Ev_Initialise' />
 				<event class='Components' event='Resize' target='Ev_Resize' />
+				<event class='Compile' event='GetVarSize' target='Ev_GetVarSize' />
+				<event class='Components' event='Renamed' target='Ev_Renamed' />
+				<event class='Components' event='Property' target='Ev_Property' />
 			</events>
 			<apis >
 				<api name='AddPoint' alt='AddPoint' type='1' proto='1' />
@@ -210,24 +210,24 @@ Line - Draws a line from the last point to the new point' filter='000Point
 						<local name='temp' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
 						</local>
-						<command class_type='call' title='User Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Ev_Property' />
+						<command class_type='call' title='User Macro' macro='Ev_Property' />
 					</flowline>
 				</macro>
 				<macro >
 					<flowline name='Ev_Pause' description='Broadcast to all components that simulation has paused or stopped' statediag='0' >
 						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Index' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='comment' title='' comment='We may be half way through drawing the data points - make sure we finish' textarea='12,0,12,0' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' />
-						<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+						<command class_type='comment' title='' comment='We may be half way through drawing the data points - make sure we finish' textarea='12,0,12,0' />
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Index = 0' />
 						</command>
-						<command class_type='loop' title='Loop' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' type='0' exp='.Index &lt; NumPlots' >
+						<command class_type='loop' title='Loop' type='0' exp='.Index &lt; NumPlots' >
 							<flowline >
-								<command class_type='call' title='Draw new updated data plot' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='DrawData' >
+								<command class_type='call' title='Draw new updated data plot' macro='DrawData' >
 									<argument exp='.Index' />
 									<argument exp='1' />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Index = .Index + 1' />
 								</command>
 							</flowline>
@@ -243,106 +243,106 @@ Line - Draws a line from the last point to the new point' filter='000Point
 						<local name='TempNum' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='TempF' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
 						<local name='Handle' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='sim' title='Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='LibraryComponent1' macro='GetLinkHandle' >
+						<command class_type='sim' title='Component Macro' component='LibraryComponent1' macro='GetLinkHandle' >
 							<return exp='.Handle' />
 							<argument exp='1' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Tree.GetName' >
+						<command class_type='sim' title='Simulation' macro='Tree.GetName' >
 							<return exp='.Temp_Str' />
 							<argument exp='.Handle' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='Length$ (.Temp_Str) &gt; 0' swap='0' >
+						<command class_type='decision' title='Decision' exp='Length$ (.Temp_Str) &gt; 0' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.GetValue' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.GetValue' >
 									<return exp='.Temp_Str' />
 									<argument exp='.Handle' />
 									<argument exp='&quot;DISPLAY_COLOUR&quot;' />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='Length$ (.Temp_Str) &gt; 0' swap='0' >
+								<command class_type='decision' title='Decision' exp='Length$ (.Temp_Str) &gt; 0' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 											<argument exp='this' />
 											<argument exp='&quot;WSLED&quot;' />
 											<argument exp='0' />
 										</command>
-										<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 											<argument exp='this' />
 											<argument exp='&quot;MIAC&quot;' />
 											<argument exp='1' />
 										</command>
-										<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 											<argument exp='this' />
 											<argument exp='&quot;Colour_Display&quot;' />
 											<argument exp='0' />
 										</command>
-										<command class_type='sim' title='Repoint GLCD Base macro calls to selected GLCD component' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='System.RedirectMacros' >
+										<command class_type='sim' title='Repoint GLCD Base macro calls to selected GLCD component' macro='System.RedirectMacros' >
 											<argument exp='Glcd_MIAC_Dummy1' />
 											<argument exp='.Handle' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.GetValue' >
+										<command class_type='sim' title='Simulation' macro='Component.Property.GetValue' >
 											<return exp='.Temp_Str' />
 											<argument exp='.Handle' />
 											<argument exp='&quot;LED_Arrangement&quot;' />
 										</command>
-										<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='Length$ (.Temp_Str) &gt; 0' swap='0' >
+										<command class_type='decision' title='Decision' exp='Length$ (.Temp_Str) &gt; 0' swap='0' >
 											<flowline >
-												<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+												<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 													<argument exp='this' />
 													<argument exp='&quot;MIAC&quot;' />
 													<argument exp='0' />
 												</command>
-												<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+												<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 													<argument exp='this' />
 													<argument exp='&quot;WSLED&quot;' />
 													<argument exp='1' />
 												</command>
-												<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+												<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 													<argument exp='this' />
 													<argument exp='&quot;Colour_Display&quot;' />
 													<argument exp='1' />
 												</command>
-												<command class_type='sim' title='Repoint GLCD Base macro calls to selected GLCD component' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='System.RedirectMacros' >
+												<command class_type='sim' title='Repoint GLCD Base macro calls to selected GLCD component' macro='System.RedirectMacros' >
 													<argument exp='LED_WS2811_Dummy1' />
 													<argument exp='.Handle' />
 												</command>
 											</flowline>
 											<flowline >
-												<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+												<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 													<argument exp='this' />
 													<argument exp='&quot;MIAC&quot;' />
 													<argument exp='0' />
 												</command>
-												<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+												<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 													<argument exp='this' />
 													<argument exp='&quot;WSLED&quot;' />
 													<argument exp='0' />
 												</command>
-												<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.GetValue' >
+												<command class_type='sim' title='Simulation' macro='Component.Property.GetValue' >
 													<return exp='.Temp_Str' />
 													<argument exp='.Handle' />
 													<argument exp='&quot;monochrome&quot;' />
 												</command>
-												<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='.Temp_Str[0] = &apos;1&apos;' swap='0' >
+												<command class_type='decision' title='Decision' exp='.Temp_Str[0] = &apos;1&apos;' swap='0' >
 													<flowline >
-														<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+														<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 															<argument exp='this' />
 															<argument exp='&quot;Colour_Display&quot;' />
 															<argument exp='0' />
 														</command>
-														<command class_type='sim' title='Repoint GLCD Base macro calls to selected GLCD component' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='System.RedirectMacros' >
+														<command class_type='sim' title='Repoint GLCD Base macro calls to selected GLCD component' macro='System.RedirectMacros' >
 															<argument exp='Glcd_Mon_Dummy1' />
 															<argument exp='.Handle' />
 														</command>
 													</flowline>
 													<flowline >
-														<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+														<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 															<argument exp='this' />
 															<argument exp='&quot;Colour_Display&quot;' />
 															<argument exp='1' />
 														</command>
-														<command class_type='sim' title='Repoint GLCD Base macro calls to selected GLCD component' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='System.RedirectMacros' >
+														<command class_type='sim' title='Repoint GLCD Base macro calls to selected GLCD component' macro='System.RedirectMacros' >
 															<argument exp='Glcd_Col_Dummy1' />
 															<argument exp='.Handle' />
 														</command>
@@ -350,35 +350,35 @@ Line - Draws a line from the last point to the new point' filter='000Point
 												</command>
 											</flowline>
 										</command>
-										<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 											<argument exp='this' />
 											<argument exp='&quot;MIAC&quot;' />
 											<argument exp='0' />
 										</command>
-										<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.GetValue' >
+										<command class_type='sim' title='Simulation' macro='Component.Property.GetValue' >
 											<return exp='.Temp_Str' />
 											<argument exp='.Handle' />
 											<argument exp='&quot;monochrome&quot;' />
 										</command>
-										<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='.Temp_Str[0] = &apos;1&apos;' swap='0' >
+										<command class_type='decision' title='Decision' exp='.Temp_Str[0] = &apos;1&apos;' swap='0' >
 											<flowline >
-												<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+												<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 													<argument exp='this' />
 													<argument exp='&quot;Colour_Display&quot;' />
 													<argument exp='0' />
 												</command>
-												<command class_type='sim' title='Repoint GLCD Base macro calls to selected GLCD component' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='System.RedirectMacros' >
+												<command class_type='sim' title='Repoint GLCD Base macro calls to selected GLCD component' macro='System.RedirectMacros' >
 													<argument exp='Glcd_Mon_Dummy1' />
 													<argument exp='.Handle' />
 												</command>
 											</flowline>
 											<flowline >
-												<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+												<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 													<argument exp='this' />
 													<argument exp='&quot;Colour_Display&quot;' />
 													<argument exp='1' />
 												</command>
-												<command class_type='sim' title='Repoint GLCD Base macro calls to selected GLCD component' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='System.RedirectMacros' >
+												<command class_type='sim' title='Repoint GLCD Base macro calls to selected GLCD component' macro='System.RedirectMacros' >
 													<argument exp='Glcd_Col_Dummy1' />
 													<argument exp='.Handle' />
 												</command>
@@ -389,16 +389,16 @@ Line - Draws a line from the last point to the new point' filter='000Point
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='Colour_Display = 0' swap='0' >
+						<command class_type='decision' title='Decision' exp='Colour_Display = 0' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Mono Displays only support 1 plot' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Mono Displays only support 1 plot' macro='Component.Property.SetValue' >
 									<argument exp='this' />
 									<argument exp='&quot;NumPlots&quot;' />
 									<argument exp='1' />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='(BgCol != 0xFFFFFF) &amp;&amp; (BgCol != 0x000000)' swap='0' >
+								<command class_type='decision' title='Decision' exp='(BgCol != 0xFFFFFF) &amp;&amp; (BgCol != 0x000000)' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Mono Displays only support 1 plot' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Mono Displays only support 1 plot' macro='Component.Property.SetValue' >
 											<argument exp='this' />
 											<argument exp='&quot;BgCol&quot;' />
 											<argument exp='0xFFFFFF' />
@@ -406,36 +406,36 @@ Line - Draws a line from the last point to the new point' filter='000Point
 									</flowline>
 									<flowline />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='BgCol = 0x000000' swap='0' >
+								<command class_type='decision' title='Decision' exp='BgCol = 0x000000' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Inverse of BgCol' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Inverse of BgCol' macro='Component.Property.SetValue' >
 											<argument exp='this' />
 											<argument exp='&quot;LabCol&quot;' />
 											<argument exp='0xFFFFFF' />
 										</command>
-										<command class_type='sim' title='Inverse of BgCol' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Inverse of BgCol' macro='Component.Property.SetValue' >
 											<argument exp='this' />
 											<argument exp='&quot;P1Col&quot;' />
 											<argument exp='0xFFFFFF' />
 										</command>
-										<command class_type='sim' title='Inverse of BgCol' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Inverse of BgCol' macro='Component.Property.SetValue' >
 											<argument exp='this' />
 											<argument exp='&quot;GridCol&quot;' />
 											<argument exp='0xFFFFFF' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='sim' title='Inverse of BgCol' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Inverse of BgCol' macro='Component.Property.SetValue' >
 											<argument exp='this' />
 											<argument exp='&quot;LabCol&quot;' />
 											<argument exp='0x000000' />
 										</command>
-										<command class_type='sim' title='Inverse of BgCol' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Inverse of BgCol' macro='Component.Property.SetValue' >
 											<argument exp='this' />
 											<argument exp='&quot;P1Col&quot;' />
 											<argument exp='0x000000' />
 										</command>
-										<command class_type='sim' title='Inverse of BgCol' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Inverse of BgCol' macro='Component.Property.SetValue' >
 											<argument exp='this' />
 											<argument exp='&quot;GridCol&quot;' />
 											<argument exp='0x000000' />
@@ -445,43 +445,43 @@ Line - Draws a line from the last point to the new point' filter='000Point
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='switch' title='Switch' textarea='36,25,36,25' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='NumPlots' >
+						<command class_type='switch' title='Switch' textarea='36,25,36,25' exp='NumPlots' >
 							<case >
 								<flowline />
 							</case>
 							<case exp='1' >
 								<flowline >
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P2Col&quot;' />
 										<argument exp='0' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P3Col&quot;' />
 										<argument exp='0' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P4Col&quot;' />
 										<argument exp='0' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P5Col&quot;' />
 										<argument exp='0' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P6Col&quot;' />
 										<argument exp='0' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P7Col&quot;' />
 										<argument exp='0' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P8Col&quot;' />
 										<argument exp='0' />
@@ -490,37 +490,37 @@ Line - Draws a line from the last point to the new point' filter='000Point
 							</case>
 							<case exp='2' >
 								<flowline >
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P2Col&quot;' />
 										<argument exp='1' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P3Col&quot;' />
 										<argument exp='0' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P4Col&quot;' />
 										<argument exp='0' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P5Col&quot;' />
 										<argument exp='0' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P6Col&quot;' />
 										<argument exp='0' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P7Col&quot;' />
 										<argument exp='0' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P8Col&quot;' />
 										<argument exp='0' />
@@ -529,37 +529,37 @@ Line - Draws a line from the last point to the new point' filter='000Point
 							</case>
 							<case exp='3' >
 								<flowline >
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P2Col&quot;' />
 										<argument exp='1' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P3Col&quot;' />
 										<argument exp='1' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P4Col&quot;' />
 										<argument exp='0' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P5Col&quot;' />
 										<argument exp='0' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P6Col&quot;' />
 										<argument exp='0' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P7Col&quot;' />
 										<argument exp='0' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P8Col&quot;' />
 										<argument exp='0' />
@@ -568,37 +568,37 @@ Line - Draws a line from the last point to the new point' filter='000Point
 							</case>
 							<case exp='4' >
 								<flowline >
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P2Col&quot;' />
 										<argument exp='1' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P3Col&quot;' />
 										<argument exp='1' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P4Col&quot;' />
 										<argument exp='1' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P5Col&quot;' />
 										<argument exp='0' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P6Col&quot;' />
 										<argument exp='0' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P7Col&quot;' />
 										<argument exp='0' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P8Col&quot;' />
 										<argument exp='0' />
@@ -607,37 +607,37 @@ Line - Draws a line from the last point to the new point' filter='000Point
 							</case>
 							<case exp='5' >
 								<flowline >
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P2Col&quot;' />
 										<argument exp='1' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P3Col&quot;' />
 										<argument exp='1' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P4Col&quot;' />
 										<argument exp='1' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P5Col&quot;' />
 										<argument exp='1' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P6Col&quot;' />
 										<argument exp='0' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P7Col&quot;' />
 										<argument exp='0' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P8Col&quot;' />
 										<argument exp='0' />
@@ -646,37 +646,37 @@ Line - Draws a line from the last point to the new point' filter='000Point
 							</case>
 							<case exp='6' >
 								<flowline >
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P2Col&quot;' />
 										<argument exp='1' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P3Col&quot;' />
 										<argument exp='1' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P4Col&quot;' />
 										<argument exp='1' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P5Col&quot;' />
 										<argument exp='1' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P6Col&quot;' />
 										<argument exp='1' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P7Col&quot;' />
 										<argument exp='0' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P8Col&quot;' />
 										<argument exp='0' />
@@ -685,37 +685,37 @@ Line - Draws a line from the last point to the new point' filter='000Point
 							</case>
 							<case exp='7' >
 								<flowline >
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P2Col&quot;' />
 										<argument exp='1' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P3Col&quot;' />
 										<argument exp='1' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P4Col&quot;' />
 										<argument exp='1' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P5Col&quot;' />
 										<argument exp='1' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P6Col&quot;' />
 										<argument exp='1' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P7Col&quot;' />
 										<argument exp='1' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P8Col&quot;' />
 										<argument exp='0' />
@@ -724,37 +724,37 @@ Line - Draws a line from the last point to the new point' filter='000Point
 							</case>
 							<case exp='8' >
 								<flowline >
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P2Col&quot;' />
 										<argument exp='1' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P3Col&quot;' />
 										<argument exp='1' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P4Col&quot;' />
 										<argument exp='1' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P5Col&quot;' />
 										<argument exp='1' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P6Col&quot;' />
 										<argument exp='1' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P7Col&quot;' />
 										<argument exp='1' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 										<argument exp='this' />
 										<argument exp='&quot;P8Col&quot;' />
 										<argument exp='1' />
@@ -762,110 +762,110 @@ Line - Draws a line from the last point to the new point' filter='000Point
 								</flowline>
 							</case>
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 							<argument exp='this' />
 							<argument exp='&quot;DiffVal&quot;' />
 							<argument exp='MaxVal - MinVal + 1' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='ShowBorder' swap='0' >
+						<command class_type='decision' title='Decision' exp='ShowBorder' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 									<argument exp='this' />
 									<argument exp='&quot;BorderColour&quot;' />
 									<argument exp='1' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.GetValue' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.GetValue' >
 									<return exp='.TempNum' />
 									<argument exp='this' />
 									<argument exp='&quot;XC&quot;' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 									<argument exp='this' />
 									<argument exp='&quot;XR&quot;' />
 									<argument exp='.TempNum + 1' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.GetValue' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.GetValue' >
 									<return exp='.TempNum' />
 									<argument exp='this' />
 									<argument exp='&quot;YC&quot;' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 									<argument exp='this' />
 									<argument exp='&quot;YR&quot;' />
 									<argument exp='.TempNum + 1' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.GetValue' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.GetValue' >
 									<return exp='.TempNum' />
 									<argument exp='this' />
 									<argument exp='&quot;WP&quot;' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 									<argument exp='this' />
 									<argument exp='&quot;WR&quot;' />
 									<argument exp='.TempNum - 2' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.GetValue' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.GetValue' >
 									<return exp='.TempNum' />
 									<argument exp='this' />
 									<argument exp='&quot;HP&quot;' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 									<argument exp='this' />
 									<argument exp='&quot;HR&quot;' />
 									<argument exp='.TempNum - 2' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 									<argument exp='this' />
 									<argument exp='&quot;BorderColour&quot;' />
 									<argument exp='0' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.GetValue' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.GetValue' >
 									<return exp='.TempNum' />
 									<argument exp='this' />
 									<argument exp='&quot;XC&quot;' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 									<argument exp='this' />
 									<argument exp='&quot;XR&quot;' />
 									<argument exp='.TempNum' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.GetValue' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.GetValue' >
 									<return exp='.TempNum' />
 									<argument exp='this' />
 									<argument exp='&quot;YC&quot;' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 									<argument exp='this' />
 									<argument exp='&quot;YR&quot;' />
 									<argument exp='.TempNum' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.GetValue' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.GetValue' >
 									<return exp='.TempNum' />
 									<argument exp='this' />
 									<argument exp='&quot;WP&quot;' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 									<argument exp='this' />
 									<argument exp='&quot;WR&quot;' />
 									<argument exp='.TempNum' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.GetValue' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.GetValue' >
 									<return exp='.TempNum' />
 									<argument exp='this' />
 									<argument exp='&quot;HP&quot;' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 									<argument exp='this' />
 									<argument exp='&quot;HR&quot;' />
 									<argument exp='.TempNum' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='WR &lt; NumPoints' swap='0' >
+						<command class_type='decision' title='Decision' exp='WR &lt; NumPoints' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 									<argument exp='this' />
 									<argument exp='&quot;NumPoints&quot;' />
 									<argument exp='WR' />
@@ -873,73 +873,73 @@ Line - Draws a line from the last point to the new point' filter='000Point
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 							<argument exp='this' />
 							<argument exp='&quot;YB&quot;' />
 							<argument exp='YR + HR - 1' />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.TempF = FLOAT WR / FLOAT NumPoints' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 							<argument exp='this' />
 							<argument exp='&quot;Xscale&quot;' />
-							<argument exp='.TempF' />
+							<argument exp='STRING .TempF' />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.TempF = FLOAT HR / FLOAT DiffVal' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 							<argument exp='this' />
 							<argument exp='&quot;Yscale&quot;' />
-							<argument exp='.TempF' />
+							<argument exp='STRING .TempF' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='XScale = 2' swap='0' >
+						<command class_type='decision' title='Decision' exp='XScale = 2' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 									<argument exp='this' />
 									<argument exp='&quot;XShift&quot;' />
 									<argument exp='1' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='XScale = 4' swap='0' >
+								<command class_type='decision' title='Decision' exp='XScale = 4' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 											<argument exp='this' />
 											<argument exp='&quot;XShift&quot;' />
 											<argument exp='2' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='XScale = 8' swap='0' >
+										<command class_type='decision' title='Decision' exp='XScale = 8' swap='0' >
 											<flowline >
-												<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+												<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 													<argument exp='this' />
 													<argument exp='&quot;XShift&quot;' />
 													<argument exp='3' />
 												</command>
 											</flowline>
 											<flowline >
-												<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='XScale = 16' swap='0' >
+												<command class_type='decision' title='Decision' exp='XScale = 16' swap='0' >
 													<flowline >
-														<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+														<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 															<argument exp='this' />
 															<argument exp='&quot;XShift&quot;' />
 															<argument exp='4' />
 														</command>
 													</flowline>
 													<flowline >
-														<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='XScale = 32' swap='0' >
+														<command class_type='decision' title='Decision' exp='XScale = 32' swap='0' >
 															<flowline >
-																<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+																<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 																	<argument exp='this' />
 																	<argument exp='&quot;XShift&quot;' />
 																	<argument exp='5' />
 																</command>
 															</flowline>
 															<flowline >
-																<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+																<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 																	<argument exp='this' />
 																	<argument exp='&quot;XShift&quot;' />
 																	<argument exp='0' />
@@ -954,61 +954,61 @@ Line - Draws a line from the last point to the new point' filter='000Point
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='YScale = 0.5' swap='0' >
+						<command class_type='decision' title='Decision' exp='YScale = 0.5' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 									<argument exp='this' />
 									<argument exp='&quot;YShift&quot;' />
 									<argument exp='1' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='YScale = 0.25' swap='0' >
+								<command class_type='decision' title='Decision' exp='YScale = 0.25' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 											<argument exp='this' />
 											<argument exp='&quot;YShift&quot;' />
 											<argument exp='2' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='YScale = 0.125' swap='0' >
+										<command class_type='decision' title='Decision' exp='YScale = 0.125' swap='0' >
 											<flowline >
-												<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+												<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 													<argument exp='this' />
 													<argument exp='&quot;YShift&quot;' />
 													<argument exp='3' />
 												</command>
 											</flowline>
 											<flowline >
-												<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='YScale = 0.0625' swap='0' >
+												<command class_type='decision' title='Decision' exp='YScale = 0.0625' swap='0' >
 													<flowline >
-														<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+														<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 															<argument exp='this' />
 															<argument exp='&quot;YShift&quot;' />
 															<argument exp='4' />
 														</command>
 													</flowline>
 													<flowline >
-														<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='YScale = 0.03125' swap='0' >
+														<command class_type='decision' title='Decision' exp='YScale = 0.03125' swap='0' >
 															<flowline >
-																<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+																<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 																	<argument exp='this' />
 																	<argument exp='&quot;YShift&quot;' />
 																	<argument exp='5' />
 																</command>
 															</flowline>
 															<flowline >
-																<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='YScale = 0.015625' swap='0' >
+																<command class_type='decision' title='Decision' exp='YScale = 0.015625' swap='0' >
 																	<flowline >
-																		<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+																		<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 																			<argument exp='this' />
 																			<argument exp='&quot;YShift&quot;' />
 																			<argument exp='6' />
 																		</command>
 																	</flowline>
 																	<flowline >
-																		<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+																		<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 																			<argument exp='this' />
 																			<argument exp='&quot;YShift&quot;' />
 																			<argument exp='0' />
@@ -1025,41 +1025,41 @@ Line - Draws a line from the last point to the new point' filter='000Point
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='ShowGrid = 0' swap='0' >
+						<command class_type='decision' title='Decision' exp='ShowGrid = 0' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 									<argument exp='this' />
 									<argument exp='&quot;GridCol&quot;' />
 									<argument exp='0' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 									<argument exp='this' />
 									<argument exp='&quot;GridCol&quot;' />
 									<argument exp='1' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='ShowGrid &amp; 1' swap='0' >
+						<command class_type='decision' title='Decision' exp='ShowGrid &amp; 1' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 									<argument exp='this' />
 									<argument exp='&quot;GridXSubDivisions&quot;' />
 									<argument exp='1' />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='GridXSubDivisions &lt; 2' swap='0' >
+								<command class_type='decision' title='Decision' exp='GridXSubDivisions &lt; 2' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 											<argument exp='this' />
 											<argument exp='&quot;GridXSubDivisions&quot;' />
 											<argument exp='2' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='GridXSubDivisions &gt; 20' swap='0' >
+										<command class_type='decision' title='Decision' exp='GridXSubDivisions &gt; 20' swap='0' >
 											<flowline >
-												<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+												<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 													<argument exp='this' />
 													<argument exp='&quot;GridXSubDivisions&quot;' />
 													<argument exp='20' />
@@ -1069,39 +1069,39 @@ Line - Draws a line from the last point to the new point' filter='000Point
 										</command>
 									</flowline>
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 									<argument exp='this' />
 									<argument exp='&quot;GridXSpacing&quot;' />
-									<argument exp='FLOAT (FLOAT NumPoints / FLOAT GridXSubDivisions)' />
+									<argument exp='STRING (FLOAT NumPoints / FLOAT GridXSubDivisions)' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 									<argument exp='this' />
 									<argument exp='&quot;GridXSubDivisions&quot;' />
 									<argument exp='0' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='ShowGrid &amp; 2' swap='0' >
+						<command class_type='decision' title='Decision' exp='ShowGrid &amp; 2' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 									<argument exp='this' />
 									<argument exp='&quot;GridYSubDivisions&quot;' />
 									<argument exp='1' />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='GridYSubDivisions &lt; 2' swap='0' >
+								<command class_type='decision' title='Decision' exp='GridYSubDivisions &lt; 2' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 											<argument exp='this' />
 											<argument exp='&quot;GridYSubDivisions&quot;' />
 											<argument exp='2' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='GridYSubDivisions &gt; 20' swap='0' >
+										<command class_type='decision' title='Decision' exp='GridYSubDivisions &gt; 20' swap='0' >
 											<flowline >
-												<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+												<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 													<argument exp='this' />
 													<argument exp='&quot;GridYSubDivisions&quot;' />
 													<argument exp='20' />
@@ -1111,14 +1111,14 @@ Line - Draws a line from the last point to the new point' filter='000Point
 										</command>
 									</flowline>
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 									<argument exp='this' />
 									<argument exp='&quot;GridYSpacing&quot;' />
-									<argument exp='FLOAT (FLOAT DiffVal / FLOAT GridYSubDivisions)' />
+									<argument exp='STRING (FLOAT DiffVal / FLOAT GridYSubDivisions)' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Simulation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 									<argument exp='this' />
 									<argument exp='&quot;GridYSubDivisions&quot;' />
 									<argument exp='0' />
@@ -1130,13 +1130,13 @@ Line - Draws a line from the last point to the new point' filter='000Point
 				<macro >
 					<flowline name='Ev_LoadComplete' description='Broadcast after a project has finished loading' statediag='0' >
 						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='glcd_obj' swap='0' >
+						<command class_type='decision' title='Decision' exp='glcd_obj' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='LibraryComponent1' macro='SetLinkHandle' >
+								<command class_type='sim' title='Component Macro' component='LibraryComponent1' macro='SetLinkHandle' >
 									<argument exp='1' />
 									<argument exp='glcd_obj' />
 								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 									<argument exp='this' />
 									<argument exp='&quot;glcd_obj&quot;' />
 									<argument exp='0' />
@@ -1160,61 +1160,61 @@ Line - Draws a line from the last point to the new point' filter='000Point
 						<local name='RGB' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='3' />
 						</local>
-						<command class_type='decision' title='Clear old data or plot new data - pick colour' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='.Mode' swap='0' >
+						<command class_type='decision' title='Clear old data or plot new data - pick colour' exp='.Mode' swap='0' >
 							<flowline >
-								<command class_type='switch' title='Switch' textarea='36,25,36,25' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='.Index' >
+								<command class_type='switch' title='Switch' textarea='36,25,36,25' exp='.Index' >
 									<case >
 										<flowline >
-											<command class_type='call' title='Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='TypeConversions1' macro='SetLong' >
+											<command class_type='call' title='Component Macro' component='TypeConversions1' macro='SetLong' >
 												<argument exp='P1Col' />
 											</command>
 										</flowline>
 									</case>
 									<case exp='1' >
 										<flowline >
-											<command class_type='call' title='Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='TypeConversions1' macro='SetLong' >
+											<command class_type='call' title='Component Macro' component='TypeConversions1' macro='SetLong' >
 												<argument exp='P2Col' />
 											</command>
 										</flowline>
 									</case>
 									<case exp='2' >
 										<flowline >
-											<command class_type='call' title='Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='TypeConversions1' macro='SetLong' >
+											<command class_type='call' title='Component Macro' component='TypeConversions1' macro='SetLong' >
 												<argument exp='P3Col' />
 											</command>
 										</flowline>
 									</case>
 									<case exp='3' >
 										<flowline >
-											<command class_type='call' title='Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='TypeConversions1' macro='SetLong' >
+											<command class_type='call' title='Component Macro' component='TypeConversions1' macro='SetLong' >
 												<argument exp='P4Col' />
 											</command>
 										</flowline>
 									</case>
 									<case exp='4' >
 										<flowline >
-											<command class_type='call' title='Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='TypeConversions1' macro='SetLong' >
+											<command class_type='call' title='Component Macro' component='TypeConversions1' macro='SetLong' >
 												<argument exp='P5Col' />
 											</command>
 										</flowline>
 									</case>
 									<case exp='5' >
 										<flowline >
-											<command class_type='call' title='Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='TypeConversions1' macro='SetLong' >
+											<command class_type='call' title='Component Macro' component='TypeConversions1' macro='SetLong' >
 												<argument exp='P6Col' />
 											</command>
 										</flowline>
 									</case>
 									<case exp='6' >
 										<flowline >
-											<command class_type='call' title='Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='TypeConversions1' macro='SetLong' >
+											<command class_type='call' title='Component Macro' component='TypeConversions1' macro='SetLong' >
 												<argument exp='P7Col' />
 											</command>
 										</flowline>
 									</case>
 									<case exp='7' >
 										<flowline >
-											<command class_type='call' title='Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='TypeConversions1' macro='SetLong' >
+											<command class_type='call' title='Component Macro' component='TypeConversions1' macro='SetLong' >
 												<argument exp='P8Col' />
 											</command>
 										</flowline>
@@ -1222,74 +1222,74 @@ Line - Draws a line from the last point to the new point' filter='000Point
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='call' title='Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='TypeConversions1' macro='SetLong' >
+								<command class_type='call' title='Component Macro' component='TypeConversions1' macro='SetLong' >
 									<argument exp='BgCol' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.RGB[0] = TypeConversions1::GetByte(0)' />
 							<exp exp='.RGB[1] = TypeConversions1::GetByte(1)' />
 							<exp exp='.RGB[2] = TypeConversions1::GetByte(2)' />
 						</command>
-						<command class_type='call' title='Call Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='Glcd_Col_Dummy1' macro='SetForegroundColour' >
+						<command class_type='call' title='Call Component Macro' component='Glcd_Col_Dummy1' macro='SetForegroundColour' >
 							<argument exp='.RGB[0]' />
 							<argument exp='.RGB[1]' />
 							<argument exp='.RGB[2]' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='Scrolling' swap='0' >
+						<command class_type='decision' title='Decision' exp='Scrolling' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.DataIdx = DataOffset[.Index] + 1' />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='.DataIdx = NumPoints' swap='0' >
+								<command class_type='decision' title='Decision' exp='.DataIdx = NumPoints' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.DataIdx = 0' />
 										</command>
 									</flowline>
 									<flowline />
 								</command>
-								<command class_type='loop' title='Loop' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' type='2' forvar='.Count' exp='NumPoints' >
+								<command class_type='loop' title='Loop' type='2' forvar='.Count' exp='NumPoints' >
 									<flowline >
-										<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='GraphStyle' swap='0' >
+										<command class_type='decision' title='Decision' exp='GraphStyle' swap='0' >
 											<flowline >
-												<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='.Mode' swap='0' >
+												<command class_type='decision' title='Decision' exp='.Mode' swap='0' >
 													<flowline >
-														<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='.Count &gt; 0' swap='0' >
+														<command class_type='decision' title='Decision' exp='.Count &gt; 0' swap='0' >
 															<flowline >
-																<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='.DataIdx = 0' swap='0' >
+																<command class_type='decision' title='Decision' exp='.DataIdx = 0' swap='0' >
 																	<flowline >
-																		<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+																		<command class_type='calculation' title='Calculation' >
 																			<exp exp='.Value = Data[.Index][NumPoints - 1]' />
 																		</command>
 																	</flowline>
 																	<flowline >
-																		<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+																		<command class_type='calculation' title='Calculation' >
 																			<exp exp='.Value = Data[.Index][.DataIdx - 1]' />
 																		</command>
 																	</flowline>
 																</command>
-																<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+																<command class_type='calculation' title='Calculation' >
 																	<exp exp='.Value2 = Data[.Index][.DataIdx]' />
 																</command>
-																<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='XScale = 1.0' swap='0' >
+																<command class_type='decision' title='Decision' exp='XScale = 1.0' swap='0' >
 																	<flowline >
-																		<command class_type='calculation' title='Scale X to match number of points and use all X dimension' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+																		<command class_type='calculation' title='Scale X to match number of points and use all X dimension' >
 																			<exp exp='.Column = .Count - 1' />
 																			<exp exp='.Column2 = .Count' />
 																		</command>
 																	</flowline>
 																	<flowline >
-																		<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='XShift &gt; 0' swap='0' >
+																		<command class_type='decision' title='Decision' exp='XShift &gt; 0' swap='0' >
 																			<flowline >
-																				<command class_type='calculation' title='Scale X to match number of points and use all X dimension' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+																				<command class_type='calculation' title='Scale X to match number of points and use all X dimension' >
 																					<exp exp='.Column = (.Count - 1) &lt;&lt; XShift' />
 																					<exp exp='.Column2 = .Count &lt;&lt; XShift' />
 																				</command>
 																			</flowline>
 																			<flowline >
-																				<command class_type='calculation' title='Scale X to match number of points and use all X dimension' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+																				<command class_type='calculation' title='Scale X to match number of points and use all X dimension' >
 																					<exp exp='.Column = FLOAT (.Count - 1) * XScale' />
 																					<exp exp='.Column2 = FLOAT .Count * XScale' />
 																				</command>
@@ -1297,7 +1297,7 @@ Line - Draws a line from the last point to the new point' filter='000Point
 																		</command>
 																	</flowline>
 																</command>
-																<command class_type='call' title='Draw Line 0-1, 1-2, 2-3 etc' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='Glcd_Col_Dummy1' macro='DrawLine' >
+																<command class_type='call' title='Draw Line 0-1, 1-2, 2-3 etc' component='Glcd_Col_Dummy1' macro='DrawLine' >
 																	<argument exp='XR + .Column' />
 																	<argument exp='YB - .Value' />
 																	<argument exp='XR + .Column2' />
@@ -1308,40 +1308,40 @@ Line - Draws a line from the last point to the new point' filter='000Point
 														</command>
 													</flowline>
 													<flowline >
-														<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='.Count &lt; (NumPoints - 1)' swap='0' >
+														<command class_type='decision' title='Decision' exp='.Count &lt; (NumPoints - 1)' swap='0' >
 															<flowline >
-																<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+																<command class_type='calculation' title='Calculation' >
 																	<exp exp='.Value = Data[.Index][.DataIdx]' />
 																</command>
-																<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='(.DataIdx + 1) = NumPoints' swap='0' >
+																<command class_type='decision' title='Decision' exp='(.DataIdx + 1) = NumPoints' swap='0' >
 																	<flowline >
-																		<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+																		<command class_type='calculation' title='Calculation' >
 																			<exp exp='.Value2 = Data[.Index][0]' />
 																		</command>
 																	</flowline>
 																	<flowline >
-																		<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+																		<command class_type='calculation' title='Calculation' >
 																			<exp exp='.Value2 = Data[.Index][.DataIdx + 1]' />
 																		</command>
 																	</flowline>
 																</command>
-																<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='XScale = 1.0' swap='0' >
+																<command class_type='decision' title='Decision' exp='XScale = 1.0' swap='0' >
 																	<flowline >
-																		<command class_type='calculation' title='Scale X to match number of points and use all X dimension' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+																		<command class_type='calculation' title='Scale X to match number of points and use all X dimension' >
 																			<exp exp='.Column = .Count' />
 																			<exp exp='.Column2 = .Count + 1' />
 																		</command>
 																	</flowline>
 																	<flowline >
-																		<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='XShift &gt; 0' swap='0' >
+																		<command class_type='decision' title='Decision' exp='XShift &gt; 0' swap='0' >
 																			<flowline >
-																				<command class_type='calculation' title='Scale X to match number of points and use all X dimension' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+																				<command class_type='calculation' title='Scale X to match number of points and use all X dimension' >
 																					<exp exp='.Column = .Count &lt;&lt; XShift' />
 																					<exp exp='.Column2 = (.Count + 1) &lt;&lt; XShift' />
 																				</command>
 																			</flowline>
 																			<flowline >
-																				<command class_type='calculation' title='Scale X to match number of points and use all X dimension' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+																				<command class_type='calculation' title='Scale X to match number of points and use all X dimension' >
 																					<exp exp='.Column = FLOAT .Count * XScale' />
 																					<exp exp='.Column2 = FLOAT (.Count + 1) * XScale' />
 																				</command>
@@ -1349,7 +1349,7 @@ Line - Draws a line from the last point to the new point' filter='000Point
 																		</command>
 																	</flowline>
 																</command>
-																<command class_type='call' title='Draw Line 0-1, 1-2, 2-3 etc' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='Glcd_Col_Dummy1' macro='DrawLine' >
+																<command class_type='call' title='Draw Line 0-1, 1-2, 2-3 etc' component='Glcd_Col_Dummy1' macro='DrawLine' >
 																	<argument exp='XR + .Column' />
 																	<argument exp='YB - .Value' />
 																	<argument exp='XR + .Column2' />
@@ -1362,42 +1362,42 @@ Line - Draws a line from the last point to the new point' filter='000Point
 												</command>
 											</flowline>
 											<flowline >
-												<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+												<command class_type='calculation' title='Calculation' >
 													<exp exp='.Value = Data[.Index][.DataIdx]' />
 												</command>
-												<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='XScale = 1.0' swap='0' >
+												<command class_type='decision' title='Decision' exp='XScale = 1.0' swap='0' >
 													<flowline >
-														<command class_type='calculation' title='Scale X to match number of points and use all X dimension' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+														<command class_type='calculation' title='Scale X to match number of points and use all X dimension' >
 															<exp exp='.Column = .Count' />
 														</command>
 													</flowline>
 													<flowline >
-														<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='XShift &gt; 0' swap='0' >
+														<command class_type='decision' title='Decision' exp='XShift &gt; 0' swap='0' >
 															<flowline >
-																<command class_type='calculation' title='Scale X to match number of points and use all X dimension' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+																<command class_type='calculation' title='Scale X to match number of points and use all X dimension' >
 																	<exp exp='.Column = .Count &lt;&lt; XShift' />
 																</command>
 															</flowline>
 															<flowline >
-																<command class_type='calculation' title='Scale X to match number of points and use all X dimension' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+																<command class_type='calculation' title='Scale X to match number of points and use all X dimension' >
 																	<exp exp='.Column = FLOAT .Count * XScale' />
 																</command>
 															</flowline>
 														</command>
 													</flowline>
 												</command>
-												<command class_type='call' title='Draw Pixel' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='Glcd_Col_Dummy1' macro='Plot' >
+												<command class_type='call' title='Draw Pixel' component='Glcd_Col_Dummy1' macro='Plot' >
 													<argument exp='XR + .Column' />
 													<argument exp='YB - .Value' />
 												</command>
 											</flowline>
 										</command>
-										<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.DataIdx = .DataIdx + 1' />
 										</command>
-										<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='.DataIdx = NumPoints' swap='0' >
+										<command class_type='decision' title='Decision' exp='.DataIdx = NumPoints' swap='0' >
 											<flowline >
-												<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+												<command class_type='calculation' title='Calculation' >
 													<exp exp='.DataIdx = 0' />
 												</command>
 											</flowline>
@@ -1407,33 +1407,33 @@ Line - Draws a line from the last point to the new point' filter='000Point
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='GraphStyle' swap='0' >
+								<command class_type='decision' title='Decision' exp='GraphStyle' swap='0' >
 									<flowline >
-										<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='.Mode' swap='0' >
+										<command class_type='decision' title='Decision' exp='.Mode' swap='0' >
 											<flowline >
-												<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='DataOffset[.Index] &gt; 0' swap='0' >
+												<command class_type='decision' title='Decision' exp='DataOffset[.Index] &gt; 0' swap='0' >
 													<flowline >
-														<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+														<command class_type='calculation' title='Calculation' >
 															<exp exp='.Value = Data[.Index][DataOffset[.Index] - 1]' />
 															<exp exp='.Value2 = Data[.Index][DataOffset[.Index]]' />
 														</command>
-														<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='XScale = 1.0' swap='0' >
+														<command class_type='decision' title='Decision' exp='XScale = 1.0' swap='0' >
 															<flowline >
-																<command class_type='calculation' title='Scale X to match number of points and use all X dimension' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+																<command class_type='calculation' title='Scale X to match number of points and use all X dimension' >
 																	<exp exp='.Column = DataOffset[.Index] - 1' />
 																	<exp exp='.Column2 = DataOffset[.Index]' />
 																</command>
 															</flowline>
 															<flowline >
-																<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='XShift &gt; 0' swap='0' >
+																<command class_type='decision' title='Decision' exp='XShift &gt; 0' swap='0' >
 																	<flowline >
-																		<command class_type='calculation' title='Scale X to match number of points and use all X dimension' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+																		<command class_type='calculation' title='Scale X to match number of points and use all X dimension' >
 																			<exp exp='.Column = (DataOffset[.Index] - 1) &lt;&lt; XShift' />
 																			<exp exp='.Column2 = DataOffset[.Index] &lt;&lt; XShift' />
 																		</command>
 																	</flowline>
 																	<flowline >
-																		<command class_type='calculation' title='Scale X to match number of points and use all X dimension' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+																		<command class_type='calculation' title='Scale X to match number of points and use all X dimension' >
 																			<exp exp='.Column = FLOAT (DataOffset[.Index] - 1) * XScale' />
 																			<exp exp='.Column2 = FLOAT DataOffset[.Index] * XScale' />
 																		</command>
@@ -1441,7 +1441,7 @@ Line - Draws a line from the last point to the new point' filter='000Point
 																</command>
 															</flowline>
 														</command>
-														<command class_type='call' title='Draw Line 0-1, 1-2, 2-3 etc' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='Glcd_Col_Dummy1' macro='DrawLine' >
+														<command class_type='call' title='Draw Line 0-1, 1-2, 2-3 etc' component='Glcd_Col_Dummy1' macro='DrawLine' >
 															<argument exp='XR + .Column' />
 															<argument exp='YB - .Value' />
 															<argument exp='XR + .Column2' />
@@ -1452,29 +1452,29 @@ Line - Draws a line from the last point to the new point' filter='000Point
 												</command>
 											</flowline>
 											<flowline >
-												<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='DataOffset[.Index] &lt; (NumPoints - 1)' swap='0' >
+												<command class_type='decision' title='Decision' exp='DataOffset[.Index] &lt; (NumPoints - 1)' swap='0' >
 													<flowline >
-														<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+														<command class_type='calculation' title='Calculation' >
 															<exp exp='.Value = Data[.Index][DataOffset[.Index]]' />
 															<exp exp='.Value2 = Data[.Index][DataOffset[.Index] + 1]' />
 														</command>
-														<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='XScale = 1.0' swap='0' >
+														<command class_type='decision' title='Decision' exp='XScale = 1.0' swap='0' >
 															<flowline >
-																<command class_type='calculation' title='Scale X to match number of points and use all X dimension' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+																<command class_type='calculation' title='Scale X to match number of points and use all X dimension' >
 																	<exp exp='.Column = DataOffset[.Index]' />
 																	<exp exp='.Column2 = DataOffset[.Index] + 1' />
 																</command>
 															</flowline>
 															<flowline >
-																<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='XShift &gt; 0' swap='0' >
+																<command class_type='decision' title='Decision' exp='XShift &gt; 0' swap='0' >
 																	<flowline >
-																		<command class_type='calculation' title='Scale X to match number of points and use all X dimension' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+																		<command class_type='calculation' title='Scale X to match number of points and use all X dimension' >
 																			<exp exp='.Column = DataOffset[.Index] &lt;&lt; XShift' />
 																			<exp exp='.Column2 = (DataOffset[.Index] + 1) &lt;&lt; XShift' />
 																		</command>
 																	</flowline>
 																	<flowline >
-																		<command class_type='calculation' title='Scale X to match number of points and use all X dimension' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+																		<command class_type='calculation' title='Scale X to match number of points and use all X dimension' >
 																			<exp exp='.Column = FLOAT DataOffset[.Index] * XScale' />
 																			<exp exp='.Column2 = FLOAT (DataOffset[.Index] + 1) * XScale' />
 																		</command>
@@ -1482,7 +1482,7 @@ Line - Draws a line from the last point to the new point' filter='000Point
 																</command>
 															</flowline>
 														</command>
-														<command class_type='call' title='Draw Line 0-1, 1-2, 2-3 etc' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='Glcd_Col_Dummy1' macro='DrawLine' >
+														<command class_type='call' title='Draw Line 0-1, 1-2, 2-3 etc' component='Glcd_Col_Dummy1' macro='DrawLine' >
 															<argument exp='XR + .Column' />
 															<argument exp='YB - .Value' />
 															<argument exp='XR + .Column2' />
@@ -1495,31 +1495,31 @@ Line - Draws a line from the last point to the new point' filter='000Point
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Value = Data[.Index][DataOffset[.Index]]' />
 										</command>
-										<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='XScale = 1.0' swap='0' >
+										<command class_type='decision' title='Decision' exp='XScale = 1.0' swap='0' >
 											<flowline >
-												<command class_type='calculation' title='Scale X to match number of points and use all X dimension' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+												<command class_type='calculation' title='Scale X to match number of points and use all X dimension' >
 													<exp exp='.Column = DataOffset[.Index]' />
 												</command>
 											</flowline>
 											<flowline >
-												<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='XShift &gt; 0' swap='0' >
+												<command class_type='decision' title='Decision' exp='XShift &gt; 0' swap='0' >
 													<flowline >
-														<command class_type='calculation' title='Scale X to match number of points and use all X dimension' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+														<command class_type='calculation' title='Scale X to match number of points and use all X dimension' >
 															<exp exp='.Column = DataOffset[.Index] &lt;&lt; XShift' />
 														</command>
 													</flowline>
 													<flowline >
-														<command class_type='calculation' title='Scale X to match number of points and use all X dimension' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+														<command class_type='calculation' title='Scale X to match number of points and use all X dimension' >
 															<exp exp='.Column = FLOAT DataOffset[.Index] * XScale' />
 														</command>
 													</flowline>
 												</command>
 											</flowline>
 										</command>
-										<command class_type='call' title='Draw Pixel' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='Glcd_Col_Dummy1' macro='Plot' >
+										<command class_type='call' title='Draw Pixel' component='Glcd_Col_Dummy1' macro='Plot' >
 											<argument exp='XR + .Column' />
 											<argument exp='YB - .Value' />
 										</command>
@@ -1534,31 +1534,31 @@ Line - Draws a line from the last point to the new point' filter='000Point
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<local name='ix' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='fCoord' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
-						<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='ShowGrid' swap='0' >
+						<command class_type='decision' title='Decision' exp='ShowGrid' swap='0' >
 							<flowline >
-								<command class_type='call' title='Get Grid Colour' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='Glcd_Col_Dummy1' macro='SetForegroundColour' >
+								<command class_type='call' title='Get Grid Colour' component='Glcd_Col_Dummy1' macro='SetForegroundColour' >
 									<argument exp='GridCol &amp; 0xFF' />
 									<argument exp='(GridCol &gt;&gt; 8) &amp; 0xFF' />
 									<argument exp='(GridCol &gt;&gt; 16) &amp; 0xFF' />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='ShowGrid &amp; 1' swap='0' >
+								<command class_type='decision' title='Decision' exp='ShowGrid &amp; 1' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.fCoord = 0' />
 											<exp exp='.ix = 0' />
 										</command>
-										<command class_type='loop' title='Loop' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' type='0' exp='.ix &lt; (GridXSubDivisions - 1)' >
+										<command class_type='loop' title='Loop' type='0' exp='.ix &lt; (GridXSubDivisions - 1)' >
 											<flowline >
-												<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+												<command class_type='calculation' title='Calculation' >
 													<exp exp='.fCoord = .fCoord + (GridXSpacing * XScale)' />
 												</command>
-												<command class_type='call' title='Draw Grid Lines' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='Glcd_Col_Dummy1' macro='DrawLine' >
+												<command class_type='call' title='Draw Grid Lines' component='Glcd_Col_Dummy1' macro='DrawLine' >
 													<argument exp='XR + .fCoord' />
 													<argument exp='YB' />
 													<argument exp='XR + .fCoord' />
 													<argument exp='YB - HR' />
 												</command>
-												<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+												<command class_type='calculation' title='Calculation' >
 													<exp exp='.ix = .ix + 1' />
 												</command>
 											</flowline>
@@ -1566,24 +1566,24 @@ Line - Draws a line from the last point to the new point' filter='000Point
 									</flowline>
 									<flowline />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='ShowGrid &amp; 2' swap='0' >
+								<command class_type='decision' title='Decision' exp='ShowGrid &amp; 2' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.fCoord = 0' />
 											<exp exp='.ix = 0' />
 										</command>
-										<command class_type='loop' title='Loop' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' type='0' exp='.ix &lt; (GridYSubDivisions - 1)' >
+										<command class_type='loop' title='Loop' type='0' exp='.ix &lt; (GridYSubDivisions - 1)' >
 											<flowline >
-												<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+												<command class_type='calculation' title='Calculation' >
 													<exp exp='.fCoord = .fCoord + (GridYSpacing * YScale)' />
 												</command>
-												<command class_type='call' title='Draw Grid Lines' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='Glcd_Col_Dummy1' macro='DrawLine' >
+												<command class_type='call' title='Draw Grid Lines' component='Glcd_Col_Dummy1' macro='DrawLine' >
 													<argument exp='XR' />
 													<argument exp='YB - .fCoord' />
 													<argument exp='XR + WR' />
 													<argument exp='YB - .fCoord' />
 												</command>
-												<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+												<command class_type='calculation' title='Calculation' >
 													<exp exp='.ix = .ix + 1' />
 												</command>
 											</flowline>
@@ -1602,11 +1602,11 @@ Line - Draws a line from the last point to the new point' filter='000Point
 						<local name='Name' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
 						</local>
-						<command class_type='sim' title='' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Tree.GetName' >
+						<command class_type='sim' title='' macro='Tree.GetName' >
 							<return exp='.Name' />
 							<argument exp='this' />
 						</command>
-						<command class_type='sim' title='' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='' macro='Component.Property.SetValue' >
 							<argument exp='LibraryComponent1' />
 							<argument exp='&quot;Name&quot;' />
 							<argument exp='.Name' />
@@ -1620,12 +1620,12 @@ Line - Draws a line from the last point to the new point' filter='000Point
 							<array size='20' />
 						</param>
 						<param name='Elements' type='u32*' description='The number of elements in the array' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Return = 1' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='Compare$ (.VarName,&quot;DataOffset&quot;,1) == 0' swap='0' >
+						<command class_type='decision' title='Decision' exp='Compare$ (.VarName,&quot;DataOffset&quot;,1) == 0' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Elements = NumPlots' />
 								</command>
 							</flowline>
@@ -1650,40 +1650,40 @@ Line - Draws a line from the last point to the new point' filter='000Point
 							<array size='20' />
 						</local>
 						<local name='version' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Return = 1' />
 						</command>
-						<command class_type='decision' title='Test for data byte variable array' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='Compare$ (.VarName,&quot;Data&quot;,1) == 0' swap='0' >
+						<command class_type='decision' title='Test for data byte variable array' exp='Compare$ (.VarName,&quot;Data&quot;,1) == 0' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Built-in Function' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='System.GetFCVersion' >
+								<command class_type='sim' title='Built-in Function' macro='System.GetFCVersion' >
 									<return exp='.version' />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='.version &gt;= 655364' swap='0' >
+								<command class_type='decision' title='Decision' exp='.version &gt;= 655364' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.len = Contains$(.Expansion,&quot;[&quot;,0)' />
 										</command>
-										<command class_type='calculation' title='Chop off &quot;[8][1500];\n&quot;' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+										<command class_type='calculation' title='Chop off &quot;[8][1500];\n&quot;' >
 											<exp exp='.tempstr = Left$(.Expansion,.len)' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.len = Length$ (.Expansion)' />
 										</command>
-										<command class_type='calculation' title='Chop off &quot;[8][1500];\n&quot;' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+										<command class_type='calculation' title='Chop off &quot;[8][1500];\n&quot;' >
 											<exp exp='.tempstr = Left$ (.Expansion, .len - 11)' />
 										</command>
 									</flowline>
 								</command>
-								<command class_type='calculation' title='Add correct array dimensions' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+								<command class_type='calculation' title='Add correct array dimensions' >
 									<exp exp='.tempstr = .tempstr + &quot;[&quot;' />
 									<exp exp='.tempstr = .tempstr + ToString$ (NumPlots)' />
 									<exp exp='.tempstr = .tempstr + &quot;][&quot;' />
 									<exp exp='.tempstr = .tempstr + ToString$ (NumPoints)' />
 									<exp exp='.tempstr = .tempstr + &quot;];\n&quot;' />
 								</command>
-								<command class_type='calculation' title='Override C generation for var' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+								<command class_type='calculation' title='Override C generation for var' >
 									<exp exp='.expansion = .tempstr' />
 								</command>
 							</flowline>
@@ -1697,7 +1697,7 @@ Line - Draws a line from the last point to the new point' filter='000Point
 						<param name='Component' type='h32' description='The component that has been altered' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='PrevPos' type='h32' description='The position of the object before the start of positioning' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Final' type='b1' description='True if this is the end of a drag operation' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='sim' title='Built-in Function' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='System.Forward' >
+						<command class_type='sim' title='Built-in Function' macro='System.Forward' >
 							<argument exp='LibraryComponent1' />
 						</command>
 					</flowline>
@@ -1707,18 +1707,18 @@ Line - Draws a line from the last point to the new point' filter='000Point
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<param name='Data' type='s16' description='Data Value to plot' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Index' type='u8' description='Plot Index: Range 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='If data point is on a value plot index' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='.Index &lt; NumPlots' swap='0' >
+						<command class_type='decision' title='If data point is on a value plot index' exp='.Index &lt; NumPlots' swap='0' >
 							<flowline >
-								<command class_type='decision' title='Check data is in range' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='.Data &lt; MinVal' swap='0' >
+								<command class_type='decision' title='Check data is in range' exp='.Data &lt; MinVal' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Data = MinVal' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='.Data &gt; MaxVal' swap='0' >
+										<command class_type='decision' title='Decision' exp='.Data &gt; MaxVal' swap='0' >
 											<flowline >
-												<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+												<command class_type='calculation' title='Calculation' >
 													<exp exp='.Data = MaxVal' />
 												</command>
 											</flowline>
@@ -1726,30 +1726,30 @@ Line - Draws a line from the last point to the new point' filter='000Point
 										</command>
 									</flowline>
 								</command>
-								<command class_type='decision' title='Offset data by MinVal so actual data is ranged from 0 to DiffVal' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='MinVal != 0' swap='0' >
+								<command class_type='decision' title='Offset data by MinVal so actual data is ranged from 0 to DiffVal' exp='MinVal != 0' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Data = .Data - MinVal' />
 										</command>
 									</flowline>
 									<flowline />
 								</command>
-								<command class_type='call' title='Clear old plot data' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='DrawData' >
+								<command class_type='call' title='Clear old plot data' macro='DrawData' >
 									<argument exp='.Index' />
 									<argument exp='0' />
 								</command>
-								<command class_type='decision' title='GridEnabled?' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='ShowGrid' swap='0' >
+								<command class_type='decision' title='GridEnabled?' exp='ShowGrid' swap='0' >
 									<flowline >
-										<command class_type='decision' title='If the first plot then redraw grid' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='.Index = 0' swap='0' >
+										<command class_type='decision' title='If the first plot then redraw grid' exp='.Index = 0' swap='0' >
 											<flowline >
-												<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='Scrolling' swap='0' >
+												<command class_type='decision' title='Decision' exp='Scrolling' swap='0' >
 													<flowline >
-														<command class_type='call' title='Call Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='DrawGrid' />
+														<command class_type='call' title='Call Macro' macro='DrawGrid' />
 													</flowline>
 													<flowline >
-														<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='DataOffset[0] = 0' swap='0' >
+														<command class_type='decision' title='Decision' exp='DataOffset[0] = 0' swap='0' >
 															<flowline >
-																<command class_type='call' title='Call Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='DrawGrid' />
+																<command class_type='call' title='Call Macro' macro='DrawGrid' />
 															</flowline>
 															<flowline />
 														</command>
@@ -1761,14 +1761,14 @@ Line - Draws a line from the last point to the new point' filter='000Point
 									</flowline>
 									<flowline />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='Scrolling = 1' swap='0' >
+								<command class_type='decision' title='Decision' exp='Scrolling = 1' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Advance data Pointer' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+										<command class_type='calculation' title='Advance data Pointer' >
 											<exp exp='DataOffset[.Index] = DataOffset[.Index] + 1' />
 										</command>
-										<command class_type='decision' title='Wrap data pointer if required' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='DataOffset[.Index] &gt;= NumPoints' swap='0' >
+										<command class_type='decision' title='Wrap data pointer if required' exp='DataOffset[.Index] &gt;= NumPoints' swap='0' >
 											<flowline >
-												<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+												<command class_type='calculation' title='Calculation' >
 													<exp exp='DataOffset[.Index] = 0' />
 												</command>
 											</flowline>
@@ -1777,39 +1777,39 @@ Line - Draws a line from the last point to the new point' filter='000Point
 									</flowline>
 									<flowline />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='YScale = 1.0' swap='0' >
+								<command class_type='decision' title='Decision' exp='YScale = 1.0' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Scale to be in the range of the chart height' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+										<command class_type='calculation' title='Scale to be in the range of the chart height' >
 											<exp exp='Data[.Index][DataOffset[.Index]] = .Data' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='YShift &gt; 0' swap='0' >
+										<command class_type='decision' title='Decision' exp='YShift &gt; 0' swap='0' >
 											<flowline >
-												<command class_type='calculation' title='Scale to be in the range of the chart height' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+												<command class_type='calculation' title='Scale to be in the range of the chart height' >
 													<exp exp='Data[.Index][DataOffset[.Index]] = .Data &gt;&gt; YShift' />
 												</command>
 											</flowline>
 											<flowline >
-												<command class_type='calculation' title='Scale to be in the range of the chart height' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+												<command class_type='calculation' title='Scale to be in the range of the chart height' >
 													<exp exp='Data[.Index][DataOffset[.Index]] = (FLOAT .Data * YScale)' />
 												</command>
 											</flowline>
 										</command>
 									</flowline>
 								</command>
-								<command class_type='call' title='Draw new updated data plot' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='DrawData' >
+								<command class_type='call' title='Draw new updated data plot' macro='DrawData' >
 									<argument exp='.Index' />
 									<argument exp='1' />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='Scrolling = 0' swap='0' >
+								<command class_type='decision' title='Decision' exp='Scrolling = 0' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Advance data Pointer' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+										<command class_type='calculation' title='Advance data Pointer' >
 											<exp exp='DataOffset[.Index] = DataOffset[.Index] + 1' />
 										</command>
-										<command class_type='decision' title='Wrap data pointer if required' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='DataOffset[.Index] &gt;= NumPoints' swap='0' >
+										<command class_type='decision' title='Wrap data pointer if required' exp='DataOffset[.Index] &gt;= NumPoints' swap='0' >
 											<flowline >
-												<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+												<command class_type='calculation' title='Calculation' >
 													<exp exp='DataOffset[.Index] = 0' />
 												</command>
 											</flowline>
@@ -1827,25 +1827,25 @@ Line - Draws a line from the last point to the new point' filter='000Point
 					<flowline name='Main' description='' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<local name='version' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='sim' title='Built-in Function' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='System.GetFCVersion' >
+						<command class_type='sim' title='Built-in Function' macro='System.GetFCVersion' >
 							<return exp='.version' />
 						</command>
-						<command class_type='sim' title='Built-in Function' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Debug.PrintLn' >
+						<command class_type='sim' title='Built-in Function' macro='Debug.PrintLn' >
 							<argument exp='STRING .version' />
 						</command>
-						<command class_type='call' title='Call Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='Ev_Initialise' />
+						<command class_type='call' title='Call Macro' macro='Ev_Initialise' />
 					</flowline>
 				</macro>
 				<macro >
 					<flowline name='Initialise' description='Initialises the graph object on the GLCD to the specified dimensions.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='ShowBorder' swap='0' >
+						<command class_type='decision' title='Decision' exp='ShowBorder' swap='0' >
 							<flowline >
-								<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='Colour_Display = 1' swap='0' >
+								<command class_type='decision' title='Decision' exp='Colour_Display = 1' swap='0' >
 									<flowline >
-										<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='WSLED = 1' swap='0' >
+										<command class_type='decision' title='Decision' exp='WSLED = 1' swap='0' >
 											<flowline >
-												<command class_type='call' title='Call Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='LED_WS2811_Dummy1' macro='DrawRectangle2D' >
+												<command class_type='call' title='Call Component Macro' component='LED_WS2811_Dummy1' macro='DrawRectangle2D' >
 													<argument exp='XC' />
 													<argument exp='YC' />
 													<argument exp='XC + WP - 1' />
@@ -1857,12 +1857,12 @@ Line - Draws a line from the last point to the new point' filter='000Point
 												</command>
 											</flowline>
 											<flowline >
-												<command class_type='call' title='Set Pixel Colour' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='Glcd_Col_Dummy1' macro='SetForegroundColour' >
+												<command class_type='call' title='Set Pixel Colour' component='Glcd_Col_Dummy1' macro='SetForegroundColour' >
 													<argument exp='BorderColour &amp; 0xFF' />
 													<argument exp='(BorderColour &gt;&gt; 8) &amp; 0xFF' />
 													<argument exp='(BorderColour &gt;&gt; 16) &amp; 0xFF' />
 												</command>
-												<command class_type='call' title='Print Pixel' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='Glcd_Col_Dummy1' macro='DrawRectangle' >
+												<command class_type='call' title='Print Pixel' component='Glcd_Col_Dummy1' macro='DrawRectangle' >
 													<argument exp='XC' />
 													<argument exp='YC' />
 													<argument exp='XC + WP - 1' />
@@ -1874,9 +1874,9 @@ Line - Draws a line from the last point to the new point' filter='000Point
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='MIAC = 1' swap='0' >
+										<command class_type='decision' title='Decision' exp='MIAC = 1' swap='0' >
 											<flowline >
-												<command class_type='call' title='Call Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='Glcd_MIAC_Dummy1' macro='DrawRect' >
+												<command class_type='call' title='Call Component Macro' component='Glcd_MIAC_Dummy1' macro='DrawRect' >
 													<argument exp='XC' />
 													<argument exp='YC' />
 													<argument exp='XC + WP - 1' />
@@ -1885,10 +1885,10 @@ Line - Draws a line from the last point to the new point' filter='000Point
 												</command>
 											</flowline>
 											<flowline >
-												<command class_type='call' title='Set Pixel Colour' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='Glcd_Mon_Dummy1' macro='SetForegroundColour' >
+												<command class_type='call' title='Set Pixel Colour' component='Glcd_Mon_Dummy1' macro='SetForegroundColour' >
 													<argument exp='BorderColour' />
 												</command>
-												<command class_type='call' title='Call Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='Glcd_Mon_Dummy1' macro='DrawRectangle' >
+												<command class_type='call' title='Call Component Macro' component='Glcd_Mon_Dummy1' macro='DrawRectangle' >
 													<argument exp='XC' />
 													<argument exp='YC' />
 													<argument exp='XC + WP - 1' />
@@ -1903,11 +1903,11 @@ Line - Draws a line from the last point to the new point' filter='000Point
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='Colour_Display = 1' swap='0' >
+						<command class_type='decision' title='Decision' exp='Colour_Display = 1' swap='0' >
 							<flowline >
-								<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='WSLED = 1' swap='0' >
+								<command class_type='decision' title='Decision' exp='WSLED = 1' swap='0' >
 									<flowline >
-										<command class_type='call' title='Call Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='LED_WS2811_Dummy1' macro='DrawRectangle2D' >
+										<command class_type='call' title='Call Component Macro' component='LED_WS2811_Dummy1' macro='DrawRectangle2D' >
 											<argument exp='XR' />
 											<argument exp='YR' />
 											<argument exp='XR + WR - 1' />
@@ -1919,12 +1919,12 @@ Line - Draws a line from the last point to the new point' filter='000Point
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='call' title='Set Pixel Colour' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='Glcd_Col_Dummy1' macro='SetForegroundColour' >
+										<command class_type='call' title='Set Pixel Colour' component='Glcd_Col_Dummy1' macro='SetForegroundColour' >
 											<argument exp='BgCol &amp; 0xFF' />
 											<argument exp='(BgCol &gt;&gt; 8) &amp; 0xFF' />
 											<argument exp='(BgCol &gt;&gt; 16) &amp; 0xFF' />
 										</command>
-										<command class_type='call' title='Print Pixel' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='Glcd_Col_Dummy1' macro='DrawRectangle' >
+										<command class_type='call' title='Print Pixel' component='Glcd_Col_Dummy1' macro='DrawRectangle' >
 											<argument exp='XR' />
 											<argument exp='YR' />
 											<argument exp='XR + WR - 1' />
@@ -1936,9 +1936,9 @@ Line - Draws a line from the last point to the new point' filter='000Point
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='MIAC = 1' swap='0' >
+								<command class_type='decision' title='Decision' exp='MIAC = 1' swap='0' >
 									<flowline >
-										<command class_type='call' title='Call Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='Glcd_MIAC_Dummy1' macro='DrawRect' >
+										<command class_type='call' title='Call Component Macro' component='Glcd_MIAC_Dummy1' macro='DrawRect' >
 											<argument exp='XR' />
 											<argument exp='YR' />
 											<argument exp='XR + WR - 1' />
@@ -1947,10 +1947,10 @@ Line - Draws a line from the last point to the new point' filter='000Point
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='call' title='Set Pixel Colour' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='Glcd_Mon_Dummy1' macro='SetForegroundColour' >
+										<command class_type='call' title='Set Pixel Colour' component='Glcd_Mon_Dummy1' macro='SetForegroundColour' >
 											<argument exp='BgCol' />
 										</command>
-										<command class_type='call' title='Call Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='Glcd_Mon_Dummy1' macro='DrawRectangle' >
+										<command class_type='call' title='Call Component Macro' component='Glcd_Mon_Dummy1' macro='DrawRectangle' >
 											<argument exp='XR' />
 											<argument exp='YR' />
 											<argument exp='XR + WR - 1' />
@@ -1963,43 +1963,43 @@ Line - Draws a line from the last point to the new point' filter='000Point
 							</flowline>
 						</command>
 						<command class_type='comment' title='' comment='Initialise buffer Pointers
-' textarea='12,0,12,0' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' />
-						<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+' textarea='12,0,12,0' />
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='DataOffset[0] = 0' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='NumPlots &gt; 1' swap='0' >
+						<command class_type='decision' title='Decision' exp='NumPlots &gt; 1' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='DataOffset[1] = 0' />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='NumPlots &gt; 2' swap='0' >
+								<command class_type='decision' title='Decision' exp='NumPlots &gt; 2' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='DataOffset[2] = 0' />
 										</command>
-										<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='NumPlots &gt; 3' swap='0' >
+										<command class_type='decision' title='Decision' exp='NumPlots &gt; 3' swap='0' >
 											<flowline >
-												<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+												<command class_type='calculation' title='Calculation' >
 													<exp exp='DataOffset[3] = 0' />
 												</command>
-												<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='NumPlots &gt; 4' swap='0' >
+												<command class_type='decision' title='Decision' exp='NumPlots &gt; 4' swap='0' >
 													<flowline >
-														<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+														<command class_type='calculation' title='Calculation' >
 															<exp exp='DataOffset[4] = 0' />
 														</command>
-														<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='NumPlots &gt; 5' swap='0' >
+														<command class_type='decision' title='Decision' exp='NumPlots &gt; 5' swap='0' >
 															<flowline >
-																<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+																<command class_type='calculation' title='Calculation' >
 																	<exp exp='DataOffset[5] = 0' />
 																</command>
-																<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='NumPlots &gt; 6' swap='0' >
+																<command class_type='decision' title='Decision' exp='NumPlots &gt; 6' swap='0' >
 																	<flowline >
-																		<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+																		<command class_type='calculation' title='Calculation' >
 																			<exp exp='DataOffset[6] = 0' />
 																		</command>
-																		<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='NumPlots &gt; 7' swap='0' >
+																		<command class_type='decision' title='Decision' exp='NumPlots &gt; 7' swap='0' >
 																			<flowline >
-																				<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+																				<command class_type='calculation' title='Calculation' >
 																					<exp exp='DataOffset[7] = 0' />
 																				</command>
 																			</flowline>
@@ -2023,16 +2023,16 @@ Line - Draws a line from the last point to the new point' filter='000Point
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='decision' title='GridEnabled?' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='ShowGrid' swap='0' >
+						<command class_type='decision' title='GridEnabled?' exp='ShowGrid' swap='0' >
 							<flowline >
-								<command class_type='call' title='Call Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' macro='DrawGrid' />
+								<command class_type='call' title='Call Macro' macro='DrawGrid' />
 							</flowline>
 							<flowline />
 						</command>
 					</flowline>
 				</macro>
 			</macros>
-			<component class_type='ref' guid='f5a129d8-0e00-4e36-8272-8b00a5549e83' vmin='0' vmaj='1' codename='Glcd_Col_Dummy1' panelId='-1' x='24.0288' y='-30.4714' z='637.581' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='0' solid='0' layer='1' poslock='0' comp2dType='0' >
+			<component class_type='ref' guid='f5a129d8-0e00-4e36-8272-8b00a5549e83' vmin='0' vmaj='1' codename='Glcd_Col_Dummy1' panelId='-1' x='24.0288' y='-30.4714' z='637.581' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='0' solid='0' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values />
@@ -2041,7 +2041,7 @@ Line - Draws a line from the last point to the new point' filter='000Point
 				<variables />
 				<macros />
 			</component>
-			<component class_type='ref' guid='542d5713-1fd1-4cbf-a5a9-d64cfd2af087' vmin='0' vmaj='1' codename='Glcd_Mon_Dummy1' panelId='-1' x='-25.2649' y='31.0591' z='637.581' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='0' solid='0' layer='1' poslock='0' comp2dType='0' >
+			<component class_type='ref' guid='542d5713-1fd1-4cbf-a5a9-d64cfd2af087' vmin='0' vmaj='1' codename='Glcd_Mon_Dummy1' panelId='-1' x='-25.2649' y='31.0591' z='637.581' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='0' solid='0' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values />
@@ -2050,7 +2050,7 @@ Line - Draws a line from the last point to the new point' filter='000Point
 				<variables />
 				<macros />
 			</component>
-			<component class_type='ref' guid='9e33ee83-b239-47d3-b3fd-54a468a0301d' vmin='0' vmaj='1' codename='Glcd_MIAC_Dummy1' panelId='-1' x='23.911' y='26.2323' z='637.581' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='0' solid='0' layer='1' poslock='0' comp2dType='0' >
+			<component class_type='ref' guid='9e33ee83-b239-47d3-b3fd-54a468a0301d' vmin='0' vmaj='1' codename='Glcd_MIAC_Dummy1' panelId='-1' x='23.911' y='26.2323' z='637.581' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='0' solid='0' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values />
@@ -2059,7 +2059,7 @@ Line - Draws a line from the last point to the new point' filter='000Point
 				<variables />
 				<macros />
 			</component>
-			<component class_type='ref' guid='186ce026-edeb-495b-89af-2ca2d54c03eb' vmin='1' vmaj='1' codename='LED_WS2811_Dummy1' panelId='-1' x='-24.9117' y='-27.0573' z='637.581' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='0' solid='0' layer='1' poslock='0' comp2dType='0' >
+			<component class_type='ref' guid='186ce026-edeb-495b-89af-2ca2d54c03eb' vmin='1' vmaj='1' codename='LED_WS2811_Dummy1' panelId='-1' x='-24.9117' y='-27.0573' z='637.581' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='0' solid='0' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values />
@@ -2068,7 +2068,7 @@ Line - Draws a line from the last point to the new point' filter='000Point
 				<variables />
 				<macros />
 			</component>
-			<component class_type='ref' guid='58be670e-18fb-477e-ab09-61fde14b23ec' vmin='0' vmaj='1' codename='LibraryComponent1' panelId='-1' x='0' y='0' z='1.0572' xsz='100' ysz='100' zsz='100' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' comp2dType='0' >
+			<component class_type='ref' guid='58be670e-18fb-477e-ab09-61fde14b23ec' vmin='0' vmaj='1' codename='LibraryComponent1' panelId='-1' x='0' y='0' z='1.0572' xsz='100' ysz='100' zsz='100' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
@@ -2093,7 +2093,7 @@ Graph' />
 				<variables />
 				<macros />
 			</component>
-			<component class_type='ref' guid='6508c7be-063a-4f9f-bae5-4a41cf977a86' vmin='0' vmaj='1' codename='TypeConversions1' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='0' solid='0' layer='1' poslock='0' comp2dType='0' >
+			<component class_type='ref' guid='6508c7be-063a-4f9f-bae5-4a41cf977a86' vmin='0' vmaj='1' codename='TypeConversions1' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='0' solid='0' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
@@ -2110,10 +2110,10 @@ Graph' />
 	<keymap />
 	<panel2d shadows='1' lighting='0' brightness='0' >
 		<background rgb='16777215' img='' style='0' />
-		<camera xe='4.69939' ye='0.954863' ze='248.944' xt='4.69939' yt='0.954863' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
-		<viewport dx='206' dy='790' zoom='100.127' fix_topleft='0' />
+		<camera xe='4.69939' ye='0.954863' ze='328.703' xt='4.69939' yt='0.954863' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='272' dy='254' zoom='100.127' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='0' />
-		<winpos ID='7005' RectRecentFloat='-798,371,-148,821' RectRecentDocked='1208,141,1434,1021' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+		<winpos ID='7005' RectRecentFloat='2956,-472,3256,-120' RectRecentDocked='972,141,1470,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
 	</panel2d>
 	<panel3d shadows='0' lighting='2' brightness='128' perspective='1' >
 		<background rgb='65280' img='' style='0' />
@@ -2126,22 +2126,22 @@ Graph' />
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,248,450' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,246,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='0' />
 	<layout >
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA-gIAAGsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Pause' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA-gIAAGsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_GetVarSize' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA-gIAAGsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_AddVar' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA-gIAAGsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA-gIAAGsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DrawData' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA-gIAAGsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DrawGrid' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA-gIAAGsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='AddPoint' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA-gIAAGsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA-gIAAGsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA-gIAAGsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Resize' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA-gIAAGsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_LoadComplete' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA-gIAAGsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Pause' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_GetVarSize' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_AddVar' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='75' scrollx='0' scrolly='4875' flags='0' />
+		<view type='0' name='DrawData' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DrawGrid' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='AddPoint' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='75' scrollx='0' scrolly='1301' flags='0' />
+		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Resize' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_LoadComplete' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>

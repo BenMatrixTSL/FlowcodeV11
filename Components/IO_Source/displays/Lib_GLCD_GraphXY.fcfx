@@ -1,5 +1,5 @@
 <root>
-<document scada='0' projtype='1' schema='103' license='1,82702381,95CJQR' title='' description='' fcversion='720896' target='PIC.16F.16F1789' >
+<document scada='0' projtype='1' schema='103' license='1,82702381,95CJQR' title='' description='' fcversion='720897' target='PIC.16F.16F1789' >
 	<config data='!0,7c2!10,1633%0,2%3,0%5,0%6,1%7,1%8,1%9,3%b,0%c,0%d,0%10,3%15,1%18,0%19,1%1a,1%1b,0%1c,1%1d,0' clkspd='19660800' simspd='1' usewdt='0' constif='0' Use3V3='0' />
 	<plugins >
 		<dll_models enabled='1' />
@@ -172,14 +172,14 @@ Line - Draws a line from the last point to the new point' filter='000Point
 				<value target='P8Col' data='16760832' />
 			</values>
 			<events >
+				<event class='Compile' event='AddVar' target='Ev_AddVar' />
 				<event class='Components' event='Renamed' target='Ev_Renamed' />
+				<event class='Simulation' event='Stop' target='Ev_Pause' />
 				<event class='System' event='LoadComplete' target='Ev_LoadComplete' />
 				<event class='Compile' event='GetVarSize' target='Ev_GetVarSize' />
 				<event class='Simulation' event='Pause' target='Ev_Pause' />
-				<event class='Components' event='Initialise' target='Ev_Initialise' />
-				<event class='Simulation' event='Stop' target='Ev_Pause' />
 				<event class='Components' event='Property' target='Ev_Property' />
-				<event class='Compile' event='AddVar' target='Ev_AddVar' />
+				<event class='Components' event='Initialise' target='Ev_Initialise' />
 			</events>
 			<apis >
 				<api name='AddPoint' alt='AddPoint' type='1' proto='1' />
@@ -880,7 +880,7 @@ Line - Draws a line from the last point to the new point' filter='000Point
 						<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 							<argument exp='this' />
 							<argument exp='&quot;Xscale&quot;' />
-							<argument exp='.TempF' />
+							<argument exp='STRING .TempF' />
 						</command>
 						<command class_type='calculation' title='Calculation' >
 							<exp exp='.TempF = FLOAT HR / FLOAT DiffYVal' />
@@ -888,7 +888,7 @@ Line - Draws a line from the last point to the new point' filter='000Point
 						<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 							<argument exp='this' />
 							<argument exp='&quot;Yscale&quot;' />
-							<argument exp='.TempF' />
+							<argument exp='STRING .TempF' />
 						</command>
 						<command class_type='decision' title='Decision' exp='XScale = 0.5' swap='0' >
 							<flowline >
@@ -1079,7 +1079,7 @@ Line - Draws a line from the last point to the new point' filter='000Point
 								<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 									<argument exp='this' />
 									<argument exp='&quot;GridXSpacing&quot;' />
-									<argument exp='FLOAT( FLOAT DiffXVal / FLOAT GridXSubDivisions)' />
+									<argument exp='STRING( FLOAT DiffXVal / FLOAT GridXSubDivisions)' />
 								</command>
 							</flowline>
 							<flowline >
@@ -1121,7 +1121,7 @@ Line - Draws a line from the last point to the new point' filter='000Point
 								<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 									<argument exp='this' />
 									<argument exp='&quot;GridYSpacing&quot;' />
-									<argument exp='FLOAT(FLOAT DiffYVal / FLOAT GridYSubDivisions)' />
+									<argument exp='STRING(FLOAT DiffYVal / FLOAT GridYSubDivisions)' />
 								</command>
 							</flowline>
 							<flowline >
@@ -1960,10 +1960,10 @@ XY Graph' />
 	<keymap />
 	<panel2d shadows='1' lighting='0' brightness='0' >
 		<background rgb='16777215' img='' style='0' />
-		<camera xe='-0.952332' ye='-8.49555' ze='455.851' xt='-0.952332' yt='-8.49555' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
-		<viewport dx='365' dy='782' zoom='96.8847' fix_topleft='0' />
+		<camera xe='-0.952332' ye='-8.49555' ze='596.978' xt='-0.952332' yt='-8.49555' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='478' dy='782' zoom='96.8847' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='0' />
-		<winpos ID='7005' RectRecentFloat='0,-752,490,-184' RectRecentDocked='1086,141,1471,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+		<winpos ID='7005' RectRecentFloat='0,-752,490,-184' RectRecentDocked='972,141,1470,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel2d>
 	<panel3d shadows='0' lighting='2' brightness='128' perspective='1' >
 		<background rgb='65280' img='' style='0' />
@@ -1976,21 +1976,21 @@ XY Graph' />
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,214,450' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,246,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='0' />
 	<layout >
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAWgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DrawGrid' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAWgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DrawData' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAWgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Pause' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAWgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_GetVarSize' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAWgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_AddVar' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAWgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='AddPoint' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAWgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAWgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAWgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAWgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_LoadComplete' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAWgIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DrawGrid' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DrawData' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Pause' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_GetVarSize' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_AddVar' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='AddPoint' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='75' scrollx='0' scrolly='4875' flags='0' />
+		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_LoadComplete' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4AMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>
