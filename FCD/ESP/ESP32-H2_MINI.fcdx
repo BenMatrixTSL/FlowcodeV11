@@ -1,89 +1,108 @@
-<!-- CRC: 0796FC1E6A776AF9156B257209C3525871FE5938792CF2D9D76C336D8BF54135398E9ECD55A7F66EE92A6F88785D202DDA6183FD7E79AA9B6577EF8789F001E8724B4D3E87881F7D20243FEF066D8CB02BBB7B1CC80F12CBA9B11F738DF98E15400C788791E6067CD945657A2887C93EA48F3A63179EC06C4BE91ED0E091C18F88CE030EC5B255101F82F4E964EFE7C4F8450B4575B49334BE4BCE6E085264260A97393899712578E860BFEAD8BCC6937C4F2193F7E13DA5086944AE325796A6A20C1D5D1B34035497BD3B1EB506D88E434D0D66728267EA6FF949B8D8BFAD15599C160227117CAC -->
-<!-- REVISION: 13.0 -->
-<!-- GUID: 594FA6DD-9358-4539-8ACC-6F2E0099A098 -->
+<!-- CRC: 0796FC1E6A776AF9156B257209C35258A64C16ACF0D84FB55E4D86AE7C532112F4C4C23CF4F378D364492E224B878A5CF8B48017CEA9C3F928FAD4357B6CF5FF724B4D3E87881F7D20243FEF066D8CB02BBB7B1CC80F12CBA9B11F738DF98E15740BE580FD5F778018DAC028B350BADF3253F593B1F37FE3A21CE56EF6D6B627212EC46E9F3E4253A78FD28B95AF6D62A9CF67EF63962E08902868D24394C62E5E118497AE33DAAA659C7EFF1E1F407F2A5AF121AFE7A32A086944AE325796A6C0595A943C6B0522A55D3CE054437303B047F2522023D65735929AA8E37C906168E257DA63DC3B7B -->
+<!-- REVISION: 1.0 -->
+<!-- GUID: A70666A1-D52A-40F7-9D05-B4F623CFDB94 -->
 <!-- DATE: 22\04\2026 -->
-<!-- DIR: FCD\ESP\ESP32-S3_DevKitC.fcdx -->
+<!-- DIR: FCD\ESP\ESP32-H2_MINI.fcdx -->
+
+
+
+
+
+
 <root>
 
 <build>
-<compiler   exe="$(fcddir)ESP\Batch\esp32_build.bat" params="&quot;$(compileresp)&quot; &quot;$(target)&quot; &quot;$(outdir)&quot; esp32_s3_sdkconfig  esp32s3 " />
+<compiler   exe="$(fcddir)ESP\Batch\esp32_build.bat" params="&quot;$(compileresp)&quot; &quot;$(target)&quot; &quot;$(outdir)&quot; esp32h2_sdkconfig esp32h2 " />
 <linker     exe="$(appdir)tools\DoNothing\DoNothing.exe" params="" />
-<programmer exe="$(fcddir)ESP\Batch\esp32_prog.bat"  params="&quot;$(compileresp)&quot; &quot;$(target)&quot; &quot;$(outdir)&quot; $(comport) 115200 esp32_s3_sdkconfig  esp32s3 " UsesComm="1" />
+<programmer exe="$(fcddir)ESP\Batch\esp32_prog.bat"  params="&quot;$(compileresp)&quot; &quot;$(target)&quot; &quot;$(outdir)&quot; $(comport) 115200 esp32h2_sdkconfig esp32h2 " UsesComm="1" />
 </build>
 
 
-<device name='ESP32-S3_DevKitC'
-		namealt='esp32s3'
+<device name='ESP32-H2_MINI'
+		namealt='esp32h2'
 		product='ESP' 
 		cal='ESP' 
 		family='ESP32'
 		bits='32' >
 
-    <comminfo>
-        <com pid="4001" vid="303A" devdesc="USB Serial Device" />
-        <com pid="55D3" vid="1A86" devdesc="USB-Enhanced-SERIAL CH343" />
-    </comminfo>
+	<comminfo />
 	
-    <clock max_speed='240000000' master_divider='1' default='240000000' />
+    <clock max_speed='96000000' master_divider='1' default='96000000' />
     
     <memory >
         <flash bytes='2097152' />
-        <ram bytes='327680' />
+        <ram bytes='532480' />
     </memory>
 
-    <pins sides='2' smd='0' alt_pin_refs="1" >
-		<pin name='3V3' />
-		<pin name='3V3' />	
-		<pin name='RST' />		
-		<pin name='IO4 / ADC3' port='0' bit='4' adc='3' rpreg='4' rpnum='4' caption="GPIO4" />	
-		<pin name='IO5 / ADC4' port='0' bit='5' adc='4' rpreg='5' rpnum='5' caption="GPIO5" />
-		<pin name='IO6 / ADC5' port='0' bit='6' adc='5' rpreg='6' rpnum='6' caption="GPIO6" />
-		<pin name='IO7 / ADC6' port='0' bit='7' adc='6' rpreg='7' rpnum='7' caption="GPIO7" />
-		<pin name='IO15 / ADC36 / XTAL32K_P' port='0' bit='15' adc='36' rpreg='15' rpnum='15' caption="GPIO15" />
-		<pin name='IO16 / ADC37 / XTAL32K_N' port='0' bit='16' adc='37' rpreg='16' rpnum='16' caption="GPIO16" />
-		<pin name='IO17 / ADC38' port='0' bit='17' adc='38' rpreg='17' rpnum='17' caption="GPIO17" />
-		<pin name='IO18 / ADC39' port='0' bit='18' adc='39' rpreg='18' rpnum='18' caption="GPIO18" />
-		<pin name='IO8 / ADC7' port='0' bit='8' adc='7' rpreg='8' rpnum='8' caption="GPIO8" />
-		<pin name='IO3 / ADC2' port='0' bit='3' adc='2' rpreg='3' rpnum='3' caption="GPIO3" />
-		<pin name='IO46' port='1' bit='14' rpreg='46' rpnum='46' caption="GPIO46" />	
-		<pin name='IO9 / ADC8' port='0' bit='9' adc='8' rpreg='9' rpnum='9' caption="GPIO9" />
-		<pin name='IO10 / ADC9' port='0' bit='10' adc='9' rpreg='10' rpnum='10' caption="GPIO10" />
-		<pin name='IO11 / ADC32' port='0' bit='11' adc='32' rpreg='11' rpnum='11' caption="GPIO11" />
-		<pin name='IO12 / ADC33' port='0' bit='12' adc='33' rpreg='12' rpnum='12' caption="GPIO12" />
-		<pin name='IO13 / ADC34' port='0' bit='13' adc='34' rpreg='13' rpnum='13' caption="GPIO13" />
-		<pin name='IO14 / ADC35' port='0' bit='14' adc='35' rpreg='14' rpnum='14' caption="GPIO14" />
-		<pin name='5V0' />
+    <pins sides='4' smd='1' pad='GND' alt_pin_refs="1" >
+    	<pin name='GND' />
+    	<pin name='GND' />
+    	<pin name='3V3' />
+    	<pin name='NC' />
+		<pin name='IO2 / ADC1' port='0' bit='2' adc='1' rpreg='2' rpnum='2' caption="pin2" />
+		<pin name='IO3 / ADC2' port='0' bit='3' adc='2' rpreg='3' rpnum='3' caption="pin3" />
+    	<pin name='NC' />
+    	<pin name='EN' />
+    	<pin name='IO0' port='0' bit='0' rpreg='0' rpnum='0' caption="pin0" />
+    	<pin name='IO1 / ADC0' port='0' bit='1' adc='0' rpreg='1' rpnum='1' caption="pin1" />
+    	<pin name='GND' />
+    	<pin name='IO13' port='0' bit='13' rpreg='13' rpnum='13' caption="pin13" />
+    	<pin name='IO14' port='0' bit='14' rpreg='14' rpnum='14' caption="pin14" />
+    	<pin name='GND' />
+    	<pin name='VBAT' />
+    	<pin name='IO12' port='0' bit='12' rpreg='12' rpnum='12' caption="pin12" />
+    	<pin name='NC' />
+    	<pin name='IO4 / ADC3' port='0' bit='4' adc='3' rpreg='4' rpnum='4' caption="pin4" />
+    	<pin name='IO5 / ADC4' port='0' bit='5' adc='4' rpreg='5' rpnum='5' caption="pin5" />
+    	<pin name='IO10' port='0' bit='10' rpreg='10' rpnum='10' caption="pin10" />
+    	<pin name='IO11' port='0' bit='11' rpreg='11' rpnum='11' caption="pin11" />
+    	<pin name='IO8' port='0' bit='8' rpreg='8' rpnum='8' caption="pin8" />
+    	<pin name='IO9' port='0' bit='9' rpreg='9' rpnum='9' caption="pin9" />
+    	<pin name='IO22' port='0' bit='22' rpreg='22' rpnum='22' caption="pin22" />
+    	<pin name='IO25' port='0' bit='25' rpreg='25' rpnum='25' caption="pin25" />
+    	<pin name='IO26 / D-' port='0' bit='26' rpreg='26' rpnum='26' caption="pin26" />
+    	<pin name='IO27 / D+' port='0' bit='27' rpreg='27' rpnum='27' caption="pin27" />
+    	<pin name='NC' />
+    	<pin name='NC' />
+    	<pin name='IO23 / RXD0' port='0' bit='23' rpreg='23' rpnum='23' caption="pin23" />
+    	<pin name='IO24 / TXD0' port='0' bit='24' rpreg='24' rpnum='24' caption="pin24" />
 		<pin name='GND' />
-		
 		<pin name='GND' />
-		<pin name='GND' />		
-		<pin name='IO19 / ADC40 / D-' port='0' bit='19' adc='40' rpreg='19' rpnum='19' caption="GPIO19" />
-		<pin name='IO20 / ADC41 / D+' port='0' bit='20' adc='41' rpreg='20' rpnum='20' caption="GPIO20" />
-		<pin name='IO21' port='0' bit='21' rpreg='21' rpnum='21' caption="GPIO21" />
-		<pin name='IO47' port='1' bit='15' rpreg='47' rpnum='47' caption="GPIO47" />
-		<pin name='IO48' port='1' bit='16' rpreg='48' rpnum='48' caption="GPIO48" />
-		<pin name='IO45' port='1' bit='13' rpreg='45' rpnum='45' caption="GPIO45" />
-		<pin name='IO0' port='0' bit='0' rpreg='0' rpnum='0' caption="GPIO0" />
-		<pin name='IO35 / MOSI' port='1' bit='3' rpreg='35' rpnum='35' caption="GPIO35" />
-		<pin name='IO36 / SCK' port='1' bit='4' rpreg='36' rpnum='36' caption="GPIO36" />
-		<pin name='IO37 / MISO' port='1' bit='5' rpreg='37' rpnum='37' caption="GPIO37" />
-		<pin name='IO38' port='1' bit='6' rpreg='38' rpnum='38' caption="GPIO38" />
-		<pin name='IO39' port='1' bit='7' rpreg='39' rpnum='39' caption="GPIO39" />
-		<pin name='IO40' port='1' bit='8' rpreg='40' rpnum='40' caption="GPIO40" />
-		<pin name='IO41' port='1' bit='9' rpreg='41' rpnum='41' caption="GPIO41" />
-		<pin name='IO42' port='1' bit='10' rpreg='42' rpnum='42' caption="GPIO42" />
-		<pin name='IO2 / ADC1' port='0' bit='2' adc='1' rpreg='2' rpnum='2' caption="GPIO2" />
-		<pin name='IO1 / ADC0' port='0' bit='1' adc='0' rpreg='1' rpnum='1' caption="GPIO1" />
-		<pin name='IO44 / RXD0' port='1' bit='12' rpreg='44' rpnum='44' caption="RXD0" />
-		<pin name='IO43 / TXD0' port='1' bit='11' rpreg='43' rpnum='43' caption="TXD0" />
 		<pin name='GND' />
+		<pin name='GND' />
+		<pin name='GND' />
+		<pin name='GND' />
+		<pin name='GND' />
+		<pin name='GND' />
+		<pin name='GND' />
+		<pin name='GND' />
+		<pin name='GND' />
+		<pin name='GND' />
+		<pin name='GND' />
+		<pin name='GND' />
+		<pin name='GND' />
+		<pin name='GND' />
+		<pin name='GND' />
+		<pin name='GND' />
+		<pin name='GND' />
+		<pin name='GND' />
+		<pin name='GND' />
+		<pin name='GND' />
+		<pin name='GND' />
+		<pin name='GND' />
+		<pin name='GND' />
+		<pin name='GND' />
+    	<pin name='NC' />
+    	<pin name='NC' />
+    	<pin name='NC' />
+    	<pin name='NC' />
     </pins>
     
     <biasresistors allpins='1' mode='3' >
     	<code>
-	    <pullup code='gpio_set_pull_mode(xxx, GPIO_PULLUP_ONLY);' />
-	    <pulldown code='gpio_set_pull_mode(xxx, GPIO_PULLDOWN_ONLY);' />
-	    <disable code='gpio_set_pull_mode(xxx, GPIO_FLOATING);' />
+    		<pullup code='gpio_set_pull_mode(xxx, GPIO_PULLUP_ONLY);' />
+    		<pulldown code='gpio_set_pull_mode(xxx, GPIO_PULLDOWN_ONLY);' />
+    		<disable code='gpio_set_pull_mode(xxx, GPIO_FLOATING);' />
     	</code>
     </biasresistors>
     
@@ -103,49 +122,61 @@
         <vref>
             <option name='VDD' value='0' />
         </vref>
-        <out port='0' pin='17' />
-	<out port='0' pin='18' />
+        <out port='0' pin='25' />
+		<out port='0' pin='26' />
     </dac>
 	
-    <eeprom type='1' bytes='128' address='0' />
+	<eeprom type='1' bytes='128' address='0' />
 	
     <spi remappable='1' >
-        <clk  rpnum='1' caption="GPIO39" />
+        <clk  rpnum='1' caption="pin39" />
         <miso rpreg='SPI1' />
-        <mosi rpnum='1' caption="GPIO39" />
+        <mosi rpnum='1' caption="pin39" />
     </spi>
 
     <spi remappable='1' >
-        <clk  rpnum='1' caption="GPIO39" />
+        <clk  rpnum='1' caption="pin39" />
         <miso rpreg='SPI2' />
-        <mosi rpnum='1' caption="GPIO39" />
+        <mosi rpnum='1' caption="pin39" />
     </spi>
 
     <i2c remappable='1' >
-        <sda rpnum='1' caption="GPIO39" rpreg='I2C1' />
+        <sda rpnum='1' caption="pin39" rpreg='I2C1' />
         <scl rpreg='I2C2' />
     </i2c>
 
     <i2c remappable='1' >
-        <sda rpnum='1' caption="GPIO39" rpreg='I2C3' />
+        <sda rpnum='1' caption="pin39" rpreg='I2C3' />
         <scl rpreg='I2C4' />
     </i2c>
 
     <i2s type='1' remappable='1' >
-        <ck rpnum='1' caption="GPIO39" rpreg='I2S1' />
-	<ws rpnum='1' caption="GPIO39" rpreg='I2S2' />
-	<do rpnum='1' caption="GPIO39" rpreg='I2S3' />
-	<di rpreg='I2S4' />
+        <ck rpnum='1' caption="pin39" rpreg='I2S1' />
+		<ws rpnum='1' caption="pin39" rpreg='I2S2' />
+		<do rpnum='1' caption="pin39" rpreg='I2S3' />
+		<di rpreg='I2S4' />
+    </i2s>
+    
+    <i2s type='1' remappable='1' >
+        <ck rpnum='1' caption="pin39" rpreg='I2S5' />
+		<ws rpnum='1' caption="pin39" rpreg='I2S6' />
+		<do rpnum='1' caption="pin39" rpreg='I2S7' />
+		<di rpreg='I2S8' />
     </i2s>
     
     <uart remappable='0' >
-        <tx port='1' pin='11' />
-        <rx port='1' pin='12' />
+        <tx port='0' pin='1' />
+        <rx port='0' pin='3' />
     </uart>   
     
     <uart remappable='1' >
-        <tx rpnum='1' caption="GPIO39" />
+        <tx rpnum='1' caption="pin39" />
         <rx rpreg='U2' />
+    </uart>   
+    
+    <uart remappable='1' >
+        <tx rpnum='1' caption="pin39" />
+        <rx rpreg='U3' />
     </uart>   
     
     <pwm remappable='1' >
@@ -159,9 +190,25 @@
         <out rpnum='6' />
         <out rpnum='7' />
         <out rpnum='8' />
+        <out rpnum='9' />
+        <out rpnum='10' />
+        <out rpnum='11' />
+        <out rpnum='12' />
     </pwm>
     
-    <sd remappable='1' />
+    <can remappable='1'>
+         <tx rpnum='' />
+         <rx rpreg='' />
+    </can>
+    
+    <sd>
+    	<clk port='0' pin='14' />
+    	<cmd port='0' pin='15' />
+    	<d0 port='0' pin='2' />
+    	<d1 port='0' pin='4' />
+    	<d2 port='0' pin='12' />
+    	<d3 port='0' pin='13' />    	
+    </sd>  
     
     <interrupts >
         <interrupt ident='RXINT0' type='comms' name='UART0 RX' 
@@ -174,6 +221,11 @@
 			handler='#ifndef MX_INTHANDLER_RXINT1\n#define MX_INTHANDLER_RXINT1\nMX_UART_INT_CH2_FUNC FCM_%n();\nMX_UART_INT_FUNC_END\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
 			enable='uart1_interrupt_enabled = 1;\n' 
 			disable='uart1_interrupt_enabled = 0;\n' />
+        <interrupt ident='RXINT2' type='comms' name='UART2 RX' 
+			global='\n#define MX_UART2_INT\n'
+			handler='#ifndef MX_INTHANDLER_RXINT2\n#define MX_INTHANDLER_RXINT2\nMX_UART_INT_CH3_FUNC FCM_%n();\nMX_UART_INT_FUNC_END\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
+			enable='uart2_interrupt_enabled = 1;\n' 
+			disable='uart2_interrupt_enabled = 0;\n' />
 
         <interrupt ident='TMR0' name='Timer 0' regl='TMR0' regh='' type='timer8'
 			handler='#ifndef MX_INTHANDLER_TIMER0\n#define MX_INTHANDLER_TIMER0\nvoid FC_CAL_Timer_0_ISR(void* p)\n{\n\tFCM_%n();\n\tFC_CAL_Timer_Rearm(0);\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
@@ -348,43 +400,6 @@
             </options>
         </interrupt>
 
-        <interrupt ident='GPIO6' type='pin' name='GPIO6' 
-			global='\nvoid MX_ISR_GPIO6(void*);\n'
-			handler='\n#ifndef MX_ISR_GPIO6_DEF\n#define MX_ISR_GPIO6_DEF\nvoid MX_ISR_GPIO6(void* arg){FCM_%n();}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
-			enable='\ngpio_pad_select_gpio(GPIO_NUM_6);\ngpio_set_direction(GPIO_NUM_6, GPIO_MODE_INPUT);\ngpio_install_isr_service(ESP_INTR_FLAG_LOWMED);\ngpio_isr_handler_add(GPIO_NUM_6, MX_ISR_GPIO6, (void*) GPIO_NUM_6);\ngpio_intr_enable(GPIO_NUM_6);\n'
-			disable='\ngpio_intr_disable(GPIO_NUM_6);\n' >
-            <ioc config='3' >
-                <rising port='0' mask='0x40' />
-                <falling port='0' mask='0x40' />
-            </ioc>
-	    <options >
-                <edge name='Interrupt Edge Select' >
-                    <entry name='Rising edge' value='\ngpio_set_intr_type(GPIO_NUM_6, GPIO_INTR_POSEDGE);' />
-                    <entry name='Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_6, GPIO_INTR_NEGEDGE);' />
-                    <entry name='Rising and Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_6, GPIO_INTR_ANYEDGE);' />
-                </edge>
-            </options>
-        </interrupt>
-
-        <interrupt ident='GPIO7' type='pin' name='GPIO7' 
-			global='\nvoid MX_ISR_GPIO7(void*);\n'
-			handler='\n#ifndef MX_ISR_GPIO7_DEF\n#define MX_ISR_GPIO7_DEF\nvoid MX_ISR_GPIO7(void* arg){FCM_%n();}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
-			enable='\ngpio_pad_select_gpio(GPIO_NUM_7);\ngpio_set_direction(GPIO_NUM_7, GPIO_MODE_INPUT);\ngpio_install_isr_service(ESP_INTR_FLAG_LOWMED);\ngpio_isr_handler_add(GPIO_NUM_7, MX_ISR_GPIO7, (void*) GPIO_NUM_7);\ngpio_intr_enable(GPIO_NUM_7);\n'
-			disable='\ngpio_intr_disable(GPIO_NUM_7);\n' >
-            <ioc config='3' >
-                <rising port='0' mask='0x80' />
-                <falling port='0' mask='0x80' />
-            </ioc>
-	    <options >
-                <edge name='Interrupt Edge Select' >
-                    <entry name='Rising edge' value='\ngpio_set_intr_type(GPIO_NUM_7, GPIO_INTR_POSEDGE);' />
-                    <entry name='Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_7, GPIO_INTR_NEGEDGE);' />
-                    <entry name='Rising and Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_7, GPIO_INTR_ANYEDGE);' />
-                </edge>
-            </options>
-        </interrupt>
-
-
         <interrupt ident='GPIO8' type='pin' name='GPIO8' 
 			global='\nvoid MX_ISR_GPIO8(void*);\n'
 			handler='\n#ifndef MX_ISR_GPIO8_DEF\n#define MX_ISR_GPIO8_DEF\nvoid MX_ISR_GPIO8(void* arg){FCM_%n();}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
@@ -420,7 +435,7 @@
                 </edge>
             </options>
         </interrupt>
-
+        
         <interrupt ident='GPIO10' type='pin' name='GPIO10' 
 			global='\nvoid MX_ISR_GPIO10(void*);\n'
 			handler='\n#ifndef MX_ISR_GPIO10_DEF\n#define MX_ISR_GPIO10_DEF\nvoid MX_ISR_GPIO10(void* arg){FCM_%n();}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
@@ -456,7 +471,6 @@
                 </edge>
             </options>
         </interrupt>
-
         
         <interrupt ident='GPIO12' type='pin' name='GPIO12' 
 			global='\nvoid MX_ISR_GPIO12(void*);\n'
@@ -602,25 +616,7 @@
             </options>
         </interrupt>
 
-          <interrupt ident='GPIO20' type='pin' name='GPIO20' 
-			global='\nvoid MX_ISR_GPIO20(void*);\n'
-			handler='\n#ifndef MX_ISR_GPIO20_DEF\n#define MX_ISR_GPIO20_DEF\nvoid MX_ISR_GPIO20(void* arg){FCM_%n();}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
-			enable='\ngpio_pad_select_gpio(GPIO_NUM_20);\ngpio_set_direction(GPIO_NUM_20, GPIO_MODE_INPUT);\ngpio_install_isr_service(ESP_INTR_FLAG_LOWMED);\ngpio_isr_handler_add(GPIO_NUM_20, MX_ISR_GPIO20, (void*) GPIO_NUM_20);\ngpio_intr_enable(GPIO_NUM_20);\n'
-			disable='\ngpio_intr_disable(GPIO_NUM_20);\n' >
-            <ioc config='3' >
-                <rising port='0' mask='0x100000' />
-                <falling port='0' mask='0x100000' />
-            </ioc>
-	    <options >
-                <edge name='Interrupt Edge Select' >
-                    <entry name='Rising edge' value='\ngpio_set_intr_type(GPIO_NUM_20, GPIO_INTR_POSEDGE);' />
-                    <entry name='Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_20, GPIO_INTR_NEGEDGE);' />
-                    <entry name='Rising and Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_20, GPIO_INTR_ANYEDGE);' />
-                </edge>
-            </options>
-        </interrupt>
-
-		<interrupt ident='GPIO21' type='pin' name='GPIO21' 
+        <interrupt ident='GPIO21' type='pin' name='GPIO21' 
 			global='\nvoid MX_ISR_GPIO21(void*);\n'
 			handler='\n#ifndef MX_ISR_GPIO21_DEF\n#define MX_ISR_GPIO21_DEF\nvoid MX_ISR_GPIO21(void* arg){FCM_%n();}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
 			enable='\ngpio_pad_select_gpio(GPIO_NUM_21);\ngpio_set_direction(GPIO_NUM_21, GPIO_MODE_INPUT);\ngpio_install_isr_service(ESP_INTR_FLAG_LOWMED);\ngpio_isr_handler_add(GPIO_NUM_21, MX_ISR_GPIO21, (void*) GPIO_NUM_21);\ngpio_intr_enable(GPIO_NUM_21);\n'
@@ -634,6 +630,150 @@
                     <entry name='Rising edge' value='\ngpio_set_intr_type(GPIO_NUM_21, GPIO_INTR_POSEDGE);' />
                     <entry name='Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_21, GPIO_INTR_NEGEDGE);' />
                     <entry name='Rising and Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_21, GPIO_INTR_ANYEDGE);' />
+                </edge>
+            </options>
+        </interrupt>
+
+        <interrupt ident='GPIO22' type='pin' name='GPIO22' 
+			global='\nvoid MX_ISR_GPIO22(void*);\n'
+			handler='\n#ifndef MX_ISR_GPIO22_DEF\n#define MX_ISR_GPIO22_DEF\nvoid MX_ISR_GPIO22(void* arg){FCM_%n();}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
+			enable='\ngpio_pad_select_gpio(GPIO_NUM_22);\ngpio_set_direction(GPIO_NUM_22, GPIO_MODE_INPUT);\ngpio_install_isr_service(ESP_INTR_FLAG_LOWMED);\ngpio_isr_handler_add(GPIO_NUM_22, MX_ISR_GPIO22, (void*) GPIO_NUM_22);\ngpio_intr_enable(GPIO_NUM_22);\n'
+			disable='\ngpio_intr_disable(GPIO_NUM_22);\n' >
+            <ioc config='3' >
+                <rising port='0' mask='0x400000' />
+                <falling port='0' mask='0x400000' />
+            </ioc>
+	    <options >
+                <edge name='Interrupt Edge Select' >
+                    <entry name='Rising edge' value='\ngpio_set_intr_type(GPIO_NUM_22, GPIO_INTR_POSEDGE);' />
+                    <entry name='Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_22, GPIO_INTR_NEGEDGE);' />
+                    <entry name='Rising and Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_22, GPIO_INTR_ANYEDGE);' />
+                </edge>
+            </options>
+        </interrupt>
+		
+        <interrupt ident='GPIO23' type='pin' name='GPIO23' 
+			global='\nvoid MX_ISR_GPIO23(void*);\n'
+			handler='\n#ifndef MX_ISR_GPIO23_DEF\n#define MX_ISR_GPIO23_DEF\nvoid MX_ISR_GPIO23(void* arg){FCM_%n();}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
+			enable='\ngpio_pad_select_gpio(GPIO_NUM_23);\ngpio_set_direction(GPIO_NUM_23, GPIO_MODE_INPUT);\ngpio_install_isr_service(ESP_INTR_FLAG_LOWMED);\ngpio_isr_handler_add(GPIO_NUM_23, MX_ISR_GPIO23, (void*) GPIO_NUM_23);\ngpio_intr_enable(GPIO_NUM_23);\n'
+			disable='\ngpio_intr_disable(GPIO_NUM_23);\n' >
+            <ioc config='3' >
+                <rising port='0' mask='0x800000' />
+                <falling port='0' mask='0x800000' />
+            </ioc>
+	    <options >
+                <edge name='Interrupt Edge Select' >
+                    <entry name='Rising edge' value='\ngpio_set_intr_type(GPIO_NUM_23, GPIO_INTR_POSEDGE);' />
+                    <entry name='Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_23, GPIO_INTR_NEGEDGE);' />
+                    <entry name='Rising and Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_23, GPIO_INTR_ANYEDGE);' />
+                </edge>
+            </options>
+        </interrupt>
+
+        <interrupt ident='GPIO25' type='pin' name='GPIO25' 
+			global='\nvoid MX_ISR_GPIO25(void*);\n'
+			handler='\n#ifndef MX_ISR_GPIO25_DEF\n#define MX_ISR_GPIO25_DEF\nvoid MX_ISR_GPIO25(void* arg){FCM_%n();}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
+			enable='\ngpio_pad_select_gpio(GPIO_NUM_25);\ngpio_set_direction(GPIO_NUM_25, GPIO_MODE_INPUT);\ngpio_install_isr_service(ESP_INTR_FLAG_LOWMED);\ngpio_isr_handler_add(GPIO_NUM_25, MX_ISR_GPIO25, (void*) GPIO_NUM_25);\ngpio_intr_enable(GPIO_NUM_25);\n'
+			disable='\ngpio_intr_disable(GPIO_NUM_25);\n' >
+            <ioc config='3' >
+                <rising port='0' mask='0x2000000' />
+                <falling port='0' mask='0x2000000' />
+            </ioc>
+	    <options >
+                <edge name='Interrupt Edge Select' >
+                    <entry name='Rising edge' value='\ngpio_set_intr_type(GPIO_NUM_25, GPIO_INTR_POSEDGE);' />
+                    <entry name='Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_25, GPIO_INTR_NEGEDGE);' />
+                    <entry name='Rising and Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_25, GPIO_INTR_ANYEDGE);' />
+                </edge>
+            </options>
+        </interrupt>
+		
+        <interrupt ident='GPIO26' type='pin' name='GPIO26' 
+			global='\nvoid MX_ISR_GPIO26(void*);\n'
+			handler='\n#ifndef MX_ISR_GPIO26_DEF\n#define MX_ISR_GPIO26_DEF\nvoid MX_ISR_GPIO26(void* arg){FCM_%n();}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
+			enable='\ngpio_pad_select_gpio(GPIO_NUM_26);\ngpio_set_direction(GPIO_NUM_26, GPIO_MODE_INPUT);\ngpio_install_isr_service(ESP_INTR_FLAG_LOWMED);\ngpio_isr_handler_add(GPIO_NUM_26, MX_ISR_GPIO26, (void*) GPIO_NUM_26);\ngpio_intr_enable(GPIO_NUM_26);\n'
+			disable='\ngpio_intr_disable(GPIO_NUM_26);\n' >
+            <ioc config='3' >
+                <rising port='0' mask='0x4000000' />
+                <falling port='0' mask='0x4000000' />
+            </ioc>
+	    <options >
+                <edge name='Interrupt Edge Select' >
+                    <entry name='Rising edge' value='\ngpio_set_intr_type(GPIO_NUM_26, GPIO_INTR_POSEDGE);' />
+                    <entry name='Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_26, GPIO_INTR_NEGEDGE);' />
+                    <entry name='Rising and Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_26, GPIO_INTR_ANYEDGE);' />
+                </edge>
+            </options>
+        </interrupt>
+        
+		<interrupt ident='GPIO27' type='pin' name='GPIO27' 
+			global='\nvoid MX_ISR_GPIO27(void*);\n'
+			handler='\n#ifndef MX_ISR_GPIO27_DEF\n#define MX_ISR_GPIO27_DEF\nvoid MX_ISR_GPIO27(void* arg){FCM_%n();}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
+			enable='\ngpio_pad_select_gpio(GPIO_NUM_27);\ngpio_set_direction(GPIO_NUM_27, GPIO_MODE_INPUT);\ngpio_install_isr_service(ESP_INTR_FLAG_LOWMED);\ngpio_isr_handler_add(GPIO_NUM_27, MX_ISR_GPIO27, (void*) GPIO_NUM_27);\ngpio_intr_enable(GPIO_NUM_27);\n'
+			disable='\ngpio_intr_disable(GPIO_NUM_27);\n' >
+            <ioc config='3' >
+                <rising port='0' mask='0x8000000' />
+                <falling port='0' mask='0x8000000' />
+            </ioc>
+	    <options >
+                <edge name='Interrupt Edge Select' >
+                    <entry name='Rising edge' value='\ngpio_set_intr_type(GPIO_NUM_27, GPIO_INTR_POSEDGE);' />
+                    <entry name='Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_27, GPIO_INTR_NEGEDGE);' />
+                    <entry name='Rising and Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_27, GPIO_INTR_ANYEDGE);' />
+                </edge>
+            </options>
+        </interrupt>
+
+		<interrupt ident='GPIO32' type='pin' name='GPIO32' 
+			global='\nvoid MX_ISR_GPIO32(void*);\n'
+			handler='\n#ifndef MX_ISR_GPIO32_DEF\n#define MX_ISR_GPIO32_DEF\nvoid MX_ISR_GPIO32(void* arg){FCM_%n();}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
+			enable='\ngpio_pad_select_gpio(GPIO_NUM_32);\ngpio_set_direction(GPIO_NUM_32, GPIO_MODE_INPUT);\ngpio_install_isr_service(ESP_INTR_FLAG_LOWMED);\ngpio_isr_handler_add(GPIO_NUM_32, MX_ISR_GPIO32, (void*) GPIO_NUM_32);\ngpio_intr_enable(GPIO_NUM_32);\n'
+			disable='\ngpio_intr_disable(GPIO_NUM_32);\n' >
+            <ioc config='3' >
+                <rising port='1' mask='0x1' />
+                <falling port='1' mask='0x1' />
+            </ioc>
+	    <options >
+                <edge name='Interrupt Edge Select' >
+                    <entry name='Rising edge' value='\ngpio_set_intr_type(GPIO_NUM_32, GPIO_INTR_POSEDGE);' />
+                    <entry name='Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_32, GPIO_INTR_NEGEDGE);' />
+                    <entry name='Rising and Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_32, GPIO_INTR_ANYEDGE);' />
+                </edge>
+            </options>
+        </interrupt>
+
+		<interrupt ident='GPIO33' type='pin' name='GPIO33' 
+			global='\nvoid MX_ISR_GPIO33(void*);\n'
+			handler='\n#ifndef MX_ISR_GPIO33_DEF\n#define MX_ISR_GPIO33_DEF\nvoid MX_ISR_GPIO33(void* arg){FCM_%n();}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
+			enable='\ngpio_pad_select_gpio(GPIO_NUM_33);\ngpio_set_direction(GPIO_NUM_33, GPIO_MODE_INPUT);\ngpio_install_isr_service(ESP_INTR_FLAG_LOWMED);\ngpio_isr_handler_add(GPIO_NUM_33, MX_ISR_GPIO33, (void*) GPIO_NUM_33);\ngpio_intr_enable(GPIO_NUM_33);\n'
+			disable='\ngpio_intr_disable(GPIO_NUM_33);\n' >
+            <ioc config='3' >
+                <rising port='1' mask='0x2' />
+                <falling port='1' mask='0x2' />
+            </ioc>
+	    <options >
+                <edge name='Interrupt Edge Select' >
+                    <entry name='Rising edge' value='\ngpio_set_intr_type(GPIO_NUM_33, GPIO_INTR_POSEDGE);' />
+                    <entry name='Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_33, GPIO_INTR_NEGEDGE);' />
+                    <entry name='Rising and Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_33, GPIO_INTR_ANYEDGE);' />
+                </edge>
+            </options>
+        </interrupt>
+		
+		<interrupt ident='GPIO34' type='pin' name='GPIO34' 
+			global='\nvoid MX_ISR_GPIO34(void*);\n'
+			handler='\n#ifndef MX_ISR_GPIO34_DEF\n#define MX_ISR_GPIO34_DEF\nvoid MX_ISR_GPIO34(void* arg){FCM_%n();}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
+			enable='\ngpio_pad_select_gpio(GPIO_NUM_34);\ngpio_set_direction(GPIO_NUM_34, GPIO_MODE_INPUT);\ngpio_install_isr_service(ESP_INTR_FLAG_LOWMED);\ngpio_isr_handler_add(GPIO_NUM_34, MX_ISR_GPIO34, (void*) GPIO_NUM_34);\ngpio_intr_enable(GPIO_NUM_34);\n'
+			disable='\ngpio_intr_disable(GPIO_NUM_34);\n' >
+            <ioc config='3' >
+                <rising port='1' mask='0x4' />
+                <falling port='1' mask='0x4' />
+            </ioc>
+	    <options >
+                <edge name='Interrupt Edge Select' >
+                    <entry name='Rising edge' value='\ngpio_set_intr_type(GPIO_NUM_34, GPIO_INTR_POSEDGE);' />
+                    <entry name='Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_34, GPIO_INTR_NEGEDGE);' />
+                    <entry name='Rising and Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_34, GPIO_INTR_ANYEDGE);' />
                 </edge>
             </options>
         </interrupt>
@@ -727,175 +867,13 @@
                 </edge>
             </options>
         </interrupt>
-
-		<interrupt ident='GPIO40' type='pin' name='GPIO40' 
-			global='\nvoid MX_ISR_GPIO40(void*);\n'
-			handler='\n#ifndef MX_ISR_GPIO40_DEF\n#define MX_ISR_GPIO40_DEF\nvoid MX_ISR_GPIO40(void* arg){FCM_%n();}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
-			enable='\ngpio_pad_select_gpio(GPIO_NUM_40);\ngpio_set_direction(GPIO_NUM_40, GPIO_MODE_INPUT);\ngpio_install_isr_service(ESP_INTR_FLAG_LOWMED);\ngpio_isr_handler_add(GPIO_NUM_40, MX_ISR_GPIO40, (void*) GPIO_NUM_40);\ngpio_intr_enable(GPIO_NUM_40);\n'
-			disable='\ngpio_intr_disable(GPIO_NUM_40);\n' >
-            <ioc config='3' >
-                <rising port='1' mask='0x100' />
-                <falling port='1' mask='0x100' />
-            </ioc>
-	    <options >
-                <edge name='Interrupt Edge Select' >
-                    <entry name='Rising edge' value='\ngpio_set_intr_type(GPIO_NUM_40, GPIO_INTR_POSEDGE);' />
-                    <entry name='Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_40, GPIO_INTR_NEGEDGE);' />
-                    <entry name='Rising and Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_40, GPIO_INTR_ANYEDGE);' />
-                </edge>
-            </options>
-        </interrupt>
-
-		<interrupt ident='GPIO41' type='pin' name='GPIO41' 
-			global='\nvoid MX_ISR_GPIO41(void*);\n'
-			handler='\n#ifndef MX_ISR_GPIO41_DEF\n#define MX_ISR_GPIO41_DEF\nvoid MX_ISR_GPIO41(void* arg){FCM_%n();}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
-			enable='\ngpio_pad_select_gpio(GPIO_NUM_41);\ngpio_set_direction(GPIO_NUM_41, GPIO_MODE_INPUT);\ngpio_install_isr_service(ESP_INTR_FLAG_LOWMED);\ngpio_isr_handler_add(GPIO_NUM_41, MX_ISR_GPIO41, (void*) GPIO_NUM_41);\ngpio_intr_enable(GPIO_NUM_41);\n'
-			disable='\ngpio_intr_disable(GPIO_NUM_41);\n' >
-            <ioc config='3' >
-                <rising port='1' mask='0x200' />
-                <falling port='1' mask='0x200' />
-            </ioc>
-	    <options >
-                <edge name='Interrupt Edge Select' >
-                    <entry name='Rising edge' value='\ngpio_set_intr_type(GPIO_NUM_41, GPIO_INTR_POSEDGE);' />
-                    <entry name='Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_41, GPIO_INTR_NEGEDGE);' />
-                    <entry name='Rising and Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_41, GPIO_INTR_ANYEDGE);' />
-                </edge>
-            </options>
-        </interrupt>
-
-		<interrupt ident='GPIO42' type='pin' name='GPIO42' 
-			global='\nvoid MX_ISR_GPIO42(void*);\n'
-			handler='\n#ifndef MX_ISR_GPIO42_DEF\n#define MX_ISR_GPIO42_DEF\nvoid MX_ISR_GPIO42(void* arg){FCM_%n();}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
-			enable='\ngpio_pad_select_gpio(GPIO_NUM_42);\ngpio_set_direction(GPIO_NUM_42, GPIO_MODE_INPUT);\ngpio_install_isr_service(ESP_INTR_FLAG_LOWMED);\ngpio_isr_handler_add(GPIO_NUM_42, MX_ISR_GPIO42, (void*) GPIO_NUM_42);\ngpio_intr_enable(GPIO_NUM_42);\n'
-			disable='\ngpio_intr_disable(GPIO_NUM_42);\n' >
-            <ioc config='3' >
-                <rising port='1' mask='0x400' />
-                <falling port='1' mask='0x400' />
-            </ioc>
-	    <options >
-                <edge name='Interrupt Edge Select' >
-                    <entry name='Rising edge' value='\ngpio_set_intr_type(GPIO_NUM_39, GPIO_INTR_POSEDGE);' />
-                    <entry name='Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_39, GPIO_INTR_NEGEDGE);' />
-                    <entry name='Rising and Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_39, GPIO_INTR_ANYEDGE);' />
-                </edge>
-            </options>
-        </interrupt>
-
-		<interrupt ident='GPIO43' type='pin' name='GPIO43' 
-			global='\nvoid MX_ISR_GPIO43(void*);\n'
-			handler='\n#ifndef MX_ISR_GPIO43_DEF\n#define MX_ISR_GPIO43_DEF\nvoid MX_ISR_GPIO43(void* arg){FCM_%n();}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
-			enable='\ngpio_pad_select_gpio(GPIO_NUM_43);\ngpio_set_direction(GPIO_NUM_43, GPIO_MODE_INPUT);\ngpio_install_isr_service(ESP_INTR_FLAG_LOWMED);\ngpio_isr_handler_add(GPIO_NUM_43, MX_ISR_GPIO43, (void*) GPIO_NUM_43);\ngpio_intr_enable(GPIO_NUM_43);\n'
-			disable='\ngpio_intr_disable(GPIO_NUM_43);\n' >
-            <ioc config='3' >
-                <rising port='1' mask='0x800' />
-                <falling port='1' mask='0x800' />
-            </ioc>
-	    <options >
-                <edge name='Interrupt Edge Select' >
-                    <entry name='Rising edge' value='\ngpio_set_intr_type(GPIO_NUM_43, GPIO_INTR_POSEDGE);' />
-                    <entry name='Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_43, GPIO_INTR_NEGEDGE);' />
-                    <entry name='Rising and Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_43, GPIO_INTR_ANYEDGE);' />
-                </edge>
-            </options>
-        </interrupt>
-				
-				<interrupt ident='GPIO44' type='pin' name='GPIO44' 
-			global='\nvoid MX_ISR_GPIO44(void*);\n'
-			handler='\n#ifndef MX_ISR_GPIO44_DEF\n#define MX_ISR_GPIO44_DEF\nvoid MX_ISR_GPIO44(void* arg){FCM_%n();}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
-			enable='\ngpio_pad_select_gpio(GPIO_NUM_44);\ngpio_set_direction(GPIO_NUM_44, GPIO_MODE_INPUT);\ngpio_install_isr_service(ESP_INTR_FLAG_LOWMED);\ngpio_isr_handler_add(GPIO_NUM_44, MX_ISR_GPIO44, (void*) GPIO_NUM_44);\ngpio_intr_enable(GPIO_NUM_44);\n'
-			disable='\ngpio_intr_disable(GPIO_NUM_44);\n' >
-            <ioc config='3' >
-                <rising port='1' mask='0x1000' />
-                <falling port='1' mask='0x1000' />
-            </ioc>
-	    <options >
-                <edge name='Interrupt Edge Select' >
-                    <entry name='Rising edge' value='\ngpio_set_intr_type(GPIO_NUM_44, GPIO_INTR_POSEDGE);' />
-                    <entry name='Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_44, GPIO_INTR_NEGEDGE);' />
-                    <entry name='Rising and Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_44, GPIO_INTR_ANYEDGE);' />
-                </edge>
-            </options>
-        </interrupt>
-			
-				<interrupt ident='GPIO45' type='pin' name='GPIO45' 
-			global='\nvoid MX_ISR_GPIO45(void*);\n'
-			handler='\n#ifndef MX_ISR_GPIO45_DEF\n#define MX_ISR_GPIO45_DEF\nvoid MX_ISR_GPIO45(void* arg){FCM_%n();}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
-			enable='\ngpio_pad_select_gpio(GPIO_NUM_45);\ngpio_set_direction(GPIO_NUM_45, GPIO_MODE_INPUT);\ngpio_install_isr_service(ESP_INTR_FLAG_LOWMED);\ngpio_isr_handler_add(GPIO_NUM_45, MX_ISR_GPIO45, (void*) GPIO_NUM_45);\ngpio_intr_enable(GPIO_NUM_45);\n'
-			disable='\ngpio_intr_disable(GPIO_NUM_45);\n' >
-            <ioc config='3' >
-                <rising port='1' mask='0x2000' />
-                <falling port='1' mask='0x2000' />
-            </ioc>
-	    <options >
-                <edge name='Interrupt Edge Select' >
-                    <entry name='Rising edge' value='\ngpio_set_intr_type(GPIO_NUM_45, GPIO_INTR_POSEDGE);' />
-                    <entry name='Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_45, GPIO_INTR_NEGEDGE);' />
-                    <entry name='Rising and Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_45, GPIO_INTR_ANYEDGE);' />
-                </edge>
-            </options>
-        </interrupt>
-			
-				<interrupt ident='GPIO46' type='pin' name='GPIO46' 
-			global='\nvoid MX_ISR_GPIO46(void*);\n'
-			handler='\n#ifndef MX_ISR_GPIO46_DEF\n#define MX_ISR_GPIO46_DEF\nvoid MX_ISR_GPIO46(void* arg){FCM_%n();}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
-			enable='\ngpio_pad_select_gpio(GPIO_NUM_46);\ngpio_set_direction(GPIO_NUM_46, GPIO_MODE_INPUT);\ngpio_install_isr_service(ESP_INTR_FLAG_LOWMED);\ngpio_isr_handler_add(GPIO_NUM_46, MX_ISR_GPIO46, (void*) GPIO_NUM_46);\ngpio_intr_enable(GPIO_NUM_46);\n'
-			disable='\ngpio_intr_disable(GPIO_NUM_46);\n' >
-            <ioc config='3' >
-                <rising port='1' mask='0x4000' />
-                <falling port='1' mask='0x4000' />
-            </ioc>
-	    <options >
-                <edge name='Interrupt Edge Select' >
-                    <entry name='Rising edge' value='\ngpio_set_intr_type(GPIO_NUM_46, GPIO_INTR_POSEDGE);' />
-                    <entry name='Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_46, GPIO_INTR_NEGEDGE);' />
-                    <entry name='Rising and Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_46, GPIO_INTR_ANYEDGE);' />
-                </edge>
-            </options>
-        </interrupt>
-
-		<interrupt ident='GPIO47' type='pin' name='GPIO47' 
-			global='\nvoid MX_ISR_GPIO47(void*);\n'
-			handler='\n#ifndef MX_ISR_GPIO47_DEF\n#define MX_ISR_GPIO47_DEF\nvoid MX_ISR_GPIO47(void* arg){FCM_%n();}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
-			enable='\ngpio_pad_select_gpio(GPIO_NUM_47);\ngpio_set_direction(GPIO_NUM_47, GPIO_MODE_INPUT);\ngpio_install_isr_service(ESP_INTR_FLAG_LOWMED);\ngpio_isr_handler_add(GPIO_NUM_47, MX_ISR_GPIO47, (void*) GPIO_NUM_47);\ngpio_intr_enable(GPIO_NUM_47);\n'
-			disable='\ngpio_intr_disable(GPIO_NUM_47);\n' >
-            <ioc config='3' >
-                <rising port='1' mask='0x8000' />
-                <falling port='1' mask='0x8000' />
-            </ioc>
-	    <options >
-                <edge name='Interrupt Edge Select' >
-                    <entry name='Rising edge' value='\ngpio_set_intr_type(GPIO_NUM_47, GPIO_INTR_POSEDGE);' />
-                    <entry name='Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_47, GPIO_INTR_NEGEDGE);' />
-                    <entry name='Rising and Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_47, GPIO_INTR_ANYEDGE);' />
-                </edge>
-            </options>
-        </interrupt>
-
-		<interrupt ident='GPIO48' type='pin' name='GPIO48' 
-			global='\nvoid MX_ISR_GPIO48(void*);\n'
-			handler='\n#ifndef MX_ISR_GPIO48_DEF\n#define MX_ISR_GPIO48_DEF\nvoid MX_ISR_GPIO48(void* arg){FCM_%n();}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
-			enable='\ngpio_pad_select_gpio(GPIO_NUM_48);\ngpio_set_direction(GPIO_NUM_48, GPIO_MODE_INPUT);\ngpio_install_isr_service(ESP_INTR_FLAG_LOWMED);\ngpio_isr_handler_add(GPIO_NUM_48, MX_ISR_GPIO48, (void*) GPIO_NUM_48);\ngpio_intr_enable(GPIO_NUM_48);\n'
-			disable='\ngpio_intr_disable(GPIO_NUM_48);\n' >
-            <ioc config='3' >
-                <rising port='1' mask='0x10000' />
-                <falling port='1' mask='0x10000' />
-            </ioc>
-	    <options >
-                <edge name='Interrupt Edge Select' >
-                    <entry name='Rising edge' value='\ngpio_set_intr_type(GPIO_NUM_48, GPIO_INTR_POSEDGE);' />
-                    <entry name='Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_48, GPIO_INTR_NEGEDGE);' />
-                    <entry name='Rising and Falling edge' value='\ngpio_set_intr_type(GPIO_NUM_48, GPIO_INTR_ANYEDGE);' />
-                </edge>
-            </options>
-        </interrupt>
-
+		
     </interrupts>
     
 </device>
 <inline >
-    <defines code='\n#define MX_CAL_ESP32\n#define MX_CAL_ESP32S3\n#define MX_ESP32_TYPE ESP32S3\n' />
-    <directives code='#include &lt;stdio.h&gt;\n#include &lt;string.h&gt;\n#include &quot;freertos/FreeRTOS.h&quot;\n#include &quot;freertos/event_groups.h&quot;\n#include &quot;freertos/task.h&quot;\n#include &quot;driver/gpio.h&quot;\n#include &quot;esp_wifi.h&quot;\n#include &quot;esp_log.h&quot;\n#include &quot;esp_event_loop.h&quot;\n#include &quot;nvs_flash.h&quot;\n#include &quot;lwip/err.h&quot;\n#include &quot;lwip/sys.h&quot;\n#include &quot;sdkconfig.h&quot;' />
+    <defines code='\n#define MX_CAL_ESP32\n#define MX_ESP32_TYPE ESP32H2\n' />
+    <directives code='#include &lt;stdio.h&gt;\n#include &lt;string.h&gt;\n#include &quot;freertos/FreeRTOS.h&quot;\n#include &quot;freertos/event_groups.h&quot;\n#include &quot;freertos/task.h&quot;\n#include &quot;driver/gpio.h&quot;\n#include &quot;esp_log.h&quot;\n#include &quot;esp_event_loop.h&quot;\n#include &quot;nvs_flash.h&quot;\n#include &quot;lwip/err.h&quot;\n#include &quot;lwip/sys.h&quot;\n#include &quot;sdkconfig.h&quot;' />
     <main >
         <start code='\nvoid app_main()\n{
     // Initialize NVS
@@ -921,10 +899,4 @@
         <end code='//Configuration End\n\n' />
     </config>
 </inline>
-<test >
-    <icd >
-        <clock port0='1' pin0='1' />
-        <data port0='1' pin0='0' />
-    </icd>
-</test>
 </root>

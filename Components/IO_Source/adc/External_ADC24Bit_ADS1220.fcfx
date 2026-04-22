@@ -915,6 +915,20 @@ No: Do not show the pin signals on the data recorder window.' />
 											<argument exp='2' />
 										</command>
 										<command class_type='call' title='CS Pin High' component='cal_spi1' macro='Master_Disable_CS' />
+										<command class_type='decision' title='Continuouse Conversion needs kick starting' exp='ConversionMode' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Send START/SYNC command' >
+													<exp exp='spi_buffer[0] = 0x08' />
+												</command>
+												<command class_type='call' title='CS Pin Low' component='cal_spi1' macro='Master_Enable_CS' />
+												<command class_type='call' title='SPI Transaction' component='cal_spi1' macro='Master_Transaction' >
+													<argument exp='spi_buffer' />
+													<argument exp='1' />
+												</command>
+												<command class_type='call' title='CS Pin High' component='cal_spi1' macro='Master_Disable_CS' />
+											</flowline>
+											<flowline />
+										</command>
 									</flowline>
 								</command>
 								<command class_type='call' title='User Macro' macro='ReadSample' >
@@ -1200,6 +1214,20 @@ Returns 0 if the channel selection is invalid.' statediag='0' >
 											<argument exp='2' />
 										</command>
 										<command class_type='call' title='CS Pin High' component='cal_spi1' macro='Master_Disable_CS' />
+										<command class_type='decision' title='Continuouse Conversion needs kick starting' exp='ConversionMode' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Send START/SYNC command' >
+													<exp exp='spi_buffer[0] = 0x08' />
+												</command>
+												<command class_type='call' title='CS Pin Low' component='cal_spi1' macro='Master_Enable_CS' />
+												<command class_type='call' title='SPI Transaction' component='cal_spi1' macro='Master_Transaction' >
+													<argument exp='spi_buffer' />
+													<argument exp='1' />
+												</command>
+												<command class_type='call' title='CS Pin High' component='cal_spi1' macro='Master_Disable_CS' />
+											</flowline>
+											<flowline />
+										</command>
 									</flowline>
 								</command>
 								<command class_type='call' title='User Macro' macro='ReadSample' >
@@ -1482,10 +1510,10 @@ Returns 0 if the channel selection is invalid.' statediag='0' >
 	</panel3d>
 	<panels2d count='0' />
 	<layout >
-		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAAgQAAIsDAAA' zoom='75' scrollx='0' scrolly='201' flags='0' />
-		<view type='0' name='SampleSglRaw' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAAgQAAIsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAAgQAAIsDAAA' zoom='75' scrollx='0' scrolly='234' flags='0' />
+		<view type='0' name='SampleSglRaw' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAAgQAAIsDAAA' zoom='75' scrollx='0' scrolly='92' flags='0' />
 		<view type='0' name='SampleSglVolts' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAAgQAAIsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SampleDiffRAW' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAAgQAAIsDAAA' zoom='75' scrollx='0' scrolly='1131' flags='0' />
+		<view type='0' name='SampleDiffRAW' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAAgQAAIsDAAA' zoom='75' scrollx='0' scrolly='1433' flags='0' />
 		<view type='0' name='SampleDiffVolts' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAAgQAAIsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
 		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAAgQAAIsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
 		<view type='0' name='Ev_Timer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAAgQAAIsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
@@ -1495,7 +1523,7 @@ Returns 0 if the channel selection is invalid.' statediag='0' >
 		<view type='0' name='ReadRTDResistance' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAAgQAAIsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
 		<view type='0' name='ReadRTDTemperature' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAAgQAAIsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
 		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAAgQAAIsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadSample' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAAgQAAIsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadSample' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAAgQAAIsDAAA' zoom='100' scrollx='0' scrolly='494' flags='0' />
 		<view type='0' name='Ev_SimStart' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAAgQAAIsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 		<view type='0' name='Ev_CompileStart' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAAgQAAIsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 	</layout>

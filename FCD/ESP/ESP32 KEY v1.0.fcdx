@@ -1,0 +1,152 @@
+<!-- CRC: 0796FC1E6A776AF9156B257209C352586B34F4BE416E5B7FEB06B350A621A5CF4742ECABEF8602987B31C0022A2170482B702871DF5ADABCC487AA0E0C74ACDB724B4D3E87881F7D20243FEF066D8CB02BBB7B1CC80F12CBA9B11F738DF98E1545FE3F47CCFAA666997E2333827FF8ADD843EBD9B13CF07869D32E0D80AF00D3D80A37DF65BC7E4BB0E6553748B246371BD0F1DE04384987F1020368DE8F3F2E525476785FA1A9135C7436660CBFE7410323A023D32F1A00086944AE325796A6F1D2FCF61344986D4C07A73743AB222207584BBBB2CDF9CE79849CDE32E3BB2BC44AB45AA6BFFC2C -->
+<!-- REVISION: 1.0 -->
+<!-- GUID: B5B1DE25-E5BD-449F-9482-365FED5B8327 -->
+<!-- DATE: 22\04\2026 -->
+<!-- DIR: FCD\ESP\ESP32|KEY|v1.0.fcdx -->
+
+<root>
+
+<build>
+<compiler   exe="$(fcddir)ESP\Batch\esp32_build.bat" params="&quot;$(compileresp)&quot; &quot;$(target)&quot; &quot;$(outdir)&quot; esp32s_sdkconfig esp32 " />
+<linker     exe="$(appdir)tools\DoNothing\DoNothing.exe" params="" />
+<programmer exe="$(fcddir)ESP\Batch\esp32_prog.bat"  params="&quot;$(compileresp)&quot; &quot;$(target)&quot; &quot;$(outdir)&quot; $(comport) 115200 esp32s_sdkconfig esp32 " UsesComm="1" />
+</build>
+
+
+<device name='ESP32 KEY v1.0'
+		namealt='ESP32'
+		product='ESP' 
+		cal='ESP' 
+		family='ESP32'
+		bits='32' >
+
+    <comminfo>
+        <com pid="55D3" vid="1A86" devdesc="USB-Enhanced-SERIAL CH343" />
+    </comminfo>
+	
+    <clock max_speed='240000000' master_divider='1' default='240000000' />
+    
+    <memory >
+        <flash bytes='2097152' />
+        <ram bytes='532480' />
+    </memory>
+
+    <pins sides='4' smd='1' pad='GND' alt_pin_refs="1" >
+		<pin name='IO10 / LED' port='0' bit='10' rpreg='10' rpnum='10' caption="GPIO10" />
+    </pins>
+    
+    <uart remappable='0' >
+        <tx port='0' pin='1' />
+        <rx port='0' pin='3' />
+    </uart>   
+
+    <interrupts >
+        <interrupt ident='RXINT0' type='comms' name='UART0 RX' 
+			global='\n#define MX_UART0_INT\n'
+			handler='#ifndef MX_INTHANDLER_RXINT0\n#define MX_INTHANDLER_RXINT0\nMX_UART_INT_CH1_FUNC FCM_%n();\nMX_UART_INT_FUNC_END\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
+			enable='uart0_interrupt_enabled = 1;\n' 
+			disable='uart0_interrupt_enabled = 0;\n' />
+
+        <interrupt ident='TMR0' name='Timer 0' regl='TMR0' regh='' type='timer8'
+			handler='#ifndef MX_INTHANDLER_TIMER0\n#define MX_INTHANDLER_TIMER0\nvoid FC_CAL_Timer_0_ISR(void* p)\n{\n\tFCM_%n();\n\tFC_CAL_Timer_Rearm(0);\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
+			enable='FC_CAL_Timer_Init(0, FC_CAL_Timer_Period * FC_CAL_Timer_Multiplier, FC_CAL_Timer_0_ISR);\n' 
+			disable='FC_CAL_Timer_Deinit(0);\n' >
+            <timer overflow='4294967295' extrange='0' />
+            <options >
+				<rollover name='Timer Period (integer)' >
+                    <entry name='1000' min='1' max='4294967295' value='FC_CAL_Timer_Period = %d;\n' />
+                </rollover>
+			    <option name='Timer Resolution' >
+			    		<entry name='microseconds (experimental)' value='FC_CAL_Timer_Multiplier = 1;\n' />
+					<entry name='milliseconds' value='FC_CAL_Timer_Multiplier = 1000;\n' />
+					<entry name='seconds'      value='FC_CAL_Timer_Multiplier = 1000000;\n' />
+                </option>
+            </options>
+        </interrupt>
+        <interrupt ident='TMR1' name='Timer 1' regl='TMR1' regh='' type='timer8'
+			handler='#ifndef MX_INTHANDLER_TIMER1\n#define MX_INTHANDLER_TIMER1\nvoid FC_CAL_Timer_1_ISR(void* p)\n{\n\tFCM_%n();\n\tFC_CAL_Timer_Rearm(1);\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
+			enable='FC_CAL_Timer_Init(1, FC_CAL_Timer_Period * FC_CAL_Timer_Multiplier, FC_CAL_Timer_1_ISR);\n' 
+			disable='FC_CAL_Timer_Deinit(1);\n' >
+            <timer overflow='4294967295' extrange='0' />
+            <options >
+				<rollover name='Timer Period (integer)' >
+                    <entry name='1000' min='1' max='4294967295' value='FC_CAL_Timer_Period = %d;\n' />
+                </rollover>
+			    <option name='Timer Resolution' >
+			    		<entry name='microseconds (experimental)' value='FC_CAL_Timer_Multiplier = 1;\n' />
+					<entry name='milliseconds' value='FC_CAL_Timer_Multiplier = 1000;\n' />
+					<entry name='seconds'      value='FC_CAL_Timer_Multiplier = 1000000;\n' />
+                </option>
+            </options>
+        </interrupt>
+        <interrupt ident='TMR2' name='Timer 2' regl='TMR2' regh='' type='timer8'
+			handler='#ifndef MX_INTHANDLER_TIMER2\n#define MX_INTHANDLER_TIMER2\nvoid FC_CAL_Timer_2_ISR(void* p)\n{\n\tFCM_%n();\n\tFC_CAL_Timer_Rearm(2);\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
+			enable='FC_CAL_Timer_Init(2, FC_CAL_Timer_Period * FC_CAL_Timer_Multiplier, FC_CAL_Timer_2_ISR);\n' 
+			disable='FC_CAL_Timer_Deinit(2);\n' >
+            <timer overflow='4294967295' extrange='0' />
+            <options >
+				<rollover name='Timer Period (integer)' >
+                    <entry name='1000' min='1' max='4294967295' value='FC_CAL_Timer_Period = %d;\n' />
+                </rollover>
+			    <option name='Timer Resolution' >
+			    		<entry name='microseconds (experimental)' value='FC_CAL_Timer_Multiplier = 1;\n' />
+					<entry name='milliseconds' value='FC_CAL_Timer_Multiplier = 1000;\n' />
+					<entry name='seconds'      value='FC_CAL_Timer_Multiplier = 1000000;\n' />
+                </option>
+            </options>
+        </interrupt>
+        <interrupt ident='TMR3' name='Timer 3' regl='TMR3' regh='' type='timer8'
+			handler='#ifndef MX_INTHANDLER_TIMER3\n#define MX_INTHANDLER_TIMER3\nvoid FC_CAL_Timer_3_ISR(void* p)\n{\n\tFCM_%n();\n\tFC_CAL_Timer_Rearm(3);\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' 
+			enable='FC_CAL_Timer_Init(3, FC_CAL_Timer_Period * FC_CAL_Timer_Multiplier, FC_CAL_Timer_3_ISR);\n' 
+			disable='FC_CAL_Timer_Deinit(3);\n' >
+            <timer overflow='4294967295' extrange='0' />
+            <options >
+				<rollover name='Timer Period (integer)' >
+                    <entry name='1000' min='1' max='4294967295' value='FC_CAL_Timer_Period = %d;\n' />
+                </rollover>
+			    <option name='Timer Resolution' >
+			    		<entry name='microseconds (experimental)' value='FC_CAL_Timer_Multiplier = 1;\n' />
+					<entry name='milliseconds' value='FC_CAL_Timer_Multiplier = 1000;\n' />
+					<entry name='seconds'      value='FC_CAL_Timer_Multiplier = 1000000;\n' />
+                </option>
+            </options>
+        </interrupt>		
+    </interrupts>
+    
+</device>
+<inline >
+    <defines code='\n#define MX_CAL_ESP32\n#define MX_ESP32_TYPE ESP32\n' />
+    <directives code='#include &lt;stdio.h&gt;\n#include &lt;string.h&gt;\n#include &quot;freertos/FreeRTOS.h&quot;\n#include &quot;freertos/event_groups.h&quot;\n#include &quot;freertos/task.h&quot;\n#include &quot;driver/gpio.h&quot;\n#include &quot;esp_wifi.h&quot;\n#include &quot;esp_log.h&quot;\n#include &quot;esp_event_loop.h&quot;\n#include &quot;nvs_flash.h&quot;\n#include &quot;lwip/err.h&quot;\n#include &quot;lwip/sys.h&quot;\n#include &quot;sdkconfig.h&quot;' />
+    <main >
+        <start code='\nvoid app_main()\n{
+    // Initialize NVS
+    esp_err_t ret = nvs_flash_init();
+    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+        ESP_ERROR_CHECK(nvs_flash_erase());
+        ret = nvs_flash_init();
+    }
+    ESP_ERROR_CHECK( ret );
+	ESP_ERROR_CHECK(esp_event_loop_create_default());\n' />
+        <end code='\tmainendloop: goto mainendloop;\n}\n\n' />
+        <init code='' />
+    </main>
+    <interrupt >
+        <enable code='' />
+        <start code='\t#ifdef USE_FLOWCODE_ICD3\n\t\tICD_INTERRUPT_HANDLER\n\t#endif\n' />
+        <end code='' />
+        <init code='' />
+    </interrupt>
+    <config >
+        <start code='//Configuration Start\n' />
+        <body code='' />
+        <end code='//Configuration End\n\n' />
+    </config>
+</inline>
+<test >
+    <icd >
+        <clock port0='1' pin0='1' />
+        <data port0='1' pin0='0' />
+    </icd>
+    <icd3 type='com' channel='1' baud='115200' rxport='0' rxpin='3' txport='0' txpin='1' autodetect='0' />
+</test>
+</root>
