@@ -1,7 +1,7 @@
-// CRC: 9127F328264D8FABC87FF80C826F04D0E463E451CD747EFC4B2F8236B78C0C84919322A6129BAB668A1F07FD2640D767265B9B5C83AAC8680C3CAEE8E7DA6987B73F1ADF2AD46F0B80E2966912EBCB9A0835AF06B53641108741CC02A86228770A3A7C70C2F8885D36DCA8B36FC67E1E68BE6FCEF249B64382B5F72235EEE72F94F04968BF60E54AFD352432F208853EF8395F2401ECB9DE549D34A0D5AD11F31C96262D0C51598CF96CEC05A3EC6EA7D3FE065936E79CC3B0330AA6FB05B88105A68DA3CE9026E5
-// REVISION: 7.0
+// CRC: 9127F328264D8FABC87FF80C826F04D0E463E451CD747EFC4B2F8236B78C0C8417B470248A3E565D848C9455C852E4567AAB8FF6C48BFC20A9B11F738DF98E15102A164A9ECB44A980E2966912EBCB9A0835AF06B53641108741CC02A86228770A3A7C70C2F8885D36DCA8B36FC67E1E68BE6FCEF249B64382B5F72235EEE72F94F04968BF60E54AFD352432F208853EF8395F2401ECB9DE549D34A0D5AD11F30DF9E9BE9544D9CBCBC1D63B864F86206AFA60BE370D9403BFFF998DDEA49026AF90F20157562625
+// REVISION: 9.0
 // GUID: AF5BA3D1-36BB-4DEE-A530-1F5660353617
-// DATE: 01\10\2025
+// DATE: 28\04\2026
 // DIR: CAL\includes.c
 /*********************************************************************
  *           Flowcode Peripheral Slot Allocation Header File
@@ -716,6 +716,236 @@
 #endif
 #ifdef	MX_I2C_REF10
   #define MX_I2C_NUM 10
+  #if defined MX_CAL_RPI
+	#include "RPI\RPI_CAL_I2C.c"
+  #elif defined MX_CAL_PIC
+	#include "PIC\PIC_CAL_I2C.c"
+  #elif defined MX_CAL_PIC16
+	#include "PIC16BIT\PIC16BIT_CAL_I2C.c"
+  #elif defined MX_CAL_PIC32
+    #include "PIC32BIT\PIC32BIT_CAL_I2C.c"
+  #elif defined MX_CAL_ESP32
+  	#include "ESP\ESP_CAL_I2C.c"
+  #elif defined MX_CAL_AVR
+	#include "AVR\AVR_CAL_I2C.c"
+  #elif defined MX_CAL_ARD
+	#include "AVR\AVR_CAL_I2C.c"
+  #elif defined MX_CAL_STARM
+    #include "STARM\STARM_CAL_I2C.c"
+  #elif defined MX_CAL_ARM
+	#include "ARM\ARM_CAL_I2C.c"
+  #endif
+  #undef MX_I2C_NUM
+#endif
+#ifdef	MX_I2C_REF11
+  #define MX_I2C_NUM 11
+  #if defined MX_CAL_RPI
+	#include "RPI\RPI_CAL_I2C.c"
+  #elif defined MX_CAL_PIC
+	#include "PIC\PIC_CAL_I2C.c"
+  #elif defined MX_CAL_PIC16
+	#include "PIC16BIT\PIC16BIT_CAL_I2C.c"
+  #elif defined MX_CAL_PIC32
+    #include "PIC32BIT\PIC32BIT_CAL_I2C.c"
+  #elif defined MX_CAL_ESP32
+  	#include "ESP\ESP_CAL_I2C.c"
+  #elif defined MX_CAL_AVR
+	#include "AVR\AVR_CAL_I2C.c"
+  #elif defined MX_CAL_ARD
+	#include "AVR\AVR_CAL_I2C.c"
+  #elif defined MX_CAL_STARM
+    #include "STARM\STARM_CAL_I2C.c"
+  #elif defined MX_CAL_ARM
+	#include "ARM\ARM_CAL_I2C.c"
+  #endif
+  #undef MX_I2C_NUM
+#endif
+#ifdef	MX_I2C_REF12
+  #define MX_I2C_NUM 12
+  #if defined MX_CAL_RPI
+	#include "RPI\RPI_CAL_I2C.c"
+  #elif defined MX_CAL_PIC
+	#include "PIC\PIC_CAL_I2C.c"
+  #elif defined MX_CAL_PIC16
+	#include "PIC16BIT\PIC16BIT_CAL_I2C.c"
+  #elif defined MX_CAL_PIC32
+    #include "PIC32BIT\PIC32BIT_CAL_I2C.c"
+  #elif defined MX_CAL_ESP32
+  	#include "ESP\ESP_CAL_I2C.c"
+  #elif defined MX_CAL_AVR
+	#include "AVR\AVR_CAL_I2C.c"
+  #elif defined MX_CAL_ARD
+	#include "AVR\AVR_CAL_I2C.c"
+  #elif defined MX_CAL_STARM
+    #include "STARM\STARM_CAL_I2C.c"
+  #elif defined MX_CAL_ARM
+	#include "ARM\ARM_CAL_I2C.c"
+  #endif
+  #undef MX_I2C_NUM
+#endif
+#ifdef	MX_I2C_REF13
+  #define MX_I2C_NUM 13
+  #if defined MX_CAL_RPI
+	#include "RPI\RPI_CAL_I2C.c"
+  #elif defined MX_CAL_PIC
+	#include "PIC\PIC_CAL_I2C.c"
+  #elif defined MX_CAL_PIC16
+	#include "PIC16BIT\PIC16BIT_CAL_I2C.c"
+  #elif defined MX_CAL_PIC32
+    #include "PIC32BIT\PIC32BIT_CAL_I2C.c"
+  #elif defined MX_CAL_ESP32
+  	#include "ESP\ESP_CAL_I2C.c"
+  #elif defined MX_CAL_AVR
+	#include "AVR\AVR_CAL_I2C.c"
+  #elif defined MX_CAL_ARD
+	#include "AVR\AVR_CAL_I2C.c"
+  #elif defined MX_CAL_STARM
+    #include "STARM\STARM_CAL_I2C.c"
+  #elif defined MX_CAL_ARM
+	#include "ARM\ARM_CAL_I2C.c"
+  #endif
+  #undef MX_I2C_NUM
+#endif
+#ifdef	MX_I2C_REF14
+  #define MX_I2C_NUM 14
+  #if defined MX_CAL_RPI
+	#include "RPI\RPI_CAL_I2C.c"
+  #elif defined MX_CAL_PIC
+	#include "PIC\PIC_CAL_I2C.c"
+  #elif defined MX_CAL_PIC16
+	#include "PIC16BIT\PIC16BIT_CAL_I2C.c"
+  #elif defined MX_CAL_PIC32
+    #include "PIC32BIT\PIC32BIT_CAL_I2C.c"
+  #elif defined MX_CAL_ESP32
+  	#include "ESP\ESP_CAL_I2C.c"
+  #elif defined MX_CAL_AVR
+	#include "AVR\AVR_CAL_I2C.c"
+  #elif defined MX_CAL_ARD
+	#include "AVR\AVR_CAL_I2C.c"
+  #elif defined MX_CAL_STARM
+    #include "STARM\STARM_CAL_I2C.c"
+  #elif defined MX_CAL_ARM
+	#include "ARM\ARM_CAL_I2C.c"
+  #endif
+  #undef MX_I2C_NUM
+#endif
+#ifdef	MX_I2C_REF15
+  #define MX_I2C_NUM 15
+  #if defined MX_CAL_RPI
+	#include "RPI\RPI_CAL_I2C.c"
+  #elif defined MX_CAL_PIC
+	#include "PIC\PIC_CAL_I2C.c"
+  #elif defined MX_CAL_PIC16
+	#include "PIC16BIT\PIC16BIT_CAL_I2C.c"
+  #elif defined MX_CAL_PIC32
+    #include "PIC32BIT\PIC32BIT_CAL_I2C.c"
+  #elif defined MX_CAL_ESP32
+  	#include "ESP\ESP_CAL_I2C.c"
+  #elif defined MX_CAL_AVR
+	#include "AVR\AVR_CAL_I2C.c"
+  #elif defined MX_CAL_ARD
+	#include "AVR\AVR_CAL_I2C.c"
+  #elif defined MX_CAL_STARM
+    #include "STARM\STARM_CAL_I2C.c"
+  #elif defined MX_CAL_ARM
+	#include "ARM\ARM_CAL_I2C.c"
+  #endif
+  #undef MX_I2C_NUM
+#endif
+#ifdef	MX_I2C_REF16
+  #define MX_I2C_NUM 16
+  #if defined MX_CAL_RPI
+	#include "RPI\RPI_CAL_I2C.c"
+  #elif defined MX_CAL_PIC
+	#include "PIC\PIC_CAL_I2C.c"
+  #elif defined MX_CAL_PIC16
+	#include "PIC16BIT\PIC16BIT_CAL_I2C.c"
+  #elif defined MX_CAL_PIC32
+    #include "PIC32BIT\PIC32BIT_CAL_I2C.c"
+  #elif defined MX_CAL_ESP32
+  	#include "ESP\ESP_CAL_I2C.c"
+  #elif defined MX_CAL_AVR
+	#include "AVR\AVR_CAL_I2C.c"
+  #elif defined MX_CAL_ARD
+	#include "AVR\AVR_CAL_I2C.c"
+  #elif defined MX_CAL_STARM
+    #include "STARM\STARM_CAL_I2C.c"
+  #elif defined MX_CAL_ARM
+	#include "ARM\ARM_CAL_I2C.c"
+  #endif
+  #undef MX_I2C_NUM
+#endif
+#ifdef	MX_I2C_REF17
+  #define MX_I2C_NUM 17
+  #if defined MX_CAL_RPI
+	#include "RPI\RPI_CAL_I2C.c"
+  #elif defined MX_CAL_PIC
+	#include "PIC\PIC_CAL_I2C.c"
+  #elif defined MX_CAL_PIC16
+	#include "PIC16BIT\PIC16BIT_CAL_I2C.c"
+  #elif defined MX_CAL_PIC32
+    #include "PIC32BIT\PIC32BIT_CAL_I2C.c"
+  #elif defined MX_CAL_ESP32
+  	#include "ESP\ESP_CAL_I2C.c"
+  #elif defined MX_CAL_AVR
+	#include "AVR\AVR_CAL_I2C.c"
+  #elif defined MX_CAL_ARD
+	#include "AVR\AVR_CAL_I2C.c"
+  #elif defined MX_CAL_STARM
+    #include "STARM\STARM_CAL_I2C.c"
+  #elif defined MX_CAL_ARM
+	#include "ARM\ARM_CAL_I2C.c"
+  #endif
+  #undef MX_I2C_NUM
+#endif
+#ifdef	MX_I2C_REF18
+  #define MX_I2C_NUM 18
+  #if defined MX_CAL_RPI
+	#include "RPI\RPI_CAL_I2C.c"
+  #elif defined MX_CAL_PIC
+	#include "PIC\PIC_CAL_I2C.c"
+  #elif defined MX_CAL_PIC16
+	#include "PIC16BIT\PIC16BIT_CAL_I2C.c"
+  #elif defined MX_CAL_PIC32
+    #include "PIC32BIT\PIC32BIT_CAL_I2C.c"
+  #elif defined MX_CAL_ESP32
+  	#include "ESP\ESP_CAL_I2C.c"
+  #elif defined MX_CAL_AVR
+	#include "AVR\AVR_CAL_I2C.c"
+  #elif defined MX_CAL_ARD
+	#include "AVR\AVR_CAL_I2C.c"
+  #elif defined MX_CAL_STARM
+    #include "STARM\STARM_CAL_I2C.c"
+  #elif defined MX_CAL_ARM
+	#include "ARM\ARM_CAL_I2C.c"
+  #endif
+  #undef MX_I2C_NUM
+#endif
+#ifdef	MX_I2C_REF19
+  #define MX_I2C_NUM 19
+  #if defined MX_CAL_RPI
+	#include "RPI\RPI_CAL_I2C.c"
+  #elif defined MX_CAL_PIC
+	#include "PIC\PIC_CAL_I2C.c"
+  #elif defined MX_CAL_PIC16
+	#include "PIC16BIT\PIC16BIT_CAL_I2C.c"
+  #elif defined MX_CAL_PIC32
+    #include "PIC32BIT\PIC32BIT_CAL_I2C.c"
+  #elif defined MX_CAL_ESP32
+  	#include "ESP\ESP_CAL_I2C.c"
+  #elif defined MX_CAL_AVR
+	#include "AVR\AVR_CAL_I2C.c"
+  #elif defined MX_CAL_ARD
+	#include "AVR\AVR_CAL_I2C.c"
+  #elif defined MX_CAL_STARM
+    #include "STARM\STARM_CAL_I2C.c"
+  #elif defined MX_CAL_ARM
+	#include "ARM\ARM_CAL_I2C.c"
+  #endif
+  #undef MX_I2C_NUM
+#endif
+#ifdef	MX_I2C_REF20
+  #define MX_I2C_NUM 20
   #if defined MX_CAL_RPI
 	#include "RPI\RPI_CAL_I2C.c"
   #elif defined MX_CAL_PIC
@@ -1519,6 +1749,256 @@
   #endif
   #undef MX_SPI_NUM
 #endif
+#ifdef	MX_SPI_REF11
+  #define MX_SPI_NUM 11
+  #ifdef MX_CAL_PIC
+	#include "PIC\PIC_CAL_SPI.c"
+  #elif defined MX_CAL_PIC16
+	#include "PIC16BIT\PIC16BIT_CAL_SPI.c"
+  #elif defined MX_CAL_PIC32
+    #include "PIC32BIT\PIC32BIT_CAL_SPI.c"
+  #elif defined MX_CAL_ESP32
+  	#include "ESP\ESP_CAL_SPI.c"
+  #elif defined MX_CAL_AVR
+	#include "AVR\AVR_CAL_SPI.c"
+  #elif defined MX_CAL_ARD
+	#include "AVR\AVR_CAL_SPI.c"
+  #elif defined MX_CAL_RPI
+	#include "RPI\RPI_CAL_SPI.c"
+  #elif defined MX_CAL_STARM
+	#include "STARM\STARM_CAL_SPI.c"
+  #elif defined MX_CAL_ARM
+	#include "ARM\ARM_CAL_SPI.c"
+  #elif defined MX_CAL_PICO
+	#include "PICO\PICO_CAL_SPI.c"
+  #endif
+  #undef MX_SPI_NUM
+#endif
+#ifdef	MX_SPI_REF12
+  #define MX_SPI_NUM 12
+  #ifdef MX_CAL_PIC
+	#include "PIC\PIC_CAL_SPI.c"
+  #elif defined MX_CAL_PIC16
+	#include "PIC16BIT\PIC16BIT_CAL_SPI.c"
+  #elif defined MX_CAL_PIC32
+    #include "PIC32BIT\PIC32BIT_CAL_SPI.c"
+  #elif defined MX_CAL_ESP32
+  	#include "ESP\ESP_CAL_SPI.c"
+  #elif defined MX_CAL_AVR
+	#include "AVR\AVR_CAL_SPI.c"
+  #elif defined MX_CAL_ARD
+	#include "AVR\AVR_CAL_SPI.c"
+  #elif defined MX_CAL_RPI
+	#include "RPI\RPI_CAL_SPI.c"
+  #elif defined MX_CAL_STARM
+	#include "STARM\STARM_CAL_SPI.c"
+  #elif defined MX_CAL_ARM
+	#include "ARM\ARM_CAL_SPI.c"
+  #elif defined MX_CAL_PICO
+	#include "PICO\PICO_CAL_SPI.c"
+  #endif
+  #undef MX_SPI_NUM
+#endif
+#ifdef	MX_SPI_REF13
+  #define MX_SPI_NUM 13
+  #ifdef MX_CAL_PIC
+	#include "PIC\PIC_CAL_SPI.c"
+  #elif defined MX_CAL_PIC16
+	#include "PIC16BIT\PIC16BIT_CAL_SPI.c"
+  #elif defined MX_CAL_PIC32
+    #include "PIC32BIT\PIC32BIT_CAL_SPI.c"
+  #elif defined MX_CAL_ESP32
+  	#include "ESP\ESP_CAL_SPI.c"
+  #elif defined MX_CAL_AVR
+	#include "AVR\AVR_CAL_SPI.c"
+  #elif defined MX_CAL_ARD
+	#include "AVR\AVR_CAL_SPI.c"
+  #elif defined MX_CAL_RPI
+	#include "RPI\RPI_CAL_SPI.c"
+  #elif defined MX_CAL_STARM
+	#include "STARM\STARM_CAL_SPI.c"
+  #elif defined MX_CAL_ARM
+	#include "ARM\ARM_CAL_SPI.c"
+  #elif defined MX_CAL_PICO
+	#include "PICO\PICO_CAL_SPI.c"
+  #endif
+  #undef MX_SPI_NUM
+#endif
+#ifdef	MX_SPI_REF14
+  #define MX_SPI_NUM 14
+  #ifdef MX_CAL_PIC
+	#include "PIC\PIC_CAL_SPI.c"
+  #elif defined MX_CAL_PIC16
+	#include "PIC16BIT\PIC16BIT_CAL_SPI.c"
+  #elif defined MX_CAL_PIC32
+    #include "PIC32BIT\PIC32BIT_CAL_SPI.c"
+  #elif defined MX_CAL_ESP32
+  	#include "ESP\ESP_CAL_SPI.c"
+  #elif defined MX_CAL_AVR
+	#include "AVR\AVR_CAL_SPI.c"
+  #elif defined MX_CAL_ARD
+	#include "AVR\AVR_CAL_SPI.c"
+  #elif defined MX_CAL_RPI
+	#include "RPI\RPI_CAL_SPI.c"
+  #elif defined MX_CAL_STARM
+	#include "STARM\STARM_CAL_SPI.c"
+  #elif defined MX_CAL_ARM
+	#include "ARM\ARM_CAL_SPI.c"
+  #elif defined MX_CAL_PICO
+	#include "PICO\PICO_CAL_SPI.c"
+  #endif
+  #undef MX_SPI_NUM
+#endif
+#ifdef	MX_SPI_REF15
+  #define MX_SPI_NUM 15
+  #ifdef MX_CAL_PIC
+	#include "PIC\PIC_CAL_SPI.c"
+  #elif defined MX_CAL_PIC16
+	#include "PIC16BIT\PIC16BIT_CAL_SPI.c"
+  #elif defined MX_CAL_PIC32
+    #include "PIC32BIT\PIC32BIT_CAL_SPI.c"
+  #elif defined MX_CAL_ESP32
+  	#include "ESP\ESP_CAL_SPI.c"
+  #elif defined MX_CAL_AVR
+	#include "AVR\AVR_CAL_SPI.c"
+  #elif defined MX_CAL_ARD
+	#include "AVR\AVR_CAL_SPI.c"
+  #elif defined MX_CAL_RPI
+	#include "RPI\RPI_CAL_SPI.c"
+  #elif defined MX_CAL_STARM
+	#include "STARM\STARM_CAL_SPI.c"
+  #elif defined MX_CAL_ARM
+	#include "ARM\ARM_CAL_SPI.c"
+  #elif defined MX_CAL_PICO
+	#include "PICO\PICO_CAL_SPI.c"
+  #endif
+  #undef MX_SPI_NUM
+#endif
+#ifdef	MX_SPI_REF16
+  #define MX_SPI_NUM 16
+  #ifdef MX_CAL_PIC
+	#include "PIC\PIC_CAL_SPI.c"
+  #elif defined MX_CAL_PIC16
+	#include "PIC16BIT\PIC16BIT_CAL_SPI.c"
+  #elif defined MX_CAL_PIC32
+    #include "PIC32BIT\PIC32BIT_CAL_SPI.c"
+  #elif defined MX_CAL_ESP32
+  	#include "ESP\ESP_CAL_SPI.c"
+  #elif defined MX_CAL_AVR
+	#include "AVR\AVR_CAL_SPI.c"
+  #elif defined MX_CAL_ARD
+	#include "AVR\AVR_CAL_SPI.c"
+  #elif defined MX_CAL_RPI
+	#include "RPI\RPI_CAL_SPI.c"
+  #elif defined MX_CAL_STARM
+	#include "STARM\STARM_CAL_SPI.c"
+  #elif defined MX_CAL_ARM
+	#include "ARM\ARM_CAL_SPI.c"
+  #elif defined MX_CAL_PICO
+	#include "PICO\PICO_CAL_SPI.c"
+  #endif
+  #undef MX_SPI_NUM
+#endif
+#ifdef	MX_SPI_REF17
+  #define MX_SPI_NUM 17
+  #ifdef MX_CAL_PIC
+	#include "PIC\PIC_CAL_SPI.c"
+  #elif defined MX_CAL_PIC16
+	#include "PIC16BIT\PIC16BIT_CAL_SPI.c"
+  #elif defined MX_CAL_PIC32
+    #include "PIC32BIT\PIC32BIT_CAL_SPI.c"
+  #elif defined MX_CAL_ESP32
+  	#include "ESP\ESP_CAL_SPI.c"
+  #elif defined MX_CAL_AVR
+	#include "AVR\AVR_CAL_SPI.c"
+  #elif defined MX_CAL_ARD
+	#include "AVR\AVR_CAL_SPI.c"
+  #elif defined MX_CAL_RPI
+	#include "RPI\RPI_CAL_SPI.c"
+  #elif defined MX_CAL_STARM
+	#include "STARM\STARM_CAL_SPI.c"
+  #elif defined MX_CAL_ARM
+	#include "ARM\ARM_CAL_SPI.c"
+  #elif defined MX_CAL_PICO
+	#include "PICO\PICO_CAL_SPI.c"
+  #endif
+  #undef MX_SPI_NUM
+#endif
+#ifdef	MX_SPI_REF18
+  #define MX_SPI_NUM 18
+  #ifdef MX_CAL_PIC
+	#include "PIC\PIC_CAL_SPI.c"
+  #elif defined MX_CAL_PIC16
+	#include "PIC16BIT\PIC16BIT_CAL_SPI.c"
+  #elif defined MX_CAL_PIC32
+    #include "PIC32BIT\PIC32BIT_CAL_SPI.c"
+  #elif defined MX_CAL_ESP32
+  	#include "ESP\ESP_CAL_SPI.c"
+  #elif defined MX_CAL_AVR
+	#include "AVR\AVR_CAL_SPI.c"
+  #elif defined MX_CAL_ARD
+	#include "AVR\AVR_CAL_SPI.c"
+  #elif defined MX_CAL_RPI
+	#include "RPI\RPI_CAL_SPI.c"
+  #elif defined MX_CAL_STARM
+	#include "STARM\STARM_CAL_SPI.c"
+  #elif defined MX_CAL_ARM
+	#include "ARM\ARM_CAL_SPI.c"
+  #elif defined MX_CAL_PICO
+	#include "PICO\PICO_CAL_SPI.c"
+  #endif
+  #undef MX_SPI_NUM
+#endif
+#ifdef	MX_SPI_REF19
+  #define MX_SPI_NUM 19
+  #ifdef MX_CAL_PIC
+	#include "PIC\PIC_CAL_SPI.c"
+  #elif defined MX_CAL_PIC16
+	#include "PIC16BIT\PIC16BIT_CAL_SPI.c"
+  #elif defined MX_CAL_PIC32
+    #include "PIC32BIT\PIC32BIT_CAL_SPI.c"
+  #elif defined MX_CAL_ESP32
+  	#include "ESP\ESP_CAL_SPI.c"
+  #elif defined MX_CAL_AVR
+	#include "AVR\AVR_CAL_SPI.c"
+  #elif defined MX_CAL_ARD
+	#include "AVR\AVR_CAL_SPI.c"
+  #elif defined MX_CAL_RPI
+	#include "RPI\RPI_CAL_SPI.c"
+  #elif defined MX_CAL_STARM
+	#include "STARM\STARM_CAL_SPI.c"
+  #elif defined MX_CAL_ARM
+	#include "ARM\ARM_CAL_SPI.c"
+  #elif defined MX_CAL_PICO
+	#include "PICO\PICO_CAL_SPI.c"
+  #endif
+  #undef MX_SPI_NUM
+#endif
+#ifdef	MX_SPI_REF20
+  #define MX_SPI_NUM 20
+  #ifdef MX_CAL_PIC
+	#include "PIC\PIC_CAL_SPI.c"
+  #elif defined MX_CAL_PIC16
+	#include "PIC16BIT\PIC16BIT_CAL_SPI.c"
+  #elif defined MX_CAL_PIC32
+    #include "PIC32BIT\PIC32BIT_CAL_SPI.c"
+  #elif defined MX_CAL_ESP32
+  	#include "ESP\ESP_CAL_SPI.c"
+  #elif defined MX_CAL_AVR
+	#include "AVR\AVR_CAL_SPI.c"
+  #elif defined MX_CAL_ARD
+	#include "AVR\AVR_CAL_SPI.c"
+  #elif defined MX_CAL_RPI
+	#include "RPI\RPI_CAL_SPI.c"
+  #elif defined MX_CAL_STARM
+	#include "STARM\STARM_CAL_SPI.c"
+  #elif defined MX_CAL_ARM
+	#include "ARM\ARM_CAL_SPI.c"
+  #elif defined MX_CAL_PICO
+	#include "PICO\PICO_CAL_SPI.c"
+  #endif
+  #undef MX_SPI_NUM
+#endif
 #ifdef CALFUNCTION
 	#undef CALFUNCTION
 #endif
@@ -1954,17 +2434,20 @@
 
 
 #if defined MX_CAL_ESP32
-	#if defined MX_CAL_ESP32_WIFI
-		#include "ESP\ESP_CAL_WIFI.c"
-	#endif
-	#if defined MX_CAL_ESP32_BT_SPP
-		#include "ESP\ESP_CAL_BT_SPP.c"
-	#endif
 	#if defined MX_CAL_ESP32_BLE_GATT_SPP_SERVER
 		#include "ESP\ESP_CAL_BLE_SPP_Server.c"
 	#endif
 	#if defined MX_CAL_ESP32_BLE_GATT_SPP_CLIENT
 		#include "ESP\ESP_CAL_BLE_SPP_Client.c"
+	#endif
+	#if defined MX_CAL_ESP32_BT_SPP
+		#include "ESP\ESP_CAL_BT_SPP.c"
+	#endif
+	#if defined MX_CAL_ESP32_WIFI
+		#include "ESP\ESP_CAL_WIFI.c"
+	#endif
+	#if defined MX_CAL_ESP32_ZIGBEE
+		#include "ESP\ESP_CAL_ZIGBEE.c"
 	#endif
 #endif
 
