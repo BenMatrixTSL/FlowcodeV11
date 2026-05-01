@@ -1,5 +1,5 @@
 <root>
-<document scada='0' schema='103' license='10,BenR,C9TN1M' title='' description='' fcversion='655360' target='PIC.16F.16F1937' >
+<document scada='0' projtype='1' schema='103' license='1,82702381,95CJQR' title='' description='' fcversion='720897' target='PIC.16F.16F1937' >
 	<config data='!0,fe2!10,1eff%0,2%3,0%5,1%6,1%7,1%8,1%9,3%b,1%c,0%d,0%10,3%14,3%18,0%19,1%1a,1%1c,1%1d,0' clkspd='19660800' simspd='1' usewdt='0' constif='1' Use3V3='0' />
 	<plugins >
 		<dll_models enabled='1' />
@@ -57,8 +57,8 @@
 	<components >
 		<settings autoimg='0' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
 		<definition guid='e78d88a0-e132-4f82-988d-59353009b669' vstate='40' vmin='0' vmaj='1' srcleaf='DAC_MCP4725.fcfx' visiblename='DAC (MCP4725)' description='Component to drive a 12-bit digital to analogue converter (DAC) IC from Microchip via an I2C interface.
-' category='Analog Output' category2='API IO' category3='' bIs2dOnly='1' bIs3dOnly='0' catenable='1' author='Matrix TSL' manuname='Microchip' manucode='MCP4725' sysinfo='5255947' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='1' showmacros='1' iconpath='..\..\icons\components\DAC.png' />
-		<component class_type='root' codename='DAC_MCP4725' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+' category='Analog Output' category2='API IO' category3='' bIs2dOnly='1' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='Matrix TSL' manuname='Microchip' manucode='MCP4725' sysinfo='5255947' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='1' showmacros='1' iconpath='..\..\icons\components\DAC.png' />
+		<component class_type='root' codename='DAC_MCP4725' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 			<resources />
 			<properties >
 				<property name='DAC IC' target='DAC_IC' typeid='16' hidden='1' locked='0' info='Selects which DAC IC is connected and therefore the bit depth available.' filter='000MCP4706 8-Bit
@@ -166,12 +166,12 @@ No: Do not show the pin signals on the data recorder window.' />
 				<value target='cal_i2c1::Injector' data='000' />
 			</values>
 			<events >
-				<event class='Connection' event='ChipChange' target='Ev_ChipChange' />
-				<event class='Simulation' event='Start' target='Ev_Start' />
-				<event class='Components' event='Initialise' target='Ev_Initialise' />
 				<event class='Components' event='Property' target='Ev_Property_Change' />
-				<event class='System' event='Timer' target='Ev_Timer' />
+				<event class='Simulation' event='Start' target='Ev_Start' />
 				<event class='Components' event='Renamed' target='Ev_Renamed' />
+				<event class='System' event='Timer' target='Ev_Timer' />
+				<event class='Components' event='Initialise' target='Ev_Initialise' />
+				<event class='Connection' event='ChipChange' target='Ev_ChipChange' />
 			</events>
 			<apis >
 				<api name='SetOutput' alt='SetOutputSim' type='1' proto='1' />
@@ -211,15 +211,15 @@ No: Do not show the pin signals on the data recorder window.' />
 						<local name='data' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='2' />
 						</local>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='Output = Output &amp; 0xF000' />
 							<exp exp='Output = Output | (.DAC_Value &amp; 0x0FFF)' />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.data[0] = Output &gt;&gt; 8' />
 							<exp exp='.data[1] = Output' />
 						</command>
-						<command class_type='call' title='I2C Start' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Transaction_Write' >
+						<command class_type='call' title='I2C Start' component='cal_i2c1' macro='Transaction_Write' >
 							<argument exp='.data' />
 							<argument exp='2' />
 						</command>
@@ -230,45 +230,45 @@ No: Do not show the pin signals on the data recorder window.' />
 						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='TimerID' type='u32' description='The identifier passed to the System.TimerStart panel command' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Handle' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='SimComms' swap='0' >
+						<command class_type='decision' title='Decision' exp='SimComms' swap='0' >
 							<flowline >
-								<command class_type='sim' title='I2C Icon' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='I2C Icon' macro='Component.Property.SetValue' >
 									<argument exp='SensorLibraryComponent1' />
 									<argument exp='&quot;OutputIcon::CommsType&quot;' />
 									<argument exp='4' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 									<argument exp='this' />
 									<argument exp='&quot;property_1&quot;' />
 									<argument exp='1' />
 								</command>
-								<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='GetConsoleHandle' >
+								<command class_type='sim' title='Component Macro' component='cal_i2c1' macro='GetConsoleHandle' >
 									<return exp='.Handle' />
 								</command>
-								<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='SetConsoleHandle' >
+								<command class_type='sim' title='Component Macro' component='SensorLibraryComponent1' macro='SetConsoleHandle' >
 									<argument exp='.Handle' />
 								</command>
-								<command class_type='sim' title='Comms Flashers' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Comms Flashers' macro='Component.Property.SetValue' >
 									<argument exp='SensorLibraryComponent1' />
 									<argument exp='&quot;ShowComms&quot;' />
 									<argument exp='1' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='No Icon' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='No Icon' macro='Component.Property.SetValue' >
 									<argument exp='SensorLibraryComponent1' />
 									<argument exp='&quot;OutputIcon::CommsType&quot;' />
 									<argument exp='255' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 									<argument exp='this' />
 									<argument exp='&quot;property_1&quot;' />
 									<argument exp='0' />
 								</command>
-								<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='SetConsoleHandle' >
+								<command class_type='sim' title='Component Macro' component='SensorLibraryComponent1' macro='SetConsoleHandle' >
 									<argument exp='0' />
 								</command>
-								<command class_type='sim' title='Comms Flashers' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Comms Flashers' macro='Component.Property.SetValue' >
 									<argument exp='SensorLibraryComponent1' />
 									<argument exp='&quot;ShowComms&quot;' />
 									<argument exp='0' />
@@ -284,31 +284,31 @@ No: Do not show the pin signals on the data recorder window.' />
 							<array size='20' />
 						</local>
 						<local name='ObjectHandle' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_Property_Change' />
+						<command class_type='call' title='Call Macro' macro='Ev_Property_Change' />
 					</flowline>
 				</macro>
 				<macro >
 					<flowline name='Ev_Property_Change' description='Sent when a property has been changed by the User' statediag='0' >
 						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='fcalc' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.TimerStart' >
+						<command class_type='sim' title='Built-in Function' macro='System.TimerStart' >
 							<argument exp='0' />
 							<argument exp='200' />
 						</command>
-						<command class_type='switch' title='Switch' textarea='36,25,36,25' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='DAC_IC' >
+						<command class_type='switch' title='Switch' textarea='36,25,36,25' exp='DAC_IC' >
 							<case >
 								<flowline >
-									<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 										<argument exp='this' />
 										<argument exp='&quot;Steps&quot;' />
 										<argument exp='256' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 										<argument exp='this' />
 										<argument exp='&quot;BITS&quot;' />
 										<argument exp='8' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 										<argument exp='this' />
 										<argument exp='&quot;Res&quot;' />
 										<argument exp='&quot;1:256&quot;' />
@@ -317,17 +317,17 @@ No: Do not show the pin signals on the data recorder window.' />
 							</case>
 							<case exp='1' >
 								<flowline >
-									<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 										<argument exp='this' />
 										<argument exp='&quot;Steps&quot;' />
 										<argument exp='1024' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 										<argument exp='this' />
 										<argument exp='&quot;BITS&quot;' />
 										<argument exp='10' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 										<argument exp='this' />
 										<argument exp='&quot;Res&quot;' />
 										<argument exp='&quot;1:1024&quot;' />
@@ -336,17 +336,17 @@ No: Do not show the pin signals on the data recorder window.' />
 							</case>
 							<case exp='2' >
 								<flowline >
-									<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 										<argument exp='this' />
 										<argument exp='&quot;Steps&quot;' />
 										<argument exp='4096' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 										<argument exp='this' />
 										<argument exp='&quot;BITS&quot;' />
 										<argument exp='12' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 										<argument exp='this' />
 										<argument exp='&quot;Res&quot;' />
 										<argument exp='&quot;1:4096&quot;' />
@@ -354,36 +354,36 @@ No: Do not show the pin signals on the data recorder window.' />
 								</flowline>
 							</case>
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.fcalc = VrefVol / (Steps - 1)' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 							<argument exp='this' />
 							<argument exp='&quot;VoltRes&quot;' />
-							<argument exp='.fcalc' />
+							<argument exp='STRING .fcalc' />
 						</command>
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 							<argument exp='SensorLibraryComponent1' />
 							<argument exp='&quot;Max0&quot;' />
-							<argument exp='VrefVol' />
+							<argument exp='STRING VrefVol' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='ScopeTraces' swap='0' >
+						<command class_type='decision' title='Decision' exp='ScopeTraces' swap='0' >
 							<flowline >
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='ScopeOld = 0' swap='0' >
+								<command class_type='decision' title='Decision' exp='ScopeOld = 0' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='ScopeOld = 1' />
 										</command>
-										<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SimSetupScope' />
+										<command class_type='call' title='Call Macro' macro='SimSetupScope' />
 									</flowline>
 									<flowline />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='ScopeOld = 0' />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='ScopeGroup = 0' />
 									<exp exp='ScopeStream = 0' />
 								</command>
@@ -397,19 +397,19 @@ No: Do not show the pin signals on the data recorder window.' />
 						<local name='data' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='2' />
 						</local>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 							<argument exp='this' />
 							<argument exp='&quot;enabled&quot;' />
 							<argument exp='0' />
 						</command>
-						<command class_type='calculation' title='Power Down Output' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Power Down Output' >
 							<exp exp='Output = Output | (DisPullDown &lt;&lt; 12)' />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.data[0] = Output &gt;&gt; 8' />
 							<exp exp='.data[1] = Output' />
 						</command>
-						<command class_type='call' title='I2C Start' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Transaction_Write' >
+						<command class_type='call' title='I2C Start' component='cal_i2c1' macro='Transaction_Write' >
 							<argument exp='.data' />
 							<argument exp='2' />
 						</command>
@@ -421,19 +421,19 @@ No: Do not show the pin signals on the data recorder window.' />
 						<local name='data' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='2' />
 						</local>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 							<argument exp='this' />
 							<argument exp='&quot;enabled&quot;' />
 							<argument exp='1' />
 						</command>
-						<command class_type='calculation' title='Power Up Output' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Power Up Output' >
 							<exp exp='Output = Output &amp; 0x0FFF' />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.data[0] = Output &gt;&gt; 8' />
 							<exp exp='.data[1] = Output' />
 						</command>
-						<command class_type='call' title='I2C Start' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Transaction_Write' >
+						<command class_type='call' title='I2C Start' component='cal_i2c1' macro='Transaction_Write' >
 							<argument exp='.data' />
 							<argument exp='2' />
 						</command>
@@ -445,11 +445,11 @@ No: Do not show the pin signals on the data recorder window.' />
 						<local name='Name' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
 						</local>
-						<command class_type='sim' title='' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.GetName' >
+						<command class_type='sim' title='' macro='Tree.GetName' >
 							<return exp='.Name' />
 							<argument exp='this' />
 						</command>
-						<command class_type='sim' title='' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='' macro='Component.Property.SetValue' >
 							<argument exp='SensorLibraryComponent1' />
 							<argument exp='&quot;Name&quot;' />
 							<argument exp='.Name' />
@@ -463,42 +463,42 @@ No: Do not show the pin signals on the data recorder window.' />
 						<local name='ParentName' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
 						</local>
-						<command class_type='calculation' title='Initialise values' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Initialise values' >
 							<exp exp='.ObjectHandle = this' />
 							<exp exp='ScopeGroup = 0' />
 							<exp exp='ScopeStream = 0' />
 						</command>
-						<command class_type='sim' title='Step away from ADC CAL' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.StepParent' >
+						<command class_type='sim' title='Step away from ADC CAL' macro='Tree.StepParent' >
 							<argument exp='.ObjectHandle' />
 						</command>
-						<command class_type='sim' title='Step away from ADC Base' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.StepParent' >
+						<command class_type='sim' title='Step away from ADC Base' disable='1' macro='Tree.StepParent' >
 							<argument exp='.ObjectHandle' />
 						</command>
-						<command class_type='sim' title='Get Name Of Current Position' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.GetName' >
+						<command class_type='sim' title='Get Name Of Current Position' macro='Tree.GetName' >
 							<return exp='.ParentName' />
 							<argument exp='.ObjectHandle' />
 						</command>
-						<command class_type='loop' title='While name is equal to &quot;group&quot;' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='Compare$ (.ParentName,&quot;group&quot;,1) == 0' >
+						<command class_type='loop' title='While name is equal to &quot;group&quot;' type='0' exp='Compare$ (.ParentName,&quot;group&quot;,1) == 0' >
 							<flowline >
-								<command class_type='sim' title='Step away from &quot;group&quot;' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.StepParent' >
+								<command class_type='sim' title='Step away from &quot;group&quot;' macro='Tree.StepParent' >
 									<argument exp='.ObjectHandle' />
 								</command>
-								<command class_type='sim' title='Get Name Of Current Position' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.GetName' >
+								<command class_type='sim' title='Get Name Of Current Position' macro='Tree.GetName' >
 									<return exp='.ParentName' />
 									<argument exp='.ObjectHandle' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DataRecorder.AddGroup' >
+						<command class_type='sim' title='Simulation' macro='DataRecorder.AddGroup' >
 							<return exp='ScopeGroup' />
 							<argument exp='.ParentName' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DataRecorder.AddStream' >
+						<command class_type='sim' title='Simulation' macro='DataRecorder.AddStream' >
 							<return exp='ScopeStream' />
 							<argument exp='ScopeGroup' />
 							<argument exp='&quot;DAC Output MCP48x1&quot;' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DataRecorder.AddCustom' >
+						<command class_type='sim' title='Simulation' macro='DataRecorder.AddCustom' >
 							<argument exp='ScopeStream' />
 							<argument exp='0' />
 							<argument exp='0' />
@@ -511,18 +511,18 @@ No: Do not show the pin signals on the data recorder window.' />
 						<param name='DAC_Value' type='u16' description='The value to output to the DAC' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='value' type='f32' description='Value read from ADC' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
 						<local name='ActualCount' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Value = FLOAT .DAC_Value / FLOAT Steps' />
 							<exp exp='.Value = .Value * VrefVol' />
 						</command>
-						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='SetValue' >
+						<command class_type='sim' title='Component Macro' component='SensorLibraryComponent1' macro='SetValue' >
 							<argument exp='0' />
 							<argument exp='.value' />
 						</command>
-						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='FlashRx' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='ScopeTraces' swap='0' >
+						<command class_type='sim' title='Component Macro' component='SensorLibraryComponent1' macro='FlashRx' />
+						<command class_type='decision' title='Decision' exp='ScopeTraces' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DataRecorder.SetCustom' >
+								<command class_type='sim' title='Simulation' macro='DataRecorder.SetCustom' >
 									<argument exp='ScopeGroup' />
 									<argument exp='0' />
 									<argument exp='.Value / 5.0' />
@@ -530,7 +530,7 @@ No: Do not show the pin signals on the data recorder window.' />
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetOutput' >
+						<command class_type='call' title='Call Macro' macro='SetOutput' >
 							<argument exp='.DAC_Value' />
 						</command>
 					</flowline>
@@ -538,32 +538,32 @@ No: Do not show the pin signals on the data recorder window.' />
 				<macro >
 					<flowline name='Ev_Start' description='Broadcast to all components that simulation is starting' statediag='0' >
 						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 							<argument exp='this' />
 							<argument exp='&quot;enabled&quot;' />
 							<argument exp='0' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 							<argument exp='this' />
 							<argument exp='&quot;OutVolt&quot;' />
-							<argument exp='0.0' />
+							<argument exp='STRING 0.0' />
 						</command>
 					</flowline>
 				</macro>
 				<macro >
 					<flowline name='Main' description='' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_Initialise' />
-						<command class_type='call' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Enable' />
-						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='1' >
+						<command class_type='call' title='Call Macro' macro='Ev_Initialise' />
+						<command class_type='call' title='Call Component Macro' macro='Enable' />
+						<command class_type='loop' title='Loop' type='0' exp='1' >
 							<flowline >
-								<command class_type='call' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetOutputSim' >
+								<command class_type='call' title='Call Component Macro' macro='SetOutputSim' >
 									<argument exp='out' />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='out = out + 1' />
 								</command>
-								<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='1' type='1' />
+								<command class_type='delay' title='Delay' exp='1' type='1' />
 							</flowline>
 						</command>
 					</flowline>
@@ -574,25 +574,25 @@ No: Do not show the pin signals on the data recorder window.' />
 						<local name='data' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='3' />
 						</local>
-						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Transaction_Initialise' >
+						<command class_type='call' title='Component Macro' component='cal_i2c1' macro='Transaction_Initialise' >
 							<argument exp='0x60 | AddrBits' />
 						</command>
-						<command class_type='calculation' title='Add Power Down to Output' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Add Power Down to Output' >
 							<exp exp='Output = (DisPullDown &lt;&lt; 12)' />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.data[0] = 0x40 | (DisPullDown &lt;&lt; 1)' />
 							<exp exp='.data[1] = 0' />
 							<exp exp='.data[2] = 0' />
 						</command>
-						<command class_type='call' title='I2C Start' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_i2c1' macro='Transaction_Write' >
+						<command class_type='call' title='I2C Start' component='cal_i2c1' macro='Transaction_Write' >
 							<argument exp='.data' />
 							<argument exp='3' />
 						</command>
 					</flowline>
 				</macro>
 			</macros>
-			<component class_type='ref' guid='ed3a5141-43bb-43e0-86b0-2243fd1147ca' vmin='0' vmaj='2' codename='cal_i2c1' panelId='-1' x='0' y='0' z='0' xsz='0.01' ysz='0.01' zsz='0.01' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+			<component class_type='ref' guid='ed3a5141-43bb-43e0-86b0-2243fd1147ca' vmin='0' vmaj='2' codename='cal_i2c1' panelId='-1' x='0' y='0' z='0' xsz='0.01' ysz='0.01' zsz='0.01' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
@@ -613,9 +613,11 @@ No: Do not show the pin signals on the data recorder window.' />
 					<value target='BMODE' data='0' />
 					<value target='SDA_PORT' data='$PORTC.4' />
 					<value target='SDA_TRIS' data='$PORTC.4' />
+					<value target='SDA_ODC' data='' />
 					<value target='SDA_PIN' data='4' />
 					<value target='SCL_PORT' data='$PORTC.3' />
 					<value target='SCL_TRIS' data='$PORTC.3' />
+					<value target='SCL_ODC' data='' />
 					<value target='SCL_PIN' data='3' />
 					<value target='MASTER' data='1' />
 					<value target='ScopeTraces' data='1' />
@@ -623,6 +625,7 @@ No: Do not show the pin signals on the data recorder window.' />
 					<value target='Injector' data='000' />
 					<value target='InjectorHandle' data='0' />
 					<value target='InjectorChannel' data='0' />
+					<value target='Loading' data='1' />
 					<value target='REMAPPABLE' data='' />
 					<value target='SDABank' data='b' />
 					<value target='SDABank2' data='c' />
@@ -641,13 +644,14 @@ No: Do not show the pin signals on the data recorder window.' />
 					<value target='SCLAlts' data='000' />
 					<value target='SDAAlt' data='0' />
 					<value target='SCLAlt' data='0' />
+					<value target='Sorted' data='0' />
 				</values>
 				<events />
 				<apis />
 				<variables />
 				<macros />
 			</component>
-			<component class_type='ref' guid='960e433c-1295-4aeb-ac84-04d75422119e' vmin='0' vmaj='1' codename='SensorLibraryComponent1' panelId='-1' x='0' y='0' z='0' xsz='100' ysz='100' zsz='100' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' comp2dType='0' >
+			<component class_type='ref' guid='960e433c-1295-4aeb-ac84-04d75422119e' vmin='0' vmaj='1' codename='SensorLibraryComponent1' panelId='-1' x='0' y='0' z='0' xsz='100' ysz='100' zsz='100' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
@@ -726,7 +730,7 @@ No: Do not show the pin signals on the data recorder window.' />
 		<camera xe='-10.6909' ye='-34.1568' ze='822.461' xt='-10.6909' yt='-34.1568' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
 		<viewport dx='622' dy='352' zoom='91.5083' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='0' />
-		<winpos ID='7005' RectRecentFloat='1270,379,1920,829' RectRecentDocked='0,0,453,419' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+		<winpos ID='7005' RectRecentFloat='1270,379,1920,829' RectRecentDocked='0,0,504,515' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
 	</panel2d>
 	<panel3d shadows='0' lighting='0' brightness='0' perspective='1' >
 		<background rgb='32768' img='' style='0' />
@@ -739,21 +743,21 @@ No: Do not show the pin signals on the data recorder window.' />
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='-1916,452,-1463,998' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,246,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='0' />
 	<layout >
-		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAhQMAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Enable' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAhQMAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Disable' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAhQMAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Property_Change' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAhQMAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetOutputSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAhQMAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetOutput' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAhQMAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAhQMAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAhQMAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Start' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAhQMAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SimSetupScope' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAhQMAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Timer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAhQMAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Enable' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Disable' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property_Change' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetOutputSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetOutput' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Start' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SimSetupScope' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Timer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>

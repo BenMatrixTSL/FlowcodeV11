@@ -1,5 +1,5 @@
 <root>
-<document scada='0' schema='103' license='10,BenR,C9TN1M' title='' description='' fcversion='655360' target='PIC.16F.16F18877' >
+<document scada='0' projtype='1' schema='103' license='1,82702381,95CJQR' title='' description='' fcversion='720897' target='PIC.16F.16F18877' >
 	<config data='!0,3f8c!10,37fd!20,3f92!30,1fff!40,3fff%0,4%4,0%8,1%b,1%d,1%10,1%11,0%15,1%16,3%19,1%1a,1%1b,0%1c,1%1d,1%20,12%25,0%28,7%2b,7%30,3%3c,1%3d,0%40,1%41,1' clkspd='32000000' simspd='1' usewdt='0' constif='1' Use3V3='0' />
 	<plugins >
 		<dll_models enabled='1' />
@@ -57,8 +57,8 @@
 	<components >
 		<settings autoimg='0' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
 		<definition guid='fab5cf20-8686-4397-8a21-cc936659d5f6' vstate='40' vmin='0' vmaj='1' srcleaf='DAC_MCP48x1.fcfx' visiblename='DAC (MCP48x1)' description='Component to drive a digital to analogue converter (DAC) IC from Microchip via an SPI interface.
-Compatible with MCP4801 (8-Bit), MCP4811 (10-Bit) and MCP4821 (12-Bit) devices.' category='Analog Output' category2='API IO' category3='' bIs2dOnly='1' bIs3dOnly='0' catenable='1' author='Matrix TSL' manuname='Microchip' manucode='MCP48x1' sysinfo='5255947' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='1' showmacros='1' iconpath='..\..\icons\components\DAC.png' />
-		<component class_type='root' codename='DAC_Output' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
+Compatible with MCP4801 (8-Bit), MCP4811 (10-Bit) and MCP4821 (12-Bit) devices.' category='Analog Output' category2='API IO' category3='' bIs2dOnly='1' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='Matrix TSL' manuname='Microchip' manucode='MCP48x1' sysinfo='5255947' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='1' showmacros='1' iconpath='..\..\icons\components\DAC.png' />
+		<component class_type='root' codename='DAC_Output' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 			<resources />
 			<properties >
 				<property name='DAC IC' target='DAC_IC' typeid='16' hidden='0' locked='0' info='Selects which DAC IC is connected and therefore the bit depth available.' filter='000MCP4801 8-Bit
@@ -181,12 +181,12 @@ If not used then tie the LDAC pin to GND to allow the DAC to function.' />
 				<value target='cal_spi1::InjectorCS' data='' />
 			</values>
 			<events >
-				<event class='Connection' event='ChipChange' target='Ev_ChipChange' />
-				<event class='Simulation' event='Start' target='Ev_Start' />
-				<event class='Components' event='Initialise' target='Ev_Initialise' />
 				<event class='Components' event='Property' target='Ev_Property_Change' />
-				<event class='System' event='Timer' target='Ev_Timer' />
+				<event class='Simulation' event='Start' target='Ev_Start' />
 				<event class='Components' event='Renamed' target='Ev_Renamed' />
+				<event class='System' event='Timer' target='Ev_Timer' />
+				<event class='Components' event='Initialise' target='Ev_Initialise' />
+				<event class='Connection' event='ChipChange' target='Ev_ChipChange' />
 			</events>
 			<apis >
 				<api name='SetOutput' alt='SetOutputSim' type='1' proto='1' />
@@ -226,16 +226,16 @@ If not used then tie the LDAC pin to GND to allow the DAC to function.' />
 12-Bit: Range 0-4095' statediag='0' >
 						<return name='Return' type='v0' description='The sample value, as an 8, 10 or 12 bit value 0-&gt;N' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<param name='DAC_Value' type='u16' description='The value to output to the DAC' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='8-Bit Device' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='DAC_IC = 0' swap='0' >
+						<command class_type='decision' title='8-Bit Device' exp='DAC_IC = 0' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Shift up to match register bits' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Shift up to match register bits' >
 									<exp exp='.DAC_Value = .DAC_Value &lt;&lt; 4' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='decision' title='10-Bit Device' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='DAC_IC = 1' swap='0' >
+								<command class_type='decision' title='10-Bit Device' exp='DAC_IC = 1' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Shift up to match register bits' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Shift up to match register bits' >
 											<exp exp='.DAC_Value = .DAC_Value &lt;&lt; 2' />
 										</command>
 									</flowline>
@@ -243,26 +243,26 @@ If not used then tie the LDAC pin to GND to allow the DAC to function.' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='If control value out of range' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.DAC_Value &gt; 4095' swap='0' >
+						<command class_type='decision' title='If control value out of range' exp='.DAC_Value &gt; 4095' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Ensure we are in range' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Ensure we are in range' >
 									<exp exp='.DAC_Value = 4095' />
 								</command>
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='calculation' title='Combine DAC command with Value' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Combine DAC command with Value' >
 							<exp exp='Command = Command &amp; 0xF000' />
 							<exp exp='Command = Command | .DAC_Value' />
 						</command>
-						<command class_type='call' title='Enable CS - Pull Low' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_spi1' macro='Master_Enable_CS' />
-						<command class_type='call' title='Send MSB' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_spi1' macro='Master_Byte' >
+						<command class_type='call' title='Enable CS - Pull Low' component='cal_spi1' macro='Master_Enable_CS' />
+						<command class_type='call' title='Send MSB' component='cal_spi1' macro='Master_Byte' >
 							<argument exp='Command &gt;&gt; 8' />
 						</command>
-						<command class_type='call' title='Send LSB' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_spi1' macro='Master_Byte' >
+						<command class_type='call' title='Send LSB' component='cal_spi1' macro='Master_Byte' >
 							<argument exp='Command' />
 						</command>
-						<command class_type='call' title='Disable CS - Pull High' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_spi1' macro='Master_Disable_CS' />
+						<command class_type='call' title='Disable CS - Pull High' component='cal_spi1' macro='Master_Disable_CS' />
 					</flowline>
 				</macro>
 				<macro >
@@ -270,16 +270,16 @@ If not used then tie the LDAC pin to GND to allow the DAC to function.' />
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<param name='Shutdown' type='b1' description='0 = Shutdown Device, 1 = Device Active' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Latch' type='b1' description='0 = Data output driven from DAC register, 1 = Data output locked' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='UseSHDN' swap='0' >
+						<command class_type='decision' title='Decision' exp='UseSHDN' swap='0' >
 							<flowline >
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Shutdown' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Shutdown' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Enable Device' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Enable Device' >
 											<exp exp='SHDN_Pin = 1' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='calculation' title='Disable Device' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Disable Device' >
 											<exp exp='SHDN_Pin = 0' />
 										</command>
 									</flowline>
@@ -287,16 +287,16 @@ If not used then tie the LDAC pin to GND to allow the DAC to function.' />
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='UseLDAC' swap='0' >
+						<command class_type='decision' title='Decision' exp='UseLDAC' swap='0' >
 							<flowline >
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='.Latch' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Latch' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Enable Device' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Enable Device' >
 											<exp exp='LDAC_Pin = 1' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='calculation' title='Disable Device' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Disable Device' >
 											<exp exp='LDAC_Pin = 0' />
 										</command>
 									</flowline>
@@ -311,45 +311,45 @@ If not used then tie the LDAC pin to GND to allow the DAC to function.' />
 						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='TimerID' type='u32' description='The identifier passed to the System.TimerStart panel command' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Handle' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='SimComms' swap='0' >
+						<command class_type='decision' title='Decision' exp='SimComms' swap='0' >
 							<flowline >
-								<command class_type='sim' title='SPI Icon' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='SPI Icon' macro='Component.Property.SetValue' >
 									<argument exp='SensorLibraryComponent1' />
 									<argument exp='&quot;OutputIcon::CommsType&quot;' />
 									<argument exp='5' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 									<argument exp='this' />
 									<argument exp='&quot;property_3&quot;' />
 									<argument exp='1' />
 								</command>
-								<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_spi1' macro='GetConsoleHandle' >
+								<command class_type='sim' title='Component Macro' component='cal_spi1' macro='GetConsoleHandle' >
 									<return exp='.Handle' />
 								</command>
-								<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='SetConsoleHandle' >
+								<command class_type='sim' title='Component Macro' component='SensorLibraryComponent1' macro='SetConsoleHandle' >
 									<argument exp='.Handle' />
 								</command>
-								<command class_type='sim' title='Comms Flashers' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Comms Flashers' macro='Component.Property.SetValue' >
 									<argument exp='SensorLibraryComponent1' />
 									<argument exp='&quot;ShowComms&quot;' />
 									<argument exp='1' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='No Icon' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='No Icon' macro='Component.Property.SetValue' >
 									<argument exp='SensorLibraryComponent1' />
 									<argument exp='&quot;OutputIcon::CommsType&quot;' />
 									<argument exp='255' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 									<argument exp='this' />
 									<argument exp='&quot;property_3&quot;' />
 									<argument exp='0' />
 								</command>
-								<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='SetConsoleHandle' >
+								<command class_type='sim' title='Component Macro' component='SensorLibraryComponent1' macro='SetConsoleHandle' >
 									<argument exp='0' />
 								</command>
-								<command class_type='sim' title='Comms Flashers' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Comms Flashers' macro='Component.Property.SetValue' >
 									<argument exp='SensorLibraryComponent1' />
 									<argument exp='&quot;ShowComms&quot;' />
 									<argument exp='0' />
@@ -365,63 +365,63 @@ If not used then tie the LDAC pin to GND to allow the DAC to function.' />
 							<array size='20' />
 						</local>
 						<local name='ObjectHandle' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_Property_Change' />
+						<command class_type='call' title='Call Macro' macro='Ev_Property_Change' />
 					</flowline>
 				</macro>
 				<macro >
 					<flowline name='Ev_Property_Change' description='Sent when a property has been changed by the User' statediag='0' >
 						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='fcalc' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.TimerStart' >
+						<command class_type='sim' title='Built-in Function' macro='System.TimerStart' >
 							<argument exp='0' />
 							<argument exp='200' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='UseSHDN' swap='0' >
+						<command class_type='decision' title='Decision' exp='UseSHDN' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 									<argument exp='this' />
 									<argument exp='&quot;SHDN_Pin&quot;' />
 									<argument exp='1' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 									<argument exp='this' />
 									<argument exp='&quot;SHDN_Pin&quot;' />
 									<argument exp='0' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='UseLDAC' swap='0' >
+						<command class_type='decision' title='Decision' exp='UseLDAC' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 									<argument exp='this' />
 									<argument exp='&quot;LDAC_Pin&quot;' />
 									<argument exp='1' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 									<argument exp='this' />
 									<argument exp='&quot;LDAC_Pin&quot;' />
 									<argument exp='0' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='switch' title='Switch' textarea='36,25,36,25' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='DAC_IC' >
+						<command class_type='switch' title='Switch' textarea='36,25,36,25' exp='DAC_IC' >
 							<case >
 								<flowline >
-									<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 										<argument exp='this' />
 										<argument exp='&quot;Steps&quot;' />
 										<argument exp='256' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 										<argument exp='this' />
 										<argument exp='&quot;BITS&quot;' />
 										<argument exp='8' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 										<argument exp='this' />
 										<argument exp='&quot;Res&quot;' />
 										<argument exp='&quot;1:256&quot;' />
@@ -430,17 +430,17 @@ If not used then tie the LDAC pin to GND to allow the DAC to function.' />
 							</case>
 							<case exp='1' >
 								<flowline >
-									<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 										<argument exp='this' />
 										<argument exp='&quot;Steps&quot;' />
 										<argument exp='1024' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 										<argument exp='this' />
 										<argument exp='&quot;BITS&quot;' />
 										<argument exp='10' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 										<argument exp='this' />
 										<argument exp='&quot;Res&quot;' />
 										<argument exp='&quot;1:1024&quot;' />
@@ -449,17 +449,17 @@ If not used then tie the LDAC pin to GND to allow the DAC to function.' />
 							</case>
 							<case exp='2' >
 								<flowline >
-									<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 										<argument exp='this' />
 										<argument exp='&quot;Steps&quot;' />
 										<argument exp='4096' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 										<argument exp='this' />
 										<argument exp='&quot;BITS&quot;' />
 										<argument exp='12' />
 									</command>
-									<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+									<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 										<argument exp='this' />
 										<argument exp='&quot;Res&quot;' />
 										<argument exp='&quot;1:4096&quot;' />
@@ -467,52 +467,52 @@ If not used then tie the LDAC pin to GND to allow the DAC to function.' />
 								</flowline>
 							</case>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='GainOp = 2' swap='0' >
+						<command class_type='decision' title='Decision' exp='GainOp = 2' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 									<argument exp='this' />
 									<argument exp='&quot;VrefVol&quot;' />
-									<argument exp='4.096' />
+									<argument exp='STRING 4.096' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 									<argument exp='this' />
 									<argument exp='&quot;VrefVol&quot;' />
-									<argument exp='2.048' />
+									<argument exp='STRING 2.048' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.fcalc = VrefVol / (Steps - 1)' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 							<argument exp='this' />
 							<argument exp='&quot;VoltRes&quot;' />
-							<argument exp='.fcalc' />
+							<argument exp='STRING .fcalc' />
 						</command>
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 							<argument exp='SensorLibraryComponent1' />
 							<argument exp='&quot;Max0&quot;' />
-							<argument exp='VrefVol' />
+							<argument exp='STRING VrefVol' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='ScopeTraces' swap='0' >
+						<command class_type='decision' title='Decision' exp='ScopeTraces' swap='0' >
 							<flowline >
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='ScopeOld = 0' swap='0' >
+								<command class_type='decision' title='Decision' exp='ScopeOld = 0' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='ScopeOld = 1' />
 										</command>
-										<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SimSetupScope' />
+										<command class_type='call' title='Call Macro' macro='SimSetupScope' />
 									</flowline>
 									<flowline />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='ScopeOld = 0' />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='ScopeGroup = 0' />
 									<exp exp='ScopeStream = 0' />
 								</command>
@@ -523,12 +523,12 @@ If not used then tie the LDAC pin to GND to allow the DAC to function.' />
 				<macro >
 					<flowline name='Disable' description='Disables the DAC output.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 							<argument exp='this' />
 							<argument exp='&quot;enabled&quot;' />
 							<argument exp='0' />
 						</command>
-						<command class_type='calculation' title='Disable SHDN bit' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Disable SHDN bit' >
 							<exp exp='Command = Command &amp; 0xEFFF' />
 						</command>
 					</flowline>
@@ -536,12 +536,12 @@ If not used then tie the LDAC pin to GND to allow the DAC to function.' />
 				<macro >
 					<flowline name='Enable' description='Enables the DAC Output.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 							<argument exp='this' />
 							<argument exp='&quot;enabled&quot;' />
 							<argument exp='1' />
 						</command>
-						<command class_type='calculation' title='Enable SHDN bit' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Enable SHDN bit' >
 							<exp exp='Command = Command | 0x1000' />
 						</command>
 					</flowline>
@@ -552,11 +552,11 @@ If not used then tie the LDAC pin to GND to allow the DAC to function.' />
 						<local name='Name' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
 						</local>
-						<command class_type='sim' title='' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.GetName' >
+						<command class_type='sim' title='' macro='Tree.GetName' >
 							<return exp='.Name' />
 							<argument exp='this' />
 						</command>
-						<command class_type='sim' title='' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='' macro='Component.Property.SetValue' >
 							<argument exp='SensorLibraryComponent1' />
 							<argument exp='&quot;Name&quot;' />
 							<argument exp='.Name' />
@@ -570,42 +570,42 @@ If not used then tie the LDAC pin to GND to allow the DAC to function.' />
 						<local name='ParentName' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
 						</local>
-						<command class_type='calculation' title='Initialise values' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Initialise values' >
 							<exp exp='.ObjectHandle = this' />
 							<exp exp='ScopeGroup = 0' />
 							<exp exp='ScopeStream = 0' />
 						</command>
-						<command class_type='sim' title='Step away from ADC CAL' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.StepParent' >
+						<command class_type='sim' title='Step away from ADC CAL' macro='Tree.StepParent' >
 							<argument exp='.ObjectHandle' />
 						</command>
-						<command class_type='sim' title='Step away from ADC Base' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.StepParent' >
+						<command class_type='sim' title='Step away from ADC Base' disable='1' macro='Tree.StepParent' >
 							<argument exp='.ObjectHandle' />
 						</command>
-						<command class_type='sim' title='Get Name Of Current Position' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.GetName' >
+						<command class_type='sim' title='Get Name Of Current Position' macro='Tree.GetName' >
 							<return exp='.ParentName' />
 							<argument exp='.ObjectHandle' />
 						</command>
-						<command class_type='loop' title='While name is equal to &quot;group&quot;' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='Compare$ (.ParentName,&quot;group&quot;,1) == 0' >
+						<command class_type='loop' title='While name is equal to &quot;group&quot;' type='0' exp='Compare$ (.ParentName,&quot;group&quot;,1) == 0' >
 							<flowline >
-								<command class_type='sim' title='Step away from &quot;group&quot;' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.StepParent' >
+								<command class_type='sim' title='Step away from &quot;group&quot;' macro='Tree.StepParent' >
 									<argument exp='.ObjectHandle' />
 								</command>
-								<command class_type='sim' title='Get Name Of Current Position' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.GetName' >
+								<command class_type='sim' title='Get Name Of Current Position' macro='Tree.GetName' >
 									<return exp='.ParentName' />
 									<argument exp='.ObjectHandle' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DataRecorder.AddGroup' >
+						<command class_type='sim' title='Simulation' macro='DataRecorder.AddGroup' >
 							<return exp='ScopeGroup' />
 							<argument exp='.ParentName' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DataRecorder.AddStream' >
+						<command class_type='sim' title='Simulation' macro='DataRecorder.AddStream' >
 							<return exp='ScopeStream' />
 							<argument exp='ScopeGroup' />
 							<argument exp='&quot;DAC Output MCP48x1&quot;' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DataRecorder.AddCustom' >
+						<command class_type='sim' title='Simulation' macro='DataRecorder.AddCustom' >
 							<argument exp='ScopeStream' />
 							<argument exp='0' />
 							<argument exp='0' />
@@ -618,23 +618,23 @@ If not used then tie the LDAC pin to GND to allow the DAC to function.' />
 						<param name='DAC_Value' type='u16' description='The value to output to the DAC' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='value' type='f32' description='Value read from ADC' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
 						<local name='ActualCount' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Value = FLOAT .DAC_Value / FLOAT Steps' />
 							<exp exp='.Value = .Value * VrefVol' />
 						</command>
-						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='SetValue' >
+						<command class_type='sim' title='Component Macro' component='SensorLibraryComponent1' macro='SetValue' >
 							<argument exp='0' />
 							<argument exp='.value' />
 						</command>
-						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='SensorLibraryComponent1' macro='FlashRx' />
-						<command class_type='sim' title='Simulation' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Component Macro' component='SensorLibraryComponent1' macro='FlashRx' />
+						<command class_type='sim' title='Simulation' disable='1' macro='Component.Property.SetValue' >
 							<argument exp='this' />
 							<argument exp='&quot;OutVolt&quot;' />
 							<argument exp='.DAC_Value * VoltRes' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='ScopeTraces' swap='0' >
+						<command class_type='decision' title='Decision' exp='ScopeTraces' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='DataRecorder.SetCustom' >
+								<command class_type='sim' title='Simulation' macro='DataRecorder.SetCustom' >
 									<argument exp='ScopeGroup' />
 									<argument exp='0' />
 									<argument exp='.Value / 5.0' />
@@ -642,7 +642,7 @@ If not used then tie the LDAC pin to GND to allow the DAC to function.' />
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetOutput' >
+						<command class_type='call' title='Call Macro' macro='SetOutput' >
 							<argument exp='.DAC_Value' />
 						</command>
 					</flowline>
@@ -650,32 +650,32 @@ If not used then tie the LDAC pin to GND to allow the DAC to function.' />
 				<macro >
 					<flowline name='Ev_Start' description='Broadcast to all components that simulation is starting' statediag='0' >
 						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 							<argument exp='this' />
 							<argument exp='&quot;enabled&quot;' />
 							<argument exp='0' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 							<argument exp='this' />
 							<argument exp='&quot;OutVolt&quot;' />
-							<argument exp='0.0' />
+							<argument exp='STRING 0.0' />
 						</command>
 					</flowline>
 				</macro>
 				<macro >
 					<flowline name='Main' description='' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_Initialise' />
-						<command class_type='call' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Enable' />
-						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' type='0' exp='1' >
+						<command class_type='call' title='Call Macro' macro='Ev_Initialise' />
+						<command class_type='call' title='Call Component Macro' macro='Enable' />
+						<command class_type='loop' title='Loop' type='0' exp='1' >
 							<flowline >
-								<command class_type='call' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetOutputSim' >
+								<command class_type='call' title='Call Component Macro' macro='SetOutputSim' >
 									<argument exp='out' />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='out = out + 1' />
 								</command>
-								<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='1' type='1' />
+								<command class_type='delay' title='Delay' exp='1' type='1' />
 							</flowline>
 						</command>
 					</flowline>
@@ -683,15 +683,15 @@ If not used then tie the LDAC pin to GND to allow the DAC to function.' />
 				<macro >
 					<flowline name='Initialise' description='Configures the SPI peripheral ready for communications and initialises the internal variables. DAC needs to be enabled before any output voltage can be generated.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<command class_type='call' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_spi1' macro='Master_Init' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='0' cmdgradient='4' cmdopacity='0.64' exp='GainOP = 2' swap='0' >
+						<command class_type='call' title='Call Component Macro' component='cal_spi1' macro='Master_Init' />
+						<command class_type='decision' title='Decision' exp='GainOP = 2' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Reset Command Variable - Disabled &amp; 2X Gain' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Reset Command Variable - Disabled &amp; 2X Gain' >
 									<exp exp='Command = 0x0000' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='calculation' title='Reset Command Variable - Disabled &amp; 1X Gain' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Reset Command Variable - Disabled &amp; 1X Gain' >
 									<exp exp='Command = 0x2000' />
 								</command>
 							</flowline>
@@ -699,7 +699,7 @@ If not used then tie the LDAC pin to GND to allow the DAC to function.' />
 					</flowline>
 				</macro>
 			</macros>
-			<component class_type='ref' guid='c67171df-0ad6-4b11-8361-cfe14b072847' vmin='1' vmaj='2' codename='cal_spi1' panelId='-1' x='0' y='0' z='0' xsz='0.01' ysz='0.01' zsz='0.01' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+			<component class_type='ref' guid='c67171df-0ad6-4b11-8361-cfe14b072847' vmin='21' vmaj='21' codename='cal_spi1' panelId='-1' x='0' y='0' z='0' xsz='0.01' ysz='0.01' zsz='0.01' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
@@ -729,6 +729,7 @@ If not used then tie the LDAC pin to GND to allow the DAC to function.' />
 					<value target='InjectorCS' data='0' />
 					<value target='InjectorHandle' data='0' />
 					<value target='InjectorChannel' data='0' />
+					<value target='Loading' data='1' />
 					<value target='BMODE' data='2' />
 					<value target='MOSI_PORT' data='$PORTB.0' />
 					<value target='MOSI_TRIS' data='$PORTB.0' />
@@ -768,13 +769,14 @@ If not used then tie the LDAC pin to GND to allow the DAC to function.' />
 					<value target='SSBank2' data='d' />
 					<value target='AltSSReg' data='' />
 					<value target='AltSSMask' data='0' />
+					<value target='Sorted' data='0' />
 				</values>
 				<events />
 				<apis />
 				<variables />
 				<macros />
 			</component>
-			<component class_type='ref' guid='960e433c-1295-4aeb-ac84-04d75422119e' vmin='0' vmaj='1' codename='SensorLibraryComponent1' panelId='-1' x='-3.00158' y='1.50079' z='0.333905' xsz='100' ysz='100' zsz='100' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' comp2dType='0' >
+			<component class_type='ref' guid='960e433c-1295-4aeb-ac84-04d75422119e' vmin='0' vmaj='1' codename='SensorLibraryComponent1' panelId='-1' x='-3.00158' y='1.50079' z='0.333905' xsz='100' ysz='100' zsz='100' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
@@ -853,7 +855,7 @@ If not used then tie the LDAC pin to GND to allow the DAC to function.' />
 		<camera xe='-61.2306' ye='-12.3461' ze='983.128' xt='-61.2306' yt='-12.3461' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
 		<viewport dx='622' dy='352' zoom='76.5536' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='0' />
-		<winpos ID='7005' RectRecentFloat='1270,379,1920,829' RectRecentDocked='0,0,453,419' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+		<winpos ID='7005' RectRecentFloat='1270,379,1920,829' RectRecentDocked='0,0,504,419' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
 	</panel2d>
 	<panel3d shadows='0' lighting='0' brightness='0' perspective='1' >
 		<background rgb='32768' img='' style='0' />
@@ -866,22 +868,22 @@ If not used then tie the LDAC pin to GND to allow the DAC to function.' />
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='-1916,452,-1463,998' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,246,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='0' />
 	<layout >
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAhQMAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Start' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAhQMAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetOutputSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAhQMAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SimSetupScope' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAhQMAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetOutput' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAhQMAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Property_Change' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAhQMAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAhQMAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ControlPins' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAhQMAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAhQMAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Enable' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAhQMAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Disable' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAhQMAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Timer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAhQMAAEwCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Start' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetOutputSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SimSetupScope' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetOutput' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property_Change' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='273' flags='0' />
+		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ControlPins' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Enable' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Disable' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Timer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>
