@@ -1,5 +1,5 @@
 <root>
-<document scada='0' schema='103' license='10,CompMaker,WNV3JN' title='' description='' fcversion='655618' target='PIC.16F.16F1937' >
+<document scada='0' projtype='1' schema='103' license='1,82702381,95CJQR' title='' description='' fcversion='720897' target='PIC.16F.16F1937' >
 	<config data='!0,fe2!10,1eff%0,2%3,0%5,1%6,1%7,1%8,1%9,3%b,1%c,0%d,0%10,3%14,3%18,0%19,1%1a,1%1c,1%1d,0' clkspd='19660800' simspd='0' usewdt='0' constif='0' Use3V3='0' />
 	<plugins >
 		<dll_models enabled='1' />
@@ -61,8 +61,8 @@
 		<settings autoimg='0' center='1' unitscale='1' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
 		<definition guid='756045fb-388b-4dbb-8f10-5136de8bfacb' vstate='40' vmin='0' vmaj='1' srcleaf='Nextion.fcfx' visiblename='Nextion Display' description='A simple libray to interface a Nextion display.
 The elements on the nextion display are built using the Nextion  Editor software and uploaded to the display.
-The component can then interact with the display elements.' category='Graphical Color' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' catenable='1' author='Matrix TSL' manuname='' manucode='' sysinfo='1061643' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='1' showmacros='1' iconpath='..\..\icons\components\glcd.png' />
-		<component class_type='root' codename='Nextion' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='1' comp2dType='0' >
+The component can then interact with the display elements.' category='Graphical Color' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='Matrix TSL' manuname='' manucode='' sysinfo='1061643' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='1' showmacros='1' iconpath='..\..\icons\components\glcd.png' />
+		<component class_type='root' codename='Nextion' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 			<resources />
 			<properties >
 				<property name='Communications' folder='property_1' hidden='0' >
@@ -160,14 +160,14 @@ Hardware channels use the selected peripheral on-board the target microcontrolle
 				<value target='cal_uart1::com_port' data='008' />
 			</values>
 			<events >
+				<event class='System' event='Timer' target='Ev_Timer' />
 				<event class='Compile' event='AddInterrupts' target='Ev_AddInterrupts' />
-				<event class='Components' event='Initialise' target='Ev_Initialise' />
-				<event class='Simulation' event='Stop' target='Ev_Stop' />
-				<event class='Compile' event='GetVarSize' target='Ev_GetVarSize' />
 				<event class='Compile' event='Preprocess' target='Ev_Preprocess' />
 				<event class='Components' event='Renamed' target='Ev_Renamed' />
+				<event class='Components' event='Initialise' target='Ev_Initialise' />
 				<event class='Components' event='Property' target='Ev_Property' />
-				<event class='System' event='Timer' target='Ev_Timer' />
+				<event class='Simulation' event='Stop' target='Ev_Stop' />
+				<event class='Compile' event='GetVarSize' target='Ev_GetVarSize' />
 			</events>
 			<apis >
 				<api name='GetTouchID' alt='GetTouchID' type='1' proto='1' />
@@ -212,7 +212,7 @@ Hardware channels use the selected peripheral on-board the target microcontrolle
 					<flowline name='GetTouchID' description='Gets the ID of the corresponding touch event.
 Must be called after calling GetTouchEvent component macro.' statediag='0' >
 						<return name='Return' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Return = LastTouchID' />
 						</command>
 					</flowline>
@@ -222,23 +222,23 @@ Must be called after calling GetTouchEvent component macro.' statediag='0' >
 						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='TimerID' type='u32' description='The identifier passed to the System.TimerStart panel command' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Handle' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.TimerID = 0' swap='0' >
+						<command class_type='decision' title='Decision' exp='.TimerID = 0' swap='0' >
 							<flowline >
-								<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='2' exp='10' >
+								<command class_type='loop' title='Loop' type='2' exp='10' >
 									<flowline >
-										<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Receive_Interrupt' />
+										<command class_type='call' title='User Macro' macro='Receive_Interrupt' />
 									</flowline>
 								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.TimerStart' >
+								<command class_type='sim' title='Built-in Function' macro='System.TimerStart' >
 									<argument exp='0' />
 									<argument exp='50' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='GetConsoleHandle' >
+								<command class_type='sim' title='Built-in Function' component='cal_uart1' macro='GetConsoleHandle' >
 									<return exp='.Handle' />
 								</command>
-								<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='LibraryComponent1' macro='SetConsoleHandle' >
+								<command class_type='sim' title='Built-in Function' component='LibraryComponent1' macro='SetConsoleHandle' >
 									<argument exp='.Handle' />
 								</command>
 							</flowline>
@@ -248,7 +248,7 @@ Must be called after calling GetTouchEvent component macro.' statediag='0' >
 				<macro >
 					<flowline name='Ev_Stop' description='Broadcast to all components that simulation has stopped' statediag='0' >
 						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.TimerStop' >
+						<command class_type='sim' title='Built-in Function' macro='System.TimerStop' >
 							<argument exp='0' />
 						</command>
 					</flowline>
@@ -257,62 +257,62 @@ Must be called after calling GetTouchEvent component macro.' statediag='0' >
 					<flowline name='Receive_Interrupt' description='' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<local name='din' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='Receive' >
+						<command class_type='call' title='Component Macro' component='cal_uart1' macro='Receive' >
 							<return exp='.din' />
 							<argument exp='0' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.din &lt; 256' swap='0' >
+						<command class_type='decision' title='Decision' exp='.din &lt; 256' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='LibraryComponent1' macro='FlashRx' />
-								<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='CircularBuffer1' macro='PutByte' >
+								<command class_type='sim' title='Component Macro' component='LibraryComponent1' macro='FlashRx' />
+								<command class_type='call' title='Component Macro' component='CircularBuffer1' macro='PutByte' >
 									<argument exp='.din' />
 								</command>
-								<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='CircularBuffer1' macro='LookForValue' >
+								<command class_type='call' title='Component Macro' component='CircularBuffer1' macro='LookForValue' >
 									<return exp='.din' />
 									<argument exp='Terminator' />
 									<argument exp='3' />
 									<argument exp='0' />
 									<argument exp='0' />
 								</command>
-								<command class_type='decision' title='Command Complete' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.din' swap='0' >
+								<command class_type='decision' title='Command Complete' exp='.din' swap='0' >
 									<flowline >
-										<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='CircularBuffer1' macro='GetByte' >
+										<command class_type='call' title='Component Macro' component='CircularBuffer1' macro='GetByte' >
 											<return exp='.din' />
 										</command>
-										<command class_type='decision' title='Touch Event?' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.din = 0x65' swap='0' >
+										<command class_type='decision' title='Touch Event?' exp='.din = 0x65' swap='0' >
 											<flowline >
-												<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='TouchIdx &lt; TouchQueueSize' swap='0' >
+												<command class_type='decision' title='Decision' exp='TouchIdx &lt; TouchQueueSize' swap='0' >
 													<flowline >
-														<command class_type='call' title='Read Touch ID MSB' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='CircularBuffer1' macro='GetByte' >
+														<command class_type='call' title='Read Touch ID MSB' component='CircularBuffer1' macro='GetByte' >
 															<return exp='.Din' />
 														</command>
-														<command class_type='call' title='Read Touch ID LSB' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='CircularBuffer1' macro='GetByte' >
+														<command class_type='call' title='Read Touch ID LSB' component='CircularBuffer1' macro='GetByte' >
 															<return exp='TouchQueueID[TouchIdx]' />
 														</command>
-														<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+														<command class_type='calculation' title='Calculation' >
 															<exp exp='TouchQueueID[TouchIdx] = TouchQueueID[TouchIdx] | (.Din &lt;&lt; 8)' />
 														</command>
-														<command class_type='call' title='Read Event Type - Press / Release' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='CircularBuffer1' macro='GetByte' >
+														<command class_type='call' title='Read Event Type - Press / Release' component='CircularBuffer1' macro='GetByte' >
 															<return exp='TouchQueueEvent[TouchIdx]' />
 														</command>
-														<command class_type='decision' title='Button Press - Has value of 0' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='TouchQueueEvent[TouchIdx] = 0' swap='0' >
+														<command class_type='decision' title='Button Press - Has value of 0' exp='TouchQueueEvent[TouchIdx] = 0' swap='0' >
 															<flowline >
-																<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+																<command class_type='calculation' title='Calculation' >
 																	<exp exp='TouchQueueEvent[TouchIdx] = 2' />
 																</command>
 															</flowline>
 															<flowline />
 														</command>
-														<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+														<command class_type='calculation' title='Calculation' >
 															<exp exp='TouchIdx = TouchIdx + 1' />
 														</command>
 													</flowline>
 													<flowline />
 												</command>
-												<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='CircularBuffer1' macro='FlushBuffer' />
+												<command class_type='call' title='Component Macro' component='CircularBuffer1' macro='FlushBuffer' />
 											</flowline>
 											<flowline >
-												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<command class_type='calculation' title='Calculation' >
 													<exp exp='CommandDone = .din' />
 												</command>
 											</flowline>
@@ -337,28 +337,28 @@ Must be called after calling GetTouchEvent component macro.' statediag='0' >
 						<local name='ISR_Macro' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
 						</local>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Expand.MacroBody' >
+						<command class_type='sim' title='Simulation' macro='Expand.MacroBody' >
 							<return exp='.ISR_Macro' />
 							<argument exp='&quot;Receive_Interrupt&quot;' />
 							<argument exp='this' />
 							<argument exp='0' />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.UART_Str = &quot;MX_UART_INT_CH&quot; + STRING UARTidx + &quot;_FUNC\n\n&quot;' />
 							<exp exp='.UART_Str = .UART_Str + &quot;MX_UINT16 FCL_DIN;\n\n&quot;' />
 							<exp exp='.UART_Str = .UART_Str + &quot;if (MX_UART_INT_CH&quot; + STRING UARTidx + &quot;_DET)\n{\n\n&quot;' />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.ISR_Macro = .UART_Str + .ISR_Macro' />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.ISR_Macro = .ISR_Macro + &quot;MX_UART_INT_CH&quot; + STRING UARTidx + &quot;_CLR;&quot;' />
 							<exp exp='.ISR_Macro = .ISR_Macro + &quot;\n\n}\n\nMX_UART_INT_FUNC_END\n&quot;' />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.HandlerCode = .HandlerCode + &quot;\n\n&quot; + .ISR_Macro' />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Return = 0' />
 						</command>
 					</flowline>
@@ -369,23 +369,23 @@ Must be called after calling GetTouchEvent component macro.' statediag='0' >
 						<param name='Name' type='T8*' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
 						</param>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='CommandDone = 0' />
 						</command>
-						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='LibraryComponent1' macro='FlashTx' />
-						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='SendString' >
+						<command class_type='sim' title='Component Macro' component='LibraryComponent1' macro='FlashTx' />
+						<command class_type='call' title='Component Macro' component='cal_uart1' macro='SendString' >
 							<argument exp='&quot;get &quot;' />
 						</command>
-						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='SendString' >
+						<command class_type='call' title='Component Macro' component='cal_uart1' macro='SendString' >
 							<argument exp='.Name' />
 						</command>
-						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='SendString' >
+						<command class_type='call' title='Component Macro' component='cal_uart1' macro='SendString' >
 							<argument exp='&quot;.val&quot;' />
 						</command>
-						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='SendString' >
+						<command class_type='call' title='Component Macro' component='cal_uart1' macro='SendString' >
 							<argument exp='Terminator' />
 						</command>
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReceiveReturnNumber' >
+						<command class_type='call' title='User Macro' macro='ReceiveReturnNumber' >
 							<return exp='.Return' />
 						</command>
 					</flowline>
@@ -393,7 +393,7 @@ Must be called after calling GetTouchEvent component macro.' statediag='0' >
 				<macro >
 					<flowline name='Ev_Initialise' description='Initialisation routine for the component once the component is linked to its parent' statediag='0' >
 						<return name='Return' type='u32' description='Non-zero to prevent initialisation' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_Property' />
+						<command class_type='call' title='User Macro' macro='Ev_Property' />
 					</flowline>
 				</macro>
 				<macro >
@@ -405,23 +405,23 @@ Must be called after calling GetTouchEvent component macro.' statediag='0' >
 						<param name='Text' type='T8*' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
 						</param>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='CommandDone = 0' />
 						</command>
-						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='LibraryComponent1' macro='FlashTx' />
-						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='SendString' >
+						<command class_type='sim' title='Component Macro' component='LibraryComponent1' macro='FlashTx' />
+						<command class_type='call' title='Component Macro' component='cal_uart1' macro='SendString' >
 							<argument exp='.Name' />
 						</command>
-						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='SendString' >
+						<command class_type='call' title='Component Macro' component='cal_uart1' macro='SendString' >
 							<argument exp='&quot;.txt=\&quot;&quot;' />
 						</command>
-						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='SendString' >
+						<command class_type='call' title='Component Macro' component='cal_uart1' macro='SendString' >
 							<argument exp='.Text' />
 						</command>
-						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='SendString' >
+						<command class_type='call' title='Component Macro' component='cal_uart1' macro='SendString' >
 							<argument exp='&quot;\&quot;&quot;' />
 						</command>
-						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='SendString' >
+						<command class_type='call' title='Component Macro' component='cal_uart1' macro='SendString' >
 							<argument exp='Terminator' />
 						</command>
 					</flowline>
@@ -433,35 +433,35 @@ Must be called after calling GetTouchEvent component macro.' statediag='0' >
 						</return>
 						<local name='din' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
 						<local name='idx' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
-						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='(CommandDone = 0) &amp;&amp; (.din &lt; Timeout)' >
+						<command class_type='loop' title='Loop' type='0' exp='(CommandDone = 0) &amp;&amp; (.din &lt; Timeout)' >
 							<flowline >
-								<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='1' type='1' />
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='delay' title='Delay' exp='1' type='1' />
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.din = .din + 1' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='CommandDone = 0x70' swap='0' >
+						<command class_type='decision' title='Decision' exp='CommandDone = 0x70' swap='0' >
 							<flowline >
-								<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='CircularBuffer1' macro='GetByte' >
+								<command class_type='call' title='Component Macro' component='CircularBuffer1' macro='GetByte' >
 									<return exp='.din' />
 								</command>
-								<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.din &lt; 255' >
+								<command class_type='loop' title='Loop' type='0' exp='.din &lt; 255' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Return[.idx] = .din' />
 											<exp exp='.idx = .idx + 1' />
 										</command>
-										<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='CircularBuffer1' macro='GetByte' >
+										<command class_type='call' title='Component Macro' component='CircularBuffer1' macro='GetByte' >
 											<return exp='.din' />
 										</command>
 									</flowline>
 								</command>
-								<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='CircularBuffer1' macro='FlushBuffer' />
+								<command class_type='call' title='Component Macro' component='CircularBuffer1' macro='FlushBuffer' />
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Return[.idx] = 0' />
 						</command>
 					</flowline>
@@ -474,23 +474,23 @@ Must be called after calling GetTouchEvent component macro.' statediag='0' >
 						<param name='Name' type='T8*' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
 						</param>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='CommandDone = 0' />
 						</command>
-						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='LibraryComponent1' macro='FlashTx' />
-						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='SendString' >
+						<command class_type='sim' title='Component Macro' component='LibraryComponent1' macro='FlashTx' />
+						<command class_type='call' title='Component Macro' component='cal_uart1' macro='SendString' >
 							<argument exp='&quot;get &quot;' />
 						</command>
-						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='SendString' >
+						<command class_type='call' title='Component Macro' component='cal_uart1' macro='SendString' >
 							<argument exp='.Name' />
 						</command>
-						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='SendString' >
+						<command class_type='call' title='Component Macro' component='cal_uart1' macro='SendString' >
 							<argument exp='&quot;.txt&quot;' />
 						</command>
-						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='SendString' >
+						<command class_type='call' title='Component Macro' component='cal_uart1' macro='SendString' >
 							<argument exp='Terminator' />
 						</command>
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReceiveReturnString' >
+						<command class_type='call' title='User Macro' macro='ReceiveReturnString' >
 							<return exp='.Return' />
 						</command>
 					</flowline>
@@ -505,23 +505,23 @@ Must be called after calling GetTouchEvent component macro.' statediag='0' >
 						<local name='ColStr' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='8' />
 						</local>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='CommandDone = 0' />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.ColStr = ToString$ (.Colour)' />
 						</command>
-						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='LibraryComponent1' macro='FlashTx' />
-						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='SendString' >
+						<command class_type='sim' title='Component Macro' component='LibraryComponent1' macro='FlashTx' />
+						<command class_type='call' title='Component Macro' component='cal_uart1' macro='SendString' >
 							<argument exp='.Name' />
 						</command>
-						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='SendString' >
+						<command class_type='call' title='Component Macro' component='cal_uart1' macro='SendString' >
 							<argument exp='&quot;.pco=&quot;' />
 						</command>
-						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='SendString' >
+						<command class_type='call' title='Component Macro' component='cal_uart1' macro='SendString' >
 							<argument exp='.ColStr' />
 						</command>
-						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='SendString' >
+						<command class_type='call' title='Component Macro' component='cal_uart1' macro='SendString' >
 							<argument exp='Terminator' />
 						</command>
 					</flowline>
@@ -530,39 +530,39 @@ Must be called after calling GetTouchEvent component macro.' statediag='0' >
 					<flowline name='ReceiveReturnNumber' description='' statediag='0' >
 						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='din' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Return = 0' />
 						</command>
-						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='(CommandDone = 0) &amp;&amp; (.din &lt; Timeout)' >
+						<command class_type='loop' title='Loop' type='0' exp='(CommandDone = 0) &amp;&amp; (.din &lt; Timeout)' >
 							<flowline >
-								<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='1' type='1' />
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='delay' title='Delay' exp='1' type='1' />
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.din = .din + 1' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='CommandDone = 0x71' swap='0' >
+						<command class_type='decision' title='Decision' exp='CommandDone = 0x71' swap='0' >
 							<flowline >
-								<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='TypeConversionsFree1' macro='SetByte' >
+								<command class_type='call' title='Component Macro' component='TypeConversionsFree1' macro='SetByte' >
 									<argument exp='0' />
 									<argument exp='CircularBuffer1::GetByte()' />
 								</command>
-								<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='TypeConversionsFree1' macro='SetByte' >
+								<command class_type='call' title='Component Macro' component='TypeConversionsFree1' macro='SetByte' >
 									<argument exp='1' />
 									<argument exp='CircularBuffer1::GetByte()' />
 								</command>
-								<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='TypeConversionsFree1' macro='SetByte' >
+								<command class_type='call' title='Component Macro' component='TypeConversionsFree1' macro='SetByte' >
 									<argument exp='2' />
 									<argument exp='CircularBuffer1::GetByte()' />
 								</command>
-								<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='TypeConversionsFree1' macro='SetByte' >
+								<command class_type='call' title='Component Macro' component='TypeConversionsFree1' macro='SetByte' >
 									<argument exp='3' />
 									<argument exp='CircularBuffer1::GetByte()' />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Return = TypeConversionsFree1 :: GetLong ()' />
 								</command>
-								<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='CircularBuffer1' macro='FlushBuffer' />
+								<command class_type='call' title='Component Macro' component='CircularBuffer1' macro='FlushBuffer' />
 							</flowline>
 							<flowline />
 						</command>
@@ -572,17 +572,17 @@ Must be called after calling GetTouchEvent component macro.' statediag='0' >
 					<flowline name='ReceiveReturnFinished' description='' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<local name='din' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
-						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='(CommandDone = 0) &amp;&amp; (.din &lt; Timeout)' >
+						<command class_type='loop' title='Loop' type='0' exp='(CommandDone = 0) &amp;&amp; (.din &lt; Timeout)' >
 							<flowline >
-								<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='1' type='1' />
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='delay' title='Delay' exp='1' type='1' />
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.din = .din + 1' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='CommandDone = 0x1A' swap='0' >
+						<command class_type='decision' title='Decision' exp='CommandDone = 0x1A' swap='0' >
 							<flowline >
-								<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='CircularBuffer1' macro='FlushBuffer' />
+								<command class_type='call' title='Component Macro' component='CircularBuffer1' macro='FlushBuffer' />
 							</flowline>
 							<flowline />
 						</command>
@@ -591,7 +591,7 @@ Must be called after calling GetTouchEvent component macro.' statediag='0' >
 				<macro >
 					<flowline name='Ev_Property' description='Sent when a property has been changed by the User' statediag='0' >
 						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.TimerStart' >
+						<command class_type='sim' title='Built-in Function' macro='System.TimerStart' >
 							<argument exp='1' />
 							<argument exp='200' />
 						</command>
@@ -603,20 +603,20 @@ Must be called after calling GetTouchEvent component macro.' statediag='0' >
 						<param name='Name' type='T8*' description='Name of the page e.g. &quot;page0&quot;' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
 						</param>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='CommandDone = 0' />
 						</command>
-						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='LibraryComponent1' macro='FlashTx' />
-						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='SendString' >
+						<command class_type='sim' title='Component Macro' component='LibraryComponent1' macro='FlashTx' />
+						<command class_type='call' title='Component Macro' component='cal_uart1' macro='SendString' >
 							<argument exp='&quot;page &quot;' />
 						</command>
-						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='SendString' >
+						<command class_type='call' title='Component Macro' component='cal_uart1' macro='SendString' >
 							<argument exp='.Name' />
 						</command>
-						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='SendString' >
+						<command class_type='call' title='Component Macro' component='cal_uart1' macro='SendString' >
 							<argument exp='Terminator' />
 						</command>
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ReceiveReturnFinished' />
+						<command class_type='call' title='User Macro' macro='ReceiveReturnFinished' />
 					</flowline>
 				</macro>
 				<macro >
@@ -629,23 +629,23 @@ Must be called after calling GetTouchEvent component macro.' statediag='0' >
 						<local name='StrVal' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='15' />
 						</local>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='CommandDone = 0' />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.StrVal = ToString$ (.Number)' />
 						</command>
-						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='LibraryComponent1' macro='FlashTx' />
-						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='SendString' >
+						<command class_type='sim' title='Component Macro' component='LibraryComponent1' macro='FlashTx' />
+						<command class_type='call' title='Component Macro' component='cal_uart1' macro='SendString' >
 							<argument exp='.Name' />
 						</command>
-						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='SendString' >
+						<command class_type='call' title='Component Macro' component='cal_uart1' macro='SendString' >
 							<argument exp='&quot;.val=&quot;' />
 						</command>
-						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='SendString' >
+						<command class_type='call' title='Component Macro' component='cal_uart1' macro='SendString' >
 							<argument exp='.StrVal' />
 						</command>
-						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='SendString' >
+						<command class_type='call' title='Component Macro' component='cal_uart1' macro='SendString' >
 							<argument exp='Terminator' />
 						</command>
 					</flowline>
@@ -656,11 +656,11 @@ Must be called after calling GetTouchEvent component macro.' statediag='0' >
 						<local name='Name' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
 						</local>
-						<command class_type='sim' title='' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.GetName' >
+						<command class_type='sim' title='' macro='Tree.GetName' >
 							<return exp='.Name' />
 							<argument exp='this' />
 						</command>
-						<command class_type='sim' title='' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='' macro='Component.Property.SetValue' >
 							<argument exp='LibraryComponent1' />
 							<argument exp='&quot;Name&quot;' />
 							<argument exp='.Name' />
@@ -674,17 +674,17 @@ Must be called after calling GetTouchEvent component macro.' statediag='0' >
 							<array size='20' />
 						</param>
 						<param name='Elements' type='u32*' description='The number of elements in the array' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='Compare$ (.VarName,&quot;TouchQueueEvent&quot;,1) == 0' swap='0' >
+						<command class_type='decision' title='Decision' exp='Compare$ (.VarName,&quot;TouchQueueEvent&quot;,1) == 0' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Elements = TouchQueueSize' />
 								</command>
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='Compare$ (.VarName,&quot;TouchQueueID&quot;,1) == 0' swap='0' >
+						<command class_type='decision' title='Decision' exp='Compare$ (.VarName,&quot;TouchQueueID&quot;,1) == 0' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Elements = TouchQueueSize' />
 								</command>
 							</flowline>
@@ -697,18 +697,18 @@ Must be called after calling GetTouchEvent component macro.' statediag='0' >
 Returns 0 for no touch event detected, 1= touch press, 2 = touch release' statediag='0' >
 						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Idx' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='TouchIdx &gt; 0' swap='0' >
+						<command class_type='decision' title='Decision' exp='TouchIdx &gt; 0' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Return and Store first event and ID' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Return and Store first event and ID' >
 									<exp exp='.Return = TouchQueueEvent[0]' />
 									<exp exp='LastTouchID = TouchQueueID[0]' />
 								</command>
-								<command class_type='calculation' title='Remove event from counter' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Remove event from counter' >
 									<exp exp='TouchIdx = TouchIdx - 1' />
 								</command>
-								<command class_type='loop' title='Shift events forward in arrays' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.Idx &lt; TouchIdx' >
+								<command class_type='loop' title='Shift events forward in arrays' type='2' forvar='.Idx' exp='TouchIdx' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='TouchQueueEvent[.idx] = TouchQueueEvent[.idx + 1]' />
 											<exp exp='TouchQueueID[.idx] = TouchQueueID[.idx + 1]' />
 										</command>
@@ -716,7 +716,7 @@ Returns 0 for no touch event detected, 1= touch press, 2 = touch release' stated
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Return = 0' />
 								</command>
 							</flowline>
@@ -729,34 +729,34 @@ Returns 0 for no touch event detected, 1= touch press, 2 = touch release' stated
 						<local name='Temp_Str' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
 						</local>
-						<command class_type='comment' title='' comment='Apply some CAL defaults' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='SetValue' >
+						<command class_type='comment' title='' comment='Apply some CAL defaults' textarea='12,0,12,0' />
+						<command class_type='sim' title='Simulation' component='cal_uart1' macro='SetValue' >
 							<argument exp='&quot;FLOWEN&quot;' />
 							<argument exp='&quot;0&quot;' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='SetValue' >
+						<command class_type='sim' title='Simulation' component='cal_uart1' macro='SetValue' >
 							<argument exp='&quot;ECHO&quot;' />
 							<argument exp='&quot;0&quot;' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='SetValue' >
+						<command class_type='sim' title='Simulation' component='cal_uart1' macro='SetValue' >
 							<argument exp='&quot;DBITS&quot;' />
 							<argument exp='&quot;8&quot;' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='SetValue' >
+						<command class_type='sim' title='Simulation' component='cal_uart1' macro='SetValue' >
 							<argument exp='&quot;RETURN&quot;' />
 							<argument exp='&quot;1&quot;' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='SetValue' >
+						<command class_type='sim' title='Simulation' component='cal_uart1' macro='SetValue' >
 							<argument exp='&quot;INT&quot;' />
 							<argument exp='&quot;1&quot;' />
 						</command>
-						<command class_type='comment' title='' comment='Record current UART channel' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetValue' >
+						<command class_type='comment' title='' comment='Record current UART channel' textarea='12,0,12,0' />
+						<command class_type='sim' title='Simulation' macro='Component.Property.GetValue' >
 							<return exp='.Temp_Str' />
 							<argument exp='cal_uart1' />
 							<argument exp='&quot;CHANNEL&quot;' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 							<argument exp='this' />
 							<argument exp='&quot;UARTidx&quot;' />
 							<argument exp='.Temp_Str' />
@@ -773,23 +773,23 @@ Returns 0 for no touch event detected, 1= touch press, 2 = touch release' stated
 						<local name='ColStr' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='8' />
 						</local>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='CommandDone = 0' />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.ColStr = ToString$ (.Colour)' />
 						</command>
-						<command class_type='sim' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='LibraryComponent1' macro='FlashTx' />
-						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='SendString' >
+						<command class_type='sim' title='Component Macro' component='LibraryComponent1' macro='FlashTx' />
+						<command class_type='call' title='Component Macro' component='cal_uart1' macro='SendString' >
 							<argument exp='.Name' />
 						</command>
-						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='SendString' >
+						<command class_type='call' title='Component Macro' component='cal_uart1' macro='SendString' >
 							<argument exp='&quot;.bco=&quot;' />
 						</command>
-						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='SendString' >
+						<command class_type='call' title='Component Macro' component='cal_uart1' macro='SendString' >
 							<argument exp='.ColStr' />
 						</command>
-						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='SendString' >
+						<command class_type='call' title='Component Macro' component='cal_uart1' macro='SendString' >
 							<argument exp='Terminator' />
 						</command>
 					</flowline>
@@ -802,72 +802,72 @@ Returns 0 for no touch event detected, 1= touch press, 2 = touch release' stated
 						</local>
 						<local name='TestVal' type='s32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Val' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Initialise' />
-						<command class_type='call' title='User Macro' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetText' >
+						<command class_type='call' title='User Macro' macro='Initialise' />
+						<command class_type='call' title='User Macro' disable='1' macro='SetText' >
 							<argument exp='&quot;t0&quot;' />
 							<argument exp='&quot;Sup Yall&quot;' />
 						</command>
-						<command class_type='call' title='User Macro' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetText' >
+						<command class_type='call' title='User Macro' disable='1' macro='GetText' >
 							<return exp='.Test' />
 							<argument exp='&quot;t0&quot;' />
 						</command>
-						<command class_type='call' title='User Macro' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetPage' >
+						<command class_type='call' title='User Macro' disable='1' macro='SetPage' >
 							<argument exp='&quot;page0&quot;' />
 						</command>
-						<command class_type='call' title='User Macro' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetBackgroundColour' >
+						<command class_type='call' title='User Macro' disable='1' macro='SetBackgroundColour' >
 							<argument exp='&quot;page0&quot;' />
 							<argument exp='0x0F' />
 						</command>
-						<command class_type='call' title='User Macro' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetText' >
+						<command class_type='call' title='User Macro' disable='1' macro='SetText' >
 							<argument exp='&quot;g0&quot;' />
 							<argument exp='&quot;Scrolling Text Woop&quot;' />
 						</command>
-						<command class_type='call' title='User Macro' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetBackgroundColour' >
+						<command class_type='call' title='User Macro' disable='1' macro='SetBackgroundColour' >
 							<argument exp='&quot;t0&quot;' />
 							<argument exp='0xFF' />
 						</command>
-						<command class_type='call' title='User Macro' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetFontColour' >
+						<command class_type='call' title='User Macro' disable='1' macro='SetFontColour' >
 							<argument exp='&quot;t0&quot;' />
 							<argument exp='63488' />
 						</command>
-						<command class_type='call' title='User Macro' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetValue' >
+						<command class_type='call' title='User Macro' disable='1' macro='SetValue' >
 							<argument exp='&quot;n0&quot;' />
 							<argument exp='1234' />
 						</command>
-						<command class_type='call' title='User Macro' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetValue' >
+						<command class_type='call' title='User Macro' disable='1' macro='GetValue' >
 							<return exp='.TestVal' />
 							<argument exp='&quot;n0&quot;' />
 						</command>
-						<command class_type='call' title='User Macro' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetBackgroundColour' >
+						<command class_type='call' title='User Macro' disable='1' macro='SetBackgroundColour' >
 							<argument exp='&quot;n0&quot;' />
 							<argument exp='63488' />
 						</command>
-						<command class_type='call' title='User Macro' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetFontColour' >
+						<command class_type='call' title='User Macro' disable='1' macro='SetFontColour' >
 							<argument exp='&quot;n0&quot;' />
 							<argument exp='0xFF' />
 						</command>
-						<command class_type='loop' title='Loop' disable='1' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='1' >
+						<command class_type='loop' title='Loop' disable='1' type='0' exp='1' >
 							<flowline >
-								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetValue' >
+								<command class_type='call' title='User Macro' macro='SetValue' >
 									<argument exp='&quot;z0&quot;' />
 									<argument exp='.Val' />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Val = .Val + 1' />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Val = 360' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Val = 360' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Val = 0' />
 										</command>
 									</flowline>
 									<flowline />
 								</command>
-								<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='10' type='1' />
-								<command class_type='call' title='User Macro' break='1' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Receive_Interrupt' />
+								<command class_type='delay' title='Delay' exp='10' type='1' />
+								<command class_type='call' title='User Macro' break='1' disable='1' macro='Receive_Interrupt' />
 							</flowline>
 						</command>
-						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='1' >
+						<command class_type='loop' title='Loop' type='0' exp='1' >
 							<flowline />
 						</command>
 					</flowline>
@@ -875,13 +875,13 @@ Returns 0 for no touch event detected, 1= touch press, 2 = touch release' stated
 				<macro >
 					<flowline name='Initialise' description='Sets up the UART connection to the Nextion display' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='CircularBuffer1' macro='FlushBuffer' />
-						<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='cal_uart1' macro='Init' />
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='System.TimerStart' >
+						<command class_type='call' title='Component Macro' component='CircularBuffer1' macro='FlushBuffer' />
+						<command class_type='call' title='Component Macro' component='cal_uart1' macro='Init' />
+						<command class_type='sim' title='Built-in Function' macro='System.TimerStart' >
 							<argument exp='0' />
 							<argument exp='50' />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='Terminator[0] = 0xFF' />
 							<exp exp='Terminator[1] = 0xFF' />
 							<exp exp='Terminator[2] = 0xFF' />
@@ -890,12 +890,13 @@ Returns 0 for no touch event detected, 1= touch press, 2 = touch release' stated
 					</flowline>
 				</macro>
 			</macros>
-			<component class_type='ref' guid='91b64b1d-b8b2-40f1-b073-e953a91fa234' vmin='2' vmaj='2' codename='cal_uart1' panelId='-1' x='0' y='0' z='0' xsz='0.1' ysz='0.1' zsz='0.1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+			<component class_type='ref' guid='91b64b1d-b8b2-40f1-b073-e953a91fa234' vmin='3' vmaj='19' codename='cal_uart1' panelId='-1' x='0' y='0' z='0' xsz='0.1' ysz='0.1' zsz='0.1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
 					<value target='UseUART' data='1' />
 					<value target='CHANNEL' data='001' />
+					<value target='Filter' data='' />
 					<value target='UseTX' data='1' />
 					<value target='TX' data='$PORTC.6' />
 					<value target='OutputPins' data='000' />
@@ -961,13 +962,14 @@ Returns 0 for no touch event detected, 1= touch press, 2 = touch release' stated
 					<value target='BitDelay' data='104' />
 					<value target='ParentName' data='Nextion' />
 					<value target='CompName' data='' />
+					<value target='Sorted' data='0' />
 				</values>
 				<events />
 				<apis />
 				<variables />
 				<macros />
 			</component>
-			<component class_type='ref' guid='c34f9b8a-a915-4f75-ad0c-87f2ad670a8a' vmin='6' vmaj='1' codename='CircularBuffer1' panelId='-1' x='0' y='0' z='0' xsz='0.01' ysz='0.01' zsz='0.01' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+			<component class_type='ref' guid='c34f9b8a-a915-4f75-ad0c-87f2ad670a8a' vmin='6' vmaj='1' codename='CircularBuffer1' panelId='-1' x='0' y='0' z='0' xsz='0.01' ysz='0.01' zsz='0.01' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
@@ -982,7 +984,7 @@ Returns 0 for no touch event detected, 1= touch press, 2 = touch release' stated
 				<variables />
 				<macros />
 			</component>
-			<component class_type='ref' guid='3e8d8ce5-379f-45cf-99dc-b2d57e3c1964' vmin='0' vmaj='1' codename='TypeConversionsFree1' panelId='-1' x='0' y='0' z='0' xsz='0.1' ysz='0.1' zsz='0.1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' >
+			<component class_type='ref' guid='3e8d8ce5-379f-45cf-99dc-b2d57e3c1964' vmin='0' vmaj='1' codename='TypeConversionsFree1' panelId='-1' x='0' y='0' z='0' xsz='0.1' ysz='0.1' zsz='0.1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
@@ -993,7 +995,7 @@ Returns 0 for no touch event detected, 1= touch press, 2 = touch release' stated
 				<variables />
 				<macros />
 			</component>
-			<component class_type='ref' guid='58be670e-18fb-477e-ab09-61fde14b23ec' vmin='0' vmaj='1' codename='LibraryComponent1' panelId='-1' x='0' y='0' z='0' xsz='100' ysz='100' zsz='100' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' comp2dType='0' >
+			<component class_type='ref' guid='58be670e-18fb-477e-ab09-61fde14b23ec' vmin='0' vmaj='1' codename='LibraryComponent1' panelId='-1' x='0' y='0' z='0' xsz='100' ysz='100' zsz='100' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
@@ -1026,7 +1028,7 @@ Display' />
 		<camera xe='5.1209' ye='-1.83237' ze='396.87' xt='5.1209' yt='-1.83237' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
 		<viewport dx='622' dy='352' zoom='189.639' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='0' />
-		<winpos ID='7005' RectRecentFloat='1270,427,1920,877' RectRecentDocked='1222,141,1495,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+		<winpos ID='7005' RectRecentFloat='1270,427,1920,877' RectRecentDocked='1274,454,1916,873' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel2d>
 	<panel3d shadows='0' lighting='2' brightness='0' perspective='1' >
 		<background rgb='8409120' img='' style='0' />
@@ -1039,32 +1041,32 @@ Display' />
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,410,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,392,866' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='0' />
 	<layout >
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAARgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Receive_Interrupt' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAARgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAARgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetText' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAARgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetText' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAARgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReceiveReturnString' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAARgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetValue' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAARgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetValue' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAARgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReceiveReturnNumber' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAARgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetBackgroundColour' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAARgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReceiveReturnFinished' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAARgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetFontColour' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAARgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetPage' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAARgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetTouchEvent' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAARgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetTouchID' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAARgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Timer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAARgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Stop' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAARgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_GetVarSize' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAARgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_AddInterrupts' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAARgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Preprocess' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAARgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAARgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAARgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAaAMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Receive_Interrupt' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAaAMAAGMDAAA' zoom='75' scrollx='266' scrolly='360' flags='0' />
+		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAaAMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetText' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAaAMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetText' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAaAMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReceiveReturnString' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAaAMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetValue' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAaAMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetValue' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAaAMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReceiveReturnNumber' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAaAMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetBackgroundColour' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAaAMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReceiveReturnFinished' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAaAMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetFontColour' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAaAMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetPage' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAaAMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetTouchEvent' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAaAMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetTouchID' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAaAMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Timer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAaAMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Stop' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAaAMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_GetVarSize' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAaAMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_AddInterrupts' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAaAMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Preprocess' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAaAMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAaAMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAaAMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>
