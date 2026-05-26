@@ -1,5 +1,5 @@
 <root>
-<document scada='0' projtype='1' schema='103' license='1,82702381,95CJQR' title='' description='' fcversion='720898' target='PIC16.33E.E-Blocks 16-bit dsPIC Programmer' >
+<document scada='0' projtype='1' schema='103' license='1,82702381,95CJQR' title='' description='' fcversion='720897' target='PIC16.33E.E-Blocks 16-bit dsPIC Programmer' >
 	<config data='' clkspd='140000000' simspd='1' usewdt='0' constif='0' Use3V3='0' />
 	<plugins >
 		<dll_models enabled='1' />
@@ -572,17 +572,17 @@ set to responf to &apos;User.Notify&apos; events (ID = n/a,  Data = Position (0-
 				<value target='sim7' data='' />
 			</values>
 			<events >
-				<event class='Connection' event='ChipChange' target='Ev_ChipChange' />
-				<event class='Simulation' event='Start' target='Ev_Start' />
-				<event class='Components' event='Initialise' target='Ev_Property' />
 				<event class='Compile' event='Preprocess' target='Ev_Property' />
+				<event class='Components' event='Initialise' target='Ev_Property' />
+				<event class='Components' event='Renamed' target='Ev_Renamed' />
+				<event class='Compile' event='AddInterrupts' target='Ev_AddInterrupts' />
 				<event class='System' event='Timer' target='Ev_Timer' />
-				<event class='Compile' event='AddHeader' target='Ev_AddHeader' />
+				<event class='Components' event='Property' target='Ev_Property' />
 				<event class='Connection' event='FCDChange' target='Ev_ChipChange' />
 				<event class='Simulation' event='Stop' target='Ev_Stop' />
-				<event class='Components' event='Renamed' target='Ev_Renamed' />
-				<event class='Components' event='Property' target='Ev_Property' />
-				<event class='Compile' event='AddInterrupts' target='Ev_AddInterrupts' />
+				<event class='Compile' event='AddHeader' target='Ev_AddHeader' />
+				<event class='Simulation' event='Start' target='Ev_Start' />
+				<event class='Connection' event='ChipChange' target='Ev_ChipChange' />
 			</events>
 			<apis >
 				<api name='DisableServo' alt='DisableServo_Sim' type='1' proto='1' />
@@ -650,7 +650,7 @@ set to responf to &apos;User.Notify&apos; events (ID = n/a,  Data = Position (0-
 						<local name='Trim' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Idx' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
 						<local name='calc' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='loop' title='Loop' type='0' exp='.Idx &lt; Channel_Count' for1='' for2='' for3='' >
+						<command class_type='loop' title='Loop' type='0' exp='.Idx &lt; Channel_Count' >
 							<flowline >
 								<command class_type='decision' title='Decision' exp='Servo_Required[.Idx] != Servo_Position[.Idx]' swap='0' >
 									<flowline >
@@ -822,27 +822,18 @@ set to responf to &apos;User.Notify&apos; events (ID = n/a,  Data = Position (0-
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<param name='Channel' type='u8' description='The channel to set the position for.  First channel is zero.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Dummy' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='native' title='C Code' ccode='      #if defined MX_CAL_ESP' language='C' />
 						<command class_type='switch' title='Switch' textarea='36,25,36,25' exp='.Channel' >
 							<case >
 								<flowline >
-									<command class_type='calculation' title='Convert pin to input' disable='1' >
-										<exp exp='.Dummy = pin0' />
-									</command>
-									<command class_type='native' title='C Code' ccode='      #if defined MX_CAL_ESP
-        FC_CAL_PWM_Disable_1();
-      #endif' language='C' />
+									<command class_type='native' title='C Code' ccode='        FC_CAL_PWM_Disable_X1();' language='C' />
 								</flowline>
 							</case>
 							<case exp='1' >
 								<flowline >
 									<command class_type='decision' title='Decision' exp='Channel_Count &gt; 1' swap='0' >
 										<flowline >
-											<command class_type='calculation' title='Convert pin to input' disable='1' >
-												<exp exp='.Dummy = pin1' />
-											</command>
-											<command class_type='native' title='C Code' ccode='        #if defined MX_CAL_ESP
-          FC_CAL_PWM_Disable_2();
-        #endif' language='C' />
+											<command class_type='native' title='C Code' ccode='          FC_CAL_PWM_Disable_X2();' language='C' />
 										</flowline>
 										<flowline />
 									</command>
@@ -852,12 +843,7 @@ set to responf to &apos;User.Notify&apos; events (ID = n/a,  Data = Position (0-
 								<flowline >
 									<command class_type='decision' title='Decision' exp='Channel_Count &gt; 2' swap='0' >
 										<flowline >
-											<command class_type='calculation' title='Convert pin to input' disable='1' >
-												<exp exp='.Dummy = pin2' />
-											</command>
-											<command class_type='native' title='C Code' ccode='        #if defined MX_CAL_ESP
-          FC_CAL_PWM_Disable_3();
-        #endif' language='C' />
+											<command class_type='native' title='C Code' ccode='          FC_CAL_PWM_Disable_X3();' language='C' />
 										</flowline>
 										<flowline />
 									</command>
@@ -867,12 +853,7 @@ set to responf to &apos;User.Notify&apos; events (ID = n/a,  Data = Position (0-
 								<flowline >
 									<command class_type='decision' title='Decision' exp='Channel_Count &gt; 3' swap='0' >
 										<flowline >
-											<command class_type='calculation' title='Convert pin to input' disable='1' >
-												<exp exp='.Dummy = pin3' />
-											</command>
-											<command class_type='native' title='C Code' ccode='        #if defined MX_CAL_ESP
-          FC_CAL_PWM_Disable_4();
-        #endif' language='C' />
+											<command class_type='native' title='C Code' ccode='          FC_CAL_PWM_Disable_X4();' language='C' />
 										</flowline>
 										<flowline />
 									</command>
@@ -882,12 +863,7 @@ set to responf to &apos;User.Notify&apos; events (ID = n/a,  Data = Position (0-
 								<flowline >
 									<command class_type='decision' title='Decision' exp='Channel_Count &gt; 4' swap='0' >
 										<flowline >
-											<command class_type='calculation' title='Convert pin to input' disable='1' >
-												<exp exp='.Dummy = pin4' />
-											</command>
-											<command class_type='native' title='C Code' ccode='        #if defined MX_CAL_ESP
-          FC_CAL_PWM_Disable_5();
-        #endif' language='C' />
+											<command class_type='native' title='C Code' ccode='          FC_CAL_PWM_Disable_X5();' language='C' />
 										</flowline>
 										<flowline />
 									</command>
@@ -897,12 +873,7 @@ set to responf to &apos;User.Notify&apos; events (ID = n/a,  Data = Position (0-
 								<flowline >
 									<command class_type='decision' title='Decision' exp='Channel_Count &gt; 5' swap='0' >
 										<flowline >
-											<command class_type='calculation' title='Convert pin to input' disable='1' >
-												<exp exp='.Dummy = pin5' />
-											</command>
-											<command class_type='native' title='C Code' ccode='        #if defined MX_CAL_ESP
-          FC_CAL_PWM_Disable_6();
-        #endif' language='C' />
+											<command class_type='native' title='C Code' ccode='          FC_CAL_PWM_Disable_X6();' language='C' />
 										</flowline>
 										<flowline />
 									</command>
@@ -912,12 +883,7 @@ set to responf to &apos;User.Notify&apos; events (ID = n/a,  Data = Position (0-
 								<flowline >
 									<command class_type='decision' title='Decision' exp='Channel_Count &gt; 6' swap='0' >
 										<flowline >
-											<command class_type='calculation' title='Convert pin to input' disable='1' >
-												<exp exp='.Dummy = pin6' />
-											</command>
-											<command class_type='native' title='C Code' ccode='        #if defined MX_CAL_ESP
-          FC_CAL_PWM_Disable_7();
-        #endif' language='C' />
+											<command class_type='native' title='C Code' ccode='          FC_CAL_PWM_Disable_X7();' language='C' />
 										</flowline>
 										<flowline />
 									</command>
@@ -927,18 +893,14 @@ set to responf to &apos;User.Notify&apos; events (ID = n/a,  Data = Position (0-
 								<flowline >
 									<command class_type='decision' title='Decision' exp='Channel_Count &gt; 7' swap='0' >
 										<flowline >
-											<command class_type='calculation' title='Convert pin to input' disable='1' >
-												<exp exp='.Dummy = pin7' />
-											</command>
-											<command class_type='native' title='C Code' ccode='        #if defined MX_CAL_ESP
-          FC_CAL_PWM_Disable_8();
-        #endif' language='C' />
+											<command class_type='native' title='C Code' ccode='          FC_CAL_PWM_Disable_X8();' language='C' />
 										</flowline>
 										<flowline />
 									</command>
 								</flowline>
 							</case>
 						</command>
+						<command class_type='native' title='C Code' ccode='      #endif' language='C' />
 						<command class_type='decision' title='Dont disable the output here' disable='1' exp='.Channel &lt; Channel_Count' swap='0' >
 							<flowline >
 								<command class_type='calculation' title='Clear bit from enabled register' disable='1' >
@@ -1010,14 +972,14 @@ set to responf to &apos;User.Notify&apos; events (ID = n/a,  Data = Position (0-
 								<command class_type='switch' title='Switch' textarea='36,25,36,25' exp='.Channel' >
 									<case >
 										<flowline >
-											<command class_type='native' title='C Code' ccode='        FC_CAL_PWM_SetDutyFloat_1(FCL_DUTY);' language='C' />
+											<command class_type='native' title='C Code' ccode='        FC_CAL_PWM_SetDutyFloat_X1(FCL_DUTY);' language='C' />
 										</flowline>
 									</case>
 									<case exp='1' >
 										<flowline >
 											<command class_type='decision' title='Decision' exp='Channel_Count &gt; 1' swap='0' >
 												<flowline >
-													<command class_type='native' title='C Code' ccode='          FC_CAL_PWM_SetDutyFloat_2(FCL_DUTY);' language='C' />
+													<command class_type='native' title='C Code' ccode='          FC_CAL_PWM_SetDutyFloat_X2(FCL_DUTY);' language='C' />
 												</flowline>
 												<flowline />
 											</command>
@@ -1027,7 +989,7 @@ set to responf to &apos;User.Notify&apos; events (ID = n/a,  Data = Position (0-
 										<flowline >
 											<command class_type='decision' title='Decision' exp='Channel_Count &gt; 2' swap='0' >
 												<flowline >
-													<command class_type='native' title='C Code' ccode='          FC_CAL_PWM_SetDutyFloat_3(FCL_DUTY);' language='C' />
+													<command class_type='native' title='C Code' ccode='          FC_CAL_PWM_SetDutyFloat_X3(FCL_DUTY);' language='C' />
 												</flowline>
 												<flowline />
 											</command>
@@ -1037,7 +999,7 @@ set to responf to &apos;User.Notify&apos; events (ID = n/a,  Data = Position (0-
 										<flowline >
 											<command class_type='decision' title='Decision' exp='Channel_Count &gt; 3' swap='0' >
 												<flowline >
-													<command class_type='native' title='C Code' ccode='          FC_CAL_PWM_SetDutyFloat_4(FCL_DUTY);' language='C' />
+													<command class_type='native' title='C Code' ccode='          FC_CAL_PWM_SetDutyFloat_X4(FCL_DUTY);' language='C' />
 												</flowline>
 												<flowline />
 											</command>
@@ -1047,7 +1009,7 @@ set to responf to &apos;User.Notify&apos; events (ID = n/a,  Data = Position (0-
 										<flowline >
 											<command class_type='decision' title='Decision' exp='Channel_Count &gt; 4' swap='0' >
 												<flowline >
-													<command class_type='native' title='C Code' ccode='          FC_CAL_PWM_SetDutyFloat_5(FCL_DUTY);' language='C' />
+													<command class_type='native' title='C Code' ccode='          FC_CAL_PWM_SetDutyFloat_X5(FCL_DUTY);' language='C' />
 												</flowline>
 												<flowline />
 											</command>
@@ -1057,7 +1019,7 @@ set to responf to &apos;User.Notify&apos; events (ID = n/a,  Data = Position (0-
 										<flowline >
 											<command class_type='decision' title='Decision' exp='Channel_Count &gt; 5' swap='0' >
 												<flowline >
-													<command class_type='native' title='C Code' ccode='          FC_CAL_PWM_SetDutyFloat_6(FCL_DUTY);' language='C' />
+													<command class_type='native' title='C Code' ccode='          FC_CAL_PWM_SetDutyFloat_X6(FCL_DUTY);' language='C' />
 												</flowline>
 												<flowline />
 											</command>
@@ -1067,7 +1029,7 @@ set to responf to &apos;User.Notify&apos; events (ID = n/a,  Data = Position (0-
 										<flowline >
 											<command class_type='decision' title='Decision' exp='Channel_Count &gt; 6' swap='0' >
 												<flowline >
-													<command class_type='native' title='C Code' ccode='          FC_CAL_PWM_SetDutyFloat_7(FCL_DUTY);' language='C' />
+													<command class_type='native' title='C Code' ccode='          FC_CAL_PWM_SetDutyFloat_X7(FCL_DUTY);' language='C' />
 												</flowline>
 												<flowline />
 											</command>
@@ -1077,7 +1039,7 @@ set to responf to &apos;User.Notify&apos; events (ID = n/a,  Data = Position (0-
 										<flowline >
 											<command class_type='decision' title='Decision' exp='Channel_Count &gt; 7' swap='0' >
 												<flowline >
-													<command class_type='native' title='C Code' ccode='          FC_CAL_PWM_SetDutyFloat_8(FCL_DUTY);' language='C' />
+													<command class_type='native' title='C Code' ccode='          FC_CAL_PWM_SetDutyFloat_X8(FCL_DUTY);' language='C' />
 												</flowline>
 												<flowline />
 											</command>
@@ -1293,7 +1255,7 @@ Default speed is shown in the Servo_Period_Multiplier property.' statediag='0' >
 						<command class_type='calculation' title='Calculation' >
 							<exp exp='Servo_Idx = 0' />
 						</command>
-						<command class_type='loop' title='Loop' type='0' exp='Servo_Idx &lt; 8' for1='' for2='' for3='' >
+						<command class_type='loop' title='Loop' type='0' exp='Servo_Idx &lt; 8' >
 							<flowline >
 								<command class_type='calculation' title='Calculation' >
 									<exp exp='Servo_Position[Servo_Idx] = 128' />
@@ -1455,14 +1417,14 @@ Uses a 16-bit position parameter to add extra precision.' statediag='0' >
 								<command class_type='switch' title='Switch' textarea='36,25,36,25' exp='.Channel' >
 									<case >
 										<flowline >
-											<command class_type='native' title='C Code' ccode='        FC_CAL_PWM_SetDutyFloat_1(FCL_DUTY);' language='C' />
+											<command class_type='native' title='C Code' ccode='        FC_CAL_PWM_SetDutyFloat_X1(FCL_DUTY);' language='C' />
 										</flowline>
 									</case>
 									<case exp='1' >
 										<flowline >
 											<command class_type='decision' title='Decision' exp='Channel_Count &gt; 1' swap='0' >
 												<flowline >
-													<command class_type='native' title='C Code' ccode='          FC_CAL_PWM_SetDutyFloat_2(FCL_DUTY);' language='C' />
+													<command class_type='native' title='C Code' ccode='          FC_CAL_PWM_SetDutyFloat_X2(FCL_DUTY);' language='C' />
 												</flowline>
 												<flowline />
 											</command>
@@ -1472,7 +1434,7 @@ Uses a 16-bit position parameter to add extra precision.' statediag='0' >
 										<flowline >
 											<command class_type='decision' title='Decision' exp='Channel_Count &gt; 2' swap='0' >
 												<flowline >
-													<command class_type='native' title='C Code' ccode='          FC_CAL_PWM_SetDutyFloat_3(FCL_DUTY);' language='C' />
+													<command class_type='native' title='C Code' ccode='          FC_CAL_PWM_SetDutyFloat_X3(FCL_DUTY);' language='C' />
 												</flowline>
 												<flowline />
 											</command>
@@ -1482,7 +1444,7 @@ Uses a 16-bit position parameter to add extra precision.' statediag='0' >
 										<flowline >
 											<command class_type='decision' title='Decision' exp='Channel_Count &gt; 3' swap='0' >
 												<flowline >
-													<command class_type='native' title='C Code' ccode='          FC_CAL_PWM_SetDutyFloat_4(FCL_DUTY);' language='C' />
+													<command class_type='native' title='C Code' ccode='          FC_CAL_PWM_SetDutyFloat_X4(FCL_DUTY);' language='C' />
 												</flowline>
 												<flowline />
 											</command>
@@ -1492,7 +1454,7 @@ Uses a 16-bit position parameter to add extra precision.' statediag='0' >
 										<flowline >
 											<command class_type='decision' title='Decision' exp='Channel_Count &gt; 4' swap='0' >
 												<flowline >
-													<command class_type='native' title='C Code' ccode='          FC_CAL_PWM_SetDutyFloat_5(FCL_DUTY);' language='C' />
+													<command class_type='native' title='C Code' ccode='          FC_CAL_PWM_SetDutyFloat_X5(FCL_DUTY);' language='C' />
 												</flowline>
 												<flowline />
 											</command>
@@ -1502,7 +1464,7 @@ Uses a 16-bit position parameter to add extra precision.' statediag='0' >
 										<flowline >
 											<command class_type='decision' title='Decision' exp='Channel_Count &gt; 5' swap='0' >
 												<flowline >
-													<command class_type='native' title='C Code' ccode='          FC_CAL_PWM_SetDutyFloat_6(FCL_DUTY);' language='C' />
+													<command class_type='native' title='C Code' ccode='          FC_CAL_PWM_SetDutyFloat_X6(FCL_DUTY);' language='C' />
 												</flowline>
 												<flowline />
 											</command>
@@ -1512,7 +1474,7 @@ Uses a 16-bit position parameter to add extra precision.' statediag='0' >
 										<flowline >
 											<command class_type='decision' title='Decision' exp='Channel_Count &gt; 6' swap='0' >
 												<flowline >
-													<command class_type='native' title='C Code' ccode='          FC_CAL_PWM_SetDutyFloat_7(FCL_DUTY);' language='C' />
+													<command class_type='native' title='C Code' ccode='          FC_CAL_PWM_SetDutyFloat_X7(FCL_DUTY);' language='C' />
 												</flowline>
 												<flowline />
 											</command>
@@ -1522,7 +1484,7 @@ Uses a 16-bit position parameter to add extra precision.' statediag='0' >
 										<flowline >
 											<command class_type='decision' title='Decision' exp='Channel_Count &gt; 7' swap='0' >
 												<flowline >
-													<command class_type='native' title='C Code' ccode='          FC_CAL_PWM_SetDutyFloat_8(FCL_DUTY);' language='C' />
+													<command class_type='native' title='C Code' ccode='          FC_CAL_PWM_SetDutyFloat_X8(FCL_DUTY);' language='C' />
 												</flowline>
 												<flowline />
 											</command>
@@ -2925,7 +2887,7 @@ Uses a 16-bit position parameter to add extra precision.' statediag='0' >
 						<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 							<argument exp='this' />
 							<argument exp='&quot;IntScaler&quot;' />
-							<argument exp='.CalcR' />
+							<argument exp='STRING .CalcR' />
 						</command>
 						<command class_type='decision' title='Decision' exp='Compare$ (.product,&quot;PIC&quot;,0) == 0' swap='0' >
 							<flowline >
@@ -3748,7 +3710,7 @@ Returns 0 if the servo movement is complete.' statediag='0' >
 										<exp exp='pin0 = 0' />
 									</command>
 									<command class_type='native' title='C Code' ccode='      #if defined MX_CAL_ESP
-        FC_CAL_PWM_Enable_1();
+        FC_CAL_PWM_Enable_X1();
       #endif' language='C' />
 								</flowline>
 							</case>
@@ -3760,7 +3722,7 @@ Returns 0 if the servo movement is complete.' statediag='0' >
 												<exp exp='pin1 = 0' />
 											</command>
 											<command class_type='native' title='C Code' ccode='        #if defined MX_CAL_ESP
-          FC_CAL_PWM_Enable_2();
+          FC_CAL_PWM_Enable_X2();
         #endif' language='C' />
 										</flowline>
 										<flowline />
@@ -3775,7 +3737,7 @@ Returns 0 if the servo movement is complete.' statediag='0' >
 												<exp exp='pin2 = 0' />
 											</command>
 											<command class_type='native' title='C Code' ccode='        #if defined MX_CAL_ESP
-          FC_CAL_PWM_Enable_3();
+          FC_CAL_PWM_Enable_X3();
         #endif' language='C' />
 										</flowline>
 										<flowline />
@@ -3790,7 +3752,7 @@ Returns 0 if the servo movement is complete.' statediag='0' >
 												<exp exp='pin3 = 0' />
 											</command>
 											<command class_type='native' title='C Code' ccode='        #if defined MX_CAL_ESP
-          FC_CAL_PWM_Enable_4();
+          FC_CAL_PWM_Enable_X4();
         #endif' language='C' />
 										</flowline>
 										<flowline />
@@ -3805,7 +3767,7 @@ Returns 0 if the servo movement is complete.' statediag='0' >
 												<exp exp='pin4 = 0' />
 											</command>
 											<command class_type='native' title='C Code' ccode='        #if defined MX_CAL_ESP
-          FC_CAL_PWM_Enable_5();
+          FC_CAL_PWM_Enable_X5();
         #endif' language='C' />
 										</flowline>
 										<flowline />
@@ -3820,7 +3782,7 @@ Returns 0 if the servo movement is complete.' statediag='0' >
 												<exp exp='pin5 = 0' />
 											</command>
 											<command class_type='native' title='C Code' ccode='        #if defined MX_CAL_ESP
-          FC_CAL_PWM_Enable_6();
+          FC_CAL_PWM_Enable_X6();
         #endif' language='C' />
 										</flowline>
 										<flowline />
@@ -3835,7 +3797,7 @@ Returns 0 if the servo movement is complete.' statediag='0' >
 												<exp exp='pin6 = 0' />
 											</command>
 											<command class_type='native' title='C Code' ccode='        #if defined MX_CAL_ESP
-          FC_CAL_PWM_Enable_7();
+          FC_CAL_PWM_Enable_X7();
         #endif' language='C' />
 										</flowline>
 										<flowline />
@@ -3850,7 +3812,7 @@ Returns 0 if the servo movement is complete.' statediag='0' >
 												<exp exp='pin7 = 0' />
 											</command>
 											<command class_type='native' title='C Code' ccode='        #if defined MX_CAL_ESP
-          FC_CAL_PWM_Enable_8();
+          FC_CAL_PWM_Enable_X8();
         #endif' language='C' />
 										</flowline>
 										<flowline />
@@ -4386,7 +4348,7 @@ and effecting other channels.' textarea='12,0,12,0' />
 								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Root = .Handle' />
 								</command>
-								<command class_type='loop' title='Loop' type='0' exp='.Handle' for1='' for2='' for3='' >
+								<command class_type='loop' title='Loop' type='0' exp='.Handle' >
 									<flowline >
 										<command class_type='sim' title='Built-in Function' macro='Tree.Traverse' >
 											<argument exp='.Handle' />
@@ -4416,7 +4378,7 @@ and effecting other channels.' textarea='12,0,12,0' />
 								<command class_type='calculation' title='Calculation' >
 									<exp exp='.GenCode = &quot;\n\n//ESP32 CAL PWM Definitions\n#define MX_PWM\n&quot;' />
 								</command>
-								<command class_type='loop' title='Loop' type='0' exp='.idx &lt;= Channel_Count' for1='' for2='' for3='' >
+								<command class_type='loop' title='Loop' type='0' exp='.idx &lt;= Channel_Count' >
 									<flowline >
 										<command class_type='calculation' title='Calculation' >
 											<exp exp='.PropStr = &quot;pin&quot; + STRING (.idx - 1)' />
@@ -4432,6 +4394,9 @@ and effecting other channels.' textarea='12,0,12,0' />
 											<exp exp='.GenCode = .GenCode + &quot;#define MX_PWM_PORT_&quot; + STRING (.idx + .PwmCount) + &quot; &quot; + Mid$(.PropVal,1,5) + &quot;\n&quot;' />
 											<exp exp='.GenCode = .GenCode + &quot;#define MX_PWM_PIN_&quot; + STRING (.idx + .PwmCount) + &quot; &quot; + Mid$(.PropVal,7,2) + &quot;\n&quot;' />
 											<exp exp='.GenCode = .GenCode + &quot;#define MX_PWM_FREQ_&quot; + STRING (.idx + .PwmCount) + &quot; 50\n&quot;' />
+											<exp exp='.GenCode = .GenCode + &quot;#define FC_CAL_PWM_Disable_X&quot; + STRING .idx + &quot; FC_CAL_PWM_Disable_&quot; + STRING (.idx + .PwmCount) + &quot;\n&quot;' />
+											<exp exp='.GenCode = .GenCode + &quot;#define FC_CAL_PWM_Enable_X&quot; + STRING .idx + &quot; FC_CAL_PWM_Enable_&quot; + STRING (.idx + .PwmCount) + &quot;\n&quot;' />
+											<exp exp='.GenCode = .GenCode + &quot;#define FC_CAL_PWM_SetDutyFloat_X&quot; + STRING .idx + &quot; FC_CAL_PWM_SetDutyFloat_&quot; + STRING (.idx + .PwmCount) + &quot;\n&quot;' />
 										</command>
 										<command class_type='calculation' title='Calculation' >
 											<exp exp='.idx = .idx + 1' />
@@ -4582,7 +4547,7 @@ Default speed is shown in the Servo_Period_Multiplier property.' statediag='0' >
 						<command class_type='calculation' title='Calculation' >
 							<exp exp='Servo_Idx = 0' />
 						</command>
-						<command class_type='loop' title='Loop' type='0' exp='Servo_Idx &lt; 8' for1='' for2='' for3='' >
+						<command class_type='loop' title='Loop' type='0' exp='Servo_Idx &lt; 8' >
 							<flowline >
 								<command class_type='calculation' title='Calculation' >
 									<exp exp='Servo_Position[Servo_Idx] = 128 * Servo_Period_Multiplier' />
@@ -4970,10 +4935,10 @@ Default speed is shown in the Servo_Period_Multiplier property.' statediag='0' >
 	<keymap />
 	<panel2d shadows='0' lighting='0' brightness='0' >
 		<background rgb='2960685' img='' style='0' />
-		<camera xe='178.563' ye='43.6512' ze='646.814' xt='178.563' yt='43.6512' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
-		<viewport dx='471' dy='782' zoom='88.1103' fix_topleft='0' />
+		<camera xe='178.563' ye='43.6512' ze='499.873' xt='178.563' yt='43.6512' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='364' dy='782' zoom='88.1103' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='0' />
-		<winpos ID='7005' RectRecentFloat='1270,379,1920,829' RectRecentDocked='998,141,1489,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7005' RectRecentFloat='1270,379,1920,829' RectRecentDocked='1086,141,1470,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel2d>
 	<panel3d shadows='1' lighting='0' brightness='0' perspective='1' >
 		<background rgb='8409120' img='' style='4' />
@@ -4986,48 +4951,48 @@ Default speed is shown in the Servo_Period_Multiplier property.' statediag='0' >
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,246,866' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,246,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='0' />
 	<layout >
-		<view type='0' name='SetTrim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Timer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetPosition_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetPosition' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='60' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='AutoMoveToPosition_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='AutoMoveToPosition' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='AutoMoveToPositionInt_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DisableServo_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='EnableServo_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Initialise_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='MoveToPositionInt_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='60' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='MoveToPosition_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetAutoMoveSpeedInt_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetAutoMoveSpeed_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetPositionInt_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='MoveToPositionInt' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='IsServoAutoMoving' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='IsAutoMoving' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Start' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Stop' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DisableServo' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='55' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetAutoMoveSpeedInt' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='AutoMoveToPositionInt' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='MoveToPosition' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetAutoMoveSpeed' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ISR' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_ChipChange' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_AddInterrupts' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='EnableServo' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetPositionInt' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_AddHeader' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='330' flags='0' />
-		<view type='0' name='MoveToAngle_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='MoveToAngle' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='AutoMoveToAngle_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='AutoMoveToAngle' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetTrim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Timer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetPosition_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetPosition' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='60' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='AutoMoveToPosition_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='AutoMoveToPosition' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='AutoMoveToPositionInt_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DisableServo_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='EnableServo_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Initialise_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='MoveToPositionInt_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='60' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='MoveToPosition_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetAutoMoveSpeedInt_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetAutoMoveSpeed_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetPositionInt_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='MoveToPositionInt' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='IsServoAutoMoving' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='IsAutoMoving' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='3052' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Start' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Stop' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='3573' flags='0' />
+		<view type='0' name='DisableServo' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='55' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetAutoMoveSpeedInt' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='AutoMoveToPositionInt' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='MoveToPosition' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='102' flags='0' />
+		<view type='0' name='SetAutoMoveSpeed' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ISR' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='5462' flags='0' />
+		<view type='0' name='Ev_ChipChange' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_AddInterrupts' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='EnableServo' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='70' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetPositionInt' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_AddHeader' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='498' flags='0' />
+		<view type='0' name='MoveToAngle_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='MoveToAngle' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='AutoMoveToAngle_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='AutoMoveToAngle' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>
