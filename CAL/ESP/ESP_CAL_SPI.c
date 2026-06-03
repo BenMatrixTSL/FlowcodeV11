@@ -154,7 +154,7 @@ CALFUNCTION(void,     FC_CAL_SPI_Transaction_Uninit_, (void));
 				};
 
 				#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 0)				// enable functionality present in IDF v5.0
-					spi_bus_initialize(HSPI_HOST, &buscfg, SPI_DMA_CH_AUTO);	//Initialize the SPI bus
+					spi_bus_initialize(HSPI_HOST, &buscfg, SPI_DMA_CH_AUTO);	//Initialize the SPI bus - SPI_DMA_CH_AUTO will automatically use DMA for transactions of over 64 bytes
 				#else
 					spi_bus_initialize(HSPI_HOST, &buscfg, 1);					//Initialize the SPI bus
 				#endif
@@ -275,7 +275,7 @@ CALFUNCTION(void,     FC_CAL_SPI_Transaction_Uninit_, (void));
 				};
 
 				#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 0)				// enable functionality present in IDF v5.0
-					spi_bus_initialize(VSPI_HOST, &buscfg, SPI_DMA_CH_AUTO);		//Initialize the SPI bus
+					spi_bus_initialize(VSPI_HOST, &buscfg, SPI_DMA_CH_AUTO);	//Initialize the SPI bus - SPI_DMA_CH_AUTO will automatically use DMA for transactions of over 64 bytes
 				#else
 					spi_bus_initialize(VSPI_HOST, &buscfg, 2);					//Initialize the SPI bus
 				#endif

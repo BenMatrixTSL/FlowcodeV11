@@ -1,5 +1,5 @@
 <root>
-<document scada='0' projtype='1' schema='103' license='1,82702381,95CJQR' title='' description='' fcversion='720897' target='PIC.16F.16F18877' >
+<document scada='0' projtype='1' schema='103' license='1,82702381,95CJQR' title='' description='' fcversion='720898' target='PIC.16F.16F18877' >
 	<config data='!0,3f8c!10,37fd!20,3f92!30,1fff!40,3fff%0,4%4,0%8,1%b,1%d,1%10,1%11,0%15,1%16,3%19,1%1a,1%1b,0%1c,1%1d,1%20,12%25,0%28,7%2b,7%30,3%3c,1%3d,0%40,1%41,1' clkspd='32000000' simspd='1' usewdt='0' constif='0' Use3V3='0' />
 	<plugins >
 		<dll_models enabled='1' />
@@ -807,13 +807,13 @@ The point cloud should run faster but may use more memory.
 				<value target='cal_spi1::InjectorCS' data='0' />
 			</values>
 			<events >
-				<event class='Components' event='Initialise' target='Ev_Property' />
-				<event class='Components' event='Property' target='Ev_Property' />
-				<event class='Compile' event='AddVar' target='Ev_AddVar' />
-				<event class='Simulation' event='Start' target='Ev_Property' />
 				<event class='Compile' event='GetVarSize' target='Ev_GetVarSize' />
 				<event class='Compile' event='AddProperty' target='Ev_AddProperty' />
+				<event class='Components' event='Initialise' target='Ev_Property' />
 				<event class='Components' event='Resize' target='Ev_Resize' />
+				<event class='Compile' event='AddVar' target='Ev_AddVar' />
+				<event class='Simulation' event='Start' target='Ev_Property' />
+				<event class='Components' event='Property' target='Ev_Property' />
 			</events>
 			<apis >
 				<api name='ReadFontWidth' alt='ReadFontWidth' type='5' proto='0' />
@@ -901,19 +901,52 @@ The point cloud should run faster but may use more memory.
 Not compatible with orientations other than 0.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<local name='colour' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='out' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='&quot; 0 &quot;' setinit='{0}' >
+							<array size='2' />
+						</local>
 						<command class_type='decision' title='Decision' exp='UseSPI' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' >
-									<exp exp='PixelBuffer[PixelPointer] = background_col_var &gt;&gt; 8' />
-									<exp exp='PixelBuffer[PixelPointer + 1] = background_col_var' />
-								</command>
-								<command class_type='calculation' title='Calculation' >
-									<exp exp='PixelPointer = PixelPointer + 2' />
-								</command>
-								<command class_type='calculation' title='Calculation' >
-									<exp exp='PixelCount = PixelCount - 1' />
-								</command>
-								<command class_type='decision' title='Decision' exp='(PixelCount = 0) || (PixelPointer = (PixelQueueSize * 2))' swap='0' >
+								<command class_type='decision' title='Decision' exp='QueueFastPixels' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='PixelBuffer[PixelPointer] = background_col_var &gt;&gt; 8' />
+											<exp exp='PixelBuffer[PixelPointer + 1] = background_col_var' />
+										</command>
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='PixelPointer = PixelPointer + 2' />
+										</command>
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='PixelCount = PixelCount - 1' />
+										</command>
+										<command class_type='decision' title='Decision' exp='(PixelCount = 0) || (PixelPointer = (PixelQueueSize * 2))' swap='0' >
+											<flowline >
+												<command class_type='decision' title='Decision' exp='ToggleCS' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' >
+															<exp exp='chip_sel_pin = 0' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='call' title='Component Macro' component='cal_spi1' macro='Master_Transaction' >
+													<argument exp='PixelBuffer' />
+													<argument exp='PixelPointer' />
+												</command>
+												<command class_type='decision' title='Decision' exp='ToggleCS' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' >
+															<exp exp='chip_sel_pin = 1' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='PixelPointer = 0' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
 									<flowline >
 										<command class_type='decision' title='Decision' exp='ToggleCS' swap='0' >
 											<flowline >
@@ -923,9 +956,13 @@ Not compatible with orientations other than 0.' statediag='0' >
 											</flowline>
 											<flowline />
 										</command>
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.out[0] = background_col_var &gt;&gt; 8' />
+											<exp exp='.out[1] = background_col_var' />
+										</command>
 										<command class_type='call' title='Component Macro' component='cal_spi1' macro='Master_Transaction' >
-											<argument exp='PixelBuffer' />
-											<argument exp='PixelPointer' />
+											<argument exp='.out' />
+											<argument exp='2' />
 										</command>
 										<command class_type='decision' title='Decision' exp='ToggleCS' swap='0' >
 											<flowline >
@@ -935,11 +972,7 @@ Not compatible with orientations other than 0.' statediag='0' >
 											</flowline>
 											<flowline />
 										</command>
-										<command class_type='calculation' title='Calculation' >
-											<exp exp='PixelPointer = 0' />
-										</command>
 									</flowline>
-									<flowline />
 								</command>
 							</flowline>
 							<flowline >
@@ -1181,7 +1214,7 @@ Not compatible with orientations other than 0.' statediag='0' >
 								<command class_type='calculation' title='Calculation' >
 									<exp exp='.PixelX = (.PixelX * .PixelY) + 1' />
 								</command>
-								<command class_type='loop' title='Loop' type='2' exp='.PixelX' >
+								<command class_type='loop' title='Loop' type='2' exp='.PixelX' for1='' for2='' for3='' >
 									<flowline >
 										<command class_type='call' title='User Macro' macro='FastPlot' />
 									</flowline>
@@ -1194,7 +1227,7 @@ Not compatible with orientations other than 0.' statediag='0' >
 											<exp exp='.C1 = 2 * .PixelX' />
 											<exp exp='.M1 = 2 * .PixelY' />
 										</command>
-										<command class_type='loop' title='Loop' type='0' exp='.X1 != .X2' >
+										<command class_type='loop' title='Loop' type='0' exp='.X1 != .X2' for1='' for2='' for3='' >
 											<flowline >
 												<command class_type='call' title='Call Macro' macro='Plot' >
 													<argument exp='.X1' />
@@ -1225,7 +1258,7 @@ Not compatible with orientations other than 0.' statediag='0' >
 											<exp exp='.C1 = 2 * .PixelY' />
 											<exp exp='.M1 = 2 * .PixelX' />
 										</command>
-										<command class_type='loop' title='Loop' type='0' exp='.Y1 != .Y2' >
+										<command class_type='loop' title='Loop' type='0' exp='.Y1 != .Y2' for1='' for2='' for3='' >
 											<flowline >
 												<command class_type='call' title='Call Macro' macro='Plot' >
 													<argument exp='.X1' />
@@ -1612,7 +1645,7 @@ Currently does not simulate.' statediag='0' >
 						<local name='K' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
 						<command class_type='decision' title='Draw the circle in solid foreground' exp='.Solid = 1' swap='0' >
 							<flowline >
-								<command class_type='label' title='Connection Point' labelid='0' labelname='A' />
+								<command class_type='label' title='Connection Point' labelid='0' labelname='A' labeltype='4' />
 								<command class_type='decision' title='Decision' exp='.XRadius &gt; .YRadius' swap='0' >
 									<flowline >
 										<command class_type='calculation' title='Start Locations' >
@@ -1625,7 +1658,7 @@ Currently does not simulate.' statediag='0' >
 										<command class_type='calculation' title='Start K' >
 											<exp exp='.K = FLOAT (FLOAT .XRadius / FLOAT .YRadius)' />
 										</command>
-										<command class_type='loop' title='Loop' type='0' exp='.CurX &lt;= 0' start='0' >
+										<command class_type='loop' title='Loop' type='0' exp='.CurX &lt;= 0' start='0' for1='' for2='' for3='' >
 											<flowline >
 												<command class_type='call' title='Call Macro' macro='DrawLine' >
 													<argument exp='.X + .CurX' />
@@ -1684,7 +1717,7 @@ Currently does not simulate.' statediag='0' >
 										<command class_type='calculation' title='Start K' >
 											<exp exp='.K = FLOAT (FLOAT .YRadius / FLOAT .XRadius)' />
 										</command>
-										<command class_type='loop' title='Loop' type='0' exp='.CurY &lt;= 0' start='0' >
+										<command class_type='loop' title='Loop' type='0' exp='.CurY &lt;= 0' start='0' for1='' for2='' for3='' >
 											<flowline >
 												<command class_type='call' title='Call Macro' macro='DrawLine' >
 													<argument exp='.X - (.CurX / .K)' />
@@ -1737,7 +1770,7 @@ Currently does not simulate.' statediag='0' >
 							<flowline >
 								<command class_type='decision' title='Draw the background colour?' exp='.Transparent = 1' swap='0' >
 									<flowline >
-										<command class_type='label' title='Connection Point' labelid='1' labelname='B' />
+										<command class_type='label' title='Connection Point' labelid='1' labelname='B' labeltype='4' />
 										<command class_type='decision' title='Decision' exp='.XRadius &gt; .YRadius' swap='0' >
 											<flowline >
 												<command class_type='calculation' title='Start Locations' >
@@ -1750,7 +1783,7 @@ Currently does not simulate.' statediag='0' >
 												<command class_type='calculation' title='Start K' >
 													<exp exp='.K = FLOAT (FLOAT .XRadius / FLOAT .YRadius)' />
 												</command>
-												<command class_type='loop' title='Loop' type='0' exp='.CurX &lt;= 0' start='0' >
+												<command class_type='loop' title='Loop' type='0' exp='.CurX &lt;= 0' start='0' for1='' for2='' for3='' >
 													<flowline >
 														<command class_type='call' title='Call Macro' macro='Plot' >
 															<argument exp='.X + .CurX' />
@@ -1813,7 +1846,7 @@ Currently does not simulate.' statediag='0' >
 												<command class_type='calculation' title='Start K' >
 													<exp exp='.K = FLOAT (FLOAT .YRadius / FLOAT .XRadius)' />
 												</command>
-												<command class_type='loop' title='Loop' type='0' exp='.CurY &lt;= 0' start='0' >
+												<command class_type='loop' title='Loop' type='0' exp='.CurY &lt;= 0' start='0' for1='' for2='' for3='' >
 													<flowline >
 														<command class_type='call' title='Call Macro' macro='Plot' >
 															<argument exp='.X - (.CurX / .K)' />
@@ -1878,7 +1911,7 @@ Currently does not simulate.' statediag='0' >
 										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Rep = 1' />
 										</command>
-										<command class_type='goto' title='Goto Connection Point' labelid='0' labelname='' />
+										<command class_type='goto' title='Goto Connection Point' labelid='0' labelname='' labeltype='0' />
 									</flowline>
 								</command>
 							</flowline>
@@ -1891,7 +1924,7 @@ Currently does not simulate.' statediag='0' >
 								<command class_type='calculation' title='Calculation' >
 									<exp exp='foreground_col_var = .FGCol' />
 								</command>
-								<command class_type='goto' title='Goto Connection Point' labelid='1' labelname='' />
+								<command class_type='goto' title='Goto Connection Point' labelid='1' labelname='' labeltype='0' />
 							</flowline>
 							<flowline />
 						</command>
@@ -1912,19 +1945,52 @@ Currently does not simulate.' statediag='0' >
 Not compatible with orientations other than 0.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<local name='colour' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='out' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='&quot; 0 &quot;' setinit='{0}' >
+							<array size='2' />
+						</local>
 						<command class_type='decision' title='Decision' exp='UseSPI' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' >
-									<exp exp='PixelBuffer[PixelPointer] = foreground_col_var &gt;&gt; 8' />
-									<exp exp='PixelBuffer[PixelPointer + 1] = foreground_col_var' />
-								</command>
-								<command class_type='calculation' title='Calculation' >
-									<exp exp='PixelPointer = PixelPointer + 2' />
-								</command>
-								<command class_type='calculation' title='Calculation' >
-									<exp exp='PixelCount = PixelCount - 1' />
-								</command>
-								<command class_type='decision' title='Decision' exp='(PixelCount = 0) || (PixelPointer = (PixelQueueSize * 2))' swap='0' >
+								<command class_type='decision' title='Decision' exp='QueueFastPixels' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='PixelBuffer[PixelPointer] = foreground_col_var &gt;&gt; 8' />
+											<exp exp='PixelBuffer[PixelPointer + 1] = foreground_col_var' />
+										</command>
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='PixelPointer = PixelPointer + 2' />
+										</command>
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='PixelCount = PixelCount - 1' />
+										</command>
+										<command class_type='decision' title='Decision' exp='(PixelCount = 0) || (PixelPointer = (PixelQueueSize * 2))' swap='0' >
+											<flowline >
+												<command class_type='decision' title='Decision' exp='ToggleCS' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' >
+															<exp exp='chip_sel_pin = 0' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='call' title='Component Macro' component='cal_spi1' macro='Master_Transaction' >
+													<argument exp='PixelBuffer' />
+													<argument exp='PixelPointer' />
+												</command>
+												<command class_type='decision' title='Decision' exp='ToggleCS' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' >
+															<exp exp='chip_sel_pin = 1' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='PixelPointer = 0' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
 									<flowline >
 										<command class_type='decision' title='Decision' exp='ToggleCS' swap='0' >
 											<flowline >
@@ -1934,9 +2000,13 @@ Not compatible with orientations other than 0.' statediag='0' >
 											</flowline>
 											<flowline />
 										</command>
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.out[0] = foreground_col_var &gt;&gt; 8' />
+											<exp exp='.out[1] = foreground_col_var' />
+										</command>
 										<command class_type='call' title='Component Macro' component='cal_spi1' macro='Master_Transaction' >
-											<argument exp='PixelBuffer' />
-											<argument exp='PixelPointer' />
+											<argument exp='.out' />
+											<argument exp='2' />
 										</command>
 										<command class_type='decision' title='Decision' exp='ToggleCS' swap='0' >
 											<flowline >
@@ -1946,11 +2016,7 @@ Not compatible with orientations other than 0.' statediag='0' >
 											</flowline>
 											<flowline />
 										</command>
-										<command class_type='calculation' title='Calculation' >
-											<exp exp='PixelPointer = 0' />
-										</command>
 									</flowline>
-									<flowline />
 								</command>
 							</flowline>
 							<flowline >
@@ -1996,11 +2062,11 @@ Not compatible with orientations other than 0.' statediag='0' >
 							<exp exp='.EndAngle = .EndAngle * 0.017453' />
 							<exp exp='.AngleStep = (.EndAngle - .StartAngle) / .Resolution' />
 						</command>
-						<command class_type='loop' title='Loop' type='2' forvar='.i' exp='.Resolution' >
+						<command class_type='loop' title='Loop' type='2' forvar='.i' exp='.Resolution' for1='' for2='' for3='' >
 							<flowline >
 								<command class_type='decision' title='Decision' exp='(.Transparent = 0) || (.Solid = 1)' swap='0' >
 									<flowline >
-										<command class_type='loop' title='Loop' type='2' forvar='.j' exp='.Radius + 1' >
+										<command class_type='loop' title='Loop' type='2' forvar='.j' exp='.Radius + 1' for1='' for2='' for3='' >
 											<flowline >
 												<command class_type='calculation' title='Calculation' >
 													<exp exp='.Angle = .StartAngle + (.i * .AngleStep)' />
@@ -2594,7 +2660,7 @@ Does not simulate.' statediag='0' >
 							<exp exp='.t = 0.0' />
 							<exp exp='.step = 1.0 / FLOAT .Resolution' />
 						</command>
-						<command class_type='loop' title='Loop' type='2' forvar='.i' exp='.Resolution + 1' >
+						<command class_type='loop' title='Loop' type='2' forvar='.i' exp='.Resolution + 1' for1='' for2='' for3='' >
 							<flowline >
 								<command class_type='calculation' title='Bezier calculation' >
 									<exp exp='.one_minus_t = 1.0 - .t' />
@@ -2976,7 +3042,7 @@ Useful when used with the FastPlot function to draw bitmaps at high speed.' stat
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='loop' title='Loop' type='0' exp='.cnt &lt; 8' >
+								<command class_type='loop' title='Loop' type='0' exp='.cnt &lt; 8' for1='' for2='' for3='' >
 									<flowline >
 										<command class_type='decision' title='Decision' exp='.LCD_Out &amp; 0x80' swap='0' >
 											<flowline >
@@ -3051,7 +3117,7 @@ Useful when used with the FastPlot function to draw bitmaps at high speed.' stat
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='loop' title='Loop' type='0' exp='.cnt &lt; 8' >
+								<command class_type='loop' title='Loop' type='0' exp='.cnt &lt; 8' for1='' for2='' for3='' >
 									<flowline >
 										<command class_type='decision' title='Decision' exp='.LCD_Out &amp; 0x80' swap='0' >
 											<flowline >
@@ -3178,7 +3244,7 @@ Useful when used with the FastPlot function to draw bitmaps at high speed.' stat
 						<command class_type='calculation' title='Calculate character height' >
 							<exp exp='.BytesPerColumn = ((.CharacterHeight - 1) &gt;&gt; 3) + 1' />
 						</command>
-						<command class_type='loop' title='Loop through characters in string' type='0' exp='.idx &lt; .len_str' >
+						<command class_type='loop' title='Loop through characters in string' type='0' exp='.idx &lt; .len_str' for1='' for2='' for3='' >
 							<flowline >
 								<command class_type='call' title='Call Macro' component='Base_GLCD' macro='ReadFontWidth' >
 									<return exp='.CharacterColumns' />
@@ -3188,7 +3254,7 @@ Useful when used with the FastPlot function to draw bitmaps at high speed.' stat
 								<command class_type='calculation' title='Calculation' >
 									<exp exp='.ColumnSubIndex = 0' />
 								</command>
-								<command class_type='loop' title='Loop' type='0' exp='.ColumnSubIndex &lt; .BytesPerColumn' >
+								<command class_type='loop' title='Loop' type='0' exp='.ColumnSubIndex &lt; .BytesPerColumn' for1='' for2='' for3='' >
 									<flowline >
 										<command class_type='decision' title='Decision' exp='.ColumnSubIndex' swap='0' >
 											<flowline >
@@ -3201,9 +3267,9 @@ Useful when used with the FastPlot function to draw bitmaps at high speed.' stat
 										<command class_type='calculation' title='Calculation' >
 											<exp exp='.ColumnIndex = 0' />
 										</command>
-										<command class_type='loop' title='Loop' type='0' exp='.ColumnIndex &lt; (.CharacterColumns + .SpaceColumns)' >
+										<command class_type='loop' title='Loop' type='0' exp='.ColumnIndex &lt; (.CharacterColumns + .SpaceColumns)' for1='' for2='' for3='' >
 											<flowline >
-												<command class_type='loop' title='Loop' type='2' exp='ScaleX' >
+												<command class_type='loop' title='Loop' type='2' exp='ScaleX' for1='' for2='' for3='' >
 													<flowline >
 														<command class_type='decision' title='Decision' exp='.ColumnIndex &lt; .CharacterColumns' swap='0' >
 															<flowline >
@@ -3262,9 +3328,9 @@ Useful when used with the FastPlot function to draw bitmaps at high speed.' stat
 																	<argument exp='.X1 + .xcount' />
 																	<argument exp='.Y1 + .Ycount + ((.h - .ypix) * ScaleY) - 1' />
 																</command>
-																<command class_type='loop' title='Loop' type='0' exp='.ypix &lt; .h' >
+																<command class_type='loop' title='Loop' type='0' exp='.ypix &lt; .h' for1='' for2='' for3='' >
 																	<flowline >
-																		<command class_type='loop' title='Loop' type='2' exp='ScaleY' >
+																		<command class_type='loop' title='Loop' type='2' exp='ScaleY' for1='' for2='' for3='' >
 																			<flowline >
 																				<command class_type='decision' title='Decision' exp='(Orientation = 1) || (Orientation = 2)' swap='0' >
 																					<flowline >
@@ -3311,9 +3377,9 @@ Useful when used with the FastPlot function to draw bitmaps at high speed.' stat
 																</command>
 															</flowline>
 															<flowline >
-																<command class_type='loop' title='Loop' type='0' exp='.ypix &lt; 8' >
+																<command class_type='loop' title='Loop' type='0' exp='.ypix &lt; 8' for1='' for2='' for3='' >
 																	<flowline >
-																		<command class_type='loop' title='Loop' type='2' exp='ScaleY' >
+																		<command class_type='loop' title='Loop' type='2' exp='ScaleY' for1='' for2='' for3='' >
 																			<flowline >
 																				<command class_type='decision' title='Decision' exp='.PixelData &amp; (0x01 &lt;&lt; .ypix)' swap='0' >
 																					<flowline >
@@ -3472,12 +3538,12 @@ Useful when used with the FastPlot function to draw bitmaps at high speed.' stat
 							<argument exp='pixel_width - 1' />
 							<argument exp='pixel_height - 1' />
 						</command>
-						<command class_type='loop' title='Loop' type='0' exp='.Y &lt; pixel_height' >
+						<command class_type='loop' title='Loop' type='0' exp='.Y &lt; pixel_height' for1='' for2='' for3='' >
 							<flowline >
 								<command class_type='calculation' title='Calculation' >
 									<exp exp='.X = 0' />
 								</command>
-								<command class_type='loop' title='Loop' type='0' exp='.X &lt; pixel_width' >
+								<command class_type='loop' title='Loop' type='0' exp='.X &lt; pixel_width' for1='' for2='' for3='' >
 									<flowline >
 										<command class_type='call' title='User Macro' macro='FastBPlot' />
 										<command class_type='calculation' title='Calculation' >
@@ -3561,7 +3627,7 @@ Useful when used with the FastPlot function to draw bitmaps at high speed.' stat
 						<local name='Rep' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
 						<command class_type='decision' title='Draw the circle in solid foreground' exp='.Solid = 1' swap='0' >
 							<flowline >
-								<command class_type='label' title='Connection Point' labelid='0' labelname='A' />
+								<command class_type='label' title='Connection Point' labelid='0' labelname='A' labeltype='4' />
 								<command class_type='calculation' title='Calculate Decision Variable' >
 									<exp exp='.D = 3 - (.Radius &lt;&lt; 1)' />
 								</command>
@@ -3569,7 +3635,7 @@ Useful when used with the FastPlot function to draw bitmaps at high speed.' stat
 									<exp exp='.CurX = 0' />
 									<exp exp='.CurY = .Radius' />
 								</command>
-								<command class_type='loop' title='Loop' type='0' exp='.CurX &lt;= .CurY' >
+								<command class_type='loop' title='Loop' type='0' exp='.CurX &lt;= .CurY' for1='' for2='' for3='' >
 									<flowline >
 										<command class_type='decision' title='Decision' exp='.CurY &gt; 0' swap='0' >
 											<flowline >
@@ -3629,7 +3695,7 @@ Useful when used with the FastPlot function to draw bitmaps at high speed.' stat
 							<flowline >
 								<command class_type='decision' title='Draw the background colour?' exp='.Transparent = 1' swap='0' >
 									<flowline >
-										<command class_type='label' title='Connection Point' labelid='1' labelname='B' />
+										<command class_type='label' title='Connection Point' labelid='1' labelname='B' labeltype='4' />
 										<command class_type='calculation' title='Calculate Decision Variable' >
 											<exp exp='.D = 3 - (.Radius &lt;&lt; 1)' />
 										</command>
@@ -3637,7 +3703,7 @@ Useful when used with the FastPlot function to draw bitmaps at high speed.' stat
 											<exp exp='.CurX = 0' />
 											<exp exp='.CurY = .Radius' />
 										</command>
-										<command class_type='loop' title='Loop' type='0' exp='.CurX &lt;= .CurY' >
+										<command class_type='loop' title='Loop' type='0' exp='.CurX &lt;= .CurY' for1='' for2='' for3='' >
 											<flowline >
 												<command class_type='call' title='Call Macro' macro='Plot' >
 													<argument exp='.X + .CurX' />
@@ -3703,7 +3769,7 @@ Useful when used with the FastPlot function to draw bitmaps at high speed.' stat
 										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Rep = 1' />
 										</command>
-										<command class_type='goto' title='Goto Connection Point' labelid='0' labelname='' />
+										<command class_type='goto' title='Goto Connection Point' labelid='0' labelname='' labeltype='0' />
 									</flowline>
 								</command>
 							</flowline>
@@ -3716,7 +3782,7 @@ Useful when used with the FastPlot function to draw bitmaps at high speed.' stat
 								<command class_type='calculation' title='Calculation' >
 									<exp exp='foreground_col_var = .FGCol' />
 								</command>
-								<command class_type='goto' title='Goto Connection Point' labelid='1' labelname='' />
+								<command class_type='goto' title='Goto Connection Point' labelid='1' labelname='' labeltype='0' />
 							</flowline>
 							<flowline />
 						</command>
@@ -3751,7 +3817,7 @@ Useful when used with the FastPlot function to draw bitmaps at high speed.' stat
 						</command>
 						<command class_type='decision' title='Decision' exp='.Solid' swap='0' >
 							<flowline >
-								<command class_type='loop' title='Loop' type='0' exp='.y &lt;= 0' >
+								<command class_type='loop' title='Loop' type='0' exp='.y &lt;= 0' for1='' for2='' for3='' >
 									<flowline >
 										<command class_type='calculation' title='Calculation' >
 											<exp exp='.r = round (SQRT (.Radius * .Radius - .y * .y))' />
@@ -3793,7 +3859,7 @@ Useful when used with the FastPlot function to draw bitmaps at high speed.' stat
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='loop' title='Loop' type='0' exp='.y &lt;= 0' >
+								<command class_type='loop' title='Loop' type='0' exp='.y &lt;= 0' for1='' for2='' for3='' >
 									<flowline >
 										<command class_type='calculation' title='Calculation' >
 											<exp exp='.r = round (SQRT ((.Radius * .Radius) - (.y * .y)))' />
@@ -4034,12 +4100,12 @@ Useful when used with the FastPlot function to draw bitmaps at high speed.' stat
 								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Y1 = .Ymin' />
 								</command>
-								<command class_type='loop' title='Loop' type='0' exp='.Y1 &lt; .YMax' >
+								<command class_type='loop' title='Loop' type='0' exp='.Y1 &lt; .YMax' for1='' for2='' for3='' >
 									<flowline >
 										<command class_type='calculation' title='Calculation' >
 											<exp exp='.X1 = .Xmin' />
 										</command>
-										<command class_type='loop' title='Loop' type='0' exp='.X1 &lt; .XMax' >
+										<command class_type='loop' title='Loop' type='0' exp='.X1 &lt; .XMax' for1='' for2='' for3='' >
 											<flowline >
 												<command class_type='decision' title='Decision' exp='.Solid' swap='0' >
 													<flowline >
@@ -4396,9 +4462,9 @@ Useful when used with the FastPlot function to draw bitmaps at high speed.' stat
 	<panel2d shadows='0' lighting='0' brightness='0' >
 		<background rgb='9737364' img='' style='0' />
 		<camera xe='18.8075' ye='-8.2894' ze='662.255' xt='18.8075' yt='-8.2894' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
-		<viewport dx='471' dy='830' zoom='86.056' fix_topleft='0' />
+		<viewport dx='471' dy='782' zoom='86.056' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='0' />
-		<winpos ID='7005' RectRecentFloat='795,173,1920,898' RectRecentDocked='998,141,1489,1061' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7005' RectRecentFloat='795,173,1920,898' RectRecentDocked='998,141,1489,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel2d>
 	<panel3d shadows='0' lighting='2' brightness='0' perspective='1' >
 		<background rgb='8409120' img='' style='0' />
@@ -4416,15 +4482,15 @@ Useful when used with the FastPlot function to draw bitmaps at high speed.' stat
 	<panels2d count='0' />
 	<layout >
 		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Window' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='414' flags='0' />
+		<view type='0' name='Window' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='483' flags='0' />
 		<view type='0' name='ClearDisplay' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
 		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
 		<view type='0' name='BacklightOn' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
 		<view type='0' name='BacklightOff' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
 		<view type='0' name='SendCommand' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
 		<view type='0' name='SendData' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='FastBPlot' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='FastPlot' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='FastBPlot' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='84' flags='0' />
+		<view type='0' name='FastPlot' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='54' flags='0' />
 		<view type='0' name='PrintNumber_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
 		<view type='0' name='Raw_GetForegroundColour' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
 		<view type='0' name='SetForegroundColour' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
@@ -4439,7 +4505,7 @@ Useful when used with the FastPlot function to draw bitmaps at high speed.' stat
 		<view type='0' name='DrawRectangleSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
 		<view type='0' name='PrintSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
 		<view type='0' name='BPlotSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DrawLine' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='288' scrolly='1467' flags='0' />
+		<view type='0' name='DrawLine' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='1467' flags='0' />
 		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='85' scrollx='0' scrolly='0' flags='0' />
 		<view type='0' name='Raw_GetBackgroundColour' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
 		<view type='0' name='DrawRectangle' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
