@@ -86,6 +86,9 @@ The time and date shown are the compilation time and date to help pinpoint the f
 				<property name='Bluetooth Reset' target='BlueReset' typeid='7' hidden='0' locked='0' info='Decides if the Bluetooth data connection can reset the Formula AllCode.
 Used by mLoader when programming via Bluetooth to allow reprogramming without having to physically touch the robot.
 To ensure programming security set this option to No.' />
+				<property name='Turn Scale' target='TurnScale' typeid='15' hidden='0' locked='0' info='Scales turn distance. Lower if turns go too far (try 0.85). Raise if turns stop short (try 0.95). Default 0.88.' />
+				<property name='Reverse Scale' target='ReverseScale' typeid='15' hidden='0' locked='0' info='Scales backward distance. Lower if backward goes too far. Default 1.0 (adjust after brake fix if needed).' />
+				<property name='Forward Scale' target='ForwardScale' typeid='15' hidden='0' locked='0' info='Scales forward distance. Lower if forward goes too far (try 0.96). Default 1.0.' />
 				<property name='Use Motor Feedback' target='MotFeedback' typeid='7' hidden='0' locked='0' info='Controls when the motor feedback is used.
 No - Speed control feedback is not used for SetMotors commands.
 Yes - Speed control feedback is used for the SetMotors commands.
@@ -123,6 +126,9 @@ Otherwise leave blank to maintain the normal simulation functionality.' />
 				<value target='startup_time' data='2000' />
 				<value target='CreationInfo' data='003' />
 				<value target='BlueReset' data='0' />
+				<value target='TurnScale' data='0.880000' />
+				<value target='ReverseScale' data='1.000000' />
+				<value target='ForwardScale' data='1.000000' />
 				<value target='MotFeedback' data='0' />
 				<value target='Model' data='000' />
 				<value target='IRSimMode' data='000' />
@@ -138,14 +144,14 @@ Otherwise leave blank to maintain the normal simulation functionality.' />
 				<value target='AddonMech' data='' />
 			</values>
 			<events >
-				<event class='Simulation' event='Stop' target='Ev_Stop' />
-				<event class='Simulation' event='Start' target='Ev_Start' />
-				<event class='Components' event='Property' target='Ev_Property' />
-				<event class='Simulation' event='Resume' target='Ev_Resume' />
-				<event class='System' event='Timer' target='Ev_Timer' />
-				<event class='Components' event='Initialise' target='Ev_Initialise' />
 				<event class='Compile' event='AddInterrupts' target='Ev_AddInterrupts' />
+				<event class='Simulation' event='Start' target='Ev_Start' />
+				<event class='System' event='Timer' target='Ev_Timer' />
+				<event class='Components' event='Property' target='Ev_Property' />
+				<event class='Components' event='Initialise' target='Ev_Initialise' />
+				<event class='Simulation' event='Resume' target='Ev_Resume' />
 				<event class='Simulation' event='Pause' target='Ev_Pause' />
+				<event class='Simulation' event='Stop' target='Ev_Stop' />
 			</events>
 			<apis >
 				<api name='PlayNote' alt='PlayNote_Sim' type='1' proto='1' />
@@ -996,15 +1002,203 @@ Voltages lower than 3.4V may damage the battery.' statediag='0' >
 						<local name='BaseL' type='s16' description='Base (un-corrected) left speed after ramping' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='BaseR' type='s16' description='Base (un-corrected) right speed after ramping' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='MaxSpeed' type='s16' description='Maximum allowed motor speed' isconst='0' isHidden='0' isinit='1' usrinit='100' setinit='100' />
+						<local name='MinPower' type='s16' description='Minimum forward motor power to overcome static friction' isconst='0' isHidden='0' isinit='1' usrinit='22' setinit='22' />
+						<local name='MinPowerRev' type='s16' description='Minimum reverse motor power (higher to match forward response)' isconst='0' isHidden='0' isinit='1' usrinit='32' setinit='32' />
+						<local name='KickL' type='s16' description='Kickstart power for left motor' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='KickR' type='s16' description='Kickstart power for right motor' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='RampStep' type='u8' description='Startup ramp step counter (0-25)' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='IsTurn' type='u8' description='1 when motors run in opposite directions (pivot turn)' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='IsReverse' type='u8' description='1 when both motors drive backward' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='ErrorSum' type='s16' description='Accumulated encoder error for straight-line trim' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='TurnMin' type='s16' description='Matched minimum power for both motors during pivot turns' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='PrevError' type='s16' description='Previous encoder error for damping' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='DError' type='s16' description='Rate of change of encoder error' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='PrevLSP' type='s16' description='Previous left speed for slew limiting' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='PrevRSP' type='s16' description='Previous right speed for slew limiting' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='StopTarget' type='u32' description='Encoder target used to stop the move' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='FloorFwd' type='s16' description='Scaled minimum forward power for current speed' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='FloorRev' type='s16' description='Scaled minimum reverse power for current speed' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='done' type='u8' description='Loop exit flag' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
-						<command class_type='calculation' title='Reset Encoders and Initialise Speeds' >
+						<command class_type='decision' title='Ensure minimum encoder target' exp='.EncTarget = 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Set minimum target' >
+									<exp exp='.EncTarget = 1' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='calculation' title='Default stop target' >
+							<exp exp='.StopTarget = .EncTarget' />
+						</command>
+						<command class_type='decision' title='Decision' exp='MotFeedback = 1' swap='0' >
+							<flowline >
+								<command class_type='call' title='Ensure Motors Are Stopped' macro='SetMotors' >
+									<argument exp='0' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='calculation' title='Reset Encoders and Initialise' >
 							<exp exp='EncCount[0] = 0' />
 							<exp exp='EncCount[1] = 0' />
-							<exp exp='.LSP = .Left' />
-							<exp exp='.RSP = .Right' />
+							<exp exp='.RampStep = 0' />
+							<exp exp='.done = 0' />
+							<exp exp='.PrevError = 0' />
+							<exp exp='.ErrorSum = 0' />
+							<exp exp='LogoMove = 1' />
+						</command>
+						<command class_type='decision' title='Straight reverse move?' exp='(.Left &lt; 0) &amp;&amp; (.Right &lt; 0)' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Mark as reverse straight' >
+									<exp exp='.IsReverse = 1' />
+								</command>
+								<command class_type='decision' title='Lead reverse stop to reduce overshoot' exp='.StopTarget &gt; 10' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Stop slightly early going backward' >
+											<exp exp='.StopTarget = (.StopTarget * 19) / 20' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+							<flowline />
 						</command>
 						<command class_type='calculation' title='Calculation' >
 							<exp exp='.MaxSpeed = LogoSpeed' />
+						</command>
+						<command class_type='decision' title='Left kickstart power' exp='.Left = 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.KickL = 0' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='decision' title='Decision' exp='.Left &gt;= 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.KickL = .MinPower' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.KickL = - .MinPowerRev' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+						<command class_type='decision' title='Right kickstart power' exp='.Right = 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.KickR = 0' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='decision' title='Decision' exp='.Right &gt;= 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.KickR = .MinPower' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.KickR = - .MinPowerRev' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+						<command class_type='decision' title='Turn move with opposite motor directions?' exp='((.Left &lt; 0) &amp;&amp; (.Right &gt; 0)) || ((.Left &gt; 0) &amp;&amp; (.Right &lt; 0))' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Mark as turn move' >
+									<exp exp='.IsTurn = 1' />
+									<exp exp='.TurnMin = .MinPowerRev' />
+								</command>
+								<command class_type='decision' title='Lead turn stop to reduce overshoot' exp='.StopTarget &gt; 5' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Stop slightly early on turns' >
+											<exp exp='.StopTarget = .StopTarget - 5' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Small turn early stop' >
+											<exp exp='.StopTarget = (.StopTarget * 9) / 10' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='decision' title='Use higher value for matched turn power' exp='.MinPower &gt; .TurnMin' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.TurnMin = .MinPower' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='decision' title='Matched kickstart for left motor' exp='.Left &gt; 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.KickL = .TurnMin' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='decision' title='Decision' exp='.Left &lt; 0' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='.KickL = - .TurnMin' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='decision' title='Matched kickstart for right motor' exp='.Right &gt; 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.KickR = .TurnMin' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='decision' title='Decision' exp='.Right &lt; 0' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='.KickR = - .TurnMin' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='decision' title='Pre-kickstart reverse left motor' exp='.Left &lt; 0' swap='0' >
+									<flowline >
+										<command class_type='call' title='Start reverse left early' macro='SetMotors' >
+											<argument exp='.KickL' />
+											<argument exp='0' />
+										</command>
+										<command class_type='delay' title='Delay' exp='25' type='1' />
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='decision' title='Pre-kickstart reverse right motor' exp='.Right &lt; 0' swap='0' >
+									<flowline >
+										<command class_type='call' title='Start reverse right early' macro='SetMotors' >
+											<argument exp='0' />
+											<argument exp='.KickR' />
+										</command>
+										<command class_type='delay' title='Delay' exp='25' type='1' />
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='call' title='Kickstart Motors' macro='SetMotors' >
+							<argument exp='.KickL' />
+							<argument exp='.KickR' />
+						</command>
+						<command class_type='calculation' title='Initialise slew limiter' >
+							<exp exp='.PrevLSP = .KickL' />
+							<exp exp='.PrevRSP = .KickR' />
 						</command>
 						<command class_type='loop' title='Control Loop' type='0' exp='.done = 0' for1='' for2='' for3='' >
 							<flowline >
@@ -1013,7 +1207,7 @@ Voltages lower than 3.4V may damage the battery.' statediag='0' >
 									<exp exp='.EncR = EncCount[1]' />
 									<exp exp='.Avg = (.EncL + .EncR) / 2' />
 								</command>
-								<command class_type='decision' title='Reached Target Distance?' exp='.Avg &gt;= .EncTarget' swap='0' >
+								<command class_type='decision' title='Reached Target Distance?' exp='.Avg &gt;= .StopTarget' swap='0' >
 									<flowline >
 										<command class_type='call' title='Stop Motors' macro='SetMotors' >
 											<argument exp='0' />
@@ -1066,8 +1260,22 @@ Voltages lower than 3.4V may damage the battery.' statediag='0' >
 										</command>
 										<command class_type='decision' title='Clamp SpeedScale Low' exp='.SpeedScale &lt; 30' swap='0' >
 											<flowline >
-												<command class_type='calculation' title='Limit SpeedScale Low' >
-													<exp exp='.SpeedScale = 30' />
+												<command class_type='decision' title='Use higher brake floor on turns' exp='.IsTurn = 1' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Limit SpeedScale Low on turn' >
+															<exp exp='.SpeedScale = 50' />
+														</command>
+													</flowline>
+													<flowline >
+														<command class_type='decision' title='Allow slower straight braking' exp='.SpeedScale &lt; 10' swap='0' >
+															<flowline >
+																<command class_type='calculation' title='Limit SpeedScale Low on straight' >
+																	<exp exp='.SpeedScale = 10' />
+																</command>
+															</flowline>
+															<flowline />
+														</command>
+													</flowline>
 												</command>
 											</flowline>
 											<flowline />
@@ -1076,11 +1284,141 @@ Voltages lower than 3.4V may damage the battery.' statediag='0' >
 											<exp exp='.BaseL = (.Left * .SpeedScale) / 100' />
 											<exp exp='.BaseR = (.Right * .SpeedScale) / 100' />
 										</command>
+										<command class_type='decision' title='Startup ramp in progress?' exp='.RampStep &lt; 25' swap='0' >
+											<flowline >
+												<command class_type='decision' title='Ramp left motor' exp='.Left != 0' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Ramp BaseL from kickstart' >
+															<exp exp='.BaseL = .KickL + ((.BaseL - .KickL) * .RampStep) / 25' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='decision' title='Ramp right motor' exp='.Right != 0' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Ramp BaseR from kickstart' >
+															<exp exp='.BaseR = .KickR + ((.BaseR - .KickR) * .RampStep) / 25' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='calculation' title='Next ramp step' >
+													<exp exp='.RampStep = .RampStep + 1' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
 										<command class_type='calculation' title='Compute Error and Correction' >
 											<exp exp='.Error = .EncL - .EncR' />
-											<exp exp='.Correction = .Error / 5' />
+											<exp exp='.DError = .Error - .PrevError' />
+											<exp exp='.PrevError = .Error' />
 										</command>
-										<command class_type='decision' title='Decision' exp='Left &lt; 0' swap='0' >
+										<command class_type='decision' title='Turn deadband only' exp='(.IsTurn = 1) &amp;&amp; (.Error &gt; -5) &amp;&amp; (.Error &lt; 5)' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Pivot encoders close enough' >
+													<exp exp='.Correction = 0' />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='decision' title='Straight deadband only' exp='(.IsTurn = 0) &amp;&amp; (.Error &gt; -2) &amp;&amp; (.Error &lt; 2)' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Straight encoders close enough' >
+															<exp exp='.Correction = 0' />
+															<exp exp='.ErrorSum = 0' />
+														</command>
+													</flowline>
+													<flowline >
+														<command class_type='decision' title='Pivot turn sync' exp='.IsTurn = 1' swap='0' >
+															<flowline >
+																<command class_type='calculation' title='PD correction for pivot turn' >
+																	<exp exp='.Correction = (.Error / 10) + (.DError / 6)' />
+																</command>
+															</flowline>
+															<flowline >
+																<command class_type='decision' title='Reverse straight sync' exp='.IsReverse = 1' swap='0' >
+																	<flowline >
+																		<command class_type='calculation' title='Stronger PD for backward straight' >
+																			<exp exp='.Correction = (.Error / 3) + (.DError / 3)' />
+																		</command>
+																	</flowline>
+																	<flowline >
+																		<command class_type='calculation' title='PD correction for forward straight' >
+																			<exp exp='.Correction = (.Error / 4) + (.DError / 4)' />
+																		</command>
+																	</flowline>
+																</command>
+															</flowline>
+														</command>
+													</flowline>
+												</command>
+											</flowline>
+										</command>
+										<command class_type='decision' title='Add integral trim on straight moves' exp='.IsTurn = 0' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Accumulate steady drift' >
+													<exp exp='.ErrorSum = .ErrorSum + .Error' />
+												</command>
+												<command class_type='decision' title='Limit integral high' exp='.ErrorSum &gt; 40' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' >
+															<exp exp='.ErrorSum = 40' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='decision' title='Limit integral low' exp='.ErrorSum &lt; -40' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' >
+															<exp exp='.ErrorSum = -40' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='calculation' title='Apply integral correction' >
+													<exp exp='.Correction = .Correction + (.ErrorSum / 10)' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+										<command class_type='decision' title='Cap correction on turns' exp='.IsTurn = 1' swap='0' >
+											<flowline >
+												<command class_type='decision' title='Limit positive turn correction' exp='.Correction &gt; 3' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' >
+															<exp exp='.Correction = 3' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='decision' title='Limit negative turn correction' exp='.Correction &lt; -3' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' >
+															<exp exp='.Correction = -3' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='decision' title='Limit positive straight correction' exp='.Correction &gt; 10' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' >
+															<exp exp='.Correction = 10' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='decision' title='Limit negative straight correction' exp='.Correction &lt; -10' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' >
+															<exp exp='.Correction = -10' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+											</flowline>
+										</command>
+										<command class_type='decision' title='Decision' exp='.Left &lt; 0' swap='0' >
 											<flowline >
 												<command class_type='calculation' title='Calculation' >
 													<exp exp='.LSP = .BaseL + .Correction' />
@@ -1092,7 +1430,7 @@ Voltages lower than 3.4V may damage the battery.' statediag='0' >
 												</command>
 											</flowline>
 										</command>
-										<command class_type='decision' title='Decision' exp='Right &lt; 0' swap='0' >
+										<command class_type='decision' title='Decision' exp='.Right &lt; 0' swap='0' >
 											<flowline >
 												<command class_type='calculation' title='Calculation' >
 													<exp exp='.RSP = .BaseR - .Correction' />
@@ -1136,15 +1474,197 @@ Voltages lower than 3.4V may damage the battery.' statediag='0' >
 											</flowline>
 											<flowline />
 										</command>
+										<command class_type='calculation' title='Scale power floor with braking ramp' >
+											<exp exp='.FloorFwd = (.MinPower * .SpeedScale) / 100' />
+											<exp exp='.FloorRev = (.MinPowerRev * .SpeedScale) / 100' />
+										</command>
+										<command class_type='decision' title='Minimum scaled forward floor' exp='.FloorFwd &lt; 8' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='.FloorFwd = 8' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+										<command class_type='decision' title='Minimum scaled reverse floor' exp='.FloorRev &lt; 8' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='.FloorRev = 8' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+										<command class_type='decision' title='Matched minimum power during turns' exp='.IsTurn = 1' swap='0' >
+											<flowline >
+												<command class_type='decision' title='Floor left forward on turn' exp='.Left &gt; 0' swap='0' >
+													<flowline >
+														<command class_type='decision' title='Decision' exp='.LSP &lt; .TurnMin' swap='0' >
+															<flowline >
+																<command class_type='calculation' title='Calculation' >
+																	<exp exp='.LSP = .TurnMin' />
+																</command>
+															</flowline>
+															<flowline />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='decision' title='Floor left reverse on turn' exp='.Left &lt; 0' swap='0' >
+													<flowline >
+														<command class_type='decision' title='Decision' exp='.LSP &gt; - .TurnMin' swap='0' >
+															<flowline >
+																<command class_type='calculation' title='Calculation' >
+																	<exp exp='.LSP = - .TurnMin' />
+																</command>
+															</flowline>
+															<flowline />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='decision' title='Floor right forward on turn' exp='.Right &gt; 0' swap='0' >
+													<flowline >
+														<command class_type='decision' title='Decision' exp='.RSP &lt; .TurnMin' swap='0' >
+															<flowline >
+																<command class_type='calculation' title='Calculation' >
+																	<exp exp='.RSP = .TurnMin' />
+																</command>
+															</flowline>
+															<flowline />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='decision' title='Floor right reverse on turn' exp='.Right &lt; 0' swap='0' >
+													<flowline >
+														<command class_type='decision' title='Decision' exp='.RSP &gt; - .TurnMin' swap='0' >
+															<flowline >
+																<command class_type='calculation' title='Calculation' >
+																	<exp exp='.RSP = - .TurnMin' />
+																</command>
+															</flowline>
+															<flowline />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='decision' title='Floor left motor forward' exp='.Left &gt; 0' swap='0' >
+													<flowline >
+														<command class_type='decision' title='Prevent left forward stall' exp='.LSP &lt; .FloorFwd' swap='0' >
+															<flowline >
+																<command class_type='calculation' title='Calculation' >
+																	<exp exp='.LSP = .FloorFwd' />
+																</command>
+															</flowline>
+															<flowline />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='decision' title='Floor left motor reverse' exp='.Left &lt; 0' swap='0' >
+													<flowline >
+														<command class_type='decision' title='Prevent left reverse stall' exp='.LSP &gt; - .FloorRev' swap='0' >
+															<flowline >
+																<command class_type='calculation' title='Calculation' >
+																	<exp exp='.LSP = - .FloorRev' />
+																</command>
+															</flowline>
+															<flowline />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='decision' title='Floor right motor forward' exp='.Right &gt; 0' swap='0' >
+													<flowline >
+														<command class_type='decision' title='Prevent right forward stall' exp='.RSP &lt; .FloorFwd' swap='0' >
+															<flowline >
+																<command class_type='calculation' title='Calculation' >
+																	<exp exp='.RSP = .FloorFwd' />
+																</command>
+															</flowline>
+															<flowline />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='decision' title='Floor right motor reverse' exp='.Right &lt; 0' swap='0' >
+													<flowline >
+														<command class_type='decision' title='Prevent right reverse stall' exp='.RSP &gt; - .FloorRev' swap='0' >
+															<flowline >
+																<command class_type='calculation' title='Calculation' >
+																	<exp exp='.RSP = - .FloorRev' />
+																</command>
+															</flowline>
+															<flowline />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+											</flowline>
+										</command>
+										<command class_type='decision' title='Smooth speed changes on turns' exp='.IsTurn = 1' swap='0' >
+											<flowline >
+												<command class_type='decision' title='Limit left speed increase' exp='.LSP &gt; (.PrevLSP + 2)' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' >
+															<exp exp='.LSP = .PrevLSP + 2' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='decision' title='Limit left speed decrease' exp='.LSP &lt; (.PrevLSP - 2)' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' >
+															<exp exp='.LSP = .PrevLSP - 2' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='decision' title='Limit right speed increase' exp='.RSP &gt; (.PrevRSP + 2)' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' >
+															<exp exp='.RSP = .PrevRSP + 2' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='decision' title='Limit right speed decrease' exp='.RSP &lt; (.PrevRSP - 2)' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' >
+															<exp exp='.RSP = .PrevRSP - 2' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+										<command class_type='calculation' title='Store speeds for next slew step' >
+											<exp exp='.PrevLSP = .LSP' />
+											<exp exp='.PrevRSP = .RSP' />
+										</command>
 										<command class_type='call' title='Update Motors' macro='SetMotors' >
 											<argument exp='.LSP' />
 											<argument exp='.RSP' />
 										</command>
-										<command class_type='delay' title='Delay' exp='10' type='1' />
+										<command class_type='decision' title='Slower control loop on turns' exp='.IsTurn = 1' swap='0' >
+											<flowline >
+												<command class_type='delay' title='Delay' exp='15' type='1' />
+											</flowline>
+											<flowline >
+												<command class_type='delay' title='Delay' exp='10' type='1' />
+											</flowline>
+										</command>
 									</flowline>
 								</command>
 							</flowline>
 						</command>
+						<command class_type='calculation' title='End Logo move' >
+							<exp exp='LogoMove = 0' />
+						</command>
+						<command class_type='delay' title='Delay' exp='50' type='1' />
 					</flowline>
 				</macro>
 				<macro >
@@ -1975,32 +2495,15 @@ the robot turns evenly. Automatically stops at the specified turn angle.' stated
 						<param name='Angle' type='u16' description='Angle in degrees you wish to rotate. Range 1-65536' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='EncTarget' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='FCalc' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
-						<command class_type='decision' title='Decision' disable='1' exp='.Angle &gt; 10' swap='0' >
-							<flowline >
-								<command class_type='calculation' title='Calculation' disable='1' >
-									<exp exp='.Angle = .Angle - 5' />
-								</command>
-							</flowline>
-							<flowline >
-								<command class_type='decision' title='Decision' disable='1' exp='.Angle &gt; 5' swap='0' >
-									<flowline >
-										<command class_type='calculation' title='Calculation' disable='1' >
-											<exp exp='.Angle = .Angle - 2' />
-										</command>
-									</flowline>
-									<flowline />
-								</command>
-							</flowline>
-						</command>
 						<command class_type='calculation' title='Calculation' >
-							<exp exp='.FCalc = int2float (.Angle)' />
+							<exp exp='.FCalc = int2float(.Angle)' />
 							<exp exp='.FCalc = .FCalc * AngleResolution' />
 							<exp exp='.FCalc = .FCalc / EncoderResolution' />
-							<exp exp='.EncTarget = float2int (.FCalc)' />
+							<exp exp='.EncTarget = float2int(.FCalc)' />
 						</command>
 						<command class_type='call' title='Call Macro' macro='LogoProcess2' >
-							<argument exp='-LogoSpeed / 2' />
-							<argument exp='LogoSpeed / 2' />
+							<argument exp='- (LogoSpeed * 3) / 4' />
+							<argument exp='(LogoSpeed * 3) / 4' />
 							<argument exp='.EncTarget' />
 						</command>
 					</flowline>
@@ -2773,32 +3276,15 @@ Return value range: 0 to 4095
 						<param name='Angle' type='u16' description='Angle in degrees you wish to rotate. Range 1-65536' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='EncTarget' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='FCalc' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
-						<command class_type='decision' title='Decision' disable='1' exp='.Angle &gt; 10' swap='0' >
-							<flowline >
-								<command class_type='calculation' title='Calculation' disable='1' >
-									<exp exp='.Angle = .Angle - 5' />
-								</command>
-							</flowline>
-							<flowline >
-								<command class_type='decision' title='Decision' disable='1' exp='.Angle &gt; 5' swap='0' >
-									<flowline >
-										<command class_type='calculation' title='Calculation' disable='1' >
-											<exp exp='.Angle = .Angle - 2' />
-										</command>
-									</flowline>
-									<flowline />
-								</command>
-							</flowline>
-						</command>
 						<command class_type='calculation' title='Calculation' >
-							<exp exp='.FCalc = int2float (.Angle)' />
+							<exp exp='.FCalc = int2float(.Angle)' />
 							<exp exp='.FCalc = .FCalc * AngleResolution' />
 							<exp exp='.FCalc = .FCalc / EncoderResolution' />
-							<exp exp='.EncTarget = float2int (.FCalc)' />
+							<exp exp='.EncTarget = float2int(.FCalc)' />
 						</command>
 						<command class_type='call' title='Call Macro' macro='LogoProcess2' >
-							<argument exp='LogoSpeed / 2' />
-							<argument exp='-LogoSpeed / 2' />
+							<argument exp='(LogoSpeed * 3) / 4' />
+							<argument exp='- (LogoSpeed * 3) / 4' />
 							<argument exp='.EncTarget' />
 						</command>
 					</flowline>
@@ -3391,9 +3877,9 @@ the robot drives straight. Automatically stops at the specified distance.' state
 						<local name='EncTarget' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='FCalc' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
 						<command class_type='calculation' title='Calculation' >
-							<exp exp='.FCalc = int2float (.Distance)' />
+							<exp exp='.FCalc = int2float(.Distance)' />
 							<exp exp='.FCalc = .FCalc / FLOAT EncoderResolution' />
-							<exp exp='.EncTarget = float2int (.FCalc)' />
+							<exp exp='.EncTarget = float2int(.FCalc)' />
 						</command>
 						<command class_type='call' title='Call Macro' macro='LogoProcess2' >
 							<argument exp='-LogoSpeed' />
@@ -4323,9 +4809,9 @@ the robot drives straight. Automatically stops at the specified distance.' state
 						<local name='EncTarget' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='FCalc' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
 						<command class_type='calculation' title='Calculation' >
-							<exp exp='.FCalc = int2float (.Distance)' />
+							<exp exp='.FCalc = int2float(.Distance)' />
 							<exp exp='.FCalc = .FCalc / FLOAT EncoderResolution' />
-							<exp exp='.EncTarget = float2int (.FCalc)' />
+							<exp exp='.EncTarget = float2int(.FCalc)' />
 						</command>
 						<command class_type='call' title='Call Macro' macro='LogoProcess2' >
 							<argument exp='LogoSpeed' />
@@ -4669,10 +5155,10 @@ the robot drives straight. Automatically stops at the specified distance.' state
 					<value target='red_bit_depth' data='0' />
 					<value target='green_bit_depth' data='0' />
 					<value target='blue_bit_depth' data='0' />
-					<value target='data_pin' data='$PORTA.0' />
-					<value target='clock_pin' data='$PORTA.1' />
-					<value target='a0_pin' data='$PORTA.2' />
-					<value target='chip_sel_pin' data='$PORTA.3' />
+					<value target='data_pin' data='$PORTG.8' />
+					<value target='clock_pin' data='$PORTG.6' />
+					<value target='a0_pin' data='$PORTA.3' />
+					<value target='chip_sel_pin' data='$PORTA.2' />
 					<value target='reset_pin' data='$PORTA.4' />
 					<value target='Base_GLCD::FontCount' data='001' />
 					<value target='Base_GLCD::gLCD_Font1::Font' data='000' />
@@ -5031,222 +5517,6 @@ the robot drives straight. Automatically stops at the specified distance.' state
 					<variables />
 					<macros />
 				</component>
-				<component class_type='ref' guid='8d619fb4-12ba-4c00-a6a8-32dd5887de72' vmin='3' vmaj='1' codename='PWM_LeftMotorFW1' panelId='-1' x='-7.37915' y='7.7205' z='56.9455' xsz='2' ysz='2' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
-					<resources />
-					<properties />
-					<values >
-						<value target='CHANNEL' data='001' />
-						<value target='HWALT' data='0' />
-						<value target='PORT' data='$PORTG.15' />
-						<value target='RemapPin' data='000' />
-						<value target='REF' data='0' />
-						<value target='PERIOD' data='255' />
-						<value target='PRESCALE' data='002' />
-						<value target='timer' data='2' />
-						<value target='CLK_SPEED' data='140000000' />
-						<value target='CALC_PERIOD' data='14.628572' />
-						<value target='CALC_FREQ' data='68.359375' />
-						<value target='PWM_PORT' data='$PORTG.15' />
-						<value target='PWM_TRIS' data='$PORTG.15' />
-						<value target='PWM_PIN' data='15' />
-						<value target='master_divider' data='2' />
-						<value target='PWM_PRESCALE' data='4' />
-						<value target='Remappable' data='1' />
-						<value target='OutputReg' data='000' />
-						<value target='OCRPNUM' data='16' />
-						<value target='OCBank' data='' />
-						<value target='AltReg' data='' />
-						<value target='AltMask' data='0' />
-						<value target='pwm_type' data='0' />
-						<value target='PWMName' data='' />
-						<value target='PWMClock' data='' />
-						<value target='PWMNumber' data='' />
-					</values>
-					<events />
-					<apis />
-					<variables />
-					<macros />
-				</component>
-				<component class_type='ref' guid='8d619fb4-12ba-4c00-a6a8-32dd5887de72' vmin='3' vmaj='1' codename='PWM_RightMotorFW1' panelId='-1' x='-4.58649' y='7.7205' z='56.9455' xsz='2' ysz='2' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
-					<resources />
-					<properties />
-					<values >
-						<value target='CHANNEL' data='001' />
-						<value target='HWALT' data='0' />
-						<value target='PORT' data='$PORTG.15' />
-						<value target='RemapPin' data='000' />
-						<value target='REF' data='0' />
-						<value target='PERIOD' data='255' />
-						<value target='PRESCALE' data='002' />
-						<value target='timer' data='2' />
-						<value target='CLK_SPEED' data='140000000' />
-						<value target='CALC_PERIOD' data='14.628572' />
-						<value target='CALC_FREQ' data='68.359375' />
-						<value target='PWM_PORT' data='$PORTG.15' />
-						<value target='PWM_TRIS' data='$PORTG.15' />
-						<value target='PWM_PIN' data='15' />
-						<value target='master_divider' data='2' />
-						<value target='PWM_PRESCALE' data='4' />
-						<value target='Remappable' data='1' />
-						<value target='OutputReg' data='000' />
-						<value target='OCRPNUM' data='16' />
-						<value target='OCBank' data='' />
-						<value target='AltReg' data='' />
-						<value target='AltMask' data='0' />
-						<value target='pwm_type' data='0' />
-						<value target='PWMName' data='' />
-						<value target='PWMClock' data='' />
-						<value target='PWMNumber' data='' />
-					</values>
-					<events />
-					<apis />
-					<variables />
-					<macros />
-				</component>
-				<component class_type='ref' guid='8d619fb4-12ba-4c00-a6a8-32dd5887de72' vmin='3' vmaj='1' codename='PWM_LeftMotorBW1' panelId='-1' x='-1.58649' y='7.80732' z='56.9455' xsz='2' ysz='2' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
-					<resources />
-					<properties />
-					<values >
-						<value target='CHANNEL' data='001' />
-						<value target='HWALT' data='0' />
-						<value target='PORT' data='$PORTG.15' />
-						<value target='RemapPin' data='000' />
-						<value target='REF' data='0' />
-						<value target='PERIOD' data='255' />
-						<value target='PRESCALE' data='002' />
-						<value target='timer' data='2' />
-						<value target='CLK_SPEED' data='140000000' />
-						<value target='CALC_PERIOD' data='14.628572' />
-						<value target='CALC_FREQ' data='68.359375' />
-						<value target='PWM_PORT' data='$PORTG.15' />
-						<value target='PWM_TRIS' data='$PORTG.15' />
-						<value target='PWM_PIN' data='15' />
-						<value target='master_divider' data='2' />
-						<value target='PWM_PRESCALE' data='4' />
-						<value target='Remappable' data='1' />
-						<value target='OutputReg' data='000' />
-						<value target='OCRPNUM' data='16' />
-						<value target='OCBank' data='' />
-						<value target='AltReg' data='' />
-						<value target='AltMask' data='0' />
-						<value target='pwm_type' data='0' />
-						<value target='PWMName' data='' />
-						<value target='PWMClock' data='' />
-						<value target='PWMNumber' data='' />
-					</values>
-					<events />
-					<apis />
-					<variables />
-					<macros />
-				</component>
-				<component class_type='ref' guid='8d619fb4-12ba-4c00-a6a8-32dd5887de72' vmin='3' vmaj='1' codename='PWM_RightMotorBW1' panelId='-1' x='1.41351' y='7.8073' z='56.9455' xsz='2' ysz='2' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
-					<resources />
-					<properties />
-					<values >
-						<value target='CHANNEL' data='001' />
-						<value target='HWALT' data='0' />
-						<value target='PORT' data='$PORTG.15' />
-						<value target='RemapPin' data='000' />
-						<value target='REF' data='0' />
-						<value target='PERIOD' data='255' />
-						<value target='PRESCALE' data='002' />
-						<value target='timer' data='2' />
-						<value target='CLK_SPEED' data='140000000' />
-						<value target='CALC_PERIOD' data='14.628572' />
-						<value target='CALC_FREQ' data='68.359375' />
-						<value target='PWM_PORT' data='$PORTG.15' />
-						<value target='PWM_TRIS' data='$PORTG.15' />
-						<value target='PWM_PIN' data='15' />
-						<value target='master_divider' data='2' />
-						<value target='PWM_PRESCALE' data='4' />
-						<value target='Remappable' data='1' />
-						<value target='OutputReg' data='000' />
-						<value target='OCRPNUM' data='16' />
-						<value target='OCBank' data='' />
-						<value target='AltReg' data='' />
-						<value target='AltMask' data='0' />
-						<value target='pwm_type' data='0' />
-						<value target='PWMName' data='' />
-						<value target='PWMClock' data='' />
-						<value target='PWMNumber' data='' />
-					</values>
-					<events />
-					<apis />
-					<variables />
-					<macros />
-				</component>
-				<component class_type='ref' guid='8d619fb4-12ba-4c00-a6a8-32dd5887de72' vmin='3' vmaj='1' codename='PWM_AudioOut1' panelId='-1' x='4.79201' y='7.94326' z='-56.9455' xsz='2' ysz='2' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
-					<resources />
-					<properties />
-					<values >
-						<value target='CHANNEL' data='001' />
-						<value target='HWALT' data='0' />
-						<value target='PORT' data='$PORTG.15' />
-						<value target='RemapPin' data='000' />
-						<value target='REF' data='0' />
-						<value target='PERIOD' data='255' />
-						<value target='PRESCALE' data='002' />
-						<value target='timer' data='2' />
-						<value target='CLK_SPEED' data='140000000' />
-						<value target='CALC_PERIOD' data='14.628572' />
-						<value target='CALC_FREQ' data='68.359375' />
-						<value target='PWM_PORT' data='$PORTG.15' />
-						<value target='PWM_TRIS' data='$PORTG.15' />
-						<value target='PWM_PIN' data='15' />
-						<value target='master_divider' data='2' />
-						<value target='PWM_PRESCALE' data='4' />
-						<value target='Remappable' data='1' />
-						<value target='OutputReg' data='000' />
-						<value target='OCRPNUM' data='16' />
-						<value target='OCBank' data='' />
-						<value target='AltReg' data='' />
-						<value target='AltMask' data='0' />
-						<value target='pwm_type' data='0' />
-						<value target='PWMName' data='' />
-						<value target='PWMClock' data='' />
-						<value target='PWMNumber' data='' />
-					</values>
-					<events />
-					<apis />
-					<variables />
-					<macros />
-				</component>
-				<component class_type='ref' guid='8d619fb4-12ba-4c00-a6a8-32dd5887de72' vmin='3' vmaj='1' codename='LCD_Backlight' panelId='-1' x='6.17301' y='-6.53617' z='56.9455' xsz='2' ysz='2' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
-					<resources />
-					<properties />
-					<values >
-						<value target='CHANNEL' data='001' />
-						<value target='HWALT' data='0' />
-						<value target='PORT' data='$PORTG.15' />
-						<value target='RemapPin' data='000' />
-						<value target='REF' data='0' />
-						<value target='PERIOD' data='255' />
-						<value target='PRESCALE' data='002' />
-						<value target='timer' data='2' />
-						<value target='CLK_SPEED' data='140000000' />
-						<value target='CALC_PERIOD' data='14.628572' />
-						<value target='CALC_FREQ' data='68.359375' />
-						<value target='PWM_PORT' data='$PORTG.15' />
-						<value target='PWM_TRIS' data='$PORTG.15' />
-						<value target='PWM_PIN' data='15' />
-						<value target='master_divider' data='2' />
-						<value target='PWM_PRESCALE' data='4' />
-						<value target='Remappable' data='1' />
-						<value target='OutputReg' data='000' />
-						<value target='OCRPNUM' data='16' />
-						<value target='OCBank' data='' />
-						<value target='AltReg' data='' />
-						<value target='AltMask' data='0' />
-						<value target='pwm_type' data='0' />
-						<value target='PWMName' data='' />
-						<value target='PWMClock' data='' />
-						<value target='PWMNumber' data='' />
-					</values>
-					<events />
-					<apis />
-					<variables />
-					<macros />
-				</component>
 				<component class_type='ref' guid='b8ce2cdc-ed76-4157-8ed8-96b1bb736bd3' vmin='0' vmaj='2' codename='BlueTooth' panelId='-1' x='-2.76362' y='-2.33397' z='56.8282' xsz='6.5946' ysz='2.85766' zsz='0.165964' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 					<resources />
 					<properties />
@@ -5340,6 +5610,276 @@ the robot drives straight. Automatically stops at the specified distance.' state
 						<value target='DateFormat' data='000' />
 						<value target='LastBuildDate' data='' />
 						<value target='LastBuildTime' data='' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='ref' guid='068080a0-b949-4a7e-b370-c45430e0c9de' vmin='2' vmaj='2' codename='PWM_AudioOut1' panelId='-1' x='4.79201' y='7.94326' z='-56.9455' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Enable' data='1' />
+						<value target='CHANNEL' data='003' />
+						<value target='HWALT' data='0' />
+						<value target='PORT' data='$PORTF.3' />
+						<value target='RemapPin' data='010' />
+						<value target='REF' data='0' />
+						<value target='PERIOD' data='2048' />
+						<value target='PRESCALE' data='000' />
+						<value target='timer' data='004' />
+						<value target='CLK_FREQ' data='64000000' />
+						<value target='CLK_SPEED' data='140000000' />
+						<value target='CALC_PERIOD' data='29.271425' />
+						<value target='CALC_FREQ' data='34.163010' />
+						<value target='CALC_FREQ2' data='34163.007812' />
+						<value target='PWM_PORT' data='$PORTF.3' />
+						<value target='PWM_TRIS' data='$PORTF.3' />
+						<value target='PWM_PIN' data='3' />
+						<value target='master_divider' data='2' />
+						<value target='PWM_PRESCALE' data='1' />
+						<value target='Remappable' data='1' />
+						<value target='OutputReg' data='010' />
+						<value target='OCRPNUM' data='18' />
+						<value target='OCBank' data='' />
+						<value target='OCABank' data='' />
+						<value target='OCAABank' data='' />
+						<value target='AltReg' data='' />
+						<value target='AltMask' data='0' />
+						<value target='pwm_type' data='0' />
+						<value target='PWMName' data='' />
+						<value target='PWMClock' data='' />
+						<value target='PWMNumber' data='' />
+						<value target='TimNumber' data='0' />
+						<value target='MaxPeriod' data='65535' />
+						<value target='AltTimerVal' data='' />
+						<value target='Sorted' data='0' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='ref' guid='068080a0-b949-4a7e-b370-c45430e0c9de' vmin='2' vmaj='2' codename='PWM_LeftMotorBW1' panelId='-1' x='-1.58649' y='7.80732' z='56.9455' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Enable' data='1' />
+						<value target='CHANNEL' data='005' />
+						<value target='HWALT' data='0' />
+						<value target='PORT' data='$PORTD.0' />
+						<value target='RemapPin' data='013' />
+						<value target='REF' data='0' />
+						<value target='PERIOD' data='100' />
+						<value target='PRESCALE' data='008' />
+						<value target='timer' data='005' />
+						<value target='CLK_FREQ' data='64000000' />
+						<value target='CLK_SPEED' data='140000000' />
+						<value target='CALC_PERIOD' data='369.371399' />
+						<value target='CALC_FREQ' data='2.707302' />
+						<value target='CALC_FREQ2' data='2707.302002' />
+						<value target='PWM_PORT' data='$PORTD.0' />
+						<value target='PWM_TRIS' data='$PORTD.0' />
+						<value target='PWM_PIN' data='0' />
+						<value target='master_divider' data='2' />
+						<value target='PWM_PRESCALE' data='256' />
+						<value target='Remappable' data='1' />
+						<value target='OutputReg' data='013' />
+						<value target='OCRPNUM' data='20' />
+						<value target='OCBank' data='' />
+						<value target='OCABank' data='' />
+						<value target='OCAABank' data='' />
+						<value target='AltReg' data='' />
+						<value target='AltMask' data='0' />
+						<value target='pwm_type' data='0' />
+						<value target='PWMName' data='' />
+						<value target='PWMClock' data='' />
+						<value target='PWMNumber' data='' />
+						<value target='TimNumber' data='0' />
+						<value target='MaxPeriod' data='65535' />
+						<value target='AltTimerVal' data='' />
+						<value target='Sorted' data='0' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='ref' guid='068080a0-b949-4a7e-b370-c45430e0c9de' vmin='2' vmaj='2' codename='PWM_LeftMotorFW1' panelId='-1' x='-7.37915' y='7.7205' z='56.9455' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Enable' data='1' />
+						<value target='CHANNEL' data='001' />
+						<value target='HWALT' data='0' />
+						<value target='PORT' data='$PORTD.1' />
+						<value target='RemapPin' data='014' />
+						<value target='REF' data='0' />
+						<value target='PERIOD' data='100' />
+						<value target='PRESCALE' data='008' />
+						<value target='timer' data='005' />
+						<value target='CLK_FREQ' data='64000000' />
+						<value target='CLK_SPEED' data='140000000' />
+						<value target='CALC_PERIOD' data='369.371399' />
+						<value target='CALC_FREQ' data='2.707302' />
+						<value target='CALC_FREQ2' data='2707.302002' />
+						<value target='PWM_PORT' data='$PORTD.1' />
+						<value target='PWM_TRIS' data='$PORTD.1' />
+						<value target='PWM_PIN' data='1' />
+						<value target='master_divider' data='2' />
+						<value target='PWM_PRESCALE' data='256' />
+						<value target='Remappable' data='1' />
+						<value target='OutputReg' data='014' />
+						<value target='OCRPNUM' data='16' />
+						<value target='OCBank' data='' />
+						<value target='OCABank' data='' />
+						<value target='OCAABank' data='' />
+						<value target='AltReg' data='' />
+						<value target='AltMask' data='0' />
+						<value target='pwm_type' data='0' />
+						<value target='PWMName' data='' />
+						<value target='PWMClock' data='' />
+						<value target='PWMNumber' data='' />
+						<value target='TimNumber' data='0' />
+						<value target='MaxPeriod' data='65535' />
+						<value target='AltTimerVal' data='' />
+						<value target='Sorted' data='0' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='ref' guid='068080a0-b949-4a7e-b370-c45430e0c9de' vmin='2' vmaj='2' codename='PWM_RightMotorBW1' panelId='-1' x='1.41351' y='7.8073' z='56.9455' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Enable' data='1' />
+						<value target='CHANNEL' data='006' />
+						<value target='HWALT' data='0' />
+						<value target='PORT' data='$PORTD.3' />
+						<value target='RemapPin' data='016' />
+						<value target='REF' data='0' />
+						<value target='PERIOD' data='100' />
+						<value target='PRESCALE' data='008' />
+						<value target='timer' data='005' />
+						<value target='CLK_FREQ' data='64000000' />
+						<value target='CLK_SPEED' data='140000000' />
+						<value target='CALC_PERIOD' data='369.371399' />
+						<value target='CALC_FREQ' data='2.707302' />
+						<value target='CALC_FREQ2' data='2707.302002' />
+						<value target='PWM_PORT' data='$PORTD.3' />
+						<value target='PWM_TRIS' data='$PORTD.3' />
+						<value target='PWM_PIN' data='3' />
+						<value target='master_divider' data='2' />
+						<value target='PWM_PRESCALE' data='256' />
+						<value target='Remappable' data='1' />
+						<value target='OutputReg' data='016' />
+						<value target='OCRPNUM' data='21' />
+						<value target='OCBank' data='' />
+						<value target='OCABank' data='' />
+						<value target='OCAABank' data='' />
+						<value target='AltReg' data='' />
+						<value target='AltMask' data='0' />
+						<value target='pwm_type' data='0' />
+						<value target='PWMName' data='' />
+						<value target='PWMClock' data='' />
+						<value target='PWMNumber' data='' />
+						<value target='TimNumber' data='0' />
+						<value target='MaxPeriod' data='65535' />
+						<value target='AltTimerVal' data='' />
+						<value target='Sorted' data='0' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='ref' guid='068080a0-b949-4a7e-b370-c45430e0c9de' vmin='2' vmaj='2' codename='PWM_RightMotorFW1' panelId='-1' x='-4.58649' y='7.7205' z='56.9455' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Enable' data='1' />
+						<value target='CHANNEL' data='002' />
+						<value target='HWALT' data='0' />
+						<value target='PORT' data='$PORTD.2' />
+						<value target='RemapPin' data='015' />
+						<value target='REF' data='0' />
+						<value target='PERIOD' data='100' />
+						<value target='PRESCALE' data='008' />
+						<value target='timer' data='005' />
+						<value target='CLK_FREQ' data='64000000' />
+						<value target='CLK_SPEED' data='140000000' />
+						<value target='CALC_PERIOD' data='369.371399' />
+						<value target='CALC_FREQ' data='2.707302' />
+						<value target='CALC_FREQ2' data='2707.302002' />
+						<value target='PWM_PORT' data='$PORTD.2' />
+						<value target='PWM_TRIS' data='$PORTD.2' />
+						<value target='PWM_PIN' data='2' />
+						<value target='master_divider' data='2' />
+						<value target='PWM_PRESCALE' data='256' />
+						<value target='Remappable' data='1' />
+						<value target='OutputReg' data='015' />
+						<value target='OCRPNUM' data='17' />
+						<value target='OCBank' data='' />
+						<value target='OCABank' data='' />
+						<value target='OCAABank' data='' />
+						<value target='AltReg' data='' />
+						<value target='AltMask' data='0' />
+						<value target='pwm_type' data='0' />
+						<value target='PWMName' data='' />
+						<value target='PWMClock' data='' />
+						<value target='PWMNumber' data='' />
+						<value target='TimNumber' data='0' />
+						<value target='MaxPeriod' data='65535' />
+						<value target='AltTimerVal' data='' />
+						<value target='Sorted' data='0' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='ref' guid='068080a0-b949-4a7e-b370-c45430e0c9de' vmin='2' vmaj='2' codename='LCD_Backlight' panelId='-1' x='6.17301' y='-6.53617' z='56.9455' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Enable' data='1' />
+						<value target='CHANNEL' data='004' />
+						<value target='HWALT' data='0' />
+						<value target='PORT' data='$PORTG.0' />
+						<value target='RemapPin' data='024' />
+						<value target='REF' data='0' />
+						<value target='PERIOD' data='100' />
+						<value target='PRESCALE' data='008' />
+						<value target='timer' data='005' />
+						<value target='CLK_FREQ' data='64000000' />
+						<value target='CLK_SPEED' data='140000000' />
+						<value target='CALC_PERIOD' data='369.371399' />
+						<value target='CALC_FREQ' data='2.707302' />
+						<value target='CALC_FREQ2' data='2707.302002' />
+						<value target='PWM_PORT' data='$PORTG.0' />
+						<value target='PWM_TRIS' data='$PORTG.0' />
+						<value target='PWM_PIN' data='0' />
+						<value target='master_divider' data='2' />
+						<value target='PWM_PRESCALE' data='256' />
+						<value target='Remappable' data='1' />
+						<value target='OutputReg' data='024' />
+						<value target='OCRPNUM' data='19' />
+						<value target='OCBank' data='' />
+						<value target='OCABank' data='' />
+						<value target='OCAABank' data='' />
+						<value target='AltReg' data='' />
+						<value target='AltMask' data='0' />
+						<value target='pwm_type' data='0' />
+						<value target='PWMName' data='' />
+						<value target='PWMClock' data='' />
+						<value target='PWMNumber' data='' />
+						<value target='TimNumber' data='0' />
+						<value target='MaxPeriod' data='65535' />
+						<value target='AltTimerVal' data='' />
+						<value target='Sorted' data='0' />
 					</values>
 					<events />
 					<apis />
@@ -5537,15 +6077,15 @@ the robot drives straight. Automatically stops at the specified distance.' state
 	<keymap />
 	<panel2d shadows='0' lighting='2' brightness='0' >
 		<background rgb='12583104' img='' style='0' />
-		<camera xe='20.94' ye='9.03295' ze='119.236' xt='20.94' yt='9.03295' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
-		<viewport dx='491' dy='849' zoom='498.264' fix_topleft='0' />
+		<camera xe='13.6997' ye='38.7572' ze='192.966' xt='13.6997' yt='38.7572' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='224' dy='782' zoom='140.46' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='0' />
-		<winpos ID='7005' RectRecentFloat='1219,463,1869,913' RectRecentDocked='0,0,491,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7005' RectRecentFloat='1219,463,1869,913' RectRecentDocked='1245,141,1489,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel2d>
 	<panel3d shadows='1' lighting='0' brightness='153' perspective='1' >
 		<background rgb='16777120' img='' style='0' />
 		<table rgb='7360576' img='' style='0' size='0' />
-		<camera xe='0.974074' ye='1.05871' ze='307.528' xt='0.974074' yt='1.05871' zt='-24.0211' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camera xe='5.43786' ye='-0.254168' ze='189.702' xt='5.43786' yt='-0.254168' zt='-24.0211' xquat='0' yquat='0' zquat='0' wquat='1' />
 		<camerakey0 xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
 		<camerakey1 xe='-3.67394e-14' ye='0' ze='-300' xt='0' yt='0' zt='0' xquat='0' yquat='1' zquat='0' wquat='6.12323e-17' />
 		<camerakey2 xe='0' ye='-300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.707107' yquat='0' zquat='0' wquat='0.707107' />
@@ -5553,55 +6093,55 @@ the robot drives straight. Automatically stops at the specified distance.' state
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='895,309,1920,871' RectRecentDocked='1674,141,1920,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+		<winpos ID='7004' RectRecentFloat='895,309,1920,871' RectRecentDocked='744,141,1239,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='0' />
 	<layout >
-		<view type='0' name='SetMotors' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='981' flags='0' />
-		<view type='0' name='SetMotorsInterrupt' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Interrupt_MotorTimer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='CheckLine_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='CheckLine' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='CheckIR_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='CheckIR' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LogoForwardsSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LogoTurnRightSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LogoTurnLeftSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LogoBackwardsSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Timer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='InitialiseSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='BattMon' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Interrupt_BluetoothRX' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='BluetoothReceive' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='BluetoothCheckRx' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadIRSensor' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='BluetoothCommand' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='BluetoothTransmit' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Interrupt_Audio' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='AudioStreamControl' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LogoProcess' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LogoTurnRight' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LogoTurnLeft' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LogoBackwards' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LogoForwards' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LogoConfigure' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='PlayNote' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='70' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetEEFloat' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetEEFloat' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadMic' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Interrupt_Encoder' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='BluetoothTransmitString' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LCDPrintNumber' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LEDWrite' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadBattery' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadIRSensor_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LogoProcess2' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LogoSetSpeed' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='BluetoothCheckConnection' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAjAQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetMotors' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetMotorsInterrupt' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Interrupt_MotorTimer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CheckLine_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CheckLine' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CheckIR_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CheckIR' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LogoForwardsSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LogoTurnRightSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LogoTurnLeftSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LogoBackwardsSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Timer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='InitialiseSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='BattMon' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Interrupt_BluetoothRX' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='BluetoothReceive' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='BluetoothCheckRx' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadIRSensor' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='BluetoothCommand' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='BluetoothTransmit' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Interrupt_Audio' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='AudioStreamControl' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LogoProcess' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LogoTurnRight' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LogoTurnLeft' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LogoBackwards' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LogoForwards' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LogoConfigure' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='PlayNote' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='70' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetEEFloat' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetEEFloat' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadMic' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Interrupt_Encoder' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='BluetoothTransmitString' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LCDPrintNumber' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LEDWrite' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadBattery' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadIRSensor_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LogoProcess2' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='100' scrollx='0' scrolly='804' flags='0' />
+		<view type='0' name='LogoSetSpeed' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='BluetoothCheckConnection' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>
