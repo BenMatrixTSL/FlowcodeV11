@@ -144,14 +144,14 @@ Otherwise leave blank to maintain the normal simulation functionality.' />
 				<value target='AddonMech' data='' />
 			</values>
 			<events >
-				<event class='Compile' event='AddInterrupts' target='Ev_AddInterrupts' />
 				<event class='Simulation' event='Start' target='Ev_Start' />
-				<event class='System' event='Timer' target='Ev_Timer' />
-				<event class='Components' event='Property' target='Ev_Property' />
-				<event class='Components' event='Initialise' target='Ev_Initialise' />
-				<event class='Simulation' event='Resume' target='Ev_Resume' />
+				<event class='Compile' event='AddInterrupts' target='Ev_AddInterrupts' />
 				<event class='Simulation' event='Pause' target='Ev_Pause' />
 				<event class='Simulation' event='Stop' target='Ev_Stop' />
+				<event class='Simulation' event='Resume' target='Ev_Resume' />
+				<event class='Components' event='Property' target='Ev_Property' />
+				<event class='Components' event='Initialise' target='Ev_Initialise' />
+				<event class='System' event='Timer' target='Ev_Timer' />
 			</events>
 			<apis >
 				<api name='PlayNote' alt='PlayNote_Sim' type='1' proto='1' />
@@ -159,6 +159,7 @@ Otherwise leave blank to maintain the normal simulation functionality.' />
 				<api name='BluetoothTransmit' alt='BluetoothTransmit' type='1' proto='1' />
 				<api name='LCDPrintString' alt='LCDPrintString' type='1' proto='1' />
 				<api name='LogoConfigure' alt='LogoConfigure' type='1' proto='1' />
+				<api name='LogoCalibrateMotors' alt='LogoCalibrateMotors' type='1' proto='1' />
 				<api name='Stop' alt='Stop_Sim' type='1' proto='1' />
 				<api name='ReadBattery' alt='ReadBattery_Sim' type='1' proto='1' />
 				<api name='LEDOff' alt='LEDOff' type='1' proto='1' />
@@ -214,10 +215,22 @@ Otherwise leave blank to maintain the normal simulation functionality.' />
 					<def class_type='variable' name='RightDir' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 				</variable>
 				<variable public='0' >
+					<def class_type='variable' name='TrimRevR' type='f32' description='Per-robot reverse trim for right motor' isconst='0' isHidden='0' isinit='1' usrinit='1.0' setinit='1.0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='ForwardScale' type='f32' description='Forward distance scale factor' isconst='0' isHidden='0' isinit='1' usrinit='1.0' setinit='1.0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='TrimFwdL' type='f32' description='Per-robot forward trim for left motor' isconst='0' isHidden='0' isinit='1' usrinit='1.0' setinit='1.0' />
+				</variable>
+				<variable public='0' >
 					<def class_type='variable' name='AreYouThereCount' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
 				</variable>
 				<variable public='0' >
 					<def class_type='variable' name='LeftDir' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='TrimRevL' type='f32' description='Per-robot reverse trim for left motor' isconst='0' isHidden='0' isinit='1' usrinit='1.0' setinit='1.0' />
 				</variable>
 				<variable public='0' >
 					<def class_type='variable' name='false' type='b1' description='' isconst='1' isHidden='0' isinit='1' usrinit='0' setinit='0' />
@@ -249,7 +262,13 @@ Otherwise leave blank to maintain the normal simulation functionality.' />
 					<def class_type='variable' name='EncSave' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 				</variable>
 				<variable public='0' >
+					<def class_type='variable' name='ReverseScale' type='f32' description='Backward distance scale factor' isconst='0' isHidden='0' isinit='1' usrinit='1.0' setinit='1.0' />
+				</variable>
+				<variable public='0' >
 					<def class_type='variable' name='Movement' type='s32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='TurnScale' type='f32' description='Turn distance scale factor' isconst='0' isHidden='0' isinit='1' usrinit='2.5' setinit='2.5' />
 				</variable>
 				<variable public='0' >
 					<def class_type='variable' name='AudioSampleCount' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
@@ -265,6 +284,9 @@ Otherwise leave blank to maintain the normal simulation functionality.' />
 				</variable>
 				<variable public='0' >
 					<def class_type='variable' name='AudioBitDepth' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='TrimFwdR' type='f32' description='Per-robot forward trim for right motor' isconst='0' isHidden='0' isinit='1' usrinit='1.0' setinit='1.0' />
 				</variable>
 				<variable public='0' >
 					<def class_type='variable' name='tmr_running' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
@@ -485,6 +507,7 @@ Returns 1 if the IR reading is greater than or equal to the threshold.' statedia
 									<return exp='AngleResolution' />
 									<argument exp='10' />
 								</command>
+								<command class_type='call' title='Load motor calibration' macro='Prv_LoadMotorCal' />
 							</flowline>
 							<flowline />
 						</command>
@@ -881,6 +904,169 @@ Before tweaking the factory values check that the wheels are pushed well onto th
 					</flowline>
 				</macro>
 				<macro >
+					<flowline name='LogoCalibrateMotors' description='Runs a short forward and reverse test, measures encoder balance, and saves motor trim values to EEPROM for this robot.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<local name='done' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='Avg' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='EncL' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='EncR' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='FCalc' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<command class_type='call' title='Stop motors' macro='SetMotors' >
+							<argument exp='0' />
+							<argument exp='0' />
+						</command>
+						<command class_type='delay' title='Settle before calibration' exp='200' type='1' />
+						<command class_type='calculation' title='Reset trim defaults' >
+							<exp exp='TrimFwdL = 1.0' />
+							<exp exp='TrimFwdR = 1.0' />
+							<exp exp='TrimRevL = 1.0' />
+							<exp exp='TrimRevR = 1.0' />
+						</command>
+						<command class_type='calculation' title='Reset encoders for forward test' >
+							<exp exp='EncCount[0] = 0' />
+							<exp exp='EncCount[1] = 0' />
+						</command>
+						<command class_type='call' title='Drive forward calibration' macro='SetMotors' >
+							<argument exp='LogoSpeed' />
+							<argument exp='LogoSpeed' />
+						</command>
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.done = 0' />
+						</command>
+						<command class_type='loop' title='Forward calibration loop' type='0' exp='.done = 0' for1='' for2='' for3='' >
+							<flowline >
+								<command class_type='delay' title='Delay' exp='10' type='1' />
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.Avg = (EncCount[0] + EncCount[1]) / 2' />
+								</command>
+								<command class_type='decision' title='Forward test complete?' exp='.Avg &gt;= 80' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.done = 1' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='call' title='Stop after forward test' macro='SetMotors' >
+							<argument exp='0' />
+							<argument exp='0' />
+						</command>
+						<command class_type='delay' title='Settle after forward test' exp='150' type='1' />
+						<command class_type='calculation' title='Read forward encoder result' >
+							<exp exp='.EncL = EncCount[0]' />
+							<exp exp='.EncR = EncCount[1]' />
+						</command>
+						<command class_type='decision' title='Valid forward encoder data?' exp='.EncR &gt; 10' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Compute forward right trim' >
+									<exp exp='.FCalc = FLOAT .EncL / FLOAT .EncR' />
+									<exp exp='TrimFwdR = .FCalc' />
+								</command>
+								<command class_type='decision' title='Clamp forward right trim high' exp='TrimFwdR &gt; 1.25' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='TrimFwdR = 1.25' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='decision' title='Clamp forward right trim low' exp='TrimFwdR &lt; 0.75' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='TrimFwdR = 0.75' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='calculation' title='Reset encoders for reverse test' >
+							<exp exp='EncCount[0] = 0' />
+							<exp exp='EncCount[1] = 0' />
+						</command>
+						<command class_type='call' title='Drive reverse calibration' macro='SetMotors' >
+							<argument exp='-LogoSpeed' />
+							<argument exp='-LogoSpeed' />
+						</command>
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.done = 0' />
+						</command>
+						<command class_type='loop' title='Reverse calibration loop' type='0' exp='.done = 0' for1='' for2='' for3='' >
+							<flowline >
+								<command class_type='delay' title='Delay' exp='10' type='1' />
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.Avg = (EncCount[0] + EncCount[1]) / 2' />
+								</command>
+								<command class_type='decision' title='Reverse test complete?' exp='.Avg &gt;= 80' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.done = 1' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='call' title='Stop after reverse test' macro='SetMotors' >
+							<argument exp='0' />
+							<argument exp='0' />
+						</command>
+						<command class_type='delay' title='Settle after reverse test' exp='150' type='1' />
+						<command class_type='calculation' title='Read reverse encoder result' >
+							<exp exp='.EncL = EncCount[0]' />
+							<exp exp='.EncR = EncCount[1]' />
+						</command>
+						<command class_type='decision' title='Valid reverse encoder data?' exp='.EncR &gt; 10' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Compute reverse right trim' >
+									<exp exp='.FCalc = FLOAT .EncL / FLOAT .EncR' />
+									<exp exp='TrimRevR = .FCalc' />
+								</command>
+								<command class_type='decision' title='Clamp reverse right trim high' exp='TrimRevR &gt; 1.25' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='TrimRevR = 1.25' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='decision' title='Clamp reverse right trim low' exp='TrimRevR &lt; 0.75' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='TrimRevR = 0.75' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='call' title='Save forward left trim' macro='SetEEFloat' >
+							<argument exp='30' />
+							<argument exp='TrimFwdL' />
+						</command>
+						<command class_type='call' title='Save forward right trim' macro='SetEEFloat' >
+							<argument exp='40' />
+							<argument exp='TrimFwdR' />
+						</command>
+						<command class_type='call' title='Save reverse left trim' macro='SetEEFloat' >
+							<argument exp='50' />
+							<argument exp='TrimRevL' />
+						</command>
+						<command class_type='call' title='Save reverse right trim' macro='SetEEFloat' >
+							<argument exp='60' />
+							<argument exp='TrimRevR' />
+						</command>
+						<command class_type='call' title='Mark calibration valid' component='flasheeprom1' macro='Write' >
+							<argument exp='20' />
+							<argument exp='0' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
 					<flowline name='Stop' description='Stops both motors.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<command class_type='call' title='Call Macro' macro='SetMotors' >
@@ -1018,6 +1204,12 @@ Voltages lower than 3.4V may damage the battery.' statediag='0' >
 						<local name='StopTarget' type='u32' description='Encoder target used to stop the move' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='FloorFwd' type='s16' description='Scaled minimum forward power for current speed' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='FloorRev' type='s16' description='Scaled minimum reverse power for current speed' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='TrimCalc' type='f32' description='Temporary value for motor trim' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='PrevEncL' type='u16' description='Previous left encoder for speed balance' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='PrevEncR' type='u16' description='Previous right encoder for speed balance' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='DeltaL' type='u16' description='Left encoder change this loop' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='DeltaR' type='u16' description='Right encoder change this loop' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='VelTgt' type='u8' description='Expected encoder counts per loop' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='done' type='u8' description='Loop exit flag' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
 						<command class_type='decision' title='Ensure minimum encoder target' exp='.EncTarget = 0' swap='0' >
 							<flowline >
@@ -1046,16 +1238,19 @@ Voltages lower than 3.4V may damage the battery.' statediag='0' >
 							<exp exp='.done = 0' />
 							<exp exp='.PrevError = 0' />
 							<exp exp='.ErrorSum = 0' />
+							<exp exp='.PrevEncL = 0' />
+							<exp exp='.PrevEncR = 0' />
 							<exp exp='LogoMove = 1' />
 						</command>
+						<command class_type='delay' title='Settle before move' exp='30' type='1' />
 						<command class_type='decision' title='Straight reverse move?' exp='(.Left &lt; 0) &amp;&amp; (.Right &lt; 0)' swap='0' >
 							<flowline >
 								<command class_type='calculation' title='Mark as reverse straight' >
 									<exp exp='.IsReverse = 1' />
 								</command>
-								<command class_type='decision' title='Lead reverse stop to reduce overshoot' exp='.StopTarget &gt; 10' swap='0' >
+								<command class_type='decision' title='Lead reverse stop to reduce overshoot' disable='1' exp='.StopTarget &gt; 10' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Stop slightly early going backward' >
+										<command class_type='calculation' title='Stop slightly early going backward' disable='1' >
 											<exp exp='.StopTarget = (.StopTarget * 19) / 20' />
 										</command>
 									</flowline>
@@ -1308,6 +1503,44 @@ Voltages lower than 3.4V may damage the battery.' statediag='0' >
 											</flowline>
 											<flowline />
 										</command>
+										<command class_type='decision' title='Apply forward trim to left' exp='.Left &gt; 0' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='.TrimCalc = int2float (.BaseL) * TrimFwdL' />
+													<exp exp='.BaseL = float2int (.TrimCalc)' />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='decision' title='Apply reverse trim to left' exp='.Left &lt; 0' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' >
+															<exp exp='.TrimCalc = int2float (.BaseL) * TrimRevL' />
+															<exp exp='.BaseL = float2int (.TrimCalc)' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+											</flowline>
+										</command>
+										<command class_type='decision' title='Apply forward trim to right' exp='.Right &gt; 0' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='.TrimCalc = int2float (.BaseR) * TrimFwdR' />
+													<exp exp='.BaseR = float2int (.TrimCalc)' />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='decision' title='Apply reverse trim to right' exp='.Right &lt; 0' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' >
+															<exp exp='.TrimCalc = int2float (.BaseR) * TrimRevR' />
+															<exp exp='.BaseR = float2int (.TrimCalc)' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+											</flowline>
+										</command>
 										<command class_type='calculation' title='Compute Error and Correction' >
 											<exp exp='.Error = .EncL - .EncR' />
 											<exp exp='.DError = .Error - .PrevError' />
@@ -1441,6 +1674,115 @@ Voltages lower than 3.4V may damage the battery.' statediag='0' >
 													<exp exp='.RSP = .BaseR + .Correction' />
 												</command>
 											</flowline>
+										</command>
+										<command class_type='calculation' title='Encoder speed deltas' >
+											<exp exp='.DeltaL = .EncL - .PrevEncL' />
+											<exp exp='.DeltaR = .EncR - .PrevEncR' />
+											<exp exp='.PrevEncL = .EncL' />
+											<exp exp='.PrevEncR = .EncR' />
+										</command>
+										<command class_type='decision' title='Cruise speed balance active?' exp='(.RampStep &gt;= 25) &amp;&amp; (.SpeedScale &gt; 40)' swap='0' >
+											<flowline >
+												<command class_type='decision' title='Balance left forward speed' exp='.Left &gt; 0' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Expected left counts' >
+															<exp exp='.VelTgt = .BaseL / 6' />
+														</command>
+														<command class_type='decision' title='Left wheel too slow' exp='(.VelTgt &gt; 2) &amp;&amp; (.DeltaL + 1 &lt; .VelTgt)' swap='0' >
+															<flowline >
+																<command class_type='calculation' title='Calculation' >
+																	<exp exp='.LSP = .LSP + 1' />
+																</command>
+															</flowline>
+															<flowline />
+														</command>
+														<command class_type='decision' title='Left wheel too fast' exp='(.VelTgt &gt; 2) &amp;&amp; (.DeltaL &gt; .VelTgt + 2)' swap='0' >
+															<flowline >
+																<command class_type='calculation' title='Calculation' >
+																	<exp exp='.LSP = .LSP - 1' />
+																</command>
+															</flowline>
+															<flowline />
+														</command>
+													</flowline>
+													<flowline >
+														<command class_type='decision' title='Balance left reverse speed' exp='.Left &lt; 0' swap='0' >
+															<flowline >
+																<command class_type='calculation' title='Expected left counts' >
+																	<exp exp='.VelTgt = (0 - .BaseL) / 6' />
+																</command>
+																<command class_type='decision' title='Left wheel too slow' exp='(.VelTgt &gt; 2) &amp;&amp; (.DeltaL + 1 &lt; .VelTgt)' swap='0' >
+																	<flowline >
+																		<command class_type='calculation' title='Calculation' >
+																			<exp exp='.LSP = .LSP - 1' />
+																		</command>
+																	</flowline>
+																	<flowline />
+																</command>
+																<command class_type='decision' title='Left wheel too fast' exp='(.VelTgt &gt; 2) &amp;&amp; (.DeltaL &gt; .VelTgt + 2)' swap='0' >
+																	<flowline >
+																		<command class_type='calculation' title='Calculation' >
+																			<exp exp='.LSP = .LSP + 1' />
+																		</command>
+																	</flowline>
+																	<flowline />
+																</command>
+															</flowline>
+															<flowline />
+														</command>
+													</flowline>
+												</command>
+												<command class_type='decision' title='Balance right forward speed' exp='.Right &gt; 0' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Expected right counts' >
+															<exp exp='.VelTgt = .BaseR / 6' />
+														</command>
+														<command class_type='decision' title='Right wheel too slow' exp='(.VelTgt &gt; 2) &amp;&amp; (.DeltaR + 1 &lt; .VelTgt)' swap='0' >
+															<flowline >
+																<command class_type='calculation' title='Calculation' >
+																	<exp exp='.RSP = .RSP + 1' />
+																</command>
+															</flowline>
+															<flowline />
+														</command>
+														<command class_type='decision' title='Right wheel too fast' exp='(.VelTgt &gt; 2) &amp;&amp; (.DeltaR &gt; .VelTgt + 2)' swap='0' >
+															<flowline >
+																<command class_type='calculation' title='Calculation' >
+																	<exp exp='.RSP = .RSP - 1' />
+																</command>
+															</flowline>
+															<flowline />
+														</command>
+													</flowline>
+													<flowline >
+														<command class_type='decision' title='Balance right reverse speed' exp='.Right &lt; 0' swap='0' >
+															<flowline >
+																<command class_type='calculation' title='Expected right counts' >
+																	<exp exp='.VelTgt = (0 - .BaseR) / 6' />
+																</command>
+																<command class_type='decision' title='Right wheel too slow' exp='(.VelTgt &gt; 2) &amp;&amp; (.DeltaR + 1 &lt; .VelTgt)' swap='0' >
+																	<flowline >
+																		<command class_type='calculation' title='Calculation' >
+																			<exp exp='.RSP = .RSP - 1' />
+																		</command>
+																	</flowline>
+																	<flowline />
+																</command>
+																<command class_type='decision' title='Right wheel too fast' exp='(.VelTgt &gt; 2) &amp;&amp; (.DeltaR &gt; .VelTgt + 2)' swap='0' >
+																	<flowline >
+																		<command class_type='calculation' title='Calculation' >
+																			<exp exp='.RSP = .RSP + 1' />
+																		</command>
+																	</flowline>
+																	<flowline />
+																</command>
+															</flowline>
+															<flowline />
+														</command>
+													</flowline>
+												</command>
+											</flowline>
+											<flowline />
 										</command>
 										<command class_type='decision' title='Clamp LSP High' exp='.LSP &gt; .MaxSpeed' swap='0' >
 											<flowline >
@@ -1664,7 +2006,60 @@ Voltages lower than 3.4V may damage the battery.' statediag='0' >
 						<command class_type='calculation' title='End Logo move' >
 							<exp exp='LogoMove = 0' />
 						</command>
-						<command class_type='delay' title='Delay' exp='50' type='1' />
+						<command class_type='delay' title='Settle after move' exp='100' type='1' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Prv_LoadMotorCal' description='Loads per-robot motor trim values from EEPROM' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='call' title='Load forward left trim' macro='GetEEFloat' >
+							<return exp='TrimFwdL' />
+							<argument exp='30' />
+						</command>
+						<command class_type='call' title='Load forward right trim' macro='GetEEFloat' >
+							<return exp='TrimFwdR' />
+							<argument exp='40' />
+						</command>
+						<command class_type='call' title='Load reverse left trim' macro='GetEEFloat' >
+							<return exp='TrimRevL' />
+							<argument exp='50' />
+						</command>
+						<command class_type='call' title='Load reverse right trim' macro='GetEEFloat' >
+							<return exp='TrimRevR' />
+							<argument exp='60' />
+						</command>
+						<command class_type='decision' title='Validate forward left trim' exp='(TrimFwdL &lt; 0.75) || (TrimFwdL &gt; 1.25)' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='TrimFwdL = 1.0' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Validate forward right trim' exp='(TrimFwdR &lt; 0.75) || (TrimFwdR &gt; 1.25)' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='TrimFwdR = 1.0' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Validate reverse left trim' exp='(TrimRevL &lt; 0.75) || (TrimRevL &gt; 1.25)' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='TrimRevL = 1.0' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Validate reverse right trim' exp='(TrimRevR &lt; 0.75) || (TrimRevR &gt; 1.25)' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='TrimRevR = 1.0' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
 					</flowline>
 				</macro>
 				<macro >
@@ -2499,6 +2894,7 @@ the robot turns evenly. Automatically stops at the specified turn angle.' stated
 							<exp exp='.FCalc = int2float(.Angle)' />
 							<exp exp='.FCalc = .FCalc * AngleResolution' />
 							<exp exp='.FCalc = .FCalc / EncoderResolution' />
+							<exp exp='.FCalc = .FCalc * TurnScale' />
 							<exp exp='.EncTarget = float2int(.FCalc)' />
 						</command>
 						<command class_type='call' title='Call Macro' macro='LogoProcess2' >
@@ -3280,6 +3676,7 @@ Return value range: 0 to 4095
 							<exp exp='.FCalc = int2float(.Angle)' />
 							<exp exp='.FCalc = .FCalc * AngleResolution' />
 							<exp exp='.FCalc = .FCalc / EncoderResolution' />
+							<exp exp='.FCalc = .FCalc * TurnScale' />
 							<exp exp='.EncTarget = float2int(.FCalc)' />
 						</command>
 						<command class_type='call' title='Call Macro' macro='LogoProcess2' >
@@ -3879,6 +4276,7 @@ the robot drives straight. Automatically stops at the specified distance.' state
 						<command class_type='calculation' title='Calculation' >
 							<exp exp='.FCalc = int2float(.Distance)' />
 							<exp exp='.FCalc = .FCalc / FLOAT EncoderResolution' />
+							<exp exp='.FCalc = .FCalc * ReverseScale' />
 							<exp exp='.EncTarget = float2int(.FCalc)' />
 						</command>
 						<command class_type='call' title='Call Macro' macro='LogoProcess2' >
@@ -4568,6 +4966,7 @@ Default colour is 1 where a set pixel is black and the background is white.' sta
 									<return exp='AngleResolution' />
 									<argument exp='10' />
 								</command>
+								<command class_type='call' title='Load motor calibration' macro='Prv_LoadMotorCal' />
 							</flowline>
 							<flowline />
 						</command>
@@ -4811,6 +5210,7 @@ the robot drives straight. Automatically stops at the specified distance.' state
 						<command class_type='calculation' title='Calculation' >
 							<exp exp='.FCalc = int2float(.Distance)' />
 							<exp exp='.FCalc = .FCalc / FLOAT EncoderResolution' />
+							<exp exp='.FCalc = .FCalc * ForwardScale' />
 							<exp exp='.EncTarget = float2int(.FCalc)' />
 						</command>
 						<command class_type='call' title='Call Macro' macro='LogoProcess2' >
@@ -5604,12 +6004,12 @@ the robot drives straight. Automatically stops at the specified distance.' state
 					<resources />
 					<properties />
 					<values >
-						<value target='BuildNumber' data='0' />
+						<value target='BuildNumber' data='1' />
 						<value target='DateDivider' data='/' />
 						<value target='TimeDivider' data=':' />
 						<value target='DateFormat' data='000' />
-						<value target='LastBuildDate' data='' />
-						<value target='LastBuildTime' data='' />
+						<value target='LastBuildDate' data='15/06/26' />
+						<value target='LastBuildTime' data='12:18:15' />
 					</values>
 					<events />
 					<apis />
@@ -6077,8 +6477,8 @@ the robot drives straight. Automatically stops at the specified distance.' state
 	<keymap />
 	<panel2d shadows='0' lighting='2' brightness='0' >
 		<background rgb='12583104' img='' style='0' />
-		<camera xe='13.6997' ye='38.7572' ze='192.966' xt='13.6997' yt='38.7572' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
-		<viewport dx='224' dy='782' zoom='140.46' fix_topleft='0' />
+		<camera xe='13.6997' ye='38.7572' ze='228.962' xt='13.6997' yt='38.7572' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='224' dy='782' zoom='118.378' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='0' />
 		<winpos ID='7005' RectRecentFloat='1219,463,1869,913' RectRecentDocked='1245,141,1489,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel2d>
@@ -6093,7 +6493,7 @@ the robot drives straight. Automatically stops at the specified distance.' state
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='895,309,1920,871' RectRecentDocked='744,141,1239,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='895,309,1920,871' RectRecentDocked='994,141,1489,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='0' />
 	<layout >
@@ -6109,9 +6509,9 @@ the robot drives straight. Automatically stops at the specified distance.' state
 		<view type='0' name='LogoTurnLeftSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
 		<view type='0' name='LogoBackwardsSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
 		<view type='0' name='Ev_Timer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='InitialiseSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='InitialiseSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='1377' flags='0' />
 		<view type='0' name='BattMon' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='1330' flags='0' />
 		<view type='0' name='Interrupt_BluetoothRX' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
 		<view type='0' name='BluetoothReceive' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
 		<view type='0' name='BluetoothCheckRx' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
@@ -6139,9 +6539,11 @@ the robot drives straight. Automatically stops at the specified distance.' state
 		<view type='0' name='ReadBattery' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
 		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
 		<view type='0' name='ReadIRSensor_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LogoProcess2' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='100' scrollx='0' scrolly='12632' flags='0' />
+		<view type='0' name='LogoProcess2' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='100' scrollx='0' scrolly='6623' flags='0' />
 		<view type='0' name='LogoSetSpeed' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 		<view type='0' name='BluetoothCheckConnection' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LogoCalibrateMotors' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='100' scrollx='0' scrolly='2889' flags='0' />
+		<view type='0' name='Prv_LoadMotorCal' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA2QMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>
