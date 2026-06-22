@@ -1,5 +1,5 @@
 <root>
-<document scada='1' projtype='2' schema='103' license='1,88169790,XQ5X1V' title='Blank Web' description='A blank Web App Developer project suitable for creating apps that run in a browser' fcversion='720897' target='SCADA.SCADA.WEBEXP' >
+<document scada='1' projtype='2' schema='103' license='10,36776847,QK3W86' title='Blank Web' description='A blank Web App Developer project suitable for creating apps that run in a browser' fcversion='720898' target='SCADA.SCADA.WEBEXP' >
 	<config data='' clkspd='100000000' simspd='0' usewdt='0' constif='0' Use3V3='0' />
 	<plugins >
 		<dll_models enabled='1' />
@@ -56,7 +56,7 @@
 	</ghost>
 	<components >
 		<settings autoimg='0' center='1' unitscale='1' fixedscale='1' fixedx='25' fixedy='25' fixedz='25' headcode='0' />
-		<definition guid='21cdfa0f-51ac-48a5-9448-53d3460fed47' vstate='40' vmin='2' vmaj='1' srcleaf='WEBEXP_CheckBox.fcsx' visiblename='Check Box' description='Creates a checkbox item to allow a user to toggle between on and off.' category=' Control' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='MatrixTSL' manuname='' manucode='' sysinfo='1052939' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='0' showmacros='1' iconpath='..\..\icons\components\CheckBox.png' />
+		<definition guid='21cdfa0f-51ac-48a5-9448-53d3460fed47' vstate='40' vmin='3' vmaj='1' srcleaf='WEBEXP_CheckBox.fcsx' visiblename='Check Box' description='Creates a checkbox item to allow a user to toggle between on and off.' category=' Control' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='MatrixTSL' manuname='' manucode='' sysinfo='1052939' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='0' showmacros='1' iconpath='..\..\icons\components\CheckBox.png' />
 		<component class_type='root' codename='CheckBox' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' varnames='$(type)_$(module)__$(variable:u)' >
 			<resources />
 			<properties >
@@ -97,10 +97,10 @@ DesCalled when this object is clicked' />
 				<value target='sCustomAttributes' data='' />
 			</values>
 			<events >
-				<event class='Components' event='Property' target='Ev_Property' />
-				<event class='Components' event='Resize' target='Ev_Resize' />
-				<event class='Compile' event='HtmlBodyInfo' target='Ev_HtmlBodyInfo' />
 				<event class='Compile' event='HtmlScriptHeader' target='Ev_HtmlScriptHeader' />
+				<event class='Components' event='Resize' target='Ev_Resize' />
+				<event class='Components' event='Property' target='Ev_Property' />
+				<event class='Compile' event='HtmlBodyInfo' target='Ev_HtmlBodyInfo' />
 			</events>
 			<apis >
 				<api name='GetState' alt='GetState' type='1' proto='1' />
@@ -115,7 +115,7 @@ DesCalled when this object is clicked' />
 				<macro >
 					<flowline name='GetState' description='Returns the current state of the checkbox (i.e. if it is selected or not)' statediag='0' >
 						<return name='Return' type='b1' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='native' title='Javascript for web export file' ccode='  FCR_RETVAL = (document.getElementById(&quot;inp_&quot; + FC_THIS).checked == true);
+						<command class_type='native' title='Javascript for web export file' ccode='  FCR_RETVAL = (document.getElementById(FC_THIS).checked == true);
 ' language='C' />
 					</flowline>
 				</macro>
@@ -152,7 +152,7 @@ DesCalled when this object is clicked' />
 								<command class_type='calculation' title='Calculation' >
 									<exp exp='.StrDiff = 8 - .StrLen' />
 								</command>
-								<command class_type='loop' title='Loop' textarea='106,62,106,62' type='2' exp='.StrDiff' >
+								<command class_type='loop' title='Loop' textarea='106,62,106,62' type='2' exp='.StrDiff' for1='' for3='' >
 									<flowline >
 										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Str = &quot;0&quot; + .Str' />
@@ -417,10 +417,16 @@ DesCalled when this object is clicked' />
 						</command>
 						<command class_type='calculation' title='Calculation' >
 							<exp exp='.HeaderScript = .HeaderScript + .sFontDecoration + &quot;\n&quot;' />
+							<exp exp='.HeaderScript = .HeaderScript + &quot;}\n&quot;' />
 						</command>
 						<command class_type='calculation' title='Calculation' >
-							<exp exp='.HeaderScript = .HeaderScript + &quot;  /*width:inherit;\n  height:inherit;/*\n&quot;' />
-							<exp exp='.HeaderScript = .HeaderScript + &quot;}\n&lt;/style&gt;\n&lt;script&gt;\n&quot;' />
+							<exp exp='.HeaderScript = .HeaderScript + &quot;.lbl_&quot; + .CompID + &quot;[mtxenabled=false] {\n&quot;' />
+							<exp exp='.HeaderScript = .HeaderScript + &quot;  color: #888888;\n&quot;' />
+							<exp exp='.HeaderScript = .HeaderScript + &quot;  cursor: not-allowed;\n&quot;' />
+							<exp exp='.HeaderScript = .HeaderScript + &quot;}\n&quot;' />
+						</command>
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.HeaderScript = .HeaderScript + &quot;&lt;/style&gt;\n&lt;script&gt;\n&quot;' />
 							<exp exp='' />
 						</command>
 						<command class_type='calculation' title='Calculation' >
@@ -486,11 +492,7 @@ DesCalled when this object is clicked' />
 							<exp exp='.BodyInfo = .BodyInfo + &quot; width:&quot; + FloatToString$ (.fSize[0],0) + &quot;px; height:&quot; + FloatToString$ (.fSize[1],0) + &quot;px; line-height:&quot; + FloatToString$ (.fSize[1],0) + &quot;px;&apos;&gt;\n&quot;' />
 						</command>
 						<command class_type='calculation' title='Set up information for the label' >
-							<exp exp='.BodyInfo = .BodyInfo + &quot;    &lt;div id=&apos;&quot; + .CompID + &quot;&apos;&gt;&quot;' />
-							<exp exp='' />
-						</command>
-						<command class_type='calculation' title='Set up information for the label' >
-							<exp exp='.BodyInfo = .BodyInfo + &quot;      &lt;input id=&apos;inp_&quot; + .CompID + &quot;&apos; name=&apos;&quot; + .CompID + &quot;&apos;&quot; + .sInfo' />
+							<exp exp='.BodyInfo = .BodyInfo + &quot;    &lt;input id=&apos;&quot; + .CompID + &quot;&apos; name=&apos;&quot; + .CompID + &quot;&apos;&quot; + .sInfo' />
 							<exp exp='' />
 						</command>
 						<command class_type='decision' title='Decision' exp='Length$ (macroOnClick) &gt; 0' swap='0' >
@@ -527,12 +529,11 @@ DesCalled when this object is clicked' />
 						</command>
 						<command class_type='calculation' title='Set up information for the label' >
 							<exp exp='.BodyInfo = .BodyInfo + &quot;&gt;\n&quot;' />
-							<exp exp='.BodyInfo = .BodyInfo + &quot;      &lt;label id=&apos;lbl_&quot; + .CompID + &quot;&apos; for=&apos;inp_&quot; + .CompID + &quot;&apos; class=&apos;lbl_&quot; + .CompID + &quot;&apos;&gt;&quot;' />
+							<exp exp='.BodyInfo = .BodyInfo + &quot;    &lt;label id=&apos;lbl_&quot; + .CompID + &quot;&apos; for=&apos;&quot; + .CompID + &quot;&apos; class=&apos;lbl_&quot; + .CompID + &quot;&apos;&gt;&quot;' />
 							<exp exp='.BodyInfo = .BodyInfo + sLabel + &quot;&lt;/label&gt;\n&quot;' />
 							<exp exp='' />
 						</command>
 						<command class_type='calculation' title='Calculation' >
-							<exp exp='.BodyInfo = .BodyInfo + &quot;    &lt;/div&gt;\n&quot;' />
 							<exp exp='.BodyInfo = .BodyInfo + &quot;  &lt;/div&gt;&quot;' />
 						</command>
 						<command class_type='calculation' title='Set return to zero to ensure text is added to html file' >
@@ -546,10 +547,10 @@ DesCalled when this object is clicked' />
 						<param name='bState' type='b1' description='The state to set' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='decision' title='Decision' exp='.bState' swap='0' >
 							<flowline >
-								<command class_type='native' title='Javascript for web export file' ccode='    document.getElementById(&quot;inp_&quot; + FC_THIS).checked = true;' language='C' />
+								<command class_type='native' title='Javascript for web export file' ccode='    document.getElementById(FC_THIS).checked = true;' language='C' />
 							</flowline>
 							<flowline >
-								<command class_type='native' title='Javascript for web export file' ccode='    document.getElementById(&quot;inp_&quot; + FC_THIS).checked = false;' language='C' />
+								<command class_type='native' title='Javascript for web export file' ccode='    document.getElementById(FC_THIS).checked = false;' language='C' />
 							</flowline>
 						</command>
 					</flowline>
@@ -624,6 +625,7 @@ DesCalled when this object is clicked' />
 						<command class_type='comment' title='' comment='Component Version Information;
 2, 1.1, 14-06-24, ST, Corrected the id tag of the html elements;
 3, 1.2, 20-04-26, ST, Resizing no longer distorts the square shape;
+4, 1.3, 17-06-26, ST, Text is now grey when disabled;
 ' textarea='12,0,12,0' />
 					</flowline>
 				</macro>
@@ -720,10 +722,10 @@ AL,80,-80' />
 	<keymap />
 	<panel2d shadows='0' lighting='2' brightness='0' >
 		<background rgb='7292207' img='' style='0' />
-		<camera xe='0' ye='0' ze='427.825' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
-		<viewport dx='287' dy='1109' zoom='81.1711' fix_topleft='0' />
+		<camera xe='0' ye='0' ze='298.136' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='200' dy='416' zoom='81.1711' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='7360576' />
-		<winpos ID='7005' RectRecentFloat='272,148,1255,722' RectRecentDocked='0,0,287,1132' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7005' RectRecentFloat='272,148,1255,722' RectRecentDocked='0,0,200,439' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel2d>
 	<panel3d shadows='0' lighting='2' brightness='0' perspective='1' >
 		<background rgb='8409120' img='' style='0' />
@@ -736,21 +738,21 @@ AL,80,-80' />
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='-657,630,-7,1080' RectRecentDocked='0,0,210,805' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='0,630,650,1080' RectRecentDocked='0,0,210,737' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='1' >
 		<panel2d_0 id='0' name='NewPanel' type='0' >
-			<winpos ID='1171' RectRecentFloat='1448,736,1930,984' RectRecentDocked='664,141,951,857' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+			<winpos ID='1171' RectRecentFloat='1448,736,1930,984' RectRecentDocked='676,141,1051,878' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
 			<background fill='288230376151053813' showgrid='1' gridstyle='1' gridsize='10' gridbrush='71776119075691740' snaptogrid='1' fitcomp='0' disp_x='300' disp_y='400' scale='100' disp_col='16777215' />
 		</panel2d_0>
 	</panels2d>
 	<layout >
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQIAAMcCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetState' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQIAAMcCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetState' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQIAAMcCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_HtmlBodyInfo' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQIAAMcCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_HtmlScriptHeader' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQIAAMcCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Resize' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQIAAMcCAAA' zoom='100' scrollx='0' scrolly='54' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA6QIAANwCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetState' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA6QIAANwCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetState' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA6QIAANwCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_HtmlBodyInfo' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA6QIAANwCAAA' zoom='100' scrollx='0' scrolly='1108' flags='0' />
+		<view type='0' name='Ev_HtmlScriptHeader' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA6QIAANwCAAA' zoom='100' scrollx='0' scrolly='2530' flags='0' />
+		<view type='0' name='Ev_Resize' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA6QIAANwCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>

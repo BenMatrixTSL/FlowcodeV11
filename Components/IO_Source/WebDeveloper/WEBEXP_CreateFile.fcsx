@@ -1,5 +1,5 @@
 <root>
-<document scada='1' panel2DSCADA='0' panel3DSCADA='0' panelPropsSCADA='0' panelConsoleSCADA='0' panelDataRecorderSCADA='0' panel2DCount='1' panel2DSCADA_0='6' playbackSCADA='0' ShouldAutoStartSCADA='0' ShouldLockCameraSCADA='0' ShouldBundleSCADA='1' SCADAProgramTitle='' buildnumber='0' schema='103' license='10,BenR,C9TN1M' title='Blank Web' description='A blank Web App Developer project suitable for creating apps that run in a browser' fcversion='655618' target='SCADA.SCADA.WEBEXP' >
+<document scada='1' projtype='2' schema='103' license='10,36776847,QK3W86' title='Blank Web' description='A blank Web App Developer project suitable for creating apps that run in a browser' fcversion='720898' target='SCADA.SCADA.WEBEXP' >
 	<config data='' clkspd='100000000' simspd='0' usewdt='0' constif='0' Use3V3='0' />
 	<plugins >
 		<dll_models enabled='1' />
@@ -56,12 +56,29 @@
 	</ghost>
 	<components >
 		<settings autoimg='0' center='1' unitscale='1' fixedscale='1' fixedx='25' fixedy='25' fixedz='25' headcode='0' />
-		<definition guid='e822511e-30d7-4aaa-a34d-93b7796cc82b' vstate='40' vmin='0' vmaj='1' srcleaf='WEBEXP_CreateFile.fcsx' visiblename='Create File' description='Creates a download file from a string variable.' category=' Data' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' catenable='1' author='MatrixTSL' manuname='' manucode='' sysinfo='11' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='0' showmacros='1' iconpath='..\..\Icons\Components\EE_Icon.png' />
-		<component class_type='root' codename='CreateFile' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' varnames='$(type)_$(module)__$(variable:u)' >
+		<definition guid='e822511e-30d7-4aaa-a34d-93b7796cc82b' vstate='40' vmin='1' vmaj='1' srcleaf='WEBEXP_CreateFile.fcsx' visiblename='Create File' description='Creates a download file from a string variable.' category=' Data' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='MatrixTSL' manuname='' manucode='' sysinfo='1052939' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='0' showmacros='1' iconpath='..\..\Icons\Components\EE_Icon.png' />
+		<component class_type='root' codename='CreateFile' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' varnames='$(type)_$(module)__$(variable:u)' >
 			<resources />
-			<properties />
-			<values />
-			<events />
+			<properties >
+				<property name='Use Defaults' target='bDefault' typeid='7' hidden='0' locked='0' info='Set to false to override the default settings' />
+				<property name='Raw Data' target='bRawData' typeid='7' hidden='0' locked='1' info='True if the data passed to the CreateFile macro needs no additional formatting' />
+				<property name='Advanced' folder='dirAdvanced' hidden='1' layout='' >
+					<property name='Media Type' target='sMediaType' typeid='10' hidden='0' locked='0' info='The MIMI type for the data - e.g. &quot;image/jpeg&quot; or &quot;text/plain;charset=UTF-8&quot;' />
+					<property name='Base64 Data' target='bBase64' typeid='7' hidden='0' locked='0' info='True if the data passed should be base-64 decoded before saving' />
+					<property name='Encode URI' target='bEncodeURI' typeid='7' hidden='0' locked='0' info='Set true if the data needs to be encoded' />
+				</property>
+			</properties>
+			<values >
+				<value target='bDefault' data='1' />
+				<value target='bRawData' data='1' />
+				<value target='sMediaType' data='&quot;attachment/text&quot;' />
+				<value target='bBase64' data='0' />
+				<value target='bEncodeURI' data='1' />
+			</values>
+			<events >
+				<event class='Compile' event='HtmlScriptHeader' target='Ev_HtmlScriptHeader' />
+				<event class='Components' event='Property' target='Ev_Property' />
+			</events>
 			<apis >
 				<api name='CreateFile' alt='CreateFile' type='1' proto='1' />
 			</apis>
@@ -77,21 +94,200 @@ triggers a download ' statediag='0' >
 						<param name='Data' type='T8' description='Data to assign to the file' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='2000' />
 						</param>
-						<command class_type='native' title='Javascript for web export file' ccode='  var hiddenElement = document.createElement(&apos;a&apos;);
+						<command class_type='native' title='Javascript' ccode='let sPrefix = window[&apos;FCPRE_&apos; + FC_THIS];
+let bEncode = window[&apos;FCENC_&apos; + FC_THIS];
 
-  hiddenElement.href = &apos;data:attachment/text,&apos; + encodeURI(FCL_DATA);
-  hiddenElement.target = &apos;_blank&apos;;
-  hiddenElement.download = FCL_FILENAME;
-  hiddenElement.click();' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' language='C' />
+var hiddenElement = document.createElement(&apos;a&apos;);
+
+if (bEncode)
+{
+  hiddenElement.href = sPrefix + encodeURI(FCL_DATA);
+}
+else
+{
+  hiddenElement.href = sPrefix + FCL_DATA;
+}
+
+hiddenElement.target = &apos;_blank&apos;;
+hiddenElement.download = FCL_FILENAME;
+hiddenElement.click();' language='C' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Property' description='Sent when a property has been changed by the User' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='bDefault' type='b1' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='bRawData' type='b1' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
+							<return exp='.bDefault' />
+							<argument exp='this' />
+							<argument exp='&quot;bDefault&quot;' />
+						</command>
+						<command class_type='decision' title='Decision' exp='.bDefault' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;dirAdvanced&quot;' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetWritable' >
+									<argument exp='this' />
+									<argument exp='&quot;bRawData&quot;' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;dirAdvanced&quot;' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetWritable' >
+									<argument exp='this' />
+									<argument exp='&quot;bRawData&quot;' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
+									<return exp='.bRawData' />
+									<argument exp='this' />
+									<argument exp='&quot;bRawData&quot;' />
+								</command>
+								<command class_type='decision' title='Decision' exp='.bRawData' swap='0' >
+									<flowline >
+										<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
+											<argument exp='this' />
+											<argument exp='&quot;dirAdvanced&quot;' />
+											<argument exp='0' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
+											<argument exp='this' />
+											<argument exp='&quot;dirAdvanced&quot;' />
+											<argument exp='1' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_HtmlScriptHeader' description='Sent to a component to retrieve script code to be placed in the html header section' statediag='0' >
+						<return name='Return' type='u32' description='Non-zero to block script code insertion' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='CompID' type='T8' description='The unique name of this component' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</param>
+						<param name='HeaderScript' type='T8*' description='Text to amend for the header script' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</param>
+						<local name='sMacro' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<local name='hParent' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='sOptions' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='2000' />
+						</local>
+						<local name='sMode' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='2000' />
+						</local>
+						<local name='sCredentials' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='2000' />
+						</local>
+						<local name='sRedirect' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='2000' />
+						</local>
+						<local name='sHeaders' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='2000' />
+						</local>
+						<local name='bDefault' type='b1' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='bRawData' type='b1' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='bBase64' type='b1' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='bEncodeURI' type='b1' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
+							<return exp='.bDefault' />
+							<argument exp='this' />
+							<argument exp='&quot;bDefault&quot;' />
+						</command>
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.bEncodeURI = 0' />
+						</command>
+						<command class_type='decision' title='Decision' exp='.bDefault' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Default Href prefix' >
+									<exp exp='.HeaderScript = .HeaderScript + &quot;  var FCPRE_&quot; + .CompID + &quot; = &apos;data:attachment/text,&apos;;\n&quot;' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
+									<return exp='.bRawData' />
+									<argument exp='this' />
+									<argument exp='&quot;bRawData&quot;' />
+								</command>
+								<command class_type='decision' title='Decision' exp='.bRawData' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='No prefix when creating the Href' >
+											<exp exp='.HeaderScript = .HeaderScript + &quot;  var FCPRE_&quot; + .CompID + &quot; = &apos;&apos;;\n&quot;' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
+											<return exp='.bEncodeURI' />
+											<argument exp='this' />
+											<argument exp='&quot;bEncodeURI&quot;' />
+										</command>
+										<command class_type='calculation' title='Custom Href prefix' >
+											<exp exp='.HeaderScript = .HeaderScript + &quot;  var FCPRE_&quot; + .CompID + &quot; = &apos;data:&quot; + sMediaType' />
+										</command>
+										<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
+											<return exp='.bBase64' />
+											<argument exp='this' />
+											<argument exp='&quot;bBase64&quot;' />
+										</command>
+										<command class_type='decision' title='Decision' exp='.bBase64' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Add base64' >
+													<exp exp='.HeaderScript = .HeaderScript + &quot;;base64&quot;' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+										<command class_type='calculation' title='Add base64' >
+											<exp exp='.HeaderScript = .HeaderScript + &quot;,&apos;;\n&quot;' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+						<command class_type='calculation' title='Custom Href prefix' >
+							<exp exp='.HeaderScript = .HeaderScript + &quot;  var FCENC_&quot; + .CompID + &quot; = &quot;' />
+						</command>
+						<command class_type='decision' title='Decision' exp='.bEncodeURI' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Custom Href prefix' >
+									<exp exp='.HeaderScript = .HeaderScript + &quot;true;\n&quot;' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Custom Href prefix' >
+									<exp exp='.HeaderScript = .HeaderScript + &quot;false;\n&quot;' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='calculation' title='Set return to zero to ensure text is added to html file' >
+							<exp exp='.Return = 0' />
+						</command>
 					</flowline>
 				</macro>
 				<macro >
 					<flowline name='Main' description='' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='comment' title='' comment='Component Version Information
+2, 1.1, 19-06-26, ST, Added optional override of href creation;' textarea='12,0,12,0' />
 					</flowline>
 				</macro>
 			</macros>
-			<component class_type='ref' guid='27e0f9bc-4ddb-4365-9f90-97a7f0943b58' vmin='0' vmaj='1' codename='WebDevLibraryComponent1' panelId='0' x='60' y='-50' z='0' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='2' poslock='0' comp2dType='0' >
+			<component class_type='ref' guid='27e0f9bc-4ddb-4365-9f90-97a7f0943b58' vmin='0' vmaj='1' codename='WebDevLibraryComponent1' panelId='0' x='60' y='-50' z='0' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='2' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
@@ -110,10 +306,10 @@ File' />
 	<keymap />
 	<panel2d shadows='0' lighting='2' brightness='0' >
 		<background rgb='7292207' img='' style='0' />
-		<camera xe='0' ye='0' ze='541.116' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
-		<viewport dx='494' dy='828' zoom='110.464' fix_topleft='0' />
+		<camera xe='0' ye='0' ze='219.076' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='200' dy='416' zoom='110.464' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='7360576' />
-		<winpos ID='7005' RectRecentFloat='272,148,1255,722' RectRecentDocked='0,0,383,851' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7005' RectRecentFloat='272,148,1255,722' RectRecentDocked='0,0,200,439' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel2d>
 	<panel3d shadows='0' lighting='2' brightness='0' perspective='1' >
 		<background rgb='8409120' img='' style='0' />
@@ -126,17 +322,19 @@ File' />
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='0,600,650,1050' RectRecentDocked='0,0,383,880' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='0,600,650,1050' RectRecentDocked='0,0,210,737' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='1' >
-		<panel2d_0 id='0' name='NewPanel' >
-			<winpos ID='1171' RectRecentFloat='1564,480,1931,770' RectRecentDocked='978,141,1361,1021' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
-			<background fill='288230376151053813' showgrid='1' gridstyle='1' gridsize='10' gridbrush='71776119075691740' snaptogrid='1' />
+		<panel2d_0 id='0' name='NewPanel' type='0' >
+			<winpos ID='1171' RectRecentFloat='1980,848,2347,1138' RectRecentDocked='676,141,1051,878' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+			<background fill='288230376151053813' showgrid='1' gridstyle='1' gridsize='10' gridbrush='71776119075691740' snaptogrid='1' fitcomp='0' disp_x='300' disp_y='400' scale='100' disp_col='16777215' />
 		</panel2d_0>
 	</panels2d>
 	<layout >
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA-wMAAGsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='CreateFile' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA-wMAAGsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA6QIAANwCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CreateFile' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA6QIAANwCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA6QIAANwCAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_HtmlScriptHeader' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA6QIAANwCAAA' zoom='100' scrollx='0' scrolly='737' flags='0' />
 	</layout>
 </document>
 </root>

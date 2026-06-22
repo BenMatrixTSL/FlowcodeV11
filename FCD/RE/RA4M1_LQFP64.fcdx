@@ -1,0 +1,263 @@
+<!-- CRC: 0000000000000000000000000000000000000000000000000000000000000000 -->
+<!-- REVISION: 1.0 -->
+<!-- GUID: C3D4E5F6-A7B8-9012-3456-789012345678 -->
+<!-- DATE: 22\06\2026 -->
+<!-- DIR: FCD\RE\RA4M1_LQFP64.fcdx -->
+<root>
+
+<build>
+<compiler exe="$(fcddir)RE\batch\racomp.bat" params="&quot;$(target)&quot; &quot;$(outdir)&quot; &quot;$(chipalt)&quot; &quot;$(family)&quot; &quot;$(lscript)&quot; &quot;$(clock)&quot; &quot;$(romsize)&quot; &quot;$(ramsize)&quot; &quot;$(compilerstarm)&quot;" />
+<linker exe="$(appdir)tools\DoNothing\DoNothing.exe" params="" />
+<programmer exe="$(fcddir)RE\batch\raprog.bat" params="&quot;$(outdir)&quot; &quot;$(target)&quot; $(devname) &quot;$(compilerstarm)&quot; " />
+</build>
+
+<device    file = 'RA4M1_LQFP64'
+        name='R7FA4M1AB3CFM'
+        namealt='RA4M1'
+        product='RE' compiler='RE' cal='RE'
+        family='RA4'
+        bits='32' >
+
+    <parameters>
+        <lscript value = 'ra4m1.ld' />
+        <romsize value = '256K' />
+        <ramsize value = '32K' />
+    </parameters>
+
+    <!-- Bare-metal direct J-Link/E2 Lite programming, flash starts at 0x00000000 -->
+    <clock max_speed='48000000' master_divider='1' default='48000000' />
+
+    <memory >
+        <flash bytes='262144' />
+        <ram bytes='32768' />
+    </memory>
+
+    <configuration address='0' mult='1' >
+        <format ><dword address='RA_HOCO_FREQ' value='48000000' /></format>
+        <setting />
+        <settings >
+            <setting name='HOCO Frequency' offset='0' mask='0xFFFFFFFF' bits='32' hint='System clock' >
+                <option name='48 MHz' value='48000000' />
+                <option name='24 MHz' value='24000000' />
+            </setting>
+        </settings>
+    </configuration>
+
+    <!--
+        RA4M1 LQFP-64 full pin listing (bare chip, no Arduino header)
+        Port notation: port=N → Pnxx, bit=N → Pxx N
+        Peripheral function select (PSEL):
+          1 = IIC  (SDA/SCL)
+          3 = RSPI (RSPCK/MOSI/MISO/SSL)
+          4 = SCI  (TXD/RXD)
+          6 = GPT  (GTIOCA/GTIOCB)
+        SCI0: TXD=P101, RXD=P100
+        SCI1: TXD=P401, RXD=P402 (tentative - verify P402 against datasheet)
+        SCI2: TXD=P302, RXD=P301
+        SCI9: TXD=P109, RXD=P110
+        IIC0: SCL=P400, SDA=P401
+        IIC1: SCL=P100, SDA=P101 (alt: SCL=P505, SDA=P506)
+    -->
+    <pins sides='4' smd='1' >
+        <pin name='VCC'  />
+        <pin name='VSS'  />
+        <pin name='AVCC0' />
+        <pin name='AVSS0' />
+        <pin name='VCL'  />
+        <pin name='NRST' />
+
+        <!-- Port 0: analog (AN000-AN009) -->
+        <pin name='P000' port='0' bit='0'  adc='0'  />
+        <pin name='P001' port='0' bit='1'  adc='1'  />
+        <pin name='P002' port='0' bit='2'  adc='2'  />
+        <pin name='P003' port='0' bit='3'  adc='3'  />
+        <pin name='P004' port='0' bit='4'  adc='4'  />
+        <pin name='P005' port='0' bit='5'  adc='5'  />
+        <pin name='P006' port='0' bit='6'  adc='6'  />
+        <pin name='P007' port='0' bit='7'  adc='7'  />
+        <pin name='P008' port='0' bit='8'  />
+        <pin name='P009' port='0' bit='9'  />
+        <pin name='P010' port='0' bit='10' />
+        <pin name='P011' port='0' bit='11' />
+        <pin name='P012' port='0' bit='12' />
+        <pin name='P013' port='0' bit='13' />
+        <pin name='P014' port='0' bit='14' adc='8'  />
+        <pin name='P015' port='0' bit='15' adc='9'  />
+
+        <!-- Port 1: SPI/UART/GPIO -->
+        <pin name='P100' port='1' bit='0'  />
+        <pin name='P101' port='1' bit='1'  />
+        <pin name='P102' port='1' bit='2'  />
+        <pin name='P103' port='1' bit='3'  />
+        <pin name='P104' port='1' bit='4'  />
+        <pin name='P105' port='1' bit='5'  />
+        <pin name='P106' port='1' bit='6'  />
+        <pin name='P107' port='1' bit='7'  />
+        <pin name='P108' port='1' bit='8'  />
+        <pin name='P109' port='1' bit='9'  />
+        <pin name='P110' port='1' bit='10' />
+        <pin name='P111' port='1' bit='11' />
+        <pin name='P112' port='1' bit='12' />
+        <pin name='P113' port='1' bit='13' />
+        <pin name='P114' port='1' bit='14' />
+        <pin name='P115' port='1' bit='15' />
+
+        <!-- Port 2 -->
+        <pin name='P200' port='2' bit='0'  />
+        <pin name='P201' port='2' bit='1'  />
+        <pin name='P202' port='2' bit='2'  />
+        <pin name='P203' port='2' bit='3'  />
+        <pin name='P204' port='2' bit='4'  />
+        <pin name='P205' port='2' bit='5'  />
+        <pin name='P206' port='2' bit='6'  />
+        <pin name='P207' port='2' bit='7'  />
+        <pin name='P208' port='2' bit='8'  />
+
+        <!-- Port 3 -->
+        <pin name='P300' port='3' bit='0'  />
+        <pin name='P301' port='3' bit='1'  />
+        <pin name='P302' port='3' bit='2'  />
+        <pin name='P303' port='3' bit='3'  />
+        <pin name='P304' port='3' bit='4'  />
+        <pin name='P305' port='3' bit='5'  />
+
+        <!-- Port 4 -->
+        <pin name='P400' port='4' bit='0'  />
+        <pin name='P401' port='4' bit='1'  />
+        <pin name='P402' port='4' bit='2'  />
+        <pin name='P403' port='4' bit='3'  />
+        <pin name='P404' port='4' bit='4'  />
+        <pin name='P405' port='4' bit='5'  />
+        <pin name='P406' port='4' bit='6'  />
+        <pin name='P407' port='4' bit='7'  />
+        <pin name='P408' port='4' bit='8'  />
+        <pin name='P409' port='4' bit='9'  />
+        <pin name='P410' port='4' bit='10' />
+        <pin name='P411' port='4' bit='11' />
+        <pin name='P412' port='4' bit='12' />
+        <pin name='P413' port='4' bit='13' />
+        <pin name='P414' port='4' bit='14' />
+        <pin name='P415' port='4' bit='15' />
+
+        <!-- Port 5 -->
+        <pin name='P500' port='5' bit='0'  />
+        <pin name='P501' port='5' bit='1'  />
+        <pin name='P502' port='5' bit='2'  />
+        <pin name='P503' port='5' bit='3'  />
+        <pin name='P504' port='5' bit='4'  />
+        <pin name='P505' port='5' bit='5'  />
+        <pin name='P506' port='5' bit='6'  />
+
+        <!-- Debug -->
+        <pin name='SWDIO' />
+        <pin name='SWCLK' />
+    </pins>
+
+    <adc type='2' bits='12' >
+        <speed >
+            <option name='Fast'   value='0x13' />
+            <option name='Medium' value='0x1F' />
+            <option name='Slow'   value='0x3F' />
+        </speed>
+    </adc>
+
+    <!-- SPI0 (RSPI0): primary pins P102(SCK)/P100(MISO)/P101(MOSI). PSEL=3. -->
+    <spi remappable='1' name='SPI0' >
+        <clk  af0='3' port0='1' pin0='2' />
+        <miso af0='3' port0='1' pin0='0' />
+        <mosi af0='3' port0='1' pin0='1' />
+    </spi>
+
+    <!-- SCI0: TXD0=P101, RXD0=P100. PSEL=4. -->
+    <uart remappable='1' name='SCI0' >
+        <tx af0='4' port0='1' pin0='1' />
+        <rx af0='4' port0='1' pin0='0' />
+    </uart>
+
+    <!-- SCI1: TXD1=P401, RXD1=P402 (P402 tentative). PSEL=4. -->
+    <uart remappable='1' name='SCI1' >
+        <tx af0='4' port0='4' pin0='1' />
+        <rx af0='4' port0='4' pin0='2' />
+    </uart>
+
+    <!-- SCI2: TXD2=P302, RXD2=P301. PSEL=4. (Arduino D1/D0 serial) -->
+    <uart remappable='1' name='SCI2' >
+        <tx af0='4' port0='3' pin0='2' />
+        <rx af0='4' port0='3' pin0='1' />
+    </uart>
+
+    <!-- SCI9: TXD9=P109, RXD9=P110. PSEL=4. -->
+    <uart remappable='1' name='SCI9' >
+        <tx af0='4' port0='1' pin0='9'  />
+        <rx af0='4' port0='1' pin0='10' />
+    </uart>
+
+    <!-- IIC0: SCL=P400, SDA=P401. PSEL=1. -->
+    <i2c remappable='1' name='IIC0' >
+        <scl af0='1' port0='4' pin0='0' />
+        <sda af0='1' port0='4' pin0='1' />
+    </i2c>
+
+    <!-- IIC1: SCL=P100, SDA=P101 (primary); SCL=P505, SDA=P506 (alt). PSEL=1. -->
+    <i2c remappable='2' name='IIC1' >
+        <scl af0='1' port0='1' pin0='0' af1='1' port1='5' pin1='5' />
+        <sda af0='1' port0='1' pin0='1' af1='1' port1='5' pin1='6' />
+    </i2c>
+
+    <!-- GPT PWM: PSEL=6 selects GTIOC function. -->
+    <pwm regset='1' remappable='1' >
+        <timer><option name='Fixed' value='1' count='14' /></timer>
+        <prescaler >
+            <option name="1"    value="1"    />
+            <option name="4"    value="4"    />
+            <option name="16"   value="16"   />
+            <option name="64"   value="64"   />
+            <option name="256"  value="256"  />
+            <option name="1024" value="1024" />
+        </prescaler>
+        <out name='GPT0_A' af0='6' port0='1' pin0='7'  />
+        <out name='GPT0_B' af0='6' port0='1' pin0='6'  />
+        <out name='GPT1_A' af0='6' port0='1' pin0='5'  />
+        <out name='GPT1_A' af0='6' port0='1' pin0='9'  />
+        <out name='GPT1_B' af0='6' port0='1' pin0='4'  />
+        <out name='GPT1_B' af0='6' port0='1' pin0='10' />
+        <out name='GPT2_B' af0='6' port0='1' pin0='2'  />
+        <out name='GPT3_A' af0='6' port0='1' pin0='11' />
+        <out name='GPT3_B' af0='6' port0='1' pin0='12' />
+        <out name='GPT5_A' af0='6' port0='1' pin0='1'  />
+        <out name='GPT5_B' af0='6' port0='1' pin0='0'  />
+        <out name='GPT6_A' af0='6' port0='4' pin0='0'  />
+        <out name='GPT6_B' af0='6' port0='4' pin0='1'  />
+        <out name='GPT7_A' af0='6' port0='3' pin0='4'  />
+        <out name='GPT7_B' af0='6' port0='3' pin0='3'  />
+    </pwm>
+
+    <interrupts >
+    </interrupts>
+
+</device>
+
+<inline >
+    <defines code='\n#define MX_CAL_RE' />
+    <directives code='' />
+    <main >
+        <start code='
+int main()
+{
+' />
+        <end code='    mainendloop: goto mainendloop;\n\treturn 0;\n}\n\n' />
+        <init code='' />
+    </main>
+    <interrupt ><enable code='' /><start code='' /><end code='' /><init code='' /></interrupt>
+    <config >
+        <start code='//Configuration Start\n' />
+        <body code='#define $(address) ($(value))\n' />
+        <end code='//Configuration End\n\n' />
+    </config>
+</inline>
+
+<test >
+    <icd ><clock port0='1' pin0='2' /><data port0='1' pin0='1' /></icd>
+</test>
+
+</root>

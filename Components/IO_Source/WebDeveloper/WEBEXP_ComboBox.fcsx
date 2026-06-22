@@ -1,5 +1,5 @@
 <root>
-<document scada='1' projtype='2' schema='103' license='1,88169790,XQ5X1V' title='Blank Web' description='A blank Web App Developer project suitable for creating apps that run in a browser' fcversion='720897' target='SCADA.SCADA.WEBEXP' >
+<document scada='1' projtype='2' schema='103' license='10,36776847,QK3W86' title='Blank Web' description='A blank Web App Developer project suitable for creating apps that run in a browser' fcversion='720898' target='SCADA.SCADA.WEBEXP' >
 	<config data='' clkspd='100000000' simspd='0' usewdt='0' constif='0' Use3V3='0' />
 	<plugins >
 		<dll_models enabled='1' />
@@ -56,7 +56,7 @@
 	</ghost>
 	<components >
 		<settings autoimg='0' center='1' unitscale='1' fixedscale='1' fixedx='25' fixedy='25' fixedz='25' headcode='0' />
-		<definition guid='9d2842d2-c72d-4631-94b3-1186cb496fff' vstate='40' vmin='3' vmaj='1' srcleaf='WEBEXP_ComboBox.fcsx' visiblename='Combo Box' description='Creates a user selectable combo box for selecting between various options.' category=' Control' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='MatrixTSL' manuname='' manucode='' sysinfo='1052939' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='0' showmacros='1' iconpath='..\..\icons\components\comp2d_combobox.png' />
+		<definition guid='9d2842d2-c72d-4631-94b3-1186cb496fff' vstate='40' vmin='4' vmaj='1' srcleaf='WEBEXP_ComboBox.fcsx' visiblename='Combo Box' description='Creates a user selectable combo box for selecting between various options.' category=' Control' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='MatrixTSL' manuname='' manucode='' sysinfo='1052939' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='0' showmacros='1' iconpath='..\..\icons\components\comp2d_combobox.png' />
 		<component class_type='root' codename='ComboBox' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' varnames='$(type)_$(module)__$(variable:u)' >
 			<resources />
 			<properties >
@@ -106,8 +106,8 @@ Option3' />
 			</values>
 			<events >
 				<event class='Compile' event='HtmlScriptHeader' target='Ev_HtmlScriptHeader' />
-				<event class='Components' event='Property' target='Ev_Property' />
 				<event class='Compile' event='HtmlBodyInfo' target='Ev_HtmlBodyInfo' />
+				<event class='Components' event='Property' target='Ev_Property' />
 			</events>
 			<apis >
 				<api name='AddEntry' alt='AddEntry' type='1' proto='1' />
@@ -227,8 +227,17 @@ Option3' />
 						</command>
 						<command class_type='decision' title='From v10.1.1 SplitString idx is different' exp='.ver &gt;= 655617' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' >
-									<exp exp='.sLine1 = SplitString$(.sText,&quot;\n\r&quot;,0)' />
+								<command class_type='decision' title='From v11.0.2 SplitString delimited works differently' exp='.ver &gt;= 720898' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.sLine1 = SplitString$(.sText,&quot;\n&quot;,0)' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.sLine1 = SplitString$(.sText,&quot;\n\r&quot;,0)' />
+										</command>
+									</flowline>
 								</command>
 							</flowline>
 							<flowline >
@@ -273,7 +282,7 @@ Option3' />
 								<command class_type='calculation' title='Calculation' >
 									<exp exp='.StrDiff = 8 - .StrLen' />
 								</command>
-								<command class_type='loop' title='Loop' textarea='106,62,106,62' type='2' exp='.StrDiff' >
+								<command class_type='loop' title='Loop' textarea='106,62,106,62' type='2' exp='.StrDiff' for1='' for3='' >
 									<flowline >
 										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Str = &quot;0&quot; + .Str' />
@@ -557,6 +566,9 @@ Option3' />
 						</local>
 						<local name='dummy' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='ver' type='s32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='sDelimiter' type='T8' description='' isconst='0' isHidden='0' isinit='1' usrinit='&quot;&quot;' setinit='&quot;&quot;' >
+							<array size='2000' />
+						</local>
 						<command class_type='sim' title='Built-in Function' macro='Panel.Position.GetWorldPosition' >
 							<return exp='.fPos' />
 							<argument exp='this' />
@@ -590,10 +602,21 @@ Option3' />
 						<command class_type='sim' title='Built-in Function' macro='System.GetFCVersion' >
 							<return exp='.ver' />
 						</command>
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.sDelimiter = &quot;\n\r&quot;' />
+						</command>
 						<command class_type='decision' title='From v10.1.1 SplitString idx is different' exp='.ver &gt;= 655617' swap='0' >
 							<flowline >
 								<command class_type='calculation' title='Calculation' >
 									<exp exp='.i = 0' />
+								</command>
+								<command class_type='decision' title='From v11.0.2 SplitString delimited works differently' exp='.ver &gt;= 720898' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.sDelimiter = &quot;\n&quot;' />
+										</command>
+									</flowline>
+									<flowline />
 								</command>
 							</flowline>
 							<flowline >
@@ -605,10 +628,10 @@ Option3' />
 						<command class_type='calculation' title='Calculation' >
 							<exp exp='.sOptions = &quot;&quot;' />
 						</command>
-						<command class_type='loop' title='Loop' type='0' exp='.i &lt; 255' >
+						<command class_type='loop' title='Loop' type='0' exp='.i &lt; 255' for1='' for3='' >
 							<flowline >
 								<command class_type='calculation' title='Calculation' >
-									<exp exp='.sThisOption = SplitString$(.sOptProperty,&quot;\n\r&quot;,.i)' />
+									<exp exp='.sThisOption = SplitString$(.sOptProperty,.sDelimiter,.i)' />
 								</command>
 								<command class_type='calculation' title='Calculation' >
 									<exp exp='.sThisOption = SearchAndReplace$(.sThisOption,&quot;\n&quot;,&quot;&quot;)' />
@@ -790,7 +813,8 @@ Option3' />
 						<command class_type='comment' title='' comment='Component Version Information;
 3, 1.1, 14-06-24, ST, Corrected the select element id tag, and fixed SplitString use;
 4, 1.2, 18-06-24, ST, Added macros to clear and set entries and fixed TypeIn version;
-5, 1.3, 02-02-26, ST, Added SetSelectedIndex macro;' textarea='12,0,12,0' />
+5, 1.3, 02-02-26, ST, Added SetSelectedIndex macro;
+6, 1.4, 16-06-26, ST, Fix for SplitString change in v11.0.2;' textarea='12,0,12,0' />
 					</flowline>
 				</macro>
 			</macros>
@@ -915,9 +939,9 @@ AL, 50, 0' />
 	<panel2d shadows='0' lighting='2' brightness='0' >
 		<background rgb='7292207' img='' style='0' />
 		<camera xe='0' ye='0' ze='298.136' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
-		<viewport dx='200' dy='396' zoom='81.1711' fix_topleft='0' />
+		<viewport dx='200' dy='416' zoom='81.1711' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='7360576' />
-		<winpos ID='7005' RectRecentFloat='272,148,1255,722' RectRecentDocked='0,0,200,419' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7005' RectRecentFloat='272,148,1255,722' RectRecentDocked='0,0,200,439' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel2d>
 	<panel3d shadows='0' lighting='2' brightness='0' perspective='1' >
 		<background rgb='8409120' img='' style='0' />
@@ -930,24 +954,24 @@ AL, 50, 0' />
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='-657,630,-7,1080' RectRecentDocked='0,0,210,610' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='0,630,650,1080' RectRecentDocked='0,0,210,737' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='1' >
 		<panel2d_0 id='0' name='NewPanel' type='0' >
-			<winpos ID='1171' RectRecentFloat='212,393,694,597' RectRecentDocked='633,141,948,751' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+			<winpos ID='1171' RectRecentFloat='212,393,694,597' RectRecentDocked='676,141,1051,878' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
 			<background fill='288230376151053813' showgrid='1' gridstyle='1' gridsize='10' gridbrush='71776119075691740' snaptogrid='1' fitcomp='0' disp_x='300' disp_y='400' scale='100' disp_col='16777215' />
 		</panel2d_0>
 	</panels2d>
 	<layout >
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAmQMAABADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetSelectedText' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAmQMAABADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetSelectedIndex' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAmQMAABADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_HtmlBodyInfo' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAmQMAABADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAmQMAABADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_HtmlScriptHeader' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAmQMAABADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ClearEntries' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAmQMAABADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='AddEntry' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAmQMAABADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetSelectedIndex' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAmQMAABADAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA6QIAALIBAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetSelectedText' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA6QIAALIBAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetSelectedIndex' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA6QIAALIBAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_HtmlBodyInfo' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA6QIAALIBAAA' zoom='100' scrollx='0' scrolly='1224' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA6QIAALIBAAA' zoom='100' scrollx='0' scrolly='422' flags='0' />
+		<view type='0' name='Ev_HtmlScriptHeader' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA6QIAALIBAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ClearEntries' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA6QIAALIBAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='AddEntry' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA6QIAALIBAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetSelectedIndex' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA6QIAALIBAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>

@@ -1,0 +1,214 @@
+<!-- CRC: 0000000000000000000000000000000000000000000000000000000000000000 -->
+<!-- REVISION: 1.0 -->
+<!-- GUID: B2C3D4E5-F6A7-8901-2345-678901234567 -->
+<!-- DATE: 22\06\2026 -->
+<!-- DIR: FCD\RE\RA4M1_WiFi.fcdx -->
+<root>
+
+<build>
+<compiler exe="$(fcddir)RE\batch\racomp.bat" params="&quot;$(target)&quot; &quot;$(outdir)&quot; &quot;$(chipalt)&quot; &quot;$(family)&quot; &quot;$(lscript)&quot; &quot;$(clock)&quot; &quot;$(romsize)&quot; &quot;$(ramsize)&quot; &quot;$(compilerstarm)&quot;" />
+<linker exe="$(appdir)tools\DoNothing\DoNothing.exe" params="" />
+<programmer exe="$(fcddir)RE\batch\raprog.bat" params="&quot;$(outdir)&quot; &quot;$(target)&quot; $(devname) &quot;$(compilerstarm)&quot; " />
+</build>
+
+<device    file = 'RA4M1_WiFi'
+        name='R7FA4M1AB3CFM'
+        namealt='RA4M1'
+        product='RE' compiler='RE' cal='RE'
+        family='RA4'
+        bits='32' >
+
+    <parameters>
+        <lscript value = 'ra4m1_boot.ld' />
+        <romsize value = '256K' />
+        <ramsize value = '32K' />
+    </parameters>
+
+    <clock max_speed='48000000' master_divider='1' default='48000000' />
+
+    <memory >
+        <flash bytes='262144' />
+        <ram bytes='32768' />
+    </memory>
+
+    <configuration address='0' mult='1' >
+        <format ><dword address='RA_HOCO_FREQ' value='48000000' /></format>
+        <setting />
+        <settings >
+            <setting name='HOCO Frequency' offset='0' mask='0xFFFFFFFF' bits='32' hint='System clock frequency (Hz)' >
+                <option name='48 MHz' value='48000000' />
+                <option name='24 MHz' value='24000000' />
+            </setting>
+        </settings>
+    </configuration>
+
+    <!--
+        Arduino Uno R4 WiFi pin mapping (R7FA4M1AB3CFM LQFP-64)
+        Verified against ArduinoCore-renesas UNOWIFIR4/variant.cpp and MINIMA/pinmux.inc.
+
+        D0  (RX)   = P301 (port=3, bit=1)  SCI2 RXD          PSEL=4
+        D1  (TX)   = P302 (port=3, bit=2)  SCI2 TXD          PSEL=4
+        D2         = P104 (port=1, bit=4)
+        D3  (PWM)  = P105 (port=1, bit=5)  GPT1A             PSEL=6
+        D4         = P106 (port=1, bit=6)
+        D5  (PWM)  = P107 (port=1, bit=7)  GPT0A             PSEL=6
+        D6  (PWM)  = P111 (port=1, bit=11) GPT3A             PSEL=6
+        D7         = P112 (port=1, bit=12)
+        D8         = P304 (port=3, bit=4)
+        D9  (PWM)  = P303 (port=3, bit=3)  GPT7B             PSEL=6
+        D10 (SS)   = P103 (port=1, bit=3)
+        D11 (MOSI) = P411 (port=4, bit=11) RSPI0 MOSIA/GPT6A PSEL=3/6
+        D12 (MISO) = P410 (port=4, bit=10) RSPI0 MISOA/GPT6B PSEL=3/6
+        D13 (SCK)  = P102 (port=1, bit=2)  RSPI0 RSPCKA/GPT2B PSEL=3/6
+        A0  (DAC)  = P014 (port=0, bit=14) AN008
+        A1         = P000 (port=0, bit=0)  AN000
+        A2         = P001 (port=0, bit=1)  AN001
+        A3         = P002 (port=0, bit=2)  AN002
+        A4  (SDA)  = P101 (port=1, bit=1)  AN021, IIC1 SDA   PSEL=1
+        A5  (SCL)  = P100 (port=1, bit=0)  AN022, IIC1 SCL   PSEL=1
+
+        RESERVED (ESP32-S3 link via SCI9, do not use):
+          P109 = SCI9 TXD (RA4M1→ESP32)
+          P110 = SCI9 RXD (ESP32→RA4M1)
+
+        Onboard LEDs (active LOW):
+          LED_RED  = P006
+          LED_GRN  = P008
+          LED_BLUE = P107 (shared with D5!)
+
+        PSEL values (R_PFS PSEL field):
+          1 = IIC  (SDA/SCL)
+          3 = RSPI (RSPCK/MOSI/MISO)
+          4 = SCI  (TXD/RXD)
+          6 = GPT  (GTIOCA/GTIOCB)
+    -->
+    <pins sides='4' smd='1' >
+        <pin name='AVCC0' />
+        <pin name='AVSS0' />
+        <pin name='VCC' />
+        <pin name='VSS' />
+
+        <!-- Port 0: A0=P014/AN008, A1-A3=P000-P002 -->
+        <pin name='P000/A1'          port='0' bit='0'  adc='0'  />
+        <pin name='P001/A2'          port='0' bit='1'  adc='1'  />
+        <pin name='P002/A3'          port='0' bit='2'  adc='2'  />
+        <pin name='P003'             port='0' bit='3'  adc='3'  />
+        <pin name='P004'             port='0' bit='4'  adc='4'  />
+        <pin name='P005'             port='0' bit='5'  adc='5'  />
+        <pin name='P006/LED_RED'     port='0' bit='6'  />
+        <pin name='P007'             port='0' bit='7'  />
+        <pin name='P008/LED_GRN'     port='0' bit='8'  />
+        <pin name='P014/A0'          port='0' bit='14' adc='8'  />
+        <pin name='P015'             port='0' bit='15' adc='9'  />
+
+        <!-- Port 1. NOTE: P109/P110 reserved for ESP32-S3 (SCI9). -->
+        <pin name='P100/A5/SCL'      port='1' bit='0'  adc='22' />
+        <pin name='P101/A4/SDA'      port='1' bit='1'  adc='21' />
+        <pin name='P102/D13/SCK'     port='1' bit='2'  />
+        <pin name='P103/D10/SS'      port='1' bit='3'  />
+        <pin name='P104/D2'          port='1' bit='4'  />
+        <pin name='P105/D3'          port='1' bit='5'  />
+        <pin name='P106/D4'          port='1' bit='6'  />
+        <pin name='P107/D5/LED_BLU'  port='1' bit='7'  />
+        <pin name='P109/ESP32_TX*'   port='1' bit='9'  />
+        <pin name='P110/ESP32_RX*'   port='1' bit='10' />
+        <pin name='P111/D6'          port='1' bit='11' />
+        <pin name='P112/D7'          port='1' bit='12' />
+
+        <!-- Port 3: D0(RX)/D1(TX), D8/D9 -->
+        <pin name='P301/D0/RX'       port='3' bit='1'  />
+        <pin name='P302/D1/TX'       port='3' bit='2'  />
+        <pin name='P303/D9'          port='3' bit='3'  />
+        <pin name='P304/D8'          port='3' bit='4'  />
+
+        <!-- Port 4 -->
+        <pin name='P400'             port='4' bit='0'  />
+        <pin name='P401'             port='4' bit='1'  />
+        <pin name='P402'             port='4' bit='2'  />
+        <pin name='P403'             port='4' bit='3'  />
+        <pin name='P404'             port='4' bit='4'  />
+        <pin name='P405'             port='4' bit='5'  />
+        <pin name='P406'             port='4' bit='6'  />
+        <pin name='P407'             port='4' bit='7'  />
+        <pin name='P410/D12/MISO'    port='4' bit='10' />
+        <pin name='P411/D11/MOSI'    port='4' bit='11' />
+
+        <pin name='NRST' />
+        <pin name='SWDIO' />
+        <pin name='SWCLK' />
+    </pins>
+
+    <adc type='2' bits='12' >
+        <speed >
+            <option name='Fast'   value='0x13' />
+            <option name='Medium' value='0x1F' />
+            <option name='Slow'   value='0x3F' />
+        </speed>
+    </adc>
+
+    <!-- SPI0 (RSPI0): D13=SCK(P102), D12=MISO(P410), D11=MOSI(P411). PSEL=3. -->
+    <spi remappable='1' name='SPI0' >
+        <clk  af0='3' port0='1' pin0='2'  />
+        <miso af0='3' port0='4' pin0='10' />
+        <mosi af0='3' port0='4' pin0='11' />
+    </spi>
+
+    <!-- SCI2 UART: D0=RX(P301), D1=TX(P302). PSEL=4. -->
+    <uart remappable='1' name='SCI2' >
+        <tx af0='4' port0='3' pin0='2' />
+        <rx af0='4' port0='3' pin0='1' />
+    </uart>
+
+    <!-- IIC1 (A4/A5): SDA=P101, SCL=P100. PSEL=1. -->
+    <i2c remappable='1' name='IIC1' >
+        <sda af0='1' port0='1' pin0='1' />
+        <scl af0='1' port0='1' pin0='0' />
+    </i2c>
+
+    <!-- GPT PWM: D3/D5/D6/D9/D11. PSEL=6 selects GTIOC output. -->
+    <pwm regset='1' remappable='1' >
+        <timer><option name='Fixed' value='1' count='5' /></timer>
+        <prescaler >
+            <option name="1"    value="1"    />
+            <option name="4"    value="4"    />
+            <option name="16"   value="16"   />
+            <option name="64"   value="64"   />
+            <option name="256"  value="256"  />
+            <option name="1024" value="1024" />
+        </prescaler>
+        <out name='GPT0_A/D5'   af0='6' port0='1' pin0='7'  />
+        <out name='GPT1_A/D3'   af0='6' port0='1' pin0='5'  />
+        <out name='GPT3_A/D6'   af0='6' port0='1' pin0='11' />
+        <out name='GPT6_A/D11'  af0='6' port0='4' pin0='11' />
+        <out name='GPT7_B/D9'   af0='6' port0='3' pin0='3'  />
+    </pwm>
+
+    <interrupts >
+    </interrupts>
+
+</device>
+
+<inline >
+    <defines code='\n#define MX_CAL_RE' />
+    <directives code='' />
+    <main >
+        <start code='
+int main()
+{
+' />
+        <end code='    mainendloop: goto mainendloop;\n\treturn 0;\n}\n\n' />
+        <init code='' />
+    </main>
+    <interrupt ><enable code='' /><start code='' /><end code='' /><init code='' /></interrupt>
+    <config >
+        <start code='//Configuration Start\n' />
+        <body code='#define $(address) ($(value))\n' />
+        <end code='//Configuration End\n\n' />
+    </config>
+</inline>
+
+<test >
+    <icd ><clock port0='1' pin0='2' /><data port0='1' pin0='9' /></icd>
+</test>
+
+</root>

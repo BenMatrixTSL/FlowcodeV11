@@ -1,4 +1,4 @@
-// CRC: 9127F328264D8FABC87FF80C826F04D0E463E451CD747EFC4B2F8236B78C0C8417B470248A3E565D848C9455C852E4567AAB8FF6C48BFC20A9B11F738DF98E15102A164A9ECB44A980E2966912EBCB9A0835AF06B53641108741CC02A86228770A3A7C70C2F8885D36DCA8B36FC67E1E68BE6FCEF249B64382B5F72235EEE72F94F04968BF60E54AFD352432F208853EF8395F2401ECB9DE549D34A0D5AD11F30DF9E9BE9544D9CBCBC1D63B864F86206AFA60BE370D9403BFFF998DDEA49026AF90F20157562625
+ï»¿// CRC: 9127F328264D8FABC87FF80C826F04D0E463E451CD747EFC4B2F8236B78C0C8417B470248A3E565D848C9455C852E4567AAB8FF6C48BFC20A9B11F738DF98E15102A164A9ECB44A980E2966912EBCB9A0835AF06B53641108741CC02A86228770A3A7C70C2F8885D36DCA8B36FC67E1E68BE6FCEF249B64382B5F72235EEE72F94F04968BF60E54AFD352432F208853EF8395F2401ECB9DE549D34A0D5AD11F30DF9E9BE9544D9CBCBC1D63B864F86206AFA60BE370D9403BFFF998DDEA49026AF90F20157562625
 // REVISION: 9.0
 // GUID: AF5BA3D1-36BB-4DEE-A530-1F5660353617
 // DATE: 28\04\2026
@@ -14,8 +14,8 @@
  * Software License Agreement
  *
  * The software supplied herewith by Matrix Multimedia Ltd (the
- * “Company”) for its Flowcode graphical programming language is
- * intended and supplied to you, the Company’s customer, for use
+ * ï¿½Companyï¿½) for its Flowcode graphical programming language is
+ * intended and supplied to you, the Companyï¿½s customer, for use
  * solely and exclusively on the Company's products. The software
  * is owned by the Company, and is protected under applicable
  * copyright laws. All rights are reserved. Any use in violation
@@ -23,7 +23,7 @@
  * sanctions under applicable laws, as well as to civil liability
  * for the breach of the terms and conditions of this licence.
  *
- * THIS SOFTWARE IS PROVIDED IN AN “AS IS” CONDITION. NO WARRANTIES,
+ * THIS SOFTWARE IS PROVIDED IN AN ï¿½AS ISï¿½ CONDITION. NO WARRANTIES,
  * WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT NOT LIMITED
  * TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
  * PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. THE COMPANY SHALL NOT,
@@ -89,6 +89,8 @@
   	#include "AVR\AVR_CAL_ADC.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_ADC.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_ADC.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_ADC.c"
   #elif defined MX_CAL_PICO
@@ -116,6 +118,8 @@
   	#include "AVR\AVR_CAL_ADC.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_ADC.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_ADC.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_ADC.c"
   #endif
@@ -141,6 +145,8 @@
   	#include "AVR\AVR_CAL_ADC.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_ADC.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_ADC.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_ADC.c"
   #endif
@@ -176,6 +182,8 @@
 	#include "ESP\ESP_CAL_DAC.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_DAC.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_DAC.c"
   #elif defined MX_CAL_ARM
 	//#include "ARM\ARM_CAL_DAC.c"
   #endif
@@ -202,6 +210,8 @@
 	#include "ESP\ESP_CAL_DAC.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_DAC.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_DAC.c"
   #elif defined MX_CAL_ARM
 	//#include "ARM\ARM_CAL_DAC.c"
   #endif
@@ -226,6 +236,8 @@
   #endif
   #ifdef MX_CAL_STARM
 	#include "STARM\STARM_CAL_DAC.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_DAC.c"
   #elif defined MX_CAL_ARM
 	//#include "ARM\ARM_CAL_DAC.c"
   #endif
@@ -250,6 +262,8 @@
   #endif
   #ifdef MX_CAL_STARM
 	#include "STARM\STARM_CAL_DAC.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_DAC.c"
   #elif defined MX_CAL_ARM
 	//#include "ARM\ARM_CAL_DAC.c"
   #endif
@@ -284,6 +298,8 @@
   #endif
   #ifdef MX_CAL_STARM
 	#include "STARM\STARM_CAL_CAN.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_CAN.c"
   #elif defined MX_CAL_ARM
 	#error "Internal CAN not supported on ARM AT91SAM7S devices"
   #endif
@@ -311,6 +327,8 @@
   #endif
   #ifdef MX_CAL_STARM
 	#include "STARM\STARM_CAL_CAN.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_CAN.c"
   #elif defined MX_CAL_ARM
 	#error "Internal CAN not supported on ARM AT91SAM7S devices"
   #endif
@@ -338,6 +356,8 @@
   #endif
   #ifdef MX_CAL_STARM
 	#include "STARM\STARM_CAL_CAN.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_CAN.c"
   #elif defined MX_CAL_ARM
 	#error "Internal CAN not supported on ARM AT91SAM7S devices"
   #endif
@@ -448,6 +468,8 @@
 	#include "AVR\AVR_CAL_HBRIDGE.c"
   #elif defined MX_CAL_STARM
     #include "STARM\STARM_CAL_HBRIDGE.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_HBRIDGE.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_HBRIDGE.c"
   #endif
@@ -469,6 +491,8 @@
 	#include "AVR\AVR_CAL_HBRIDGE.c"
   #elif defined MX_CAL_STARM
     #include "STARM\STARM_CAL_HBRIDGE.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_HBRIDGE.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_HBRIDGE.c"
   #endif
@@ -490,6 +514,8 @@
 	#include "AVR\AVR_CAL_HBRIDGE.c"
   #elif defined MX_CAL_STARM
     #include "STARM\STARM_CAL_HBRIDGE.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_HBRIDGE.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_HBRIDGE.c"
   #endif
@@ -521,6 +547,8 @@
 	#include "AVR\AVR_CAL_I2C.c"
   #elif defined MX_CAL_STARM
     #include "STARM\STARM_CAL_I2C.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_I2C.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_I2C.c"
   #elif defined MX_CAL_PICO
@@ -546,6 +574,8 @@
 	#include "AVR\AVR_CAL_I2C.c"
   #elif defined MX_CAL_STARM
     #include "STARM\STARM_CAL_I2C.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_I2C.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_I2C.c"
   #elif defined MX_CAL_PICO
@@ -571,6 +601,8 @@
 	#include "AVR\AVR_CAL_I2C.c"
   #elif defined MX_CAL_STARM
     #include "STARM\STARM_CAL_I2C.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_I2C.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_I2C.c"
   #endif
@@ -594,6 +626,8 @@
 	#include "AVR\AVR_CAL_I2C.c"
   #elif defined MX_CAL_STARM
     #include "STARM\STARM_CAL_I2C.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_I2C.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_I2C.c"
   #endif
@@ -617,6 +651,8 @@
 	#include "AVR\AVR_CAL_I2C.c"
   #elif defined MX_CAL_STARM
     #include "STARM\STARM_CAL_I2C.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_I2C.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_I2C.c"
   #endif
@@ -640,6 +676,8 @@
 	#include "AVR\AVR_CAL_I2C.c"
   #elif defined MX_CAL_STARM
     #include "STARM\STARM_CAL_I2C.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_I2C.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_I2C.c"
   #endif
@@ -663,6 +701,8 @@
 	#include "AVR\AVR_CAL_I2C.c"
   #elif defined MX_CAL_STARM
     #include "STARM\STARM_CAL_I2C.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_I2C.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_I2C.c"
   #endif
@@ -686,6 +726,8 @@
 	#include "AVR\AVR_CAL_I2C.c"
   #elif defined MX_CAL_STARM
     #include "STARM\STARM_CAL_I2C.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_I2C.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_I2C.c"
   #endif
@@ -709,6 +751,8 @@
 	#include "AVR\AVR_CAL_I2C.c"
   #elif defined MX_CAL_STARM
     #include "STARM\STARM_CAL_I2C.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_I2C.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_I2C.c"
   #endif
@@ -732,6 +776,8 @@
 	#include "AVR\AVR_CAL_I2C.c"
   #elif defined MX_CAL_STARM
     #include "STARM\STARM_CAL_I2C.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_I2C.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_I2C.c"
   #endif
@@ -755,6 +801,8 @@
 	#include "AVR\AVR_CAL_I2C.c"
   #elif defined MX_CAL_STARM
     #include "STARM\STARM_CAL_I2C.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_I2C.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_I2C.c"
   #endif
@@ -778,6 +826,8 @@
 	#include "AVR\AVR_CAL_I2C.c"
   #elif defined MX_CAL_STARM
     #include "STARM\STARM_CAL_I2C.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_I2C.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_I2C.c"
   #endif
@@ -801,6 +851,8 @@
 	#include "AVR\AVR_CAL_I2C.c"
   #elif defined MX_CAL_STARM
     #include "STARM\STARM_CAL_I2C.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_I2C.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_I2C.c"
   #endif
@@ -824,6 +876,8 @@
 	#include "AVR\AVR_CAL_I2C.c"
   #elif defined MX_CAL_STARM
     #include "STARM\STARM_CAL_I2C.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_I2C.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_I2C.c"
   #endif
@@ -847,6 +901,8 @@
 	#include "AVR\AVR_CAL_I2C.c"
   #elif defined MX_CAL_STARM
     #include "STARM\STARM_CAL_I2C.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_I2C.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_I2C.c"
   #endif
@@ -870,6 +926,8 @@
 	#include "AVR\AVR_CAL_I2C.c"
   #elif defined MX_CAL_STARM
     #include "STARM\STARM_CAL_I2C.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_I2C.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_I2C.c"
   #endif
@@ -893,6 +951,8 @@
 	#include "AVR\AVR_CAL_I2C.c"
   #elif defined MX_CAL_STARM
     #include "STARM\STARM_CAL_I2C.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_I2C.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_I2C.c"
   #endif
@@ -916,6 +976,8 @@
 	#include "AVR\AVR_CAL_I2C.c"
   #elif defined MX_CAL_STARM
     #include "STARM\STARM_CAL_I2C.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_I2C.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_I2C.c"
   #endif
@@ -939,6 +1001,8 @@
 	#include "AVR\AVR_CAL_I2C.c"
   #elif defined MX_CAL_STARM
     #include "STARM\STARM_CAL_I2C.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_I2C.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_I2C.c"
   #endif
@@ -962,6 +1026,8 @@
 	#include "AVR\AVR_CAL_I2C.c"
   #elif defined MX_CAL_STARM
     #include "STARM\STARM_CAL_I2C.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_I2C.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_I2C.c"
   #endif
@@ -992,6 +1058,8 @@
 	#include "AVR\AVR_CAL_I2S.c"
   #elif defined MX_CAL_STARM
     #include "STARM\STARM_CAL_I2S.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_I2S.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_I2S.c"
   #endif
@@ -1015,6 +1083,8 @@
 	#include "AVR\AVR_CAL_I2S.c"
   #elif defined MX_CAL_STARM
     #include "STARM\STARM_CAL_I2S.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_I2S.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_I2S.c"
   #endif
@@ -1043,6 +1113,8 @@
 	#include "AVR\AVR_CAL_PWM.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_PWM.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_PWM.c"
   #elif defined MX_CAL_ESP32
     #include "ESP\ESP_CAL_PWM.c"
   #elif defined MX_CAL_ARM
@@ -1069,6 +1141,8 @@
 	#include "AVR\AVR_CAL_PWM.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_PWM.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_PWM.c"
   #elif defined MX_CAL_ESP32
     #include "ESP\ESP_CAL_PWM.c"
   #elif defined MX_CAL_ARM
@@ -1095,6 +1169,8 @@
 	#include "AVR\AVR_CAL_PWM.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_PWM.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_PWM.c"
   #elif defined MX_CAL_ESP32
     #include "ESP\ESP_CAL_PWM.c"
   #elif defined MX_CAL_ARM
@@ -1120,6 +1196,8 @@
 	#include "AVR\AVR_CAL_PWM.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_PWM.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_PWM.c"
   #elif defined MX_CAL_ESP32
     #include "ESP\ESP_CAL_PWM.c"
   #elif defined MX_CAL_ARM
@@ -1145,6 +1223,8 @@
 	#include "AVR\AVR_CAL_PWM.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_PWM.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_PWM.c"
   #elif defined MX_CAL_ESP32
     #include "ESP\ESP_CAL_PWM.c"
   #elif defined MX_CAL_ARM
@@ -1170,6 +1250,8 @@
 	#include "AVR\AVR_CAL_PWM.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_PWM.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_PWM.c"
   #elif defined MX_CAL_ESP32
     #include "ESP\ESP_CAL_PWM.c"
   #elif defined MX_CAL_ARM
@@ -1195,6 +1277,8 @@
 	#include "AVR\AVR_CAL_PWM.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_PWM.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_PWM.c"
   #elif defined MX_CAL_ESP32
     #include "ESP\ESP_CAL_PWM.c"
   #elif defined MX_CAL_ARM
@@ -1218,6 +1302,8 @@
 	#include "AVR\AVR_CAL_PWM.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_PWM.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_PWM.c"
   #elif defined MX_CAL_ESP32
     #include "ESP\ESP_CAL_PWM.c"
   #elif defined MX_CAL_ARM
@@ -1241,6 +1327,8 @@
 	#include "AVR\AVR_CAL_PWM.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_PWM.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_PWM.c"
   #elif defined MX_CAL_ESP32
     #include "ESP\ESP_CAL_PWM.c"
   #elif defined MX_CAL_ARM
@@ -1264,6 +1352,8 @@
 	#include "AVR\AVR_CAL_PWM.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_PWM.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_PWM.c"
   #elif defined MX_CAL_ESP32
     #include "ESP\ESP_CAL_PWM.c"
   #elif defined MX_CAL_ARM
@@ -1287,6 +1377,8 @@
 	#include "AVR\AVR_CAL_PWM.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_PWM.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_PWM.c"
   #elif defined MX_CAL_ESP32
     #include "ESP\ESP_CAL_PWM.c"
   #elif defined MX_CAL_ARM
@@ -1310,6 +1402,8 @@
 	#include "AVR\AVR_CAL_PWM.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_PWM.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_PWM.c"
   #elif defined MX_CAL_ESP32
     #include "ESP\ESP_CAL_PWM.c"
   #elif defined MX_CAL_ARM
@@ -1333,6 +1427,8 @@
 	#include "AVR\AVR_CAL_PWM.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_PWM.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_PWM.c"
   #elif defined MX_CAL_ESP32
     #include "ESP\ESP_CAL_PWM.c"
   #elif defined MX_CAL_ARM
@@ -1356,6 +1452,8 @@
 	#include "AVR\AVR_CAL_PWM.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_PWM.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_PWM.c"
   #elif defined MX_CAL_ESP32
     #include "ESP\ESP_CAL_PWM.c"
   #elif defined MX_CAL_ARM
@@ -1379,6 +1477,8 @@
 	#include "AVR\AVR_CAL_PWM.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_PWM.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_PWM.c"
   #elif defined MX_CAL_ESP32
     #include "ESP\ESP_CAL_PWM.c"
   #elif defined MX_CAL_ARM
@@ -1402,6 +1502,8 @@
 	#include "AVR\AVR_CAL_PWM.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_PWM.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_PWM.c"
   #elif defined MX_CAL_ESP32
     #include "ESP\ESP_CAL_PWM.c"
   #elif defined MX_CAL_ARM
@@ -1485,6 +1587,8 @@
   #endif
   #ifdef MX_CAL_STARM
 	#include "STARM\STARM_CAL_RTC.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_RTC.c"
   #elif defined MX_CAL_ARM
 	//#include "ARM\ARM_CAL_RTC.c"
   #endif
@@ -1517,6 +1621,8 @@
 	#include "RPI\RPI_CAL_SPI.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_SPI.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_SPI.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_SPI.c"
   #elif defined MX_CAL_PICO
@@ -1542,6 +1648,8 @@
 	#include "RPI\RPI_CAL_SPI.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_SPI.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_SPI.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_SPI.c"
   #elif defined MX_CAL_PICO
@@ -1567,6 +1675,8 @@
 	#include "RPI\RPI_CAL_SPI.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_SPI.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_SPI.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_SPI.c"
   #elif defined MX_CAL_PICO
@@ -1592,6 +1702,8 @@
 	#include "RPI\RPI_CAL_SPI.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_SPI.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_SPI.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_SPI.c"
   #elif defined MX_CAL_PICO
@@ -1617,6 +1729,8 @@
 	#include "RPI\RPI_CAL_SPI.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_SPI.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_SPI.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_SPI.c"
   #elif defined MX_CAL_PICO
@@ -1642,6 +1756,8 @@
 	#include "RPI\RPI_CAL_SPI.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_SPI.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_SPI.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_SPI.c"
   #elif defined MX_CAL_PICO
@@ -1667,6 +1783,8 @@
 	#include "RPI\RPI_CAL_SPI.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_SPI.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_SPI.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_SPI.c"
   #elif defined MX_CAL_PICO
@@ -1692,6 +1810,8 @@
 	#include "RPI\RPI_CAL_SPI.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_SPI.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_SPI.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_SPI.c"
   #elif defined MX_CAL_PICO
@@ -1717,6 +1837,8 @@
 	#include "RPI\RPI_CAL_SPI.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_SPI.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_SPI.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_SPI.c"
   #elif defined MX_CAL_PICO
@@ -1742,6 +1864,8 @@
 	#include "RPI\RPI_CAL_SPI.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_SPI.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_SPI.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_SPI.c"
   #elif defined MX_CAL_PICO
@@ -1767,6 +1891,8 @@
 	#include "RPI\RPI_CAL_SPI.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_SPI.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_SPI.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_SPI.c"
   #elif defined MX_CAL_PICO
@@ -1792,6 +1918,8 @@
 	#include "RPI\RPI_CAL_SPI.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_SPI.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_SPI.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_SPI.c"
   #elif defined MX_CAL_PICO
@@ -1817,6 +1945,8 @@
 	#include "RPI\RPI_CAL_SPI.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_SPI.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_SPI.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_SPI.c"
   #elif defined MX_CAL_PICO
@@ -1842,6 +1972,8 @@
 	#include "RPI\RPI_CAL_SPI.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_SPI.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_SPI.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_SPI.c"
   #elif defined MX_CAL_PICO
@@ -1867,6 +1999,8 @@
 	#include "RPI\RPI_CAL_SPI.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_SPI.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_SPI.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_SPI.c"
   #elif defined MX_CAL_PICO
@@ -1892,6 +2026,8 @@
 	#include "RPI\RPI_CAL_SPI.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_SPI.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_SPI.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_SPI.c"
   #elif defined MX_CAL_PICO
@@ -1917,6 +2053,8 @@
 	#include "RPI\RPI_CAL_SPI.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_SPI.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_SPI.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_SPI.c"
   #elif defined MX_CAL_PICO
@@ -1942,6 +2080,8 @@
 	#include "RPI\RPI_CAL_SPI.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_SPI.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_SPI.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_SPI.c"
   #elif defined MX_CAL_PICO
@@ -1967,6 +2107,8 @@
 	#include "RPI\RPI_CAL_SPI.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_SPI.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_SPI.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_SPI.c"
   #elif defined MX_CAL_PICO
@@ -1992,6 +2134,8 @@
 	#include "RPI\RPI_CAL_SPI.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_SPI.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_SPI.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_SPI.c"
   #elif defined MX_CAL_PICO
@@ -2024,6 +2168,8 @@
 	#include "RPI\RPI_CAL_UART.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_UART.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_UART.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_UART.c"
   #elif defined MX_CAL_PICO
@@ -2049,6 +2195,8 @@
 	#include "RPI\RPI_CAL_UART.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_UART.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_UART.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_UART.c"
   #elif defined MX_CAL_PICO
@@ -2074,6 +2222,8 @@
 	#include "RPI\RPI_CAL_UART.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_UART.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_UART.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_UART.c"
   #endif
@@ -2097,6 +2247,8 @@
 	#include "RPI\RPI_CAL_UART.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_UART.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_UART.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_UART.c"
   #endif
@@ -2120,6 +2272,8 @@
 	#include "RPI\RPI_CAL_UART.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_UART.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_UART.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_UART.c"
   #endif
@@ -2143,6 +2297,8 @@
 	#include "RPI\RPI_CAL_UART.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_UART.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_UART.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_UART.c"
   #endif
@@ -2166,6 +2322,8 @@
 	#include "RPI\RPI_CAL_UART.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_UART.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_UART.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_UART.c"
   #endif
@@ -2189,6 +2347,8 @@
 	#include "RPI\RPI_CAL_UART.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_UART.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_UART.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_UART.c"
   #endif
@@ -2212,6 +2372,8 @@
 	#include "RPI\RPI_CAL_UART.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_UART.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_UART.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_UART.c"
   #endif
@@ -2235,6 +2397,8 @@
 	#include "RPI\RPI_CAL_UART.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_UART.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_UART.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_UART.c"
   #endif
@@ -2258,6 +2422,8 @@
 	#include "RPI\RPI_CAL_UART.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_UART.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_UART.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_UART.c"
   #endif
@@ -2281,6 +2447,8 @@
 	#include "RPI\RPI_CAL_UART.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_UART.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_UART.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_UART.c"
   #endif
@@ -2304,6 +2472,8 @@
 	#include "RPI\RPI_CAL_UART.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_UART.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_UART.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_UART.c"
   #endif
@@ -2327,6 +2497,8 @@
 	#include "RPI\RPI_CAL_UART.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_UART.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_UART.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_UART.c"
   #endif
@@ -2350,6 +2522,8 @@
 	#include "RPI\RPI_CAL_UART.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_UART.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_UART.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_UART.c"
   #endif
@@ -2373,6 +2547,8 @@
 	#include "RPI\RPI_CAL_UART.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_UART.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_UART.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_UART.c"
   #endif
@@ -2427,6 +2603,8 @@
 	#include "RPI\RPI_CAL_ICD3.c"
   #elif defined MX_CAL_STARM
 	#include "STARM\STARM_CAL_ICD3.c"
+  #elif defined MX_CAL_RE
+	#include "RE\RE_CAL_ICD3.c"
   #elif defined MX_CAL_ARM
 	#include "ARM\ARM_CAL_ICD3.c"
   #endif

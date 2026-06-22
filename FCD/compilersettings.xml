@@ -312,6 +312,22 @@
   </settings> 
   
   
+  <settings title="Default" path="RE" platform="RE.*" language='C' >
+    <compiler   exe="$(fcddir)RE\batch\racomp.bat"
+	            params="&quot;$(target)&quot; &quot;$(outdir)&quot; &quot;$(chipalt)&quot; &quot;$(family)&quot; &quot;$(lscript)&quot; &quot;$(clock)&quot; &quot;$(romsize)&quot; &quot;$(ramsize)&quot; &quot;$(compilerstarm)&quot;" />
+    <linker     exe="$(appdir)tools\DoNothing\DoNothing.exe"
+	            params="" />
+    <programmer exe="$(fcddir)RE\batch\raprog.bat"
+	            params="&quot;$(outdir)&quot; &quot;$(target)&quot; $(devname) &quot;$(compilerstarm)&quot; " />
+    <viewer>
+      <source enabled='0' exe='C:\Windows\Notepad.exe'
+              params='$(outdir)$(target).c' />
+      <asm exe='C:\Windows\Notepad.exe'
+           params='$(outdir)$(target).lst' />
+    </viewer>
+  </settings>
+
+
   <settings title="Default" path="STARM" platform="STARM.*" language='C' >
     <compiler   exe="$(fcddir)ARM\batch\stm32comp.bat" 
 	            params="&quot;$(target)&quot; &quot;$(outdir)&quot; &quot;$(chipalt)&quot; &quot;$(family)&quot; &quot;$(lscript)&quot; &quot;$(clock)&quot; &quot;$(romsize)&quot; &quot;$(ramsize)&quot; &quot;$(compilerstarm)&quot;" />
