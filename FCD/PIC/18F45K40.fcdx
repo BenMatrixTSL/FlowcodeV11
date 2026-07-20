@@ -1,7 +1,7 @@
-<!-- CRC: 90CF26913586BBA787FE92D55377193376D5A832839A61AF1D22140136FDFF91DA6183FD7E79AA9B6577EF8789F001E82C88DA37D76DFD220CBD1DF30DF2EE3DEBF4E1791E51DEDDA4D1C56CD1580BF5C4F9300ED29FB295FBA73420AD9449077F9D15ED38EF863E1BB0163EB453E2ED8D518938F267C7E15AA3E913D909529F52C896BB1C2E186658379CD195C2699BB78755A52C2898C807831AD8112197B0250FAFC30DF7B254086944AE325796A63483B62C948D0C99318325117644EBC163CAEA9DFB7E4B2E19F5A1519A28222137BBA28BD2FD4C2E -->
-<!-- REVISION: 2.0 -->
+<!-- CRC: 90CF26913586BBA787FE92D55377193376D5A832839A61AF1D22140136FDFF91DA6183FD7E79AA9B6577EF8789F001E86F7C987855AE361E591EF3746DED5E9DEE9C40F438F233A5A9B11F738DF98E15DFDAA60077B84509FBA73420AD9449077F9D15ED38EF863E1BB0163EB453E2ED8D518938F267C7E15AA3E913D909529F52C896BB1C2E186658379CD195C2699BB78755A52C2898C807831AD8112197B0250FAFC30DF7B254086944AE325796A63760A875049ED3AF0C26F9603E63B595AA3386EE983FA9D711F33536FF4271682E83591212429612 -->
+<!-- REVISION: 3.0 -->
 <!-- GUID: 74E56F2F-2FBB-4C0C-B53A-E10E40B69E32 -->
-<!-- DATE: 07\11\2022 -->
+<!-- DATE: 20\07\2026 -->
 <!-- DIR: FCD\PIC\18F45K40.fcdx -->
 <root>
 <device name='18F45K40' product='PIC' cal='PIC' family='18F' bits='8' >
@@ -316,14 +316,16 @@
     	<option name='64000000' value='OSCFRQ = 0x08;' />
     </intosc>
     <interrupts >
-        <interrupt ident='IOC0' type='multipin' name='IOC PORTABC' handler='#ifndef MX_INTHANDLER_PIE0_IOCIF\n#define MX_INTHANDLER_PIE0_IOCIF\nchar mxtmp;\nif (ts_bit(PIR0, IOCIF) &amp;&amp; ts_bit(PIE0, IOCIE))\n{\n\tFCM_%n();\n\tmxtmp=PORTA;\n\tmxtmp=PORTB;\n\tmxtmp=PORTC;\n\tIOCAF &amp;= ~IOCAF;\nIOCBF &amp;= ~IOCBF;\nIOCCF &amp;= ~IOCCF;\n\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='st_bit(INTCON, PEIE);\nIOCAP=%pA0h;\nIOCAN=%pA0l;\nIOCAF=0;\nIOCBP=%pB0h;\nIOCBN=%pB0l;\nIOCBF=0;\nIOCCP=%pC0h;\nIOCCN=%pC0l;\nIOCCF=0;\nst_bit(PIE0, IOCIE);\n' disable='cr_bit(PIE0, IOCIE);\n' >
+        <interrupt ident='IOC0' type='multipin' name='IOC PORTABC' handler='#ifndef MX_INTHANDLER_PIE0_IOCIF\n#define MX_INTHANDLER_PIE0_IOCIF\nchar mxtmp;\nif (ts_bit(PIR0, IOCIF) &amp;&amp; ts_bit(PIE0, IOCIE))\n{\n\tFCM_%n();\n\tmxtmp=PORTA;\n\tmxtmp=PORTB;\n\tmxtmp=PORTC;\n\tmxtmp=PORTE;\n\tIOCAF &amp;= ~IOCAF;\nIOCBF &amp;= ~IOCBF;\nIOCCF &amp;= ~IOCCF;\nIOCEF &amp;= ~IOCEF;\n\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='st_bit(INTCON, PEIE);\nIOCAP=%pA0h;\nIOCAN=%pA0l;\nIOCAF=0;\nIOCBP=%pB0h;\nIOCBN=%pB0l;\nIOCBF=0;\nIOCCP=%pC0h;\nIOCCN=%pC0l;\nIOCCF=0;\nIOCEP=%pE0h;\nIOCEN=%pE0l;\nIOCEF=0;\nst_bit(PIE0, IOCIE);\n' disable='cr_bit(PIE0, IOCIE);\n' >
             <ioc config='0x0F' >
                 <rising port='0' mask='0xFF' />
                 <rising port='1' mask='0xFF' />
                 <rising port='2' mask='0xFF' />
+                <rising port='4' mask='0x08' />
                 <falling port='0' mask='0xFF' />
                 <falling port='1' mask='0xFF' />
                 <falling port='2' mask='0xFF' />
+                <falling port='4' mask='0x08' />
             </ioc>
         </interrupt>
         <interrupt ident='INT0' type='pin' name='INT0 Pin' handler='#ifndef MX_INTHANDLER_PIR0_INT0IF\n#define MX_INTHANDLER_PIR0_INT0IF\nif (ts_bit(PIR0, INT0IF) &amp;&amp; ts_bit(PIE0, INT0IE))\n{\n\tFCM_%n();\n\tcr_bit(PIR0, INT0IF);\n}\n#else\n#warning &quot;This interrupt has previously been enabled, so the macro &lt;%n&gt; may never get called.&quot;\n#endif\n' enable='st_bit(INTCON, PEIE);\nst_bit(PIE0, INT0IE);\n' disable='cr_bit(PIE0, INT0IE);\n' >
