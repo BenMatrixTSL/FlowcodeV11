@@ -16,7 +16,6 @@
 | `u8` | Unsigned 8-bit integer | 1 byte | Pin numbers, counters |
 | `u16` | Unsigned 16-bit integer | 2 bytes | ADC readings, timers |
 | `u32` | Unsigned 32-bit integer | 4 bytes | Timestamps, large counters |
-| `s8` | Signed 8-bit integer | 1 byte | Small signed values |
 | `s16` | Signed 16-bit integer | 2 bytes | Sensor readings |
 | `s32` | Signed 32-bit integer | 4 bytes | Large signed values |
 | `b1` | Boolean | 1 bit | Flags, true/false |

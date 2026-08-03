@@ -151,7 +151,7 @@ The `<variables>` section defines global variables used by the component. These 
 - **`name`**: Variable name (must be valid C identifier)
 - **`type`**: Data type. Common types:
   - `u8`, `u16`, `u32` - Unsigned integers (8, 16, 32 bit)
-  - `s8`, `s16`, `s32` - Signed integers
+  - `s16`, `s32` - Signed integers
   - `b1` - Boolean (1 bit)
   - `T8` - String/character array
   - `T8*` - String pointer
