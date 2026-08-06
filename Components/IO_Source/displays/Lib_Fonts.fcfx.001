@@ -1,5 +1,5 @@
 <root>
-<document scada='0' projtype='1' schema='103' license='1,82702381,95CJQR' title='' description='' fcversion='720898' target='PIC.16F.16F1937' >
+<document scada='0' projtype='1' schema='103' license='1,82702381,95CJQR' title='' description='' fcversion='720897' target='PIC.16F.16F1937' >
 	<config data='!0,fe2!10,1eff%0,2%3,0%5,1%6,1%7,1%8,1%9,3%b,1%c,0%d,0%10,3%14,3%18,0%19,1%1a,1%1c,1%1d,0' clkspd='19660800' simspd='1' usewdt='0' constif='0' Use3V3='0' />
 	<plugins >
 		<dll_models enabled='1' />
@@ -193,8 +193,8 @@ Some displays have their own in-built font set and so do not require an addition
 				<value target='Enabled' data='1' />
 				<value target='EmbedFont' data='1' />
 				<value target='EmbedWidth' data='1' />
-				<value target='Font' data='001' />
-				<value target='PrevFont' data='1' />
+				<value target='Font' data='006' />
+				<value target='PrevFont' data='6' />
 				<value target='CustomFontFile' data='' />
 				<value target='BinaryFilename' data='Ari14.bin' />
 				<value target='BytesRequired' data='1193' />
@@ -214,10 +214,10 @@ Some displays have their own in-built font set and so do not require an addition
 				<value target='DCSimBold' data='0' />
 			</values>
 			<events >
-				<event class='Components' event='Renamed' target='Ev_Renamed' />
-				<event class='Components' event='Property' target='Ev_Property' />
-				<event class='Components' event='Initialise' target='Ev_Initialise' />
 				<event class='System' event='Timer' target='Ev_Timer' />
+				<event class='Components' event='Initialise' target='Ev_Initialise' />
+				<event class='Components' event='Property' target='Ev_Property' />
+				<event class='Components' event='Renamed' target='Ev_Renamed' />
 			</events>
 			<apis >
 				<api name='ReadWidth' alt='ReadWidth' type='1' proto='1' />
@@ -289,7 +289,7 @@ Some displays have their own in-built font set and so do not require an addition
 						<command class_type='sim' title='Find First Top Level Component in project' macro='Tree.StepChildHead' >
 							<argument exp='.Handle' />
 						</command>
-						<command class_type='loop' title='Loop' type='0' exp='.Handle' for1='' for3='' >
+						<command class_type='loop' title='Loop' type='0' exp='.Handle' >
 							<flowline >
 								<command class_type='sim' title='Check to see if it is a display manager component' macro='Component.Property.GetValue' >
 									<return exp='.DM_Handle' />
@@ -325,7 +325,7 @@ Some displays have their own in-built font set and so do not require an addition
 							<flowline >
 								<command class_type='decision' title='Decision' exp='WidthFixed = 0' swap='0' >
 									<flowline >
-										<command class_type='loop' title='Loop' type='0' exp='.Character &gt; 0' for1='' for3='' >
+										<command class_type='loop' title='Loop' type='0' exp='.Character &gt; 0' >
 											<flowline >
 												<command class_type='calculation' title='Pre-Decrement' >
 													<exp exp='.Character = .Character - 1' />
@@ -521,7 +521,7 @@ Some displays have their own in-built font set and so do not require an addition
 									<argument exp='.Str' />
 									<argument exp='1' />
 								</command>
-								<command class_type='loop' title='Loop' type='0' exp='.BytesRead = 1' for1='' for3='' >
+								<command class_type='loop' title='Loop' type='0' exp='.BytesRead = 1' >
 									<flowline >
 										<command class_type='decision' title='Check for new line' exp='.Str[0] = &apos;\n&apos;' swap='0' >
 											<flowline >
@@ -550,7 +550,7 @@ Some displays have their own in-built font set and so do not require an addition
 														<command class_type='calculation' title='Jump to start of name on font line' >
 															<exp exp='.idx = 21' />
 														</command>
-														<command class_type='loop' title='Loop' type='0' exp='.Line[.idx] != &apos;\&quot;&apos;' for1='' for3='' >
+														<command class_type='loop' title='Loop' type='0' exp='.Line[.idx] != &apos;\&quot;&apos;' >
 															<flowline >
 																<command class_type='calculation' title='Append font name to return string' >
 																	<exp exp='.Return[.ReturnIdx] = .Line[.idx]' />
@@ -685,7 +685,7 @@ Some displays have their own in-built font set and so do not require an addition
 									<argument exp='.Str' />
 									<argument exp='1' />
 								</command>
-								<command class_type='loop' title='Loop' type='0' exp='.BytesRead = 1' for1='' for3='' >
+								<command class_type='loop' title='Loop' type='0' exp='.BytesRead = 1' >
 									<flowline >
 										<command class_type='decision' title='Check for new line' exp='.Str[0] = &apos;\n&apos;' swap='0' >
 											<flowline >
@@ -1246,7 +1246,7 @@ Coming soon' textarea='12,0,12,0' />
 						<local name='StateCount' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
 						<command class_type='decision' title='Decision' exp='Length$(CustomFontFile) = 0' swap='0' >
 							<flowline >
-								<command class_type='goto' title='Goto Connection Point' labelid='0' labelname='' labeltype='0' />
+								<command class_type='goto' title='Goto Connection Point' labelid='0' labelname='' />
 							</flowline>
 							<flowline />
 						</command>
@@ -1264,7 +1264,7 @@ Coming soon' textarea='12,0,12,0' />
 						</command>
 						<command class_type='decision' title='Decision' exp='.FileHandle = 0' swap='0' >
 							<flowline >
-								<command class_type='goto' title='Goto Connection Point' labelid='0' labelname='' labeltype='0' />
+								<command class_type='goto' title='Goto Connection Point' labelid='0' labelname='' />
 							</flowline>
 							<flowline />
 						</command>
@@ -1274,7 +1274,7 @@ Coming soon' textarea='12,0,12,0' />
 							<argument exp='::File.Seek_Begin' />
 						</command>
 						<command class_type='comment' title='' comment='First part - pull out bitmap pixel data' textarea='12,0,12,0' />
-						<command class_type='loop' title='Read until we hit first &apos;{&apos;' type='0' exp='.Done = 0' for1='' for3='' >
+						<command class_type='loop' title='Read until we hit first &apos;{&apos;' type='0' exp='.Done = 0' >
 							<flowline >
 								<command class_type='sim' title='Built-in Function' macro='File.ReadArray' >
 									<argument exp='.FileHandle' />
@@ -1302,7 +1302,7 @@ Coming soon' textarea='12,0,12,0' />
 						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Done = 0' />
 						</command>
-						<command class_type='loop' title='Read until we hit first &apos;}&apos;' type='0' exp='.Done = 0' for1='' for3='' >
+						<command class_type='loop' title='Read until we hit first &apos;}&apos;' type='0' exp='.Done = 0' >
 							<flowline >
 								<command class_type='sim' title='Built-in Function' macro='File.ReadArray' >
 									<argument exp='.FileHandle' />
@@ -1372,7 +1372,7 @@ Coming soon' textarea='12,0,12,0' />
 							<exp exp='.index = 0' />
 							<exp exp='.Done = 0' />
 						</command>
-						<command class_type='loop' title='Read until we hit second &apos;{&apos;' type='0' exp='.Done = 0' for1='' for3='' >
+						<command class_type='loop' title='Read until we hit second &apos;{&apos;' type='0' exp='.Done = 0' >
 							<flowline >
 								<command class_type='sim' title='Built-in Function' macro='File.ReadArray' >
 									<argument exp='.FileHandle' />
@@ -1423,12 +1423,12 @@ Coming soon' textarea='12,0,12,0' />
 							<exp exp='.Done = 0' />
 							<exp exp='.State = 0' />
 						</command>
-						<command class_type='loop' title='Read until we hit Second &apos;}&apos;' type='0' exp='.Done = 0' for1='' for3='' >
+						<command class_type='loop' title='Read until we hit Second &apos;}&apos;' type='0' exp='.Done = 0' >
 							<flowline >
 								<command class_type='calculation' title='Calculation' >
 									<exp exp='.InnerDone = 0' />
 								</command>
-								<command class_type='loop' title='Read until we hit inner &apos;{&apos;' type='0' exp='.InnerDone = 0' for1='' for3='' >
+								<command class_type='loop' title='Read until we hit inner &apos;{&apos;' type='0' exp='.InnerDone = 0' >
 									<flowline >
 										<command class_type='sim' title='Built-in Function' macro='File.ReadArray' >
 											<argument exp='.FileHandle' />
@@ -1500,7 +1500,7 @@ Coming soon' textarea='12,0,12,0' />
 										<command class_type='calculation' title='Calculation' >
 											<exp exp='.InnerDone = 0' />
 										</command>
-										<command class_type='loop' title='Read until we hit inner &apos;,&apos;' type='0' exp='.InnerDone = 0' for1='' for3='' >
+										<command class_type='loop' title='Read until we hit inner &apos;,&apos;' type='0' exp='.InnerDone = 0' >
 											<flowline >
 												<command class_type='sim' title='Built-in Function' macro='File.ReadArray' >
 													<argument exp='.FileHandle' />
@@ -1547,7 +1547,7 @@ Coming soon' textarea='12,0,12,0' />
 							<exp exp='.State = 0' />
 							<exp exp='.index = 0' />
 						</command>
-						<command class_type='loop' title='Read until we hit last &apos;{&apos;' type='0' exp='.Done = 0' for1='' for3='' >
+						<command class_type='loop' title='Read until we hit last &apos;{&apos;' type='0' exp='.Done = 0' >
 							<flowline >
 								<command class_type='sim' title='Built-in Function' macro='File.ReadArray' >
 									<argument exp='.FileHandle' />
@@ -1577,7 +1577,7 @@ Coming soon' textarea='12,0,12,0' />
 							<exp exp='.State = 0' />
 							<exp exp='.StateCount = 0' />
 						</command>
-						<command class_type='loop' title='Read until we hit final &apos;{&apos;' type='0' exp='.Done = 0' for1='' for3='' >
+						<command class_type='loop' title='Read until we hit final &apos;{&apos;' type='0' exp='.Done = 0' >
 							<flowline >
 								<command class_type='sim' title='Built-in Function' macro='File.ReadArray' >
 									<argument exp='.FileHandle' />
@@ -1738,7 +1738,7 @@ Coming soon' textarea='12,0,12,0' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='label' title='Declare Connection Point' labelid='0' labelname='A' labeltype='4' />
+						<command class_type='label' title='Declare Connection Point' labelid='0' labelname='A' />
 					</flowline>
 				</macro>
 				<macro >
@@ -1879,7 +1879,6 @@ Coming soon' textarea='12,0,12,0' />
 26, 19.1, 26-10-24, BR, Mod to allow larger space widths to be entered;
 27, 19.1, 04-11-24, BR, Fixed a bug with the space widths and reapplied the previous method, now with more options;
 28, 20.0, 17-07-25, BR, Added binary filename property which is pulled from updated index.xml;' textarea='12,0,12,0' />
-						<command class_type='call' title='User Macro' macro='Ev_Initialise' />
 						<command class_type='call' title='User Macro' macro='Ev_Property' />
 					</flowline>
 				</macro>
@@ -1938,10 +1937,10 @@ FONT' />
 	<keymap />
 	<panel2d shadows='0' lighting='2' brightness='0' >
 		<background rgb='16777215' img='' style='0' />
-		<camera xe='0.249067' ye='3.82274' ze='318.162' xt='0.249067' yt='3.82274' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
-		<viewport dx='236' dy='782' zoom='89.753' fix_topleft='0' />
+		<camera xe='0.249067' ye='3.82274' ze='601.525' xt='0.249067' yt='3.82274' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='484' dy='782' zoom='97.3592' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='0' />
-		<winpos ID='7005' RectRecentFloat='613,635,1263,1085' RectRecentDocked='1137,141,1393,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7005' RectRecentFloat='613,635,1263,1085' RectRecentDocked='966,141,1470,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel2d>
 	<panel3d shadows='0' lighting='2' brightness='0' perspective='1' >
 		<background rgb='8409120' img='' style='5' />
@@ -1954,23 +1953,23 @@ FONT' />
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,462,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,246,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='0' />
 	<layout >
-		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadASCIILUT' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SumWidths' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadWidth' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadFontStat' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Renamed' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Prv_ParseCustomFont' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Prv_CollectFontFilter' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Prv_CollectFontData' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='80' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Timer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Prv_UpdateDCComps' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadASCIILUT' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SumWidths' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadWidth' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadFontStat' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Renamed' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_ParseCustomFont' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_CollectFontFilter' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_CollectFontData' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='80' scrollx='2047' scrolly='3456' flags='0' />
+		<view type='0' name='Ev_Timer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_UpdateDCComps' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA7AMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>
