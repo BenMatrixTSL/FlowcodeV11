@@ -133,6 +133,7 @@ Master Mode: General purpose output pin used to select the remote SPI device.
 Slave Mode: Hardware chip select pin input used to select the SPI device.
 ' />
 				</property>
+				<property name='DHCP' target='DHCP' typeid='7' hidden='0' locked='0' info='Enable DHCP to automatically obtain IP address, subnet mask and gateway from a DHCP server. When enabled, the IP Address, Subnet Mask and Gateway IP properties are not used.' />
 				<property name='Gateway IP' hidden='0' >
 					<property name='Gateway0' target='gateway0' typeid='14' hidden='0' locked='0' info='' />
 					<property name='Gateway1' target='gateway1' typeid='14' hidden='0' locked='0' info='' />
@@ -181,7 +182,6 @@ Sets which interface we are communicating via.' filter='0000
 0044
 255AutoDetect' />
 					</property>
-					<property name='DHCP' target='DHCP' typeid='7' hidden='0' locked='0' info='' />
 				</property>
 				<property name='RemapIndex' target='RemapIndex' typeid='21' hidden='1' locked='0' info='' />
 			</properties>
@@ -233,6 +233,11 @@ Sets which interface we are communicating via.' filter='0000
 				<event class='Connection' event='ChipChange' target='Ev_ChipChange' />
 			</events>
 			<apis >
+				<api name='DHCP_Run' alt='DHCP_Run' type='1' proto='1' />
+				<api name='DNS_GetHostByName' alt='DNS_GetHostByName' type='1' proto='1' />
+				<api name='DNS_GetServer' alt='DNS_GetServer' type='1' proto='1' />
+				<api name='DNS_GetResolvedIP' alt='DNS_GetResolvedIP' type='1' proto='1' />
+				<api name='DHCP_CheckLease' alt='DHCP_CheckLease' type='1' proto='1' />
 				<api name='TxSendMyIP' alt='TxSendMyIP_Sim' type='1' proto='1' />
 				<api name='RxMatchMyIP' alt='RxMatchMyIP_Sim' type='1' proto='1' />
 				<api name='RxMatch_4_Bytes' alt='RxMatch_4_Bytes_Sim' type='1' proto='1' />
@@ -404,6 +409,27 @@ Sets which interface we are communicating via.' filter='0000
 				</variable>
 				<variable public='0' >
 					<def class_type='variable' name='DHCP_State' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='DHCP_LeaseTime' type='u32' description='Lease duration in seconds from DHCP server' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='DHCP_RenewIn' type='u32' description='Seconds remaining until T1 renewal attempt' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='DHCP_ServerIP' type='u8' description='IP of the DHCP server (from option 54)' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+						<array size='4' />
+					</def>
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='DNS_MSG' type='u8' description='DNS packet buffer for outgoing query and incoming response.' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+						<array size='128' />
+					</def>
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='DNS_ResolvedIP' type='u8' description='Resolved IP address from the most recent successful DNS_GetHostByName call.' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+						<array size='4' />
+					</def>
 				</variable>
 				<variable public='0' >
 					<def class_type='variable' name='Sn_MR_UDP' type='s16' description='' isconst='1' isHidden='0' isinit='1' usrinit='2' setinit='2' />
@@ -1764,7 +1790,7 @@ Now wait until confirmation of socket opened in UDP mode' textarea='12,0,12,0' /
 					</flowline>
 				</macro>
 				<macro >
-					<flowline name='DHCP_Parse' description='' statediag='0' >
+					<flowline name='DHCP_Parse' description='Internal. Reads the incoming DHCP packet on channel 0 into DHCP_MSG. Extracts yiaddr (offered IP) into My_IP, then scans TLV options: option 1 = Subnet, option 3 = Gateway, option 6 = dns[], option 51 = lease time into DHCP_LeaseTime, option 53 = message type (returned), option 54 = server IP into DHCP_ServerIP. Returns 0 (nothing), 2 (OFFER), 5 (ACK), or 6 (NAK).' statediag='0' >
 						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='len' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='p' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
@@ -1785,6 +1811,12 @@ Now wait until confirmation of socket opened in UDP mode' textarea='12,0,12,0' /
 											<argument exp='0' />
 											<argument exp='DHCP_MSG' />
 											<argument exp='.len' />
+										</command>
+										<command class_type='calculation' title='Read assigned IP from yiaddr (header bytes 16-19)' >
+											<exp exp='My_IP[0] = DHCP_MSG[16]' />
+											<exp exp='My_IP[1] = DHCP_MSG[17]' />
+											<exp exp='My_IP[2] = DHCP_MSG[18]' />
+											<exp exp='My_IP[3] = DHCP_MSG[19]' />
 										</command>
 										<command class_type='calculation' title='Calculation' >
 											<exp exp='.p = 240' />
@@ -1848,7 +1880,7 @@ Now wait until confirmation of socket opened in UDP mode' textarea='12,0,12,0' /
 																<exp exp='Gateway[1] = DHCP_MSG[.p + 3]' />
 																<exp exp='Gateway[2] = DHCP_MSG[.p + 4]' />
 																<exp exp='Gateway[3] = DHCP_MSG[.p + 5]' />
-																<exp exp='.p = .p + .opt_len + 1' />
+																<exp exp='.p = .p + .opt_len + 2' />
 															</command>
 														</flowline>
 													</case>
@@ -1861,27 +1893,32 @@ Now wait until confirmation of socket opened in UDP mode' textarea='12,0,12,0' /
 																<exp exp='dns[1] = DHCP_MSG[.p + 3]' />
 																<exp exp='dns[2] = DHCP_MSG[.p + 4]' />
 																<exp exp='dns[3] = DHCP_MSG[.p + 5]' />
-																<exp exp='.p = .p + .opt_len + 1' />
+																<exp exp='.p = .p + .opt_len + 2' />
 															</command>
 														</flowline>
 													</case>
 													<case exp='51' >
 														<flowline >
 															<command class_type='comment' title='' comment='dhcpIPaddrLeaseTime' textarea='12,0,12,0' />
-															<command class_type='calculation' title='Calculation' >
+															<command class_type='calculation' title='Capture lease time (big-endian u32, seconds)' >
 																<exp exp='.opt_len = DHCP_MSG[.p + 1]' />
-																<exp exp='.p = .p + .opt_len + 1' />
+																<exp exp='DHCP_LeaseTime = DHCP_MSG[.p + 2]' />
+																<exp exp='DHCP_LeaseTime = (DHCP_LeaseTime &lt;&lt; 8) | DHCP_MSG[.p + 3]' />
+																<exp exp='DHCP_LeaseTime = (DHCP_LeaseTime &lt;&lt; 8) | DHCP_MSG[.p + 4]' />
+																<exp exp='DHCP_LeaseTime = (DHCP_LeaseTime &lt;&lt; 8) | DHCP_MSG[.p + 5]' />
+																<exp exp='DHCP_RenewIn = DHCP_LeaseTime &gt;&gt; 1' />
+																<exp exp='.p = .p + .opt_len + 2' />
 															</command>
 														</flowline>
 													</case>
 													<case exp='54' >
 														<flowline >
 															<command class_type='comment' title='' comment='dhcpServerIdentifier' textarea='12,0,12,0' />
-															<command class_type='calculation' title='Calculation' >
-																<exp exp='My_IP[0] = DHCP_MSG[.p + 2]' />
-																<exp exp='My_IP[1] = DHCP_MSG[.p + 3]' />
-																<exp exp='My_IP[2] = DHCP_MSG[.p + 4]' />
-																<exp exp='My_IP[3] = DHCP_MSG[.p + 5]' />
+															<command class_type='calculation' title='Store DHCP server IP for unicast renewal' >
+																<exp exp='DHCP_ServerIP[0] = DHCP_MSG[.p + 2]' />
+																<exp exp='DHCP_ServerIP[1] = DHCP_MSG[.p + 3]' />
+																<exp exp='DHCP_ServerIP[2] = DHCP_MSG[.p + 4]' />
+																<exp exp='DHCP_ServerIP[3] = DHCP_MSG[.p + 5]' />
 																<exp exp='.p = .p + 6' />
 															</command>
 														</flowline>
@@ -2158,6 +2195,132 @@ Now wait until confirmation of socket opened in UDP mode' textarea='12,0,12,0' /
 							<argument exp='TCP_Base' />
 							<argument exp='&quot;mac5&quot;' />
 						</command>
+						<command class_type='decision' title='Show/hide static IP settings' exp='DHCP' swap='0' >
+							<flowline>
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetWritable' >
+									<argument exp='this' />
+									<argument exp='&quot;gateway0&quot;' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetWritable' >
+									<argument exp='this' />
+									<argument exp='&quot;gateway1&quot;' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetWritable' >
+									<argument exp='this' />
+									<argument exp='&quot;gateway2&quot;' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetWritable' >
+									<argument exp='this' />
+									<argument exp='&quot;gateway3&quot;' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetWritable' >
+									<argument exp='this' />
+									<argument exp='&quot;subnet0&quot;' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetWritable' >
+									<argument exp='this' />
+									<argument exp='&quot;subnet1&quot;' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetWritable' >
+									<argument exp='this' />
+									<argument exp='&quot;subnet2&quot;' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetWritable' >
+									<argument exp='this' />
+									<argument exp='&quot;subnet3&quot;' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetWritable' >
+									<argument exp='this' />
+									<argument exp='&quot;ip0&quot;' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetWritable' >
+									<argument exp='this' />
+									<argument exp='&quot;ip1&quot;' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetWritable' >
+									<argument exp='this' />
+									<argument exp='&quot;ip2&quot;' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetWritable' >
+									<argument exp='this' />
+									<argument exp='&quot;ip3&quot;' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+							<flowline>
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetWritable' >
+									<argument exp='this' />
+									<argument exp='&quot;gateway0&quot;' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetWritable' >
+									<argument exp='this' />
+									<argument exp='&quot;gateway1&quot;' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetWritable' >
+									<argument exp='this' />
+									<argument exp='&quot;gateway2&quot;' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetWritable' >
+									<argument exp='this' />
+									<argument exp='&quot;gateway3&quot;' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetWritable' >
+									<argument exp='this' />
+									<argument exp='&quot;subnet0&quot;' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetWritable' >
+									<argument exp='this' />
+									<argument exp='&quot;subnet1&quot;' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetWritable' >
+									<argument exp='this' />
+									<argument exp='&quot;subnet2&quot;' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetWritable' >
+									<argument exp='this' />
+									<argument exp='&quot;subnet3&quot;' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetWritable' >
+									<argument exp='this' />
+									<argument exp='&quot;ip0&quot;' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetWritable' >
+									<argument exp='this' />
+									<argument exp='&quot;ip1&quot;' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetWritable' >
+									<argument exp='this' />
+									<argument exp='&quot;ip2&quot;' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetWritable' >
+									<argument exp='this' />
+									<argument exp='&quot;ip3&quot;' />
+									<argument exp='1' />
+								</command>
+							</flowline>
+						</command>
 					</flowline>
 				</macro>
 				<macro >
@@ -2238,7 +2401,7 @@ Now wait until confirmation of socket opened in UDP mode' textarea='12,0,12,0' /
 					</flowline>
 				</macro>
 				<macro >
-					<flowline name='DHCP_Discover' description='' statediag='0' >
+					<flowline name='DHCP_Discover' description='Internal. Builds and broadcasts a DHCPDISCOVER packet on channel 0 (port 67). Appends options: message type=1, client ID (Ethernet/MAC), hostname composed of &quot;WIZnet&quot; and the last three MAC bytes, and a parameter request list asking for subnet mask, gateway, DNS, domain, T1, and T2 timers. Only runs when the DHCP property is enabled. Called automatically by DHCP_Run.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<command class_type='decision' title='Decision' exp='DHCP' swap='0' >
 							<flowline >
@@ -3004,7 +3167,7 @@ Now wait until confirmation of socket opened in UDP mode' textarea='12,0,12,0' /
 					</flowline>
 				</macro>
 				<macro >
-					<flowline name='DHCP_Run' description='' statediag='0' >
+					<flowline name='DHCP_Run' description='Advances the DHCP state machine by one step and returns 0. States: 0=send DISCOVER; 1=wait for OFFER (type 2), timeout on miss; 2=wait for ACK (type 5) then advance to state 3 (leased); 3=leased, no-op (DHCP_CheckLease handles renewal); 4=renewal REQUEST sent, advance to 5; 5=wait for renewal ACK (type 5) or NAK/timeout back to 0. Called automatically by Initialise during startup. To force renegotiation: set DHCP_State=0, DHCP_Timeout=0, then call this macro in a polling loop until DHCP_State reaches 3 or DHCP_Timeout exceeds 1000.' statediag='0' >
 						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='type' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='calculation' title='Calculation' >
@@ -3066,10 +3229,40 @@ Now wait until confirmation of socket opened in UDP mode' textarea='12,0,12,0' /
 								</flowline>
 							</case>
 							<case exp='4' >
-								<flowline />
+								<flowline >
+									<command class_type='comment' title='' comment='Renewal: send unicast REQUEST to DHCP server' textarea='12,0,12,0' />
+									<command class_type='call' title='User Macro' macro='DHCP_Request' />
+									<command class_type='calculation' title='Advance to wait-for-ACK state' >
+										<exp exp='DHCP_State = 5' />
+									</command>
+								</flowline>
 							</case>
 							<case exp='5' >
-								<flowline />
+								<flowline >
+									<command class_type='comment' title='' comment='Waiting for renewal ACK' textarea='12,0,12,0' />
+									<command class_type='decision' title='ACK received?' exp='.type = 5' swap='0' >
+										<flowline >
+											<command class_type='calculation' title='Renewal success: reset countdown from new lease time' >
+												<exp exp='DHCP_RenewIn = DHCP_LeaseTime &gt;&gt; 1' />
+												<exp exp='DHCP_State = 3' />
+											</command>
+										</flowline>
+										<flowline >
+											<command class_type='decision' title='NAK received?' exp='.type = 6' swap='0' >
+												<flowline >
+													<command class_type='calculation' title='NAK: fall back to full discovery' >
+														<exp exp='DHCP_State = 0' />
+													</command>
+												</flowline>
+												<flowline >
+													<command class_type='calculation' title='Still waiting' >
+														<exp exp='DHCP_Timeout = DHCP_Timeout + 1' />
+													</command>
+												</flowline>
+											</command>
+										</flowline>
+									</command>
+								</flowline>
 							</case>
 							<case exp='6' >
 								<flowline />
@@ -3401,7 +3594,7 @@ Now wait until confirmation of socket opened in UDP mode' textarea='12,0,12,0' /
 					</flowline>
 				</macro>
 				<macro >
-					<flowline name='DHCP_Request' description='' statediag='0' >
+					<flowline name='DHCP_Request' description='Internal. Builds and sends a DHCPREQUEST on channel 0. For lease renewal (DHCP_State=4) unicasts to DHCP_ServerIP with ciaddr set to the current My_IP (as required by RFC 2131 for unicast renewal). For initial requests (all other states) broadcasts to 255.255.255.255. Appends TLV options: message type=3, client ID, requested IP, server identifier, parameter request list, END. Called automatically by DHCP_Run.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<local name='idx' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='ptr' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
@@ -3411,17 +3604,23 @@ Now wait until confirmation of socket opened in UDP mode' textarea='12,0,12,0' /
 						<command class_type='decision' title='Decision' exp='DHCP' swap='0' >
 							<flowline >
 								<command class_type='call' title='User Macro' macro='DHCP_MakeMessage' />
-								<command class_type='decision' title='Leased or ReRequest?' exp='(DHCP_State = 3) || (DHCP_State = 4)' swap='0' >
+								<command class_type='decision' title='Renewal (state 4) or initial request?' exp='DHCP_State = 4' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' >
-											<exp exp='.ip[0] = 255' />
-											<exp exp='.ip[1] = 255' />
-											<exp exp='.ip[2] = 255' />
-											<exp exp='.ip[3] = 255' />
+										<command class_type='calculation' title='Renewal: unicast to DHCP server' >
+											<exp exp='.ip[0] = DHCP_ServerIP[0]' />
+											<exp exp='.ip[1] = DHCP_ServerIP[1]' />
+											<exp exp='.ip[2] = DHCP_ServerIP[2]' />
+											<exp exp='.ip[3] = DHCP_ServerIP[3]' />
+										</command>
+										<command class_type='calculation' title='Set ciaddr to current IP (required for unicast renewal)' >
+											<exp exp='DHCP_MSG[12] = My_IP[0]' />
+											<exp exp='DHCP_MSG[13] = My_IP[1]' />
+											<exp exp='DHCP_MSG[14] = My_IP[2]' />
+											<exp exp='DHCP_MSG[15] = My_IP[3]' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='calculation' title='Calculation' >
+										<command class_type='calculation' title='Initial request: broadcast' >
 											<exp exp='.ip[0] = 255' />
 											<exp exp='.ip[1] = 255' />
 											<exp exp='.ip[2] = 255' />
@@ -3983,7 +4182,7 @@ Returns 1 to indicate successful communication.' statediag='0' >
 					</flowline>
 				</macro>
 				<macro >
-					<flowline name='DHCP_MakeMessage' description='' statediag='0' >
+					<flowline name='DHCP_MakeMessage' description='Internal. Fills DHCP_MSG[0..239] with the standard 236-byte BOOTP/DHCP fixed header: op=BOOTREQUEST(1), htype=Ethernet(1), hlen=6, hops=0, xid=0x12345678, secs=0, flags=BROADCAST(0x8000), ciaddr/yiaddr/siaddr/giaddr=0, chaddr=My_MAC (zero-padded to 16 bytes, server/file fields zeroed). Appends the DHCP magic cookie (0x63825363) at bytes 236-239. DHCP_Discover and DHCP_Request call this first, then append their option TLVs from offset 240.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<local name='idx' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='ptr' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
@@ -4075,6 +4274,388 @@ Returns 1 to indicate successful communication.' statediag='0' >
 								</command>
 							</flowline>
 							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='DHCP_CheckLease' description='Call once per second from your main loop when DHCP is enabled. Decrements the T1 renewal timer and when it expires attempts a unicast renewal, falling back to full rediscovery if the renewal fails. Returns: 0=lease OK, 2=renewed, 3=rebind failed, 4=rebind succeeded.' statediag='0' >
+						<return name='Return' type='u8' description='0=OK, 2=renewed, 3=rebind failed, 4=rebind succeeded' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.Return = 0' />
+						</command>
+						<command class_type='decision' title='DHCP enabled and lease active?' exp='DHCP &amp;&amp; (DHCP_State = 3)' swap='0' >
+							<flowline >
+								<command class_type='decision' title='Time remaining before T1?' exp='DHCP_RenewIn &gt; 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Decrement renewal countdown' >
+											<exp exp='DHCP_RenewIn = DHCP_RenewIn - 1' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='T1 expired: attempt unicast renewal' >
+											<exp exp='DHCP_State = 4' />
+											<exp exp='DHCP_Timeout = 0' />
+										</command>
+										<command class_type='loop' title='Loop' type='0' exp='(DHCP_Timeout &lt; 500) &amp;&amp; (DHCP_State &lt; 3)' >
+											<flowline >
+												<command class_type='call' title='User Macro' macro='DHCP_Run' />
+											</flowline>
+										</command>
+										<command class_type='decision' title='Renewal succeeded?' exp='DHCP_State = 3' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='.Return = 2' />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='calculation' title='Renewal failed: fall back to full rediscovery (rebind)' >
+													<exp exp='DHCP_State = 0' />
+													<exp exp='DHCP_Timeout = 0' />
+												</command>
+												<command class_type='loop' title='Loop' type='0' exp='(DHCP_Timeout &lt; 1000) &amp;&amp; (DHCP_State &lt; 3)' >
+													<flowline >
+														<command class_type='call' title='User Macro' macro='DHCP_Run' />
+													</flowline>
+												</command>
+												<command class_type='decision' title='Rebind succeeded?' exp='DHCP_State = 3' swap='0' >
+													<flowline >
+														<command class_type='call' title='Set Gateway' macro='MAC_WriteArray' >
+															<argument exp='0x01' />
+															<argument exp='Gateway' />
+															<argument exp='4' />
+														</command>
+														<command class_type='call' title='Set Subnet' macro='MAC_WriteArray' >
+															<argument exp='0x05' />
+															<argument exp='Subnet' />
+															<argument exp='4' />
+														</command>
+														<command class_type='call' title='Set IP Address' macro='MAC_WriteArray' >
+															<argument exp='0x0F' />
+															<argument exp='My_IP' />
+															<argument exp='4' />
+														</command>
+														<command class_type='calculation' title='Calculation' >
+															<exp exp='.Return = 4' />
+														</command>
+													</flowline>
+													<flowline >
+														<command class_type='calculation' title='Calculation' >
+															<exp exp='.Return = 3' />
+														</command>
+													</flowline>
+												</command>
+											</flowline>
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='DNS_GetServer' description='Returns the specified byte (index 0-3) of the configured DNS server IP address.' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Idx' type='u8' description='IP byte index 0-3.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.Return = dns[.Idx]' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='DNS_GetResolvedIP' description='Returns the specified byte (index 0-3) of the IP address resolved by the most recent successful DNS_GetHostByName call.' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Idx' type='u8' description='IP byte index 0-3.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.Return = DNS_ResolvedIP[.Idx]' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='DNS_BuildQuery' description='Encodes the given hostname as a DNS type-A query packet into DNS_MSG. Returns the total packet length in bytes.' statediag='0' >
+						<return name='Return' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Hostname' type='u8' description='Hostname to resolve as a byte array.' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='64' />
+						</param>
+						<param name='HostLen' type='u8' description='Length of the hostname string.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='ptr' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='i' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='seg_start' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='seg_len' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='j' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='DNS header: ID=0x1234 RD=1 QDCOUNT=1' >
+							<exp exp='DNS_MSG[0] = 0x12' />
+							<exp exp='DNS_MSG[1] = 0x34' />
+							<exp exp='DNS_MSG[2] = 0x01' />
+							<exp exp='DNS_MSG[3] = 0x00' />
+							<exp exp='DNS_MSG[4] = 0x00' />
+							<exp exp='DNS_MSG[5] = 0x01' />
+							<exp exp='DNS_MSG[6] = 0x00' />
+							<exp exp='DNS_MSG[7] = 0x00' />
+							<exp exp='DNS_MSG[8] = 0x00' />
+							<exp exp='DNS_MSG[9] = 0x00' />
+							<exp exp='DNS_MSG[10] = 0x00' />
+							<exp exp='DNS_MSG[11] = 0x00' />
+						</command>
+						<command class_type='calculation' title='Initialise write pointer and hostname index' >
+							<exp exp='.ptr = 12' />
+							<exp exp='.i = 0' />
+						</command>
+						<command class_type='loop' title='For each hostname label' type='0' exp='.i &lt; .HostLen' >
+							<flowline >
+								<command class_type='calculation' title='Record segment start' >
+									<exp exp='.seg_start = .i' />
+									<exp exp='.seg_len = 0' />
+								</command>
+								<command class_type='loop' title='Scan to dot or end' type='0' exp='(.i &lt; .HostLen) &amp;&amp; (.Hostname[.i] != 46)' >
+									<flowline >
+										<command class_type='calculation' title='Advance index and length' >
+											<exp exp='.i = .i + 1' />
+											<exp exp='.seg_len = .seg_len + 1' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='calculation' title='Write label length byte and reset inner index' >
+									<exp exp='DNS_MSG[.ptr] = .seg_len' />
+									<exp exp='.ptr = .ptr + 1' />
+									<exp exp='.j = 0' />
+								</command>
+								<command class_type='loop' title='Write label characters' type='0' exp='.j &lt; .seg_len' >
+									<flowline >
+										<command class_type='calculation' title='Write character and advance' >
+											<exp exp='DNS_MSG[.ptr] = .Hostname[.seg_start + .j]' />
+											<exp exp='.ptr = .ptr + 1' />
+											<exp exp='.j = .j + 1' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='decision' title='Skip dot separator' exp='.i &lt; .HostLen' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Skip the dot character' >
+											<exp exp='.i = .i + 1' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='calculation' title='Root label, QTYPE=A(1), QCLASS=IN(1)' >
+							<exp exp='DNS_MSG[.ptr] = 0' />
+							<exp exp='DNS_MSG[.ptr + 1] = 0' />
+							<exp exp='DNS_MSG[.ptr + 2] = 1' />
+							<exp exp='DNS_MSG[.ptr + 3] = 0' />
+							<exp exp='DNS_MSG[.ptr + 4] = 1' />
+							<exp exp='.ptr = .ptr + 5' />
+						</command>
+						<command class_type='calculation' title='Return total packet length' >
+							<exp exp='.Return = .ptr' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='DNS_ParseResponse' description='Parses a DNS response already loaded into DNS_MSG. On finding a valid TYPE_A answer record sets DNS_ResolvedIP and returns 1, otherwise returns 0.' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='PktLen' type='u16' description='Number of bytes received into DNS_MSG.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='ptr' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='ancount' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='ans_idx' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='ans_type' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='ans_class' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='rdlen' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='done_flag' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='found' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Default to failure' >
+							<exp exp='.Return = 0' />
+						</command>
+						<command class_type='decision' title='Header invalid? (short/wrong ID/not response/RCODE error)' exp='(.PktLen &lt; 12) || (DNS_MSG[0] != 0x12) || (DNS_MSG[1] != 0x34) || ((DNS_MSG[2] &amp; 0x80) = 0) || ((DNS_MSG[3] &amp; 0x0F) != 0)' swap='0' >
+							<flowline />
+							<flowline >
+								<command class_type='calculation' title='Read answer count' >
+									<exp exp='.ancount = (DNS_MSG[6] * 256) + DNS_MSG[7]' />
+								</command>
+								<command class_type='decision' title='No answers?' exp='.ancount = 0' swap='0' >
+									<flowline />
+									<flowline >
+										<command class_type='calculation' title='Start after 12-byte header' >
+											<exp exp='.ptr = 12' />
+										</command>
+										<command class_type='loop' title='Skip QNAME labels (no compression in question)' type='0' exp='DNS_MSG[.ptr] != 0' >
+											<flowline >
+												<command class_type='calculation' title='Skip label: advance by length+1' >
+													<exp exp='.ptr = .ptr + DNS_MSG[.ptr] + 1' />
+												</command>
+											</flowline>
+										</command>
+										<command class_type='calculation' title='Skip root label, QTYPE, QCLASS (5 bytes)' >
+											<exp exp='.ptr = .ptr + 5' />
+										</command>
+										<command class_type='calculation' title='Initialise answer loop' >
+											<exp exp='.ans_idx = 0' />
+											<exp exp='.found = 0' />
+										</command>
+										<command class_type='loop' title='Process each answer record' type='0' exp='(.ans_idx &lt; .ancount) &amp;&amp; (.found = 0) &amp;&amp; (.ptr &lt; .PktLen)' >
+											<flowline >
+												<command class_type='calculation' title='Reset name-done flag' >
+													<exp exp='.done_flag = 0' />
+												</command>
+												<command class_type='loop' title='Skip answer NAME (with compression)' type='0' exp='(DNS_MSG[.ptr] != 0) &amp;&amp; (.done_flag = 0)' >
+													<flowline >
+														<command class_type='decision' title='Compression pointer (top 2 bits set)?' exp='(DNS_MSG[.ptr] &amp; 0xC0) = 0xC0' swap='0' >
+															<flowline >
+																<command class_type='calculation' title='Pointer: skip 2 bytes, name ends here' >
+																	<exp exp='.ptr = .ptr + 2' />
+																	<exp exp='.done_flag = 1' />
+																</command>
+															</flowline>
+															<flowline >
+																<command class_type='calculation' title='Normal label: skip length+1' >
+																	<exp exp='.ptr = .ptr + DNS_MSG[.ptr] + 1' />
+																</command>
+															</flowline>
+														</command>
+													</flowline>
+												</command>
+												<command class_type='decision' title='Not ended by pointer - skip root 0x00' exp='.done_flag = 0' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Skip root label byte' >
+															<exp exp='.ptr = .ptr + 1' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='calculation' title='Read TYPE, CLASS, skip TTL, read RDLENGTH' >
+													<exp exp='.ans_type = (DNS_MSG[.ptr] * 256) + DNS_MSG[.ptr + 1]' />
+													<exp exp='.ptr = .ptr + 2' />
+													<exp exp='.ans_class = (DNS_MSG[.ptr] * 256) + DNS_MSG[.ptr + 1]' />
+													<exp exp='.ptr = .ptr + 2' />
+													<exp exp='.ptr = .ptr + 4' />
+													<exp exp='.rdlen = (DNS_MSG[.ptr] * 256) + DNS_MSG[.ptr + 1]' />
+													<exp exp='.ptr = .ptr + 2' />
+												</command>
+												<command class_type='decision' title='Is this an A record (TYPE=1 CLASS=1)?' exp='(.ans_type = 1) &amp;&amp; (.ans_class = 1)' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Copy 4-byte IP into DNS_ResolvedIP' >
+															<exp exp='DNS_ResolvedIP[0] = DNS_MSG[.ptr]' />
+															<exp exp='DNS_ResolvedIP[1] = DNS_MSG[.ptr + 1]' />
+															<exp exp='DNS_ResolvedIP[2] = DNS_MSG[.ptr + 2]' />
+															<exp exp='DNS_ResolvedIP[3] = DNS_MSG[.ptr + 3]' />
+															<exp exp='.found = 1' />
+														</command>
+													</flowline>
+													<flowline >
+														<command class_type='calculation' title='Not an A record - skip RDATA' >
+															<exp exp='.ptr = .ptr + .rdlen' />
+														</command>
+													</flowline>
+												</command>
+												<command class_type='calculation' title='Next answer record' >
+													<exp exp='.ans_idx = .ans_idx + 1' />
+												</command>
+											</flowline>
+										</command>
+										<command class_type='calculation' title='Return 1 if A record found' >
+											<exp exp='.Return = .found' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='DNS_GetHostByName' description='Resolves a hostname to an IPv4 address using the configured DNS server. Opens a UDP socket on the specified channel, sends a type-A query, waits up to ~2 seconds for a response, then parses the answer. Returns 1 on success with DNS_ResolvedIP populated, or 0 on timeout or any error.' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='UDP socket channel to use (0-3). Must not conflict with DHCP channel.' isconst='0' isHidden='0' isinit='0' usrinit='1' setinit='' />
+						<param name='Hostname' type='u8' description='Hostname to resolve as a byte array.' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='64' />
+						</param>
+						<param name='HostLen' type='u8' description='Length of the hostname string (number of characters).' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='qlen' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='rlen' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='timeout' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Default to failure' >
+							<exp exp='.Return = 0' />
+						</command>
+						<command class_type='decision' title='DNS server configured?' exp='dns[0] = 0' swap='0' >
+							<flowline />
+							<flowline >
+								<command class_type='call' title='Open UDP socket on source port 1025' macro='CreateUDPSocket' >
+									<return exp='.Return' />
+									<argument exp='.Channel' />
+									<argument exp='1025' />
+								</command>
+								<command class_type='call' title='Set destination: DNS server port 53' macro='SetDestination' >
+									<argument exp='.Channel' />
+									<argument exp='dns[0]' />
+									<argument exp='dns[1]' />
+									<argument exp='dns[2]' />
+									<argument exp='dns[3]' />
+									<argument exp='53' />
+								</command>
+								<command class_type='call' title='Build DNS query into DNS_MSG' macro='DNS_BuildQuery' >
+									<return exp='.qlen' />
+									<argument exp='.Hostname' />
+									<argument exp='.HostLen' />
+								</command>
+								<command class_type='call' title='Start transmit' macro='TxStart' >
+									<argument exp='.Channel' />
+								</command>
+								<command class_type='call' title='Send DNS query packet' macro='TxSendArray' >
+									<argument exp='.Channel' />
+									<argument exp='DNS_MSG' />
+									<argument exp='.qlen' />
+								</command>
+								<command class_type='call' title='End transmit' macro='TxEnd' >
+									<argument exp='.Channel' />
+								</command>
+								<command class_type='calculation' title='Initialise timeout counter' >
+									<exp exp='.timeout = 0' />
+									<exp exp='.rlen = 0' />
+								</command>
+								<command class_type='loop' title='Wait for DNS response (up to ~2 s)' type='0' exp='(.rlen = 0) &amp;&amp; (.timeout &lt; 2000)' >
+									<flowline >
+										<command class_type='call' title='Check for received data' macro='RxDataSize' >
+											<return exp='.rlen' />
+											<argument exp='.Channel' />
+										</command>
+										<command class_type='calculation' title='Increment timeout counter' >
+											<exp exp='.timeout = .timeout + 1' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='decision' title='Response received?' exp='.rlen &gt; 0' swap='0' >
+									<flowline >
+										<command class_type='decision' title='Clamp response length to buffer' exp='.rlen &gt; 128' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Cap at 128 bytes' >
+													<exp exp='.rlen = 128' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+										<command class_type='call' title='Read response into DNS_MSG buffer' macro='RxReadArray' >
+											<argument exp='.Channel' />
+											<argument exp='DNS_MSG' />
+											<argument exp='.rlen' />
+										</command>
+										<command class_type='call' title='Flush remaining receive data' macro='RxFlushData' >
+											<argument exp='.Channel' />
+										</command>
+										<command class_type='call' title='Parse DNS response' macro='DNS_ParseResponse' >
+											<return exp='.Return' />
+											<argument exp='.rlen' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Timeout - return failure' >
+											<exp exp='.Return = 0' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='call' title='Close UDP socket' macro='TCPClose' >
+									<argument exp='.Channel' />
+								</command>
+							</flowline>
 						</command>
 					</flowline>
 				</macro>
@@ -4271,10 +4852,15 @@ W5500' />
 		<view type='0' name='RxReadArray_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAswEAAD8DAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 		<view type='0' name='RxDataAvailable' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAswEAAD8DAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 		<view type='0' name='DHCP_Run' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAswEAAD8DAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+	<view type='0' name='DHCP_CheckLease' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAswEAAD8DAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DHCP_Run' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAswEAAD8DAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 		<view type='0' name='DHCP_Discover' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAswEAAD8DAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 		<view type='0' name='DHCP_Parse' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAswEAAD8DAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 		<view type='0' name='DHCP_Request' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAswEAAD8DAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 		<view type='0' name='DHCP_MakeMessage' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAswEAAD8DAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+	<view type='0' name='DNS_GetHostByName' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAswEAAD8DAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+	<view type='0' name='DNS_GetServer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAswEAAD8DAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+	<view type='0' name='DNS_GetResolvedIP' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAswEAAD8DAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>

@@ -18,9 +18,9 @@
           family="ATMEGA"
           bits="8" >
 
-    <comminfo pid="0043"
-          vid="2341"
-          devdesc="Arduino UNO R3" />
+    <comminfo>
+        <com pid="6015" vid="0403" devdesc="SparkFun RedBoard" />
+     </comminfo>															  
 
     <clock max_speed="16000000"
            master_divider="1"
@@ -42,16 +42,30 @@
     </configuration>
 
     <pins sides="2" smd="0" alt_pin_refs="1" >
-        <pin name="PC6 (RESET)" port="2" bit="6" />
-        <pin name="PD0 (RXD 0)" port="3" bit="0" caption="D0" />
+		<pin name="" />
+		<pin name="" />
+		<pin name="" />
+		<pin name="" />
+		<pin name="" />
+		<pin name="" />
+		<pin name="IOREF(5V)" />
+		<pin name="PC6 (RESET)" port="2" bit="6" />
+		<pin name="3.3V" />
+		<pin name="5V" />
+		<pin name="GND" />		
+		<pin name="GND" />
+		<pin name="Vin" />		
+        <pin name="(ADC0) PC0" port="2" bit="0" adc="0" caption="D14_A0" />
+        <pin name="(ADC1) PC1" port="2" bit="1" adc="1" caption="D15_A1" />
+        <pin name="(ADC2) PC2" port="2" bit="2" adc="2" caption="D16_A2" />
+        <pin name="(ADC3) PC3" port="2" bit="3" adc="3" caption="D17_A3" />
+        <pin name="(SDA ADC4) PC4" port="2" bit="4" adc="4" caption="D18_A4" />
+        <pin name="(SCL ADC5) PC5" port="2" bit="5" adc="5" caption="D19_A5" />
+		<pin name="PD0 (RXD 0)" port="3" bit="0" caption="D0" />
         <pin name="PD1 (TXD 1)" port="3" bit="1" caption="D1" />
         <pin name="PD2 (2)" port="3" bit="2" caption="D2" />
         <pin name="PD3 (3 PWM)" port="3" bit="3" caption="D3" />
         <pin name="PD4 (4)" port="3" bit="4" caption="D4" />
-        <pin name="" />
-        <pin name="" />
-        <pin name="PB6 (XTAL1)" port="1" bit="6" />
-        <pin name="PB7 (XTAL2)" port="1" bit="7" />
         <pin name="PD5 (5 PWM)" port="3" bit="5" caption="D5" />
         <pin name="PD6 (6 PWM)" port="3" bit="6" caption="D6" />
         <pin name="PD7 (7)" port="3" bit="7" caption="D7" />
@@ -61,15 +75,12 @@
         <pin name="(MOSI 11 PWM INT) PB3" port="1" bit="3" caption="D11" />
         <pin name="(MISO 12) PB4" port="1" bit="4" caption="D12" />
         <pin name="(SCK 13 LED) PB5" port="1" bit="5" caption="D13" />
-        <pin name="" />
+        <pin name="PB6 (XTAL1)" port="1" bit="6" />
+        <pin name="PB7 (XTAL2)" port="1" bit="7" />
+        <pin name="GND" />
         <pin name="AREF" />
-        <pin name="" />
-        <pin name="(ADC0) PC0" port="2" bit="0" adc="0" caption="D14_A0" />
-        <pin name="(ADC1) PC1" port="2" bit="1" adc="1" caption="D15_A1" />
-        <pin name="(ADC2) PC2" port="2" bit="2" adc="2" caption="D16_A2" />
-        <pin name="(ADC3) PC3" port="2" bit="3" adc="3" caption="D17_A3" />
-        <pin name="(SDA ADC4) PC4" port="2" bit="4" adc="4" caption="D18_A4" />
-        <pin name="(SCL ADC5) PC5" port="2" bit="5" adc="5" caption="D19_A5" />
+        <pin name="(SDA ADC4)" />
+        <pin name="(SCL ADC5)" />
     </pins>
 
     <adc type="2" bits="10" >
@@ -227,8 +238,8 @@
           enable="EIMSK |= (1 &lt;&lt; INT0);\n"
           disable="EIMSK &amp;= ~(1 &lt;&lt; INT0);\n" >
         <ioc config="3">
-          <rising port="3" mask="1" />
-          <falling port="3" mask="1" />
+          <rising port="3" mask="4" />
+          <falling port="3" mask="4" />
         </ioc>
         <options>
           <edge name="Interrupt Edge Select">
@@ -248,8 +259,8 @@
           enable="EIMSK |= (1 &lt;&lt; INT1);\n"
           disable="EIMSK &amp;= ~(1 &lt;&lt; INT1);\n" >
         <ioc config="3">
-          <rising port="3" mask="2" />
-          <falling port="3" mask="2" />
+          <rising port="3" mask="8" />
+          <falling port="3" mask="8" />
         </ioc>
         <options>
           <edge name="Interrupt Edge Select">
@@ -283,12 +294,12 @@
     <main>
       <start code="int main()\n{\n" />
       <end code="\tmainendloop: goto mainendloop;\n}\n\n" />
-      <init code="\tMCUSR=0x00;\n\tMCUSR=0x00;\n\twdt_disable();\n" />
+      <init code="\tMCUSR=0x00;\n" />
     </main>
 
     <interrupt>
       <enable code="sei();\n" />
-      <start code="" />
+      <start code="#ifdef USE_FLOWCODE_ICD3\nICD_INTERRUPT_HANDLER\n#endif\n" />
       <end code="" />
       <init code="" />
     </interrupt>
@@ -333,10 +344,10 @@
   <test>
 
     <icd>
-        <clock port='1' pin='1' aport='1' apin='5' />
-        <data port='1' pin='0' aport='1' apin='4' />
+        <clock port='3' pin='1' aport='1' apin='5' />
+        <data port='3' pin='0' aport='1' apin='4' />
     </icd>
-
+   <icd3 type='com' channel='1' baud='115200' rxport='3' rxpin='0' txport='3' txpin='1' autodetect='0' />
   </test>
 
 </root>
