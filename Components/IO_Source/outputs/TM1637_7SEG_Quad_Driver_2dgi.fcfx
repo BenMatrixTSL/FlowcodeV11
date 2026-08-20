@@ -60,7 +60,7 @@
 	</ghost>
 	<components >
 		<settings autoimg='0' center='1' unitscale='1' fixedscale='0' fixedx='0' fixedy='0' fixedz='0' headcode='0' />
-		<definition guid='e6bd0a57-6bf2-42bb-b05e-6b6cdad2ce0e' vstate='40' vmin='4' vmaj='4' srcleaf='TM1637_7SEG_Quad_Driver_2dgi.fcfx' visiblename='7Segment (Quad TM1637)' description='Quad seven segment display using an two pin communications bus to reduce the number of control pins.
+		<definition guid='e6bd0a57-6bf2-42bb-b05e-6b6cdad2ce0e' vstate='40' vmin='0' vmaj='5' srcleaf='TM1637_7SEG_Quad_Driver_2dgi.fcfx' visiblename='7Segment (Quad TM1637)' description='Quad seven segment display using an two pin communications bus to reduce the number of control pins.
 Driven using a TM1637 quad 7-segment display driver.' category='Segment' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' catenable='1' author='Matrix Ltd' manuname='MCI Electronics' manucode='' sysinfo='1053451' keywords='' dynamic='1' scadaCompatible='0' embeddedCompatible='1' showmacros='1' iconpath='..\..\icons\components\IC7segment.png' />
 		<component class_type='root' codename='TM1637_Display_2dgdi' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' comp2dType='0' >
 			<resources />
@@ -138,134 +138,134 @@ Common Cathode:  Pin true -&gt; LED On,  Pin false -&gt; LED Off' filter='000Ano
 						<param name='Value2' type='u8' description='The number value to set the digit to (0...15), 16=Clear' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Value3' type='u8' description='The number value to set the digit to (0...15), 16=Clear' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Colon' type='u8' description='Whether to show the colon character.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_Start' />
-						<command class_type='call' title='ADDR_AUTO' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_WriteByte' >
+						<command class_type='call' title='Call Macro' macro='TM1637_Start' />
+						<command class_type='call' title='ADDR_AUTO' macro='TM1637_WriteByte' >
 							<argument exp='0x40' />
 						</command>
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_Stop' />
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_Start' />
-						<command class_type='call' title='Segment address 0' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_WriteByte' >
+						<command class_type='call' title='Call Macro' macro='TM1637_Stop' />
+						<command class_type='call' title='Call Macro' macro='TM1637_Start' />
+						<command class_type='call' title='Segment address 0' macro='TM1637_WriteByte' >
 							<argument exp='0xC0' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value0 &lt; 16' swap='0' >
+						<command class_type='decision' title='Decision' exp='.Value0 &lt; 16' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Convert value 0-15 to character pattern' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Convert value 0-15 to character pattern' >
 									<exp exp='.Value0 = DataLUT[.Value0]' />
 								</command>
-								<command class_type='call' title='Character to display 0-15' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_WriteByte' >
+								<command class_type='call' title='Character to display 0-15' macro='TM1637_WriteByte' >
 									<argument exp='.Value0' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='call' title='Clear display' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_WriteByte' >
+								<command class_type='call' title='Clear display' macro='TM1637_WriteByte' >
 									<argument exp='0x00' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value1 &lt; 16' swap='0' >
+						<command class_type='decision' title='Decision' exp='.Value1 &lt; 16' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Convert value 0-15 to character pattern' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Convert value 0-15 to character pattern' >
 									<exp exp='.Value0 = DataLUT[.Value1]' />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Colon' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Colon' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Value0 = .Value0 | 0x80' />
 										</command>
 									</flowline>
 									<flowline />
 								</command>
-								<command class_type='call' title='Character to display 0-15' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_WriteByte' >
+								<command class_type='call' title='Character to display 0-15' macro='TM1637_WriteByte' >
 									<argument exp='.Value0' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Colon' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Colon' swap='0' >
 									<flowline >
-										<command class_type='call' title='Clear display' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_WriteByte' >
+										<command class_type='call' title='Clear display' macro='TM1637_WriteByte' >
 											<argument exp='0x80' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='call' title='Clear display' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_WriteByte' >
+										<command class_type='call' title='Clear display' macro='TM1637_WriteByte' >
 											<argument exp='0x00' />
 										</command>
 									</flowline>
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value2 &lt; 16' swap='0' >
+						<command class_type='decision' title='Decision' exp='.Value2 &lt; 16' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Convert value 0-15 to character pattern' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Convert value 0-15 to character pattern' >
 									<exp exp='.Value0 = DataLUT[.Value2]' />
 								</command>
-								<command class_type='call' title='Character to display 0-15' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_WriteByte' >
+								<command class_type='call' title='Character to display 0-15' macro='TM1637_WriteByte' >
 									<argument exp='.Value0' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='call' title='Clear display' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_WriteByte' >
+								<command class_type='call' title='Clear display' macro='TM1637_WriteByte' >
 									<argument exp='0x00' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value3 &lt; 16' swap='0' >
+						<command class_type='decision' title='Decision' exp='.Value3 &lt; 16' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Convert value 0-15 to character pattern' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Convert value 0-15 to character pattern' >
 									<exp exp='.Value0 = DataLUT[.Value3]' />
 								</command>
-								<command class_type='call' title='Character to display 0-15' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_WriteByte' >
+								<command class_type='call' title='Character to display 0-15' macro='TM1637_WriteByte' >
 									<argument exp='.Value0' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='call' title='Clear display' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_WriteByte' >
+								<command class_type='call' title='Clear display' macro='TM1637_WriteByte' >
 									<argument exp='0x00' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_Stop' />
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_Start' />
-						<command class_type='call' title='ADDR_FIXED' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_WriteByte' >
+						<command class_type='call' title='Call Macro' macro='TM1637_Stop' />
+						<command class_type='call' title='Call Macro' macro='TM1637_Start' />
+						<command class_type='call' title='ADDR_FIXED' macro='TM1637_WriteByte' >
 							<argument exp='Brightness' />
 						</command>
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_Stop' />
+						<command class_type='call' title='Call Macro' macro='TM1637_Stop' />
 					</flowline>
 				</macro>
 				<macro >
 					<flowline name='Prv_ClearDigit3' description='Clears Digit 3 Including decimal point' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 							<argument exp='d3segmentA' />
 							<argument exp='&quot;colFill&quot;' />
 							<argument exp='LEDAutoOffColour' />
 						</command>
-						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 							<argument exp='d3segmentB' />
 							<argument exp='&quot;colFill&quot;' />
 							<argument exp='LEDAutoOffColour' />
 						</command>
-						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 							<argument exp='d3segmentC' />
 							<argument exp='&quot;colFill&quot;' />
 							<argument exp='LEDAutoOffColour' />
 						</command>
-						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 							<argument exp='d3segmentD' />
 							<argument exp='&quot;colFill&quot;' />
 							<argument exp='LEDAutoOffColour' />
 						</command>
-						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 							<argument exp='d3segmentE' />
 							<argument exp='&quot;colFill&quot;' />
 							<argument exp='LEDAutoOffColour' />
 						</command>
-						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 							<argument exp='d3segmentF' />
 							<argument exp='&quot;colFill&quot;' />
 							<argument exp='LEDAutoOffColour' />
 						</command>
-						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 							<argument exp='d3segmentG' />
 							<argument exp='&quot;colFill&quot;' />
 							<argument exp='LEDAutoOffColour' />
@@ -275,37 +275,37 @@ Common Cathode:  Pin true -&gt; LED On,  Pin false -&gt; LED Off' filter='000Ano
 				<macro >
 					<flowline name='Prv_ClearDigit2' description='Clears Digit 2 Including decimal point' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 							<argument exp='d2segmentA' />
 							<argument exp='&quot;colFill&quot;' />
 							<argument exp='LEDAutoOffColour' />
 						</command>
-						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 							<argument exp='d2segmentB' />
 							<argument exp='&quot;colFill&quot;' />
 							<argument exp='LEDAutoOffColour' />
 						</command>
-						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 							<argument exp='d2segmentC' />
 							<argument exp='&quot;colFill&quot;' />
 							<argument exp='LEDAutoOffColour' />
 						</command>
-						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 							<argument exp='d2segmentD' />
 							<argument exp='&quot;colFill&quot;' />
 							<argument exp='LEDAutoOffColour' />
 						</command>
-						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 							<argument exp='d2segmentE' />
 							<argument exp='&quot;colFill&quot;' />
 							<argument exp='LEDAutoOffColour' />
 						</command>
-						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 							<argument exp='d2segmentF' />
 							<argument exp='&quot;colFill&quot;' />
 							<argument exp='LEDAutoOffColour' />
 						</command>
-						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 							<argument exp='d2segmentG' />
 							<argument exp='&quot;colFill&quot;' />
 							<argument exp='LEDAutoOffColour' />
@@ -322,120 +322,120 @@ Common Cathode:  Pin true -&gt; LED On,  Pin false -&gt; LED Off' filter='000Ano
 						<local name='blue' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='green' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='red' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.red = (FGColor AND 255) / 5' />
 							<exp exp='.green = ((FGColor &gt;&gt; 8) AND 255) / 5' />
 							<exp exp='.blue = ((FGColor &gt;&gt; 16) AND 255) / 5' />
 							<exp exp='.OffColour = (.blue &lt;&lt; 16) + (.green &lt;&lt; 8) + .red' />
 						</command>
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 							<argument exp='this' />
 							<argument exp='&quot;LEDAutoOffColour&quot;' />
 							<argument exp='.OffColour' />
 						</command>
-						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 							<argument exp='Body' />
 							<argument exp='&quot;colFill&quot;' />
 							<argument exp='BGColor' />
 						</command>
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ClearDigits' />
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.GetValue' >
+						<command class_type='call' title='Call Macro' macro='ClearDigits' />
+						<command class_type='sim' title='Simulation' macro='Component.Property.GetValue' >
 							<return exp='.TempStr' />
 							<argument exp='this' />
 							<argument exp='&quot;LabelColor&quot;' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 							<argument exp='LabelA' />
 							<argument exp='&quot;colTextColour&quot;' />
 							<argument exp='.TempStr' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 							<argument exp='LabelB' />
 							<argument exp='&quot;colTextColour&quot;' />
 							<argument exp='.TempStr' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 							<argument exp='LabelC' />
 							<argument exp='&quot;colTextColour&quot;' />
 							<argument exp='.TempStr' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 							<argument exp='LabelD' />
 							<argument exp='&quot;colTextColour&quot;' />
 							<argument exp='.TempStr' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 							<argument exp='LabelE' />
 							<argument exp='&quot;colTextColour&quot;' />
 							<argument exp='.TempStr' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 							<argument exp='LabelF' />
 							<argument exp='&quot;colTextColour&quot;' />
 							<argument exp='.TempStr' />
 						</command>
-						<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 							<argument exp='LabelG' />
 							<argument exp='&quot;colTextColour&quot;' />
 							<argument exp='.TempStr' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='ShowSegLabels = 1' swap='0' >
+						<command class_type='decision' title='Decision' exp='ShowSegLabels = 1' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.SetVisible' >
 									<argument exp='LabelA' />
 									<argument exp='1' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.SetVisible' >
 									<argument exp='LabelB' />
 									<argument exp='1' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.SetVisible' >
 									<argument exp='LabelC' />
 									<argument exp='1' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.SetVisible' >
 									<argument exp='LabelD' />
 									<argument exp='1' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.SetVisible' >
 									<argument exp='LabelE' />
 									<argument exp='1' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.SetVisible' >
 									<argument exp='LabelF' />
 									<argument exp='1' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.SetVisible' >
 									<argument exp='LabelG' />
 									<argument exp='1' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.SetVisible' >
 									<argument exp='LabelA' />
 									<argument exp='0' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.SetVisible' >
 									<argument exp='LabelB' />
 									<argument exp='0' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.SetVisible' >
 									<argument exp='LabelC' />
 									<argument exp='0' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.SetVisible' >
 									<argument exp='LabelD' />
 									<argument exp='0' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.SetVisible' >
 									<argument exp='LabelE' />
 									<argument exp='0' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.SetVisible' >
 									<argument exp='LabelF' />
 									<argument exp='0' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.SetVisible' >
 									<argument exp='LabelG' />
 									<argument exp='0' />
 								</command>
@@ -446,34 +446,34 @@ Common Cathode:  Pin true -&gt; LED On,  Pin false -&gt; LED Off' filter='000Ano
 				<macro >
 					<flowline name='Ev_Stop' description='Broadcast to all components that simulation has stopped' statediag='0' >
 						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ClearDigits' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='ShowSegLabels = 1' swap='0' >
+						<command class_type='call' title='User Macro' macro='ClearDigits' />
+						<command class_type='decision' title='Decision' exp='ShowSegLabels = 1' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.SetVisible' >
 									<argument exp='LabelA' />
 									<argument exp='1' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.SetVisible' >
 									<argument exp='LabelB' />
 									<argument exp='1' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.SetVisible' >
 									<argument exp='LabelC' />
 									<argument exp='1' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.SetVisible' >
 									<argument exp='LabelD' />
 									<argument exp='1' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.SetVisible' >
 									<argument exp='LabelE' />
 									<argument exp='1' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.SetVisible' >
 									<argument exp='LabelF' />
 									<argument exp='1' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.SetVisible' >
 									<argument exp='LabelG' />
 									<argument exp='1' />
 								</command>
@@ -485,42 +485,42 @@ Common Cathode:  Pin true -&gt; LED On,  Pin false -&gt; LED Off' filter='000Ano
 				<macro >
 					<flowline name='Prv_ClearDigit1' description='Clears Digit 1 Including decimal point' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 							<argument exp='d1segmentA' />
 							<argument exp='&quot;colFill&quot;' />
 							<argument exp='LEDAutoOffColour' />
 						</command>
-						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 							<argument exp='d1segmentB' />
 							<argument exp='&quot;colFill&quot;' />
 							<argument exp='LEDAutoOffColour' />
 						</command>
-						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 							<argument exp='d1segmentC' />
 							<argument exp='&quot;colFill&quot;' />
 							<argument exp='LEDAutoOffColour' />
 						</command>
-						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 							<argument exp='d1segmentD' />
 							<argument exp='&quot;colFill&quot;' />
 							<argument exp='LEDAutoOffColour' />
 						</command>
-						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 							<argument exp='d1segmentE' />
 							<argument exp='&quot;colFill&quot;' />
 							<argument exp='LEDAutoOffColour' />
 						</command>
-						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 							<argument exp='d1segmentF' />
 							<argument exp='&quot;colFill&quot;' />
 							<argument exp='LEDAutoOffColour' />
 						</command>
-						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 							<argument exp='d1segmentG' />
 							<argument exp='&quot;colFill&quot;' />
 							<argument exp='LEDAutoOffColour' />
 						</command>
-						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 							<argument exp='d0segmentDP' />
 							<argument exp='&quot;colFill&quot;' />
 							<argument exp='LEDAutoOffColour' />
@@ -530,37 +530,37 @@ Common Cathode:  Pin true -&gt; LED On,  Pin false -&gt; LED Off' filter='000Ano
 				<macro >
 					<flowline name='Prv_ClearDigit0' description='Clears Digit 0 Including decimal point' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 							<argument exp='d0segmentA' />
 							<argument exp='&quot;colFill&quot;' />
 							<argument exp='LEDAutoOffColour' />
 						</command>
-						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 							<argument exp='d0segmentB' />
 							<argument exp='&quot;colFill&quot;' />
 							<argument exp='LEDAutoOffColour' />
 						</command>
-						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 							<argument exp='d0segmentC' />
 							<argument exp='&quot;colFill&quot;' />
 							<argument exp='LEDAutoOffColour' />
 						</command>
-						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 							<argument exp='d0segmentD' />
 							<argument exp='&quot;colFill&quot;' />
 							<argument exp='LEDAutoOffColour' />
 						</command>
-						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 							<argument exp='d0segmentE' />
 							<argument exp='&quot;colFill&quot;' />
 							<argument exp='LEDAutoOffColour' />
 						</command>
-						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 							<argument exp='d0segmentF' />
 							<argument exp='&quot;colFill&quot;' />
 							<argument exp='LEDAutoOffColour' />
 						</command>
-						<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 							<argument exp='d0segmentG' />
 							<argument exp='&quot;colFill&quot;' />
 							<argument exp='LEDAutoOffColour' />
@@ -570,8 +570,8 @@ Common Cathode:  Pin true -&gt; LED On,  Pin false -&gt; LED Off' filter='000Ano
 				<macro >
 					<flowline name='Ev_Initialize' description='Initialisation routine for the component once the component is linked to its parent' statediag='0' >
 						<return name='Return' type='u32' description='Non-zero to prevent initialisation' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='call' title='Call Macro' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_PropertyChange' />
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ClearDigits' />
+						<command class_type='call' title='Call Macro' disable='1' macro='Ev_PropertyChange' />
+						<command class_type='call' title='Call Macro' macro='ClearDigits' />
 					</flowline>
 				</macro>
 				<macro >
@@ -579,157 +579,145 @@ Common Cathode:  Pin true -&gt; LED On,  Pin false -&gt; LED Off' filter='000Ano
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<param name='Brightness' type='u8' description='Range: 0-7 - 0=Darkest, 7=Brightest' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='On' type='b1' description='0 = Display Off, 1 = Display On' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.On' swap='0' >
+						<command class_type='decision' title='In Range?' exp='.Brightness &lt; 8' swap='0' >
 							<flowline >
-								<command class_type='decision' title='In Range?' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Brightness &lt; 8' swap='0' >
-									<flowline >
-										<command class_type='calculation' title='Update Brightness Control Variable' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
-											<exp exp='Brightness = 0x80 | .Brightness' />
-										</command>
-									</flowline>
-									<flowline />
-								</command>
-								<command class_type='calculation' title='Calculation' disable='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
-									<exp exp='displayOn = 1' />
+								<command class_type='calculation' title='Update Brightness Control Variable' >
+									<exp exp='Brightness = 0x80 | .Brightness' />
 								</command>
 							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Decision' exp='.On' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' disable='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
-									<exp exp='displayOn = 0' />
-								</command>
-								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ClearDigits' />
-								<command class_type='call' title='Call Macro' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowDigits' >
-									<argument exp='16' />
-									<argument exp='16' />
-									<argument exp='16' />
-									<argument exp='16' />
-									<argument exp='0' />
+								<command class_type='calculation' title='Update Brightness Control Variable' >
+									<exp exp='Brightness = Brightness | 0x08' />
 								</command>
 							</flowline>
+							<flowline />
 						</command>
 					</flowline>
 				</macro>
 				<macro >
 					<flowline name='Ev_PinChange' description='Sent during simulation if a connected port pin changes' statediag='0' >
 						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_Update' />
+						<command class_type='call' title='Call Macro' macro='Prv_Update' />
 					</flowline>
 				</macro>
 				<macro >
 					<flowline name='Prv_ShowDigit3' description='Updates a digit in simulation.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<param name='value' type='u8' description='Value to display' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value &lt; 16' swap='0' >
+						<command class_type='decision' title='Decision' exp='.Value &lt; 16' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Retrieve from const' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Retrieve from const' >
 									<exp exp='.Value = DataLUT[.Value]' />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value &amp; 0x01' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Value &amp; 0x01' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d3segmentA' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='brightnessColour' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d3segmentA' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='LEDAutoOffColour' />
 										</command>
 									</flowline>
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value &amp; 0x02' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Value &amp; 0x02' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d3segmentB' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='brightnessColour' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d3segmentB' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='LEDAutoOffColour' />
 										</command>
 									</flowline>
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value &amp; 0x04' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Value &amp; 0x04' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d3segmentC' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='brightnessColour' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d3segmentC' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='LEDAutoOffColour' />
 										</command>
 									</flowline>
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value &amp; 0x08' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Value &amp; 0x08' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d3segmentD' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='brightnessColour' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d3segmentD' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='LEDAutoOffColour' />
 										</command>
 									</flowline>
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value &amp; 0x10' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Value &amp; 0x10' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d3segmentE' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='brightnessColour' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d3segmentE' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='LEDAutoOffColour' />
 										</command>
 									</flowline>
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value &amp; 0x20' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Value &amp; 0x20' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d3segmentF' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='brightnessColour' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d3segmentF' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='LEDAutoOffColour' />
 										</command>
 									</flowline>
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value &amp; 0x40' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Value &amp; 0x40' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d3segmentG' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='brightnessColour' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d3segmentG' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='LEDAutoOffColour' />
@@ -738,37 +726,37 @@ Common Cathode:  Pin true -&gt; LED On,  Pin false -&gt; LED Off' filter='000Ano
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d3segmentA' />
 									<argument exp='&quot;colFill&quot;' />
 									<argument exp='LEDAutoOffColour' />
 								</command>
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d3segmentB' />
 									<argument exp='&quot;colFill&quot;' />
 									<argument exp='LEDAutoOffColour' />
 								</command>
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d3segmentC' />
 									<argument exp='&quot;colFill&quot;' />
 									<argument exp='LEDAutoOffColour' />
 								</command>
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d3segmentD' />
 									<argument exp='&quot;colFill&quot;' />
 									<argument exp='LEDAutoOffColour' />
 								</command>
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d3segmentE' />
 									<argument exp='&quot;colFill&quot;' />
 									<argument exp='LEDAutoOffColour' />
 								</command>
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d3segmentF' />
 									<argument exp='&quot;colFill&quot;' />
 									<argument exp='LEDAutoOffColour' />
 								</command>
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d3segmentG' />
 									<argument exp='&quot;colFill&quot;' />
 									<argument exp='LEDAutoOffColour' />
@@ -783,57 +771,57 @@ The colon character can also be controlled when writing to digit 1.' statediag='
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<param name='Digit' type='u8' description='Which of the four digits to change. (0...3)' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Segments' type='u8' description='The binary segment value to display' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='switch' title='Switch' textarea='36,25,36,25' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Digit' >
+						<command class_type='switch' title='Switch' textarea='36,25,36,25' exp='.Digit' >
 							<case >
 								<flowline >
-									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
-									<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='PrvSetSegs0' >
+									<command class_type='block' title='' hide='1' start='1' />
+									<command class_type='call' title='Call Macro' macro='PrvSetSegs0' >
 										<argument exp='.Segments' />
 									</command>
-									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' start='0' />
 								</flowline>
 							</case>
 							<case exp='1' >
 								<flowline >
-									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
-									<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='PrvSetSegs1' >
+									<command class_type='block' title='' hide='1' start='1' />
+									<command class_type='call' title='Call Macro' macro='PrvSetSegs1' >
 										<argument exp='.Segments' />
 									</command>
-									<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Segments &amp; 0x80' swap='0' >
+									<command class_type='decision' title='Decision' exp='.Segments &amp; 0x80' swap='0' >
 										<flowline >
-											<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+											<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 												<argument exp='d0segmentDP' />
 												<argument exp='&quot;color&quot;' />
 												<argument exp='brightnessColour' />
 											</command>
 										</flowline>
 										<flowline >
-											<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+											<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 												<argument exp='d0segmentDP' />
 												<argument exp='&quot;color&quot;' />
 												<argument exp='OffColor' />
 											</command>
 										</flowline>
 									</command>
-									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' start='0' />
 								</flowline>
 							</case>
 							<case exp='2' >
 								<flowline >
-									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
-									<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='PrvSetSegs2' >
+									<command class_type='block' title='' hide='1' start='1' />
+									<command class_type='call' title='Call Macro' macro='PrvSetSegs2' >
 										<argument exp='.Segments' />
 									</command>
-									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' start='0' />
 								</flowline>
 							</case>
 							<case exp='3' >
 								<flowline >
-									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
-									<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='PrvSetSegs3' >
+									<command class_type='block' title='' hide='1' start='1' />
+									<command class_type='call' title='Call Macro' macro='PrvSetSegs3' >
 										<argument exp='.Segments' />
 									</command>
-									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' start='0' />
 								</flowline>
 							</case>
 						</command>
@@ -843,117 +831,117 @@ The colon character can also be controlled when writing to digit 1.' statediag='
 					<flowline name='Prv_ShowDigit2' description='Updates a digit in simulation.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<param name='value' type='u8' description='Value to display' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value &lt; 16' swap='0' >
+						<command class_type='decision' title='Decision' exp='.Value &lt; 16' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Retrieve from const' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Retrieve from const' >
 									<exp exp='.Value = DataLUT[.Value]' />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value &amp; 0x01' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Value &amp; 0x01' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d2segmentA' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='brightnessColour' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d2segmentA' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='LEDAutoOffColour' />
 										</command>
 									</flowline>
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value &amp; 0x02' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Value &amp; 0x02' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d2segmentB' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='brightnessColour' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d2segmentB' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='LEDAutoOffColour' />
 										</command>
 									</flowline>
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value &amp; 0x04' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Value &amp; 0x04' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d2segmentC' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='brightnessColour' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d2segmentC' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='LEDAutoOffColour' />
 										</command>
 									</flowline>
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value &amp; 0x08' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Value &amp; 0x08' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d2segmentD' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='brightnessColour' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d2segmentD' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='LEDAutoOffColour' />
 										</command>
 									</flowline>
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value &amp; 0x10' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Value &amp; 0x10' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d2segmentE' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='brightnessColour' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d2segmentE' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='LEDAutoOffColour' />
 										</command>
 									</flowline>
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value &amp; 0x20' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Value &amp; 0x20' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d2segmentF' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='brightnessColour' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d2segmentF' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='LEDAutoOffColour' />
 										</command>
 									</flowline>
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value &amp; 0x40' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Value &amp; 0x40' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d2segmentG' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='brightnessColour' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d2segmentG' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='LEDAutoOffColour' />
@@ -962,37 +950,37 @@ The colon character can also be controlled when writing to digit 1.' statediag='
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d2segmentA' />
 									<argument exp='&quot;colFill&quot;' />
 									<argument exp='LEDAutoOffColour' />
 								</command>
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d2segmentB' />
 									<argument exp='&quot;colFill&quot;' />
 									<argument exp='LEDAutoOffColour' />
 								</command>
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d2segmentC' />
 									<argument exp='&quot;colFill&quot;' />
 									<argument exp='LEDAutoOffColour' />
 								</command>
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d2segmentD' />
 									<argument exp='&quot;colFill&quot;' />
 									<argument exp='LEDAutoOffColour' />
 								</command>
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d2segmentE' />
 									<argument exp='&quot;colFill&quot;' />
 									<argument exp='LEDAutoOffColour' />
 								</command>
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d2segmentF' />
 									<argument exp='&quot;colFill&quot;' />
 									<argument exp='LEDAutoOffColour' />
 								</command>
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d2segmentG' />
 									<argument exp='&quot;colFill&quot;' />
 									<argument exp='LEDAutoOffColour' />
@@ -1004,7 +992,7 @@ The colon character can also be controlled when writing to digit 1.' statediag='
 				<macro >
 					<flowline name='TM1637_Stop' description='Send stop signal to TM1637' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<command class_type='calculation' title='Perform Stop Sequence' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Perform Stop Sequence' >
 							<exp exp='CLK_PIN = 0' />
 							<exp exp='DATA_PIN = 0' />
 							<exp exp='CLK_PIN = 1' />
@@ -1017,117 +1005,117 @@ The colon character can also be controlled when writing to digit 1.' statediag='
 					<flowline name='Prv_ShowDigit1' description='Updates a digit in simulation.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<param name='value' type='u8' description='Value to display' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value &lt; 16' swap='0' >
+						<command class_type='decision' title='Decision' exp='.Value &lt; 16' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Retrieve from const' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Retrieve from const' >
 									<exp exp='.Value = DataLUT[.Value]' />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value &amp; 0x01' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Value &amp; 0x01' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d1segmentA' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='brightnessColour' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d1segmentA' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='LEDAutoOffColour' />
 										</command>
 									</flowline>
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value &amp; 0x02' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Value &amp; 0x02' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d1segmentB' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='brightnessColour' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d1segmentB' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='LEDAutoOffColour' />
 										</command>
 									</flowline>
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value &amp; 0x04' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Value &amp; 0x04' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d1segmentC' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='brightnessColour' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d1segmentC' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='LEDAutoOffColour' />
 										</command>
 									</flowline>
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value &amp; 0x08' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Value &amp; 0x08' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d1segmentD' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='brightnessColour' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d1segmentD' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='LEDAutoOffColour' />
 										</command>
 									</flowline>
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value &amp; 0x10' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Value &amp; 0x10' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d1segmentE' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='brightnessColour' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d1segmentE' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='LEDAutoOffColour' />
 										</command>
 									</flowline>
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value &amp; 0x20' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Value &amp; 0x20' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d1segmentF' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='brightnessColour' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d1segmentF' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='LEDAutoOffColour' />
 										</command>
 									</flowline>
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value &amp; 0x40' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Value &amp; 0x40' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d1segmentG' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='brightnessColour' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d1segmentG' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='LEDAutoOffColour' />
@@ -1136,37 +1124,37 @@ The colon character can also be controlled when writing to digit 1.' statediag='
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d1segmentA' />
 									<argument exp='&quot;colFill&quot;' />
 									<argument exp='LEDAutoOffColour' />
 								</command>
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d1segmentB' />
 									<argument exp='&quot;colFill&quot;' />
 									<argument exp='LEDAutoOffColour' />
 								</command>
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d1segmentC' />
 									<argument exp='&quot;colFill&quot;' />
 									<argument exp='LEDAutoOffColour' />
 								</command>
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d1segmentD' />
 									<argument exp='&quot;colFill&quot;' />
 									<argument exp='LEDAutoOffColour' />
 								</command>
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d1segmentE' />
 									<argument exp='&quot;colFill&quot;' />
 									<argument exp='LEDAutoOffColour' />
 								</command>
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d1segmentF' />
 									<argument exp='&quot;colFill&quot;' />
 									<argument exp='LEDAutoOffColour' />
 								</command>
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d1segmentG' />
 									<argument exp='&quot;colFill&quot;' />
 									<argument exp='LEDAutoOffColour' />
@@ -1179,117 +1167,117 @@ The colon character can also be controlled when writing to digit 1.' statediag='
 					<flowline name='Prv_ShowDigit0' description='Updates a digit in simulation.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<param name='value' type='u8' description='Value to display' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value &lt; 16' swap='0' >
+						<command class_type='decision' title='Decision' exp='.Value &lt; 16' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Retrieve from const' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Retrieve from const' >
 									<exp exp='.Value = DataLUT[.Value]' />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value &amp; 0x01' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Value &amp; 0x01' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d0segmentA' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='brightnessColour' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d0segmentA' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='LEDAutoOffColour' />
 										</command>
 									</flowline>
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value &amp; 0x02' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Value &amp; 0x02' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d0segmentB' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='brightnessColour' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d0segmentB' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='LEDAutoOffColour' />
 										</command>
 									</flowline>
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value &amp; 0x04' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Value &amp; 0x04' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d0segmentC' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='brightnessColour' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d0segmentC' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='LEDAutoOffColour' />
 										</command>
 									</flowline>
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value &amp; 0x08' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Value &amp; 0x08' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d0segmentD' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='brightnessColour' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d0segmentD' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='LEDAutoOffColour' />
 										</command>
 									</flowline>
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value &amp; 0x10' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Value &amp; 0x10' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d0segmentE' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='brightnessColour' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d0segmentE' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='LEDAutoOffColour' />
 										</command>
 									</flowline>
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value &amp; 0x20' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Value &amp; 0x20' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d0segmentF' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='brightnessColour' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d0segmentF' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='LEDAutoOffColour' />
 										</command>
 									</flowline>
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value &amp; 0x40' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Value &amp; 0x40' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d0segmentG' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='brightnessColour' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+										<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 											<argument exp='d0segmentG' />
 											<argument exp='&quot;colFill&quot;' />
 											<argument exp='LEDAutoOffColour' />
@@ -1298,37 +1286,37 @@ The colon character can also be controlled when writing to digit 1.' statediag='
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d0segmentA' />
 									<argument exp='&quot;colFill&quot;' />
 									<argument exp='LEDAutoOffColour' />
 								</command>
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d0segmentB' />
 									<argument exp='&quot;colFill&quot;' />
 									<argument exp='LEDAutoOffColour' />
 								</command>
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d0segmentC' />
 									<argument exp='&quot;colFill&quot;' />
 									<argument exp='LEDAutoOffColour' />
 								</command>
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d0segmentD' />
 									<argument exp='&quot;colFill&quot;' />
 									<argument exp='LEDAutoOffColour' />
 								</command>
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d0segmentE' />
 									<argument exp='&quot;colFill&quot;' />
 									<argument exp='LEDAutoOffColour' />
 								</command>
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d0segmentF' />
 									<argument exp='&quot;colFill&quot;' />
 									<argument exp='LEDAutoOffColour' />
 								</command>
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d0segmentG' />
 									<argument exp='&quot;colFill&quot;' />
 									<argument exp='LEDAutoOffColour' />
@@ -1342,108 +1330,108 @@ The colon character can also be controlled when writing to digit 1.' statediag='
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<param name='Digit' type='u8' description='Which digit of the display to change the setting for. (0...3)' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Value' type='u8' description='The number value to show at the selected digit.  (0...9)' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Colon' type='u8' description='Whether to display the decimal point for the chosen digit.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='delay' title='Delay to preven dispaly corruption' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='50' type='1' />
-						<command class_type='comment' title='' comment='Configure the segments first.' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
-						<command class_type='switch' title='Switch' textarea='36,25,36,25' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Digit' >
+						<param name='Colon' type='u8' description='Whether to display the colon 0 = Don&apos;t Show,  1 = Show' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='delay' title='Delay to preven dispaly corruption' exp='50' type='1' />
+						<command class_type='comment' title='' comment='Configure the segments first.' textarea='12,0,12,0' />
+						<command class_type='switch' title='Switch' textarea='36,25,36,25' exp='.Digit' >
 							<case >
 								<flowline >
-									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
-									<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_ShowDigit0' >
+									<command class_type='block' title='' hide='1' start='1' />
+									<command class_type='call' title='Call Macro' macro='Prv_ShowDigit0' >
 										<argument exp='.Value' />
 									</command>
-									<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Colon' swap='0' >
+									<command class_type='decision' title='Decision' exp='.Colon' swap='0' >
 										<flowline >
-											<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+											<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 												<argument exp='d0segmentDP' />
 												<argument exp='&quot;colFill&quot;' />
 												<argument exp='brightnessColour' />
 											</command>
 										</flowline>
 										<flowline >
-											<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+											<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 												<argument exp='d0segmentDP' />
 												<argument exp='&quot;colFill&quot;' />
 												<argument exp='LEDAutoOffColour' />
 											</command>
 										</flowline>
 									</command>
-									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' start='0' />
 								</flowline>
 							</case>
 							<case exp='1' >
 								<flowline >
-									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
-									<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_ShowDigit1' >
+									<command class_type='block' title='' hide='1' start='1' />
+									<command class_type='call' title='Call Macro' macro='Prv_ShowDigit1' >
 										<argument exp='.Value' />
 									</command>
-									<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Colon' swap='0' >
+									<command class_type='decision' title='Decision' exp='.Colon' swap='0' >
 										<flowline >
-											<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+											<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 												<argument exp='d0segmentDP' />
 												<argument exp='&quot;colFill&quot;' />
 												<argument exp='brightnessColour' />
 											</command>
 										</flowline>
 										<flowline >
-											<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+											<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 												<argument exp='d0segmentDP' />
 												<argument exp='&quot;colFill&quot;' />
 												<argument exp='LEDAutoOffColour' />
 											</command>
 										</flowline>
 									</command>
-									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' start='0' />
 								</flowline>
 							</case>
 							<case exp='2' >
 								<flowline >
-									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
-									<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_ShowDigit2' >
+									<command class_type='block' title='' hide='1' start='1' />
+									<command class_type='call' title='Call Macro' macro='Prv_ShowDigit2' >
 										<argument exp='.Value' />
 									</command>
-									<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Colon' swap='0' >
+									<command class_type='decision' title='Decision' exp='.Colon' swap='0' >
 										<flowline >
-											<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+											<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 												<argument exp='d0segmentDP' />
 												<argument exp='&quot;colFill&quot;' />
 												<argument exp='brightnessColour' />
 											</command>
 										</flowline>
 										<flowline >
-											<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+											<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 												<argument exp='d0segmentDP' />
 												<argument exp='&quot;colFill&quot;' />
 												<argument exp='LEDAutoOffColour' />
 											</command>
 										</flowline>
 									</command>
-									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' start='0' />
 								</flowline>
 							</case>
 							<case exp='3' >
 								<flowline >
-									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='1' />
-									<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_ShowDigit3' >
+									<command class_type='block' title='' hide='1' start='1' />
+									<command class_type='call' title='Call Macro' macro='Prv_ShowDigit3' >
 										<argument exp='.Value' />
 									</command>
-									<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Colon' swap='0' >
+									<command class_type='decision' title='Decision' exp='.Colon' swap='0' >
 										<flowline >
-											<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+											<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 												<argument exp='d0segmentDP' />
 												<argument exp='&quot;colFill&quot;' />
 												<argument exp='brightnessColour' />
 											</command>
 										</flowline>
 										<flowline >
-											<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+											<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 												<argument exp='d0segmentDP' />
 												<argument exp='&quot;colFill&quot;' />
 												<argument exp='LEDAutoOffColour' />
 											</command>
 										</flowline>
 									</command>
-									<command class_type='block' title='' hide='1' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' start='0' />
+									<command class_type='block' title='' hide='1' start='0' />
 								</flowline>
 							</case>
 						</command>
@@ -1457,7 +1445,7 @@ The colon character can also be controlled when writing to digit 1.' statediag='
 				<macro >
 					<flowline name='TM1637_Start' description='Send start signal to TM1637' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<command class_type='calculation' title='Perform Start Sequence' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Perform Start Sequence' >
 							<exp exp='CLK_PIN = 1' />
 							<exp exp='DATA_PIN = 1' />
 							<exp exp='DATA_PIN = 0' />
@@ -1478,17 +1466,17 @@ The colon character can also be controlled when writing to digit 1.' statediag='
 						<local name='GreenMin' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='BlueMin' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='LedsBrightnessValue' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.On' swap='0' >
+						<command class_type='decision' title='Decision' exp='.On' swap='0' >
 							<flowline >
-								<command class_type='decision' title='In Range?' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Brightness &lt; 8' swap='0' >
+								<command class_type='decision' title='In Range?' exp='.Brightness &lt; 8' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.blueMax = ((FGColor &gt;&gt; 16) AND 255)' />
 											<exp exp='.blueMin = ((LEDAutoOffColour &gt;&gt; 16) AND 255)' />
 										</command>
-										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='(.blueMax - .BlueMin) &gt; 0' swap='0' >
+										<command class_type='decision' title='Decision' exp='(.blueMax - .BlueMin) &gt; 0' swap='0' >
 											<flowline >
-												<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='MapFunction1' macro='MapUlong' >
+												<command class_type='call' title='Component Macro' component='MapFunction1' macro='MapUlong' >
 													<return exp='.BrightnessValue' />
 													<argument exp='.Brightness' />
 													<argument exp='0' />
@@ -1500,19 +1488,19 @@ The colon character can also be controlled when writing to digit 1.' statediag='
 											</flowline>
 											<flowline />
 										</command>
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='brightnessColour = (.BrightnessValue &lt;&lt; 16)' />
 										</command>
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.greenMax = ((FGColor &gt;&gt; 8) AND 255)' />
 											<exp exp='.greenMin = ((LEDAutoOffColour &gt;&gt; 8) AND 255)' />
 										</command>
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.BrightnessValue = 0' />
 										</command>
-										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='(.greenMax - .greenMin) &gt; 0' swap='0' >
+										<command class_type='decision' title='Decision' exp='(.greenMax - .greenMin) &gt; 0' swap='0' >
 											<flowline >
-												<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='MapFunction1' macro='MapUlong' >
+												<command class_type='call' title='Component Macro' component='MapFunction1' macro='MapUlong' >
 													<return exp='.BrightnessValue' />
 													<argument exp='.Brightness' />
 													<argument exp='0' />
@@ -1524,19 +1512,19 @@ The colon character can also be controlled when writing to digit 1.' statediag='
 											</flowline>
 											<flowline />
 										</command>
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='brightnessColour = brightnessColour | (.BrightnessValue &lt;&lt; 8)' />
 										</command>
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.redMax = FGColor AND 255' />
 											<exp exp='.redMin = LEDAutoOffColour AND 255' />
 										</command>
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.BrightnessValue = 0' />
 										</command>
-										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='(.redMax - .redMin) &gt; 0' swap='0' >
+										<command class_type='decision' title='Decision' exp='(.redMax - .redMin) &gt; 0' swap='0' >
 											<flowline >
-												<command class_type='call' title='Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' component='MapFunction1' macro='MapUlong' >
+												<command class_type='call' title='Component Macro' component='MapFunction1' macro='MapUlong' >
 													<return exp='.BrightnessValue' />
 													<argument exp='.Brightness' />
 													<argument exp='0' />
@@ -1548,21 +1536,21 @@ The colon character can also be controlled when writing to digit 1.' statediag='
 											</flowline>
 											<flowline />
 										</command>
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='brightnessColour = brightnessColour | .BrightnessValue' />
 										</command>
 									</flowline>
 									<flowline />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='displayOn = 1' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='displayOn = 0' />
 								</command>
-								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ClearDigits' />
+								<command class_type='call' title='User Macro' macro='ClearDigits' />
 							</flowline>
 						</command>
 					</flowline>
@@ -1575,25 +1563,25 @@ The colon character can also be controlled when writing to digit 1.' statediag='
 						<param name='Value2' type='u8' description='The number value to set the digit to (0...15), 16=Clear' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Value3' type='u8' description='The number value to set the digit to (0...15), 16=Clear' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Colon' type='u8' description='Whether to show the colon character.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowDigitSim' >
+						<command class_type='call' title='Call Macro' macro='ShowDigitSim' >
 							<argument exp='0' />
 							<argument exp='.Value0' />
-							<argument exp='0' />
+							<argument exp='.Colon' />
 						</command>
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowDigitSim' >
+						<command class_type='call' title='Call Macro' macro='ShowDigitSim' >
 							<argument exp='1' />
 							<argument exp='.Value1' />
 							<argument exp='.Colon' />
 						</command>
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowDigitSim' >
+						<command class_type='call' title='Call Macro' macro='ShowDigitSim' >
 							<argument exp='2' />
 							<argument exp='.Value2' />
-							<argument exp='0' />
+							<argument exp='.Colon' />
 						</command>
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowDigitSim' >
+						<command class_type='call' title='Call Macro' macro='ShowDigitSim' >
 							<argument exp='3' />
 							<argument exp='.Value3' />
-							<argument exp='0' />
+							<argument exp='.Colon' />
 						</command>
 					</flowline>
 				</macro>
@@ -1603,26 +1591,26 @@ The colon character can also be controlled when writing to digit 1.' statediag='
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<param name='Digit' type='u8' description='Which of the four digits to change. (0...3)' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Segments' type='u8' description='The binary segment value to display' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Digit &lt; 4' swap='0' >
+						<command class_type='decision' title='Decision' exp='.Digit &lt; 4' swap='0' >
 							<flowline >
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_Start' />
-								<command class_type='call' title='ADDR_FIXED' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_WriteByte' >
+								<command class_type='call' title='Call Macro' macro='TM1637_Start' />
+								<command class_type='call' title='ADDR_FIXED' macro='TM1637_WriteByte' >
 									<argument exp='0x44' />
 								</command>
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_Stop' />
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_Start' />
-								<command class_type='call' title='Segment address' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_WriteByte' >
+								<command class_type='call' title='Call Macro' macro='TM1637_Stop' />
+								<command class_type='call' title='Call Macro' macro='TM1637_Start' />
+								<command class_type='call' title='Segment address' macro='TM1637_WriteByte' >
 									<argument exp='.Digit | 0xC0' />
 								</command>
-								<command class_type='call' title='Character to display 0-15' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_WriteByte' >
+								<command class_type='call' title='Character to display 0-15' macro='TM1637_WriteByte' >
 									<argument exp='.Segments' />
 								</command>
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_Stop' />
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_Start' />
-								<command class_type='call' title='ADDR_FIXED' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_WriteByte' >
+								<command class_type='call' title='Call Macro' macro='TM1637_Stop' />
+								<command class_type='call' title='Call Macro' macro='TM1637_Start' />
+								<command class_type='call' title='ADDR_FIXED' macro='TM1637_WriteByte' >
 									<argument exp='Brightness' />
 								</command>
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_Stop' />
+								<command class_type='call' title='Call Macro' macro='TM1637_Stop' />
 							</flowline>
 							<flowline />
 						</command>
@@ -1634,56 +1622,56 @@ The colon character can also be controlled when writing to digit 1.' statediag='
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<param name='Digit' type='u8' description='Which of the four digits to change. (0...3)' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Value' type='u8' description='The number value to set the digit to (0...15), 16=Clear' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Colon' type='u8' description='Whether to show the colon character. Digit 1 only.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Digit &lt; 4' swap='0' >
+						<param name='Colon' type='u8' description='Whether to display the colon 0 = Don&apos;t Show,  1 = Show' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' exp='.Digit &lt; 4' swap='0' >
 							<flowline >
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_Start' />
-								<command class_type='call' title='ADDR_FIXED' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_WriteByte' >
+								<command class_type='call' title='Call Macro' macro='TM1637_Start' />
+								<command class_type='call' title='ADDR_FIXED' macro='TM1637_WriteByte' >
 									<argument exp='0x44' />
 								</command>
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_Stop' />
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_Start' />
-								<command class_type='call' title='Segment address' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_WriteByte' >
+								<command class_type='call' title='Call Macro' macro='TM1637_Stop' />
+								<command class_type='call' title='Call Macro' macro='TM1637_Start' />
+								<command class_type='call' title='Segment address' macro='TM1637_WriteByte' >
 									<argument exp='.Digit | 0xC0' />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Value &lt; 16' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Value &lt; 16' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Convert value 0-15 to character pattern' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Convert value 0-15 to character pattern' >
 											<exp exp='.Value = DataLUT[.Value]' />
 										</command>
-										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Colon' swap='0' >
+										<command class_type='decision' title='Decision' exp='.Colon' swap='0' >
 											<flowline >
-												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<command class_type='calculation' title='Calculation' >
 													<exp exp='.Value = .Value | 0x80' />
 												</command>
 											</flowline>
 											<flowline />
 										</command>
-										<command class_type='call' title='Character to display 0-15' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_WriteByte' >
+										<command class_type='call' title='Character to display 0-15' macro='TM1637_WriteByte' >
 											<argument exp='.Value' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Colon' swap='0' >
+										<command class_type='decision' title='Decision' exp='.Colon' swap='0' >
 											<flowline >
-												<command class_type='call' title='Clear display with DP' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_WriteByte' >
+												<command class_type='call' title='Clear display with DP' macro='TM1637_WriteByte' >
 													<argument exp='0x80' />
 												</command>
 											</flowline>
 											<flowline >
-												<command class_type='call' title='Clear display' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_WriteByte' >
+												<command class_type='call' title='Clear display' macro='TM1637_WriteByte' >
 													<argument exp='0x00' />
 												</command>
 											</flowline>
 										</command>
 									</flowline>
 								</command>
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_Stop' />
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_Start' />
-								<command class_type='call' title='ADDR_FIXED' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_WriteByte' >
+								<command class_type='call' title='Call Macro' macro='TM1637_Stop' />
+								<command class_type='call' title='Call Macro' macro='TM1637_Start' />
+								<command class_type='call' title='ADDR_FIXED' macro='TM1637_WriteByte' >
 									<argument exp='Brightness' />
 								</command>
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='TM1637_Stop' />
+								<command class_type='call' title='Call Macro' macro='TM1637_Stop' />
 							</flowline>
 							<flowline />
 						</command>
@@ -1696,178 +1684,178 @@ The colon character can also be controlled when writing to digit 1.' statediag='
 						<local name='i' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='count1' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='ack' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='calculation' title='Initialise to bit 0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Initialise to bit 0' >
 							<exp exp='.i = 0' />
 						</command>
-						<command class_type='loop' title='Loop through 8 bits in a byte' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.i &lt; 8' >
+						<command class_type='loop' title='Loop through 8 bits in a byte' type='0' exp='.i &lt; 8' >
 							<flowline >
-								<command class_type='calculation' title='Clock Pin Low' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Clock Pin Low' >
 									<exp exp='CLK_PIN = 0' />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Data &amp; 0x01' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Data &amp; 0x01' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Data Pin High' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Data Pin High' >
 											<exp exp='DATA_PIN = 1' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='calculation' title='Data Pin Low' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Data Pin Low' >
 											<exp exp='DATA_PIN = 0' />
 										</command>
 									</flowline>
 								</command>
-								<command class_type='calculation' title='Shift data by one bit' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Shift data by one bit' >
 									<exp exp='.Data = .Data &gt;&gt; 1' />
 								</command>
-								<command class_type='calculation' title='Clock Pin High' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Clock Pin High' >
 									<exp exp='CLK_PIN = 1' />
 								</command>
-								<command class_type='calculation' title='Move to next bit' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Move to next bit' >
 									<exp exp='.i = .i + 1' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='calculation' title='Clock Pin Low' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Clock Pin Low' >
 							<exp exp='CLK_PIN = 0' />
 						</command>
-						<command class_type='calculation' title='Data Pin High' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Data Pin High' >
 							<exp exp='DATA_PIN = 1' />
 						</command>
-						<command class_type='calculation' title='Clock Pin High' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Clock Pin High' >
 							<exp exp='CLK_PIN = 1' />
 						</command>
-						<command class_type='calculation' title='Data Pin Input' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Data Pin Input' >
 							<exp exp='.ack = DATA_PIN' />
 						</command>
-						<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='50' type='0' />
-						<command class_type='calculation' title='Read Data Pin Input' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='delay' title='Delay' exp='50' type='0' />
+						<command class_type='calculation' title='Read Data Pin Input' >
 							<exp exp='.ack = DATA_PIN' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.ack = 0' swap='0' >
+						<command class_type='decision' title='Decision' exp='.ack = 0' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Data Pin Low' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Data Pin Low' >
 									<exp exp='DATA_PIN = 0' />
 								</command>
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='50' type='0' />
-						<command class_type='calculation' title='Data Pin High' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='delay' title='Delay' exp='50' type='0' />
+						<command class_type='calculation' title='Data Pin High' >
 							<exp exp='DATA_PIN = 1' />
 						</command>
-						<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='50' type='0' />
+						<command class_type='delay' title='Delay' exp='50' type='0' />
 					</flowline>
 				</macro>
 				<macro >
 					<flowline name='PrvSetSegs3' description='Manual Control of the segments in simulation.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<param name='value' type='u8' description='Value to display' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.value &amp; 0x01' swap='0' >
+						<command class_type='decision' title='Decision' exp='.value &amp; 0x01' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d3segmentA' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='brightnessColour' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d3segmentA' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='OffColor' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.value &amp; 0x02' swap='0' >
+						<command class_type='decision' title='Decision' exp='.value &amp; 0x02' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d3segmentB' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='brightnessColour' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d3segmentB' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='OffColor' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.value &amp; 0x04' swap='0' >
+						<command class_type='decision' title='Decision' exp='.value &amp; 0x04' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d3segmentC' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='brightnessColour' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d3segmentC' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='OffColor' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.value &amp; 0x08' swap='0' >
+						<command class_type='decision' title='Decision' exp='.value &amp; 0x08' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d3segmentD' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='brightnessColour' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d3segmentD' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='OffColor' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.value &amp; 0x10' swap='0' >
+						<command class_type='decision' title='Decision' exp='.value &amp; 0x10' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d3segmentE' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='brightnessColour' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d3segmentE' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='OffColor' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.value &amp; 0x20' swap='0' >
+						<command class_type='decision' title='Decision' exp='.value &amp; 0x20' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d3segmentF' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='brightnessColour' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d3segmentF' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='OffColor' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.value &amp; 0x40' swap='0' >
+						<command class_type='decision' title='Decision' exp='.value &amp; 0x40' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d3segmentG' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='brightnessColour' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d3segmentG' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='OffColor' />
@@ -1880,112 +1868,112 @@ The colon character can also be controlled when writing to digit 1.' statediag='
 					<flowline name='PrvSetSegs2' description='Manual Control of the segments in simulation.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<param name='value' type='u8' description='Value to display' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.value &amp; 0x01' swap='0' >
+						<command class_type='decision' title='Decision' exp='.value &amp; 0x01' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d2segmentA' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='brightnessColour' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d2segmentA' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='OffColor' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.value &amp; 0x02' swap='0' >
+						<command class_type='decision' title='Decision' exp='.value &amp; 0x02' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d2segmentB' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='brightnessColour' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d2segmentB' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='OffColor' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.value &amp; 0x04' swap='0' >
+						<command class_type='decision' title='Decision' exp='.value &amp; 0x04' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d2segmentC' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='brightnessColour' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d2segmentC' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='OffColor' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.value &amp; 0x08' swap='0' >
+						<command class_type='decision' title='Decision' exp='.value &amp; 0x08' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d2segmentD' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='brightnessColour' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d2segmentD' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='OffColor' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.value &amp; 0x10' swap='0' >
+						<command class_type='decision' title='Decision' exp='.value &amp; 0x10' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d2segmentE' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='brightnessColour' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d2segmentE' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='OffColor' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.value &amp; 0x20' swap='0' >
+						<command class_type='decision' title='Decision' exp='.value &amp; 0x20' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d2segmentF' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='brightnessColour' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d2segmentF' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='OffColor' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.value &amp; 0x40' swap='0' >
+						<command class_type='decision' title='Decision' exp='.value &amp; 0x40' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d2segmentG' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='brightnessColour' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d2segmentG' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='OffColor' />
@@ -2006,29 +1994,29 @@ The colon character can also be controlled when writing to digit 1.' statediag='
 						<param name='Expansion' type='T8*' description='The expanded string to inline to the code' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
 						</param>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Return = 1' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='Compare$(.VarName,&quot;brightnessColour&quot;,1)' swap='0' >
+						<command class_type='decision' title='Decision' exp='Compare$(.VarName,&quot;brightnessColour&quot;,1)' swap='0' >
 							<flowline />
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Return = 0' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='Compare$(.VarName,&quot;OffColor&quot;,1)' swap='0' >
+						<command class_type='decision' title='Decision' exp='Compare$(.VarName,&quot;OffColor&quot;,1)' swap='0' >
 							<flowline />
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Return = 0' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='Compare$(.VarName,&quot;displayOn&quot;,1)' swap='0' >
+						<command class_type='decision' title='Decision' exp='Compare$(.VarName,&quot;displayOn&quot;,1)' swap='0' >
 							<flowline />
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Return = 0' />
 								</command>
 							</flowline>
@@ -2039,112 +2027,112 @@ The colon character can also be controlled when writing to digit 1.' statediag='
 					<flowline name='PrvSetSegs1' description='Manual Control of the segments in simulation.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<param name='value' type='u8' description='Value to display' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.value &amp; 0x01' swap='0' >
+						<command class_type='decision' title='Decision' exp='.value &amp; 0x01' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d1segmentA' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='brightnessColour' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d1segmentA' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='OffColor' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.value &amp; 0x02' swap='0' >
+						<command class_type='decision' title='Decision' exp='.value &amp; 0x02' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d1segmentB' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='brightnessColour' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d1segmentB' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='OffColor' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.value &amp; 0x04' swap='0' >
+						<command class_type='decision' title='Decision' exp='.value &amp; 0x04' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d1segmentC' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='brightnessColour' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d1segmentC' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='OffColor' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.value &amp; 0x08' swap='0' >
+						<command class_type='decision' title='Decision' exp='.value &amp; 0x08' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d1segmentD' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='brightnessColour' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d1segmentD' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='OffColor' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.value &amp; 0x10' swap='0' >
+						<command class_type='decision' title='Decision' exp='.value &amp; 0x10' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d1segmentE' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='brightnessColour' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d1segmentE' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='OffColor' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.value &amp; 0x20' swap='0' >
+						<command class_type='decision' title='Decision' exp='.value &amp; 0x20' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d1segmentF' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='brightnessColour' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d1segmentF' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='OffColor' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.value &amp; 0x40' swap='0' >
+						<command class_type='decision' title='Decision' exp='.value &amp; 0x40' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d1segmentG' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='brightnessColour' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d1segmentG' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='OffColor' />
@@ -2157,112 +2145,112 @@ The colon character can also be controlled when writing to digit 1.' statediag='
 					<flowline name='PrvSetSegs0' description='Manual Control of the segments in simulation.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<param name='value' type='u8' description='Value to display' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.value &amp; 0x01' swap='0' >
+						<command class_type='decision' title='Decision' exp='.value &amp; 0x01' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d0segmentA' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='brightnessColour' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d0segmentA' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='OffColor' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.value &amp; 0x02' swap='0' >
+						<command class_type='decision' title='Decision' exp='.value &amp; 0x02' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d0segmentB' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='brightnessColour' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d0segmentB' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='OffColor' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.value &amp; 0x04' swap='0' >
+						<command class_type='decision' title='Decision' exp='.value &amp; 0x04' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d0segmentC' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='brightnessColour' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d0segmentC' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='OffColor' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.value &amp; 0x08' swap='0' >
+						<command class_type='decision' title='Decision' exp='.value &amp; 0x08' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d0segmentD' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='brightnessColour' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d0segmentD' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='OffColor' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.value &amp; 0x10' swap='0' >
+						<command class_type='decision' title='Decision' exp='.value &amp; 0x10' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d0segmentE' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='brightnessColour' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d0segmentE' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='OffColor' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.value &amp; 0x20' swap='0' >
+						<command class_type='decision' title='Decision' exp='.value &amp; 0x20' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d0segmentF' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='brightnessColour' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d0segmentF' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='OffColor' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.value &amp; 0x40' swap='0' >
+						<command class_type='decision' title='Decision' exp='.value &amp; 0x40' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d0segmentG' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='brightnessColour' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Panel' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+								<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
 									<argument exp='d0segmentG' />
 									<argument exp='&quot;color&quot;' />
 									<argument exp='OffColor' />
@@ -2274,47 +2262,47 @@ The colon character can also be controlled when writing to digit 1.' statediag='
 				<macro >
 					<flowline name='ClearDigits' description='Clear all digits of the display.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<command class_type='delay' title='Delay to preven dispaly corruption' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='50' type='1' />
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_ClearDigit0' />
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_ClearDigit1' />
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_ClearDigit2' />
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Prv_ClearDigit3' />
+						<command class_type='delay' title='Delay to preven dispaly corruption' exp='50' type='1' />
+						<command class_type='call' title='Call Macro' macro='Prv_ClearDigit0' />
+						<command class_type='call' title='Call Macro' macro='Prv_ClearDigit1' />
+						<command class_type='call' title='Call Macro' macro='Prv_ClearDigit2' />
+						<command class_type='call' title='Call Macro' macro='Prv_ClearDigit3' />
 					</flowline>
 				</macro>
 				<macro >
 					<flowline name='Ev_Start' description='Broadcast to all components that simulation is starting' statediag='0' >
 						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='brightnessColour = FGColor' />
 						</command>
-						<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Ev_Initialize' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='ShowSegLabels = 1' swap='0' >
+						<command class_type='call' title='Call Macro' macro='Ev_Initialize' />
+						<command class_type='decision' title='Decision' exp='ShowSegLabels = 1' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.SetVisible' >
 									<argument exp='LabelA' />
 									<argument exp='0' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.SetVisible' >
 									<argument exp='LabelB' />
 									<argument exp='0' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.SetVisible' >
 									<argument exp='LabelC' />
 									<argument exp='0' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.SetVisible' >
 									<argument exp='LabelD' />
 									<argument exp='0' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.SetVisible' >
 									<argument exp='LabelE' />
 									<argument exp='0' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.SetVisible' >
 									<argument exp='LabelF' />
 									<argument exp='0' />
 								</command>
-								<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.SetVisible' >
+								<command class_type='sim' title='Simulation' macro='Component.SetVisible' >
 									<argument exp='LabelG' />
 									<argument exp='0' />
 								</command>
@@ -2329,173 +2317,183 @@ The colon character can also be controlled when writing to digit 1.' statediag='
 						<local name='bright' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
 						<command class_type='comment' title='' comment='Component Version Information;
 3, 3.0, 09-12-24, MW, improved component simuulation;
-4, 4.0, 04-02-25, MW, Adding simulation and embedded SetBrightness function;' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
-						<command class_type='call' title='Call Macro' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ClearDigits' />
-						<command class_type='call' title='User Macro' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowDigitSim' >
+4, 4.0, 04-02-25, MW, Adding simulation and embedded SetBrightness function;
+5, 5.0, 17-08-26, MW, Fixed Simulation ShowDigitSim so Colon remains on;
+5, 5.0, 17-08-26, MW, Fixed embedded SetBrightnes On/Off function; 
+5, 5.0, 17-08-26, MW, Changed wording for Colon parameter within SetBrightness function; ; ' textarea='12,0,12,0' />
+						<command class_type='call' title='Call Macro' macro='ClearDigits' />
+						<command class_type='call' title='User Macro' break='1' macro='ShowDigitsSim' >
+							<argument exp='0' />
+							<argument exp='1' />
+							<argument exp='2' />
+							<argument exp='3' />
+							<argument exp='1' />
+						</command>
+						<command class_type='call' title='User Macro' break='1' disable='1' macro='ShowDigitSim' >
 							<argument exp='0' />
 							<argument exp='2' />
 							<argument exp='1' />
 						</command>
-						<command class_type='loop' title='Loop' disable='1' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='1' >
+						<command class_type='loop' title='Loop' type='0' exp='1' for1='' for3='' >
 							<flowline />
 						</command>
-						<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='SetBrightnessSim' >
+						<command class_type='call' title='User Macro' macro='SetBrightnessSim' >
 							<argument exp='4' />
 							<argument exp='1' />
 						</command>
-						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='1' >
+						<command class_type='loop' title='Loop' type='0' exp='1' >
 							<flowline >
-								<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='1' >
+								<command class_type='loop' title='Loop' type='0' exp='1' >
 									<flowline >
-										<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowDigitSim' >
+										<command class_type='call' title='Call Macro' macro='ShowDigitSim' >
 											<argument exp='3' />
 											<argument exp='.bright MOD 10' />
 											<argument exp='1' />
 										</command>
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.bright = .bright + 1' />
 										</command>
-										<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='200' type='1' />
+										<command class_type='delay' title='Delay' exp='200' type='1' />
 									</flowline>
 								</command>
-								<command class_type='call' title='Call Macro' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowDigit' >
+								<command class_type='call' title='Call Macro' disable='1' macro='ShowDigit' >
 									<argument exp='0' />
 									<argument exp='0' />
 									<argument exp='0' />
 								</command>
-								<command class_type='call' title='Call Macro' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowDigit' >
+								<command class_type='call' title='Call Macro' disable='1' macro='ShowDigit' >
 									<argument exp='1' />
 									<argument exp='1' />
 									<argument exp='0' />
 								</command>
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowDigitSim' >
+								<command class_type='call' title='Call Macro' macro='ShowDigitSim' >
 									<argument exp='1' />
 									<argument exp='1' />
 									<argument exp='0' />
 								</command>
-								<command class_type='call' title='Call Macro' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowDigit' >
+								<command class_type='call' title='Call Macro' disable='1' macro='ShowDigit' >
 									<argument exp='2' />
 									<argument exp='2' />
 									<argument exp='0' />
 								</command>
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowDigitSim' >
+								<command class_type='call' title='Call Macro' macro='ShowDigitSim' >
 									<argument exp='2' />
 									<argument exp='2' />
 									<argument exp='0' />
 								</command>
-								<command class_type='call' title='Call Macro' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowDigit' >
+								<command class_type='call' title='Call Macro' disable='1' macro='ShowDigit' >
 									<argument exp='3' />
 									<argument exp='3' />
 									<argument exp='0' />
 								</command>
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowDigitSim' >
+								<command class_type='call' title='Call Macro' macro='ShowDigitSim' >
 									<argument exp='3' />
 									<argument exp='3' />
 									<argument exp='0' />
 								</command>
-								<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='1' type='2' />
-								<command class_type='call' title='Call Macro' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowDigit' >
+								<command class_type='delay' title='Delay' exp='1' type='2' />
+								<command class_type='call' title='Call Macro' disable='1' macro='ShowDigit' >
 									<argument exp='0' />
 									<argument exp='0' />
 									<argument exp='1' />
 								</command>
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowDigitSim' >
+								<command class_type='call' title='Call Macro' macro='ShowDigitSim' >
 									<argument exp='0' />
 									<argument exp='0' />
 									<argument exp='0' />
 								</command>
-								<command class_type='call' title='Call Macro' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowDigit' >
+								<command class_type='call' title='Call Macro' disable='1' macro='ShowDigit' >
 									<argument exp='1' />
 									<argument exp='1' />
 									<argument exp='1' />
 								</command>
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowDigitSim' >
+								<command class_type='call' title='Call Macro' macro='ShowDigitSim' >
 									<argument exp='1' />
 									<argument exp='1' />
 									<argument exp='1' />
 								</command>
-								<command class_type='call' title='Call Macro' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowDigit' >
+								<command class_type='call' title='Call Macro' disable='1' macro='ShowDigit' >
 									<argument exp='2' />
 									<argument exp='2' />
 									<argument exp='1' />
 								</command>
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowDigitSim' >
+								<command class_type='call' title='Call Macro' macro='ShowDigitSim' >
 									<argument exp='2' />
 									<argument exp='2' />
 									<argument exp='0' />
 								</command>
-								<command class_type='call' title='Call Macro' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowDigit' >
+								<command class_type='call' title='Call Macro' disable='1' macro='ShowDigit' >
 									<argument exp='3' />
 									<argument exp='3' />
 									<argument exp='1' />
 								</command>
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowDigitSim' >
+								<command class_type='call' title='Call Macro' macro='ShowDigitSim' >
 									<argument exp='3' />
 									<argument exp='3' />
 									<argument exp='0' />
 								</command>
-								<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='1' type='2' />
-								<command class_type='call' title='Call Macro' disable='1' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowDigits' >
+								<command class_type='delay' title='Delay' exp='1' type='2' />
+								<command class_type='call' title='Call Macro' disable='1' macro='ShowDigits' >
 									<argument exp='5' />
 									<argument exp='6' />
 									<argument exp='7' />
 									<argument exp='8' />
 									<argument exp='0' />
 								</command>
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowDigitsSim' >
+								<command class_type='call' title='Call Macro' macro='ShowDigitsSim' >
 									<argument exp='5' />
 									<argument exp='6' />
 									<argument exp='7' />
 									<argument exp='8' />
 									<argument exp='0' />
 								</command>
-								<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='1' type='2' />
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowDigits' >
+								<command class_type='delay' title='Delay' exp='1' type='2' />
+								<command class_type='call' title='Call Macro' macro='ShowDigits' >
 									<argument exp='5' />
 									<argument exp='6' />
 									<argument exp='7' />
 									<argument exp='8' />
 									<argument exp='1' />
 								</command>
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowDigitsSim' >
+								<command class_type='call' title='Call Macro' macro='ShowDigitsSim' >
 									<argument exp='5' />
 									<argument exp='6' />
 									<argument exp='7' />
 									<argument exp='8' />
 									<argument exp='1' />
 								</command>
-								<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='1' type='2' />
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowDigits' >
+								<command class_type='delay' title='Delay' exp='1' type='2' />
+								<command class_type='call' title='Call Macro' macro='ShowDigits' >
 									<argument exp='16' />
 									<argument exp='16' />
 									<argument exp='16' />
 									<argument exp='16' />
 									<argument exp='0' />
 								</command>
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowDigitsSim' >
+								<command class_type='call' title='Call Macro' macro='ShowDigitsSim' >
 									<argument exp='16' />
 									<argument exp='16' />
 									<argument exp='16' />
 									<argument exp='16' />
 									<argument exp='0' />
 								</command>
-								<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='1' type='2' />
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowDigits' >
+								<command class_type='delay' title='Delay' exp='1' type='2' />
+								<command class_type='call' title='Call Macro' macro='ShowDigits' >
 									<argument exp='16' />
 									<argument exp='16' />
 									<argument exp='16' />
 									<argument exp='16' />
 									<argument exp='1' />
 								</command>
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='ShowDigitsSim' >
+								<command class_type='call' title='Call Macro' macro='ShowDigitsSim' >
 									<argument exp='16' />
 									<argument exp='16' />
 									<argument exp='16' />
 									<argument exp='16' />
 									<argument exp='1' />
 								</command>
-								<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='1' type='2' />
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='delay' title='Delay' exp='1' type='2' />
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.bright = (.bright + 1) &amp; 7' />
 								</command>
 							</flowline>
