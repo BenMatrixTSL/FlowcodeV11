@@ -1,0 +1,673 @@
+<root>
+<document scada='0' projtype='1' schema='103' license='1,82702381,95CJQR' title='' description='' fcversion='720898' target='ARD.ATMEGA.Arduino Uno R3 SMD' >
+	<config data='' clkspd='16000000' simspd='0' usewdt='0' constif='0' Use3V3='0' />
+	<plugins >
+		<dll_models enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug />
+	<traces />
+	<ghost >
+		<FK2 >
+			<data name='FK2D0' port='4294967295' pin='4294967295' />
+			<data name='FK2D1' port='4294967295' pin='4294967295' />
+			<data name='FK2D2' port='4294967295' pin='4294967295' />
+			<data name='FK2D3' port='4294967295' pin='4294967295' />
+			<data name='FK2D4' port='4294967295' pin='4294967295' />
+			<data name='FK2D5' port='4294967295' pin='4294967295' />
+			<data name='FK2D6' port='4294967295' pin='4294967295' />
+			<data name='FK2D7' port='4294967295' pin='4294967295' />
+			<data name='FK2D8' port='4294967295' pin='4294967295' />
+			<data name='FK2D9' port='4294967295' pin='4294967295' />
+			<data name='FK2D10' port='4294967295' pin='4294967295' />
+			<data name='FK2D11' port='4294967295' pin='4294967295' />
+			<data name='FK2D12' port='4294967295' pin='4294967295' />
+			<data name='FK2D13' port='4294967295' pin='4294967295' />
+			<data name='FK2D14' port='4294967295' pin='4294967295' />
+			<data name='FK2D15' port='4294967295' pin='4294967295' />
+			<data name='FK2A0' port='4294967295' pin='4294967295' />
+			<data name='FK2A1' port='4294967295' pin='4294967295' />
+			<data name='FK2A2' port='4294967295' pin='4294967295' />
+			<data name='FK2A3' port='4294967295' pin='4294967295' />
+			<data name='FK2A4' port='4294967295' pin='4294967295' />
+			<data name='FK2A5' port='4294967295' pin='4294967295' />
+		</FK2>
+		<ICD >
+			<data name='AnalogPrescaleValue' value='19' />
+			<data name='DigitalSampleRate' value='100000' />
+			<data name='BreakpointCount' value='8' />
+			<data name='CallStackDepthCount' value='8' />
+			<data name='ClockPort' value='3' />
+			<data name='ClockPin' value='1' />
+			<data name='DataPort' value='3' />
+			<data name='DataPin' value='0' />
+			<data name='UseDefaultPins' value='1' />
+			<data name='WrapEnabled' value='1' />
+			<data name='CommsDelayOverridden' value='0' />
+			<data name='CommsDelay' value='11' />
+			<data name='CalculatedCommsDelay' value='11' />
+			<data name='AnalogEB2PrescaleValue' value='2' />
+			<data name='DigitalEB2SampleRate' value='100000' />
+		</ICD>
+		<pins >
+			<digital A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+			<analog A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+		</pins>
+	</ghost>
+	<components >
+		<settings autoimg='0' center='1' unitscale='0' fixedscale='0' fixedx='25' fixedy='25' fixedz='25' headcode='0' />
+		<definition guid='2c3923f5-3a7d-45f5-84a9-72a99c590622' vstate='40' vmin='3' vmaj='1' srcleaf='Neuron.fcfx' visiblename='Neuron' description='Performs a single-neuron calculation of Z = W · X + B.
+
+Sums weight * input for each input, adds bias, then optionally applies an activation function (Linear, ReLU, Sigmoid, Tanh or Leaky ReLU).
+
+Use SetWeights / SetWeight and SetBias to configure, set inputs with SetInput or pass an array to Calculate / CalculateSingle.
+Use CalculateLoss or CalculateLossFromResult to measure error against a target value.' category='Calculation' category2=' Data' category3='' bIs2dOnly='1' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='Matrix TSL' manuname='' manucode='' sysinfo='1052939' keywords='Neuron|MAC|AI|ML|Weight|Bias|ReLU|Sigmoid|Tanh|LeakyReLU|Loss|MSE|MAE' dynamic='1' scadaCompatible='1' embeddedCompatible='1' showmacros='1' iconpath='..\..\Icons\Components\Median.png' />
+		<component class_type='root' codename='Neuron' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+			<resources />
+			<properties >
+				<property name='Number of Inputs' target='NumInputs' typeid='21' hidden='0' locked='0' info='Number of inputs (and weights) used by the neuron. Range: 1 to 32.' />
+				<property name='Activation' target='ActivationType' typeid='16' hidden='0' locked='0' info='Activation applied after Z = W · X + B.
+Linear returns Z unchanged.
+ReLU returns max(0, Z).
+Sigmoid returns 1 / (1 + exp(-Z)).
+Tanh returns (2 / (1 + exp(-2Z))) - 1.
+Leaky ReLU returns Z when Z &gt; 0, otherwise Leak Slope * Z.' filter='000Linear
+001ReLU
+002Sigmoid
+003Tanh
+004Leaky ReLU' />
+				<property name='Leak Slope' target='LeakSlope' typeid='15' hidden='1' locked='0' info='Slope used for negative values when Activation is Leaky ReLU. Typical value: 0.01.' />
+				<property name='Loss Type' target='LossType' typeid='16' hidden='0' locked='0' info='Error / loss function used by CalculateLoss and CalculateLossFromResult.
+MSE = (Predicted - Target)^2.
+MAE = abs(Predicted - Target).
+Binary Cross Entropy is intended for Sigmoid outputs in the range 0 to 1.' filter='000MSE
+001MAE
+002Binary Cross Entropy' />
+			</properties>
+			<values >
+				<value target='NumInputs' data='1' />
+				<value target='ActivationType' data='000' />
+				<value target='LeakSlope' data='0.01' />
+				<value target='LossType' data='000' />
+			</values>
+			<events >
+				<event class='Compile' event='GetVarSize' target='Ev_GetVarSize' />
+				<event class='Components' event='Property' target='Ev_Property' />
+				<event class='Components' event='Renamed' target='Ev_Renamed' />
+			</events>
+			<apis >
+				<api name='Initialise' alt='Initialise' type='1' proto='1' />
+				<api name='SetInput' alt='SetInput' type='1' proto='1' />
+				<api name='SetWeight' alt='SetWeight' type='1' proto='1' />
+				<api name='SetWeights' alt='SetWeights' type='1' proto='1' />
+				<api name='SetBias' alt='SetBias' type='1' proto='1' />
+				<api name='Calculate' alt='Calculate' type='1' proto='1' />
+				<api name='CalculateSingle' alt='CalculateSingle' type='1' proto='1' />
+				<api name='CalculateStored' alt='CalculateStored' type='1' proto='1' />
+				<api name='CalculateLoss' alt='CalculateLoss' type='1' proto='1' />
+				<api name='Prv_ApplyActivation' alt='Prv_ApplyActivation' type='0' proto='1' />
+				<api name='Prv_CalculateLossFromResult' alt='Prv_CalculateLossFromResult' type='0' proto='1' />
+				<api name='Prv_GetWeight' alt='Prv_GetWeight' type='0' proto='1' />
+				<api name='Prv_GetBias' alt='Prv_GetBias' type='0' proto='1' />
+				<api name='Prv_GetResult' alt='Prv_GetResult' type='0' proto='1' />
+				<api name='Prv_GetLoss' alt='Prv_GetLoss' type='0' proto='1' />
+				<api name='Prv_GetNumInputs' alt='Prv_GetNumInputs' type='0' proto='1' />
+				<api name='Prv_ResetResult' alt='Prv_ResetResult' type='0' proto='1' />
+			</apis>
+			<variables >
+				<variable public='1' >
+					<def class_type='variable' name='Result' type='f32' description='Last calculated neuron output after activation' isconst='0' isHidden='0' isinit='1' usrinit='0.0' setinit='0.0' />
+				</variable>
+				<variable public='1' >
+					<def class_type='variable' name='Loss' type='f32' description='Last calculated loss / error value' isconst='0' isHidden='0' isinit='1' usrinit='0.0' setinit='0.0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='Bias' type='f32' description='Bias offset added after the weighted sum' isconst='0' isHidden='0' isinit='1' usrinit='0.0' setinit='0.0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='Weights' type='f32' description='Stored weight values for each input' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' >
+						<array size='1' />
+					</def>
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='Inputs' type='f32' description='Stored input values used by CalculateStored' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' >
+						<array size='1' />
+					</def>
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='SetInput' description='Stores a single input value for later use by CalculateStored.
+Index range: 0 to (Number of Inputs - 1).' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Index' type='u8' description='Input index (0 based)' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Value' type='f32' description='Input value to store' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<command class_type='decision' title='Index in range?' exp='.Index &lt; NumInputs' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Store input' >
+									<exp exp='Inputs[.Index] = .Value' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SetWeight' description='Sets a single weight value by index.
+Index range: 0 to (Number of Inputs - 1).' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Index' type='u8' description='Weight index (0 based)' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Value' type='f32' description='Weight value to store' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<command class_type='decision' title='Index in range?' exp='.Index &lt; NumInputs' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Store weight' >
+									<exp exp='Weights[.Index] = .Value' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Prv_GetWeight' description='Private helper: returns a stored weight by index.
+Returns 0.0 if the index is out of range.' statediag='0' >
+						<return name='Return' type='f32' description='Weight value' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<param name='Index' type='u8' description='Weight index (0 based)' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Default return' >
+							<exp exp='.Return = 0.0' />
+						</command>
+						<command class_type='decision' title='Index in range?' exp='.Index &lt; NumInputs' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Read weight' >
+									<exp exp='.Return = Weights[.Index]' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SetWeights' description='Copies an array of weight values into the neuron.
+The array must contain at least Number of Inputs elements.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='WeightArray' type='f32' description='Array of weight values (one per input)' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' >
+							<array size='32' />
+						</param>
+						<local name='Index' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<command class_type='loop' title='Copy weights' type='2' forvar='.Index' exp='NumInputs' for1='' for3='' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='Weights[.Index] = .WeightArray[.Index]' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Prv_ResetResult' description='Private helper: clears the public Result variable to 0.0.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='calculation' title='Clear result' >
+							<exp exp='Result = 0.0' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='CalculateSingle' description='Convenience for a single-input neuron: Z = Weight[0] * X + Bias, then activation.
+Uses only input index 0. Ideal when Number of Inputs is 1.' statediag='0' >
+						<return name='Return' type='f32' description='Neuron output after activation' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<param name='X' type='f32' description='Single input value' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='Z' type='f32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0.0' setinit='0.0' />
+						<command class_type='calculation' title='Z = W0 * X + B' >
+							<exp exp='.Z = (Weights[0] * .X) + Bias' />
+						</command>
+						<command class_type='call' title='Apply activation' macro='Prv_ApplyActivation' >
+							<return exp='.Return' />
+							<argument exp='.Z' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Prv_ApplyActivation' description='Private helper: applies the selected activation function to value Z.
+Also stores the activated value in Result.' statediag='0' >
+						<return name='Return' type='f32' description='Activated output' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<param name='Z' type='f32' description='Pre-activation value' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<command class_type='switch' title='Apply activation' exp='ActivationType' >
+							<case >
+								<flowline >
+									<command class_type='comment' title='' comment='Linear: return Z unchanged' />
+									<command class_type='calculation' title='Linear' >
+										<exp exp='Result = .Z' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='1' >
+								<flowline >
+									<command class_type='comment' title='' comment='ReLU: max(0, Z)' />
+									<command class_type='decision' title='Z &gt; 0?' exp='.Z &gt; 0.0' swap='0' >
+										<flowline >
+											<command class_type='calculation' title='Positive' >
+												<exp exp='Result = .Z' />
+											</command>
+										</flowline>
+										<flowline >
+											<command class_type='calculation' title='Clamp to zero' >
+												<exp exp='Result = 0.0' />
+											</command>
+										</flowline>
+									</command>
+								</flowline>
+							</case>
+							<case exp='2' >
+								<flowline >
+									<command class_type='comment' title='' comment='Sigmoid: 1 / (1 + exp(-Z))' />
+									<command class_type='calculation' title='Sigmoid' >
+										<exp exp='Result = 1.0 / (1.0 + exp(0.0 - .Z))' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='3' >
+								<flowline >
+									<command class_type='comment' title='' comment='Tanh: (2 / (1 + exp(-2Z))) - 1' />
+									<command class_type='calculation' title='Tanh' >
+										<exp exp='Result = (2.0 / (1.0 + exp(0.0 - (2.0 * .Z)))) - 1.0' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='4' >
+								<flowline >
+									<command class_type='comment' title='' comment='Leaky ReLU: Z if Z &gt; 0, else LeakSlope * Z' />
+									<command class_type='decision' title='Z &gt; 0?' exp='.Z &gt; 0.0' swap='0' >
+										<flowline >
+											<command class_type='calculation' title='Positive' >
+												<exp exp='Result = .Z' />
+											</command>
+										</flowline>
+										<flowline >
+											<command class_type='calculation' title='Leaky negative' >
+												<exp exp='Result = LeakSlope * .Z' />
+											</command>
+										</flowline>
+									</command>
+								</flowline>
+							</case>
+						</command>
+						<command class_type='calculation' title='Return result' >
+							<exp exp='.Return = Result' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Calculate' description='Calculates Z = sum(Weight[i] * Input[i]) + Bias, then applies the selected activation.
+Returns the activated output and also stores it in Result.' statediag='0' >
+						<return name='Return' type='f32' description='Neuron output after activation' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<param name='InputArray' type='f32' description='Array of input values (one per input)' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' >
+							<array size='32' />
+						</param>
+						<local name='Index' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='Z' type='f32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0.0' setinit='0.0' />
+						<command class_type='calculation' title='Start MAC at zero' >
+							<exp exp='.Z = 0.0' />
+						</command>
+						<command class_type='loop' title='Accumulate W * X' type='2' forvar='.Index' exp='NumInputs' for1='' for3='' >
+							<flowline >
+								<command class_type='calculation' title='Multiply-accumulate' >
+									<exp exp='.Z = .Z + (Weights[.Index] * .InputArray[.Index])' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='calculation' title='Add bias' >
+							<exp exp='.Z = .Z + Bias' />
+						</command>
+						<command class_type='call' title='Apply activation' macro='Prv_ApplyActivation' >
+							<return exp='.Return' />
+							<argument exp='.Z' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Property' description='Sent when a property has been changed by the User' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='NumInputs too small?' exp='NumInputs &lt; 1' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+									<argument exp='this' />
+									<argument exp='&quot;NumInputs&quot;' />
+									<argument exp='1' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='NumInputs too large?' exp='NumInputs &gt; 32' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+									<argument exp='this' />
+									<argument exp='&quot;NumInputs&quot;' />
+									<argument exp='32' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Show Leak Slope?' exp='ActivationType = 4' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;LeakSlope&quot;' />
+									<argument exp='1' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;LeakSlope&quot;' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Renamed' description='' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Name' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<command class_type='sim' title='' macro='Tree.GetName' >
+							<return exp='.Name' />
+							<argument exp='this' />
+						</command>
+						<command class_type='sim' title='' macro='Component.Property.SetValue' >
+							<argument exp='LibraryComponent1' />
+							<argument exp='&quot;Name&quot;' />
+							<argument exp='.Name' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SetBias' description='Sets the bias offset constant B used in Z = W · X + B.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Value' type='f32' description='Bias value' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<command class_type='calculation' title='Store bias' >
+							<exp exp='Bias = .Value' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='CalculateStored' description='Same as Calculate, but uses the inputs previously stored with SetInput.
+Useful when filling inputs one at a time.' statediag='0' >
+						<return name='Return' type='f32' description='Neuron output after activation' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='Index' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='Z' type='f32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0.0' setinit='0.0' />
+						<command class_type='calculation' title='Start MAC at zero' >
+							<exp exp='.Z = 0.0' />
+						</command>
+						<command class_type='loop' title='Accumulate W * X' type='2' forvar='.Index' exp='NumInputs' for1='' for3='' >
+							<flowline >
+								<command class_type='calculation' title='Multiply-accumulate' >
+									<exp exp='.Z = .Z + (Weights[.Index] * Inputs[.Index])' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='calculation' title='Add bias' >
+							<exp exp='.Z = .Z + Bias' />
+						</command>
+						<command class_type='call' title='Apply activation' macro='Prv_ApplyActivation' >
+							<return exp='.Return' />
+							<argument exp='.Z' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_GetVarSize' description='Sent to a component to amend the size of the expected array' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='VarName' type='T8' description='The original Flowcode variable' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</param>
+						<param name='Elements' type='u32*' description='The number of elements in the array' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.Return = 1' />
+						</command>
+						<command class_type='decision' title='Resize Weights?' exp='Compare$ (.VarName,&quot;Weights&quot;,1) == 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Match Number of Inputs' >
+									<exp exp='.Elements = NumInputs' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Resize Inputs?' exp='Compare$ (.VarName,&quot;Inputs&quot;,1) == 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Match Number of Inputs' >
+									<exp exp='.Elements = NumInputs' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Prv_GetBias' description='Private helper: returns the current bias offset B.' statediag='0' >
+						<return name='Return' type='f32' description='Bias value' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<command class_type='calculation' title='Read bias' >
+							<exp exp='.Return = Bias' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Prv_GetResult' description='Private helper: returns the last value stored in Result.' statediag='0' >
+						<return name='Return' type='f32' description='Last neuron output' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<command class_type='calculation' title='Return stored result' >
+							<exp exp='.Return = Result' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='CalculateLoss' description='Calculates loss between a predicted value and a target value using the Loss Type property.
+MSE = (Predicted - Target)^2.
+MAE = abs(Predicted - Target).
+Binary Cross Entropy = -(Target * log(Predicted) + (1 - Target) * log(1 - Predicted)).
+Stores the value in Loss and returns it.' statediag='0' >
+						<return name='Return' type='f32' description='Calculated loss value' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<param name='Predicted' type='f32' description='Predicted / output value' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<param name='Target' type='f32' description='Expected / target value' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='Pred' type='f32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0.0' setinit='0.0' />
+						<local name='Diff' type='f32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0.0' setinit='0.0' />
+						<command class_type='switch' title='Loss type' exp='LossType' >
+							<case >
+								<flowline >
+									<command class_type='comment' title='' comment='MSE: (Predicted - Target)^2' />
+									<command class_type='calculation' title='MSE' >
+										<exp exp='.Diff = .Predicted - .Target' />
+										<exp exp='Loss = .Diff * .Diff' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='1' >
+								<flowline >
+									<command class_type='comment' title='' comment='MAE: abs(Predicted - Target)' />
+									<command class_type='calculation' title='MAE' >
+										<exp exp='Loss = fabs(.Predicted - .Target)' />
+									</command>
+								</flowline>
+							</case>
+							<case exp='2' >
+								<flowline >
+									<command class_type='comment' title='' comment='Binary Cross Entropy (clamp Predicted away from 0 and 1)' />
+									<command class_type='calculation' title='Clamp prediction' >
+										<exp exp='.Pred = .Predicted' />
+									</command>
+									<command class_type='decision' title='Pred too low?' exp='.Pred &lt; 0.000001' swap='0' >
+										<flowline >
+											<command class_type='calculation' title='Clamp low' >
+												<exp exp='.Pred = 0.000001' />
+											</command>
+										</flowline>
+										<flowline />
+									</command>
+									<command class_type='decision' title='Pred too high?' exp='.Pred &gt; 0.999999' swap='0' >
+										<flowline >
+											<command class_type='calculation' title='Clamp high' >
+												<exp exp='.Pred = 0.999999' />
+											</command>
+										</flowline>
+										<flowline />
+									</command>
+									<command class_type='calculation' title='BCE' >
+										<exp exp='Loss = 0.0 - ((.Target * log(.Pred)) + ((1.0 - .Target) * log(1.0 - .Pred)))' />
+									</command>
+								</flowline>
+							</case>
+						</command>
+						<command class_type='calculation' title='Return loss' >
+							<exp exp='.Return = Loss' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Prv_CalculateLossFromResult' description='Private helper: calculates loss using the last Result as the predicted value and the supplied Target.' statediag='0' >
+						<return name='Return' type='f32' description='Calculated loss value' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<param name='Target' type='f32' description='Expected / target value' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<command class_type='call' title='Loss from Result' macro='CalculateLoss' >
+							<return exp='.Return' />
+							<argument exp='Result' />
+							<argument exp='.Target' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Prv_GetLoss' description='Private helper: returns the last value stored in Loss.' statediag='0' >
+						<return name='Return' type='f32' description='Last loss value' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<command class_type='calculation' title='Return stored loss' >
+							<exp exp='.Return = Loss' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Prv_GetNumInputs' description='Private helper: returns the Number of Inputs property value.' statediag='0' >
+						<return name='Return' type='u8' description='Configured number of inputs' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Read property' >
+							<exp exp='.Return = NumInputs' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='Example: single-input neuron Z = 2.0 * X + 0.5 with Linear activation, then MSE loss against target 3.5.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<local name='Output' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='Error' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<command class_type='call' title='Initialise neuron' macro='Initialise' />
+						<command class_type='call' title='Set weight W0 = 2.0' macro='SetWeight' >
+							<argument exp='0' />
+							<argument exp='2.0' />
+						</command>
+						<command class_type='call' title='Set bias B = 0.5' macro='SetBias' >
+							<argument exp='0.5' />
+						</command>
+						<command class_type='call' title='CalculateSingle Z = 2.0 * 1.5 + 0.5' macro='CalculateSingle' >
+							<return exp='.Output' />
+							<argument exp='1.5' />
+						</command>
+						<command class_type='call' title='MSE loss vs target 3.5' macro='CalculateLoss' >
+							<return exp='.Error' />
+							<argument exp='Result' />
+							<argument exp='3.5' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Initialise' description='Clears all weights, inputs, bias, result and loss to 0.0.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<local name='Index' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<command class_type='loop' title='Clear each weight and input' type='2' forvar='.Index' exp='NumInputs' for1='' for3='' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='Weights[.Index] = 0.0' />
+									<exp exp='Inputs[.Index] = 0.0' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='calculation' title='Clear bias, result and loss' >
+							<exp exp='Bias = 0.0' />
+							<exp exp='Result = 0.0' />
+							<exp exp='Loss = 0.0' />
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='58be670e-18fb-477e-ab09-61fde14b23ec' vmin='0' vmaj='1' codename='LibraryComponent1' panelId='0' x='67' y='-65.5' z='0' xsz='100.707' ysz='100.893' zsz='100' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='0' layer='2' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Text::sText' data='Neuron
+Z=WX+B' />
+					<value target='Name' data='' />
+					<value target='Peripheral::sText' data='' />
+					<value target='Text::nVerticalAlignment' data='002' />
+					<value target='ShowComms' data='0' />
+					<value target='InputIcon::CommsType' data='255' />
+					<value target='InputIcon::LinkTo' data='0' />
+					<value target='IconsOnRight' data='0' />
+					<value target='OutputIcon::CommsType' data='255' />
+					<value target='OutputIcon::LinkTo' data='0' />
+					<value target='InputIcon1::CommsType' data='255' />
+					<value target='ConsoleHandle' data='0' />
+					<value target='Upgraded' data='0' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<scadaresourcelookup />
+	<keymap />
+	<panel2d shadows='0' lighting='2' brightness='0' >
+		<background rgb='7292207' img='' style='0' />
+		<camera xe='0' ye='0' ze='2111.94' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='466' dy='849' zoom='26.6987' fix_topleft='0' />
+		<page x='1000' y='1000' show='0' rgb='0' />
+		<winpos ID='7005' RectRecentFloat='0,-852,1146,-70' RectRecentDocked='0,0,466,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+	</panel2d>
+	<panel3d shadows='0' lighting='2' brightness='0' perspective='1' >
+		<background rgb='8409120' img='' style='0' />
+		<table rgb='7360576' img='' style='0' size='0' />
+		<camera xe='0' ye='0' ze='781.66' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey0 xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey1 xe='-3.67394e-14' ye='0' ze='-300' xt='0' yt='0' zt='0' xquat='0' yquat='1' zquat='0' wquat='6.12323e-17' />
+		<camerakey2 xe='0' ye='-300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.707107' yquat='0' zquat='0' wquat='0.707107' />
+		<camerakey3 xe='-3.67394e-14' ye='300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-4.32978e-17' yquat='0.707107' zquat='0.707107' wquat='4.32978e-17' />
+		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
+		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
+		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
+		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,462,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+	</panel3d>
+	<panels2d count='1' >
+		<panel2d_0 id='0' name='2D Panel' type='0' >
+			<winpos ID='1171' RectRecentFloat='0,483,650,933' RectRecentDocked='927,141,1393,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+			<background fill='72057594037927935' showgrid='1' gridstyle='1' gridsize='10' gridbrush='71776119075691740' snaptogrid='1' fitcomp='0' disp_x='300' disp_y='400' scale='100' disp_col='16777215' />
+		</panel2d_0>
+	</panels2d>
+	<layout >
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetWeights' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetWeight' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_GetWeight' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetBias' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_GetBias' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetInput' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_ApplyActivation' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Calculate' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CalculateSingle' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CalculateStored' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_GetResult' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CalculateLoss' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_CalculateLossFromResult' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_GetLoss' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_ResetResult' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_GetNumInputs' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_GetVarSize' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

@@ -1,6 +1,6 @@
 <root>
-<document scada='0' projtype='1' schema='103' license='1,82702381,95CJQR' title='' description='' fcversion='720898' target='PIC.16F.16F1937' >
-	<config data='!0,fe2!10,1eff%0,2%3,0%5,1%6,1%7,1%8,1%9,3%b,1%c,0%d,0%10,3%14,3%18,0%19,1%1a,1%1c,1%1d,0' clkspd='19660800' simspd='1' usewdt='0' constif='0' Use3V3='0' />
+<document scada='0' projtype='1' schema='103' license='1,82702381,95CJQR' title='' description='' fcversion='720898' target='PIC.16F.16F18877' >
+	<config data='!0,3f8c!10,37fd!20,3f92!30,1fff!40,3fff%0,4%4,0%8,1%b,1%d,1%10,1%11,0%15,1%16,3%19,1%1a,1%1b,0%1c,1%1d,1%20,12%25,0%28,7%2b,7%30,3%3c,1%3d,0%40,1%41,1' clkspd='32000000' simspd='1' usewdt='0' constif='0' Use3V3='0' />
 	<plugins >
 		<dll_models enabled='1' />
 	</plugins>
@@ -56,8 +56,8 @@
 			<data name='UseDefaultPins' value='1' />
 			<data name='WrapEnabled' value='1' />
 			<data name='CommsDelayOverridden' value='0' />
-			<data name='CommsDelay' value='9' />
-			<data name='CalculatedCommsDelay' value='9' />
+			<data name='CommsDelay' value='6' />
+			<data name='CalculatedCommsDelay' value='6' />
 			<data name='AnalogEB2PrescaleValue' value='2' />
 			<data name='DigitalEB2SampleRate' value='100000' />
 		</ICD>
@@ -68,10 +68,10 @@
 	</ghost>
 	<components >
 		<settings autoimg='0' center='1' unitscale='1' fixedscale='0' fixedx='0' fixedy='0' fixedz='0' headcode='0' />
-		<definition guid='3408fde0-f512-487b-8902-74cd56623191' vstate='40' vmin='0' vmaj='26' srcleaf='GLCD_ILI9488_SPI.fcfx' visiblename='GLCD (ILI9488 SPI)' description='Graphical display component designed to work with the ILI9488 controller IC
-Based on the ILI9488 16-bit colour graphical controller IC.
+		<definition guid='7bd84555-ae51-40cc-8e1a-a7bcba661e52' vstate='40' vmin='0' vmaj='19' srcleaf='GLCD_ILI9341_SPI.fcfx' visiblename='GLCD (ILI9341 SPI)' description='Graphical display component designed to work with the ILI9341 controller IC
+Based on the ILI9341 16-bit colour graphical controller IC.
 Uses the SPI CAL component to allow for faster serial display communications.' category='Graphical Color' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='Matrix Ltd' manuname='' manucode='' sysinfo='1053467' keywords='' dynamic='1' scadaCompatible='0' embeddedCompatible='1' showmacros='1' iconpath='..\..\icons\components\glcd.png' />
-		<component class_type='root' codename='gLCD_ILI9488_SPI' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' macronames='$(type)_$(module)__$(macro)' varnames='$(type)_$(module)__$(variable:u)' >
+		<component class_type='root' codename='gLCD_ILI9341_SPI' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' macronames='$(type)_$(module)__$(macro)' varnames='$(type)_$(module)__$(variable:u)' >
 			<resources />
 			<properties >
 				<property name='Dimensions' hidden='0' >
@@ -80,15 +80,37 @@ Uses the SPI CAL component to allow for faster serial display communications.' c
 					<property name='Flip X' target='FlipX' typeid='7' hidden='0' locked='0' info='Flips the horizontal display axis in hardware.' />
 					<property name='Flip Y' target='FlipY' typeid='7' hidden='0' locked='0' info='Flips the vertical display axis in hardware.' />
 				</property>
+				<property name='Colour' hidden='0' >
+					<property name='Monochrome' target='monochrome' typeid='7' hidden='0' locked='1' info='Specifies if the display is capable of colour or monochrome only.' />
+					<property name='Foreground Color' target='foreground_colour' typeid='1' hidden='0' locked='0' info='Specifies the initial foreground color.' />
+					<property name='Background Color' target='background_colour' typeid='1' hidden='0' locked='0' info='Specifies the initial background color.' />
+					<property name='Invert Colour' target='InvertColour' typeid='7' hidden='0' locked='0' info='Some display hardware may require colours to be inverted' />
+					<property name='Swap Red / Blue' target='SwapRB' typeid='7' hidden='0' locked='0' info='Allows Red and Blue colour channels to be swapped to match the way the display has been wired to the 
+controller IC.' />
+					<property name='BGCOL' target='BGCOL' typeid='21' hidden='1' locked='0' info='' />
+					<property name='FGCOL' target='FGCOL' typeid='21' hidden='1' locked='0' info='' />
+					<property name='Queue Fast Pixels' target='QueueFastPixels' typeid='7' hidden='0' locked='0' info='An optimisation for ESP32 based devices where Fast pixels are queued up and all drawn together.
+Acts to speed up writes to the display when drawing lines, rectangles, ellipses, circles, none transparent strings etc.' />
+					<property name='Pixel Queue Size' target='PixelQueueSize' typeid='21' hidden='1' locked='0' info='Defines how many fast pixels can be stored in the queue.
+The larger the number the more RAM used but the quicker the speed to write to the display.
+Each pixel = 2 bytes.' />
+					<property name='Bit Depth' hidden='0' >
+						<property name='Colour Bit Depth' target='colour_bit_depth' typeid='14' hidden='0' locked='1' info='Total color bit depth for the display.' />
+						<property name='Red Bit Depth' target='red_bit_depth' typeid='14' hidden='0' locked='1' info='Specifies the red bit depth for the display.' />
+						<property name='Green Bit Depth' target='green_bit_depth' typeid='14' hidden='0' locked='1' info='Specifies the green bit depth for the display.' />
+						<property name='Blue Bit Depth' target='blue_bit_depth' typeid='14' hidden='0' locked='1' info='Specifies the blue bit depth for the display.' />
+					</property>
+				</property>
 				<property name='Connections' hidden='0' >
 					<property name='Channel' target='cal_spi1::CHANNEL' typeid='16' hidden='0' locked='0' info='SPI Channel selector' filter='000Software
 001Channel 1
+002Channel 2
 ' />
 					<property name='Prescale' target='cal_spi1::PR_SCALE' typeid='16' hidden='0' locked='0' info='Prescale option selector' filter='004Fosc/4
 016Fosc/16
 064Fosc/64' />
 					<property name='MOSI' target='cal_spi1::MOSI' typeid='5' hidden='0' locked='1' info='SPI Data Out Pin SDO - Also Known as Master Out Slave In (MOSI) when used in Master mode.' />
-					<property name='MOSI Remap Pin' target='cal_spi1::MOSIPins' typeid='16' hidden='1' locked='0' info='Select which the target pin to assign the MOSI hardware pin functionality.' filter='000$PORTC.0
+					<property name='MOSI Remap Pin' target='cal_spi1::MOSIPins' typeid='16' hidden='0' locked='0' info='Select which the target pin to assign the MOSI hardware pin functionality.' filter='000$PORTC.0
 001$PORTC.1
 002$PORTC.2
 003$PORTC.3
@@ -105,7 +127,7 @@ Uses the SPI CAL component to allow for faster serial display communications.' c
 014$PORTB.6
 015$PORTB.7' />
 					<property name='MISO' target='cal_spi1::MISO' typeid='5' hidden='0' locked='1' info='SPI Data In Pin SDI - Also Known as Master In Slave Out (MISO) when used in Master mode.' />
-					<property name='MISO Remap Pin' target='cal_spi1::MISOPins' typeid='16' hidden='1' locked='0' info='Select which the target pin to assign the MISO hardware pin functionality.' filter='016$PORTC.0
+					<property name='MISO Remap Pin' target='cal_spi1::MISOPins' typeid='16' hidden='0' locked='0' info='Select which the target pin to assign the MISO hardware pin functionality.' filter='016$PORTC.0
 017$PORTC.1
 018$PORTC.2
 019$PORTC.3
@@ -122,7 +144,7 @@ Uses the SPI CAL component to allow for faster serial display communications.' c
 014$PORTB.6
 015$PORTB.7' />
 					<property name='CLK' target='cal_spi1::CLK' typeid='5' hidden='0' locked='1' info='SPI Clock Pin CLK - The Clock signal is driven by the SPI master.' />
-					<property name='CLK Remap Pin' target='cal_spi1::CLKPins' typeid='16' hidden='1' locked='0' info='Select which the target pin to assign the CLK hardware pin functionality.' filter='000$PORTC.0
+					<property name='CLK Remap Pin' target='cal_spi1::CLKPins' typeid='16' hidden='0' locked='0' info='Select which the target pin to assign the CLK hardware pin functionality.' filter='000$PORTC.0
 001$PORTC.1
 002$PORTC.2
 003$PORTC.3
@@ -138,35 +160,22 @@ Uses the SPI CAL component to allow for faster serial display communications.' c
 013$PORTB.5
 014$PORTB.6
 015$PORTB.7' />
+					<property name='Use chip Select Pin' target='UseCS' typeid='7' hidden='0' locked='0' info='Allows the CS pin to be toggled by the component when communicating with the display.
+No - Allows for better performace, the display is always enabled
+Yes - Allows for the display pins to be multiplexed with other functionality without the risk of display corruption
+If selected No, then for AVR set an output on Pin B2 to prevent SPI lockups.
+' />
 					<property name='Toggle CS' target='ToggleCS' typeid='7' hidden='0' locked='0' info='Allows the CS pin to be toggled by the component when communicating with the display.
 No - Allows for better performace, the display is always enabled
 Yes - Allows for the display pins to be multiplexed with other functionality without the risk of display corruption' />
-					<property name='Chip Select' target='chip_sel_pin' typeid='5' hidden='0' locked='0' info='Chip select pin connection' />
+					<property name='Chip Select' target='chip_sel_pin' typeid='5' hidden='0' locked='0' info='Chip select pin connection
+For AVR devices use Pin B2 to prevent SPI lockups.
+' />
 					<property name='D/C' target='dc_pin' typeid='5' hidden='0' locked='0' info='Instruction / Command pin connection' />
+					<property name='Use Reset Pin' target='UseReset' typeid='7' hidden='0' locked='0' info='' />
 					<property name='Reset' target='reset_pin' typeid='5' hidden='0' locked='0' info='Reset pin connection' />
-					<property name='LED' target='led_pin' typeid='5' hidden='0' locked='0' info='LED backlight strobe pin connection' />
 					<property name='Use Backlight Pin' target='UseBacklight' typeid='7' hidden='0' locked='0' info='' />
-				</property>
-				<property name='Colour' hidden='0' >
-					<property name='Monochrome' target='monochrome' typeid='7' hidden='0' locked='1' info='Specifies if the display is capable of colour or monochrome only.' />
-					<property name='Foreground Color' target='foreground_colour' typeid='1' hidden='0' locked='0' info='Specifies the initial foreground color.' />
-					<property name='Background Color' target='background_colour' typeid='1' hidden='0' locked='0' info='Specifies the initial background color.' />
-					<property name='BGCOL' target='BGCOL' typeid='21' hidden='1' locked='0' info='' />
-					<property name='FGCOL' target='FGCOL' typeid='21' hidden='1' locked='0' info='' />
-					<property name='Invert Colour' target='InvertColour' typeid='7' hidden='0' locked='0' info='No:  A set output will light the corresponding LED
-Yes:  A clear output will light the corresponding LED' />
-					<property name='Queue Fast Pixels' target='QueueFastPixels' typeid='7' hidden='0' locked='0' info='An optimisation for ESP32 based devices where Fast pixels are queued up and all drawn together.
-Acts to speed up writes to the display when drawing lines, rectangles, ellipses, circles, none transparent strings etc.' />
-					<property name='Pixel Queue Size' target='PixelQueueSize' typeid='21' hidden='1' locked='0' info='Defines how many fast pixels can be stored in the queue.
-The larger the number the more RAM used but the quicker the speed to write to the display.
-Each pixel = 3 bytes.' />
-					<property name='Pixel Queue Total' target='PixelQueueTotal' typeid='21' hidden='1' locked='0' info='' />
-					<property name='Bit Depth' hidden='0' >
-						<property name='Colour Bit Depth' target='colour_bit_depth' typeid='14' hidden='0' locked='1' info='Total color bit depth for the display.' />
-						<property name='Red Bit Depth' target='red_bit_depth' typeid='14' hidden='0' locked='1' info='Specifies the red bit depth for the display.' />
-						<property name='Green Bit Depth' target='green_bit_depth' typeid='14' hidden='0' locked='1' info='Specifies the green bit depth for the display.' />
-						<property name='Blue Bit Depth' target='blue_bit_depth' typeid='14' hidden='0' locked='1' info='Specifies the blue bit depth for the display.' />
-					</property>
+					<property name='LED' target='led_pin' typeid='5' hidden='0' locked='0' info='LED backlight strobe pin connection' />
 				</property>
 				<property name='Fonts' folder='Base_GLCD::property_2' hidden='0' >
 					<property name='Font Count' target='Base_GLCD::FontCount' typeid='16' hidden='0' locked='0' info='Specifies the number of fonts available to use on the display.' filter='0011
@@ -691,15 +700,15 @@ Each pixel = 3 bytes.' />
 					</property>
 				</property>
 				<property name='Simulation' folder='property_1' hidden='0' >
+					<property name='Component Label' target='Base_GLCD::ComponentLabel' typeid='16' hidden='0' locked='0' info='' filter='000Same as Handle
+001Custom' />
+					<property name='User Label Text' target='Base_GLCD::GdiText1::sText' typeid='11' hidden='1' locked='1' info='Text to display' />
+					<property name='Component Label Scale' target='Base_GLCD::GdiText1::dScale' typeid='15' hidden='0' locked='0' info='The label scale can be change if the amout of text is too wide for the display ' />
 					<property name='Display Method' target='DisplayMethod' typeid='16' hidden='1' locked='0' info='Chooses which method to use when drawing to the gLCD component
 The bitmap is the more common mode but may run slowly on some machines.
 The point cloud should run faster but may use more memory.
 ' filter='000Bitmap
 001Point Cloud' />
-					<property name='Component Label' target='Base_GLCD::ComponentLabel' typeid='16' hidden='0' locked='0' info='' filter='000Same as Handle
-001Custom' />
-					<property name='User Label Text' target='Base_GLCD::GdiText1::sText' typeid='11' hidden='0' locked='0' info='Text to display' />
-					<property name='Component Label Scale' target='Base_GLCD::GdiText1::dScale' typeid='15' hidden='0' locked='0' info='The label scale can be change if the amout of text is too wide for the display ' />
 					<property name='Physical Orientation' target='Base_GLCD::PhysicalOrientation' typeid='16' hidden='0' locked='0' info='Rotates the simulated canvas to match the orientation of real world hardware.' filter='0000 (Default)
 0011
 0022
@@ -714,37 +723,39 @@ The point cloud should run faster but may use more memory.
 				</property>
 			</properties>
 			<values >
-				<value target='pixel_width' data='320' />
-				<value target='pixel_height' data='480' />
-				<value target='FlipX' data='0' />
+				<value target='pixel_width' data='240' />
+				<value target='pixel_height' data='320' />
+				<value target='FlipX' data='1' />
 				<value target='FlipY' data='0' />
-				<value target='cal_spi1::CHANNEL' data='001' />
-				<value target='cal_spi1::PR_SCALE' data='004' />
-				<value target='cal_spi1::MOSI' data='$PORTC.5' />
-				<value target='cal_spi1::MOSIPins' data='008' />
-				<value target='cal_spi1::MISO' data='$PORTC.4' />
-				<value target='cal_spi1::MISOPins' data='013' />
-				<value target='cal_spi1::CLK' data='$PORTC.3' />
-				<value target='cal_spi1::CLKPins' data='004' />
-				<value target='ToggleCS' data='0' />
-				<value target='chip_sel_pin' data='$PORTB.2' />
-				<value target='dc_pin' data='$PORTB.3' />
-				<value target='reset_pin' data='$PORTB.4' />
-				<value target='led_pin' data='$PORTB.5' />
-				<value target='UseBacklight' data='1' />
 				<value target='monochrome' data='0' />
 				<value target='foreground_colour' data='0' />
 				<value target='background_colour' data='16777215' />
-				<value target='BGCOL' data='16777215' />
-				<value target='FGCOL' data='0' />
 				<value target='InvertColour' data='0' />
+				<value target='SwapRB' data='' />
+				<value target='BGCOL' data='65535' />
+				<value target='FGCOL' data='0' />
 				<value target='QueueFastPixels' data='0' />
-				<value target='PixelQueueSize' data='320' />
-				<value target='PixelQueueTotal' data='960' />
-				<value target='colour_bit_depth' data='18' />
-				<value target='red_bit_depth' data='6' />
+				<value target='PixelQueueSize' data='240' />
+				<value target='colour_bit_depth' data='16' />
+				<value target='red_bit_depth' data='5' />
 				<value target='green_bit_depth' data='6' />
-				<value target='blue_bit_depth' data='6' />
+				<value target='blue_bit_depth' data='5' />
+				<value target='cal_spi1::CHANNEL' data='001' />
+				<value target='cal_spi1::PR_SCALE' data='004' />
+				<value target='cal_spi1::MOSI' data='$PORTC.0' />
+				<value target='cal_spi1::MOSIPins' data='000' />
+				<value target='cal_spi1::MISO' data='$PORTC.1' />
+				<value target='cal_spi1::MISOPins' data='017' />
+				<value target='cal_spi1::CLK' data='$PORTC.2' />
+				<value target='cal_spi1::CLKPins' data='002' />
+				<value target='UseCS' data='1' />
+				<value target='ToggleCS' data='0' />
+				<value target='chip_sel_pin' data='$PORTC.3' />
+				<value target='dc_pin' data='$PORTC.4' />
+				<value target='UseReset' data='1' />
+				<value target='reset_pin' data='$PORTC.5' />
+				<value target='UseBacklight' data='1' />
+				<value target='led_pin' data='$PORTC.6' />
 				<value target='Base_GLCD::FontCount' data='001' />
 				<value target='Base_GLCD::gLCD_Font1::Font' data='000' />
 				<value target='Base_GLCD::gLCD_Font1::CustomFontFile' data='C:\Users\BenR\Desktop\customfont.h.c' />
@@ -786,10 +797,10 @@ The point cloud should run faster but may use more memory.
 				<value target='Base_GLCD::gLCD_Font8::BytesRequired' data='' />
 				<value target='Base_GLCD::gLCD_Font8::FontSpace' data='001' />
 				<value target='Base_GLCD::gLCD_Font8::SpaceWidth' data='004' />
+				<value target='Base_GLCD::ComponentLabel' data='000' />
+				<value target='Base_GLCD::GdiText1::sText' data='gLCD_ILI9341_SPI' />
+				<value target='Base_GLCD::GdiText1::dScale' data='1' />
 				<value target='DisplayMethod' data='000' />
-				<value target='Base_GLCD::ComponentLabel' data='001' />
-				<value target='Base_GLCD::GdiText1::sText' data='gLCD_ILI9488_SPI' />
-				<value target='Base_GLCD::GdiText1::dScale' data='1.000000' />
 				<value target='Base_GLCD::PhysicalOrientation' data='000' />
 				<value target='SimComms' data='0' />
 				<value target='cal_spi1::ConsoleData' data='1' />
@@ -799,18 +810,20 @@ The point cloud should run faster but may use more memory.
 			</values>
 			<events >
 				<event class='Components' event='Resize' target='Ev_Resize' />
-				<event class='Compile' event='GetVarSize' target='Ev_GetVarSize' />
-				<event class='Components' event='Property' target='Ev_Property' />
-				<event class='Simulation' event='Start' target='Ev_Property' />
+				<event class='Components' event='Initialise' target='prv_init' />
 				<event class='Compile' event='AddVar' target='Ev_AddVar' />
-				<event class='Components' event='Initialise' target='Ev_Initialise' />
+				<event class='Simulation' event='Start' target='prv_init' />
+				<event class='Compile' event='GetVarSize' target='Ev_GetVarSize' />
+				<event class='Components' event='Property' target='prv_init' />
 			</events>
 			<apis >
 				<api name='ReadFontWidth' alt='ReadFontWidth' type='5' proto='0' />
 				<api name='BacklightOn' alt='BacklightOn' type='1' proto='1' />
 				<api name='SetFontScaler' alt='SetFontScalerSim' type='1' proto='1' />
+				<api name='LCD_Write_Reg' alt='LCD_Write_Reg' type='1' proto='1' />
 				<api name='PrintNumber' alt='PrintNumber_Sim' type='1' proto='1' />
 				<api name='DrawLine' alt='DrawLine_Sim' type='1' proto='1' />
+				<api name='LCD_Write_Data8' alt='LCD_Write_Data8' type='1' proto='1' />
 				<api name='Plot' alt='PlotSim' type='1' proto='1' />
 				<api name='DrawEllipse' alt='DrawEllipseSim' type='1' proto='1' />
 				<api name='FastPlot' alt='FastPlot_Sim' type='1' proto='1' />
@@ -832,17 +845,13 @@ The point cloud should run faster but may use more memory.
 			</apis>
 			<variables >
 				<variable public='0' >
-					<def class_type='variable' name='bg_col_var' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
-						<array size='3' />
-					</def>
+					<def class_type='variable' name='background_col_var' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='foreground_col_var' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 				</variable>
 				<variable public='0' >
 					<def class_type='variable' name='PixelCount' type='u32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
-				</variable>
-				<variable public='0' >
-					<def class_type='variable' name='fg_col_var' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
-						<array size='3' />
-					</def>
 				</variable>
 				<variable public='0' >
 					<def class_type='variable' name='Orientation' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
@@ -914,23 +923,22 @@ Switching the backlight on and off at high speed allow the light to be dimmed.' 
 					<flowline name='FastBPlot' description='Sets a pixel with the current foreground colour at current pixel location.
 Not compatible with orientations other than 0.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<local name='out' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
-							<array size='3' />
+						<local name='data' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='2' />
 						</local>
 						<command class_type='decision' title='Decision' exp='QueueFastPixels' swap='0' >
 							<flowline >
 								<command class_type='calculation' title='Calculation' >
-									<exp exp='PixelBuffer[PixelPointer] = bg_col_var[0]' />
-									<exp exp='PixelBuffer[PixelPointer + 1] = bg_col_var[1]' />
-									<exp exp='PixelBuffer[PixelPointer + 2] = bg_col_var[2]' />
+									<exp exp='PixelBuffer[PixelPointer] = background_col_var &gt;&gt; 8' />
+									<exp exp='PixelBuffer[PixelPointer + 1] = background_col_var' />
 								</command>
 								<command class_type='calculation' title='Calculation' >
-									<exp exp='PixelPointer = PixelPointer + 3' />
+									<exp exp='PixelPointer = PixelPointer + 2' />
 								</command>
 								<command class_type='calculation' title='Calculation' >
 									<exp exp='PixelCount = PixelCount - 1' />
 								</command>
-								<command class_type='decision' title='Decision' exp='(PixelCount = 0) || (PixelPointer = PixelQueueTotal)' swap='0' >
+								<command class_type='decision' title='Decision' exp='(PixelCount = 0) || (PixelPointer = (PixelQueueSize * 2))' swap='0' >
 									<flowline >
 										<command class_type='decision' title='Decision' exp='ToggleCS' swap='0' >
 											<flowline >
@@ -969,13 +977,18 @@ Not compatible with orientations other than 0.' statediag='0' >
 									<flowline />
 								</command>
 								<command class_type='calculation' title='Calculation' >
-									<exp exp='.out[0] = bg_col_var[0]' />
-									<exp exp='.out[1] = bg_col_var[1]' />
-									<exp exp='.out[2] = bg_col_var[2]' />
+									<exp exp='.data[0] = background_col_var &gt;&gt; 8' />
+									<exp exp='.data[1] = background_col_var' />
+								</command>
+								<command class_type='call' title='Call Component Macro' disable='1' component='cal_spi1' macro='Master_Byte' >
+									<argument exp='background_col_var &gt;&gt; 8' />
+								</command>
+								<command class_type='call' title='Call Component Macro' disable='1' component='cal_spi1' macro='Master_Byte' >
+									<argument exp='background_col_var' />
 								</command>
 								<command class_type='call' title='Component Macro' component='cal_spi1' macro='Master_Transaction' >
-									<argument exp='.out' />
-									<argument exp='3' />
+									<argument exp='.data' />
+									<argument exp='2' />
 								</command>
 								<command class_type='decision' title='Decision' exp='ToggleCS' swap='0' >
 									<flowline >
@@ -1069,11 +1082,6 @@ Not compatible with orientations other than 0.' statediag='0' >
 							<argument exp='.Font' />
 							<argument exp='.Transparent' />
 						</command>
-					</flowline>
-				</macro>
-				<macro >
-					<flowline name='Ev_Initialise' description='Initialisation routine for the component once the component is linked to its parent' statediag='0' >
-						<return name='Return' type='u32' description='Non-zero to prevent initialisation' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 					</flowline>
 				</macro>
 				<macro >
@@ -1290,7 +1298,6 @@ Not compatible with orientations other than 0.' statediag='0' >
 								</command>
 								<command class_type='calculation' title='Calculation' >
 									<exp exp='.PixelX = (.PixelX * .PixelY) + 1' />
-									<exp exp='' />
 								</command>
 								<command class_type='loop' title='Loop' type='2' exp='.PixelX' for1='' for3='' >
 									<flowline >
@@ -1470,34 +1477,6 @@ Not compatible with orientations other than 0.' statediag='0' >
 					</flowline>
 				</macro>
 				<macro >
-					<flowline name='LCD_Read_Data8' description='' statediag='0' >
-						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='calculation' title='Calculation' >
-							<exp exp='dc_pin = 1' />
-						</command>
-						<command class_type='decision' title='Decision' exp='ToggleCS' swap='0' >
-							<flowline >
-								<command class_type='calculation' title='Calculation' >
-									<exp exp='chip_sel_pin = 0' />
-								</command>
-							</flowline>
-							<flowline />
-						</command>
-						<command class_type='call' title='Call Component Macro' component='cal_spi1' macro='Master_Byte' >
-							<return exp='.Return' />
-							<argument exp='0x55' />
-						</command>
-						<command class_type='decision' title='Decision' exp='ToggleCS' swap='0' >
-							<flowline >
-								<command class_type='calculation' title='Calculation' >
-									<exp exp='chip_sel_pin = 1' />
-								</command>
-							</flowline>
-							<flowline />
-						</command>
-					</flowline>
-				</macro>
-				<macro >
 					<flowline name='FastPlot_Sim' description='Sets a pixel with the current foreground colour at current pixel location.
 Not compatible with orientations other than 0.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
@@ -1522,15 +1501,11 @@ Not compatible with orientations other than 0.' statediag='0' >
 						<local name='err' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='CurX' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='CurY' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='BGCol' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='FGCol' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Rep' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
 						<local name='e2' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='K' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
-						<local name='BG' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
-							<array size='3' />
-						</local>
-						<local name='FG' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
-							<array size='3' />
-						</local>
 						<command class_type='decision' title='Draw the circle in solid foreground' exp='.Solid = 1' swap='0' >
 							<flowline >
 								<command class_type='label' title='Connection Point' labelid='0' labelname='A' labeltype='4' />
@@ -1790,18 +1765,11 @@ Not compatible with orientations other than 0.' statediag='0' >
 									</flowline>
 									<flowline >
 										<command class_type='calculation' title='Calculation' >
-											<exp exp='.FG[0] = fg_col_var[0]' />
-											<exp exp='.FG[1] = fg_col_var[1]' />
-											<exp exp='.FG[2] = fg_col_var[2]' />
-											<exp exp='' />
-											<exp exp='.BG[0] = bg_col_var[0]' />
-											<exp exp='.BG[1] = bg_col_var[1]' />
-											<exp exp='.BG[2] = bg_col_var[2]' />
+											<exp exp='.FGCol = foreground_col_var' />
+											<exp exp='.BGCol = background_col_var' />
 										</command>
 										<command class_type='calculation' title='Calculation' >
-											<exp exp='fg_col_var[0] = .BG[0]' />
-											<exp exp='fg_col_var[1] = .BG[1]' />
-											<exp exp='fg_col_var[2] = .BG[2]' />
+											<exp exp='foreground_col_var = .BGCol' />
 										</command>
 										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Rep = 1' />
@@ -1817,9 +1785,7 @@ Not compatible with orientations other than 0.' statediag='0' >
 									<exp exp='.Rep = .Rep + 1' />
 								</command>
 								<command class_type='calculation' title='Calculation' >
-									<exp exp='fg_col_var[0] = .FG[0]' />
-									<exp exp='fg_col_var[1] = .FG[1]' />
-									<exp exp='fg_col_var[2] = .FG[2]' />
+									<exp exp='foreground_col_var = .FGCol' />
 								</command>
 								<command class_type='goto' title='Goto Connection Point' labelid='1' labelname='' labeltype='0' />
 							</flowline>
@@ -1832,11 +1798,11 @@ Not compatible with orientations other than 0.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<param name='X1' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Y1' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<local name='out' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
-							<array size='3' />
+						<local name='data' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='2' />
 						</local>
 						<local name='InRange' type='b1' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
-						<command class_type='decision' title='Decision' exp='(Orientation = 0) || (Orientation = 2)' swap='0' >
+						<command class_type='decision' title='Decision' exp='(Orientation &amp; 0x01) == 0' swap='0' >
 							<flowline >
 								<command class_type='decision' title='Decision' exp='(.X1 &lt; pixel_width) &amp;&amp; (.Y1 &lt; pixel_height)' swap='0' >
 									<flowline >
@@ -1848,7 +1814,7 @@ Not compatible with orientations other than 0.' statediag='0' >
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='decision' title='Decision' exp='(Orientation = 1) || (Orientation = 3)' swap='0' >
+								<command class_type='decision' title='Decision' exp='(Orientation &amp; 0x01) == 1' swap='0' >
 									<flowline >
 										<command class_type='decision' title='Decision' exp='(.X1 &lt; pixel_height) &amp;&amp; (.Y1 &lt; pixel_width)' swap='0' >
 											<flowline >
@@ -1880,13 +1846,18 @@ Not compatible with orientations other than 0.' statediag='0' >
 									<flowline />
 								</command>
 								<command class_type='calculation' title='Calculation' >
-									<exp exp='.out[0] = fg_col_var[0]' />
-									<exp exp='.out[1] = fg_col_var[1]' />
-									<exp exp='.out[2] = fg_col_var[2]' />
+									<exp exp='.data[0] = foreground_col_var &gt;&gt; 8' />
+									<exp exp='.data[1] = foreground_col_var' />
+								</command>
+								<command class_type='call' title='Call Component Macro' disable='1' component='cal_spi1' macro='Master_Byte' >
+									<argument exp='foreground_col_var &gt;&gt; 8' />
+								</command>
+								<command class_type='call' title='Call Component Macro' disable='1' component='cal_spi1' macro='Master_Byte' >
+									<argument exp='foreground_col_var' />
 								</command>
 								<command class_type='call' title='Component Macro' component='cal_spi1' macro='Master_Transaction' >
-									<argument exp='.out' />
-									<argument exp='3' />
+									<argument exp='.data' />
+									<argument exp='2' />
 								</command>
 								<command class_type='decision' title='Decision' exp='ToggleCS' swap='0' >
 									<flowline >
@@ -1942,6 +1913,10 @@ Not compatible with orientations other than 0.' statediag='0' >
 					<flowline name='InitSim' description='' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<command class_type='sim' title='Call Component Macro' component='Base_GLCD' macro='Initialise' />
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='foreground_col_var = foreground_colour' />
+							<exp exp='background_col_var = background_colour' />
+						</command>
 						<command class_type='decision' title='Decision' exp='SimComms' swap='0' >
 							<flowline >
 								<command class_type='call' title='Call Macro' macro='Initialise' />
@@ -1954,23 +1929,22 @@ Not compatible with orientations other than 0.' statediag='0' >
 					<flowline name='FastPlot' description='Sets a pixel with the current foreground colour at current pixel location.
 Not compatible with orientations other than 0.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<local name='out' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
-							<array size='3' />
+						<local name='data' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='2' />
 						</local>
 						<command class_type='decision' title='Decision' exp='QueueFastPixels' swap='0' >
 							<flowline >
 								<command class_type='calculation' title='Calculation' >
-									<exp exp='PixelBuffer[PixelPointer] = fg_col_var[0]' />
-									<exp exp='PixelBuffer[PixelPointer + 1] = fg_col_var[1]' />
-									<exp exp='PixelBuffer[PixelPointer + 2] = fg_col_var[2]' />
+									<exp exp='PixelBuffer[PixelPointer] = foreground_col_var &gt;&gt; 8' />
+									<exp exp='PixelBuffer[PixelPointer + 1] = foreground_col_var' />
 								</command>
 								<command class_type='calculation' title='Calculation' >
-									<exp exp='PixelPointer = PixelPointer + 3' />
+									<exp exp='PixelPointer = PixelPointer + 2' />
 								</command>
 								<command class_type='calculation' title='Calculation' >
 									<exp exp='PixelCount = PixelCount - 1' />
 								</command>
-								<command class_type='decision' title='Decision' exp='(PixelCount = 0) || (PixelPointer = PixelQueueTotal)' swap='0' >
+								<command class_type='decision' title='Decision' exp='(PixelCount = 0) || (PixelPointer = (PixelQueueSize * 2))' swap='0' >
 									<flowline >
 										<command class_type='decision' title='Decision' exp='ToggleCS' swap='0' >
 											<flowline >
@@ -2009,13 +1983,18 @@ Not compatible with orientations other than 0.' statediag='0' >
 									<flowline />
 								</command>
 								<command class_type='calculation' title='Calculation' >
-									<exp exp='.out[0] = fg_col_var[0]' />
-									<exp exp='.out[1] = fg_col_var[1]' />
-									<exp exp='.out[2] = fg_col_var[2]' />
+									<exp exp='.data[0] = foreground_col_var &gt;&gt; 8' />
+									<exp exp='.data[1] = foreground_col_var' />
+								</command>
+								<command class_type='call' title='Call Component Macro' disable='1' component='cal_spi1' macro='Master_Byte' >
+									<argument exp='foreground_col_var &gt;&gt; 8' />
+								</command>
+								<command class_type='call' title='Call Component Macro' disable='1' component='cal_spi1' macro='Master_Byte' >
+									<argument exp='foreground_col_var' />
 								</command>
 								<command class_type='call' title='Component Macro' component='cal_spi1' macro='Master_Transaction' >
-									<argument exp='.out' />
-									<argument exp='3' />
+									<argument exp='.data' />
+									<argument exp='2' />
 								</command>
 								<command class_type='decision' title='Decision' exp='ToggleCS' swap='0' >
 									<flowline >
@@ -2206,137 +2185,6 @@ Not compatible with orientations other than 0.' statediag='0' >
 					</flowline>
 				</macro>
 				<macro >
-					<flowline name='Ev_Property' description='Initialisation routine for the component' statediag='0' >
-						<return name='Return' type='u32' description='Non-zero to prevent initialisation' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<local name='Red' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<local name='Green' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<local name='Blue' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<local name='Colour' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
-							<argument exp='this' />
-							<argument exp='&quot;Colour_Bit_Depth&quot;' />
-							<argument exp='18' />
-						</command>
-						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
-							<argument exp='this' />
-							<argument exp='&quot;Red_Bit_Depth&quot;' />
-							<argument exp='6' />
-						</command>
-						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
-							<argument exp='this' />
-							<argument exp='&quot;Green_Bit_Depth&quot;' />
-							<argument exp='6' />
-						</command>
-						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
-							<argument exp='this' />
-							<argument exp='&quot;Blue_Bit_Depth&quot;' />
-							<argument exp='6' />
-						</command>
-						<command class_type='decision' title='Decision' exp='SimComms' swap='0' >
-							<flowline >
-								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
-									<argument exp='this' />
-									<argument exp='&quot;property_2&quot;' />
-									<argument exp='1' />
-								</command>
-							</flowline>
-							<flowline >
-								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
-									<argument exp='this' />
-									<argument exp='&quot;property_2&quot;' />
-									<argument exp='0' />
-								</command>
-							</flowline>
-						</command>
-						<command class_type='sim' title='Panel' macro='Component.Property.CopyValue' >
-							<argument exp='this' />
-							<argument exp='Base_GLCD' />
-							<argument exp='&quot;pixel_height&quot;' />
-						</command>
-						<command class_type='sim' title='Panel' macro='Component.Property.CopyValue' >
-							<argument exp='this' />
-							<argument exp='Base_GLCD' />
-							<argument exp='&quot;pixel_width&quot;' />
-						</command>
-						<command class_type='sim' title='Panel' macro='Component.Property.CopyValue' >
-							<argument exp='this' />
-							<argument exp='Base_GLCD' />
-							<argument exp='&quot;Monochrome&quot;' />
-						</command>
-						<command class_type='sim' title='Panel' macro='Component.Property.CopyValue' >
-							<argument exp='this' />
-							<argument exp='Base_GLCD' />
-							<argument exp='&quot;Foreground_Colour&quot;' />
-						</command>
-						<command class_type='sim' title='Panel' macro='Component.Property.CopyValue' >
-							<argument exp='this' />
-							<argument exp='Base_GLCD' />
-							<argument exp='&quot;Background_Colour&quot;' />
-						</command>
-						<command class_type='sim' title='Panel' macro='Component.Property.CopyValue' >
-							<argument exp='this' />
-							<argument exp='Base_GLCD' />
-							<argument exp='&quot;Colour_Bit_Depth&quot;' />
-						</command>
-						<command class_type='sim' title='Panel' macro='Component.Property.CopyValue' >
-							<argument exp='this' />
-							<argument exp='Base_GLCD' />
-							<argument exp='&quot;Red_Bit_Depth&quot;' />
-						</command>
-						<command class_type='sim' title='Panel' macro='Component.Property.CopyValue' >
-							<argument exp='this' />
-							<argument exp='Base_GLCD' />
-							<argument exp='&quot;Green_Bit_Depth&quot;' />
-						</command>
-						<command class_type='sim' title='Panel' macro='Component.Property.CopyValue' >
-							<argument exp='this' />
-							<argument exp='Base_GLCD' />
-							<argument exp='&quot;Blue_Bit_Depth&quot;' />
-						</command>
-						<command class_type='sim' title='Simulation' macro='Component.Property.CopyValue' >
-							<argument exp='this' />
-							<argument exp='Base_GLCD' />
-							<argument exp='&quot;DisplayMethod&quot;' />
-						</command>
-						<command class_type='decision' title='Decision' exp='UseBacklight' swap='0' >
-							<flowline >
-								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
-									<argument exp='this' />
-									<argument exp='&quot;led_pin&quot;' />
-									<argument exp='1' />
-								</command>
-							</flowline>
-							<flowline >
-								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
-									<argument exp='this' />
-									<argument exp='&quot;led_pin&quot;' />
-									<argument exp='0' />
-								</command>
-							</flowline>
-						</command>
-						<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
-							<argument exp='this' />
-							<argument exp='&quot;FGCOL&quot;' />
-							<argument exp='foreground_colour' />
-						</command>
-						<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
-							<argument exp='this' />
-							<argument exp='&quot;BGCOL&quot;' />
-							<argument exp='background_colour' />
-						</command>
-						<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
-							<argument exp='this' />
-							<argument exp='&quot;PixelQueueSize&quot;' />
-							<argument exp='QueueFastPixels' />
-						</command>
-						<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
-							<argument exp='this' />
-							<argument exp='&quot;PixelQueueTotal&quot;' />
-							<argument exp='PixelQueueSize * 3' />
-						</command>
-					</flowline>
-				</macro>
-				<macro >
 					<flowline name='BacklightOff' description='Clears the backlight enable pin allowing the display backlight to switch off.
 Switching the backlight on and off at high speed allow the light to be dimmed.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
@@ -2391,15 +2239,254 @@ Switching the backlight on and off at high speed allow the light to be dimmed.' 
 					</flowline>
 				</macro>
 				<macro >
+					<flowline name='prv_init' description='Initialisation routine for the component' statediag='0' >
+						<return name='Return' type='u32' description='Non-zero to prevent initialisation' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Red' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Green' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Blue' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Colour' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='tmpStr' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<command class_type='decision' title='Decision' exp='SimComms' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;property_2&quot;' />
+									<argument exp='1' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;property_2&quot;' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='sim' title='Panel' macro='Component.Property.CopyValue' >
+							<argument exp='this' />
+							<argument exp='Base_GLCD' />
+							<argument exp='&quot;pixel_height&quot;' />
+						</command>
+						<command class_type='sim' title='Panel' macro='Component.Property.CopyValue' >
+							<argument exp='this' />
+							<argument exp='Base_GLCD' />
+							<argument exp='&quot;pixel_width&quot;' />
+						</command>
+						<command class_type='sim' title='Panel' macro='Component.Property.CopyValue' >
+							<argument exp='this' />
+							<argument exp='Base_GLCD' />
+							<argument exp='&quot;Monochrome&quot;' />
+						</command>
+						<command class_type='sim' title='Panel' macro='Component.Property.CopyValue' >
+							<argument exp='this' />
+							<argument exp='Base_GLCD' />
+							<argument exp='&quot;Foreground_Colour&quot;' />
+						</command>
+						<command class_type='sim' title='Panel' macro='Component.Property.CopyValue' >
+							<argument exp='this' />
+							<argument exp='Base_GLCD' />
+							<argument exp='&quot;Background_Colour&quot;' />
+						</command>
+						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;Colour_Bit_Depth&quot;' />
+							<argument exp='16' />
+						</command>
+						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;Red_Bit_Depth&quot;' />
+							<argument exp='5' />
+						</command>
+						<command class_type='sim' title='Panel' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;Blue_Bit_Depth&quot;' />
+							<argument exp='5' />
+						</command>
+						<command class_type='sim' title='Panel' macro='Component.Property.CopyValue' >
+							<argument exp='this' />
+							<argument exp='Base_GLCD' />
+							<argument exp='&quot;Colour_Bit_Depth&quot;' />
+						</command>
+						<command class_type='sim' title='Panel' macro='Component.Property.CopyValue' >
+							<argument exp='this' />
+							<argument exp='Base_GLCD' />
+							<argument exp='&quot;Red_Bit_Depth&quot;' />
+						</command>
+						<command class_type='sim' title='Panel' macro='Component.Property.CopyValue' >
+							<argument exp='this' />
+							<argument exp='Base_GLCD' />
+							<argument exp='&quot;Green_Bit_Depth&quot;' />
+						</command>
+						<command class_type='sim' title='Panel' macro='Component.Property.CopyValue' >
+							<argument exp='this' />
+							<argument exp='Base_GLCD' />
+							<argument exp='&quot;Blue_Bit_Depth&quot;' />
+						</command>
+						<command class_type='sim' title='Simulation' macro='Component.Property.CopyValue' >
+							<argument exp='this' />
+							<argument exp='Base_GLCD' />
+							<argument exp='&quot;DisplayMethod&quot;' />
+						</command>
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.Red = foreground_colour &amp; 0xFF' />
+							<exp exp='.Red = .Red &gt;&gt; (8 - blue_bit_depth)' />
+							<exp exp='.Green = (foreground_colour &gt;&gt; 8) &amp; 0xFF' />
+							<exp exp='.Green = .Green &gt;&gt; (8 - green_bit_depth)' />
+							<exp exp='.Blue = (foreground_colour &gt;&gt; 16) &amp; 0xFF' />
+							<exp exp='.Blue = .Blue &gt;&gt; (8 - red_bit_depth)' />
+						</command>
+						<command class_type='decision' title='Decision' exp='SwapRB' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.Colour = .Red | (.Green &lt;&lt; red_bit_depth)' />
+									<exp exp='.Colour = .Colour | (.Blue &lt;&lt; (red_bit_depth + green_bit_depth))' />
+									<exp exp='' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.Colour = .Blue | (.Green &lt;&lt; blue_bit_depth)' />
+									<exp exp='.Colour = .Colour | (.Red &lt;&lt; (blue_bit_depth + green_bit_depth))' />
+									<exp exp='' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;FGCOL&quot;' />
+							<argument exp='.Colour' />
+						</command>
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.Red = background_colour &amp; 0xFF' />
+							<exp exp='.Red = .Red &gt;&gt; (8 - red_bit_depth)' />
+							<exp exp='.Green = (background_colour &gt;&gt; 8) &amp; 0xFF' />
+							<exp exp='.Green = .Green &gt;&gt; (8 - green_bit_depth)' />
+							<exp exp='.Blue = (background_colour &gt;&gt; 16) &amp; 0xFF' />
+							<exp exp='.Blue = .Blue &gt;&gt; (8 - blue_bit_depth)' />
+						</command>
+						<command class_type='decision' title='Decision' exp='SwapRB' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.Colour = .Red | (.Green &lt;&lt; red_bit_depth)' />
+									<exp exp='.Colour = .Colour | (.Blue &lt;&lt; (red_bit_depth + green_bit_depth))' />
+									<exp exp='' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.Colour = .Blue | (.Green &lt;&lt; blue_bit_depth)' />
+									<exp exp='.Colour = .Colour | (.Red &lt;&lt; (blue_bit_depth + green_bit_depth))' />
+									<exp exp='' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;BGCOL&quot;' />
+							<argument exp='.Colour' />
+						</command>
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
+							<argument exp='this' />
+							<argument exp='&quot;PixelQueueSize&quot;' />
+							<argument exp='QueueFastPixels' />
+						</command>
+						<command class_type='sim' title='Simulation' macro='Component.Property.GetValue' >
+							<return exp='.tmpStr' />
+							<argument exp='cal_spi1' />
+							<argument exp='&quot;MOSI&quot;' />
+						</command>
+						<command class_type='decision' title='Decision' exp='UseBacklight' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;led_pin&quot;' />
+									<argument exp='1' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;led_pin&quot;' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
+									<argument exp='this' />
+									<argument exp='&quot;led_pin&quot;' />
+									<argument exp='.tmpStr' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='decision' title='Decision' exp='UseCS' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;chip_sel_pin&quot;' />
+									<argument exp='1' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;ToggleCS&quot;' />
+									<argument exp='1' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;chip_sel_pin&quot;' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
+									<argument exp='this' />
+									<argument exp='&quot;chip_sel_pin&quot;' />
+									<argument exp='.tmpStr' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
+									<argument exp='this' />
+									<argument exp='&quot;ToggleCS&quot;' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;ToggleCS&quot;' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='decision' title='Decision' exp='UseReset' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;reset_pin&quot;' />
+									<argument exp='1' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;reset_pin&quot;' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
+									<argument exp='this' />
+									<argument exp='&quot;reset_pin&quot;' />
+									<argument exp='.tmpStr' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
 					<flowline name='BPlot' description='Sets a pixel with the current background colour at pixel location X, Y.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<param name='X1' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Y1' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<local name='out' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
-							<array size='3' />
+						<local name='data' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='2' />
 						</local>
 						<local name='InRange' type='b1' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
-						<command class_type='decision' title='Decision' exp='(Orientation = 0) || (Orientation = 2)' swap='0' >
+						<command class_type='decision' title='Decision' exp='(Orientation &amp; 0x01) == 0' swap='0' >
 							<flowline >
 								<command class_type='decision' title='Decision' exp='(.X1 &lt; pixel_width) &amp;&amp; (.Y1 &lt; pixel_height)' swap='0' >
 									<flowline >
@@ -2411,7 +2498,7 @@ Switching the backlight on and off at high speed allow the light to be dimmed.' 
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='decision' title='Decision' exp='(Orientation = 1) || (Orientation = 3)' swap='0' >
+								<command class_type='decision' title='Decision' exp='(Orientation &amp; 0x01) == 1' swap='0' >
 									<flowline >
 										<command class_type='decision' title='Decision' exp='(.X1 &lt; pixel_height) &amp;&amp; (.Y1 &lt; pixel_width)' swap='0' >
 											<flowline >
@@ -2443,13 +2530,18 @@ Switching the backlight on and off at high speed allow the light to be dimmed.' 
 									<flowline />
 								</command>
 								<command class_type='calculation' title='Calculation' >
-									<exp exp='.out[0] = bg_col_var[0]' />
-									<exp exp='.out[1] = bg_col_var[1]' />
-									<exp exp='.out[2] = bg_col_var[2]' />
+									<exp exp='.data[0] = background_col_var &gt;&gt; 8' />
+									<exp exp='.data[1] = background_col_var' />
+								</command>
+								<command class_type='call' title='Call Component Macro' disable='1' component='cal_spi1' macro='Master_Byte' >
+									<argument exp='background_col_var &gt;&gt; 8' />
+								</command>
+								<command class_type='call' title='Call Component Macro' disable='1' component='cal_spi1' macro='Master_Byte' >
+									<argument exp='background_col_var' />
 								</command>
 								<command class_type='call' title='Component Macro' component='cal_spi1' macro='Master_Transaction' >
-									<argument exp='.out' />
-									<argument exp='3' />
+									<argument exp='.data' />
+									<argument exp='2' />
 								</command>
 								<command class_type='decision' title='Decision' exp='ToggleCS' swap='0' >
 									<flowline >
@@ -2850,7 +2942,7 @@ Switching the backlight on and off at high speed allow the light to be dimmed.' 
 								<command class_type='decision' title='Decision' exp='Compare$ (.VarName,&quot;PixelBuffer&quot;,0) == 0' swap='0' >
 									<flowline >
 										<command class_type='calculation' title='Calculation' >
-											<exp exp='.Elements = (PixelQueueSize * 3)' />
+											<exp exp='.Elements = (PixelQueueSize * 2)' />
 										</command>
 									</flowline>
 									<flowline />
@@ -3058,7 +3150,12 @@ Switching the backlight on and off at high speed allow the light to be dimmed.' 
 																								<command class_type='call' title='Call Macro' macro='FastPlot' />
 																							</flowline>
 																							<flowline >
-																								<command class_type='call' title='Call Macro' macro='FastBPlot' />
+																								<command class_type='decision' title='Decision' exp='.Transparent = 0' swap='0' >
+																									<flowline >
+																										<command class_type='call' title='Call Macro' macro='FastBPlot' />
+																									</flowline>
+																									<flowline />
+																								</command>
 																							</flowline>
 																						</command>
 																					</flowline>
@@ -3068,7 +3165,12 @@ Switching the backlight on and off at high speed allow the light to be dimmed.' 
 																								<command class_type='call' title='Call Macro' macro='FastPlot' />
 																							</flowline>
 																							<flowline >
-																								<command class_type='call' title='Call Macro' macro='FastBPlot' />
+																								<command class_type='decision' title='Decision' exp='.Transparent = 0' swap='0' >
+																									<flowline >
+																										<command class_type='call' title='Call Macro' macro='FastBPlot' />
+																									</flowline>
+																									<flowline />
+																								</command>
 																							</flowline>
 																						</command>
 																					</flowline>
@@ -3251,6 +3353,10 @@ Switching the backlight on and off at high speed allow the light to be dimmed.' 
 						<local name='Y' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
 						<local name='X' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
 						<local name='OrientationSave' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Buff' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='80' />
+						</local>
+						<local name='BuffIdx' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='calculation' title='Calculation' >
 							<exp exp='.OrientationSave = Orientation' />
 							<exp exp='Orientation = 0' />
@@ -3260,6 +3366,17 @@ Switching the backlight on and off at high speed allow the light to be dimmed.' 
 							<argument exp='0' />
 							<argument exp='pixel_width - 1' />
 							<argument exp='pixel_height - 1' />
+						</command>
+						<command class_type='calculation' title='Calculation' disable='1' >
+							<exp exp='dc_pin = 1' />
+						</command>
+						<command class_type='decision' title='Decision' disable='1' exp='ToggleCS' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='chip_sel_pin = 0' />
+								</command>
+							</flowline>
+							<flowline />
 						</command>
 						<command class_type='loop' title='Loop' type='0' exp='.Y &lt; pixel_height' for1='' for3='' >
 							<flowline >
@@ -3279,6 +3396,14 @@ Switching the backlight on and off at high speed allow the light to be dimmed.' 
 								</command>
 							</flowline>
 						</command>
+						<command class_type='decision' title='Decision' disable='1' exp='ToggleCS' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='chip_sel_pin = 1' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
 						<command class_type='calculation' title='Calculation' >
 							<exp exp='Orientation = .OrientationSave' />
 						</command>
@@ -3292,9 +3417,23 @@ Switching the backlight on and off at high speed allow the light to be dimmed.' 
 						<param name='Green' type='u8' description='0 - 255 where 0 = no green and 255 = maximum green' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Blue' type='u8' description='0 - 255 where 0 = no blue and 255 = maximum blue' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='calculation' title='Calculation' >
-							<exp exp='bg_col_var[0] = .Red' />
-							<exp exp='bg_col_var[1] = .Green' />
-							<exp exp='bg_col_var[2] = .Blue' />
+							<exp exp='.Red = .Red &gt;&gt; (8 - red_bit_depth)' />
+							<exp exp='.Green = .Green &gt;&gt; (8 - green_bit_depth)' />
+							<exp exp='.Blue = .Blue &gt;&gt; (8 - blue_bit_depth)' />
+						</command>
+						<command class_type='decision' title='Decision' exp='SwapRB' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='background_col_var = .Red | (.Green &lt;&lt; red_bit_depth)' />
+									<exp exp='background_col_var = background_col_var | (.Blue &lt;&lt; (green_bit_depth + red_bit_depth))' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='background_col_var = .Blue | (.Green &lt;&lt; blue_bit_depth)' />
+									<exp exp='background_col_var = background_col_var | (.Red &lt;&lt; (green_bit_depth + blue_bit_depth))' />
+								</command>
+							</flowline>
 						</command>
 					</flowline>
 				</macro>
@@ -3341,13 +3480,9 @@ Switching the backlight on and off at high speed allow the light to be dimmed.' 
 						<local name='D' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='CurX' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='CurY' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='BGCol' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='FGCol' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Rep' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
-						<local name='BG' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
-							<array size='3' />
-						</local>
-						<local name='FG' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
-							<array size='3' />
-						</local>
 						<command class_type='decision' title='Draw the circle in solid foreground' exp='.Solid = 1' swap='0' >
 							<flowline >
 								<command class_type='label' title='Connection Point' labelid='0' labelname='A' labeltype='4' />
@@ -3483,18 +3618,11 @@ Switching the backlight on and off at high speed allow the light to be dimmed.' 
 									</flowline>
 									<flowline >
 										<command class_type='calculation' title='Calculation' >
-											<exp exp='.FG[0] = fg_col_var[0]' />
-											<exp exp='.FG[1] = fg_col_var[1]' />
-											<exp exp='.FG[2] = fg_col_var[2]' />
-											<exp exp='' />
-											<exp exp='.BG[0] = bg_col_var[0]' />
-											<exp exp='.BG[1] = bg_col_var[1]' />
-											<exp exp='.BG[2] = bg_col_var[2]' />
+											<exp exp='.FGCol = foreground_col_var' />
+											<exp exp='.BGCol = background_col_var' />
 										</command>
 										<command class_type='calculation' title='Calculation' >
-											<exp exp='fg_col_var[0] = .BG[0]' />
-											<exp exp='fg_col_var[1] = .BG[1]' />
-											<exp exp='fg_col_var[2] = .BG[2]' />
+											<exp exp='foreground_col_var = .BGCol' />
 										</command>
 										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Rep = 1' />
@@ -3510,9 +3638,7 @@ Switching the backlight on and off at high speed allow the light to be dimmed.' 
 									<exp exp='.Rep = .Rep + 1' />
 								</command>
 								<command class_type='calculation' title='Calculation' >
-									<exp exp='fg_col_var[0] = .FG[0]' />
-									<exp exp='fg_col_var[1] = .FG[1]' />
-									<exp exp='fg_col_var[2] = .FG[2]' />
+									<exp exp='foreground_col_var = .FGCol' />
 								</command>
 								<command class_type='goto' title='Goto Connection Point' labelid='1' labelname='' labeltype='0' />
 							</flowline>
@@ -3535,9 +3661,6 @@ Switching the backlight on and off at high speed allow the light to be dimmed.' 
 						<param name='Radius' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Transparent' type='u8' description='Chooses the transparency of the box - 0 = Box contains background colour, 1 = Box contains previous pixel data.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Solid' type='u8' description='Chooses to fill the box with colour - 0 = Box contains transparency data, 1 = Box contains foreground colour.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<local name='ColSave' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
-							<array size='3' />
-						</local>
 						<local name='g' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='height' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='oxx1' type='s16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
@@ -3547,6 +3670,7 @@ Switching the backlight on and off at high speed allow the light to be dimmed.' 
 						<local name='xx1' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='xx2' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='y' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='ColSav' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='calculation' title='Calculation' >
 							<exp exp='.width = .X2 - .X1' />
 							<exp exp='.height = .Y2 - .Y1' />
@@ -3655,14 +3779,10 @@ Switching the backlight on and off at high speed allow the light to be dimmed.' 
 												<command class_type='decision' title='Decision' exp='.Transparent = 0' swap='0' >
 													<flowline >
 														<command class_type='calculation' title='Calculation' >
-															<exp exp='.ColSave[0] = fg_col_var[0]' />
-															<exp exp='.ColSave[1] = fg_col_var[1]' />
-															<exp exp='.ColSave[2] = fg_col_var[2]' />
+															<exp exp='.ColSav = foreground_col_var' />
 														</command>
 														<command class_type='calculation' title='Calculation' >
-															<exp exp='fg_col_var[0] = bg_col_var[0]' />
-															<exp exp='fg_col_var[1] = bg_col_var[1]' />
-															<exp exp='fg_col_var[2] = bg_col_var[2]' />
+															<exp exp='foreground_col_var = background_col_var' />
 														</command>
 														<command class_type='call' title='User Macro' macro='DrawLine' >
 															<argument exp='.oxx2 + 1' />
@@ -3677,9 +3797,7 @@ Switching the backlight on and off at high speed allow the light to be dimmed.' 
 															<argument exp='.Y1 + .y + .Radius' />
 														</command>
 														<command class_type='calculation' title='Calculation' >
-															<exp exp='fg_col_var[0] = .ColSave[0]' />
-															<exp exp='fg_col_var[1] = .ColSave[1]' />
-															<exp exp='fg_col_var[2] = .ColSave[2]' />
+															<exp exp='foreground_col_var = .ColSav' />
 														</command>
 													</flowline>
 													<flowline />
@@ -3715,14 +3833,10 @@ Switching the backlight on and off at high speed allow the light to be dimmed.' 
 								<command class_type='decision' title='Decision' exp='.Transparent = 0' swap='0' >
 									<flowline >
 										<command class_type='calculation' title='Calculation' >
-											<exp exp='.ColSave[0] = fg_col_var[0]' />
-											<exp exp='.ColSave[1] = fg_col_var[1]' />
-											<exp exp='.ColSave[2] = fg_col_var[2]' />
+											<exp exp='.ColSav = foreground_col_var' />
 										</command>
 										<command class_type='calculation' title='Calculation' >
-											<exp exp='fg_col_var[0] = bg_col_var[0]' />
-											<exp exp='fg_col_var[1] = bg_col_var[1]' />
-											<exp exp='fg_col_var[2] = bg_col_var[2]' />
+											<exp exp='foreground_col_var = background_col_var' />
 										</command>
 										<command class_type='decision' title='Decision' exp='(.Radius &gt;&gt; 1) &lt; (.Y2 - .Y1)' swap='0' >
 											<flowline >
@@ -3738,9 +3852,7 @@ Switching the backlight on and off at high speed allow the light to be dimmed.' 
 											<flowline />
 										</command>
 										<command class_type='calculation' title='Calculation' >
-											<exp exp='fg_col_var[0] = .ColSave[0]' />
-											<exp exp='fg_col_var[1] = .ColSave[1]' />
-											<exp exp='fg_col_var[2] = .ColSave[2]' />
+											<exp exp='foreground_col_var = .ColSav' />
 										</command>
 									</flowline>
 									<flowline />
@@ -3757,9 +3869,23 @@ Switching the backlight on and off at high speed allow the light to be dimmed.' 
 						<param name='Green' type='u8' description='0 - 255 where 0 = no green and 255 = maximum green' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Blue' type='u8' description='0 - 255 where 0 = no blue and 255 = maximum blue' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='calculation' title='Calculation' >
-							<exp exp='fg_col_var[0] = .Red' />
-							<exp exp='fg_col_var[1] = .Green' />
-							<exp exp='fg_col_var[2] = .Blue' />
+							<exp exp='.Red = .Red &gt;&gt; (8 - red_bit_depth)' />
+							<exp exp='.Green = .Green &gt;&gt; (8 - green_bit_depth)' />
+							<exp exp='.Blue = .Blue &gt;&gt; (8 - blue_bit_depth)' />
+						</command>
+						<command class_type='decision' title='Decision' exp='SwapRB' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='foreground_col_var = .Red | (.Green &lt;&lt; red_bit_depth)' />
+									<exp exp='foreground_col_var = foreground_col_var | (.Blue &lt;&lt; (green_bit_depth + red_bit_depth))' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='foreground_col_var = .Blue | (.Green &lt;&lt; blue_bit_depth)' />
+									<exp exp='foreground_col_var = foreground_col_var | (.Red &lt;&lt; (green_bit_depth + blue_bit_depth))' />
+								</command>
+							</flowline>
 						</command>
 					</flowline>
 				</macro>
@@ -3776,25 +3902,25 @@ Switching the backlight on and off at high speed allow the light to be dimmed.' 
 						<local name='Xmax' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Ymin' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Ymax' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='call' title='Top Line' macro='DrawLine' >
+						<command class_type='call' title='Call Macro' macro='DrawLine' >
 							<argument exp='.X1' />
 							<argument exp='.Y1' />
 							<argument exp='.X2' />
 							<argument exp='.Y1' />
 						</command>
-						<command class_type='call' title='Right Line' macro='DrawLine' >
+						<command class_type='call' title='Call Macro' macro='DrawLine' >
 							<argument exp='.X2' />
 							<argument exp='.Y1' />
 							<argument exp='.X2' />
 							<argument exp='.Y2' />
 						</command>
-						<command class_type='call' title='Bottom Line' macro='DrawLine' >
+						<command class_type='call' title='Call Macro' macro='DrawLine' >
 							<argument exp='.X1' />
 							<argument exp='.Y2' />
 							<argument exp='.X2' />
 							<argument exp='.Y2' />
 						</command>
-						<command class_type='call' title='Left Line' macro='DrawLine' >
+						<command class_type='call' title='Call Macro' macro='DrawLine' >
 							<argument exp='.X1' />
 							<argument exp='.Y1' />
 							<argument exp='.X1' />
@@ -3874,9 +4000,11 @@ Switching the backlight on and off at high speed allow the light to be dimmed.' 
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<command class_type='comment' title='' comment='Component Version Information;
 11, 1.0, 22-07-24, BR, Added DrawArc and DrawRoundedRectangle functions;
-24, 24.0, 17-07-24, MW, Fixed bug to do with Arc showing some background pixels when Resolution is 0;
-25, 25.0, 17-07-24, MW, Fix but that prevents lines being drawn if x or y value is equal to max resolution;
-26, 26.0, 17-07-24, MW, Added an additioanl font count of 4 total font count of 8;' textarea='12,0,12,0' />
+17, 17.0, 02-08-24, MW, Added an additional font count of 4, total font count of 8;
+19,19, 18-10-24, MW, Fixed bug that prevents lines being drawn when x or y = 0;
+19,19, 18-10-24, MW, Fixed bug with DrawArc that has a few pixels missing;
+19,19, 30-10-24, MW, Added dropdown selection and auto pin selection for RS, CS and  BL;
+19,19, 30-10-24, MW, Fixed bug that prevents display from working on non ESP32 devices;' textarea='12,0,12,0' />
 						<command class_type='call' title='Call Macro' macro='InitSim' />
 						<command class_type='call' title='Call Macro' macro='SetDisplayOrientationSim' >
 							<argument exp='3' />
@@ -3930,169 +4058,158 @@ Switching the backlight on and off at high speed allow the light to be dimmed.' 
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<local name='dat' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='call' title='Call Component Macro' component='cal_spi1' macro='Master_Init' />
-						<command class_type='calculation' title='Calculation' >
-							<exp exp='reset_pin = 1' />
+						<command class_type='decision' title='Decision' exp='UseReset' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='reset_pin = 1' />
+								</command>
+							</flowline>
+							<flowline />
 						</command>
 						<command class_type='delay' title='Delay' exp='5' type='1' />
-						<command class_type='calculation' title='Calculation' >
-							<exp exp='reset_pin = 0' />
-						</command>
-						<command class_type='calculation' title='Calculation' >
-							<exp exp='chip_sel_pin = 1' />
+						<command class_type='decision' title='Decision' exp='UseReset' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='reset_pin = 0' />
+								</command>
+							</flowline>
+							<flowline />
 						</command>
 						<command class_type='delay' title='Delay' exp='5' type='1' />
 						<command class_type='calculation' title='Calculation' >
 							<exp exp='dc_pin = 0' />
 						</command>
-						<command class_type='calculation' title='Calculation' >
-							<exp exp='reset_pin = 1' />
+						<command class_type='decision' title='Decision' exp='UseCS' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='chip_sel_pin = 1' />
+								</command>
+							</flowline>
+							<flowline />
 						</command>
-						<command class_type='delay' title='Delay' exp='150' type='1' />
+						<command class_type='decision' title='Decision' exp='UseReset' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='reset_pin = 1' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='delay' title='Delay' exp='5' type='1' />
 						<command class_type='decision' title='Decision' exp='ToggleCS' swap='0' >
 							<flowline />
 							<flowline >
-								<command class_type='calculation' title='Calculation' >
-									<exp exp='chip_sel_pin = 0' />
+								<command class_type='decision' title='Decision' exp='UseCS' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='chip_sel_pin = 0' />
+										</command>
+									</flowline>
+									<flowline />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='comment' title='' comment='Next we write to the display registers to setup the device ready for use' textarea='12,0,12,0' />
-						<command class_type='call' title='Set Gamma' macro='LCD_Write_Reg' >
-							<argument exp='0xE0' />
+						<command class_type='call' title='' macro='LCD_Write_Reg' >
+							<argument exp='0xCB' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x39' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x2C' />
 						</command>
 						<command class_type='call' title='' macro='LCD_Write_Data8' >
 							<argument exp='0x00' />
 						</command>
 						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x03' />
+							<argument exp='0x34' />
 						</command>
 						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x09' />
+							<argument exp='0x02' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Reg' >
+							<argument exp='0xCF' />
 						</command>
 						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x08' />
+							<argument exp='0x00' />
 						</command>
 						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x16' />
+							<argument exp='0xC1' />
 						</command>
 						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x0A' />
+							<argument exp='0x30' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Reg' >
+							<argument exp='0xE8' />
 						</command>
 						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x3F' />
+							<argument exp='0x85' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x00' />
 						</command>
 						<command class_type='call' title='' macro='LCD_Write_Data8' >
 							<argument exp='0x78' />
 						</command>
-						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x4C' />
-						</command>
-						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x09' />
-						</command>
-						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x0A' />
-						</command>
-						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x08' />
-						</command>
-						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x16' />
-						</command>
-						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x1A' />
-						</command>
-						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x0F' />
-						</command>
-						<command class_type='call' title='Set Gamma' macro='LCD_Write_Reg' >
-							<argument exp='0xE1' />
+						<command class_type='call' title='' macro='LCD_Write_Reg' >
+							<argument exp='0xEA' />
 						</command>
 						<command class_type='call' title='' macro='LCD_Write_Data8' >
 							<argument exp='0x00' />
 						</command>
 						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x16' />
+							<argument exp='0x00' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Reg' >
+							<argument exp='0xED' />
 						</command>
 						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x19' />
+							<argument exp='0x64' />
 						</command>
 						<command class_type='call' title='' macro='LCD_Write_Data8' >
 							<argument exp='0x03' />
-						</command>
-						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x0F' />
-						</command>
-						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x05' />
-						</command>
-						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x32' />
-						</command>
-						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x45' />
-						</command>
-						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x46' />
-						</command>
-						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x04' />
-						</command>
-						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x0E' />
-						</command>
-						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x0D' />
-						</command>
-						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x35' />
-						</command>
-						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x37' />
-						</command>
-						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x0F' />
-						</command>
-						<command class_type='call' title='Power Control' macro='LCD_Write_Reg' >
-							<argument exp='0xC0' />
-						</command>
-						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x17' />
-						</command>
-						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x15' />
-						</command>
-						<command class_type='call' title='Power Control 2' macro='LCD_Write_Reg' >
-							<argument exp='0xC1' />
-						</command>
-						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x47' />
-						</command>
-						<command class_type='call' title='VCM Control' macro='LCD_Write_Reg' >
-							<argument exp='0xC5' />
-						</command>
-						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x00' />
 						</command>
 						<command class_type='call' title='' macro='LCD_Write_Data8' >
 							<argument exp='0x12' />
 						</command>
 						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x80' />
+							<argument exp='0x81' />
 						</command>
-						<command class_type='call' title='TFT_MADCTL' macro='LCD_Write_Reg' >
-							<argument exp='0x36' />
+						<command class_type='call' title='' macro='LCD_Write_Reg' >
+							<argument exp='0xF7' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x20' />
+						</command>
+						<command class_type='call' title='Power Control' macro='LCD_Write_Reg' >
+							<argument exp='0xC0' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x23' />
+						</command>
+						<command class_type='call' title='Power Control' macro='LCD_Write_Reg' >
+							<argument exp='0xC1' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x10' />
+						</command>
+						<command class_type='call' title='VCM Control' macro='LCD_Write_Reg' >
+							<argument exp='0xC5' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x3E' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x28' />
+						</command>
+						<command class_type='call' title='VCM Control2' macro='LCD_Write_Reg' >
+							<argument exp='0xC7' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x86' />
 						</command>
 						<command class_type='calculation' title='Calculation' >
 							<exp exp='.dat = 0x08' />
-						</command>
-						<command class_type='decision' title='Decision' exp='FlipY' swap='0' >
-							<flowline >
-								<command class_type='calculation' title='Calculation' >
-									<exp exp='.dat = .dat | 0x80' />
-								</command>
-							</flowline>
-							<flowline />
 						</command>
 						<command class_type='decision' title='Decision' exp='FlipX' swap='0' >
 							<flowline >
@@ -4102,95 +4219,163 @@ Switching the backlight on and off at high speed allow the light to be dimmed.' 
 							</flowline>
 							<flowline />
 						</command>
+						<command class_type='decision' title='Decision' exp='FlipY' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.dat = .dat | 0x80' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='call' title='Memory Access Control' macro='LCD_Write_Reg' >
+							<argument exp='0x36' />
+						</command>
 						<command class_type='call' title='' macro='LCD_Write_Data8' >
 							<argument exp='.dat' />
 						</command>
-						<command class_type='call' title='Pixel Interface' macro='LCD_Write_Reg' >
+						<command class_type='call' title='' macro='LCD_Write_Reg' >
 							<argument exp='0x3A' />
 						</command>
-						<command class_type='call' title='18-bit Colour' macro='LCD_Write_Data8' >
-							<argument exp='0x66' />
-						</command>
-						<command class_type='call' title='Brightness' macro='LCD_Write_Reg' >
-							<argument exp='0x51' />
-						</command>
-						<command class_type='call' title='Full Brightness' macro='LCD_Write_Data8' >
-							<argument exp='0xFF' />
-						</command>
-						<command class_type='call' title='CTRL DIsplay Value' macro='LCD_Write_Reg' >
-							<argument exp='0x53' />
-						</command>
-						<command class_type='call' title='Full Brightness' macro='LCD_Write_Data8' >
-							<argument exp='0x20' />
-						</command>
-						<command class_type='call' title='Content Adaptive Brightness' macro='LCD_Write_Reg' >
-							<argument exp='0x56' />
-						</command>
 						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x00' />
+							<argument exp='0x55' />
 						</command>
-						<command class_type='call' title='Off' macro='LCD_Write_Data8' >
-							<argument exp='0x00' />
-						</command>
-						<command class_type='call' title='Interface Mode Control' macro='LCD_Write_Reg' >
-							<argument exp='0xB0' />
-						</command>
-						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x00' />
-						</command>
-						<command class_type='call' title='Frame Rate Control' macro='LCD_Write_Reg' >
+						<command class_type='call' title='' macro='LCD_Write_Reg' >
 							<argument exp='0xB1' />
 						</command>
 						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0xA0' />
-						</command>
-						<command class_type='call' title='Display INversion Control' macro='LCD_Write_Reg' >
-							<argument exp='0xB4' />
+							<argument exp='0x00' />
 						</command>
 						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x02' />
+							<argument exp='0x18' />
 						</command>
 						<command class_type='call' title='Display Function Control' macro='LCD_Write_Reg' >
 							<argument exp='0xB6' />
 						</command>
 						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x02' />
-						</command>
-						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x02' />
-						</command>
-						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x3B' />
-						</command>
-						<command class_type='call' title='Entry Mode Set' macro='LCD_Write_Reg' >
-							<argument exp='0xB7' />
-						</command>
-						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0xC6' />
-						</command>
-						<command class_type='call' title='Adjust Control 3' macro='LCD_Write_Reg' >
-							<argument exp='0xF7' />
-						</command>
-						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0xA9' />
-						</command>
-						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x51' />
-						</command>
-						<command class_type='call' title='' macro='LCD_Write_Data8' >
-							<argument exp='0x2C' />
+							<argument exp='0x08' />
 						</command>
 						<command class_type='call' title='' macro='LCD_Write_Data8' >
 							<argument exp='0x82' />
 						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x27' />
+						</command>
+						<command class_type='call' title='Gamma Function Disable' macro='LCD_Write_Reg' >
+							<argument exp='0xF2' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x00' />
+						</command>
+						<command class_type='call' title='Gamma Curve' macro='LCD_Write_Reg' >
+							<argument exp='0x26' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x01' />
+						</command>
+						<command class_type='call' title='Set Gamma' macro='LCD_Write_Reg' >
+							<argument exp='0xE0' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x0F' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x31' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x2B' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x0C' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x0E' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x08' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x4E' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0xF1' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x37' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x07' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x10' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x3' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x0E' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x09' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x00' />
+						</command>
+						<command class_type='call' title='Set Gamma' macro='LCD_Write_Reg' >
+							<argument exp='0xE1' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x00' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x0E' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x14' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x03' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x11' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x07' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x31' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0xC1' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x48' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x08' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x0F' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x0C' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x31' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x36' />
+						</command>
+						<command class_type='call' title='' macro='LCD_Write_Data8' >
+							<argument exp='0x0F' />
+						</command>
 						<command class_type='decision' title='Decision' exp='InvertColour' swap='0' >
 							<flowline >
-								<command class_type='call' title='Display Inversion On' macro='LCD_Write_Reg' >
+								<command class_type='call' title='Inverted Mode' macro='LCD_Write_Reg' >
 									<argument exp='0x21' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='call' title='Display Inversion Off' macro='LCD_Write_Reg' >
+								<command class_type='call' title='Normal Mode' macro='LCD_Write_Reg' >
 									<argument exp='0x20' />
 								</command>
 							</flowline>
@@ -4202,56 +4387,20 @@ Switching the backlight on and off at high speed allow the light to be dimmed.' 
 						<command class_type='call' title='Display On' macro='LCD_Write_Reg' >
 							<argument exp='0x29' />
 						</command>
-						<command class_type='delay' title='Delay' exp='25' type='1' />
-						<command class_type='comment' title='' comment='----!!!DEBUG!!!----
-
-Now read out some data to see what we are dealing with' textarea='12,0,12,0' disable='1' />
-						<command class_type='delay' title='Delay' disable='1' exp='10' type='1' />
-						<command class_type='call' title='Read Display Identification Information' disable='1' macro='LCD_Write_Reg' >
-							<argument exp='0x04' />
-						</command>
-						<command class_type='call' title='1st Param - dummy byte' disable='1' macro='LCD_Read_Data8' />
-						<command class_type='call' title='2nd Param - Manufacturer ID' disable='1' macro='LCD_Read_Data8' />
-						<command class_type='call' title='3rd Param - driver version ID' disable='1' macro='LCD_Read_Data8' />
-						<command class_type='call' title='4th Param - Driver ID' disable='1' macro='LCD_Read_Data8' />
-						<command class_type='delay' title='Delay' disable='1' exp='2' type='1' />
-						<command class_type='call' title='Read Display Status' disable='1' macro='LCD_Write_Reg' >
-							<argument exp='0x09' />
-						</command>
-						<command class_type='call' title='1st Param - dummy byte' disable='1' macro='LCD_Read_Data8' />
-						<command class_type='call' title='2nd Param - Display Status Bits' disable='1' macro='LCD_Read_Data8' />
-						<command class_type='call' title='3rd Param - Display Status Bits' disable='1' macro='LCD_Read_Data8' />
-						<command class_type='call' title='4th Param - Display Status Bits' disable='1' macro='LCD_Read_Data8' />
-						<command class_type='call' title='5th Param - Display Status Bits' disable='1' macro='LCD_Read_Data8' />
-						<command class_type='delay' title='Delay' disable='1' exp='2' type='1' />
-						<command class_type='call' title='Read Display Power Mode' disable='1' macro='LCD_Write_Reg' >
-							<argument exp='0x0A' />
-						</command>
-						<command class_type='call' title='1st Param - dummy byte' disable='1' macro='LCD_Read_Data8' />
-						<command class_type='call' title='2nd Param - Display Power Mode Bits' disable='1' macro='LCD_Read_Data8' />
-						<command class_type='delay' title='Delay' disable='1' exp='2' type='1' />
-						<command class_type='call' title='Read Display Signal Mode' disable='1' macro='LCD_Write_Reg' >
-							<argument exp='0x0E' />
-						</command>
-						<command class_type='call' title='1st Param - dummy byte' disable='1' macro='LCD_Read_Data8' />
-						<command class_type='call' title='2nd Param - Display Signal Mode Bits' disable='1' macro='LCD_Read_Data8' />
-						<command class_type='comment' title='' comment='End of readback' textarea='12,0,12,0' />
-						<command class_type='calculation' title='Calculation' >
-							<exp exp='TypeConversions1::SetLong(FGCOL)' />
-							<exp exp='fg_col_var[0] = TypeConversions1::GetByte(0)' />
-							<exp exp='fg_col_var[1] = TypeConversions1::GetByte(1)' />
-							<exp exp='fg_col_var[2] = TypeConversions1::GetByte(2)' />
-							<exp exp='' />
-							<exp exp='TypeConversions1::SetLong(BGCOL)' />
-							<exp exp='bg_col_var[0] = TypeConversions1::GetByte(0)' />
-							<exp exp='bg_col_var[1] = TypeConversions1::GetByte(1)' />
-							<exp exp='bg_col_var[2] = TypeConversions1::GetByte(2)' />
+						<command class_type='call' title='' macro='LCD_Write_Reg' >
+							<argument exp='0x2C' />
 						</command>
 						<command class_type='decision' title='Decision' exp='UseBacklight' swap='0' >
 							<flowline >
-								<command class_type='call' title='User Macro' macro='BacklightOn' />
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='led_pin = 1' />
+								</command>
 							</flowline>
 							<flowline />
+						</command>
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='foreground_col_var = FGCOL' />
+							<exp exp='background_col_var = BGCOL' />
 						</command>
 						<command class_type='call' title='Call Macro' macro='ClearDisplay' />
 					</flowline>
@@ -4261,15 +4410,15 @@ Now read out some data to see what we are dealing with' textarea='12,0,12,0' dis
 				<resources />
 				<properties />
 				<values >
-					<value target='pixel_width' data='320' />
-					<value target='pixel_height' data='480' />
+					<value target='pixel_width' data='240' />
+					<value target='pixel_height' data='320' />
 					<value target='monochrome' data='0' />
 					<value target='foreground_colour' data='0' />
 					<value target='background_colour' data='16777215' />
-					<value target='colour_bit_depth' data='18' />
-					<value target='red_bit_depth' data='6' />
+					<value target='colour_bit_depth' data='16' />
+					<value target='red_bit_depth' data='5' />
 					<value target='green_bit_depth' data='6' />
-					<value target='blue_bit_depth' data='6' />
+					<value target='blue_bit_depth' data='5' />
 					<value target='ExternalFonts' data='0' />
 					<value target='commsicon2::LinkTo' data='0' />
 					<value target='UseFileIndex' data='0' />
@@ -4326,9 +4475,9 @@ Now read out some data to see what we are dealing with' textarea='12,0,12,0' dis
 					<value target='gLCD_Font8::FontSpace' data='001' />
 					<value target='gLCD_Font8::SpaceWidth' data='004' />
 					<value target='ShowBackground' data='1' />
-					<value target='ComponentLabel' data='001' />
-					<value target='GdiText1::sText' data='gLCD_ILI9488_SPI' />
-					<value target='GdiText1::dScale' data='1.000000' />
+					<value target='ComponentLabel' data='000' />
+					<value target='GdiText1::sText' data='gLCD_ILI9341_SPI' />
+					<value target='GdiText1::dScale' data='1' />
 					<value target='DisplayType' data='002' />
 					<value target='EmbedFontSet' data='1' />
 					<value target='EmbedFontWidth' data='1' />
@@ -4354,12 +4503,12 @@ Now read out some data to see what we are dealing with' textarea='12,0,12,0' dis
 					<value target='ENABLED' data='1' />
 					<value target='REF' data='1' />
 					<value target='CHANNEL' data='001' />
-					<value target='MOSI' data='$PORTC.5' />
-					<value target='MOSIPins' data='008' />
-					<value target='MISO' data='$PORTC.4' />
-					<value target='MISOPins' data='013' />
-					<value target='CLK' data='$PORTC.3' />
-					<value target='CLKPins' data='004' />
+					<value target='MOSI' data='$PORTC.0' />
+					<value target='MOSIPins' data='000' />
+					<value target='MISO' data='$PORTC.1' />
+					<value target='MISOPins' data='017' />
+					<value target='CLK' data='$PORTC.2' />
+					<value target='CLKPins' data='002' />
 					<value target='UseAutoCS' data='0' />
 					<value target='UseCS' data='0' />
 					<value target='SS' data='$PORTC.2' />
@@ -4391,9 +4540,9 @@ Now read out some data to see what we are dealing with' textarea='12,0,12,0' dis
 					<value target='SS_PORT' data='$PORTC.2' />
 					<value target='SS_TRIS' data='$PORTC.2' />
 					<value target='SS_PIN' data='2' />
-					<value target='Remappable' data='' />
-					<value target='MOSIReg' data='008' />
-					<value target='CLKREG' data='004' />
+					<value target='Remappable' data='1' />
+					<value target='MOSIReg' data='000' />
+					<value target='CLKREG' data='002' />
 					<value target='MOSIRPNUM' data='21' />
 					<value target='MOSIBank' data='b' />
 					<value target='MOSIBank2' data='c' />
@@ -4408,27 +4557,16 @@ Now read out some data to see what we are dealing with' textarea='12,0,12,0' dis
 					<value target='CLKBank2' data='c' />
 					<value target='ParentName' data='' />
 					<value target='BitDelay' data='0' />
-					<value target='ClockSpeed' data='19660800' />
+					<value target='ClockSpeed' data='32000000' />
 					<value target='MasterDivider' data='4' />
 					<value target='Sim' data='1' />
 					<value target='CLKRPREG' data='' />
-					<value target='SSRPREG' data='' />
-					<value target='SSBank' data='' />
-					<value target='SSBank2' data='' />
+					<value target='SSRPREG' data='SSP1SSPPS' />
+					<value target='SSBank' data='a' />
+					<value target='SSBank2' data='d' />
 					<value target='AltSSReg' data='' />
 					<value target='AltSSMask' data='0' />
 					<value target='Sorted' data='0' />
-				</values>
-				<events />
-				<apis />
-				<variables />
-				<macros />
-			</component>
-			<component class_type='ref' guid='6508c7be-063a-4f9f-bae5-4a41cf977a86' vmin='0' vmaj='1' codename='TypeConversions1' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='0' solid='0' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
-				<resources />
-				<properties />
-				<values >
-					<value target='GenCode' data='1' />
 				</values>
 				<events />
 				<apis />
@@ -4441,10 +4579,10 @@ Now read out some data to see what we are dealing with' textarea='12,0,12,0' dis
 	<keymap />
 	<panel2d shadows='0' lighting='0' brightness='0' >
 		<background rgb='9737364' img='' style='0' />
-		<camera xe='-5.55647' ye='4.6085' ze='619.927' xt='-5.55647' yt='4.6085' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
-		<viewport dx='446' dy='782' zoom='87.0521' fix_topleft='0' />
+		<camera xe='-1.47033' ye='5.13434' ze='213.69' xt='-1.47033' yt='5.13434' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='180' dy='782' zoom='101.923' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='0' />
-		<winpos ID='7005' RectRecentFloat='2254,-952,3119,-78' RectRecentDocked='927,141,1393,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7005' RectRecentFloat='1281,197,1931,647' RectRecentDocked='1193,141,1393,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
 	</panel2d>
 	<panel3d shadows='0' lighting='2' brightness='0' perspective='1' >
 		<background rgb='8409120' img='' style='0' />
@@ -4457,61 +4595,54 @@ Now read out some data to see what we are dealing with' textarea='12,0,12,0' dis
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='434,382,973,918' RectRecentDocked='0,0,462,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,462,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
-	<panels2d count='1' >
-		<panel2d_0 id='0' name='NewPanel' type='0' >
-			<winpos ID='1171' RectRecentFloat='0,0,650,450' RectRecentDocked='927,141,1393,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
-			<background fill='72057594037927935' showgrid='1' gridstyle='1' gridsize='10' gridbrush='71776119075691740' snaptogrid='1' fitcomp='0' disp_x='300' disp_y='400' scale='100' disp_col='16777215' />
-		</panel2d_0>
-	</panels2d>
+	<panels2d count='0' />
 	<layout >
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='FastPlot_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='PlotSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetBGColourSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetFGColourSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Window_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetDisplayOrientationSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetForegroundColour' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='PrintSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='PrintNumber_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='InitSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='85' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DrawRectangleSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DrawLine_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DrawEllipseSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DrawCircleSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ClearSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='BacklightOn' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='BacklightOff' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='BPlotSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ClearDisplay' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LCD_Write_Data8' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LCD_Write_Reg' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Plot' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='235' flags='0' />
-		<view type='0' name='Window' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetDisplayOrientation' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Print' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='FastPlot' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DrawLine' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='729' flags='0' />
-		<view type='0' name='DrawCircle' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='BPlot' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadASCIILUT' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='FastBPlot' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetFontScaler' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetBackgroundColour' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DrawEllipse' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LCD_Read_Data8' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DrawRectangle' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_AddVar' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_GetVarSize' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DrawArc' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DrawRoundedRectangle' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DrawRoundedRectangleSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DrawArcSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='FastPlot_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='PlotSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetBGColourSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetFGColourSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Window_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetDisplayOrientationSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetForegroundColour' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='PrintSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='PrintNumber_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='InitSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DrawRectangleSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DrawLine_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DrawEllipseSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DrawCircleSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ClearSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='BacklightOn' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='BacklightOff' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='BPlotSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='prv_init' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ClearDisplay' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LCD_Write_Data8' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LCD_Write_Reg' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Plot' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Window' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetDisplayOrientation' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Print' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='FastPlot' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DrawLine' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DrawCircle' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='BPlot' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ReadASCIILUT' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='FastBPlot' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetFontScaler' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetBackgroundColour' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DrawRectangle' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_AddVar' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_GetVarSize' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DrawArc' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DrawArcSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DrawRoundedRectangle' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DrawRoundedRectangleSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DrawEllipse' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA0QIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>
