@@ -1,5 +1,5 @@
 <root>
-<document scada='0' projtype='1' schema='103' license='1,82702381,95CJQR' title='' description='' fcversion='720896' target='PIC.16F.16F1937' >
+<document scada='0' projtype='1' schema='103' license='1,82702381,95CJQR' title='' description='' fcversion='720898' target='PIC.16F.16F1937' >
 	<config data='!0,fe2!10,1eff%0,2%3,0%5,1%6,1%7,1%8,1%9,3%b,1%c,0%d,0%10,3%14,3%18,0%19,1%1a,1%1c,1%1d,0' clkspd='19660800' simspd='1' usewdt='0' constif='0' Use3V3='0' />
 	<plugins >
 		<dll_models enabled='1' />
@@ -59,7 +59,7 @@
 	</ghost>
 	<components >
 		<settings autoimg='0' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='1' />
-		<definition guid='f0e01201-8951-4748-87c3-d1f8423bb6e4' vstate='40' vmin='2' vmaj='2' srcleaf='RealTimeClock.fcfx' visiblename='Real Time Clock (Internal, DS1307, DS3231, DS3232)' description='A Real Time Clock component allowing things like clocks and timers to easily be created.
+		<definition guid='f0e01201-8951-4748-87c3-d1f8423bb6e4' vstate='40' vmin='3' vmaj='2' srcleaf='RealTimeClock.fcfx' visiblename='Real Time Clock (Internal, DS1307, DS3231, DS3232)' description='A Real Time Clock component allowing things like clocks and timers to easily be created.
 Compatible with the internal RTCC module and external DS1307, DS3231 or DS3232 RTC ICs.' category='Real Time Clock' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='Matrix TSL' manuname='' manucode='' sysinfo='9450475' keywords='' dynamic='1' scadaCompatible='0' embeddedCompatible='1' showmacros='1' iconpath='..\..\Icons\Components\arc_scale.png' />
 		<component class_type='root' codename='RTC' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' macronames='$(type)_$(module)__$(macro)' >
 			<resources >
@@ -170,16 +170,16 @@ No: Do not show the pin signals on the data recorder window.' />
 				<value target='cal_i2c1::InjectorHandle' data='0' />
 			</values>
 			<events >
-				<event class='System' event='Timer' target='Ev_Timer' />
-				<event class='Connection' event='ChipChange' target='Ev_ChipChange' />
-				<event class='Components' event='Renamed' target='Ev_Renamed' />
-				<event class='Simulation' event='Start' target='Ev_Start' />
-				<event class='Components' event='Property' target='Ev_Property' />
 				<event class='Components' event='Initialise' target='Ev_Initialise' />
-				<event class='Compile' event='Start' target='Ev_Comp_Start' />
+				<event class='Simulation' event='Stop' target='Ev_Stop' />
+				<event class='Components' event='Renamed' target='Ev_Renamed' />
 				<event class='Compile' event='AddVar' target='Ev_AddVar' />
 				<event class='Compile' event='AddProperty' target='Ev_AddProperty' />
-				<event class='Simulation' event='Stop' target='Ev_Stop' />
+				<event class='Connection' event='ChipChange' target='Ev_ChipChange' />
+				<event class='Components' event='Property' target='Ev_Property' />
+				<event class='System' event='Timer' target='Ev_Timer' />
+				<event class='Compile' event='Start' target='Ev_Comp_Start' />
+				<event class='Simulation' event='Start' target='Ev_Start' />
 			</events>
 			<apis >
 				<api name='SetSecs' alt='SetSecs' type='1' proto='1' />
@@ -189,6 +189,7 @@ No: Do not show the pin signals on the data recorder window.' />
 				<api name='GetHours' alt='GetHours' type='1' proto='1' />
 				<api name='GetSecs' alt='GetSecs' type='1' proto='1' />
 				<api name='GetYear' alt='GetYear' type='1' proto='1' />
+				<api name='GetDateTimeString' alt='GetDateTimeString' type='1' proto='1' />
 				<api name='GetWeekDay' alt='GetWeekDay' type='1' proto='1' />
 				<api name='SetRamDS3232' alt='SetRamDS3232' type='1' proto='1' />
 				<api name='SetRamDS1307' alt='' type='1' proto='1' />
@@ -235,7 +236,7 @@ No: Do not show the pin signals on the data recorder window.' />
 						<command class_type='calculation' title='Calculation' >
 							<exp exp='.PropStr = &quot;&quot;' />
 						</command>
-						<command class_type='loop' title='Loop' type='0' exp='.FcdHandle' >
+						<command class_type='loop' title='Loop' type='0' exp='.FcdHandle' for1='' for3='' >
 							<flowline >
 								<command class_type='sim' title='Simulation' macro='Tree.GetSubValue' >
 									<return exp='.Name' />
@@ -247,7 +248,7 @@ No: Do not show the pin signals on the data recorder window.' />
 									<argument exp='.FcdHandle' />
 									<argument exp='&quot;value&quot;' />
 								</command>
-								<command class_type='loop' title='Loop' type='0' exp='Length$ (.Value) &lt; 3' >
+								<command class_type='loop' title='Loop' type='0' exp='Length$ (.Value) &lt; 3' for1='' for3='' >
 									<flowline >
 										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Value = &quot;0&quot; + .Value' />
@@ -963,7 +964,7 @@ Simulation returns system date.' statediag='0' >
 								</command>
 							</flowline>
 						</command>
-						<command class_type='loop' title='Loop' type='0' exp='.FcdHandle' >
+						<command class_type='loop' title='Loop' type='0' exp='.FcdHandle' for1='' for3='' >
 							<flowline >
 								<command class_type='sim' title='Simulation' macro='Tree.GetSubValue' >
 									<return exp='.Name' />
@@ -975,7 +976,7 @@ Simulation returns system date.' statediag='0' >
 									<argument exp='.FcdHandle' />
 									<argument exp='&quot;value&quot;' />
 								</command>
-								<command class_type='loop' title='Loop' type='0' exp='Length$ (.Value) &lt; 3' >
+								<command class_type='loop' title='Loop' type='0' exp='Length$ (.Value) &lt; 3' for1='' for3='' >
 									<flowline >
 										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Value = &quot;0&quot; + .Value' />
@@ -997,6 +998,167 @@ Simulation returns system date.' statediag='0' >
 							<argument exp='this' />
 							<argument exp='&quot;FracDiv&quot;' />
 							<argument exp='.PropStr' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='GetDateTimeString' description='Reads the current date from the RTC and returns it formatted as a string
+
+Uses y-M-d for date entries and h-m-s for time entries, with doubled letters forcing a leading zero.
+' statediag='0' >
+						<return name='Return' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='2000' />
+						</return>
+						<param name='Format' type='T8' description='The format string (e.g. &quot;yyyy-MM-dd HH:mm:ss&quot; -&gt; &quot;2026-03-21 18:24:58&quot;)' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</param>
+						<local name='data' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='idx' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='len' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='bLeadZero' type='b1' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='bIsFormatLetter' type='b1' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<command class_type='comment' title='' comment='Supported formats for date:
+
+y    = year from 0 to 99
+yy   = year from 00 to 99
+M    = month from 1 to 12
+MM   = month from 01 to 12
+d    = day from 1 to 31
+dd   = day from 01 to 31' textarea='12,0,12,0' />
+						<command class_type='comment' title='' comment='Supported formats for time:
+
+h    = hour (12-hour clock) from 1 to 12
+hh   = hour (12-hour clock) from 01 to 12
+H    = hour (24-hour clock) from 0 to 23
+HH   = hour (24-hour clock) from 00 to 23
+m    = minute from 0 to 59
+mm   = minute from 00 to 59
+s    = second from 0 to 59
+ss   = second from 00 to 59' textarea='12,0,12,0' />
+						<command class_type='calculation' title='Initialise String' >
+							<exp exp='.Return = &quot;&quot;' />
+							<exp exp='.len = Length$(.Format)' />
+						</command>
+						<command class_type='loop' title='Loop' type='0' exp='.idx &lt; .len' for1='' for3='' >
+							<flowline >
+								<command class_type='decision' title='Decision' exp='(.idx + 1 &lt; .len) &amp;&amp; (.Format[.idx] == .Format[.idx + 1])' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.bLeadZero = 1' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.bLeadZero = 0' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='calculation' title='Assume it&apos;s a format letter' >
+									<exp exp='.bIsFormatLetter = 1' />
+								</command>
+								<command class_type='switch' title='Switch' textarea='36,25,36,25' exp='.Format[.idx]' >
+									<case >
+										<flowline >
+											<command class_type='calculation' title='Not a format letter' >
+												<exp exp='.bIsFormatLetter = 0' />
+												<exp exp='.bLeadZero = 0' />
+											</command>
+										</flowline>
+									</case>
+									<case exp='&apos;y&apos;' >
+										<flowline >
+											<command class_type='call' title='Call Macro' macro='GetYear' >
+												<return exp='.data' />
+											</command>
+										</flowline>
+									</case>
+									<case exp='&apos;M&apos;' >
+										<flowline >
+											<command class_type='call' title='Call Macro' macro='GetMonth' >
+												<return exp='.data' />
+											</command>
+										</flowline>
+									</case>
+									<case exp='&apos;d&apos;' >
+										<flowline >
+											<command class_type='call' title='Call Macro' macro='GetDate' >
+												<return exp='.data' />
+											</command>
+										</flowline>
+									</case>
+									<case exp='&apos;h&apos;' >
+										<flowline >
+											<command class_type='call' title='Call Macro' macro='GetHours' >
+												<return exp='.data' />
+												<argument exp='0' />
+											</command>
+											<command class_type='decision' title='Decision' exp='.data == 0' swap='0' >
+												<flowline >
+													<command class_type='calculation' title='Calculation' >
+														<exp exp='.data = 12' />
+													</command>
+												</flowline>
+												<flowline />
+											</command>
+										</flowline>
+									</case>
+									<case exp='&apos;H&apos;' >
+										<flowline >
+											<command class_type='call' title='Call Macro' macro='GetHours' >
+												<return exp='.data' />
+												<argument exp='0' />
+											</command>
+										</flowline>
+									</case>
+									<case exp='&apos;m&apos;' >
+										<flowline >
+											<command class_type='call' title='Call Macro' macro='GetMins' >
+												<return exp='.data' />
+												<argument exp='0' />
+											</command>
+										</flowline>
+									</case>
+									<case exp='&apos;s&apos;' >
+										<flowline >
+											<command class_type='call' title='Call Macro' macro='GetSecs' >
+												<return exp='.data' />
+												<argument exp='0' />
+											</command>
+										</flowline>
+									</case>
+								</command>
+								<command class_type='decision' title='Decision' exp='.bIsFormatLetter' swap='0' >
+									<flowline >
+										<command class_type='decision' title='Decision' exp='.bLeadZero' swap='0' >
+											<flowline >
+												<command class_type='decision' title='Decision' exp='.bLeadZero &amp;&amp; (.data &lt; 10)' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Add leading zero' >
+															<exp exp='.Return = .Return + &quot;0&quot;' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='calculation' title='Extra increase if format letter is doubled' >
+													<exp exp='.idx = .idx + 1' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.Return = .Return + ToString$(.data)' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.Return = .Return + .Format[.idx]' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.idx = .idx + 1' />
+								</command>
+							</flowline>
 						</command>
 					</flowline>
 				</macro>
@@ -1349,54 +1511,54 @@ An enabled alarm will activate the INT pin at the corresponding time.' statediag
 									<argument exp='.data' />
 									<argument exp='2' />
 								</command>
-								<command class_type='decision' title='Decision' exp='.AlarmChannel' swap='0' >
+								<command class_type='decision' title='Decision' disable='1' exp='.AlarmChannel' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Address' >
+										<command class_type='calculation' title='Address' disable='1' >
 											<exp exp='.data[0] = 0x0B' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='calculation' title='Address' >
+										<command class_type='calculation' title='Address' disable='1' >
 											<exp exp='.data[0] = 0x07' />
 										</command>
 									</flowline>
 								</command>
-								<command class_type='call' title='Component Macro' component='cal_i2c1' macro='Transaction_Write' >
+								<command class_type='call' title='Component Macro' disable='1' component='cal_i2c1' macro='Transaction_Write' >
 									<argument exp='.data' />
 									<argument exp='1' />
 								</command>
-								<command class_type='decision' title='Decision' exp='.AlarmChannel' swap='0' >
+								<command class_type='decision' title='Decision' disable='1' exp='.AlarmChannel' swap='0' >
 									<flowline >
-										<command class_type='call' title='Component Macro' component='cal_i2c1' macro='Transaction_Read' >
+										<command class_type='call' title='Component Macro' disable='1' component='cal_i2c1' macro='Transaction_Read' >
 											<argument exp='.data' />
 											<argument exp='3' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='call' title='Component Macro' component='cal_i2c1' macro='Transaction_Read' >
+										<command class_type='call' title='Component Macro' disable='1' component='cal_i2c1' macro='Transaction_Read' >
 											<argument exp='.data' />
 											<argument exp='4' />
 										</command>
 									</flowline>
 								</command>
-								<command class_type='switch' title='Switch' textarea='36,25,36,25' exp='.WhichClock' >
+								<command class_type='switch' title='Switch' textarea='36,25,36,25' disable='1' exp='.WhichClock' >
 									<case >
 										<flowline >
-											<command class_type='calculation' title='Calculation' >
+											<command class_type='calculation' title='Calculation' disable='1' >
 												<exp exp='.data[0] = 2' />
 											</command>
 										</flowline>
 									</case>
 									<case exp='1' >
 										<flowline >
-											<command class_type='calculation' title='Calculation' >
+											<command class_type='calculation' title='Calculation' disable='1' >
 												<exp exp='.data[0] = 9' />
 											</command>
 										</flowline>
 									</case>
 									<case exp='2' >
 										<flowline >
-											<command class_type='calculation' title='Calculation' >
+											<command class_type='calculation' title='Calculation' disable='1' >
 												<exp exp='.data[0] = 12' />
 											</command>
 										</flowline>
@@ -1406,7 +1568,7 @@ An enabled alarm will activate the INT pin at the corresponding time.' statediag
 							<flowline />
 						</command>
 						<command class_type='comment' title='' comment='DS1307 &amp; DS3231 ' textarea='12,0,12,0' />
-						<command class_type='call' title='Component Macro' component='cal_i2c1' macro='Transaction_Write' >
+						<command class_type='call' title='Component Macro' disable='1' component='cal_i2c1' macro='Transaction_Write' >
 							<argument exp='.data' />
 							<argument exp='2' />
 						</command>
@@ -1584,7 +1746,7 @@ Does not currently simulate.' statediag='0' >
 								</command>
 							</flowline>
 						</command>
-						<command class_type='loop' title='Loop' type='0' exp='.FcdHandle' >
+						<command class_type='loop' title='Loop' type='0' exp='.FcdHandle' for1='' for3='' >
 							<flowline >
 								<command class_type='sim' title='Simulation' macro='Tree.GetSubValue' >
 									<return exp='.Name' />
@@ -1596,7 +1758,7 @@ Does not currently simulate.' statediag='0' >
 									<argument exp='.FcdHandle' />
 									<argument exp='&quot;value&quot;' />
 								</command>
-								<command class_type='loop' title='Loop' type='0' exp='Length$ (.Value) &lt; 3' >
+								<command class_type='loop' title='Loop' type='0' exp='Length$ (.Value) &lt; 3' for1='' for3='' >
 									<flowline >
 										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Value = &quot;0&quot; + .Value' />
@@ -2392,8 +2554,10 @@ Simulation returns system date.' statediag='0' >
 				<macro >
 					<flowline name='Main' description='' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='comment' title='' comment='Component Version Information;
+2, 2.3, 10-09-26, ST, Added generic GetDateTimeString macro;' textarea='12,0,12,0' />
 						<command class_type='call' title='Call Macro' macro='Ev_Initialise' />
-						<command class_type='loop' title='Loop' type='0' exp='1' >
+						<command class_type='loop' title='Loop' type='0' exp='1' for1='' for3='' >
 							<flowline />
 						</command>
 					</flowline>
@@ -2568,10 +2732,10 @@ Clock' />
 	<keymap />
 	<panel2d shadows='0' lighting='2' brightness='0' >
 		<background rgb='65535' img='' style='0' />
-		<camera xe='-1.86459' ye='-0.511097' ze='665.452' xt='-1.86459' yt='-0.511097' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
-		<viewport dx='622' dy='352' zoom='113.099' fix_topleft='0' />
+		<camera xe='-1.86459' ye='-0.511097' ze='477.157' xt='-1.86459' yt='-0.511097' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='446' dy='782' zoom='113.099' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='0' />
-		<winpos ID='7005' RectRecentFloat='1270,427,1920,877' RectRecentDocked='3198,449,3840,868' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7005' RectRecentFloat='1270,427,1920,877' RectRecentDocked='927,141,1393,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel2d>
 	<panel3d shadows='2' lighting='2' brightness='25' perspective='1' >
 		<background rgb='10789024' img='' style='0' />
@@ -2584,50 +2748,17 @@ Clock' />
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,281,450' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,462,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='0' />
 	<layout >
-		<view type='0' name='SetYear' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='70' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetWeekDay' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetSecs' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetRamDS3232' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetRamDS1307' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetMonth' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetMins' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetHours' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='50' scrolly='612' flags='0' />
-		<view type='0' name='SetDate' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SQWandINTcontrol' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetYear' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetWeekDay' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetTimeString' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetSecs' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetRamDS3232' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetRamDS1307' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetMonth' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetMins' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetHours' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetDateString' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetDate' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetAmPm' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadDate' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ReadTime' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Prv_GetFracDiv' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Prv_GetClockSource' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_AddProperty' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Prv_GetPrescaler' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Prv_GetDivider' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_AddVar' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Start' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Stop' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_ChipChange' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Comp_Start' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Timer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetAlarm' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAOQQAAFsDAAA' zoom='100' scrollx='0' scrolly='599' flags='0' />
+		<view type='0' name='GetDateTimeString' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='1252' flags='0' />
+		<view type='0' name='GetTimeString' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetYear' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetHours' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetHours' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetAlarm' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>

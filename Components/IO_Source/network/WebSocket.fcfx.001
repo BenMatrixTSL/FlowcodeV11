@@ -71,13 +71,8 @@ Ping, pong and close control frames are handled automatically.' category='Comms:
 			<properties >
 				<property name='Max Frame Size (B)' target='MaxFrame' typeid='21' hidden='0' locked='0' info='Number of bytes reserved for the payload of a received WebSocket frame. Larger frames are truncated.' />
 				<property name='Timeout (ms)' target='Timeout' typeid='21' hidden='0' locked='0' info='Number of milliseconds to wait for data when performing the CheckSocketActivity macro.' />
-				<property name='Keepalive Ping (calls)' target='PingIdle' typeid='21' hidden='0' locked='0' info='Send a ping after this many consecutive CheckSocketActivity calls with nothing received, and use the same interval between retries. 
-Browsers reply to pings automatically but never send their own. 
-0 disables the keepalive entirely, so a client that vanishes without a close frame will hold the server forever. 
-When the link is idle each call takes about Timeout ms, so 100 calls at the default 120 ms is roughly 12 seconds.' />
-				<property name='Keepalive Retries' target='PingRetries' typeid='21' hidden='0' locked='0' info='How many extra pings to send when the first goes unanswered before declaring the link dead and freeing the server to accept a new client. 
-0 means give up after the first unanswered ping.
-The link is dropped after Keepalive Ping x (Retries + 2) idle calls.' />
+				<property name='Keepalive Ping (calls)' target='PingIdle' typeid='21' hidden='0' locked='0' info='Send a ping after this many consecutive CheckSocketActivity calls with nothing received, and use the same interval between retries. Browsers reply to pings automatically but never send their own. 0 disables the keepalive entirely, so a client that vanishes without a close frame will hold the server forever. When the link is idle each call takes about Timeout ms, so 100 calls at the default 120 ms is roughly 12 seconds.' />
+				<property name='Keepalive Retries' target='PingRetries' typeid='21' hidden='0' locked='0' info='How many extra pings to send when the first goes unanswered before declaring the link dead and freeing the server to accept a new client. 0 means give up after the first unanswered ping. The link is dropped after Keepalive Ping x (Retries + 2) idle calls.' />
 				<property name='Network Comms Component' target='Component' typeid='17' hidden='1' locked='0' info='Redirects communications via the selected component allowing different TCP/IP modules with different macros to work.' filter='91049bf5-2436-42dc-947a-c30c86463d98' />
 				<property name='LinkTo' target='LibraryComponent1::OutputIcon::LinkTo' typeid='16' hidden='0' locked='0' info='' filter='000' />
 			</properties>
@@ -128,9 +123,6 @@ The link is dropped after Keepalive Ping x (Retries + 2) idle calls.' />
 					</def>
 				</variable>
 				<variable public='0' >
-					<def class_type='variable' name='PingsSent' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-				</variable>
-				<variable public='0' >
 					<def class_type='variable' name='IsClient' type='b1' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 				</variable>
 				<variable public='0' >
@@ -138,6 +130,9 @@ The link is dropped after Keepalive Ping x (Retries + 2) idle calls.' />
 				</variable>
 				<variable public='0' >
 					<def class_type='variable' name='IdleCount' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='PingsSent' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 				</variable>
 			</variables>
 			<macros >
@@ -503,8 +498,8 @@ Returns: 1 = Connected / 0 = TCP connect failed / 2 = WebSocket handshake reject
 													<flowline >
 														<command class_type='calculation' title='Connected' >
 															<exp exp='Connected = 1' />
-															<exp exp='IdleCount = 0' />
-															<exp exp='PingsSent = 0' />
+											<exp exp='IdleCount = 0' />
+											<exp exp='PingsSent = 0' />
 															<exp exp='.Return = 1' />
 														</command>
 														<command class_type='sim' title='Simulation' macro='Debug.PrintLn' >
@@ -747,7 +742,7 @@ Payload is sent in chunks of 20 bytes as some modules (ESP8266) are slow with si
 				<macro >
 					<flowline name='Prv_Base64' description='Base64 encodes up to 24 bytes of data. Returns the encoded string.' statediag='0' >
 						<return name='Return' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
-							<array size='2000' />
+							<array size='40' />
 						</return>
 						<param name='Data' type='T8*' description='Bytes to encode' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='24' />
@@ -1177,8 +1172,8 @@ Returns 1 if the WebSocket connection is now open, 0 if the request was rejected
 								<command class_type='sim' title='Flash TX icon' component='LibraryComponent1' macro='FlashTx' />
 								<command class_type='calculation' title='Connected' >
 									<exp exp='Connected = 1' />
-									<exp exp='IdleCount = 0' />
-									<exp exp='PingsSent = 0' />
+											<exp exp='IdleCount = 0' />
+											<exp exp='PingsSent = 0' />
 									<exp exp='.Return = 1' />
 								</command>
 								<command class_type='sim' title='Simulation' macro='Debug.PrintLn' >
@@ -1480,7 +1475,7 @@ Returns 0 = nothing, 2 = data frame received, 3 = client closed, 4 = ping receiv
 				<macro >
 					<flowline name='GetRxString' description='Returns the payload of the last received data frame as a string (up to 255 characters, use GetRxByte for larger frames or binary data).' statediag='0' >
 						<return name='Return' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
-							<array size='2000' />
+							<array size='256' />
 						</return>
 						<local name='i' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='calculation' title='Reset' >
@@ -1698,7 +1693,7 @@ Returns the number of bytes sent, 0 = not connected or failed.' statediag='0' >
 					<flowline name='Prv_ComputeAccept' description='Calculates the Sec-WebSocket-Accept value for a handshake: Base64( SHA-1( Key + &quot;258EAFA5-E914-47DA-95CA-C5AB0DC85B11&quot; ) )
 Implemented using Flowcode icons so it works in simulation and on any target.' statediag='0' >
 						<return name='Return' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
-							<array size='2000' />
+							<array size='32' />
 						</return>
 						<param name='Key' type='T8*' description='24 character Sec-WebSocket-Key from the client request' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='25' />
@@ -1977,8 +1972,8 @@ Socket' />
 	<keymap />
 	<panel2d shadows='0' lighting='0' brightness='0' >
 		<background rgb='9737364' img='' style='0' />
-		<camera xe='9.13654' ye='15.2223' ze='347.337' xt='9.13654' yt='15.2223' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
-		<viewport dx='446' dy='782' zoom='155.371' fix_topleft='0' />
+		<camera xe='9.13654' ye='15.2223' ze='332.429' xt='9.13654' yt='15.2223' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='446' dy='782' zoom='162.338' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='0' />
 		<winpos ID='7005' RectRecentFloat='260,504,910,954' RectRecentDocked='927,141,1393,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
 	</panel2d>
@@ -1993,11 +1988,11 @@ Socket' />
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,230,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,462,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='1' >
 		<panel2d_0 id='0' name='NewPanel' type='0' >
-			<winpos ID='1171' RectRecentFloat='0,360,650,810' RectRecentDocked='691,141,921,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+			<winpos ID='1171' RectRecentFloat='0,360,650,810' RectRecentDocked='927,141,1393,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 			<background fill='288230376151053813' showgrid='1' gridstyle='0' gridsize='5' gridbrush='71776119075691740' snaptogrid='0' fitcomp='0' disp_x='300' disp_y='400' scale='100' disp_col='16777215' />
 		</panel2d_0>
 	</panels2d>

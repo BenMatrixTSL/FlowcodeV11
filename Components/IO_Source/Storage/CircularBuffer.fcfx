@@ -1,5 +1,5 @@
 <root>
-<document scada='0' schema='103' license='10,BenR,C9TN1M' title='' description='' fcversion='655618' target='PIC16.33E.33EP32MC202' >
+<document scada='0' projtype='1' schema='103' license='1,82702381,95CJQR' title='' description='' fcversion='720898' target='PIC16.33E.33EP32MC202' >
 	<config data='!0,ffef!10,ffff!20,ffff!30,ffbf!40,ffff!50,ffff%0,3%4,0%5,1%14,1%15,1%16,3%20,f%24,1%25,1%26,1%27,1%30,3%32,1%35,1%36,2%40,7%46,1%47,1%50,1%51,1' clkspd='19660800' simspd='1' usewdt='0' constif='0' Use3V3='0' />
 	<plugins >
 		<dll_models enabled='1' />
@@ -58,8 +58,8 @@
 		<settings autoimg='0' center='1' unitscale='0' fixedscale='0' fixedx='20' fixedy='20' fixedz='20' headcode='0' />
 		<definition guid='c34f9b8a-a915-4f75-ad0c-87f2ad670a8a' vstate='40' vmin='6' vmaj='1' srcleaf='CircularBuffer.fcfx' visiblename='Circular Buffer (8-bit)' description='Circular buffer component allowing easy and efficient first in first out (FIFO) style data byte storage.
 Useful when used with a comms component to capture data as it comes in ready for processing when we have time.
-Also features macros to allow you to check for specific incoming responses such as &quot;OK&quot; or &quot;ERROR&quot;.' category='Buffer' category2='Buffer ' category3='' bIs2dOnly='1' bIs3dOnly='0' catenable='1' author='Matrix Ltd' manuname='' manucode='' sysinfo='3150127' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='1' showmacros='1' iconpath='..\..\icons\components\CB.png' />
-		<component class_type='root' codename='CircularBuffer' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' comp2dType='0' macronames='$(type)_$(module)__$(macro)' >
+Also features macros to allow you to check for specific incoming responses such as &quot;OK&quot; or &quot;ERROR&quot;.' category='Buffer' category2='Buffer ' category3='' bIs2dOnly='1' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='Matrix Ltd' manuname='' manucode='' sysinfo='3150127' keywords='' dynamic='1' scadaCompatible='1' embeddedCompatible='1' showmacros='1' iconpath='..\..\icons\components\CB.png' />
+		<component class_type='root' codename='CircularBuffer' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' macronames='$(type)_$(module)__$(macro)' >
 			<resources />
 			<properties >
 				<property name='Buffer Size' target='BufferSize' typeid='21' hidden='0' locked='0' info='Sets the number of byte elements inside the circular buffer.' />
@@ -83,12 +83,12 @@ Store last x values - Will discard the oldest location in the buffer and overwri
 				<value target='Console' data='1' />
 			</values>
 			<events >
-				<event class='Components' event='Initialise' target='Ev_Initialise' />
 				<event class='Simulation' event='Start' target='Ev_Start' />
-				<event class='Components' event='Renamed' target='Ev_Renamed' />
-				<event class='Compile' event='AddVar' target='Ev_AddVar' />
 				<event class='Components' event='Property' target='Ev_Property' />
+				<event class='Components' event='Renamed' target='Ev_Renamed' />
 				<event class='Compile' event='GetVarSize' target='Ev_GetVarSize' />
+				<event class='Compile' event='AddVar' target='Ev_AddVar' />
+				<event class='Components' event='Initialise' target='Ev_Initialise' />
 			</events>
 			<apis >
 				<api name='LookForValue' alt='LookForValueSim' type='1' proto='1' />
@@ -141,30 +141,30 @@ Returns 1 to indicate the data has been found.' statediag='0' >
 						<param name='RemoveContent' type='u8' description='0=Leave the buffer contents untouched, 1=Remove values as you go' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Timeout' type='u16' description='Max amount of time to wait in milliseconds before returning 0=WaitForever' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='WaitForever' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Return = 0' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Timeout = 0' swap='0' >
+						<command class_type='decision' title='Decision' exp='.Timeout = 0' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.WaitForever = 1' />
 									<exp exp='.Timeout = 0xFFFF' />
 								</command>
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='(.Timeout &gt; 0) &amp;&amp; (.Return = 0)' >
+						<command class_type='loop' title='Loop' type='0' exp='(.Timeout &gt; 0) &amp;&amp; (.Return = 0)' for1='' for3='' >
 							<flowline >
-								<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='1' type='1' />
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.WaitForever = 0' swap='0' >
+								<command class_type='delay' title='Delay' exp='1' type='1' />
+								<command class_type='decision' title='Decision' exp='.WaitForever = 0' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Timeout = .Timeout - 1' />
 										</command>
 									</flowline>
 									<flowline />
 								</command>
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='LookForValueSim' >
+								<command class_type='call' title='Call Macro' macro='LookForValueSim' >
 									<return exp='.Return' />
 									<argument exp='.Value' />
 									<argument exp='.NumChars' />
@@ -187,67 +187,67 @@ Returns 1 if the value is found.' statediag='0' >
 						<param name='RemoveContent' type='u8' description='0=Leave data alone, 1=Remove data from buffer' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='ResetFind' type='u8' description='0=Continue the find from the last operation, 1=Start again' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='CompareData' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<local name='NumBytes' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='NumBytes' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='DataIndex' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='SearchIndex' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Return = 0' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.ResetFind = 1' swap='0' >
+						<command class_type='decision' title='Decision' exp='.ResetFind = 1' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='LookForCounter = 0' />
 								</command>
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.SearchIndex = LookForCounter' />
 						</command>
-						<command class_type='call' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetNumberBytes' >
+						<command class_type='call' title='Call Component Macro' macro='GetNumberBytes' >
 							<return exp='.NumBytes' />
 						</command>
-						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.NumChars &gt; LookForCounter' >
+						<command class_type='loop' title='Loop' type='0' exp='.NumChars &gt; LookForCounter' for1='' for3='' >
 							<flowline >
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.NumBytes &gt; 0' swap='0' >
+								<command class_type='decision' title='Decision' exp='.NumBytes &gt; 0' swap='0' >
 									<flowline >
-										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.RemoveContent = 1' swap='0' >
+										<command class_type='decision' title='Decision' exp='.RemoveContent = 1' swap='0' >
 											<flowline >
-												<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetByte' >
+												<command class_type='call' title='Call Macro' macro='GetByte' >
 													<return exp='.CompareData' />
 												</command>
 											</flowline>
 											<flowline >
-												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<command class_type='calculation' title='Calculation' >
 													<exp exp='.DataIndex = DataStart + .SearchIndex' />
 												</command>
-												<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.DataIndex &gt;= BufferSize' swap='0' >
+												<command class_type='decision' title='Decision' exp='.DataIndex &gt;= BufferSize' swap='0' >
 													<flowline >
-														<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+														<command class_type='calculation' title='Calculation' >
 															<exp exp='.DataIndex = .DataIndex - BufferSize' />
 														</command>
 													</flowline>
 													<flowline />
 												</command>
-												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<command class_type='calculation' title='Calculation' >
 													<exp exp='.CompareData = Data[.DataIndex]' />
 												</command>
-												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<command class_type='calculation' title='Calculation' >
 													<exp exp='.SearchIndex = .SearchIndex + 1' />
 												</command>
 											</flowline>
 										</command>
-										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.CompareData = .Value[LookForCounter]' swap='0' >
+										<command class_type='decision' title='Decision' exp='.CompareData = .Value[LookForCounter]' swap='0' >
 											<flowline >
-												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<command class_type='calculation' title='Calculation' >
 													<exp exp='LookForCounter = LookForCounter + 1' />
 												</command>
-												<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='LookForCounter = .NumChars' swap='0' >
+												<command class_type='decision' title='Decision' exp='LookForCounter = .NumChars' swap='0' >
 													<flowline >
-														<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+														<command class_type='calculation' title='Calculation' >
 															<exp exp='LookForCounter = 0' />
 														</command>
-														<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+														<command class_type='calculation' title='Calculation' >
 															<exp exp='.NumChars = 0' />
 															<exp exp='.Return = 1' />
 														</command>
@@ -256,14 +256,14 @@ Returns 1 if the value is found.' statediag='0' >
 												</command>
 											</flowline>
 											<flowline >
-												<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='LookForCounter &gt; 0' swap='0' >
+												<command class_type='decision' title='Decision' exp='LookForCounter &gt; 0' swap='0' >
 													<flowline >
-														<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+														<command class_type='calculation' title='Calculation' >
 															<exp exp='LookForCounter = 0' />
 														</command>
-														<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.CompareData = .Value[LookForCounter]' swap='0' >
+														<command class_type='decision' title='Decision' exp='.CompareData = .Value[LookForCounter]' swap='0' >
 															<flowline >
-																<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+																<command class_type='calculation' title='Calculation' >
 																	<exp exp='LookForCounter = LookForCounter + 1' />
 																</command>
 															</flowline>
@@ -274,12 +274,12 @@ Returns 1 if the value is found.' statediag='0' >
 												</command>
 											</flowline>
 										</command>
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.NumBytes = .NumBytes - 1' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.NumChars = 0' />
 										</command>
 									</flowline>
@@ -297,12 +297,12 @@ Returns 1 if the value is found.' statediag='0' >
 						</param>
 						<param name='NumBytes' type='u16' description='Number of bytes to read from the buffer' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='idx' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
-						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.idx &lt; .NumBytes' >
+						<command class_type='loop' title='Loop' type='0' exp='.idx &lt; .NumBytes' for1='' for3='' >
 							<flowline >
-								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetByte' >
+								<command class_type='call' title='User Macro' macro='GetByte' >
 									<return exp='.Data[.idx]' />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.idx = .idx + 1' />
 								</command>
 							</flowline>
@@ -317,33 +317,33 @@ Returns 1 if the value is found.' statediag='0' >
 						</return>
 						<param name='MaxLength' type='u16' description='Max number of bytes the string can store including the null byte' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='idx' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.MaxLength &gt; 1' swap='0' >
+						<command class_type='decision' title='Decision' exp='.MaxLength &gt; 1' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Make room for null byte' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Make room for null byte' >
 									<exp exp='.MaxLength = .MaxLength - 1' />
 								</command>
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.idx &lt; .MaxLength' >
+						<command class_type='loop' title='Loop' type='0' exp='.idx &lt; .MaxLength' for1='' for3='' >
 							<flowline >
-								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetByte' >
+								<command class_type='call' title='User Macro' macro='GetByte' >
 									<return exp='.Return[.idx]' />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='(.Return[.idx] = 0) || (.Return[.idx] = 255)' swap='0' >
+								<command class_type='decision' title='Decision' exp='(.Return[.idx] = 0) || (.Return[.idx] = 255)' swap='0' >
 									<flowline >
-										<command class_type='goto' title='Goto Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' labelid='0' labelname='' />
+										<command class_type='goto' title='Goto Connection Point' labelid='0' labelname='' labeltype='0' />
 									</flowline>
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.idx = .idx + 1' />
 										</command>
 									</flowline>
 								</command>
 							</flowline>
 						</command>
-						<command class_type='label' title='Declare Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' labelid='0' labelname='A' />
-						<command class_type='calculation' title='Add null termination byte' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='label' title='Declare Connection Point' labelid='0' labelname='A' labeltype='4' />
+						<command class_type='calculation' title='Add null termination byte' >
 							<exp exp='.Return[.idx] = 0' />
 						</command>
 					</flowline>
@@ -356,12 +356,12 @@ Returns 1 if the value is found.' statediag='0' >
 						</param>
 						<param name='NumBytes' type='u16' description='Number of bytes to write into the buffer' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='idx' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
-						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.idx &lt; .NumBytes' >
+						<command class_type='loop' title='Loop' type='0' exp='.idx &lt; .NumBytes' for1='' for3='' >
 							<flowline >
-								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='PutByte' >
+								<command class_type='call' title='User Macro' macro='PutByte' >
 									<argument exp='.Data[.idx]' />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.idx = .idx + 1' />
 								</command>
 							</flowline>
@@ -376,12 +376,12 @@ Returns 1 if the value is found.' statediag='0' >
 						</param>
 						<param name='NumBytes' type='u16' description='Number of bytes to write into the buffer' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='idx' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
-						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.idx &lt; .NumBytes' >
+						<command class_type='loop' title='Loop' type='0' exp='.idx &lt; .NumBytes' for1='' for3='' >
 							<flowline >
-								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='PutByteSim' >
+								<command class_type='call' title='User Macro' macro='PutByteSim' >
 									<argument exp='.Data[.idx]' />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.idx = .idx + 1' />
 								</command>
 							</flowline>
@@ -401,15 +401,15 @@ Returns 1 if the value is found.' statediag='0' >
 						</param>
 						<local name='idx' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
 						<local name='len' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.len = Length$ (.Data)' />
 						</command>
-						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.idx &lt; .len' >
+						<command class_type='loop' title='Loop' type='0' exp='.idx &lt; .len' for1='' for3='' >
 							<flowline >
-								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='PutByteSim' >
+								<command class_type='call' title='User Macro' macro='PutByteSim' >
 									<argument exp='.Data[.idx]' />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.idx = .idx + 1' />
 								</command>
 							</flowline>
@@ -421,14 +421,14 @@ Returns 1 if the value is found.' statediag='0' >
 Leaves the buffer contents and pointers untouched.' statediag='0' >
 						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='address' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.address &lt; BufferSize' swap='0' >
+						<command class_type='decision' title='Decision' exp='.address &lt; BufferSize' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Return = Data[.address]' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Return = 0' />
 								</command>
 							</flowline>
@@ -443,24 +443,24 @@ Returns 255 if the buffer is empty.' statediag='0' >
 						<local name='ConsoleData' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='16' />
 						</local>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='DataStart != DataEnd' swap='0' >
+						<command class_type='decision' title='Decision' exp='DataStart != DataEnd' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Return = Data[DataStart]' />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='Console' swap='0' >
+								<command class_type='decision' title='Decision' exp='Console' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.GetLineBytes' >
+										<command class_type='sim' title='Simulation' macro='Console.GetLineBytes' >
 											<argument exp='ConsoleHandle' />
 											<argument exp='(DataStart / 16) % ((BufferSize / 16) + 1)' />
 											<argument exp='.ConsoleData' />
 											<argument exp='0' />
 											<argument exp='-1' />
 										</command>
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.ConsoleData[DataStart % 16] = 0' />
 										</command>
-										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.SetLineBytes' >
+										<command class_type='sim' title='Simulation' macro='Console.SetLineBytes' >
 											<argument exp='ConsoleHandle' />
 											<argument exp='(DataStart / 16) % ((BufferSize / 16) + 1)' />
 											<argument exp='.ConsoleData' />
@@ -470,30 +470,30 @@ Returns 255 if the buffer is empty.' statediag='0' >
 									</flowline>
 									<flowline />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Temp = DataStart + 1' />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Temp &gt;= BufferSize' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Temp &gt;= BufferSize' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Temp = 0' />
 										</command>
 									</flowline>
 									<flowline />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='DataStart = .Temp' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='RETURN = 1' swap='0' >
+								<command class_type='decision' title='Decision' exp='RETURN = 1' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Return = 512' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Return = 255' />
 										</command>
 									</flowline>
@@ -511,12 +511,12 @@ Returns 255 if the buffer is empty.' statediag='0' >
 						</param>
 						<param name='NumBytes' type='u16' description='Number of bytes to read from the buffer' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='idx' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
-						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.idx &lt; .NumBytes' >
+						<command class_type='loop' title='Loop' type='0' exp='.idx &lt; .NumBytes' for1='' for3='' >
 							<flowline >
-								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetByteSim' >
+								<command class_type='call' title='User Macro' macro='GetByteSim' >
 									<return exp='.Data[.idx]' />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.idx = .idx + 1' />
 								</command>
 							</flowline>
@@ -534,32 +534,32 @@ Otherwise the buffer is full and the return value will equal 0.' statediag='0' >
 							<array size='16' />
 						</local>
 						<local name='Temp2' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Temp = DataEnd + 1' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Temp &gt;= BufferSize' swap='0' >
+						<command class_type='decision' title='Decision' exp='.Temp &gt;= BufferSize' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Temp = 0' />
 								</command>
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Temp != DataStart' swap='0' >
+						<command class_type='decision' title='Decision' exp='.Temp != DataStart' swap='0' >
 							<flowline >
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='Console' swap='0' >
+								<command class_type='decision' title='Decision' exp='Console' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.GetLineBytes' >
+										<command class_type='sim' title='Simulation' macro='Console.GetLineBytes' >
 											<argument exp='ConsoleHandle' />
 											<argument exp='(DataEnd / 16) % ((BufferSize / 16) + 1)' />
 											<argument exp='.ConsoleData' />
 											<argument exp='0' />
 											<argument exp='-1' />
 										</command>
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.ConsoleData[DataEnd % 16] = .Data' />
 										</command>
-										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.SetLineBytes' >
+										<command class_type='sim' title='Simulation' macro='Console.SetLineBytes' >
 											<argument exp='ConsoleHandle' />
 											<argument exp='(DataEnd / 16) % ((BufferSize / 16) + 1)' />
 											<argument exp='.ConsoleData' />
@@ -569,46 +569,46 @@ Otherwise the buffer is full and the return value will equal 0.' statediag='0' >
 									</flowline>
 									<flowline />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='Data[DataEnd] = .Data' />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='DataEnd = .Temp' />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Return = 1' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='StorageType = 1' swap='0' >
+								<command class_type='decision' title='Decision' exp='StorageType = 1' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Temp2 = DataStart + 1' />
 										</command>
-										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Temp2 &gt;= BufferSize' swap='0' >
+										<command class_type='decision' title='Decision' exp='.Temp2 &gt;= BufferSize' swap='0' >
 											<flowline >
-												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<command class_type='calculation' title='Calculation' >
 													<exp exp='.Temp2 = 0' />
 												</command>
 											</flowline>
 											<flowline />
 										</command>
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='DataStart = .Temp2' />
 										</command>
-										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='Console' swap='0' >
+										<command class_type='decision' title='Decision' exp='Console' swap='0' >
 											<flowline >
-												<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.GetLineBytes' >
+												<command class_type='sim' title='Simulation' macro='Console.GetLineBytes' >
 													<argument exp='ConsoleHandle' />
 													<argument exp='(DataEnd / 16) % ((BufferSize / 16) + 1)' />
 													<argument exp='.ConsoleData' />
 													<argument exp='0' />
 													<argument exp='-1' />
 												</command>
-												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<command class_type='calculation' title='Calculation' >
 													<exp exp='.ConsoleData[DataEnd % 16] = .Data' />
 												</command>
-												<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.SetLineBytes' >
+												<command class_type='sim' title='Simulation' macro='Console.SetLineBytes' >
 													<argument exp='ConsoleHandle' />
 													<argument exp='(DataEnd / 16) % ((BufferSize / 16) + 1)' />
 													<argument exp='.ConsoleData' />
@@ -618,18 +618,18 @@ Otherwise the buffer is full and the return value will equal 0.' statediag='0' >
 											</flowline>
 											<flowline />
 										</command>
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='Data[DataEnd] = .Data' />
 										</command>
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='DataEnd = .Temp' />
 										</command>
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Return = 1' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Return = 0' />
 										</command>
 									</flowline>
@@ -650,30 +650,30 @@ Returns 1 to indicate the data has been found.' statediag='0' >
 						<param name='RemoveContent' type='u8' description='0=Leave the buffer contents untouched, 1=Remove values as you go' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Timeout' type='u16' description='Max amount of time to wait in milliseconds before returning 0=WaitForever' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='WaitForever' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Return = 0' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Timeout = 0' swap='0' >
+						<command class_type='decision' title='Decision' exp='.Timeout = 0' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.WaitForever = 1' />
 									<exp exp='.Timeout = 0xFFFF' />
 								</command>
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='(.timeout &gt; 0) &amp;&amp; (.Return = 0)' >
+						<command class_type='loop' title='Loop' type='0' exp='(.timeout &gt; 0) &amp;&amp; (.Return = 0)' for1='' for3='' >
 							<flowline >
-								<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='1' type='1' />
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.WaitForever = 0' swap='0' >
+								<command class_type='delay' title='Delay' exp='1' type='1' />
+								<command class_type='decision' title='Decision' exp='.WaitForever = 0' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Timeout = .Timeout - 1' />
 										</command>
 									</flowline>
 									<flowline />
 								</command>
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='LookForValue' >
+								<command class_type='call' title='Call Macro' macro='LookForValue' >
 									<return exp='.Return' />
 									<argument exp='.Value' />
 									<argument exp='.NumChars' />
@@ -687,22 +687,22 @@ Returns 1 to indicate the data has been found.' statediag='0' >
 				<macro >
 					<flowline name='GetNumberBytes' description='Returns the number of valid data bytes currently inside the buffer.' statediag='0' >
 						<return name='Return' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='comment' title='' comment='Jump directly to the answer' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='DataEnd &gt; DataStart' swap='0' >
+						<command class_type='comment' title='' comment='Jump directly to the answer' textarea='12,0,12,0' />
+						<command class_type='decision' title='Decision' exp='DataEnd &gt; DataStart' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Return = DataEnd - DataStart' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='DataEnd &lt; DataStart' swap='0' >
+								<command class_type='decision' title='Decision' exp='DataEnd &lt; DataStart' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Return = (BufferSize - DataStart) + DataEnd' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Return = 0' />
 										</command>
 									</flowline>
@@ -714,7 +714,7 @@ Returns 1 to indicate the data has been found.' statediag='0' >
 				<macro >
 					<flowline name='GetConsoleHandle' description='Gets the handle to the console allowing data displaying on the panel etc.' statediag='0' >
 						<return name='Return' type='h32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Return = ConsoleHandle' />
 						</command>
 					</flowline>
@@ -725,20 +725,20 @@ Returns 1 to indicate the data has been found.' statediag='0' >
 						<local name='Name' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
 						</local>
-						<command class_type='sim' title='Built-in Function' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.GetName' >
+						<command class_type='sim' title='Built-in Function' macro='Tree.GetName' >
 							<return exp='.Name' />
 							<argument exp='this' />
 						</command>
-						<command class_type='sim' title='' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='' macro='Component.Property.SetValue' >
 							<argument exp='LibraryComponent1' />
 							<argument exp='&quot;Name&quot;' />
 							<argument exp='.Name' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='Console' swap='0' >
+						<command class_type='decision' title='Decision' exp='Console' swap='0' >
 							<flowline >
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='BufferSize % 16 = 0' swap='0' >
+								<command class_type='decision' title='Decision' exp='BufferSize % 16 = 0' swap='0' >
 									<flowline >
-										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.AddMemory' >
+										<command class_type='sim' title='Simulation' macro='Console.AddMemory' >
 											<return exp='ConsoleHandle' />
 											<argument exp='.Name' />
 											<argument exp='BufferSize' />
@@ -748,7 +748,7 @@ Returns 1 to indicate the data has been found.' statediag='0' >
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='sim' title='Simulation' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Console.AddMemory' >
+										<command class_type='sim' title='Simulation' macro='Console.AddMemory' >
 											<return exp='ConsoleHandle' />
 											<argument exp='.Name' />
 											<argument exp='BufferSize + 16' />
@@ -771,33 +771,33 @@ Returns 1 to indicate the data has been found.' statediag='0' >
 						</return>
 						<param name='MaxLength' type='u16' description='Max number of bytes the string can store including the null byte' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='idx' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.MaxLength &gt; 1' swap='0' >
+						<command class_type='decision' title='Decision' exp='.MaxLength &gt; 1' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Make room for null byte' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Make room for null byte' >
 									<exp exp='.MaxLength = .MaxLength - 1' />
 								</command>
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.idx &lt; .MaxLength' >
+						<command class_type='loop' title='Loop' type='0' exp='.idx &lt; .MaxLength' for1='' for3='' >
 							<flowline >
-								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetByteSim' >
+								<command class_type='call' title='User Macro' macro='GetByteSim' >
 									<return exp='.Return[.idx]' />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='(.Return[.idx] = 0) || (.Return[.idx] = 255)' swap='0' >
+								<command class_type='decision' title='Decision' exp='(.Return[.idx] = 0) || (.Return[.idx] = 255)' swap='0' >
 									<flowline >
-										<command class_type='goto' title='Goto Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' labelid='0' labelname='' />
+										<command class_type='goto' title='Goto Connection Point' labelid='0' labelname='' labeltype='0' />
 									</flowline>
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.idx = .idx + 1' />
 										</command>
 									</flowline>
 								</command>
 							</flowline>
 						</command>
-						<command class_type='label' title='Declare Connection Point' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' labelid='0' labelname='A' />
-						<command class_type='calculation' title='Add null termination byte' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='label' title='Declare Connection Point' labelid='0' labelname='A' labeltype='4' />
+						<command class_type='calculation' title='Add null termination byte' >
 							<exp exp='.Return[.idx] = 0' />
 						</command>
 					</flowline>
@@ -808,11 +808,11 @@ Returns 1 to indicate the data has been found.' statediag='0' >
 						<local name='Name' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
 						</local>
-						<command class_type='sim' title='' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Tree.GetName' >
+						<command class_type='sim' title='' macro='Tree.GetName' >
 							<return exp='.Name' />
 							<argument exp='this' />
 						</command>
-						<command class_type='sim' title='' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='Component.Property.SetValue' >
+						<command class_type='sim' title='' macro='Component.Property.SetValue' >
 							<argument exp='LibraryComponent1' />
 							<argument exp='&quot;Name&quot;' />
 							<argument exp='.Name' />
@@ -824,21 +824,21 @@ Returns 1 to indicate the data has been found.' statediag='0' >
 Returns 255/512 if the buffer is empty.' statediag='0' >
 						<return name='Return' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Temp' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='DataStart != DataEnd' swap='0' >
+						<command class_type='decision' title='Decision' exp='DataStart != DataEnd' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Return = Data[DataStart]' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='RETURN = 1' swap='0' >
+								<command class_type='decision' title='Decision' exp='RETURN = 1' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Return = 512' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Return = 255' />
 										</command>
 									</flowline>
@@ -855,12 +855,12 @@ Returns 255/512 if the buffer is empty.' statediag='0' >
 						</param>
 						<param name='Elements' type='u32*' description='The number of elements in the array' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Comp' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Comp = Compare$ (&quot;Data&quot;, .VarName,1)' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Comp = 0' swap='0' >
+						<command class_type='decision' title='Decision' exp='.Comp = 0' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Elements = BufferSize' />
 								</command>
 							</flowline>
@@ -880,14 +880,14 @@ Returns 255/512 if the buffer is empty.' statediag='0' >
 						<param name='Expansion' type='T8*' description='The expanded string to inline to the code' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
 						</param>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Return = 1' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='Compare$ (.VarName,&quot;Data&quot;,1) == 0' swap='0' >
+						<command class_type='decision' title='Decision' exp='Compare$ (.VarName,&quot;Data&quot;,1) == 0' swap='0' >
 							<flowline >
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='MemType = 1' swap='0' >
+								<command class_type='decision' title='Decision' exp='MemType = 1' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Expansion = &quot;__attribute__((far)) &quot; + .Expansion' />
 										</command>
 									</flowline>
@@ -896,17 +896,17 @@ Returns 255/512 if the buffer is empty.' statediag='0' >
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='Compare$ (.VarName,&quot;ConsoleHandle&quot;,1) == 0' swap='0' >
+						<command class_type='decision' title='Decision' exp='Compare$ (.VarName,&quot;ConsoleHandle&quot;,1) == 0' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Return = 0' />
 								</command>
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='Compare$ (.VarName,&quot;count&quot;,1) == 0' swap='0' >
+						<command class_type='decision' title='Decision' exp='Compare$ (.VarName,&quot;count&quot;,1) == 0' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Return = 0' />
 								</command>
 							</flowline>
@@ -922,15 +922,15 @@ Returns 255/512 if the buffer is empty.' statediag='0' >
 						</param>
 						<local name='idx' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
 						<local name='len' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.len = Length$ (.Data)' />
 						</command>
-						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.idx &lt; .len' >
+						<command class_type='loop' title='Loop' type='0' exp='.idx &lt; .len' for1='' for3='' >
 							<flowline >
-								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='PutByte' >
+								<command class_type='call' title='User Macro' macro='PutByte' >
 									<argument exp='.Data[.idx]' />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.idx = .idx + 1' />
 								</command>
 							</flowline>
@@ -945,58 +945,58 @@ Otherwise the buffer is full and the return value will equal 0.' statediag='0' >
 						<param name='Data' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Temp' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Temp2' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Temp = DataEnd + 1' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Temp &gt;= BufferSize' swap='0' >
+						<command class_type='decision' title='Decision' exp='.Temp &gt;= BufferSize' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Temp = 0' />
 								</command>
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Temp != DataStart' swap='0' >
+						<command class_type='decision' title='Decision' exp='.Temp != DataStart' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='Data[DataEnd] = .Data' />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='DataEnd = .Temp' />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Return = 1' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='StorageType = 1' swap='0' >
+								<command class_type='decision' title='Decision' exp='StorageType = 1' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Temp2 = DataStart + 1' />
 										</command>
-										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Temp2 &gt;= BufferSize' swap='0' >
+										<command class_type='decision' title='Decision' exp='.Temp2 &gt;= BufferSize' swap='0' >
 											<flowline >
-												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<command class_type='calculation' title='Calculation' >
 													<exp exp='.Temp2 = 0' />
 												</command>
 											</flowline>
 											<flowline />
 										</command>
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='DataStart = .Temp2' />
 										</command>
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='Data[DataEnd] = .Data' />
 										</command>
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='DataEnd = .Temp' />
 										</command>
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Return = 1' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Return = 0' />
 										</command>
 									</flowline>
@@ -1010,35 +1010,35 @@ Otherwise the buffer is full and the return value will equal 0.' statediag='0' >
 Returns 255 if the buffer is empty.' statediag='0' >
 						<return name='Return' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Temp' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='DataStart != DataEnd' swap='0' >
+						<command class_type='decision' title='Decision' exp='DataStart != DataEnd' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Return = Data[DataStart]' />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Temp = DataStart + 1' />
 								</command>
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Temp &gt;= BufferSize' swap='0' >
+								<command class_type='decision' title='Decision' exp='.Temp &gt;= BufferSize' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Temp = 0' />
 										</command>
 									</flowline>
 									<flowline />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='DataStart = .Temp' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='RETURN = 1' swap='0' >
+								<command class_type='decision' title='Decision' exp='RETURN = 1' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Return = 512' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Return = 255' />
 										</command>
 									</flowline>
@@ -1058,15 +1058,15 @@ Either in total or the number of bytes remaining based on Mode.' statediag='0' >
 						<return name='Return' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Mode' type='b1' description='0=TotalBufferSize, 1=BufferFreeSpace' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='NumBytes' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Return = BufferSize - 1' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.Mode' swap='0' >
+						<command class_type='decision' title='Decision' exp='.Mode' swap='0' >
 							<flowline >
-								<command class_type='call' title='User Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetNumberBytes' >
+								<command class_type='call' title='User Macro' macro='GetNumberBytes' >
 									<return exp='.NumBytes' />
 								</command>
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Return = .Return - .NumBytes' />
 								</command>
 							</flowline>
@@ -1078,15 +1078,15 @@ Either in total or the number of bytes remaining based on Mode.' statediag='0' >
 					<flowline name='Main' description='' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<command class_type='comment' title='' comment='Component Version Information;
-1, 1.6, 04-03-25, BR, Changed console tab name to match CB handle name;' textarea='12,0,12,0' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' />
-						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='1' >
+1, 1.6, 04-03-25, BR, Changed console tab name to match CB handle name;' textarea='12,0,12,0' />
+						<command class_type='loop' title='Loop' type='0' exp='1' for1='' for3='' >
 							<flowline >
-								<command class_type='delay' title='Delay' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='100' type='1' />
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='PutByteSim' >
+								<command class_type='delay' title='Delay' exp='100' type='1' />
+								<command class_type='call' title='Call Macro' macro='PutByteSim' >
 									<argument exp='count' />
 								</command>
-								<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetByte' />
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='call' title='Call Macro' macro='GetByte' />
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='count = count + 1' />
 								</command>
 							</flowline>
@@ -1096,7 +1096,7 @@ Either in total or the number of bytes remaining based on Mode.' statediag='0' >
 				<macro >
 					<flowline name='FlushBuffer' description='Clears the contents of the buffer and re-initialises the index locations.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='DataEnd = 0' />
 							<exp exp='DataStart = 0' />
 						</command>
@@ -1117,64 +1117,64 @@ Returns 1 if the value is found.' statediag='0' >
 						<local name='NumBytes' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='DataIndex' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='SearchIndex' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Return = 0' />
 						</command>
-						<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.ResetFind = 1' swap='0' >
+						<command class_type='decision' title='Decision' exp='.ResetFind = 1' swap='0' >
 							<flowline >
-								<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+								<command class_type='calculation' title='Calculation' >
 									<exp exp='LookForCounter = 0' />
 								</command>
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+						<command class_type='calculation' title='Calculation' >
 							<exp exp='.SearchIndex = LookForCounter' />
 						</command>
-						<command class_type='call' title='Call Component Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetNumberBytes' >
+						<command class_type='call' title='Call Component Macro' macro='GetNumberBytes' >
 							<return exp='.NumBytes' />
 						</command>
-						<command class_type='loop' title='Loop' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' type='0' exp='.NumChars &gt; LookForCounter' >
+						<command class_type='loop' title='Loop' type='0' exp='.NumChars &gt; LookForCounter' for1='' for3='' >
 							<flowline >
-								<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.NumBytes &gt; 0' swap='0' >
+								<command class_type='decision' title='Decision' exp='.NumBytes &gt; 0' swap='0' >
 									<flowline >
-										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.RemoveContent = 1' swap='0' >
+										<command class_type='decision' title='Decision' exp='.RemoveContent = 1' swap='0' >
 											<flowline >
-												<command class_type='call' title='Call Macro' cmdcolor='4487093' cmdcolor_sec='11066367' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' macro='GetByteSim' >
+												<command class_type='call' title='Call Macro' macro='GetByteSim' >
 													<return exp='.CompareData' />
 												</command>
 											</flowline>
 											<flowline >
-												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<command class_type='calculation' title='Calculation' >
 													<exp exp='.DataIndex = DataStart + .SearchIndex' />
 												</command>
-												<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.DataIndex &gt;= BufferSize' swap='0' >
+												<command class_type='decision' title='Decision' exp='.DataIndex &gt;= BufferSize' swap='0' >
 													<flowline >
-														<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+														<command class_type='calculation' title='Calculation' >
 															<exp exp='.DataIndex = .DataIndex - BufferSize' />
 														</command>
 													</flowline>
 													<flowline />
 												</command>
-												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<command class_type='calculation' title='Calculation' >
 													<exp exp='.CompareData = Data[.DataIndex]' />
 												</command>
-												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<command class_type='calculation' title='Calculation' >
 													<exp exp='.SearchIndex = .SearchIndex + 1' />
 												</command>
 											</flowline>
 										</command>
-										<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.CompareData = .Value[LookForCounter]' swap='0' >
+										<command class_type='decision' title='Decision' exp='.CompareData = .Value[LookForCounter]' swap='0' >
 											<flowline >
-												<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+												<command class_type='calculation' title='Calculation' >
 													<exp exp='LookForCounter = LookForCounter + 1' />
 												</command>
-												<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='LookForCounter = .NumChars' swap='0' >
+												<command class_type='decision' title='Decision' exp='LookForCounter = .NumChars' swap='0' >
 													<flowline >
-														<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+														<command class_type='calculation' title='Calculation' >
 															<exp exp='LookForCounter = 0' />
 														</command>
-														<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+														<command class_type='calculation' title='Calculation' >
 															<exp exp='.NumChars = 0' />
 															<exp exp='.Return = 1' />
 														</command>
@@ -1183,14 +1183,14 @@ Returns 1 if the value is found.' statediag='0' >
 												</command>
 											</flowline>
 											<flowline >
-												<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='LookForCounter &gt; 0' swap='0' >
+												<command class_type='decision' title='Decision' exp='LookForCounter &gt; 0' swap='0' >
 													<flowline >
-														<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+														<command class_type='calculation' title='Calculation' >
 															<exp exp='LookForCounter = 0' />
 														</command>
-														<command class_type='decision' title='Decision' cmdcolor='4767473' cmdcolor_sec='11337727' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' exp='.CompareData = .Value[LookForCounter]' swap='0' >
+														<command class_type='decision' title='Decision' exp='.CompareData = .Value[LookForCounter]' swap='0' >
 															<flowline >
-																<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+																<command class_type='calculation' title='Calculation' >
 																	<exp exp='LookForCounter = LookForCounter + 1' />
 																</command>
 															</flowline>
@@ -1201,12 +1201,12 @@ Returns 1 if the value is found.' statediag='0' >
 												</command>
 											</flowline>
 										</command>
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.NumBytes = .NumBytes - 1' />
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='calculation' title='Calculation' cmdcolor='4206456' cmdcolor_sec='10785756' cmdcolor_txt='16777215' cmdgradient='4' cmdopacity='0.64' >
+										<command class_type='calculation' title='Calculation' >
 											<exp exp='.NumChars = 0' />
 										</command>
 									</flowline>
@@ -1216,7 +1216,7 @@ Returns 1 if the value is found.' statediag='0' >
 					</flowline>
 				</macro>
 			</macros>
-			<component class_type='ref' guid='5a53127d-1014-43ab-bed0-70907df2cf05' vmin='0' vmaj='1' codename='LibraryComponent1' panelId='-1' x='0' y='0' z='0' xsz='100' ysz='100' zsz='100' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' comp2dType='0' >
+			<component class_type='ref' guid='5a53127d-1014-43ab-bed0-70907df2cf05' vmin='0' vmaj='1' codename='LibraryComponent1' panelId='-1' x='0' y='0' z='0' xsz='100' ysz='100' zsz='100' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
@@ -1240,7 +1240,7 @@ Buffer
 		<camera xe='-11.7268' ye='23.3706' ze='580.824' xt='-11.7268' yt='23.3706' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
 		<viewport dx='622' dy='352' zoom='129.578' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='0' />
-		<winpos ID='7005' RectRecentFloat='1258,498,1908,948' RectRecentDocked='0,0,302,419' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+		<winpos ID='7005' RectRecentFloat='1258,498,1908,948' RectRecentDocked='1262,525,1904,944' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel2d>
 	<panel3d shadows='0' lighting='0' brightness='0' perspective='1' >
 		<background rgb='8398592' img='' style='0' />
@@ -1253,39 +1253,39 @@ Buffer
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,309,864' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,462,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='0' />
 	<layout >
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA.QMAADECAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LookForValueSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA.QMAADECAAA' zoom='75' scrollx='0' scrolly='991' flags='0' />
-		<view type='0' name='LookForValue' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA.QMAADECAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_AddVar' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA.QMAADECAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Start' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA.QMAADECAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetConsoleHandle' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA.QMAADECAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='PutByteSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA.QMAADECAAA' zoom='75' scrollx='0' scrolly='665' flags='0' />
-		<view type='0' name='GetByteSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA.QMAADECAAA' zoom='75' scrollx='0' scrolly='250' flags='0' />
-		<view type='0' name='PeekByte' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA.QMAADECAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetByte' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA.QMAADECAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='FlushBuffer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA.QMAADECAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetIndexedByte' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA.QMAADECAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='PutByte' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA.QMAADECAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetNumberBytes' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA.QMAADECAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='WaitForValueSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA.QMAADECAAA' zoom='75' scrollx='0' scrolly='142' flags='0' />
-		<view type='0' name='Ev_GetVarSize' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA.QMAADECAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='WaitForValue' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA.QMAADECAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA.QMAADECAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA.QMAADECAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='PutString' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA.QMAADECAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetString' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA.QMAADECAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='PutArray' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA.QMAADECAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetArray' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA.QMAADECAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetArraySim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA.QMAADECAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetStringSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA.QMAADECAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='PutArraySim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA.QMAADECAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='PutStringSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA.QMAADECAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetSize' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA.QMAADECAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Renamed' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA.QMAADECAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LookForValueSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LookForValue' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='235' flags='0' />
+		<view type='0' name='Ev_AddVar' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Start' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetConsoleHandle' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='PutByteSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetByteSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='PeekByte' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetByte' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='FlushBuffer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetIndexedByte' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='PutByte' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetNumberBytes' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='WaitForValueSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_GetVarSize' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='WaitForValue' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='PutString' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetString' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='PutArray' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetArray' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetArraySim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetStringSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='PutArraySim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='PutStringSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetSize' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Renamed' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>
