@@ -1,5 +1,5 @@
 <root>
-<document scada='0' projtype='1' schema='103' license='1,82702381,95CJQR' title='' description='' fcversion='720898' target='PIC.16F.16F1937' >
+<document scada='0' projtype='1' schema='103' license='1,88169790,EHXX2F' title='' description='' fcversion='720899' target='PIC.16F.16F1937' >
 	<config data='!0,fe2!10,1eff%0,2%3,0%5,1%6,1%7,1%8,1%9,3%b,1%c,0%d,0%10,3%14,3%18,0%19,1%1a,1%1c,1%1d,0' clkspd='19660800' simspd='1' usewdt='0' constif='0' Use3V3='0' />
 	<plugins >
 		<dll_models enabled='1' />
@@ -59,9 +59,9 @@
 	</ghost>
 	<components >
 		<settings autoimg='0' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='1' />
-		<definition guid='f0e01201-8951-4748-87c3-d1f8423bb6e4' vstate='40' vmin='3' vmaj='2' srcleaf='RealTimeClock.fcfx' visiblename='Real Time Clock (Internal, DS1307, DS3231, DS3232)' description='A Real Time Clock component allowing things like clocks and timers to easily be created.
+		<definition guid='f0e01201-8951-4748-87c3-d1f8423bb6e4' vstate='40' vmin='4' vmaj='2' srcleaf='RealTimeClock.fcfx' visiblename='Real Time Clock (Internal, DS1307, DS3231, DS3232)' description='A Real Time Clock component allowing things like clocks and timers to easily be created.
 Compatible with the internal RTCC module and external DS1307, DS3231 or DS3232 RTC ICs.' category='Real Time Clock' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='Matrix TSL' manuname='' manucode='' sysinfo='9450475' keywords='' dynamic='1' scadaCompatible='0' embeddedCompatible='1' showmacros='1' iconpath='..\..\Icons\Components\arc_scale.png' />
-		<component class_type='root' codename='RTC' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' macronames='$(type)_$(module)__$(macro)' >
+		<component class_type='root' codename='RTC' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' angle2d='0' comp2dType='0' macronames='$(type)_$(module)__$(macro)' >
 			<resources >
 				<file name='RTC.png' source='..\icons\Large Comms Icons\RTC.png' />
 			</resources>
@@ -170,16 +170,16 @@ No: Do not show the pin signals on the data recorder window.' />
 				<value target='cal_i2c1::InjectorHandle' data='0' />
 			</values>
 			<events >
-				<event class='Components' event='Initialise' target='Ev_Initialise' />
 				<event class='Simulation' event='Stop' target='Ev_Stop' />
-				<event class='Components' event='Renamed' target='Ev_Renamed' />
-				<event class='Compile' event='AddVar' target='Ev_AddVar' />
-				<event class='Compile' event='AddProperty' target='Ev_AddProperty' />
 				<event class='Connection' event='ChipChange' target='Ev_ChipChange' />
-				<event class='Components' event='Property' target='Ev_Property' />
-				<event class='System' event='Timer' target='Ev_Timer' />
 				<event class='Compile' event='Start' target='Ev_Comp_Start' />
 				<event class='Simulation' event='Start' target='Ev_Start' />
+				<event class='Components' event='Property' target='Ev_Property' />
+				<event class='System' event='Timer' target='Ev_Timer' />
+				<event class='Components' event='Initialise' target='Ev_Initialise' />
+				<event class='Compile' event='AddProperty' target='Ev_AddProperty' />
+				<event class='Compile' event='AddVar' target='Ev_AddVar' />
+				<event class='Components' event='Renamed' target='Ev_Renamed' />
 			</events>
 			<apis >
 				<api name='SetSecs' alt='SetSecs' type='1' proto='1' />
@@ -1017,6 +1017,9 @@ Uses y-M-d for date entries and h-m-s for time entries, with doubled letters for
 						<local name='len' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
 						<local name='bLeadZero' type='b1' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
 						<local name='bIsFormatLetter' type='b1' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='s' type='T8' description='' isconst='0' isHidden='0' isinit='1' usrinit='&quot;&quot;' setinit='&quot;&quot;' >
+							<array size='2' />
+						</local>
 						<command class_type='comment' title='' comment='Supported formats for date:
 
 y    = year from 0 to 99
@@ -1151,7 +1154,9 @@ ss   = second from 00 to 59' textarea='12,0,12,0' />
 									</flowline>
 									<flowline >
 										<command class_type='calculation' title='Calculation' >
-											<exp exp='.Return = .Return + .Format[.idx]' />
+											<exp exp='.s[0] = .Format[.idx]' />
+											<exp exp='.s[1] = 0' />
+											<exp exp='.Return = .Return + .s' />
 										</command>
 									</flowline>
 								</command>
@@ -2555,7 +2560,8 @@ Simulation returns system date.' statediag='0' >
 					<flowline name='Main' description='' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<command class_type='comment' title='' comment='Component Version Information;
-2, 2.3, 10-09-26, ST, Added generic GetDateTimeString macro;' textarea='12,0,12,0' />
+6, 2.3, 10-09-26, ST, Added generic GetDateTimeString macro;
+7, 2.4, 11-09-26, ST, Minor edit due to incorrect string concatenation;' textarea='12,0,12,0' />
 						<command class_type='call' title='Call Macro' macro='Ev_Initialise' />
 						<command class_type='loop' title='Loop' type='0' exp='1' for1='' for3='' >
 							<flowline />
@@ -2642,7 +2648,7 @@ Simulation returns system date.' statediag='0' >
 					</flowline>
 				</macro>
 			</macros>
-			<component class_type='ref' guid='ed3a5141-43bb-43e0-86b0-2243fd1147ca' vmin='0' vmaj='2' codename='cal_i2c1' panelId='-1' x='0' y='0' z='0' xsz='0.2' ysz='0.2' zsz='0.2' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+			<component class_type='ref' guid='ed3a5141-43bb-43e0-86b0-2243fd1147ca' vmin='0' vmaj='2' codename='cal_i2c1' panelId='-1' x='0' y='0' z='0' xsz='0.2' ysz='0.2' zsz='0.2' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' angle2d='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
@@ -2701,7 +2707,7 @@ Simulation returns system date.' statediag='0' >
 				<variables />
 				<macros />
 			</component>
-			<component class_type='ref' guid='58be670e-18fb-477e-ab09-61fde14b23ec' vmin='0' vmaj='1' codename='LibraryComponent1' panelId='-1' x='-1' y='-1' z='0' xsz='100' ysz='100' zsz='100' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+			<component class_type='ref' guid='58be670e-18fb-477e-ab09-61fde14b23ec' vmin='0' vmaj='1' codename='LibraryComponent1' panelId='-1' x='-1' y='-1' z='0' xsz='100' ysz='100' zsz='100' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' angle2d='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
@@ -2732,10 +2738,10 @@ Clock' />
 	<keymap />
 	<panel2d shadows='0' lighting='2' brightness='0' >
 		<background rgb='65535' img='' style='0' />
-		<camera xe='-1.86459' ye='-0.511097' ze='477.157' xt='-1.86459' yt='-0.511097' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
-		<viewport dx='446' dy='782' zoom='113.099' fix_topleft='0' />
+		<camera xe='-1.86459' ye='-0.511097' ze='665.452' xt='-1.86459' yt='-0.511097' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='622' dy='1034' zoom='113.099' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='0' />
-		<winpos ID='7005' RectRecentFloat='1270,427,1920,877' RectRecentDocked='927,141,1393,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7005' RectRecentFloat='1270,427,1920,877' RectRecentDocked='1224,141,1866,1265' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel2d>
 	<panel3d shadows='2' lighting='2' brightness='25' perspective='1' >
 		<background rgb='10789024' img='' style='0' />
@@ -2748,17 +2754,17 @@ Clock' />
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,462,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,308,450' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='0' />
 	<layout >
-		<view type='0' name='GetDateTimeString' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='1252' flags='0' />
-		<view type='0' name='GetTimeString' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetYear' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetHours' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetHours' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetAlarm' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetDateTimeString' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAALgMAAF8EAAA' zoom='100' scrollx='0' scrolly='900' flags='0' />
+		<view type='0' name='GetTimeString' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAALgMAAF8EAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetYear' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAALgMAAF8EAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetHours' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAALgMAAF8EAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetHours' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAALgMAAF8EAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAALgMAAF8EAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetAlarm' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAALgMAAF8EAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>
