@@ -1,5 +1,5 @@
 <root>
-<document scada='0' projtype='1' schema='103' license='1,82702381,95CJQR' title='' description='' fcversion='720898' target='PIC.16F.16F1937' >
+<document scada='0' projtype='1' schema='103' license='1,82702381,95CJQR' title='' description='' fcversion='720899' target='PIC.16F.16F1937' >
 	<config data='!0,fe2!10,1633%0,2%3,0%5,1%6,1%7,1%8,1%9,3%b,1%c,0%d,0%10,3%14,3%18,0%19,1%1a,1%1c,1%1d,0' clkspd='19660800' simspd='1' usewdt='0' constif='0' Use3V3='0' />
 	<plugins >
 		<dll_models enabled='1' />
@@ -65,14 +65,19 @@ Client mode: use Connect to open a link to a remote WebSocket server, then poll 
 SendText / SendBinary and the GetRx macros work identically in both modes. 
 Frames are masked automatically in client mode.
 
-Ping, pong and close control frames are handled automatically.' category='Comms: Networking' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='Matrix Ltd.' manuname='' manucode='' sysinfo='1061131' keywords='websocket|ws|socket|realtime' dynamic='1' scadaCompatible='1' embeddedCompatible='1' showmacros='1' iconpath='..\..\Icons\Components\Web Server.png' />
-		<component class_type='root' codename='WebSocket' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+Ping, pong and close control frames are handled automatically.' category='Comms: Networking' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='Matrix Ltd.' manuname='' manucode='' sysinfo='1052939' keywords='websocket|ws|socket|realtime' dynamic='1' scadaCompatible='1' embeddedCompatible='1' showmacros='1' iconpath='..\..\Icons\Components\Web Server.png' />
+		<component class_type='root' codename='WebSocket' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' angle2d='0' comp2dType='0' >
 			<resources />
 			<properties >
 				<property name='Max Frame Size (B)' target='MaxFrame' typeid='21' hidden='0' locked='0' info='Number of bytes reserved for the payload of a received WebSocket frame. Larger frames are truncated.' />
 				<property name='Timeout (ms)' target='Timeout' typeid='21' hidden='0' locked='0' info='Number of milliseconds to wait for data when performing the CheckSocketActivity macro.' />
-				<property name='Keepalive Ping (calls)' target='PingIdle' typeid='21' hidden='0' locked='0' info='Send a ping after this many consecutive CheckSocketActivity calls with nothing received, and use the same interval between retries. Browsers reply to pings automatically but never send their own. 0 disables the keepalive entirely, so a client that vanishes without a close frame will hold the server forever. When the link is idle each call takes about Timeout ms, so 100 calls at the default 120 ms is roughly 12 seconds.' />
-				<property name='Keepalive Retries' target='PingRetries' typeid='21' hidden='0' locked='0' info='How many extra pings to send when the first goes unanswered before declaring the link dead and freeing the server to accept a new client. 0 means give up after the first unanswered ping. The link is dropped after Keepalive Ping x (Retries + 2) idle calls.' />
+				<property name='Keepalive Ping (calls)' target='PingIdle' typeid='21' hidden='0' locked='0' info='Send a ping after this many consecutive CheckSocketActivity calls with nothing received, and use the same interval between retries. 
+Browsers reply to pings automatically but never send their own. 
+0 disables the keepalive entirely, so a client that vanishes without a close frame will hold the server forever. 
+When the link is idle each call takes about Timeout ms, so 100 calls at the default 120 ms is roughly 12 seconds.' />
+				<property name='Keepalive Retries' target='PingRetries' typeid='21' hidden='0' locked='0' info='How many extra pings to send when the first goes unanswered before declaring the link dead and freeing the server to accept a new client. 
+0 means give up after the first unanswered ping.
+The link is dropped after Keepalive Ping x (Retries + 2) idle calls.' />
 				<property name='Network Comms Component' target='Component' typeid='17' hidden='1' locked='0' info='Redirects communications via the selected component allowing different TCP/IP modules with different macros to work.' filter='91049bf5-2436-42dc-947a-c30c86463d98' />
 				<property name='LinkTo' target='LibraryComponent1::OutputIcon::LinkTo' typeid='16' hidden='0' locked='0' info='' filter='000' />
 			</properties>
@@ -85,11 +90,11 @@ Ping, pong and close control frames are handled automatically.' category='Comms:
 				<value target='LibraryComponent1::OutputIcon::LinkTo' data='0' />
 			</values>
 			<events >
-				<event class='Components' event='Initialise' target='Ev_Initialise' />
-				<event class='Components' event='Renamed' target='Ev_Renamed' />
-				<event class='Components' event='Property' target='Ev_Property' />
 				<event class='Compile' event='GetVarSize' target='Ev_GetVarSize' />
 				<event class='System' event='LoadComplete' target='Ev_LoadComplete' />
+				<event class='Components' event='Initialise' target='Ev_Initialise' />
+				<event class='Components' event='Property' target='Ev_Property' />
+				<event class='Components' event='Renamed' target='Ev_Renamed' />
 			</events>
 			<apis >
 				<api name='GetRxByte' alt='GetRxByte' type='1' proto='1' />
@@ -123,6 +128,9 @@ Ping, pong and close control frames are handled automatically.' category='Comms:
 					</def>
 				</variable>
 				<variable public='0' >
+					<def class_type='variable' name='PingsSent' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
 					<def class_type='variable' name='IsClient' type='b1' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 				</variable>
 				<variable public='0' >
@@ -130,9 +138,6 @@ Ping, pong and close control frames are handled automatically.' category='Comms:
 				</variable>
 				<variable public='0' >
 					<def class_type='variable' name='IdleCount' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-				</variable>
-				<variable public='0' >
-					<def class_type='variable' name='PingsSent' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 				</variable>
 			</variables>
 			<macros >
@@ -498,8 +503,8 @@ Returns: 1 = Connected / 0 = TCP connect failed / 2 = WebSocket handshake reject
 													<flowline >
 														<command class_type='calculation' title='Connected' >
 															<exp exp='Connected = 1' />
-											<exp exp='IdleCount = 0' />
-											<exp exp='PingsSent = 0' />
+															<exp exp='IdleCount = 0' />
+															<exp exp='PingsSent = 0' />
 															<exp exp='.Return = 1' />
 														</command>
 														<command class_type='sim' title='Simulation' macro='Debug.PrintLn' >
@@ -742,7 +747,7 @@ Payload is sent in chunks of 20 bytes as some modules (ESP8266) are slow with si
 				<macro >
 					<flowline name='Prv_Base64' description='Base64 encodes up to 24 bytes of data. Returns the encoded string.' statediag='0' >
 						<return name='Return' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
-							<array size='40' />
+							<array size='2000' />
 						</return>
 						<param name='Data' type='T8*' description='Bytes to encode' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='24' />
@@ -965,7 +970,6 @@ Returns 1 if the WebSocket connection is now open, 0 if the request was rejected
 							<array size='32' />
 						</local>
 						<local name='n' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<local name='idx' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Char' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Up' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='state' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
@@ -974,16 +978,27 @@ Returns 1 if the WebSocket connection is now open, 0 if the request was rejected
 						<local name='eoh' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='tries' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='got' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='comment' title='' comment='Streaming parser - the request is never buffered, each byte is fed through a small state machine as it arrives. state: 0 = hunting for the Sec-WebSocket-Key header, 1 = skipping spaces after the colon, 2 = collecting the 24 character key, 3 = key complete.' textarea='12,0,12,0' />
+						<local name='OptTarget' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;OPTIONS &quot;' setinit='' >
+							<array size='9' />
+						</local>
+						<local name='om' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='IsOptions' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Handled' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='comment' title='' comment='Streaming parser - the request is never buffered, each byte is fed through a small state machine as it arrives. state: 0 = hunting for the Sec-WebSocket-Key header, 1 = skipping spaces after the colon, 2 = collecting the 24 character key, 3 = key complete. In parallel the first 8 bytes of the request line are matched against &quot;OPTIONS &quot; to detect a Chrome Private Network Access preflight, which carries no Sec-WebSocket-Key and must be answered separately.' textarea='12,0,12,0' />
 						<command class_type='calculation' title='Reset the parser' >
 							<exp exp='.Return = 0' />
 							<exp exp='.Target = &quot;SEC-WEBSOCKET-KEY:&quot;' />
+							<exp exp='.OptTarget[0] = 0' />
+							<exp exp='.RxTempBuff[0] = 0' />
 							<exp exp='.state = 0' />
 							<exp exp='.m = 0' />
 							<exp exp='.ki = 0' />
 							<exp exp='.eoh = 0' />
 							<exp exp='.tries = 0' />
 							<exp exp='.got = 0' />
+							<exp exp='.om = 0' />
+							<exp exp='.IsOptions = 1' />
+							<exp exp='.Handled = 0' />
 						</command>
 						<command class_type='comment' title='' comment='Read the request ONE byte at a time. A chunked read would over-run the blank line that ends the headers and swallow the first bytes of the client&apos;s first frame, desynchronising the frame stream. The handshake happens once per connection so the extra calls cost nothing in steady state.' textarea='12,0,12,0' />
 						<command class_type='loop' title='Until end of headers' type='0' exp='(.eoh &lt; 4) &amp;&amp; (.tries &lt; 25)' for1='' for3='' >
@@ -1014,6 +1029,24 @@ Returns 1 if the WebSocket connection is now open, 0 if the request was rejected
 											<flowline >
 												<command class_type='calculation' title='Fold to upper case' >
 													<exp exp='.Up = .Char - 32' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+										<command class_type='decision' title='Still checking method?' exp='.om &lt; 8' swap='0' >
+											<flowline >
+												<command class_type='decision' title='Matches OPTIONS char?' exp='.Up = .OptTarget[.om]' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Advance method match' >
+															<exp exp='.om = .om + 1' />
+														</command>
+													</flowline>
+													<flowline >
+														<command class_type='calculation' title='Not an OPTIONS request' >
+															<exp exp='.IsOptions = 0' />
+															<exp exp='.om = 8' />
+														</command>
+													</flowline>
 												</command>
 											</flowline>
 											<flowline />
@@ -1139,54 +1172,93 @@ Returns 1 if the WebSocket connection is now open, 0 if the request was rejected
 						<command class_type='calculation' title='Terminate the key' >
 							<exp exp='.Key[.ki] = 0' />
 						</command>
-						<command class_type='decision' title='Valid key length?' exp='.ki = 24' swap='0' >
+						<command class_type='decision' title='OPTIONS preflight request?' exp='.IsOptions = 1' swap='0' >
 							<flowline >
-								<command class_type='call' title='Compute accept value' macro='Prv_ComputeAccept' >
-									<return exp='.Accept' />
-									<argument exp='.Key' />
+								<command class_type='comment' title='' comment='Chrome sends this before the WebSocket GET when the page origin (eg. file:// or a public origin) is less trusted than the local/private target IP. It must see 200/204 with Access-Control-Allow-Private-Network: true or it cancels the connection before the real handshake is even attempted.' textarea='12,0,12,0' />
+								<command class_type='call' title='Send 204 response' component='NetworkComms1' macro='Send' >
+									<argument exp='&quot;HTTP/1.1 204 No Content\r\n&quot;' />
+									<argument exp='25' />
 								</command>
-								<command class_type='call' title='Send 101 response' component='NetworkComms1' macro='Send' >
-									<argument exp='&quot;HTTP/1.1 101 Switching Protocols\r\n&quot;' />
-									<argument exp='34' />
+								<command class_type='call' title='Send CORS origin header' component='NetworkComms1' macro='Send' >
+									<argument exp='&quot;Access-Control-Allow-Origin: *\r\n&quot;' />
+									<argument exp='32' />
 								</command>
-								<command class_type='call' title='Send Upgrade header' component='NetworkComms1' macro='Send' >
-									<argument exp='&quot;Upgrade: websocket\r\n&quot;' />
-									<argument exp='20' />
+								<command class_type='call' title='Send Private Network header' component='NetworkComms1' macro='Send' >
+									<argument exp='&quot;Access-Control-Allow-Private-Network: true\r\n&quot;' />
+									<argument exp='44' />
 								</command>
-								<command class_type='call' title='Send Connection header' component='NetworkComms1' macro='Send' >
-									<argument exp='&quot;Connection: Upgrade\r\n&quot;' />
-									<argument exp='21' />
+								<command class_type='call' title='Send allowed methods header' component='NetworkComms1' macro='Send' >
+									<argument exp='&quot;Access-Control-Allow-Methods: GET, OPTIONS\r\n&quot;' />
+									<argument exp='44' />
 								</command>
-								<command class_type='call' title='Send Accept header' component='NetworkComms1' macro='Send' >
-									<argument exp='&quot;Sec-WebSocket-Accept: &quot;' />
-									<argument exp='22' />
-								</command>
-								<command class_type='call' title='Send Accept value' component='NetworkComms1' macro='Send' >
-									<argument exp='.Accept' />
-									<argument exp='28' />
+								<command class_type='call' title='Send allowed headers header' component='NetworkComms1' macro='Send' >
+									<argument exp='&quot;Access-Control-Allow-Headers: *\r\n&quot;' />
+									<argument exp='33' />
 								</command>
 								<command class_type='call' title='End of header' component='NetworkComms1' macro='Send' >
-									<argument exp='&quot;\r\n\r\n&quot;' />
-									<argument exp='4' />
+									<argument exp='&quot;\r\n&quot;' />
+									<argument exp='2' />
 								</command>
 								<command class_type='sim' title='Flash TX icon' component='LibraryComponent1' macro='FlashTx' />
-								<command class_type='calculation' title='Connected' >
-									<exp exp='Connected = 1' />
-											<exp exp='IdleCount = 0' />
-											<exp exp='PingsSent = 0' />
-									<exp exp='.Return = 1' />
+								<command class_type='call' title='Close the accepted connection' component='NetworkComms1' macro='AcceptClose' />
+								<command class_type='calculation' title='Preflight handled' >
+									<exp exp='.Handled = 1' />
 								</command>
 								<command class_type='sim' title='Simulation' macro='Debug.PrintLn' >
-									<argument exp='&quot;WebSocket client connected&quot;' />
+									<argument exp='&quot;WebSocket CORS/PNA preflight answered&quot;' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='calculation' title='Not a WebSocket request' >
-									<exp exp='.Return = 0' />
+								<command class_type='decision' title='Valid key length?' exp='.ki = 24' swap='0' >
+									<flowline >
+										<command class_type='call' title='Compute accept value' macro='Prv_ComputeAccept' >
+											<return exp='.Accept' />
+											<argument exp='.Key' />
+										</command>
+										<command class_type='call' title='Send 101 response' component='NetworkComms1' macro='Send' >
+											<argument exp='&quot;HTTP/1.1 101 Switching Protocols\r\n&quot;' />
+											<argument exp='34' />
+										</command>
+										<command class_type='call' title='Send Upgrade header' component='NetworkComms1' macro='Send' >
+											<argument exp='&quot;Upgrade: websocket\r\n&quot;' />
+											<argument exp='20' />
+										</command>
+										<command class_type='call' title='Send Connection header' component='NetworkComms1' macro='Send' >
+											<argument exp='&quot;Connection: Upgrade\r\n&quot;' />
+											<argument exp='21' />
+										</command>
+										<command class_type='call' title='Send Accept header' component='NetworkComms1' macro='Send' >
+											<argument exp='&quot;Sec-WebSocket-Accept: &quot;' />
+											<argument exp='22' />
+										</command>
+										<command class_type='call' title='Send Accept value' component='NetworkComms1' macro='Send' >
+											<argument exp='.Accept' />
+											<argument exp='28' />
+										</command>
+										<command class_type='call' title='End of header' component='NetworkComms1' macro='Send' >
+											<argument exp='&quot;\r\n\r\n&quot;' />
+											<argument exp='4' />
+										</command>
+										<command class_type='sim' title='Flash TX icon' component='LibraryComponent1' macro='FlashTx' />
+										<command class_type='calculation' title='Connected' >
+											<exp exp='Connected = 1' />
+											<exp exp='IdleCount = 0' />
+											<exp exp='PingsSent = 0' />
+											<exp exp='.Return = 1' />
+										</command>
+										<command class_type='sim' title='Simulation' macro='Debug.PrintLn' >
+											<argument exp='&quot;WebSocket client connected&quot;' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Not a WebSocket request' >
+											<exp exp='.Return = 0' />
+										</command>
+									</flowline>
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Handshake failed?' exp='.Return = 0' swap='0' >
+						<command class_type='decision' title='Handshake failed?' exp='(.Return = 0) &amp;&amp; (.Handled = 0)' swap='0' >
 							<flowline >
 								<command class_type='call' title='Send 400 response' component='NetworkComms1' macro='Send' >
 									<argument exp='&quot;HTTP/1.1 400 Bad Request\r\n\r\n&quot;' />
@@ -1277,6 +1349,9 @@ Returns 0 = nothing, 2 = data frame received, 3 = client closed, 4 = ping receiv
 						<command class_type='calculation' title='Defaults' >
 							<exp exp='.Return = 0' />
 							<exp exp='RxCount = 0' />
+							<exp exp='.Hdr[0] = 0' />
+							<exp exp='.Mask[0] = 0' />
+							<exp exp='.Tmp[0] = 0' />
 						</command>
 						<command class_type='call' title='Read 2 byte frame header' component='NetworkComms1' macro='Receive' >
 							<return exp='.n' />
@@ -1475,7 +1550,7 @@ Returns 0 = nothing, 2 = data frame received, 3 = client closed, 4 = ping receiv
 				<macro >
 					<flowline name='GetRxString' description='Returns the payload of the last received data frame as a string (up to 255 characters, use GetRxByte for larger frames or binary data).' statediag='0' >
 						<return name='Return' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
-							<array size='256' />
+							<array size='2000' />
 						</return>
 						<local name='i' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='calculation' title='Reset' >
@@ -1693,7 +1768,7 @@ Returns the number of bytes sent, 0 = not connected or failed.' statediag='0' >
 					<flowline name='Prv_ComputeAccept' description='Calculates the Sec-WebSocket-Accept value for a handshake: Base64( SHA-1( Key + &quot;258EAFA5-E914-47DA-95CA-C5AB0DC85B11&quot; ) )
 Implemented using Flowcode icons so it works in simulation and on any target.' statediag='0' >
 						<return name='Return' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
-							<array size='32' />
+							<array size='2000' />
 						</return>
 						<param name='Key' type='T8*' description='24 character Sec-WebSocket-Key from the client request' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='25' />
@@ -1929,7 +2004,7 @@ Returns the number of bytes sent, 0 = not connected or failed.' statediag='0' >
 					</flowline>
 				</macro>
 			</macros>
-			<component class_type='ref' guid='58be670e-18fb-477e-ab09-61fde14b23ec' vmin='0' vmaj='1' codename='LibraryComponent1' panelId='-1' x='0' y='0' z='0' xsz='100' ysz='100' zsz='100' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+			<component class_type='ref' guid='58be670e-18fb-477e-ab09-61fde14b23ec' vmin='0' vmaj='1' codename='LibraryComponent1' panelId='-1' x='0' y='0' z='0' xsz='100' ysz='100' zsz='100' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' angle2d='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
@@ -1953,7 +2028,7 @@ Socket' />
 				<variables />
 				<macros />
 			</component>
-			<component class_type='ref' guid='6112d87f-f9c8-4670-a5d1-dfcf313d935c' vmin='1' vmaj='1' codename='NetworkComms1' panelId='-1' x='0' y='0' z='0' xsz='0.2' ysz='0.2' zsz='0.2' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='0' solid='0' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+			<component class_type='ref' guid='6112d87f-f9c8-4670-a5d1-dfcf313d935c' vmin='1' vmaj='1' codename='NetworkComms1' panelId='-1' x='0' y='0' z='0' xsz='0.2' ysz='0.2' zsz='0.2' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='0' solid='0' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' angle2d='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values >
@@ -1972,10 +2047,10 @@ Socket' />
 	<keymap />
 	<panel2d shadows='0' lighting='0' brightness='0' >
 		<background rgb='9737364' img='' style='0' />
-		<camera xe='9.13654' ye='15.2223' ze='332.429' xt='9.13654' yt='15.2223' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
-		<viewport dx='446' dy='782' zoom='162.338' fix_topleft='0' />
+		<camera xe='9.13654' ye='15.2223' ze='341.112' xt='9.13654' yt='15.2223' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='397' dy='774' zoom='140.825' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='0' />
-		<winpos ID='7005' RectRecentFloat='260,504,910,954' RectRecentDocked='927,141,1393,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+		<winpos ID='7005' RectRecentFloat='260,504,910,954' RectRecentDocked='1064,141,1481,1005' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
 	</panel2d>
 	<panel3d shadows='0' lighting='2' brightness='0' perspective='1' >
 		<background rgb='8409120' img='' style='0' />
@@ -1988,25 +2063,25 @@ Socket' />
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,462,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,210,864' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='1' >
 		<panel2d_0 id='0' name='NewPanel' type='0' >
-			<winpos ID='1171' RectRecentFloat='0,360,650,810' RectRecentDocked='927,141,1393,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+			<winpos ID='1171' RectRecentFloat='0,360,650,810' RectRecentDocked='1064,141,1481,1005' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 			<background fill='288230376151053813' showgrid='1' gridstyle='0' gridsize='5' gridbrush='71776119075691740' snaptogrid='0' fitcomp='0' disp_x='300' disp_y='400' scale='100' disp_col='16777215' />
 		</panel2d_0>
 	</panels2d>
 	<layout >
-		<view type='0' name='CheckSocketActivity' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAxwEAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Connect' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAxwEAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Prv_Handshake' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAxwEAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Prv_ReceiveFrame' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAxwEAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Prv_SendFrame' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAxwEAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Prv_ComputeAccept' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAxwEAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAxwEAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Prv_B64Char' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAxwEAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAxwEAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_GetVarSize' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAxwEAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CheckSocketActivity' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlgEAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Connect' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlgEAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_Handshake' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlgEAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_ReceiveFrame' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlgEAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_SendFrame' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlgEAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_ComputeAccept' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlgEAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlgEAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_B64Char' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlgEAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlgEAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_GetVarSize' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAlgEAAFsDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>
