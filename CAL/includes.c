@@ -2575,6 +2575,8 @@
   	#include "AVR\AVR_CAL_USB_Serial.c"
   #elif defined MX_CAL_ESP32
   	#include "ESP\ESP_CAL_USB_Serial.c"
+  #elif defined MX_CAL_STARM
+  	#include "STARM\STARM_CAL_USB_Serial.c"
   #else
   	#error "Sorry USB Serial not yet supported by your target microcontroller family"
   #endif
