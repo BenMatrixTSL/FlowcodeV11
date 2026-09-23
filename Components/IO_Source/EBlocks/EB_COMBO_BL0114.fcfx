@@ -1,6 +1,6 @@
 <root>
-<document scada='0' projtype='1' schema='103' license='50,22911366,CK7018' title='' description='' fcversion='720896' target='PIC.16F.BL0011' >
-	<config data='!0,3e9a!10,37fd!20,3f92!30,1fff!40,3fff%0,2%4,1%8,0' clkspd='32000000' simspd='1' usewdt='0' constif='0' Use3V3='0' />
+<document scada='0' projtype='1' schema='103' license='1,82702381,95CJQR' title='' description='' fcversion='720898' target='PIC.16F.E-blocks2 8-bit PIC Programmer' >
+	<config data='!0,3f8c!10,37fd!20,3f92!30,1fff!40,3fff%0,4%4,0%8,1' clkspd='32000000' simspd='1' usewdt='0' constif='0' Use3V3='0' />
 	<plugins >
 		<dll_models enabled='1' />
 	</plugins>
@@ -56,13 +56,15 @@
 	</ghost>
 	<components >
 		<settings autoimg='0' center='1' unitscale='0' fixedscale='0' fixedx='25' fixedy='25' fixedz='25' headcode='0' />
-		<definition guid='d4c04ac8-bbcd-4981-8ce6-9d6c9bb1e26a' vstate='40' vmin='0' vmaj='1' srcleaf='EBlocks2_COMBO_BL0114.fcfx' visiblename='Combo' description='A component to drive the BL0114 Combo board including LEDs, Switches, LCD, 7-Segs 
+		<definition guid='d4c04ac8-bbcd-4981-8ce6-9d6c9bb1e26a' vstate='40' vmin='0' vmaj='1' srcleaf='EB_COMBO_BL0114.fcfx' visiblename='Combo' description='A component to drive the BL0114 Combo board including LEDs, Switches, LCD, 7-Segs 
 and analogue inputs. ' category='E-blocks 2' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='Matrix TSL' manuname='Matrix TSL' manucode='BL0114' sysinfo='9443083' keywords='' dynamic='1' scadaCompatible='0' embeddedCompatible='1' showmacros='1' iconpath='..\..\Icons\Components\Combo_board.png' />
 		<component class_type='root' codename='ComboBL0114' panelId='-1' x='0.4' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 			<resources />
 			<properties >
 				<property name='Connection Type' target='ConnType' typeid='16' hidden='0' locked='0' info='' filter='000Port Byte
 001Individual Pins' />
+				<property name='Init' target='Init' typeid='7' hidden='1' locked='0' info='Hidden property to allow for auto pin population when first dragging the component onto a project.
+Designed to siplify the setup procedure for E-blocks and E-blocks 2.' />
 				<property name='Bank 0 Connections' hidden='0' >
 					<property name='Bank 0' target='Bank0' typeid='19' hidden='0' locked='0' info='' />
 					<property name='Pin 0' target='PinA0' typeid='5' hidden='1' locked='0' info='' />
@@ -85,8 +87,12 @@ and analogue inputs. ' category='E-blocks 2' category2='' category3='' bIs2dOnly
 					<property name='Pin 6' target='PinB6' typeid='5' hidden='1' locked='0' info='' />
 					<property name='Pin 7' target='PinB7' typeid='5' hidden='1' locked='0' info='' />
 				</property>
-				<property name='Init' target='Init' typeid='7' hidden='1' locked='0' info='Hidden property to allow for auto pin population when first dragging the component onto a project.
-Designed to siplify the setup procedure for E-blocks and E-blocks 2.' />
+				<property name='Switch Settings' hidden='0' >
+					<property name='Debounce' target='Debounce' typeid='14' hidden='0' locked='0' info='Sets the time in milliseconds to allow a pin change to settle into a stable state.
+
+NB)  Debouncing is only used when reading the button state using the component macros.
+        Chip pins are NOT debounced.' />
+				</property>
 				<property name='Analog Connections' folder='property_1' hidden='0' >
 					<property name='Light Sensor' target='LightSensorADC' typeid='6' hidden='0' locked='0' info='Light Sensor ADC channel
 Connected to Bank 0 pin 0 which is usually analog pin AN0.' />
@@ -95,10 +101,13 @@ Connected to Bank 0 pin 1 which is usually analog pin AN1.' />
 				</property>
 				<property name='Simulation' folder='property_2' hidden='0' >
 					<property name='Analog Scope Traces' target='AnaScopeTraces' typeid='7' hidden='0' locked='0' info='Controls if traces are automatically added to the data recorder window for the analogue signals on the combo board.' />
+					<property name='Latching Switches' target='LatchingSwitches' typeid='7' hidden='0' locked='0' info='When simulating it can be impossible to press multiple switches at once.
+Latching allows multiple to be set on/off at once, note this won&apos;t effect the operation of the physical real world switches.' />
 				</property>
 			</properties>
 			<values >
-				<value target='ConnType' data='0' />
+				<value target='ConnType' data='000' />
+				<value target='Init' data='0' />
 				<value target='Bank0' data='$PORTA' />
 				<value target='PinA0' data='$PORTA.0' />
 				<value target='PinA1' data='$PORTA.1' />
@@ -108,24 +117,25 @@ Connected to Bank 0 pin 1 which is usually analog pin AN1.' />
 				<value target='PinA5' data='$PORTA.5' />
 				<value target='PinA6' data='$PORTA.6' />
 				<value target='PinA7' data='$PORTA.7' />
-				<value target='Bank1' data='$PORTB' />
-				<value target='PinB0' data='$PORTB.0' />
-				<value target='PinB1' data='$PORTB.1' />
-				<value target='PinB2' data='$PORTB.2' />
-				<value target='PinB3' data='$PORTB.3' />
-				<value target='PinB4' data='$PORTB.4' />
-				<value target='PinB5' data='$PORTB.5' />
-				<value target='PinB6' data='$PORTB.6' />
-				<value target='PinB7' data='$PORTB.7' />
-				<value target='Init' data='0' />
+				<value target='Bank1' data='$PORTD' />
+				<value target='PinB0' data='$PORTD.0' />
+				<value target='PinB1' data='$PORTD.1' />
+				<value target='PinB2' data='$PORTD.2' />
+				<value target='PinB3' data='$PORTD.3' />
+				<value target='PinB4' data='$PORTD.4' />
+				<value target='PinB5' data='$PORTD.5' />
+				<value target='PinB6' data='$PORTD.6' />
+				<value target='PinB7' data='$PORTD.7' />
+				<value target='Debounce' data='0' />
 				<value target='LightSensorADC' data='0' />
 				<value target='PotADC' data='1' />
 				<value target='AnaScopeTraces' data='0' />
+				<value target='LatchingSwitches' data='0' />
 			</values>
 			<events >
+				<event class='Components' event='Initialise' target='Ev_Initialise' />
 				<event class='Simulation' event='Start' target='Ev_Start' />
 				<event class='Components' event='AutoIdEBlock' target='Ev_AutoIdEBlock' />
-				<event class='Components' event='Initialise' target='Ev_Initialise' />
 				<event class='Simulation' event='Stop' target='Ev_Stop' />
 				<event class='Components' event='PropertyEx' target='Ev_PropertyEx' />
 			</events>
@@ -217,7 +227,7 @@ Unsigned = 0 to 4294967295' statediag='0' >
 							<return exp='.port' />
 							<argument exp='this' />
 						</command>
-						<command class_type='decision' title='Decision' exp='.port &gt;= 0' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+						<command class_type='decision' title='Decision' exp='.port &gt;= 0' swap='0' >
 							<flowline >
 								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 									<argument exp='this' />
@@ -243,7 +253,7 @@ Unsigned = 0 to 4294967295' statediag='0' >
 							<return exp='.port' />
 							<argument exp='this' />
 						</command>
-						<command class_type='decision' title='Decision' exp='.port &gt;= 0' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+						<command class_type='decision' title='Decision' exp='.port &gt;= 0' swap='0' >
 							<flowline >
 								<command class_type='sim' title='Built-in Function' macro='Connection.GetAutodetectedPortName' >
 									<return exp='.Str' />
@@ -284,15 +294,15 @@ Unsigned = 0 to 4294967295' statediag='0' >
 						</command>
 						<command class_type='sim' title='Switch Array - Individual Pin mode' macro='Component.Property.SetValue' >
 							<argument exp='switch_array_push1' />
-							<argument exp='&quot;port&quot;' />
+							<argument exp='&quot;InputMode&quot;' />
 							<argument exp='11' />
 						</command>
 						<command class_type='sim' title='Switch Array - Individual Pin mode' macro='Component.Property.SetValue' >
 							<argument exp='switch_array_push2' />
-							<argument exp='&quot;port&quot;' />
+							<argument exp='&quot;InputMode&quot;' />
 							<argument exp='11' />
 						</command>
-						<command class_type='decision' title='Have we already been initialised before?' exp='Init = 0' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+						<command class_type='decision' title='Have we already been initialised before?' exp='Init = 0' swap='0' >
 							<flowline >
 								<command class_type='sim' title='Simulation' macro='FCD.GetItemValue' >
 									<return exp='.dev_name' />
@@ -303,7 +313,7 @@ Unsigned = 0 to 4294967295' statediag='0' >
 								<command class_type='sim' title='Simulation' disable='1' macro='Debug.PrintLn' >
 									<argument exp='.dev_name' />
 								</command>
-								<command class_type='decision' title='Decision' exp='(Compare$ (.dev_name,&quot;16F1937&quot;,1) == 0) || (Compare$ (.dev_name,&quot;16F18877&quot;,1) == 0)' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+								<command class_type='decision' title='Decision' exp='(Compare$ (.dev_name,&quot;16F1937&quot;,1) == 0) || (Compare$ (.dev_name,&quot;16F18877&quot;,1) == 0)' swap='0' >
 									<flowline >
 										<command class_type='comment' title='' comment='Default PIC configuration - leave as is Ports A &amp; B' textarea='12,0,12,0' />
 										<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
@@ -314,7 +324,7 @@ Unsigned = 0 to 4294967295' statediag='0' >
 									</flowline>
 									<flowline />
 								</command>
-								<command class_type='decision' title='Decision' exp='(Compare$ (.dev_name,&quot;ATMEGA328P&quot;,1) == 0)' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+								<command class_type='decision' title='Decision' exp='(Compare$ (.dev_name,&quot;ATMEGA328P&quot;,1) == 0)' swap='0' >
 									<flowline >
 										<command class_type='comment' title='' comment='Default AVR/Arduino configuration - Change to Ports C &amp; D' textarea='12,0,12,0' />
 										<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
@@ -421,7 +431,7 @@ Unsigned = 0 to 4294967295' statediag='0' >
 									<argument exp='&quot;namealt&quot;' />
 									<argument exp='&quot;&quot;' />
 								</command>
-								<command class_type='decision' title='Decision' exp='(Compare$ (.dev_name,&quot;33EP256MU806&quot;,1) == 0)' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+								<command class_type='decision' title='Decision' exp='(Compare$ (.dev_name,&quot;33EP256MU806&quot;,1) == 0)' swap='0' >
 									<flowline >
 										<command class_type='comment' title='' comment='Default dsPIC configuration - Change to Ports BL &amp; BH' textarea='12,0,12,0' />
 										<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
@@ -498,6 +508,24 @@ Unsigned = 0 to 4294967295' statediag='0' >
 						<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
 							<return exp='.temp' />
 							<argument exp='this' />
+							<argument exp='&quot;Debounce&quot;' />
+						</command>
+						<command class_type='call' title='User Macro' macro='Ev_PropertyEx' >
+							<argument exp='&quot;Debounce&quot;' />
+							<argument exp='.temp' />
+						</command>
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
+							<return exp='.temp' />
+							<argument exp='this' />
+							<argument exp='&quot;LatchingSwitches&quot;' />
+						</command>
+						<command class_type='call' title='User Macro' macro='Ev_PropertyEx' >
+							<argument exp='&quot;LatchingSwitches&quot;' />
+							<argument exp='.temp' />
+						</command>
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
+							<return exp='.temp' />
+							<argument exp='this' />
 							<argument exp='&quot;other_props&quot;' />
 						</command>
 						<command class_type='call' title='User Macro' macro='Ev_PropertyEx' >
@@ -566,7 +594,7 @@ The characters can be custom (in the range 0-9) or can point to an existing char
 									<command class_type='switch' title='Switch' textarea='36,25,36,25' exp='.LED' >
 										<case >
 											<flowline >
-												<command class_type='decision' title='Decision' exp='.State' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+												<command class_type='decision' title='Decision' exp='.State' swap='0' >
 													<flowline >
 														<command class_type='call' title='Component Macro' component='LED_Array1' macro='LEDon' >
 															<argument exp='0' />
@@ -582,7 +610,7 @@ The characters can be custom (in the range 0-9) or can point to an existing char
 										</case>
 										<case exp='1' >
 											<flowline >
-												<command class_type='decision' title='Decision' exp='.State' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+												<command class_type='decision' title='Decision' exp='.State' swap='0' >
 													<flowline >
 														<command class_type='call' title='Component Macro' component='LED_Array1' macro='LEDon' >
 															<argument exp='1' />
@@ -598,7 +626,7 @@ The characters can be custom (in the range 0-9) or can point to an existing char
 										</case>
 										<case exp='2' >
 											<flowline >
-												<command class_type='decision' title='Decision' exp='.State' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+												<command class_type='decision' title='Decision' exp='.State' swap='0' >
 													<flowline >
 														<command class_type='call' title='Component Macro' component='LED_Array1' macro='LEDon' >
 															<argument exp='2' />
@@ -614,7 +642,7 @@ The characters can be custom (in the range 0-9) or can point to an existing char
 										</case>
 										<case exp='3' >
 											<flowline >
-												<command class_type='decision' title='Decision' exp='.State' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+												<command class_type='decision' title='Decision' exp='.State' swap='0' >
 													<flowline >
 														<command class_type='call' title='Component Macro' component='LED_Array1' macro='LEDon' >
 															<argument exp='3' />
@@ -630,7 +658,7 @@ The characters can be custom (in the range 0-9) or can point to an existing char
 										</case>
 										<case exp='4' >
 											<flowline >
-												<command class_type='decision' title='Decision' exp='.State' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+												<command class_type='decision' title='Decision' exp='.State' swap='0' >
 													<flowline >
 														<command class_type='call' title='Component Macro' component='LED_Array1' macro='LEDon' >
 															<argument exp='4' />
@@ -646,7 +674,7 @@ The characters can be custom (in the range 0-9) or can point to an existing char
 										</case>
 										<case exp='5' >
 											<flowline >
-												<command class_type='decision' title='Decision' exp='.State' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+												<command class_type='decision' title='Decision' exp='.State' swap='0' >
 													<flowline >
 														<command class_type='call' title='Component Macro' component='LED_Array1' macro='LEDon' >
 															<argument exp='5' />
@@ -662,7 +690,7 @@ The characters can be custom (in the range 0-9) or can point to an existing char
 										</case>
 										<case exp='6' >
 											<flowline >
-												<command class_type='decision' title='Decision' exp='.State' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+												<command class_type='decision' title='Decision' exp='.State' swap='0' >
 													<flowline >
 														<command class_type='call' title='Component Macro' component='LED_Array1' macro='LEDon' >
 															<argument exp='6' />
@@ -678,7 +706,7 @@ The characters can be custom (in the range 0-9) or can point to an existing char
 										</case>
 										<case exp='7' >
 											<flowline >
-												<command class_type='decision' title='Decision' exp='.State' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+												<command class_type='decision' title='Decision' exp='.State' swap='0' >
 													<flowline >
 														<command class_type='call' title='Component Macro' component='LED_Array1' macro='LEDon' >
 															<argument exp='7' />
@@ -700,7 +728,7 @@ The characters can be custom (in the range 0-9) or can point to an existing char
 									<command class_type='switch' title='Switch' textarea='36,25,36,25' exp='.LED' >
 										<case >
 											<flowline >
-												<command class_type='decision' title='Decision' exp='.State' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+												<command class_type='decision' title='Decision' exp='.State' swap='0' >
 													<flowline >
 														<command class_type='call' title='Component Macro' component='LED_Array2' macro='LEDon' >
 															<argument exp='0' />
@@ -716,7 +744,7 @@ The characters can be custom (in the range 0-9) or can point to an existing char
 										</case>
 										<case exp='1' >
 											<flowline >
-												<command class_type='decision' title='Decision' exp='.State' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+												<command class_type='decision' title='Decision' exp='.State' swap='0' >
 													<flowline >
 														<command class_type='call' title='Component Macro' component='LED_Array2' macro='LEDon' >
 															<argument exp='1' />
@@ -732,7 +760,7 @@ The characters can be custom (in the range 0-9) or can point to an existing char
 										</case>
 										<case exp='2' >
 											<flowline >
-												<command class_type='decision' title='Decision' exp='.State' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+												<command class_type='decision' title='Decision' exp='.State' swap='0' >
 													<flowline >
 														<command class_type='call' title='Component Macro' component='LED_Array2' macro='LEDon' >
 															<argument exp='2' />
@@ -748,7 +776,7 @@ The characters can be custom (in the range 0-9) or can point to an existing char
 										</case>
 										<case exp='3' >
 											<flowline >
-												<command class_type='decision' title='Decision' exp='.State' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+												<command class_type='decision' title='Decision' exp='.State' swap='0' >
 													<flowline >
 														<command class_type='call' title='Component Macro' component='LED_Array2' macro='LEDon' >
 															<argument exp='3' />
@@ -764,7 +792,7 @@ The characters can be custom (in the range 0-9) or can point to an existing char
 										</case>
 										<case exp='4' >
 											<flowline >
-												<command class_type='decision' title='Decision' exp='.State' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+												<command class_type='decision' title='Decision' exp='.State' swap='0' >
 													<flowline >
 														<command class_type='call' title='Component Macro' component='LED_Array2' macro='LEDon' >
 															<argument exp='4' />
@@ -780,7 +808,7 @@ The characters can be custom (in the range 0-9) or can point to an existing char
 										</case>
 										<case exp='5' >
 											<flowline >
-												<command class_type='decision' title='Decision' exp='.State' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+												<command class_type='decision' title='Decision' exp='.State' swap='0' >
 													<flowline >
 														<command class_type='call' title='Component Macro' component='LED_Array2' macro='LEDon' >
 															<argument exp='5' />
@@ -796,7 +824,7 @@ The characters can be custom (in the range 0-9) or can point to an existing char
 										</case>
 										<case exp='6' >
 											<flowline >
-												<command class_type='decision' title='Decision' exp='.State' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+												<command class_type='decision' title='Decision' exp='.State' swap='0' >
 													<flowline >
 														<command class_type='call' title='Component Macro' component='LED_Array2' macro='LEDon' >
 															<argument exp='6' />
@@ -812,7 +840,7 @@ The characters can be custom (in the range 0-9) or can point to an existing char
 										</case>
 										<case exp='7' >
 											<flowline >
-												<command class_type='decision' title='Decision' exp='.State' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+												<command class_type='decision' title='Decision' exp='.State' swap='0' >
 													<flowline >
 														<command class_type='call' title='Component Macro' component='LED_Array2' macro='LEDon' >
 															<argument exp='7' />
@@ -942,14 +970,14 @@ The characters can be custom (in the range 0-9) or can point to an existing char
 							<exp exp='.index = 0' />
 							<exp exp='.divider = 1' />
 						</command>
-						<command class_type='loop' title='Loop' type='0' exp='.index &lt; 4' >
+						<command class_type='loop' title='Loop' type='0' exp='.index &lt; 4' for1='' for3='' >
 							<flowline >
 								<command class_type='calculation' title='Calculation' >
 									<exp exp='.number = round (.value / .divider)' />
 									<exp exp='.value = .value - (.number * .divider)' />
 									<exp exp='.divider = .divider / 10' />
 								</command>
-								<command class_type='decision' title='Decision' exp='.index = 0' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+								<command class_type='decision' title='Decision' exp='.index = 0' swap='0' >
 									<flowline >
 										<command class_type='calculation' title='Calculation' >
 											<exp exp='.point = true' />
@@ -1001,9 +1029,15 @@ Automatically clears the display after initialising.' statediag='0' >
 						<local name='PortLetter' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='PortPinIdx' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='idx' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Decision' exp='Compare$ (.Property,&quot;ConnType&quot;,0) = 0 || Compare$ (.Property,&quot;Bank0&quot;,0) = 0 || Compare$ (.Property,&quot;Bank1&quot;,0) = 0' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+						<local name='PropertyMinus1Char' type='T8' description='' isconst='0' isHidden='0' isinit='1' usrinit='&quot;&quot;' setinit='&quot;&quot;' >
+							<array size='20' />
+						</local>
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.PropertyMinus1Char = Left$(.Property,(Length$(.Property) - 1))' />
+						</command>
+						<command class_type='decision' title='Decision' exp='Compare$(.Property,&quot;ConnType&quot;,0) = 0 || Compare$(.PropertyMinus1Char,&quot;Bank&quot;,0) = 0 || Compare$(.PropertyMinus1Char,&quot;PinA&quot;,0) = 0 || Compare$(.PropertyMinus1Char,&quot;PinB&quot;,0) = 0' swap='0' >
 							<flowline >
-								<command class_type='decision' title='Decision' exp='ConnType = 0' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+								<command class_type='decision' title='Decision' exp='ConnType = 0' swap='0' >
 									<flowline >
 										<command class_type='sim' title='Simulation' macro='Component.Property.SetVisible' >
 											<argument exp='this' />
@@ -1100,102 +1134,46 @@ Automatically clears the display after initialising.' statediag='0' >
 											<argument exp='this' />
 											<argument exp='&quot;Bank0&quot;' />
 										</command>
-										<command class_type='decision' title='Decision' exp='0' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
-											<flowline >
-												<command class_type='calculation' title='Calculation' disable='1' >
-													<exp exp='.PortLetter = .StrVal[5]' />
-												</command>
-												<command class_type='decision' title='Decision' disable='1' exp='.strval[6] = &apos;_&apos;' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
-													<flowline >
-														<command class_type='comment' title='' comment='16-bit Port' textarea='12,0,12,0' disable='1' />
-														<command class_type='decision' title='Decision' disable='1' exp='.strval[7] = &apos;L&apos;' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
-															<flowline >
-																<command class_type='calculation' title='Calculation' disable='1' >
-																	<exp exp='.PortPinIdx = 0' />
-																</command>
-															</flowline>
-															<flowline >
-																<command class_type='calculation' title='Calculation' disable='1' >
-																	<exp exp='.PortPinIdx = 8' />
-																</command>
-															</flowline>
-														</command>
-													</flowline>
-													<flowline >
-														<command class_type='comment' title='' comment='8-bit Port' textarea='12,0,12,0' disable='1' />
-														<command class_type='calculation' title='Calculation' disable='1' >
-															<exp exp='.PortPinIdx = (.StrVal[6] - &apos;0&apos;) * 8' />
-														</command>
-													</flowline>
-												</command>
-												<command class_type='calculation' title='Calculation' disable='1' >
-													<exp exp='.idx = 0' />
-												</command>
-												<command class_type='loop' title='Loop' disable='1' type='0' exp='.idx &lt; 8' >
-													<flowline >
-														<command class_type='calculation' title='Calculation' disable='1' >
-															<exp exp='.tstr = &quot;PinA&quot; + STRING .idx' />
-														</command>
-														<command class_type='calculation' title='Calculation' disable='1' >
-															<exp exp='.strval = &quot;$PORT&quot; + .PortLetter' />
-															<exp exp='.strval = .strval + &quot;.&quot;' />
-															<exp exp='.strval = .strval + STRING .PortPinIdx' />
-														</command>
-														<command class_type='sim' title='Simulation' disable='1' macro='Component.Property.SetValue' >
-															<argument exp='this' />
-															<argument exp='.tstr' />
-															<argument exp='.strval' />
-														</command>
-														<command class_type='calculation' title='Calculation' disable='1' >
-															<exp exp='.PortPinIdx = .PortPinIdx + 1' />
-															<exp exp='.idx = .idx + 1' />
-														</command>
-													</flowline>
-												</command>
-											</flowline>
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.PortPinIdx = 0' />
+										</command>
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.idx = 0' />
+										</command>
+										<command class_type='loop' title='Loop' type='0' exp='.idx &lt; 8' for1='' for3='' >
 											<flowline >
 												<command class_type='calculation' title='Calculation' >
-													<exp exp='.PortPinIdx = 0' />
+													<exp exp='.tempstr = .strval' />
+													<exp exp='.tempstr = .tempstr + &quot;.&quot;' />
+													<exp exp='.tempstr = .tempstr + STRING .PortPinIdx' />
 												</command>
 												<command class_type='calculation' title='Calculation' >
-													<exp exp='.idx = 0' />
+													<exp exp='.tstr = &quot;PinA&quot; + STRING .idx' />
 												</command>
-												<command class_type='loop' title='Loop' type='0' exp='.idx &lt; 8' >
-													<flowline >
-														<command class_type='calculation' title='Calculation' >
-															<exp exp='.tempstr = .strval' />
-															<exp exp='.tempstr = .tempstr + &quot;.&quot;' />
-															<exp exp='.tempstr = .tempstr + STRING .PortPinIdx' />
-														</command>
-														<command class_type='calculation' title='Calculation' >
-															<exp exp='.tstr = &quot;PinA&quot; + STRING .idx' />
-														</command>
-														<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
-															<argument exp='this' />
-															<argument exp='.tstr' />
-															<argument exp='.tempstr' />
-														</command>
-														<command class_type='calculation' title='Calculation' >
-															<exp exp='.tstr = &quot;Pin&quot; + STRING .idx' />
-														</command>
-														<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
-															<argument exp='LED_Array1' />
-															<argument exp='.tstr' />
-															<argument exp='.tempstr' />
-														</command>
-														<command class_type='calculation' title='Calculation' >
-															<exp exp='.tstr = &quot;pin&quot; + STRING .idx' />
-														</command>
-														<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
-															<argument exp='switch_array_push1' />
-															<argument exp='.tstr' />
-															<argument exp='.tempstr' />
-														</command>
-														<command class_type='calculation' title='Calculation' >
-															<exp exp='.PortPinIdx = .PortPinIdx + 1' />
-															<exp exp='.idx = .idx + 1' />
-														</command>
-													</flowline>
+												<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
+													<argument exp='this' />
+													<argument exp='.tstr' />
+													<argument exp='.tempstr' />
+												</command>
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='.tstr = &quot;Pin&quot; + STRING .idx' />
+												</command>
+												<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
+													<argument exp='LED_Array1' />
+													<argument exp='.tstr' />
+													<argument exp='.tempstr' />
+												</command>
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='.tstr = &quot;pin&quot; + STRING .idx' />
+												</command>
+												<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
+													<argument exp='switch_array_push1' />
+													<argument exp='.tstr' />
+													<argument exp='.tempstr' />
+												</command>
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='.PortPinIdx = .PortPinIdx + 1' />
+													<exp exp='.idx = .idx + 1' />
 												</command>
 											</flowline>
 										</command>
@@ -1204,102 +1182,46 @@ Automatically clears the display after initialising.' statediag='0' >
 											<argument exp='this' />
 											<argument exp='&quot;Bank1&quot;' />
 										</command>
-										<command class_type='decision' title='Decision' exp='0' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
-											<flowline >
-												<command class_type='calculation' title='Calculation' disable='1' >
-													<exp exp='.PortLetter = .StrVal[5]' />
-												</command>
-												<command class_type='decision' title='Decision' disable='1' exp='.strval[6] = &apos;_&apos;' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
-													<flowline >
-														<command class_type='comment' title='' comment='16-bit Port' textarea='12,0,12,0' disable='1' />
-														<command class_type='decision' title='Decision' disable='1' exp='.strval[7] = &apos;L&apos;' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
-															<flowline >
-																<command class_type='calculation' title='Calculation' disable='1' >
-																	<exp exp='.PortPinIdx = 0' />
-																</command>
-															</flowline>
-															<flowline >
-																<command class_type='calculation' title='Calculation' disable='1' >
-																	<exp exp='.PortPinIdx = 8' />
-																</command>
-															</flowline>
-														</command>
-													</flowline>
-													<flowline >
-														<command class_type='comment' title='' comment='8-bit Port' textarea='12,0,12,0' disable='1' />
-														<command class_type='calculation' title='Calculation' disable='1' >
-															<exp exp='.PortPinIdx = (.StrVal[6] - &apos;0&apos;) * 8' />
-														</command>
-													</flowline>
-												</command>
-												<command class_type='calculation' title='Calculation' disable='1' >
-													<exp exp='.idx = 0' />
-												</command>
-												<command class_type='loop' title='Loop' disable='1' type='0' exp='.idx &lt; 8' >
-													<flowline >
-														<command class_type='calculation' title='Calculation' disable='1' >
-															<exp exp='.tstr = &quot;PinB&quot; + STRING .idx' />
-														</command>
-														<command class_type='calculation' title='Calculation' disable='1' >
-															<exp exp='.strval = &quot;$PORT&quot; + .PortLetter' />
-															<exp exp='.strval = .strval + &quot;.&quot;' />
-															<exp exp='.strval = .strval + STRING .PortPinIdx' />
-														</command>
-														<command class_type='sim' title='Simulation' disable='1' macro='Component.Property.SetValue' >
-															<argument exp='this' />
-															<argument exp='.tstr' />
-															<argument exp='.strval' />
-														</command>
-														<command class_type='calculation' title='Calculation' disable='1' >
-															<exp exp='.PortPinIdx = .PortPinIdx + 1' />
-															<exp exp='.idx = .idx + 1' />
-														</command>
-													</flowline>
-												</command>
-											</flowline>
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.PortPinIdx = 0' />
+										</command>
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.idx = 0' />
+										</command>
+										<command class_type='loop' title='Loop' type='0' exp='.idx &lt; 8' for1='' for3='' >
 											<flowline >
 												<command class_type='calculation' title='Calculation' >
-													<exp exp='.PortPinIdx = 0' />
+													<exp exp='.tempstr = .strval' />
+													<exp exp='.tempstr = .tempstr + &quot;.&quot;' />
+													<exp exp='.tempstr = .tempstr + STRING .PortPinIdx' />
 												</command>
 												<command class_type='calculation' title='Calculation' >
-													<exp exp='.idx = 0' />
+													<exp exp='.tstr = &quot;PinB&quot; + STRING .idx' />
 												</command>
-												<command class_type='loop' title='Loop' type='0' exp='.idx &lt; 8' >
-													<flowline >
-														<command class_type='calculation' title='Calculation' >
-															<exp exp='.tempstr = .strval' />
-															<exp exp='.tempstr = .tempstr + &quot;.&quot;' />
-															<exp exp='.tempstr = .tempstr + STRING .PortPinIdx' />
-														</command>
-														<command class_type='calculation' title='Calculation' >
-															<exp exp='.tstr = &quot;PinB&quot; + STRING .idx' />
-														</command>
-														<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
-															<argument exp='this' />
-															<argument exp='.tstr' />
-															<argument exp='.tempstr' />
-														</command>
-														<command class_type='calculation' title='Calculation' >
-															<exp exp='.tstr = &quot;Pin&quot; + STRING .idx' />
-														</command>
-														<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
-															<argument exp='LED_Array2' />
-															<argument exp='.tstr' />
-															<argument exp='.tempstr' />
-														</command>
-														<command class_type='calculation' title='Calculation' >
-															<exp exp='.tstr = &quot;pin&quot; + STRING .idx' />
-														</command>
-														<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
-															<argument exp='switch_array_push2' />
-															<argument exp='.tstr' />
-															<argument exp='.tempstr' />
-														</command>
-														<command class_type='calculation' title='Calculation' >
-															<exp exp='.PortPinIdx = .PortPinIdx + 1' />
-															<exp exp='.idx = .idx + 1' />
-														</command>
-													</flowline>
+												<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
+													<argument exp='this' />
+													<argument exp='.tstr' />
+													<argument exp='.tempstr' />
+												</command>
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='.tstr = &quot;Pin&quot; + STRING .idx' />
+												</command>
+												<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
+													<argument exp='LED_Array2' />
+													<argument exp='.tstr' />
+													<argument exp='.tempstr' />
+												</command>
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='.tstr = &quot;pin&quot; + STRING .idx' />
+												</command>
+												<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
+													<argument exp='switch_array_push2' />
+													<argument exp='.tstr' />
+													<argument exp='.tempstr' />
+												</command>
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='.PortPinIdx = .PortPinIdx + 1' />
+													<exp exp='.idx = .idx + 1' />
 												</command>
 											</flowline>
 										</command>
@@ -1398,7 +1320,7 @@ Automatically clears the display after initialising.' statediag='0' >
 										<command class_type='calculation' title='Calculation' >
 											<exp exp='.idx = 0' />
 										</command>
-										<command class_type='loop' title='Loop' type='0' exp='.idx &lt; 8' >
+										<command class_type='loop' title='Loop' type='0' exp='.idx &lt; 8' for1='' for3='' >
 											<flowline >
 												<command class_type='calculation' title='Calculation' >
 													<exp exp='.tstr = &quot;PinA&quot; + STRING .idx' />
@@ -1433,7 +1355,7 @@ Automatically clears the display after initialising.' statediag='0' >
 										<command class_type='calculation' title='Calculation' >
 											<exp exp='.idx = 0' />
 										</command>
-										<command class_type='loop' title='Loop' type='0' exp='.idx &lt; 8' >
+										<command class_type='loop' title='Loop' type='0' exp='.idx &lt; 8' for1='' for3='' >
 											<flowline >
 												<command class_type='calculation' title='Calculation' >
 													<exp exp='.tstr = &quot;PinB&quot; + STRING .idx' />
@@ -1467,7 +1389,7 @@ Automatically clears the display after initialising.' statediag='0' >
 										</command>
 									</flowline>
 								</command>
-								<command class_type='loop' title='Loop - Set LCD pins' type='2' forvar='.idx' exp='6' >
+								<command class_type='loop' title='Loop - Set LCD pins' type='2' forvar='.idx' exp='6' for1='' for3='' >
 									<flowline >
 										<command class_type='calculation' title='Calculation' >
 											<exp exp='.strval = &quot;PinB&quot; + STRING .idx' />
@@ -1538,7 +1460,7 @@ Automatically clears the display after initialising.' statediag='0' >
 										</command>
 									</flowline>
 								</command>
-								<command class_type='loop' title='Loop - Set 7Seg common pins (Bank A)' type='2' forvar='.idx' exp='4' >
+								<command class_type='loop' title='Loop - Set 7Seg common pins (Bank A)' type='2' forvar='.idx' exp='4' for1='' for3='' >
 									<flowline >
 										<command class_type='calculation' title='Calculation' >
 											<exp exp='.strval = &quot;PinA&quot; + STRING .idx' />
@@ -1555,7 +1477,7 @@ Automatically clears the display after initialising.' statediag='0' >
 										</command>
 									</flowline>
 								</command>
-								<command class_type='loop' title='Loop - Set 7Seg pins - Segments A to G + dp (Bank B)' type='2' forvar='.idx' exp='8' >
+								<command class_type='loop' title='Loop - Set 7Seg pins - Segments A to G + dp (Bank B)' type='2' forvar='.idx' exp='8' for1='' for3='' >
 									<flowline >
 										<command class_type='calculation' title='Calculation' >
 											<exp exp='.strval = &quot;PinB&quot; + STRING .idx' />
@@ -1574,7 +1496,7 @@ Automatically clears the display after initialising.' statediag='0' >
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='decision' title='Decision' exp='Compare$ (.Property,&quot;LightSensorADC&quot;,0) = 0' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+								<command class_type='decision' title='Decision' exp='Compare$ (.Property,&quot;LightSensorADC&quot;,0) = 0' swap='0' >
 									<flowline >
 										<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
 											<return exp='.strval' />
@@ -1588,7 +1510,7 @@ Automatically clears the display after initialising.' statediag='0' >
 										</command>
 									</flowline>
 									<flowline >
-										<command class_type='decision' title='Decision' exp='Compare$ (.Property,&quot;PotADC&quot;,0) = 0' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+										<command class_type='decision' title='Decision' exp='Compare$ (.Property,&quot;PotADC&quot;,0) = 0' swap='0' >
 											<flowline >
 												<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
 													<return exp='.strval' />
@@ -1602,60 +1524,92 @@ Automatically clears the display after initialising.' statediag='0' >
 												</command>
 											</flowline>
 											<flowline >
-												<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
-													<argument exp='LCD' />
-													<argument exp='&quot;DoubleDelay&quot;' />
-													<argument exp='1' />
-												</command>
-												<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
-													<argument exp='LED_Array1' />
-													<argument exp='&quot;DistanceBetweenSwitches&quot;' />
-													<argument exp='55' />
-												</command>
-												<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
-													<argument exp='LED_Array1' />
-													<argument exp='&quot;label_colour&quot;' />
-													<argument exp='0xFFFFFF' />
-												</command>
-												<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
-													<argument exp='LED_Array2' />
-													<argument exp='&quot;DistanceBetweenSwitches&quot;' />
-													<argument exp='55' />
-												</command>
-												<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
-													<argument exp='LED_Array2' />
-													<argument exp='&quot;label_colour&quot;' />
-													<argument exp='0xFFFFFF' />
-												</command>
-												<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
-													<argument exp='switch_array_push1' />
-													<argument exp='&quot;DistanceBetweenSwitches&quot;' />
-													<argument exp='55' />
-												</command>
-												<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
-													<argument exp='switch_array_push1' />
-													<argument exp='&quot;LabelColour&quot;' />
-													<argument exp='0xFFFFFF' />
-												</command>
-												<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
-													<argument exp='switch_array_push2' />
-													<argument exp='&quot;DistanceBetweenSwitches&quot;' />
-													<argument exp='55' />
-												</command>
-												<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
-													<argument exp='switch_array_push2' />
-													<argument exp='&quot;LabelColour&quot;' />
-													<argument exp='0xFFFFFF' />
-												</command>
-												<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
-													<argument exp='Potentiometer1' />
-													<argument exp='&quot;LabelColour&quot;' />
-													<argument exp='0xFFFFFF' />
-												</command>
-												<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
-													<argument exp='Potentiometer2' />
-													<argument exp='&quot;LabelColour&quot;' />
-													<argument exp='0xFFFFFF' />
+												<command class_type='decision' title='Decision' exp='Compare$(.Property,&quot;Debounce&quot;,0) == 0' swap='0' >
+													<flowline >
+														<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+															<argument exp='switch_array_push1' />
+															<argument exp='&quot;debounce&quot;' />
+															<argument exp='.Value' />
+														</command>
+														<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+															<argument exp='switch_array_push2' />
+															<argument exp='&quot;debounce&quot;' />
+															<argument exp='.Value' />
+														</command>
+													</flowline>
+													<flowline >
+														<command class_type='decision' title='Decision' exp='Compare$(.Property,&quot;LatchingSwitches&quot;,0) == 0' swap='0' >
+															<flowline >
+																<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+																	<argument exp='switch_array_push1' />
+																	<argument exp='&quot;Latching&quot;' />
+																	<argument exp='.Value' />
+																</command>
+																<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+																	<argument exp='switch_array_push2' />
+																	<argument exp='&quot;Latching&quot;' />
+																	<argument exp='.Value' />
+																</command>
+															</flowline>
+															<flowline >
+																<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
+																	<argument exp='LCD' />
+																	<argument exp='&quot;DoubleDelay&quot;' />
+																	<argument exp='1' />
+																</command>
+																<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+																	<argument exp='LED_Array1' />
+																	<argument exp='&quot;DistanceBetweenSwitches&quot;' />
+																	<argument exp='55' />
+																</command>
+																<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+																	<argument exp='LED_Array1' />
+																	<argument exp='&quot;label_colour&quot;' />
+																	<argument exp='0xFFFFFF' />
+																</command>
+																<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+																	<argument exp='LED_Array2' />
+																	<argument exp='&quot;DistanceBetweenSwitches&quot;' />
+																	<argument exp='55' />
+																</command>
+																<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+																	<argument exp='LED_Array2' />
+																	<argument exp='&quot;label_colour&quot;' />
+																	<argument exp='0xFFFFFF' />
+																</command>
+																<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+																	<argument exp='switch_array_push1' />
+																	<argument exp='&quot;DistanceBetweenSwitches&quot;' />
+																	<argument exp='55' />
+																</command>
+																<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+																	<argument exp='switch_array_push1' />
+																	<argument exp='&quot;LabelColour&quot;' />
+																	<argument exp='0xFFFFFF' />
+																</command>
+																<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+																	<argument exp='switch_array_push2' />
+																	<argument exp='&quot;DistanceBetweenSwitches&quot;' />
+																	<argument exp='55' />
+																</command>
+																<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+																	<argument exp='switch_array_push2' />
+																	<argument exp='&quot;LabelColour&quot;' />
+																	<argument exp='0xFFFFFF' />
+																</command>
+																<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+																	<argument exp='Potentiometer1' />
+																	<argument exp='&quot;LabelColour&quot;' />
+																	<argument exp='0xFFFFFF' />
+																</command>
+																<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+																	<argument exp='Potentiometer2' />
+																	<argument exp='&quot;LabelColour&quot;' />
+																	<argument exp='0xFFFFFF' />
+																</command>
+															</flowline>
+														</command>
+													</flowline>
 												</command>
 											</flowline>
 										</command>
@@ -1709,7 +1663,7 @@ Automatically clears the display after initialising.' statediag='0' >
 						<command class_type='sim' title='Built-in Function' disable='1' macro='Debug.PrintLn' >
 							<argument exp='&quot;ReadAsInt1&quot;' />
 						</command>
-						<command class_type='decision' title='Decision' exp='.Channel = 0' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+						<command class_type='decision' title='Decision' exp='.Channel = 0' swap='0' >
 							<flowline >
 								<command class_type='sim' title='Built-in Function' disable='1' macro='Debug.PrintLn' >
 									<argument exp='&quot;ReadAsInt ch0&quot;' />
@@ -1720,7 +1674,7 @@ Automatically clears the display after initialising.' statediag='0' >
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='decision' title='Decision' exp='.Channel = 1' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+						<command class_type='decision' title='Decision' exp='.Channel = 1' swap='0' >
 							<flowline >
 								<command class_type='sim' title='Built-in Function' disable='1' macro='Debug.PrintLn' >
 									<argument exp='&quot;ReadAsInt ch1&quot;' />
@@ -1913,7 +1867,7 @@ Returns: 0 = Switch not pressed, 1 = Switch pressed' statediag='0' >
 						<command class_type='sim' title='Built-in Function' disable='1' macro='Debug.PrintLn' >
 							<argument exp='&quot;ReadAsByte&quot;' />
 						</command>
-						<command class_type='decision' title='Decision' exp='.Channel = 0' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+						<command class_type='decision' title='Decision' exp='.Channel = 0' swap='0' >
 							<flowline >
 								<command class_type='sim' title='Built-in Function' disable='1' macro='Debug.PrintLn' >
 									<argument exp='&quot;ReadAsByte ch0&quot;' />
@@ -1924,7 +1878,7 @@ Returns: 0 = Switch not pressed, 1 = Switch pressed' statediag='0' >
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='decision' title='Decision' exp='.Channel = 1' swap='0' simple='0' op1='0' op2='0' oper='0' logical='0' op1_b='0' op2_b='0' oper_b='0' >
+						<command class_type='decision' title='Decision' exp='.Channel = 1' swap='0' >
 							<flowline >
 								<command class_type='sim' title='Built-in Function' disable='1' macro='Debug.PrintLn' >
 									<argument exp='&quot;ReadAsByte ch1&quot;' />
@@ -1979,7 +1933,7 @@ a project.
 							<argument exp='0' />
 							<argument exp='2' />
 						</command>
-						<command class_type='loop' title='Loop' disable='1' type='0' exp='1' >
+						<command class_type='loop' title='Loop' disable='1' type='0' exp='1' for1='' for3='' >
 							<flowline >
 								<command class_type='call' title='User Macro' macro='IO_GetPort' >
 									<return exp='.Var1' />
@@ -2012,7 +1966,7 @@ a project.
 						<command class_type='call' title='User Macro' macro='LCD_PrintString' >
 							<argument exp='&quot;COMBO BOARD&quot;' />
 						</command>
-						<command class_type='loop' title='Loop' disable='1' type='2' forvar='Counter' exp='11' >
+						<command class_type='loop' title='Loop' disable='1' type='2' forvar='Counter' exp='11' for1='' for3='' >
 							<flowline >
 								<command class_type='call' title='Call Macro' macro='Seg_Display' >
 									<argument exp='Counter' />
@@ -2022,7 +1976,7 @@ a project.
 						</command>
 						<command class_type='delay' title='Delay' exp='2' type='2' />
 						<command class_type='call' title='User Macro' macro='LCD_Clear' />
-						<command class_type='loop' title='Loop' type='0' exp='1' >
+						<command class_type='loop' title='Loop' type='0' exp='1' for1='' for3='' >
 							<flowline >
 								<command class_type='call' title='User Macro' macro='IO_ReadAnalogAsByte' >
 									<return exp='.Var1' />
@@ -2127,7 +2081,7 @@ a project.
 					</flowline>
 				</macro>
 			</macros>
-			<component class_type='group' codename='group1' panelId='-1' x='-0.88797' y='-8.3304' z='1.18359' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+			<component class_type='group' codename='group1' panelId='-1' x='-0.88797' y='11.6696' z='1.18359' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values />
@@ -2135,7 +2089,7 @@ a project.
 				<apis />
 				<variables />
 				<macros />
-				<component class_type='GdiShape' codename='GdiShape1' panelId='-1' x='-4.44089e-15' y='-9.82159' z='-2.18359' xsz='246.756' ysz='150.184' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='0' solid='1' layer='1' poslock='8' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='46' >
+				<component class_type='GdiShape' codename='GdiShape1' panelId='-1' x='0.88797' y='-11.6696' z='-1.68359' xsz='231.25' ysz='134.375' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='0' solid='1' layer='1' poslock='8' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='46' >
 					<resources />
 					<properties />
 					<values >
@@ -2174,14 +2128,14 @@ a project.
 						<value target='Common_Pin1' data='$PORTA.1' />
 						<value target='Common_Pin2' data='$PORTA.2' />
 						<value target='Common_Pin3' data='$PORTA.3' />
-						<value target='Pin0' data='$PORTB.0' />
-						<value target='Pin1' data='$PORTB.1' />
-						<value target='Pin2' data='$PORTB.2' />
-						<value target='Pin3' data='$PORTB.3' />
-						<value target='Pin4' data='$PORTB.4' />
-						<value target='Pin5' data='$PORTB.5' />
-						<value target='Pin6' data='$PORTB.6' />
-						<value target='Pin7' data='$PORTB.7' />
+						<value target='Pin0' data='$PORTD.0' />
+						<value target='Pin1' data='$PORTD.1' />
+						<value target='Pin2' data='$PORTD.2' />
+						<value target='Pin3' data='$PORTD.3' />
+						<value target='Pin4' data='$PORTD.4' />
+						<value target='Pin5' data='$PORTD.5' />
+						<value target='Pin6' data='$PORTD.6' />
+						<value target='Pin7' data='$PORTD.7' />
 						<value target='FGColor' data='255' />
 						<value target='BGColor' data='5921370' />
 						<value target='LabelColor' data='16777215' />
@@ -2352,7 +2306,7 @@ a project.
 					<variables />
 					<macros />
 				</component>
-				<component class_type='GdiText' codename='GdiText6' panelId='-1' x='267.633' y='-233.67' z='2.79323' xsz='19.5322' ysz='15.6258' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='8' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='46' >
+				<component class_type='GdiText' codename='GdiText6' panelId='-1' x='277.633' y='-203.67' z='2.79323' xsz='19.5322' ysz='15.6258' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='8' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='46' >
 					<resources />
 					<properties />
 					<values >
@@ -2384,7 +2338,7 @@ a project.
 					<variables />
 					<macros />
 				</component>
-				<component class_type='GdiText' codename='GdiText7' panelId='-1' x='311.386' y='-233.67' z='3.66828' xsz='19.5322' ysz='15.6258' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='8' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='46' >
+				<component class_type='GdiText' codename='GdiText7' panelId='-1' x='311.386' y='-203.67' z='3.66828' xsz='19.5322' ysz='15.6258' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='8' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='46' >
 					<resources />
 					<properties />
 					<values >
@@ -2416,7 +2370,7 @@ a project.
 					<variables />
 					<macros />
 				</component>
-				<component class_type='GdiText' codename='GdiText8' panelId='-1' x='267.633' y='76.5663' z='5.29771' xsz='19.5322' ysz='15.6258' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='8' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='46' >
+				<component class_type='GdiText' codename='GdiText8' panelId='-1' x='277.633' y='76.5663' z='5.29771' xsz='19.5322' ysz='15.6258' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='8' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='46' >
 					<resources />
 					<properties />
 					<values >
@@ -2448,19 +2402,19 @@ a project.
 					<variables />
 					<macros />
 				</component>
-				<component class_type='ref' guid='a2b40602-5421-4e2f-ba82-96db1be51d69' vmin='1' vmaj='1' codename='LCD' panelId='-1' x='149.753' y='-13.3042' z='-0.683589' xsz='28.9946' ysz='28.9946' zsz='31.2516' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+				<component class_type='ref' guid='a2b40602-5421-4e2f-ba82-96db1be51d69' vmin='1' vmaj='1' codename='LCD' panelId='-1' x='169.753' y='-13.3042' z='-0.683589' xsz='28.9946' ysz='28.9946' zsz='31.2516' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 					<resources />
 					<properties />
 					<values >
-						<value target='Pin_Data_0' data='$PORTB.0' />
-						<value target='Pin_Data_1' data='$PORTB.1' />
-						<value target='Pin_Data_2' data='$PORTB.2' />
-						<value target='Pin_Data_3' data='$PORTB.3' />
-						<value target='Pin_RS' data='$PORTB.4' />
-						<value target='Pin_E' data='$PORTB.5' />
+						<value target='Pin_Data_0' data='$PORTD.0' />
+						<value target='Pin_Data_1' data='$PORTD.1' />
+						<value target='Pin_Data_2' data='$PORTD.2' />
+						<value target='Pin_Data_3' data='$PORTD.3' />
+						<value target='Pin_RS' data='$PORTD.4' />
+						<value target='Pin_E' data='$PORTD.5' />
 						<value target='LCD::ctrl_lcd::Base_GLCD1::ComponentLabel' data='001' />
 						<value target='LCD::ctrl_lcd::Base_GLCD1::GdiText1::sText' data='LCD' />
-						<value target='LCD::ctrl_lcd::Base_GLCD1::GdiText1::dScale' data='0.8' />
+						<value target='LCD::ctrl_lcd::Base_GLCD1::GdiText1::dScale' data='1.5' />
 						<value target='LCD::ctrl_lcd::Base_GLCD1::foreground_colour' data='0' />
 						<value target='LCD::ctrl_lcd::TextBg' data='14803425' />
 						<value target='LCD::ctrl_lcd::Base_GLCD1::background_colour' data='16777215' />
@@ -2470,12 +2424,14 @@ a project.
 					<variables />
 					<macros />
 				</component>
-				<component class_type='ref' guid='cd8da0fe-80cf-4532-bb50-69f0d1730e70' vmin='13' vmaj='13' codename='switch_array_push1' panelId='-1' x='-83.33' y='110.714' z='-0.183589' xsz='31.2516' ysz='31.2516' zsz='31.2516' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+				<component class_type='ref' guid='cd8da0fe-80cf-4532-bb50-69f0d1730e70' vmin='0' vmaj='14' codename='switch_array_push1' panelId='-1' x='186.888' y='120.714' z='-0.183589' xsz='31.2516' ysz='31.2516' zsz='31.2516' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 					<resources />
 					<properties />
 					<values >
 						<value target='count' data='008' />
-						<value target='port' data='11' />
+						<value target='AppDevDetected' data='0' />
+						<value target='SimulationOnly' data='0' />
+						<value target='InputMode' data='11' />
 						<value target='PortByte' data='$PORTA' />
 						<value target='pin0' data='$PORTA.0' />
 						<value target='pin1' data='$PORTA.1' />
@@ -2485,104 +2441,69 @@ a project.
 						<value target='pin5' data='$PORTA.5' />
 						<value target='pin6' data='$PORTA.6' />
 						<value target='pin7' data='$PORTA.7' />
-						<value target='polarity' data='000' />
+						<value target='Polarity' data='000' />
 						<value target='debounce' data='0' />
 						<value target='Latching' data='000' />
 						<value target='Label' data='001' />
-						<value target='UserLabelSW0' data='' />
-						<value target='UserLabelSW1' data='' />
-						<value target='UserLabelSW2' data='' />
-						<value target='UserLabelSW3' data='' />
-						<value target='UserLabelSW4' data='' />
-						<value target='UserLabelSW5' data='' />
-						<value target='UserLabelSW6' data='' />
-						<value target='UserLabelSW7' data='' />
-						<value target='LabelColour' data='16777215' />
-						<value target='ShowConectionLabel' data='1' />
-						<value target='PinValue' data='0' />
+						<value target='Switch_Push1::GdiText2::sText' data='' />
+						<value target='Switch_Push2::GdiText2::sText' data='' />
+						<value target='Switch_Push3::GdiText2::sText' data='' />
+						<value target='Switch_Push4::GdiText2::sText' data='' />
+						<value target='Switch_Push5::GdiText2::sText' data='' />
+						<value target='Switch_Push6::GdiText2::sText' data='' />
+						<value target='Switch_Push7::GdiText2::sText' data='' />
+						<value target='Switch_Push8::GdiText2::sText' data='' />
 						<value target='SwitchLayout' data='000' />
 						<value target='DistanceBetweenSwitches' data='55' />
-						<value target='Index' data='0' />
-						<value target='CustomPins' data='0' />
-						<value target='AppDevDetected' data='0' />
-						<value target='individual' data='1' />
 						<value target='Style' data='000' />
-						<value target='Type' data='002' />
-						<value target='OnLabel' data='On' />
-						<value target='OffLabel' data='Off' />
-						<value target='Switch_Push1::Style' data='000' />
-						<value target='Switch_Push1::GdiSwitch1::nType' data='2' />
-						<value target='Switch_Push1::GdiSwitch1::sLabelOn' data='On' />
-						<value target='Switch_Push1::GdiSwitch1::sLabelOff' data='Off' />
-						<value target='Switch_Push2::Style' data='0' />
-						<value target='Switch_Push2::GdiSwitch1::nType' data='2' />
-						<value target='Switch_Push2::GdiSwitch1::sLabelOn' data='On' />
-						<value target='Switch_Push2::GdiSwitch1::sLabelOff' data='Off' />
-						<value target='Switch_Push3::Style' data='0' />
-						<value target='Switch_Push3::GdiSwitch1::nType' data='2' />
-						<value target='Switch_Push3::GdiSwitch1::sLabelOn' data='On' />
-						<value target='Switch_Push3::GdiSwitch1::sLabelOff' data='Off' />
-						<value target='Switch_Push4::Style' data='0' />
-						<value target='Switch_Push4::GdiSwitch1::nType' data='2' />
-						<value target='Switch_Push4::GdiSwitch1::sLabelOn' data='On' />
-						<value target='Switch_Push4::GdiSwitch1::sLabelOff' data='Off' />
-						<value target='Switch_Push5::Style' data='0' />
-						<value target='Switch_Push5::GdiSwitch1::nType' data='2' />
-						<value target='Switch_Push5::GdiSwitch1::sLabelOn' data='On' />
-						<value target='Switch_Push5::GdiSwitch1::sLabelOff' data='Off' />
-						<value target='Switch_Push6::Style' data='0' />
-						<value target='Switch_Push6::GdiSwitch1::nType' data='2' />
-						<value target='Switch_Push6::GdiSwitch1::sLabelOn' data='On' />
-						<value target='Switch_Push6::GdiSwitch1::sLabelOff' data='Off' />
-						<value target='Switch_Push7::Style' data='0' />
-						<value target='Switch_Push7::GdiSwitch1::nType' data='2' />
-						<value target='Switch_Push7::GdiSwitch1::sLabelOn' data='On' />
-						<value target='Switch_Push7::GdiSwitch1::sLabelOff' data='Off' />
-						<value target='Switch_Push8::Style' data='000' />
-						<value target='Switch_Push8::GdiSwitch1::nType' data='2' />
-						<value target='Switch_Push8::GdiSwitch1::sLabelOn' data='On' />
-						<value target='Switch_Push8::GdiSwitch1::sLabelOff' data='Off' />
+						<value target='nType' data='002' />
+						<value target='sLabelOn' data='On' />
+						<value target='sLabelOff' data='Off' />
+						<value target='LabelColour' data='16777215' />
+						<value target='ShowConnectionLabel' data='1' />
+						<value target='ShowPinValue' data='0' />
 					</values>
 					<events />
 					<apis />
 					<variables />
 					<macros />
 				</component>
-				<component class_type='ref' guid='b07ae733-c144-4558-979a-be737044519c' vmin='0' vmaj='1' codename='LED_Array2' panelId='-1' x='176.202' y='-137.67' z='-0.183589' xsz='31.2516' ysz='31.2516' zsz='31.2516' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+				<component class_type='ref' guid='b07ae733-c144-4558-979a-be737044519c' vmin='0' vmaj='1' codename='LED_Array2' panelId='-1' x='186.202' y='-127.67' z='-0.183589' xsz='31.2516' ysz='31.2516' zsz='31.2516' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 					<resources />
 					<properties />
 					<values >
 						<value target='Count' data='008' />
+						<value target='SimulationOnly' data='0' />
 						<value target='port' data='1' />
 						<value target='PortByte' data='$PORTB' />
-						<value target='Pin0' data='$PORTB.0' />
-						<value target='Pin1' data='$PORTB.1' />
-						<value target='Pin2' data='$PORTB.2' />
-						<value target='Pin3' data='$PORTB.3' />
-						<value target='Pin4' data='$PORTB.4' />
-						<value target='Pin5' data='$PORTB.5' />
-						<value target='Pin6' data='$PORTB.6' />
-						<value target='Pin7' data='$PORTB.7' />
+						<value target='Pin0' data='$PORTD.0' />
+						<value target='Pin1' data='$PORTD.1' />
+						<value target='Pin2' data='$PORTD.2' />
+						<value target='Pin3' data='$PORTD.3' />
+						<value target='Pin4' data='$PORTD.4' />
+						<value target='Pin5' data='$PORTD.5' />
+						<value target='Pin6' data='$PORTD.6' />
+						<value target='Pin7' data='$PORTD.7' />
 						<value target='Polarity' data='001' />
 						<value target='bitmask' data='0' />
 						<value target='inv_bitmask' data='0' />
+						<value target='Label' data='002' />
+						<value target='LEDMono1::GdiText2::sText' data='LED_Array2' />
+						<value target='LEDMono2::GdiText2::sText' data='' />
+						<value target='LEDMono3::GdiText2::sText' data='' />
+						<value target='LEDMono4::GdiText2::sText' data='' />
+						<value target='LEDMono5::GdiText2::sText' data='' />
+						<value target='LEDMono6::GdiText2::sText' data='' />
+						<value target='LEDMono7::GdiText2::sText' data='' />
+						<value target='LEDMono8::GdiText2::sText' data='' />
 						<value target='SwitchLayout' data='000' />
 						<value target='DistanceBetweenLEDs' data='55' />
-						<value target='label_colour' data='16777215' />
-						<value target='ComponentLabel' data='001' />
-						<value target='UserLabelLED0' data='' />
-						<value target='UserLabelLED1' data='' />
-						<value target='UserLabelLED2' data='' />
-						<value target='UserLabelLED3' data='' />
-						<value target='UserLabelLED4' data='' />
-						<value target='UserLabelLED5' data='' />
-						<value target='UserLabelLED6' data='' />
-						<value target='UserLabelLED7' data='' />
-						<value target='ConnectionLabels' data='0' />
-						<value target='ShowPinValue' data='0' />
+						<value target='Style' data='001' />
 						<value target='Shape' data='001' />
 						<value target='Colour' data='001' />
-						<value target='Style' data='001' />
+						<value target='LabelColour' data='9868950' />
+						<value target='ShowConnectionLabel' data='0' />
+						<value target='ShowPinValue' data='0' />
 						<value target='AutoOffColour' data='1' />
 						<value target='OnColour' data='255' />
 						<value target='OffColour' data='42' />
@@ -2595,89 +2516,56 @@ a project.
 					<variables />
 					<macros />
 				</component>
-				<component class_type='ref' guid='cd8da0fe-80cf-4532-bb50-69f0d1730e70' vmin='13' vmaj='13' codename='switch_array_push2' panelId='-1' x='-83.329' y='-197.67' z='0.066411' xsz='31.2516' ysz='31.2516' zsz='31.2516' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+				<component class_type='ref' guid='cd8da0fe-80cf-4532-bb50-69f0d1730e70' vmin='0' vmaj='14' codename='switch_array_push2' panelId='-1' x='186.888' y='-157.67' z='0.066411' xsz='31.2516' ysz='31.2516' zsz='31.2516' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 					<resources />
 					<properties />
 					<values >
 						<value target='count' data='008' />
-						<value target='port' data='11' />
+						<value target='AppDevDetected' data='0' />
+						<value target='SimulationOnly' data='0' />
+						<value target='InputMode' data='11' />
 						<value target='PortByte' data='$PORTB' />
-						<value target='pin0' data='$PORTB.0' />
-						<value target='pin1' data='$PORTB.1' />
-						<value target='pin2' data='$PORTB.2' />
-						<value target='pin3' data='$PORTB.3' />
-						<value target='pin4' data='$PORTB.4' />
-						<value target='pin5' data='$PORTB.5' />
-						<value target='pin6' data='$PORTB.6' />
-						<value target='pin7' data='$PORTB.7' />
-						<value target='polarity' data='000' />
+						<value target='pin0' data='$PORTD.0' />
+						<value target='pin1' data='$PORTD.1' />
+						<value target='pin2' data='$PORTD.2' />
+						<value target='pin3' data='$PORTD.3' />
+						<value target='pin4' data='$PORTD.4' />
+						<value target='pin5' data='$PORTD.5' />
+						<value target='pin6' data='$PORTD.6' />
+						<value target='pin7' data='$PORTD.7' />
+						<value target='Polarity' data='000' />
 						<value target='debounce' data='0' />
 						<value target='Latching' data='000' />
 						<value target='Label' data='001' />
-						<value target='UserLabelSW0' data='' />
-						<value target='UserLabelSW1' data='' />
-						<value target='UserLabelSW2' data='' />
-						<value target='UserLabelSW3' data='' />
-						<value target='UserLabelSW4' data='' />
-						<value target='UserLabelSW5' data='' />
-						<value target='UserLabelSW6' data='' />
-						<value target='UserLabelSW7' data='' />
-						<value target='LabelColour' data='16777215' />
-						<value target='ShowConectionLabel' data='1' />
-						<value target='PinValue' data='0' />
+						<value target='Switch_Push1::GdiText2::sText' data='' />
+						<value target='Switch_Push2::GdiText2::sText' data='' />
+						<value target='Switch_Push3::GdiText2::sText' data='' />
+						<value target='Switch_Push4::GdiText2::sText' data='' />
+						<value target='Switch_Push5::GdiText2::sText' data='' />
+						<value target='Switch_Push6::GdiText2::sText' data='' />
+						<value target='Switch_Push7::GdiText2::sText' data='' />
+						<value target='Switch_Push8::GdiText2::sText' data='' />
 						<value target='SwitchLayout' data='000' />
 						<value target='DistanceBetweenSwitches' data='55' />
-						<value target='Index' data='0' />
-						<value target='CustomPins' data='0' />
-						<value target='AppDevDetected' data='0' />
-						<value target='individual' data='1' />
 						<value target='Style' data='000' />
-						<value target='Type' data='002' />
-						<value target='OnLabel' data='On' />
-						<value target='OffLabel' data='Off' />
-						<value target='Switch_Push1::Style' data='000' />
-						<value target='Switch_Push1::GdiSwitch1::nType' data='2' />
-						<value target='Switch_Push1::GdiSwitch1::sLabelOn' data='On' />
-						<value target='Switch_Push1::GdiSwitch1::sLabelOff' data='Off' />
-						<value target='Switch_Push2::Style' data='0' />
-						<value target='Switch_Push2::GdiSwitch1::nType' data='2' />
-						<value target='Switch_Push2::GdiSwitch1::sLabelOn' data='On' />
-						<value target='Switch_Push2::GdiSwitch1::sLabelOff' data='Off' />
-						<value target='Switch_Push3::Style' data='0' />
-						<value target='Switch_Push3::GdiSwitch1::nType' data='2' />
-						<value target='Switch_Push3::GdiSwitch1::sLabelOn' data='On' />
-						<value target='Switch_Push3::GdiSwitch1::sLabelOff' data='Off' />
-						<value target='Switch_Push4::Style' data='0' />
-						<value target='Switch_Push4::GdiSwitch1::nType' data='2' />
-						<value target='Switch_Push4::GdiSwitch1::sLabelOn' data='On' />
-						<value target='Switch_Push4::GdiSwitch1::sLabelOff' data='Off' />
-						<value target='Switch_Push5::Style' data='0' />
-						<value target='Switch_Push5::GdiSwitch1::nType' data='2' />
-						<value target='Switch_Push5::GdiSwitch1::sLabelOn' data='On' />
-						<value target='Switch_Push5::GdiSwitch1::sLabelOff' data='Off' />
-						<value target='Switch_Push6::Style' data='0' />
-						<value target='Switch_Push6::GdiSwitch1::nType' data='2' />
-						<value target='Switch_Push6::GdiSwitch1::sLabelOn' data='On' />
-						<value target='Switch_Push6::GdiSwitch1::sLabelOff' data='Off' />
-						<value target='Switch_Push7::Style' data='0' />
-						<value target='Switch_Push7::GdiSwitch1::nType' data='2' />
-						<value target='Switch_Push7::GdiSwitch1::sLabelOn' data='On' />
-						<value target='Switch_Push7::GdiSwitch1::sLabelOff' data='Off' />
-						<value target='Switch_Push8::Style' data='000' />
-						<value target='Switch_Push8::GdiSwitch1::nType' data='2' />
-						<value target='Switch_Push8::GdiSwitch1::sLabelOn' data='On' />
-						<value target='Switch_Push8::GdiSwitch1::sLabelOff' data='Off' />
+						<value target='nType' data='002' />
+						<value target='sLabelOn' data='On' />
+						<value target='sLabelOff' data='Off' />
+						<value target='LabelColour' data='16777215' />
+						<value target='ShowConnectionLabel' data='1' />
+						<value target='ShowPinValue' data='0' />
 					</values>
 					<events />
 					<apis />
 					<variables />
 					<macros />
 				</component>
-				<component class_type='ref' guid='b07ae733-c144-4558-979a-be737044519c' vmin='0' vmaj='1' codename='LED_Array1' panelId='-1' x='176.888' y='175.033' z='-0.183589' xsz='31.2516' ysz='31.2516' zsz='31.2516' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+				<component class_type='ref' guid='b07ae733-c144-4558-979a-be737044519c' vmin='0' vmaj='1' codename='LED_Array1' panelId='-1' x='186.888' y='155.033' z='-0.183589' xsz='31.2516' ysz='31.2516' zsz='31.2516' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 					<resources />
 					<properties />
 					<values >
 						<value target='Count' data='008' />
+						<value target='SimulationOnly' data='0' />
 						<value target='port' data='1' />
 						<value target='PortByte' data='$PORTA' />
 						<value target='Pin0' data='$PORTA.0' />
@@ -2691,23 +2579,23 @@ a project.
 						<value target='Polarity' data='001' />
 						<value target='bitmask' data='0' />
 						<value target='inv_bitmask' data='0' />
+						<value target='Label' data='002' />
+						<value target='LEDMono1::GdiText2::sText' data='LED_Array1' />
+						<value target='LEDMono2::GdiText2::sText' data='' />
+						<value target='LEDMono3::GdiText2::sText' data='' />
+						<value target='LEDMono4::GdiText2::sText' data='' />
+						<value target='LEDMono5::GdiText2::sText' data='' />
+						<value target='LEDMono6::GdiText2::sText' data='' />
+						<value target='LEDMono7::GdiText2::sText' data='' />
+						<value target='LEDMono8::GdiText2::sText' data='' />
 						<value target='SwitchLayout' data='000' />
 						<value target='DistanceBetweenLEDs' data='55' />
-						<value target='label_colour' data='16777215' />
-						<value target='ComponentLabel' data='001' />
-						<value target='UserLabelLED0' data='' />
-						<value target='UserLabelLED1' data='' />
-						<value target='UserLabelLED2' data='' />
-						<value target='UserLabelLED3' data='' />
-						<value target='UserLabelLED4' data='' />
-						<value target='UserLabelLED5' data='' />
-						<value target='UserLabelLED6' data='' />
-						<value target='UserLabelLED7' data='' />
-						<value target='ConnectionLabels' data='0' />
-						<value target='ShowPinValue' data='0' />
+						<value target='Style' data='001' />
 						<value target='Shape' data='001' />
 						<value target='Colour' data='001' />
-						<value target='Style' data='001' />
+						<value target='LabelColour' data='9868950' />
+						<value target='ShowConnectionLabel' data='0' />
+						<value target='ShowPinValue' data='0' />
 						<value target='AutoOffColour' data='1' />
 						<value target='OnColour' data='255' />
 						<value target='OffColour' data='42' />
@@ -2880,7 +2768,7 @@ a project.
 					<variables />
 					<macros />
 				</component>
-				<component class_type='ref' guid='11ca2f38-de81-4812-9338-4b5a7a89a658' vmin='0' vmaj='1' codename='Potentiometer1' panelId='-1' x='292.888' y='154.976' z='-0.364049' xsz='25.9633' ysz='25.9633' zsz='24.5603' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+				<component class_type='ref' guid='11ca2f38-de81-4812-9338-4b5a7a89a658' vmin='0' vmaj='1' codename='Potentiometer1' panelId='-1' x='292.888' y='134.976' z='-0.230858' xsz='18' ysz='18' zsz='17.0273' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 					<resources />
 					<properties />
 					<values >
@@ -2927,7 +2815,7 @@ a project.
 					<variables />
 					<macros />
 				</component>
-				<component class_type='ref' guid='11ca2f38-de81-4812-9338-4b5a7a89a658' vmin='0' vmaj='1' codename='Potentiometer2' panelId='-1' x='292.888' y='-159.67' z='-0.0598648' xsz='24.4582' ysz='24.4582' zsz='24.4582' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+				<component class_type='ref' guid='11ca2f38-de81-4812-9338-4b5a7a89a658' vmin='0' vmaj='1' codename='Potentiometer2' panelId='-1' x='292.888' y='-149.67' z='-0.0598648' xsz='18' ysz='18' zsz='18' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
 					<resources />
 					<properties />
 					<values >
@@ -2981,10 +2869,10 @@ a project.
 	<keymap />
 	<panel2d shadows='0' lighting='2' brightness='256' >
 		<background rgb='8388608' img='' style='0' />
-		<camera xe='93.024' ye='-65.7951' ze='1233.54' xt='93.024' yt='-65.7951' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
-		<viewport dx='429' dy='782' zoom='42.0814' fix_topleft='0' />
+		<camera xe='-30.093' ye='-17.0965' ze='1461.51' xt='-30.093' yt='-17.0965' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='978' dy='576' zoom='80.9697' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='7360576' />
-		<winpos ID='7005' RectRecentFloat='336,316,1367,1080' RectRecentDocked='985,141,1434,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+		<winpos ID='7005' RectRecentFloat='2253,-792,3259,-118' RectRecentDocked='1082,141,1548,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
 	</panel2d>
 	<panel3d shadows='0' lighting='2' brightness='0' perspective='1' >
 		<background rgb='8398592' img='' style='0' />
@@ -2997,40 +2885,40 @@ a project.
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,341,450' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,230,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='0' />
 	<layout >
-		<view type='0' name='Seg_ShowSegments' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAApgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Seg_Display' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAApgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='IO_ReadAnalogAsByte' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAApgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='IO_ReadAnalogAsInt' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAApgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAApgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='IO_SetPort' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAApgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='IO_SetLEDState' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAApgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='IO_GetSwitchState' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAApgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='IO_GetPort' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAApgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Seg_ShowDigit' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAApgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LCD_Start' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAApgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LCD_ScrollDisplay' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAApgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LCD_RemapCharacter' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAApgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LCD_RawSend' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAApgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LCD_RAMWrite' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAApgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LCD_PrintString' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAApgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LCD_PrintNumber' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAApgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LCD_PrintAscii' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAApgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LCD_Cursor' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAApgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LCD_ClearLine' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAApgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LCD_Command' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAApgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LCD_Clear' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAApgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LCD_PrintFormattedNumber' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAApgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAApgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetLCDNumber' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAApgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='LCD_PrintFloat' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAApgIAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Start' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAApgIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Stop' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAApgIAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_PropertyEx' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAApgIAAGMDAAA' zoom='90' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_AutoIdEBlock' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAApgIAAGMDAAA' zoom='100' scrollx='0' scrolly='180' flags='0' />
+		<view type='0' name='Seg_ShowSegments' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgUAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Seg_Display' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgUAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='IO_ReadAnalogAsByte' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgUAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='IO_ReadAnalogAsInt' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgUAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgUAAGMDAAA' zoom='75' scrollx='0' scrolly='2048' flags='0' />
+		<view type='0' name='IO_SetPort' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgUAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='IO_SetLEDState' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgUAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='IO_GetSwitchState' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgUAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='IO_GetPort' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgUAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Seg_ShowDigit' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgUAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LCD_Start' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgUAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LCD_ScrollDisplay' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgUAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LCD_RemapCharacter' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgUAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LCD_RawSend' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgUAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LCD_RAMWrite' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgUAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LCD_PrintString' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgUAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LCD_PrintNumber' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgUAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LCD_PrintAscii' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgUAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LCD_Cursor' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgUAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LCD_ClearLine' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgUAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LCD_Command' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgUAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LCD_Clear' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgUAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LCD_PrintFormattedNumber' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgUAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgUAAGMDAAA' zoom='75' scrollx='0' scrolly='239' flags='0' />
+		<view type='0' name='SetLCDNumber' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgUAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LCD_PrintFloat' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgUAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Start' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgUAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Stop' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgUAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_PropertyEx' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgUAAGMDAAA' zoom='90' scrollx='0' scrolly='369' flags='0' />
+		<view type='0' name='Ev_AutoIdEBlock' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgUAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>

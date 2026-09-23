@@ -1,5 +1,5 @@
 <root>
-<document scada='0' projtype='1' schema='103' license='1,82702381,95CJQR' title='' description='' fcversion='720897' target='PIC16.33E.33EP256MU810' >
+<document scada='0' projtype='1' schema='103' license='1,82702381,95CJQR' title='' description='' fcversion='720898' target='PIC16.33E.33EP256MU810' >
 	<config data='!0,ffff!10,ffff!20,ffbf!30,ffff!40,ffef!50,ffff!60,ffff%0,1%1,1%4,3%10,7%17,1%20,3%22,1%25,1%26,2%30,f%34,1%35,1%36,1%37,1%40,7%43,1%44,0%45,1%50,3%52,1%55,1%60,1%61,1%64,3' clkspd='12000000' simspd='0' usewdt='0' constif='0' Use3V3='0' />
 	<plugins >
 		<dll_models enabled='1' />
@@ -58,7 +58,7 @@
 	</ghost>
 	<components >
 		<settings autoimg='0' center='1' unitscale='1' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
-		<definition guid='cbfb3c21-f13d-488d-9b90-400c8d4fc605' vstate='40' vmin='0' vmaj='24' srcleaf='Lib_DisplayManager.fcfx' visiblename='Display Manager' description='A component designed to simplify the process of drawing primitives and text onto a 
+		<definition guid='cbfb3c21-f13d-488d-9b90-400c8d4fc605' vstate='40' vmin='1' vmaj='24' srcleaf='Lib_DisplayManager.fcfx' visiblename='Display Manager' description='A component designed to simplify the process of drawing primitives and text onto a 
 graphical display. Keeps track of coordinates so you don&apos;t have to.
 Also works great as a base layer for gLCD based games as it will check for collisions and 
 perform movement.' category='Graphical Library' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='MatrixTSL' manuname='' manucode='' sysinfo='3158283' keywords='Keypad' dynamic='1' scadaCompatible='0' embeddedCompatible='1' showmacros='1' iconpath='..\..\icons\components\glcdLib.png' />
@@ -584,16 +584,16 @@ Each Widget theme requires 12 bytes of RAM to store the colour channels.' filter
 				<value target='YPixels' data='240' />
 			</values>
 			<events >
-				<event class='Compile' event='GetVarSize' target='Ev_GetVarSize' />
-				<event class='Simulation' event='Start' target='Ev_SimStart' />
-				<event class='Components' event='Property' target='Ev_Property' />
-				<event class='Compile' event='Start' target='Ev_CompileStart' />
-				<event class='Components' event='Renamed' target='Ev_Renamed' />
-				<event class='System' event='Timer' target='Ev_Timer' />
-				<event class='System' event='LoadComplete' target='Ev_LoadComplete' />
-				<event class='Compile' event='AddHeader' target='Ev_AddHeader' />
-				<event class='Components' event='Initialise' target='Ev_Initialise' />
 				<event class='Components' event='PostInitialise' target='Ev_PostInitialise' />
+				<event class='System' event='Timer' target='Ev_Timer' />
+				<event class='Compile' event='AddHeader' target='Ev_AddHeader' />
+				<event class='Compile' event='Start' target='Ev_CompileStart' />
+				<event class='Simulation' event='Start' target='Ev_SimStart' />
+				<event class='Compile' event='GetVarSize' target='Ev_GetVarSize' />
+				<event class='Components' event='Property' target='Ev_Property' />
+				<event class='Components' event='Renamed' target='Ev_Renamed' />
+				<event class='Components' event='Initialise' target='Ev_Initialise' />
+				<event class='System' event='LoadComplete' target='Ev_LoadComplete' />
 			</events>
 			<apis >
 				<api name='DrawScene' alt='DrawScene' type='1' proto='1' />
@@ -1108,7 +1108,7 @@ Each Widget theme requires 12 bytes of RAM to store the colour channels.' filter
 												</command>
 											</flowline>
 										</command>
-										<command class_type='loop' title='Loop' type='0' exp='.Idx &lt; .Count' >
+										<command class_type='loop' title='Loop' type='0' exp='.Idx &lt; .Count' for1='' for3='' >
 											<flowline >
 												<command class_type='decision' title='Decision' exp='IsSim == 1' swap='0' >
 													<flowline >
@@ -2189,7 +2189,7 @@ Any touched slider Widgets will automatically move their thumb and value to the 
 						<command class_type='calculation' title='No Press Detected' >
 							<exp exp='.Return = 0' />
 						</command>
-						<command class_type='loop' title='Loop' type='2' forvar='.Idx' exp='NumWidgets' >
+						<command class_type='loop' title='Loop' type='2' forvar='.Idx' exp='NumWidgets' for1='' for3='' >
 							<flowline >
 								<command class_type='calculation' title='Calculation' >
 									<exp exp='.ID = .Idx + MaxObjects' />
@@ -2224,7 +2224,7 @@ Any touched slider Widgets will automatically move their thumb and value to the 
 																<command class_type='calculation' title='Return detected Widget index' >
 																	<exp exp='.Return = 0' />
 																</command>
-																<command class_type='goto' title='Goto Connection Point' labelid='0' labelname='' />
+																<command class_type='goto' title='Goto Connection Point' labelid='0' labelname='' labeltype='0' />
 															</flowline>
 														</command>
 													</flowline>
@@ -2278,7 +2278,7 @@ Any touched slider Widgets will automatically move their thumb and value to the 
 													</flowline>
 													<flowline />
 												</command>
-												<command class_type='goto' title='Goto Connection Point' labelid='0' labelname='' />
+												<command class_type='goto' title='Goto Connection Point' labelid='0' labelname='' labeltype='0' />
 											</flowline>
 											<flowline />
 										</command>
@@ -2287,7 +2287,7 @@ Any touched slider Widgets will automatically move their thumb and value to the 
 								</command>
 							</flowline>
 						</command>
-						<command class_type='label' title='Declare Connection Point' labelid='0' labelname='A' />
+						<command class_type='label' title='Declare Connection Point' labelid='0' labelname='A' labeltype='4' />
 						<command class_type='decision' title='Is there a valid touch?' exp='.Return' swap='0' >
 							<flowline >
 								<command class_type='decision' title='Decision' exp='EnableCallbacks' swap='0' >
@@ -3019,7 +3019,7 @@ Doesn&apos;t draw text, this is done using the SetText macros.' statediag='0' >
 														<command class_type='calculation' title='Calculation' >
 															<exp exp='.idx = 0 - (LineWidth[.ID] &gt;&gt; 1)' />
 														</command>
-														<command class_type='loop' title='Loop' type='2' exp='LineWidth[.ID] - 1' >
+														<command class_type='loop' title='Loop' type='2' exp='LineWidth[.ID] - 1' for1='' for3='' >
 															<flowline >
 																<command class_type='decision' title='Decision' exp='DisplayType = 0' swap='0' >
 																	<flowline >
@@ -3106,7 +3106,7 @@ Doesn&apos;t draw text, this is done using the SetText macros.' statediag='0' >
 														<command class_type='calculation' title='Calculation' >
 															<exp exp='.idx = 0 - (LineWidth[.ID] &gt;&gt; 1)' />
 														</command>
-														<command class_type='loop' title='Loop' type='2' exp='LineWidth[.ID] - 1' >
+														<command class_type='loop' title='Loop' type='2' exp='LineWidth[.ID] - 1' for1='' for3='' >
 															<flowline >
 																<command class_type='decision' title='Decision' exp='DisplayType = 0' swap='0' >
 																	<flowline >
@@ -3197,7 +3197,7 @@ Doesn&apos;t draw text, this is done using the SetText macros.' statediag='0' >
 														<command class_type='calculation' title='Calculation' >
 															<exp exp='.idx = 0 - (LineWidth[.ID] &gt;&gt; 1)' />
 														</command>
-														<command class_type='loop' title='Loop' type='2' exp='LineWidth[.ID] - 1' >
+														<command class_type='loop' title='Loop' type='2' exp='LineWidth[.ID] - 1' for1='' for3='' >
 															<flowline >
 																<command class_type='decision' title='Decision' exp='DisplayType = 0' swap='0' >
 																	<flowline >
@@ -3261,7 +3261,7 @@ Doesn&apos;t draw text, this is done using the SetText macros.' statediag='0' >
 										<command class_type='calculation' title='Calculation' >
 											<exp exp='.idx = 0 - (LineWidth[.ID] &gt;&gt; 1)' />
 										</command>
-										<command class_type='loop' title='Loop' type='2' exp='LineWidth[.ID]' >
+										<command class_type='loop' title='Loop' type='2' exp='LineWidth[.ID]' for1='' for3='' >
 											<flowline >
 												<command class_type='decision' title='Horizontal Line?' exp='(H[.ID] = 0) || (W[.ID] &gt; H[.ID])' swap='0' >
 													<flowline >
@@ -3495,7 +3495,7 @@ Doesn&apos;t draw text, this is done using the SetText macros.' statediag='0' >
 														<command class_type='calculation' title='Calculation' >
 															<exp exp='.idx = 0 - (LineWidth[.ID] &gt;&gt; 1)' />
 														</command>
-														<command class_type='loop' title='Loop' type='2' exp='LineWidth[.ID] - 1' >
+														<command class_type='loop' title='Loop' type='2' exp='LineWidth[.ID] - 1' for1='' for3='' >
 															<flowline >
 																<command class_type='decision' title='Decision' exp='DisplayType = 0' swap='0' >
 																	<flowline >
@@ -3730,7 +3730,7 @@ Doesn&apos;t draw text, this is done using the SetText macros.' statediag='0' >
 														<command class_type='calculation' title='Calculation' >
 															<exp exp='.idx = 0 - (LineWidth[.ID] &gt;&gt; 1)' />
 														</command>
-														<command class_type='loop' title='Loop' type='2' exp='LineWidth[.ID] - 1' >
+														<command class_type='loop' title='Loop' type='2' exp='LineWidth[.ID] - 1' for1='' for3='' >
 															<flowline >
 																<command class_type='decision' title='Decision' exp='DisplayType = 0' swap='0' >
 																	<flowline >
@@ -3862,7 +3862,7 @@ Doesn&apos;t draw text, this is done using the SetText macros.' statediag='0' >
 														<command class_type='calculation' title='Calculation' >
 															<exp exp='.idx = 0 - (LineWidth[.ID] &gt;&gt; 1)' />
 														</command>
-														<command class_type='loop' title='Loop' type='2' exp='LineWidth[.ID] - 1' >
+														<command class_type='loop' title='Loop' type='2' exp='LineWidth[.ID] - 1' for1='' for3='' >
 															<flowline >
 																<command class_type='decision' title='Decision' exp='DisplayType = 0' swap='0' >
 																	<flowline >
@@ -5688,7 +5688,7 @@ Drawn using the object themes.' statediag='0' >
 													<exp exp='.Len = Length$(.Text)' />
 													<exp exp='.TextPixelWidth = 0' />
 												</command>
-												<command class_type='loop' title='Loop' type='2' forvar='.Idx' exp='.Len' >
+												<command class_type='loop' title='Loop' type='2' forvar='.Idx' exp='.Len' for1='' for3='' >
 													<flowline >
 														<command class_type='call' title='Get font character pixel width' component='Glcd_Col_Dummy1' macro='ReadFontWidth' >
 															<return exp='.PixelHeight' />
@@ -5800,7 +5800,7 @@ Drawn using the object themes.' statediag='0' >
 													<exp exp='.Len = Length$(.Text)' />
 													<exp exp='.TextPixelWidth = 0' />
 												</command>
-												<command class_type='loop' title='Loop' type='2' forvar='.Idx' exp='.Len' >
+												<command class_type='loop' title='Loop' type='2' forvar='.Idx' exp='.Len' for1='' for3='' >
 													<flowline >
 														<command class_type='call' title='Get font character pixel width' component='Glcd_Mon_Dummy1' macro='ReadFontWidth' >
 															<return exp='.PixelHeight' />
@@ -5973,7 +5973,7 @@ Drawn using the object themes.' statediag='0' >
 							<argument exp='.PanelIdx' />
 							<argument exp='0' />
 						</command>
-						<command class_type='loop' title='Loop' type='0' exp='.Return' >
+						<command class_type='loop' title='Loop' type='0' exp='.Return' for1='' for3='' >
 							<flowline >
 								<command class_type='sim' title='Read the component ID' macro='Component.Property.GetValue' >
 									<return exp='.IDTest' />
@@ -6004,7 +6004,7 @@ Drawn using the object themes.' statediag='0' >
 											</flowline>
 											<flowline />
 										</command>
-										<command class_type='goto' title='Goto Connection Point' labelid='0' labelname='' />
+										<command class_type='goto' title='Goto Connection Point' labelid='0' labelname='' labeltype='0' />
 									</flowline>
 									<flowline />
 								</command>
@@ -6014,7 +6014,7 @@ Drawn using the object themes.' statediag='0' >
 								</command>
 							</flowline>
 						</command>
-						<command class_type='label' title='Declare Connection Point' labelid='0' labelname='A' />
+						<command class_type='label' title='Declare Connection Point' labelid='0' labelname='A' labeltype='4' />
 					</flowline>
 				</macro>
 				<macro >
@@ -6033,7 +6033,7 @@ Will create new ones but will not remove old ones.' statediag='0' >
 						<command class_type='sim' title='Get number of 2D panels and DC panels' macro='Panel.Get2dPanelCount' >
 							<return exp='.PanelCount' />
 						</command>
-						<command class_type='loop' title='Loop through all panels and count number of DC panels' type='2' forvar='.Idx' exp='.PanelCount' >
+						<command class_type='loop' title='Loop through all panels and count number of DC panels' type='2' forvar='.Idx' exp='.PanelCount' for1='' for3='' >
 							<flowline >
 								<command class_type='sim' title='Built-in Function' macro='Panel.GetPanelType' >
 									<return exp='.PanelType' />
@@ -6051,7 +6051,7 @@ Will create new ones but will not remove old ones.' statediag='0' >
 						</command>
 						<command class_type='decision' title='Do we need to auto create more display creator panels?' exp='.DCPanelCount &lt; SceneCount' swap='0' >
 							<flowline >
-								<command class_type='loop' title='Loop' type='0' exp='.DCPanelCount &lt; SceneCount' >
+								<command class_type='loop' title='Loop' type='0' exp='.DCPanelCount &lt; SceneCount' for1='' for3='' >
 									<flowline >
 										<command class_type='sim' title='Built-in Function' macro='Panel.CreateDisplayCreator' >
 											<argument exp='&quot;Scene&quot; + ToString$(.DCPanelCount)' />
@@ -6074,7 +6074,7 @@ Will create new ones but will not remove old ones.' statediag='0' >
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='loop' title='Loop through and check panel setup is correct' disable='1' type='2' forvar='.Idx' exp='SceneCount' >
+						<command class_type='loop' title='Loop through and check panel setup is correct' disable='1' type='2' forvar='.Idx' exp='SceneCount' for1='' for3='' >
 							<flowline >
 								<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
 									<return exp='.TestHandle' />
@@ -6171,7 +6171,7 @@ Will create new ones but will not remove old ones.' statediag='0' >
 							<array size='2' />
 						</local>
 						<local name='Visible' type='b1' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
-						<command class_type='loop' title='Loop' type='2' forvar='.SceneIdx' exp='SceneCount' >
+						<command class_type='loop' title='Loop' type='2' forvar='.SceneIdx' exp='SceneCount' for1='' for3='' >
 							<flowline >
 								<command class_type='calculation' title='Calculation' >
 									<exp exp='.WidgetID = 0' />
@@ -6230,7 +6230,7 @@ Will create new ones but will not remove old ones.' statediag='0' >
 											<argument exp='.PanelID' />
 											<argument exp='1' />
 										</command>
-										<command class_type='loop' title='Loop through components on the panel' type='0' exp='.Handle' >
+										<command class_type='loop' title='Loop through components on the panel' type='0' exp='.Handle' for1='' for3='' >
 											<flowline >
 												<command class_type='sim' title='Check to see if it is a display layout component' macro='Component.Property.GetValue' >
 													<return exp='.TestHandle' />
@@ -6446,7 +6446,7 @@ do nothing!' textarea='12,0,12,0' />
 																		</command>
 																		<command class_type='decision' title='Decision' exp='Prv_BoundsCheck(.PosInt,.Handle)' swap='0' >
 																			<flowline >
-																				<command class_type='goto' title='Goto Connection Point' labelid='0' labelname='' />
+																				<command class_type='goto' title='Goto Connection Point' labelid='0' labelname='' labeltype='0' />
 																			</flowline>
 																			<flowline />
 																		</command>
@@ -6611,7 +6611,7 @@ do nothing!' textarea='12,0,12,0' />
 																						</command>
 																						<command class_type='decision' title='Decision' exp='Prv_BoundsCheck(.PosInt,.Handle)' swap='0' >
 																							<flowline >
-																								<command class_type='goto' title='Goto Connection Point' labelid='0' labelname='' />
+																								<command class_type='goto' title='Goto Connection Point' labelid='0' labelname='' labeltype='0' />
 																							</flowline>
 																							<flowline />
 																						</command>
@@ -6637,7 +6637,7 @@ do nothing!' textarea='12,0,12,0' />
 																							<exp exp='Prv_EncodeDCLayoutString(.EncodedLayoutText,.Handle &amp; 0xFF)' />
 																							<exp exp='Prv_EncodeDCLayoutString(.EncodedLayoutText,.Handle &gt;&gt; 8)' />
 																						</command>
-																						<command class_type='loop' title='Loop' type='2' forvar='.StrIdx' exp='Length$(.TempStr)' >
+																						<command class_type='loop' title='Loop' type='2' forvar='.StrIdx' exp='Length$(.TempStr)' for1='' for3='' >
 																							<flowline >
 																								<command class_type='calculation' title='Calculation' >
 																									<exp exp='Prv_EncodeDCLayoutString(.EncodedLayoutText,.TempStr[.StrIdx])' />
@@ -6655,7 +6655,7 @@ do nothing!' textarea='12,0,12,0' />
 																				</command>
 																			</flowline>
 																			<flowline >
-																				<command class_type='goto' title='Goto Connection Point' labelid='0' labelname='' />
+																				<command class_type='goto' title='Goto Connection Point' labelid='0' labelname='' labeltype='0' />
 																			</flowline>
 																		</command>
 																	</flowline>
@@ -6688,7 +6688,7 @@ do nothing!' textarea='12,0,12,0' />
 																			<exp exp='Prv_EncodeDCLayoutString(.EncodedLayoutText,.PosInt[0])' />
 																			<exp exp='Prv_EncodeDCLayoutString(.EncodedLayoutText,.PosInt[1])' />
 																		</command>
-																		<command class_type='loop' title='Loop' type='2' forvar='.StrIdx' exp='Length$(.TempStr)' >
+																		<command class_type='loop' title='Loop' type='2' forvar='.StrIdx' exp='Length$(.TempStr)' for1='' for3='' >
 																			<flowline >
 																				<command class_type='calculation' title='Calculation' >
 																					<exp exp='Prv_EncodeDCLayoutString(.EncodedLayoutText,.TempStr[.StrIdx])' />
@@ -6710,7 +6710,7 @@ do nothing!' textarea='12,0,12,0' />
 													</flowline>
 													<flowline />
 												</command>
-												<command class_type='label' title='Declare Connection Point' labelid='0' labelname='A' />
+												<command class_type='label' title='Declare Connection Point' labelid='0' labelname='A' labeltype='4' />
 												<command class_type='sim' title='Find Next Component on specified panel' macro='Panel.FindNextPanelComp' >
 													<return exp='.Handle' />
 													<argument exp='.PanelID' />
@@ -6786,7 +6786,7 @@ Doesn&apos;t draw text, this is done using the SetText macros.' statediag='0' >
 								<command class_type='call' title='Component Macro' component='Glcd_Mon_Dummy1' macro='ClearDisplay' />
 							</flowline>
 						</command>
-						<command class_type='loop' title='Loop through objects' type='0' exp='.Index &lt;= NumObjects' >
+						<command class_type='loop' title='Loop through objects' type='0' exp='.Index &lt;= NumObjects' for1='' for3='' >
 							<flowline >
 								<command class_type='call' title='User Macro' macro='DrawItem' >
 									<argument exp='.Index + 1' />
@@ -6796,7 +6796,7 @@ Doesn&apos;t draw text, this is done using the SetText macros.' statediag='0' >
 								</command>
 							</flowline>
 						</command>
-						<command class_type='loop' title='Loop through Widgets' type='0' exp='.Index &lt;= (NumObjects + NumWidgets)' >
+						<command class_type='loop' title='Loop through Widgets' type='0' exp='.Index &lt;= (NumObjects + NumWidgets)' for1='' for3='' >
 							<flowline >
 								<command class_type='call' title='User Macro' macro='DrawItem' >
 									<argument exp='.Index + MaxObjects' />
@@ -7153,7 +7153,7 @@ Useful when implementing 2D games.' statediag='0' >
 							<argument exp='&quot;RamUsage&quot;' />
 							<argument exp='.Calc' />
 						</command>
-						<command class_type='loop' title='Loop' type='2' forvar='.Calc' exp='8' >
+						<command class_type='loop' title='Loop' type='2' forvar='.Calc' exp='8' for1='' for3='' >
 							<flowline >
 								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Str = &quot;ObjTheme&quot; + ToString$(.Calc)' />
@@ -7203,7 +7203,7 @@ Useful when implementing 2D games.' statediag='0' >
 						<command class_type='decision' title='Decision' exp='DC_Enabled' swap='0' >
 							<flowline >
 								<command class_type='call' title='User Macro' macro='Prv_UpdateDCObjects' />
-								<command class_type='loop' title='Loop' type='2' forvar='.Idx' exp='30' >
+								<command class_type='loop' title='Loop' type='2' forvar='.Idx' exp='30' for1='' for3='' >
 									<flowline >
 										<command class_type='calculation' title='Calculation' >
 											<exp exp='.Str = &quot;Scene&quot; + ToString$(.Idx)' />
@@ -7264,7 +7264,7 @@ Useful when implementing 2D games.' statediag='0' >
 						<command class_type='sim' title='Find First Top Level Component in project' macro='Tree.StepChildHead' >
 							<argument exp='.Handle' />
 						</command>
-						<command class_type='loop' title='Loop' type='0' exp='.Handle' >
+						<command class_type='loop' title='Loop' type='0' exp='.Handle' for1='' for3='' >
 							<flowline >
 								<command class_type='sim' title='Check to see if it is a display manager component' macro='Component.Property.GetValue' >
 									<return exp='.DM_Handle' />
@@ -7624,16 +7624,16 @@ Returns the ID of the first object, the following objects have incremental IDs g
 						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Return = 0' />
 						</command>
-						<command class_type='loop' title='Loop' type='2' exp='.NumRows' >
+						<command class_type='loop' title='Loop' type='2' exp='.NumRows' for1='' for3='' >
 							<flowline >
 								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Col = 0' />
 								</command>
-								<command class_type='loop' title='Loop' type='2' exp='.NumColumns' >
+								<command class_type='loop' title='Loop' type='2' exp='.NumColumns' for1='' for3='' >
 									<flowline >
 										<command class_type='calculation' title='Calculation' >
-											<exp exp='.WX = .InitialPositionX + .Col * (.ObjectWidth + .SpacingY)' />
-											<exp exp='.WY = .InitialPositionY + .Row * (.ObjectHeight + .SpacingX)' />
+											<exp exp='.WX = .InitialPositionX + .Col * (.ObjectWidth + .SpacingX)' />
+											<exp exp='.WY = .InitialPositionY + .Row * (.ObjectHeight + .SpacingY)' />
 										</command>
 										<command class_type='call' title='User Macro' macro='CreateObject' >
 											<return exp='.ID' />
@@ -7808,7 +7808,7 @@ Returns the ID of the first object, the following objects have incremental IDs g
 							<argument exp='this' />
 							<argument exp='.PropLayout' />
 						</command>
-						<command class_type='loop' title='Loop' type='0' exp='.Idx' >
+						<command class_type='loop' title='Loop' type='0' exp='.Idx' for1='' for3='' >
 							<flowline >
 								<command class_type='decision' title='Decision' exp='.LayoutStr[.pointer] == &apos;,&apos;' swap='0' >
 									<flowline >
@@ -7826,7 +7826,7 @@ Returns the ID of the first object, the following objects have incremental IDs g
 						<command class_type='calculation' title='Calculation' >
 							<exp exp='.data[.Idx] = 0' />
 						</command>
-						<command class_type='loop' title='Loop' type='0' exp='.Idx &lt; .Count' >
+						<command class_type='loop' title='Loop' type='0' exp='.Idx &lt; .Count' for1='' for3='' >
 							<flowline >
 								<command class_type='decision' title='Decision' exp='.LayoutStr[.pointer] == &apos;,&apos;' swap='0' >
 									<flowline >
@@ -7927,7 +7927,7 @@ using callbacks' textarea='12,0,12,0' />
 										<command class_type='sim' title='Find First Top Level Component in project' macro='Tree.StepChildHead' >
 											<argument exp='.Handle' />
 										</command>
-										<command class_type='loop' title='Loop' type='0' exp='.Handle' >
+										<command class_type='loop' title='Loop' type='0' exp='.Handle' for1='' for3='' >
 											<flowline >
 												<command class_type='sim' title='Check to see if it is a display manager component' macro='Component.Property.GetValue' >
 													<return exp='.Test' />
@@ -7977,7 +7977,7 @@ using callbacks' textarea='12,0,12,0' />
 								<command class_type='calculation' title='Calculation' >
 									<exp exp='.CountArray = &quot;MX_UINT16 DC_COUNT[&quot; + ToString$(SceneCount) + &quot;] = {&quot;' />
 								</command>
-								<command class_type='loop' title='Loop' type='2' forvar='.Idx' exp='SceneCount' >
+								<command class_type='loop' title='Loop' type='2' forvar='.Idx' exp='SceneCount' for1='' for3='' >
 									<flowline >
 										<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
 											<return exp='.Count' />
@@ -8064,11 +8064,11 @@ If none exists then creates one and returns the handle.
 							<array size='20' />
 						</local>
 						<local name='Found' type='b1' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
-						<command class_type='label' title='Declare Connection Point' labelid='1' labelname='B' />
+						<command class_type='label' title='Declare Connection Point' labelid='1' labelname='B' labeltype='4' />
 						<command class_type='sim' title='Built-in Function' macro='Panel.Get2dPanelCount' >
 							<return exp='.PanelCount' />
 						</command>
-						<command class_type='loop' title='Loop through 2d panels' type='2' forvar='.Idx' exp='.PanelCount' >
+						<command class_type='loop' title='Loop through 2d panels' type='2' forvar='.Idx' exp='.PanelCount' for1='' for3='' >
 							<flowline >
 								<command class_type='sim' title='Built-in Function' macro='Panel.GetPanelName' >
 									<return exp='.PanelName' />
@@ -8080,7 +8080,7 @@ If none exists then creates one and returns the handle.
 											<exp exp='.Found = 1' />
 											<exp exp='.Return = .Idx' />
 										</command>
-										<command class_type='goto' title='Goto Connection Point' labelid='0' labelname='' />
+										<command class_type='goto' title='Goto Connection Point' labelid='0' labelname='' labeltype='0' />
 									</flowline>
 									<flowline />
 								</command>
@@ -8091,11 +8091,11 @@ If none exists then creates one and returns the handle.
 								<command class_type='sim' title='Built-in Function' macro='Panel.Create2dPanel' >
 									<argument exp='&quot;GLCD Layout Editor&quot;' />
 								</command>
-								<command class_type='goto' title='Goto Connection Point' labelid='1' labelname='' />
+								<command class_type='goto' title='Goto Connection Point' labelid='1' labelname='' labeltype='0' />
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='label' title='Declare Connection Point' labelid='0' labelname='A' />
+						<command class_type='label' title='Declare Connection Point' labelid='0' labelname='A' labeltype='4' />
 						<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
 							<argument exp='this' />
 							<argument exp='&quot;PanelHandle&quot;' />
@@ -8147,16 +8147,16 @@ Returns the ID of the first button, the following buttons have incremental IDs g
 						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Return = 0' />
 						</command>
-						<command class_type='loop' title='Loop' type='2' exp='.NumRows' >
+						<command class_type='loop' title='Loop' type='2' exp='.NumRows' for1='' for3='' >
 							<flowline >
 								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Col = 0' />
 								</command>
-								<command class_type='loop' title='Loop' type='2' exp='.NumColumns' >
+								<command class_type='loop' title='Loop' type='2' exp='.NumColumns' for1='' for3='' >
 									<flowline >
 										<command class_type='calculation' title='Calculation' >
-											<exp exp='.WX = .InitialPositionX + .Col * (.WidgetWidth + .SpacingY)' />
-											<exp exp='.WY = .InitialPositionY + .Row * (.WidgetHeight + .SpacingX)' />
+											<exp exp='.WX = .InitialPositionX + .Col * (.WidgetWidth + .SpacingX)' />
+											<exp exp='.WY = .InitialPositionY + .Row * (.WidgetHeight + .SpacingY)' />
 										</command>
 										<command class_type='call' title='User Macro' macro='CreateWidget' >
 											<return exp='.ID' />
@@ -8231,6 +8231,7 @@ based on the scene.' statediag='0' >
 20, 2.1, 06-08-24, BR, Fixed a problem where slider value could be set with out of range value;
 21, 2.1, 06-08-24, BR, Fixed problem where SetTextNumber would reset an ESP32;
 22, 22.0, 19-03-25, MW, Added keypad creation function;
+37, 0.0, 20-09-26, MW, Fixed SpacingX/SpacingY swapped in CreateWidgetArray/CreateObjectArray;
 ' textarea='12,0,12,0' />
 					</flowline>
 				</macro>
@@ -8544,10 +8545,10 @@ Manager' />
 	<keymap />
 	<panel2d shadows='0' lighting='2' brightness='0' >
 		<background rgb='255' img='' style='0' />
-		<camera xe='4.05886' ye='-6.64744' ze='211.628' xt='4.05886' yt='-6.64744' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
-		<viewport dx='583' dy='843' zoom='333.335' fix_topleft='0' />
+		<camera xe='4.05886' ye='-6.64744' ze='169.157' xt='4.05886' yt='-6.64744' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='466' dy='849' zoom='333.335' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='0' />
-		<winpos ID='7005' RectRecentFloat='1134,71,1725,945' RectRecentDocked='0,0,519,843' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7005' RectRecentFloat='1134,71,1725,945' RectRecentDocked='0,0,466,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel2d>
 	<panel3d shadows='0' lighting='2' brightness='0' perspective='1' >
 		<background rgb='8409120' img='' style='0' />
@@ -8560,59 +8561,59 @@ Manager' />
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,392,565' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,462,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='2' >
 		<panel2d_0 id='0' name='Panel' type='0' >
-			<winpos ID='1171' RectRecentFloat='1133,210,1496,498' RectRecentDocked='970,141,1489,1061' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+			<winpos ID='1171' RectRecentFloat='1133,210,1496,498' RectRecentDocked='927,141,1393,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 			<background fill='72057594035033043' showgrid='1' gridstyle='1' gridsize='10' gridbrush='71776119075691740' snaptogrid='1' fitcomp='0' disp_x='320' disp_y='240' scale='100' disp_col='16752832' />
 		</panel2d_0>
 		<panel2d_1 id='1' name='Scene0' type='1' >
-			<winpos ID='1172' RectRecentFloat='0,454,650,904' RectRecentDocked='970,141,1489,1061' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+			<winpos ID='1172' RectRecentFloat='0,454,650,904' RectRecentDocked='927,141,1393,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 			<background fill='288230376151053813' showgrid='0' gridstyle='0' gridsize='5' gridbrush='71776119075691740' snaptogrid='1' fitcomp='0' disp_x='320' disp_y='240' scale='100' disp_col='8388626' />
 		</panel2d_1>
 	</panels2d>
 	<layout >
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_GetVarSize' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ModifyPosition' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='CreateObject' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='90' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ModifyScale' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DrawAll' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DrawItem' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='65' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetTextLabel' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_LoadComplete' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='CreateWidget' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ModifyColour' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='CheckForTouch' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='70' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetLastTouchID' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='NoTouch' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetSliderValue' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetSliderValue' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='CheckCollision' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ClearAll' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_SimStart' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_CompileStart' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='CreateTextField' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetPanelHandle' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DrawScene' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Prv_SetupDCScenes' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='CreateWidgetArray' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Prv_EncodeDCComps' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_AddHeader' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Prv_EncodeDCLayoutString' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Prv_GetDCArray' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='CreateObjectArray' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Prv_UpdateDCObjects' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Prv_FindSceneCompCallback' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_PostInitialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Timer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ModifyBitmap' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Prv_BoundsCheck' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetSceneIdx' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAACgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_GetVarSize' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ModifyPosition' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CreateObject' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='90' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ModifyScale' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DrawAll' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DrawItem' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='65' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetTextLabel' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_LoadComplete' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CreateWidget' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ModifyColour' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CheckForTouch' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='70' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetLastTouchID' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='NoTouch' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetSliderValue' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetSliderValue' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CheckCollision' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ClearAll' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_SimStart' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_CompileStart' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CreateTextField' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetPanelHandle' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DrawScene' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_SetupDCScenes' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CreateWidgetArray' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_EncodeDCComps' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_AddHeader' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_EncodeDCLayoutString' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_GetDCArray' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CreateObjectArray' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_UpdateDCObjects' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_FindSceneCompCallback' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_PostInitialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Timer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ModifyBitmap' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Prv_BoundsCheck' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetSceneIdx' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAnwMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>
