@@ -362,7 +362,7 @@
 	</ghost>
 	<components >
 		<settings autoimg='0' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='1' />
-		<definition guid='9202a62e-0a42-4780-adce-16b701e5ec53' vstate='40' vmin='0' vmaj='12' srcleaf='Servo Controller.fcfx' visiblename='Servo Motor Controller' description='Can control up to eight standard PWM driven servo&apos;s.
+		<definition guid='9202a62e-0a42-4780-adce-16b701e5ec53' vstate='40' vmin='0' vmaj='13' srcleaf='Servo Controller_19.fcfx' visiblename='Servo Motor Controller' description='Can control up to eight standard PWM driven servo&apos;s.
 
 Supports 8-bit and 16-bit movement resolutions.
 &apos;Servo Object&apos; properties allow you to connect the controller to on-screen simulations using the &quot;Servo Motor&quot; component and its derivatives.
@@ -551,8 +551,8 @@ set to responf to &apos;User.Notify&apos; events (ID = n/a,  Data = Position (0-
 				<value target='trim7' data='0' />
 				<value target='min_pulse_width' data='1000' />
 				<value target='max_pulse_width' data='2000' />
-				<value target='CCPLo' data='164' />
-				<value target='CCPHi' data='102' />
+				<value target='CCPLo' data='109' />
+				<value target='CCPHi' data='68' />
 				<value target='Servo_Clock_Count_25' data='1750' />
 				<value target='Servo_Clock_Count_1280' data='8754' />
 				<value target='Servo_Clock_Count_2500' data='17517' />
@@ -572,17 +572,17 @@ set to responf to &apos;User.Notify&apos; events (ID = n/a,  Data = Position (0-
 				<value target='sim7' data='' />
 			</values>
 			<events >
-				<event class='Simulation' event='Stop' target='Ev_Stop' />
-				<event class='Simulation' event='Start' target='Ev_Start' />
-				<event class='Connection' event='FCDChange' target='Ev_ChipChange' />
-				<event class='Components' event='Renamed' target='Ev_Renamed' />
-				<event class='Connection' event='ChipChange' target='Ev_ChipChange' />
-				<event class='Compile' event='Preprocess' target='Ev_Property' />
-				<event class='Components' event='Property' target='Ev_Property' />
-				<event class='Compile' event='AddInterrupts' target='Ev_AddInterrupts' />
 				<event class='System' event='Timer' target='Ev_Timer' />
 				<event class='Compile' event='AddHeader' target='Ev_AddHeader' />
+				<event class='Connection' event='ChipChange' target='Ev_ChipChange' />
+				<event class='Connection' event='FCDChange' target='Ev_ChipChange' />
+				<event class='Compile' event='Preprocess' target='Ev_Property' />
+				<event class='Simulation' event='Start' target='Ev_Start' />
+				<event class='Components' event='Renamed' target='Ev_Renamed' />
 				<event class='Components' event='Initialise' target='Ev_Property' />
+				<event class='Compile' event='AddInterrupts' target='Ev_AddInterrupts' />
+				<event class='Components' event='Property' target='Ev_Property' />
+				<event class='Simulation' event='Stop' target='Ev_Stop' />
 			</events>
 			<apis >
 				<api name='DisableServo' alt='DisableServo_Sim' type='1' proto='1' />
@@ -593,6 +593,7 @@ set to responf to &apos;User.Notify&apos; events (ID = n/a,  Data = Position (0-
 				<api name='MoveToPosition' alt='MoveToPosition_Sim' type='1' proto='1' />
 				<api name='SetTrim' alt='SetTrim' type='1' proto='1' />
 				<api name='IsAutoMoving' alt='IsAutoMoving' type='1' proto='1' />
+				<api name='SetCalibrationAngle' alt='SetCalibrationAngle' type='1' proto='1' />
 				<api name='SetAutoMoveSpeedInt' alt='SetAutoMoveSpeedInt_Sim' type='1' proto='1' />
 				<api name='IsServoAutoMoving' alt='IsServoAutoMoving' type='1' proto='1' />
 				<api name='AutoMoveToPosition' alt='AutoMoveToPosition_Sim' type='1' proto='1' />
@@ -1509,7 +1510,6 @@ Uses a 16-bit position parameter to add extra precision.' statediag='0' >
 						<local name='ClockSpeed' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='MasterDivider' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Calc' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<local name='PeriodCalc' type='u32' description='Reload period padded with idle margin' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='CalcR' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
 						<local name='product' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
@@ -2774,24 +2774,15 @@ Uses a 16-bit position parameter to add extra precision.' statediag='0' >
 							<argument exp='&quot;Servo_Clock_Count_2500&quot;' />
 							<argument exp='.Calc' />
 						</command>
-						<command class_type='comment' title='' comment='Fix: CCPLo/CCPHi reload point now from max_pulse_width + min_pulse_width, not max_pulse_width alone.' textarea='12,0,12,0' />
-						<command class_type='calculation' title='Calculation' >
-							<exp exp='.CalcR = FLOAT (max_pulse_width + min_pulse_width) / 1000000.0' />
-							<exp exp='.CalcR = 1.0 / .CalcR' />
-						</command>
-						<command class_type='calculation' title='Calculation' >
-							<exp exp='.PeriodCalc = .CalcR * .MasterDivider' />
-							<exp exp='.PeriodCalc = .ClockSpeed / .PeriodCalc' />
-						</command>
 						<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 							<argument exp='this' />
 							<argument exp='&quot;CCPLo&quot;' />
-							<argument exp='.PeriodCalc &amp; 0xFF' />
+							<argument exp='.Calc &amp; 0xFF' />
 						</command>
 						<command class_type='sim' title='Simulation' macro='Component.Property.SetValue' >
 							<argument exp='this' />
 							<argument exp='&quot;CCPHi&quot;' />
-							<argument exp='.PeriodCalc / 256' />
+							<argument exp='.Calc / 256' />
 						</command>
 						<command class_type='calculation' title='Calculation' >
 							<exp exp='.CalcR = FLOAT min_pulse_width / 1000000.0' />
@@ -3232,7 +3223,7 @@ Returns 1 if the position has been reached.' statediag='0' >
 						<return name='Return' type='b1' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Channel' type='u8' description='The channel to assign the new position. Range: 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Angle' type='u8' description='Angle in degrees, Range 0 to calibration angle' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<local name='calc' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='calc' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Return = 1' />
 						</command>
@@ -3682,6 +3673,22 @@ Returns 0 if the servo movement is complete.' statediag='0' >
 									<exp exp='.Return = 0' />
 								</command>
 							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SetCalibrationAngle' description='Allows the angle travel of a servo motor to be defined allowing the angle functions to be more accurate.
+This can be measured using set position 0-255 and manually measuring the angle.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Channel' type='u8' description='The channel to assign the calibration. Range: 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='AngleRange' type='u8' description='The range of motion in degrees of the servo - default 180.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' exp='.Channel &lt; Channel_Count' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='Servo_Calibration_Angle[.Channel] = .AngleRange' />
+								</command>
+							</flowline>
+							<flowline />
 						</command>
 					</flowline>
 				</macro>
@@ -4555,9 +4562,9 @@ Default speed is shown in the Servo_Period_Multiplier property.' statediag='0' >
 						<command class_type='comment' title='' comment='Component Version Information;
 8, 8.0, 28-01-25, MW, Fixed bug that is preventing duty remain the same below 128, remins high above 127.;
 12, 0.0, MW, 24-09-26, Fixed bug where Calibration Angle was never initialised, causing all angle moves to clamp to 0.;
-12, 0.0, MW, 24-09-26, Fixed bug where CCPLo/CCPHi had no idle margin near max pulse width.;
 12, 0.0, MW, 24-09-26, Fixed bug where angle to byte calculation overflowed above approx 90 degrees.;
-12, 0.0, MW, 24-09-26, Fixed bug where ESP32 MoveToPosition/MoveToPositionInt double scaled position and duty curve was non linear.;' textarea='12,0,12,0' />
+12, 0.0, MW, 24-09-26, Fixed bug where ESP32 MoveToPosition/MoveToPositionInt double scaled position and duty curve was non linear.;
+' textarea='12,0,12,0' />
 						<command class_type='call' title='Call Macro' macro='Initialise' />
 					</flowline>
 				</macro>
@@ -4961,10 +4968,10 @@ Default speed is shown in the Servo_Period_Multiplier property.' statediag='0' >
 	<keymap />
 	<panel2d shadows='0' lighting='0' brightness='0' >
 		<background rgb='2960685' img='' style='0' />
-		<camera xe='178.563' ye='43.6512' ze='274.656' xt='178.563' yt='43.6512' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
-		<viewport dx='180' dy='713' zoom='79.2993' fix_topleft='0' />
+		<camera xe='178.563' ye='43.6512' ze='64.4254' xt='178.563' yt='43.6512' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='38' dy='688' zoom='71.3694' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='0' />
-		<winpos ID='7005' RectRecentFloat='1270,379,1920,829' RectRecentDocked='1243,183,1443,995' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+		<winpos ID='7005' RectRecentFloat='1270,379,1920,829' RectRecentDocked='572,183,630,970' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel2d>
 	<panel3d shadows='1' lighting='0' brightness='0' perspective='1' >
 		<background rgb='8409120' img='' style='4' />
@@ -4977,48 +4984,49 @@ Default speed is shown in the Servo_Period_Multiplier property.' statediag='0' >
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,210,698' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,26,698' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='0' />
 	<layout >
-		<view type='0' name='SetTrim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Timer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetPosition_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetPosition' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='60' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='AutoMoveToPosition_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='AutoMoveToPosition' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='AutoMoveToPositionInt_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DisableServo_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='EnableServo_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Initialise_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='MoveToPositionInt_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='60' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='MoveToPosition_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetAutoMoveSpeedInt_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetAutoMoveSpeed_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetPositionInt_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='MoveToPositionInt' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='IsServoAutoMoving' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='IsAutoMoving' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Start' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Stop' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DisableServo' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='55' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetAutoMoveSpeedInt' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='AutoMoveToPositionInt' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='MoveToPosition' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetAutoMoveSpeed' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ISR' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_ChipChange' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_AddInterrupts' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='EnableServo' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='70' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetPositionInt' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_AddHeader' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='MoveToAngle_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='MoveToAngle' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='AutoMoveToAngle_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='AutoMoveToAngle' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAOQEAACcDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetTrim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Timer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetPosition_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetPosition' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='60' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='AutoMoveToPosition_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='AutoMoveToPosition' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='AutoMoveToPositionInt_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DisableServo_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='EnableServo_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Initialise_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='MoveToPositionInt_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='60' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='MoveToPosition_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetAutoMoveSpeedInt_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetAutoMoveSpeed_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetPositionInt_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='MoveToPositionInt' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='IsServoAutoMoving' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='IsAutoMoving' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Start' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Stop' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DisableServo' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='55' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetAutoMoveSpeedInt' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='AutoMoveToPositionInt' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='MoveToPosition' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetAutoMoveSpeed' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ISR' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_ChipChange' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_AddInterrupts' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='EnableServo' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='70' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetPositionInt' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_AddHeader' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='MoveToAngle_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='MoveToAngle' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='AutoMoveToAngle_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='AutoMoveToAngle' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetCalibrationAngle' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAeAAAAAQIAAA4DAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>
