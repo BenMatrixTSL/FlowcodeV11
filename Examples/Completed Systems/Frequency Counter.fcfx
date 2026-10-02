@@ -1,0 +1,498 @@
+<root>
+<document schema='101' license='0,30day_31868014,2MBXKV' title='' description='' guid='33c9f113-cb17-4793-800b-5585396b70ba' target='PIC.16F.16F877A' >
+	<config data='!0,3f72%0,2%2,0%3,0%6,1%7,0%9,3%b,1%8,1%d,1' clkspd='19660800' simspd='1' usewdt='0' constif='0' />
+	<plugins >
+		<dll_dbg_icd enabled='0' >
+			<data name='debug' value='1' />
+			<data name='userpins' value='0' />
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='monitor' value='1' />
+			<data name='ictloop' value='1' />
+			<data name='ictrate' value='1000' />
+			<data name='ictmask' value='-1' />
+		</dll_dbg_icd>
+		<dll_dbg_ict enabled='0' >
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='userpins' value='0' />
+		</dll_dbg_ict>
+		<dll_models enabled='1' />
+		<dll_upgrader enabled='1' />
+		<dll_webhelp enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug />
+	<components >
+		<settings autoimg='1' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='7eae5c22-0392-4214-bd36-2a1b7d6d7852' vmin='0' vmaj='1' visiblename='' description='' category='' author='' sysinfo='0' keywords='' dynamic='0' iconpath='' />
+		<component class_type='root' codename='panel' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+			<resources />
+			<properties />
+			<values />
+			<events />
+			<apis />
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='count' type='u8' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='in' type='u8' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='freq' type='s16' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='update_display' type='u8' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='false' type='b1' description='' isconst='1' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='true' type='b1' description='' isconst='1' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='Display_Freq' type='s16' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='TMR_INT' description='' >
+						<command class_type='calculation' title='Increment Interrupt Count' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+							<exp exp='count = count + 1' />
+						</command>
+						<command class_type='decision' title='75 Interrupts in 1 Sec @ 19.6608MHz' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='count &lt; 75' swap='1' >
+							<flowline >
+								<command class_type='calculation' title='Set flag to allow LCD to update' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='update_display = 1' />
+								</command>
+								<command class_type='calculation' title='Store count variable into Display copy' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='Display_Freq = freq' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='' >
+						<command class_type='comment' title='' comment='Prints out the freqency of 
+pulses incoming to the pin 
+specified in macro Read_Input
+
+Max Input freq approx 32000Hz
+
+This can be simulated by pressing the SMT switch in the system panel
+during simulation' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+						<command class_type='call' title='Init LCD' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='lcd_eb005' macro='Start' />
+						<command class_type='calculation' title='Init Counters' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+							<exp exp='freq = 0' />
+							<exp exp='count = 0' />
+							<exp exp='update_display = 0' />
+						</command>
+						<command class_type='call' title='Init In Variable' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Read_input' />
+						<command class_type='interrupt' title='Start Interrupt' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' enable='1' name='TMR0' call='TMR_INT' >
+							<settings timer='1' prescale='256' postscale='-1' rollover='-1' bitcount='-1' trigger='3' maskhi='--------------------------------------------------------------------------------------------------------------------------------------------------------------------------8' masklo='--------------------------------------------------------------------------------------------------------------------------------------------------------------------------8' >
+								<option value='1' />
+								<option value='0' />
+								<option value='8' />
+								<option value='-1' />
+							</settings>
+						</command>
+						<command class_type='loop' title='Main Loop' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='1' type='0' start='1' count='1' breakend='0' >
+							<flowline >
+								<command class_type='decision' title='Is the count ready to display?' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='update_display' swap='0' >
+									<flowline >
+										<command class_type='call' title='Init Cursor' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='lcd_eb005' macro='Cursor' >
+											<argument exp='0' />
+											<argument exp='0' />
+										</command>
+										<command class_type='call' title='Output Label' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='lcd_eb005' macro='PrintString' >
+											<argument exp='&quot;Freq = &quot;' />
+										</command>
+										<command class_type='call' title='Output Frequency' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='lcd_eb005' macro='PrintNumber' >
+											<argument exp='Display_Freq' />
+										</command>
+										<command class_type='call' title='Output Units' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='lcd_eb005' macro='PrintString' >
+											<argument exp='&quot; Hz   &quot;' />
+										</command>
+										<command class_type='calculation' title='Reset Counters' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='freq = 0' />
+											<exp exp='count = 0' />
+											<exp exp='update_display = 0' />
+										</command>
+										<command class_type='native' title='Reset Timer Count register to 0' comment='' ccode='tmr0 = 0x00;
+' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' language='C' />
+									</flowline>
+									<flowline >
+										<command class_type='loop' title='Wait Until Low Or Update flag set' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='in = 1 &amp;&amp; update_display = 0' type='0' start='1' count='1' breakend='0' >
+											<flowline >
+												<command class_type='call' title='Collect Input' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Read_input' />
+											</flowline>
+										</command>
+										<command class_type='loop' title='Wait Until High Or Update flag set' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='in = 0 &amp;&amp; update_display = 0' type='0' start='1' count='1' breakend='0' >
+											<flowline >
+												<command class_type='call' title='Collect Input' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Read_input' />
+											</flowline>
+										</command>
+										<command class_type='calculation' title='Increment Count' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='freq = freq + 1' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Read_input' description='' >
+						<command class_type='input' title='Read Input Pin' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' mode='1' port='1048576' mask='1' exp='in' />
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='group' codename='group1' x='0' y='0' z='3' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values />
+				<events />
+				<apis />
+				<variables />
+				<macros />
+				<component class_type='shape' codename='shape1' x='0' y='0' z='0.99' xsz='50' ysz='30' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Shape' data='0' />
+						<value target='Color' data='1212416' />
+						<value target='Outline' data='0' />
+						<value target='Thickness' data='0.220000' />
+						<value target='Image' data='' />
+						<value target='Model' data='' />
+						<value target='Unit' data='' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='text' codename='label2' x='15' y='-12.5' z='1.5' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Color' data='16777215' />
+						<value target='Background' data='-1' />
+						<value target='Font' data='OCR A Extended' />
+						<value target='Text' data='DIGI FREQ COUNTER' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='shape' codename='shape2' x='-23' y='-13' z='0.99' xsz='2' ysz='2' zsz='1.02' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Shape' data='4' />
+						<value target='Color' data='12632256' />
+						<value target='Outline' data='0' />
+						<value target='Thickness' data='0' />
+						<value target='Image' data='' />
+						<value target='Model' data='' />
+						<value target='Unit' data='' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='shape' codename='shape3' x='-23' y='13' z='0.99' xsz='2' ysz='2' zsz='1.02' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Shape' data='4' />
+						<value target='Color' data='12632256' />
+						<value target='Outline' data='0' />
+						<value target='Thickness' data='0' />
+						<value target='Image' data='' />
+						<value target='Model' data='' />
+						<value target='Unit' data='' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='shape' codename='shape4' x='23' y='-13' z='0.99' xsz='2' ysz='2' zsz='1.02' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Shape' data='4' />
+						<value target='Color' data='12632256' />
+						<value target='Outline' data='0' />
+						<value target='Thickness' data='0' />
+						<value target='Image' data='' />
+						<value target='Model' data='' />
+						<value target='Unit' data='' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='shape' codename='shape5' x='23' y='13' z='0.99' xsz='2' ysz='2' zsz='1.02' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Shape' data='4' />
+						<value target='Color' data='12632256' />
+						<value target='Outline' data='0' />
+						<value target='Thickness' data='0' />
+						<value target='Image' data='' />
+						<value target='Model' data='' />
+						<value target='Unit' data='' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='shape' codename='shape6' x='-23' y='-13' z='0.99' xsz='1' ysz='1' zsz='1.04' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Shape' data='4' />
+						<value target='Color' data='0' />
+						<value target='Outline' data='0' />
+						<value target='Thickness' data='0' />
+						<value target='Image' data='' />
+						<value target='Model' data='' />
+						<value target='Unit' data='' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='shape' codename='shape7' x='-23' y='13' z='0.99' xsz='1' ysz='1' zsz='1.04' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Shape' data='4' />
+						<value target='Color' data='0' />
+						<value target='Outline' data='0' />
+						<value target='Thickness' data='0' />
+						<value target='Image' data='' />
+						<value target='Model' data='' />
+						<value target='Unit' data='' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='shape' codename='shape8' x='23' y='-13' z='0.99' xsz='1' ysz='1' zsz='1.04' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Shape' data='4' />
+						<value target='Color' data='0' />
+						<value target='Outline' data='0' />
+						<value target='Thickness' data='0' />
+						<value target='Image' data='' />
+						<value target='Model' data='' />
+						<value target='Unit' data='' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='shape' codename='shape9' x='23' y='13' z='0.99' xsz='1' ysz='1' zsz='1.04' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Shape' data='4' />
+						<value target='Color' data='0' />
+						<value target='Outline' data='0' />
+						<value target='Thickness' data='0' />
+						<value target='Image' data='' />
+						<value target='Model' data='' />
+						<value target='Unit' data='' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='shape' codename='shape10' x='-20' y='8' z='-0.51' xsz='5' ysz='5' zsz='2' xang='180' yang='0' zang='0' xquat='1' yquat='0' zquat='0' wquat='6.12323e-017' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Shape' data='6' />
+						<value target='Color' data='0' />
+						<value target='Outline' data='16777215' />
+						<value target='Thickness' data='0.000000' />
+						<value target='Image' data='' />
+						<value target='Model' data='' />
+						<value target='Unit' data='' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='shape' codename='shape11' x='20' y='8' z='-0.51' xsz='5' ysz='5' zsz='2' xang='180' yang='0' zang='0' xquat='1' yquat='0' zquat='0' wquat='6.12323e-017' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Shape' data='6' />
+						<value target='Color' data='0' />
+						<value target='Outline' data='16777215' />
+						<value target='Thickness' data='0.000000' />
+						<value target='Image' data='' />
+						<value target='Model' data='' />
+						<value target='Unit' data='' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='shape' codename='shape12' x='20' y='-8' z='-0.51' xsz='5' ysz='5' zsz='2' xang='180' yang='0' zang='0' xquat='1' yquat='0' zquat='0' wquat='6.12323e-017' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Shape' data='6' />
+						<value target='Color' data='0' />
+						<value target='Outline' data='16777215' />
+						<value target='Thickness' data='0.000000' />
+						<value target='Image' data='' />
+						<value target='Model' data='' />
+						<value target='Unit' data='' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='shape' codename='shape13' x='-20' y='-8' z='-0.51' xsz='5' ysz='5' zsz='2' xang='180' yang='0' zang='0' xquat='1' yquat='0' zquat='0' wquat='6.12323e-017' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Shape' data='6' />
+						<value target='Color' data='0' />
+						<value target='Outline' data='16777215' />
+						<value target='Thickness' data='0.000000' />
+						<value target='Image' data='' />
+						<value target='Model' data='' />
+						<value target='Unit' data='' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='text' codename='label1' x='15' y='-13.5' z='1.5' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Color' data='16777215' />
+						<value target='Background' data='-1' />
+						<value target='Font' data='OCR A Extended' />
+						<value target='Text' data='Matrix Multimedia' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='text' codename='label3' x='0' y='13' z='1.5' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Color' data='16777215' />
+						<value target='Background' data='-1' />
+						<value target='Font' data='OCR A Extended' />
+						<value target='Text' data='TOPSIDE' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='text' codename='label4' x='0' y='13' z='0.48' xsz='-1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Color' data='16777215' />
+						<value target='Background' data='-1' />
+						<value target='Font' data='OCR A Extended' />
+						<value target='Text' data='UNDERSIDE' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+			</component>
+			<component class_type='ref' guid='d29dda88-17de-4008-991a-c881890d4c57' vmin='1' vmaj='1' codename='lcd_eb005' x='-7' y='0' z='5.5725' xsz='0.3' ysz='0.3' zsz='0.3' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Pin_Data_0' data='$PORTB.0' />
+					<value target='Pin_Data_1' data='$PORTB.1' />
+					<value target='Pin_Data_2' data='$PORTB.2' />
+					<value target='Pin_Data_3' data='$PORTB.3' />
+					<value target='Pin_RS' data='$PORTB.4' />
+					<value target='Pin_E' data='$PORTB.5' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='26732594-ad79-472f-80ff-95d365b3b252' vmin='1' vmaj='1' codename='sw_push_pcb1' x='14' y='0' z='6.371' xsz='0.5' ysz='0.5' zsz='0.5' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='pin' data='$PORTA.0' />
+					<value target='polarity' data='000' />
+					<value target='debounce' data='10' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<keymap />
+	<panel2d shadows='0' lighting='2' brightness='0' perspective='0' >
+		<background rgb='9737364' img='' style='0' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel2d>
+	<panel3d shadows='0' lighting='2' brightness='0' perspective='1' >
+		<background rgb='8409120' img='' style='5' />
+		<table rgb='7360576' img='' style='0' size='0' />
+		<camera xe='0' ye='0' ze='95.8065' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel3d>
+	<layout >
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAXwUAAKQDAAA' zoom='45' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='TMR_INT' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAXwUAAKQDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Read_input' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAXwUAAKQDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

@@ -1,0 +1,135 @@
+<root>
+<document schema='101' license='0,30day_31868014,2MBXKV' title='' description='' guid='7d6ab1dd-d06c-4b0a-908a-d3a825a4f466' target='PIC.16F.16F88' >
+	<config data='!0,3f62!10,3ffe%0,2%2,0%3,0%5,1%6,1%7,0%8,1%9,3%b,1%c,1%d,1%10,0%11,1' clkspd='19660800' simspd='1' usewdt='0' constif='0' />
+	<plugins >
+		<dll_dbg_icd enabled='0' >
+			<data name='debug' value='1' />
+			<data name='userpins' value='0' />
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='monitor' value='1' />
+			<data name='ictloop' value='1' />
+			<data name='ictrate' value='1000' />
+			<data name='ictmask' value='-1' />
+		</dll_dbg_icd>
+		<dll_dbg_ict enabled='0' >
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='userpins' value='0' />
+		</dll_dbg_ict>
+		<dll_models enabled='1' />
+		<dll_upgrader enabled='1' />
+		<dll_webhelp enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug />
+	<components >
+		<settings autoimg='1' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='7d6ab1dd-d06c-4b0a-908a-d3a825a4f466' vmin='0' vmaj='1' visiblename='' description='' category='' author='' sysinfo='0' keywords='' dynamic='0' iconpath='' />
+		<component class_type='root' codename='panel' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+			<resources />
+			<properties />
+			<values />
+			<events />
+			<apis />
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='false' type='b1' description='' isconst='1' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='true' type='b1' description='' isconst='1' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='Main' description='' >
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='stepper_generic1' macro='EnableMotor' />
+						<command class_type='loop' title='Loop' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='1' type='0' start='1' count='1' breakend='0' >
+							<flowline >
+								<command class_type='loop' title='Loop' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='1' type='2' start='1' count='255' breakend='0' >
+									<flowline >
+										<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='stepper_generic1' macro='IncrementStep' />
+										<command class_type='delay' title='Delay' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='10' type='1' />
+									</flowline>
+								</command>
+								<command class_type='loop' title='Loop' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='1' type='2' start='1' count='50' breakend='0' >
+									<flowline >
+										<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='stepper_generic1' macro='DecrementStep' />
+										<command class_type='delay' title='Delay' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='50' type='1' />
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='cfd176dc-a2c1-4dad-ac45-117781624c82' vmin='1' vmaj='1' codename='stepper_generic1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Coil_1' data='$PORTA.0' />
+					<value target='Coil_2' data='$PORTA.1' />
+					<value target='Coil_3' data='$PORTA.2' />
+					<value target='Coil_4' data='$PORTA.3' />
+					<value target='Winding_Type' data='000' />
+					<value target='Step_Type' data='002' />
+					<value target='Steps_Per_Rev' data='100' />
+					<value target='coils_enable' data='0' />
+					<value target='arrow_enable' data='1' />
+					<value target='target_object' data='cog' />
+					<value target='gear_ratio' data='1.000000' />
+					<value target='x_pitch' data='0.000000' />
+					<value target='y_pitch' data='0.000000' />
+					<value target='z_pitch' data='0.000000' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='shape' codename='cog' x='-3.07312e-017' y='-3.12723e-017' z='20.1834' xsz='75' ysz='76' zsz='9.78647' xang='0' yang='0' zang='58' xquat='0' yquat='0' zquat='0.48481' wquat='0.87462' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Shape' data='201' />
+					<value target='Color' data='192' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+					<value target='Model' data='.\Cog.mesh' />
+					<value target='Unit' data='1' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<keymap />
+	<panel2d shadows='0' lighting='0' brightness='0' perspective='0' >
+		<background rgb='9737364' img='' style='0' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel2d>
+	<panel3d shadows='0' lighting='2' brightness='0' perspective='1' >
+		<background rgb='8409120' img='' style='0' />
+		<table rgb='7360576' img='' style='0' size='0' />
+		<camera xe='-22.1933' ye='-318.965' ze='202.4' xt='0' yt='0' zt='0' xquat='0.481962' yquat='-0.016747' zquat='-0.0304216' wquat='-0.875504' />
+	</panel3d>
+	<layout >
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAXwUAAKQDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

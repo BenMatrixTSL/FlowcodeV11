@@ -1,0 +1,392 @@
+<root>
+<document schema='101' license='0,30day_31868014,CP3P7W' title='LED Array Test' description='Demonstration of the LED array component.
+
+Arrays at the left and centre are linked to instances of LED components dragged in from the component
+menus - these are automatically hidden so long as they remain linked, but will re-appear when the link
+is broken so that they can be edited.  This function works with any LED bult using the &apos;LED base&apos;
+component.
+
+The left and right hand &apos;meter&apos; arrays use the &apos;Inidividual colours&apos; options to allow multi-coloured arrays and
+use the new &apos;BarGraph&apos; macro which makes LED meters very simple to program.  The left hand array
+reads &apos;backwards&apos; by setting a negative spacing for the array elements.
+
+The centre array uses the new &apos;PointGraph&apos; macro - a quick way to illuminate only a single LED from the
+array.
+
+The right hand arrays are not linked to a &apos;prototype&apos; LED component - they use the default geometry
+options built into the array component.' guid='649a94e0-0255-418a-8498-0807a81a65ca' target='PIC.16F.16F877A' >
+	<config data='!0,3f72%0,2%2,0%3,0%6,1%7,0%9,3%b,1%8,1%d,1' clkspd='19660800' simspd='0' usewdt='0' constif='0' />
+	<plugins >
+		<dll_dbg_icd enabled='0' >
+			<data name='debug' value='1' />
+			<data name='userpins' value='0' />
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='monitor' value='1' />
+			<data name='ictloop' value='1' />
+			<data name='ictrate' value='1000' />
+			<data name='ictmask' value='-1' />
+		</dll_dbg_icd>
+		<dll_dbg_ict enabled='0' >
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='userpins' value='0' />
+		</dll_dbg_ict>
+		<dll_models enabled='1' />
+		<dll_upgrader enabled='1' />
+		<dll_webhelp enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug />
+	<components >
+		<settings autoimg='1' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='649a94e0-0255-418a-8498-0807a81a65ca' vmin='0' vmaj='1' visiblename='' description='' category='Misc' author='' keywords='' dynamic='0' iconpath='' />
+		<component class_type='root' codename='panel' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+			<resources />
+			<properties />
+			<values />
+			<events />
+			<apis />
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='false' type='b1' array='0' description='' isconst='1' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='index' type='u8' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='index2' type='u8' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='true' type='b1' array='0' description='' isconst='1' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='Main' description='' >
+						<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+							<exp exp='index2 = 0' />
+						</command>
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='led_array1' macro='AllOn' />
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='led_array1' macro='AllOff' />
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='led_array2' macro='AllOn' />
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='led_array2' macro='AllOff' />
+						<command class_type='loop' title='Loop' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='1' type='0' start='1' count='1' breakend='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='index = 0' />
+								</command>
+								<command class_type='loop' title='Loop' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='index &lt; 9' type='0' start='1' count='1' breakend='0' >
+									<flowline >
+										<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='led_array1' macro='PointGraph' >
+											<argument exp='index2' />
+										</command>
+										<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='led_array2' macro='BarGraph' >
+											<argument exp='index' />
+										</command>
+										<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='index2 &amp; 4' swap='0' >
+											<flowline >
+												<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='led_array4' macro='LEDOff' >
+													<argument exp='1' />
+												</command>
+												<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='led_array4' macro='LEDOn' >
+													<argument exp='0' />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='led_array4' macro='LEDOff' >
+													<argument exp='0' />
+												</command>
+												<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='led_array4' macro='LEDOn' >
+													<argument exp='1' />
+												</command>
+											</flowline>
+										</command>
+										<command class_type='delay' title='Delay' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='100' type='1' />
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='index = index + 1' />
+											<exp exp='index2 = (index2 + 1) &amp; 7' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='loop' title='Loop' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='index &gt; 0' type='0' start='1' count='1' breakend='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='index = index - 1' />
+										</command>
+										<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='led_array1' macro='PointGraph' >
+											<argument exp='index2' />
+										</command>
+										<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='led_array2' macro='BarGraph' >
+											<argument exp='index' />
+										</command>
+										<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='index2 &amp; 4' swap='0' >
+											<flowline >
+												<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='led_array4' macro='LEDOff' >
+													<argument exp='1' />
+												</command>
+												<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='led_array4' macro='LEDOn' >
+													<argument exp='0' />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='led_array4' macro='LEDOff' >
+													<argument exp='0' />
+												</command>
+												<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='led_array4' macro='LEDOn' >
+													<argument exp='1' />
+												</command>
+											</flowline>
+										</command>
+										<command class_type='delay' title='Delay' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='100' type='1' />
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='index2 = (index2 + 1) &amp; 7' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='c8da67a7-fc7b-48c0-8c3f-3264c74f4024' vmin='2' vmaj='1' codename='led_array1' x='0' y='0.0715732' z='0.8' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='count' data='8' />
+					<value target='port' data='000' />
+					<value target='pin0' data='$PORTA.0' />
+					<value target='pin1' data='$PORTA.1' />
+					<value target='pin2' data='$PORTA.2' />
+					<value target='pin3' data='$PORTA.3' />
+					<value target='pin4' data='$PORTA.4' />
+					<value target='pin5' data='$PORTA.5' />
+					<value target='pin6' data='$PORTA.6' />
+					<value target='pin7' data='$PORTA.7' />
+					<value target='polarity' data='001' />
+					<value target='full_port' data='$PORTA' />
+					<value target='align' data='001' />
+					<value target='spacing' data='5.000000' />
+					<value target='target_object' data='led_plcc2' />
+					<value target='shape' data='007' />
+					<value target='width' data='5.000000' />
+					<value target='height' data='5.000000' />
+					<value target='depth' data='5.000000' />
+					<value target='color_same' data='1' />
+					<value target='color_led0' data='16777120' />
+					<value target='color_led1' data='16777047' />
+					<value target='color_led2' data='65280' />
+					<value target='color_led3' data='65280' />
+					<value target='color_led4' data='65535' />
+					<value target='color_led5' data='65535' />
+					<value target='color_led6' data='255' />
+					<value target='color_led7' data='255' />
+					<value target='bitmask' data='255' />
+					<value target='inv_bitmask' data='-256' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='ad052176-691e-4542-adb5-53f6fbea9b5b' vmin='0' vmaj='1' codename='led_plcc2' x='-0.449153' y='30.2834' z='-6.98115' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' interactive='0' solid='0' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='pin' data='' />
+					<value target='polarity' data='001' />
+					<value target='on_color' data='255' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='c8da67a7-fc7b-48c0-8c3f-3264c74f4024' vmin='2' vmaj='1' codename='led_array3' x='-35.9623' y='0' z='-4' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='count' data='8' />
+					<value target='port' data='001' />
+					<value target='pin0' data='$PORTB.0' />
+					<value target='pin1' data='$PORTB.1' />
+					<value target='pin2' data='$PORTB.2' />
+					<value target='pin3' data='$PORTB.3' />
+					<value target='pin4' data='$PORTB.4' />
+					<value target='pin5' data='$PORTB.5' />
+					<value target='pin6' data='$PORTB.6' />
+					<value target='pin7' data='$PORTB.7' />
+					<value target='polarity' data='001' />
+					<value target='full_port' data='$PORTB' />
+					<value target='align' data='000' />
+					<value target='spacing' data='-8.000000' />
+					<value target='target_object' data='led_5mm_clip1' />
+					<value target='shape' data='007' />
+					<value target='width' data='5.000000' />
+					<value target='height' data='5.000000' />
+					<value target='depth' data='5.000000' />
+					<value target='color_same' data='' />
+					<value target='color_led0' data='65280' />
+					<value target='color_led1' data='65280' />
+					<value target='color_led2' data='65280' />
+					<value target='color_led3' data='65280' />
+					<value target='color_led4' data='65535' />
+					<value target='color_led5' data='65535' />
+					<value target='color_led6' data='255' />
+					<value target='color_led7' data='255' />
+					<value target='bitmask' data='255' />
+					<value target='inv_bitmask' data='-256' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='7fdaec78-394e-4ec9-a578-4f1a12a12076' vmin='0' vmaj='1' codename='led_5mm_clip1' x='-36.4381' y='-21.2247' z='1.69776' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' interactive='0' solid='0' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='pin' data='' />
+					<value target='polarity' data='001' />
+					<value target='on_color' data='8453975' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='c8da67a7-fc7b-48c0-8c3f-3264c74f4024' vmin='2' vmaj='1' codename='led_array4' x='12.2644' y='-16.698' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='count' data='2' />
+					<value target='port' data='002' />
+					<value target='pin0' data='$PORTC.0' />
+					<value target='pin1' data='$PORTC.1' />
+					<value target='pin2' data='$PORTA.2' />
+					<value target='pin3' data='$PORTA.3' />
+					<value target='pin4' data='$PORTA.4' />
+					<value target='pin5' data='$PORTA.5' />
+					<value target='pin6' data='' />
+					<value target='pin7' data='' />
+					<value target='polarity' data='001' />
+					<value target='full_port' data='$PORTC' />
+					<value target='align' data='000' />
+					<value target='spacing' data='7.000000' />
+					<value target='target_object' data='' />
+					<value target='shape' data='004' />
+					<value target='width' data='5.000000' />
+					<value target='height' data='5.000000' />
+					<value target='depth' data='2.500000' />
+					<value target='color_same' data='0' />
+					<value target='color_led0' data='255' />
+					<value target='color_led1' data='65280' />
+					<value target='color_led2' data='65280' />
+					<value target='color_led3' data='65280' />
+					<value target='color_led4' data='65535' />
+					<value target='color_led5' data='65535' />
+					<value target='color_led6' data='255' />
+					<value target='color_led7' data='255' />
+					<value target='bitmask' data='3' />
+					<value target='inv_bitmask' data='-4' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='group' codename='group1' x='20' y='0' z='0.5' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values />
+				<events />
+				<apis />
+				<variables />
+				<macros />
+				<component class_type='ref' guid='c8da67a7-fc7b-48c0-8c3f-3264c74f4024' vmin='2' vmaj='1' codename='led_array2' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='count' data='8' />
+						<value target='port' data='001' />
+						<value target='pin0' data='$PORTB.0' />
+						<value target='pin1' data='$PORTB.1' />
+						<value target='pin2' data='$PORTB.2' />
+						<value target='pin3' data='$PORTB.3' />
+						<value target='pin4' data='$PORTB.4' />
+						<value target='pin5' data='$PORTB.5' />
+						<value target='pin6' data='$PORTB.6' />
+						<value target='pin7' data='$PORTB.7' />
+						<value target='polarity' data='001' />
+						<value target='full_port' data='$PORTB' />
+						<value target='align' data='000' />
+						<value target='spacing' data='4.000000' />
+						<value target='target_object' data='' />
+						<value target='shape' data='000' />
+						<value target='width' data='3.000000' />
+						<value target='height' data='6.000000' />
+						<value target='depth' data='1.100000' />
+						<value target='color_same' data='' />
+						<value target='color_led0' data='65280' />
+						<value target='color_led1' data='65280' />
+						<value target='color_led2' data='65280' />
+						<value target='color_led3' data='65280' />
+						<value target='color_led4' data='65535' />
+						<value target='color_led5' data='65535' />
+						<value target='color_led6' data='255' />
+						<value target='color_led7' data='255' />
+						<value target='bitmask' data='255' />
+						<value target='inv_bitmask' data='-256' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='shape' codename='shape1' x='0' y='0' z='0' xsz='33' ysz='8' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Shape' data='0' />
+						<value target='Color' data='1973790' />
+						<value target='Outline' data='0' />
+						<value target='Thickness' data='0' />
+						<value target='Image' data='' />
+						<value target='Model' data='' />
+						<value target='Unit' data='' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+			</component>
+		</component>
+	</components>
+	<keymap />
+	<panel2d shadows='0' lighting='0' perspective='0' >
+		<background rgb='3158064' img='' style='0' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel2d>
+	<panel3d shadows='0' lighting='2' perspective='1' >
+		<background rgb='12602112' img='' style='0' />
+		<table rgb='0' img='' style='0' size='0' />
+		<camera xe='-70.0766' ye='-122.197' ze='147.779' xt='-15.0846' yt='5.21165' zt='-7.39645' xquat='-0.349404' yquat='0.0721859' zquat='0.189009' wquat='0.914867' />
+	</panel3d>
+	<layout >
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAGgMAALUCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

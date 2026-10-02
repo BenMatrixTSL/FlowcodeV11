@@ -1,0 +1,147 @@
+<root>
+<document schema='101' license='0,30day_31868014,2MBXKV' title='' description='' guid='' target='PIC.16F.16F88' >
+	<config data='!0,3f62!10,3ffe%0,2%2,0%3,0%5,1%6,1%7,0%8,1%9,3%b,1%c,1%d,1%10,0%11,1' clkspd='19660800' simspd='1' usewdt='0' constif='0' />
+	<plugins >
+		<dll_dbg_icd enabled='0' >
+			<data name='debug' value='1' />
+			<data name='userpins' value='0' />
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='monitor' value='1' />
+			<data name='ictloop' value='1' />
+			<data name='ictrate' value='1000' />
+			<data name='ictmask' value='-1' />
+		</dll_dbg_icd>
+		<dll_dbg_ict enabled='0' >
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='userpins' value='0' />
+		</dll_dbg_ict>
+		<dll_models enabled='1' />
+		<dll_upgrader enabled='1' />
+		<dll_webhelp enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug />
+	<components >
+		<settings autoimg='1' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='' vmin='0' vmaj='1' visiblename='' description='' category='' author='' sysinfo='0' keywords='' dynamic='0' iconpath='' />
+		<component class_type='root' codename='panel' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+			<resources />
+			<properties />
+			<values />
+			<events />
+			<apis />
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='COUNT' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='INTERRUPT_TMR0' description='' />
+				</macro>
+				<macro >
+					<flowline name='INTERRUPT_PORTB' description='' />
+				</macro>
+				<macro >
+					<flowline name='INTERRUPT_RB0INT' description='' />
+				</macro>
+				<macro >
+					<flowline name='Main' description='A light chaser using bit shift right' >
+						<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='System.ShowHandle' >
+							<argument exp='v5__leds1' />
+						</command>
+						<command class_type='output' title='Clear Port B' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' mode='0' port='1048577' mask='255' exp='0' />
+						<command class_type='calculation' title='Initialise COUNT' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+							<exp exp='COUNT = 1' />
+						</command>
+						<command class_type='loop' title='Infinite Loop' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='1' type='0' start='1' count='1' breakend='0' >
+							<flowline >
+								<command class_type='decision' title='Reset COUNT if its 0' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='COUNT = 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Reset COUNT' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='COUNT = 1' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='output' title='Send COUNT to the LEDs' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' mode='0' port='1048577' mask='255' exp='COUNT' />
+								<command class_type='delay' title='Delay' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='200' type='1' />
+								<command class_type='calculation' title='Bit shift COUNT to the right' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='COUNT = COUNT &lt;&lt; 1' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='c8da67a7-fc7b-48c0-8c3f-3264c74f4024' vmin='3' vmaj='1' codename='v5__leds1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='count' data='8' />
+					<value target='port' data='001' />
+					<value target='pin0' data='$PORTB.0' />
+					<value target='pin1' data='$PORTB.1' />
+					<value target='pin2' data='$PORTB.2' />
+					<value target='pin3' data='$PORTB.3' />
+					<value target='pin4' data='$PORTB.4' />
+					<value target='pin5' data='$PORTB.5' />
+					<value target='pin6' data='$PORTB.6' />
+					<value target='pin7' data='$PORTB.7' />
+					<value target='polarity' data='1' />
+					<value target='full_port' data='$PORTB' />
+					<value target='align' data='' />
+					<value target='spacing' data='7.000000' />
+					<value target='target_object' data='' />
+					<value target='shape' data='4' />
+					<value target='width' data='5.000000' />
+					<value target='height' data='5.000000' />
+					<value target='depth' data='2.500000' />
+					<value target='color_same' data='1' />
+					<value target='color_led0' data='255' />
+					<value target='color_led1' data='65280' />
+					<value target='color_led2' data='65280' />
+					<value target='color_led3' data='65280' />
+					<value target='color_led4' data='65535' />
+					<value target='color_led5' data='65535' />
+					<value target='color_led6' data='255' />
+					<value target='color_led7' data='255' />
+					<value target='bitmask' data='255' />
+					<value target='inv_bitmask' data='-256' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<keymap />
+	<panel2d shadows='0' lighting='2' brightness='0' perspective='0' >
+		<background rgb='9737364' img='' style='0' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel2d>
+	<panel3d shadows='1' lighting='2' brightness='0' perspective='0' >
+		<background rgb='8409120' img='' style='0' />
+		<table rgb='7360576' img='' style='0' size='0' />
+		<camera xe='0' ye='0' ze='122.06' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel3d>
+	<layout >
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAXwUAALUCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

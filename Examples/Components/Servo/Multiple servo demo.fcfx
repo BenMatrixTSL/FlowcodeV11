@@ -1,0 +1,210 @@
+<root>
+<document schema='101' license='50 User,Dev User,M5ENXZ' title='' description='' guid='6346341a-4688-4648-985a-a06128d37531' target='PIC.16F.16F877A' >
+	<config data='!0,3f72%0,2%2,0%3,0%6,1%7,0%9,3%b,1%8,1%d,1' clkspd='19660800' simspd='0' usewdt='0' constif='0' />
+	<plugins >
+		<dll_dbg_icd enabled='0' >
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='userpins' value='0' />
+		</dll_dbg_icd>
+		<dll_dbg_ict enabled='0' >
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='userpins' value='0' />
+		</dll_dbg_ict>
+		<dll_models enabled='1' />
+		<dll_upgrader enabled='1' />
+		<dll_webhelp enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug />
+	<components >
+		<settings autoimg='1' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='6346341a-4688-4648-985a-a06128d37531' vmin='0' vmaj='1' visiblename='' description='' category='' dynamic='0' standalone='0' iconpath='' />
+		<component class_type='root' codename='panel' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+			<resources />
+			<properties />
+			<values />
+			<events />
+			<apis />
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='angle' type='u8' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='false' type='b1' array='0' description='' isconst='1' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='true' type='b1' array='0' description='' isconst='1' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='Main' description='' >
+						<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='Servo_Controller' macro='EnableServo' >
+							<argument exp='0' />
+						</command>
+						<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='Servo_Controller' macro='EnableServo' >
+							<argument exp='1' />
+						</command>
+						<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+							<exp exp='angle = 0' />
+						</command>
+						<command class_type='loop' title='Loop' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='1' type='0' start='1' count='1' breakend='0' >
+							<flowline name='Main' description='' >
+								<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='angle == 0' swap='0' >
+									<flowline name='Main' description='' >
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='angle = 255' />
+										</command>
+									</flowline>
+									<flowline name='Main' description='' >
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='angle = 0' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='Servo_Controller' macro='AutoMoveToPosition' >
+									<argument exp='0' />
+									<argument exp='angle' />
+								</command>
+								<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='Servo_Controller' macro='AutoMoveToPosition' >
+									<argument exp='1' />
+									<argument exp='255-angle' />
+								</command>
+								<command class_type='delay' title='Delay' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='4' type='2' />
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='9202a62e-0a42-4780-adce-16b701e5ec53' vmin='1' vmaj='1' codename='Servo_Controller' x='-104.162' y='66.971' z='6' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Channel_Count' data='002' />
+					<value target='pin0' data='$PORTB.0' />
+					<value target='pin1' data='$PORTB.1' />
+					<value target='pin2' data='$PORTB.2' />
+					<value target='pin3' data='$PORTB.3' />
+					<value target='pin4' data='$PORTB.4' />
+					<value target='pin5' data='$PORTB.5' />
+					<value target='pin6' data='$PORTB.6' />
+					<value target='pin7' data='$PORTB.7' />
+					<value target='trim0' data='000' />
+					<value target='trim1' data='0' />
+					<value target='trim2' data='0' />
+					<value target='trim3' data='0' />
+					<value target='trim4' data='0' />
+					<value target='trim5' data='0' />
+					<value target='trim6' data='0' />
+					<value target='trim7' data='0' />
+					<value target='sim0' data='tip_servo' />
+					<value target='sim1' data='fore_servo' />
+					<value target='sim2' data='' />
+					<value target='sim3' data='' />
+					<value target='sim4' data='' />
+					<value target='sim5' data='' />
+					<value target='sim6' data='' />
+					<value target='sim7' data='' />
+					<value target='Servo_Clock_Count' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='cc031290-2255-4e8d-b382-1998c8dda95a' vmin='0' vmaj='1' codename='fore_servo' x='-148.867' y='0' z='-4.27475' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='target_object' data='group' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='group' codename='group' x='3.64149' y='0' z='5' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values />
+				<events />
+				<apis />
+				<variables />
+				<macros />
+				<component class_type='ref' guid='cc031290-2255-4e8d-b382-1998c8dda95a' vmin='0' vmaj='1' codename='tip_servo' x='-3.64149' y='0' z='15' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='target_object' data='end' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='shape' codename='end' x='74.4335' y='0' z='35' xsz='100' ysz='10' zsz='10' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Shape' data='0' />
+						<value target='Color' data='192' />
+						<value target='Outline' data='0' />
+						<value target='Thickness' data='0' />
+						<value target='Image' data='' />
+						<value target='Model' data='' />
+						<value target='Unit' data='' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='shape' codename='formarm' x='-74.4335' y='0' z='11.5248' xsz='100' ysz='10' zsz='10' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Shape' data='0' />
+						<value target='Color' data='192' />
+						<value target='Outline' data='0' />
+						<value target='Thickness' data='0' />
+						<value target='Image' data='' />
+						<value target='Model' data='' />
+						<value target='Unit' data='' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+			</component>
+		</component>
+	</components>
+	<keymap />
+	<panel2d shadows='0' perspective='0' >
+		<background rgb='3158064' img='' style='0' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel2d>
+	<panel3d shadows='0' perspective='1' >
+		<background rgb='16760992' img='' style='0' />
+		<table rgb='7360576' img='' style='0' size='0' />
+		<camera xe='329.256' ye='-165.124' ze='268.351' xt='0' yt='0' zt='0' xquat='-0.385836' yquat='-0.238139' zquat='-0.468129' wquat='0.758469' />
+	</panel3d>
+	<layout >
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAXwUAALgCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

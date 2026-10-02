@@ -1,0 +1,345 @@
+<root>
+<document schema='101' license='50,Dev User,NXHQAN' title='' description='' guid='' target='PIC16.30F.30F3014' >
+	<config data='!0,8712!10,3f!20,87b3!30,310f!40,330f!50,7!60,c003%0,712%e,2%10,f%14,3%1f,0%20,3%24,3%27,1%28,7%2f,1%30,f%38,1%3c,3%40,f%48,3%4c,3%50,1%51,3%60,3%6e,1%6f,1' clkspd='96000000' simspd='1' usewdt='0' constif='0' />
+	<plugins >
+		<dll_dbg_icd enabled='0' >
+			<data name='debug' value='1' />
+			<data name='userpins' value='0' />
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='monitor' value='1' />
+			<data name='ictloop' value='1' />
+			<data name='ictrate' value='1000' />
+			<data name='ictmask' value='-1' />
+		</dll_dbg_icd>
+		<dll_dbg_ict enabled='0' >
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='userpins' value='0' />
+		</dll_dbg_ict>
+		<dll_models enabled='1' />
+		<dll_upgrader enabled='1' />
+		<dll_webhelp enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug />
+	<components >
+		<settings autoimg='1' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='' vmin='0' vmaj='1' visiblename='' description='' category='' author='' sysinfo='0' keywords='' dynamic='0' iconpath='' />
+		<component class_type='root' codename='panel' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+			<resources />
+			<properties />
+			<values />
+			<events />
+			<apis />
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='false' type='b1' description='' isconst='1' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='Data' type='u16' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='trigger' type='u8' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='true' type='b1' description='' isconst='1' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='SPI_Init' description='' >
+						<command class_type='comment' title='' comment='Disable SPI Devices
+' ccode='' textshow='1' textmode='0' textarea='12,0,487,300' break='0' mark='0' disable='0' hide='0' customize='0' />
+						<command class_type='output' title='Output' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,511,300' break='0' mark='0' disable='0' hide='0' customize='0' mode='1' port='2097157' mask='1' exp='1' />
+						<command class_type='output' title='Output' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,511,300' break='0' mark='0' disable='0' hide='0' customize='0' mode='1' port='2097157' mask='2' exp='1' />
+						<command class_type='call' title='Enable PWM Output' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,511,300' break='0' mark='0' disable='0' hide='0' customize='0' component='SPILegacy1' macro='Initialise' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='timer_tick' description='' >
+						<local name='switch' type='u16' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,511,300' break='0' mark='0' disable='0' hide='0' customize='0' macro='Read_ADC' >
+							<return exp='Data' />
+						</command>
+						<command class_type='call' title='Add to DSP input buffer' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,511,300' break='0' mark='0' disable='0' hide='0' customize='0' component='DSPInput1' macro='AddRawTick' >
+							<argument exp='Data' />
+						</command>
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='Switch1' macro='ReadState' >
+							<return exp='.switch' />
+						</command>
+						<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,511,300' break='0' mark='0' disable='0' hide='0' customize='0' exp='.switch' swap='0' >
+							<flowline >
+								<command class_type='call' title='Read from DSP output buffer' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,511,300' break='0' mark='0' disable='0' hide='0' customize='0' component='DSPDelay1' macro='DelayTick' />
+								<command class_type='call' title='Read from DSP output buffer' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,511,300' break='0' mark='0' disable='0' hide='0' customize='0' component='DSPOutput1' macro='ReadRawTick' >
+									<return exp='Data' />
+								</command>
+								<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,511,300' break='0' mark='0' disable='0' hide='0' customize='0' macro='Write_DAC' >
+									<argument exp='Data' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='call' title='Read from DSP output buffer' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,511,300' break='0' mark='0' disable='0' hide='0' customize='0' component='DSPOutput2' macro='ReadRawTick' >
+									<return exp='Data' />
+								</command>
+								<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,511,300' break='0' mark='0' disable='0' hide='0' customize='0' macro='Write_DAC' >
+									<argument exp='Data' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='call' title='Perform DSP tick' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,511,300' break='0' mark='0' disable='0' hide='0' customize='0' component='DSPSystem1' macro='TickAllBuffers' >
+							<return exp='trigger' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Read_ADC' description='' >
+						<return name='Return' type='u16' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='upper' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='mid' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='lower' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='output' title='Output' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,511,300' break='0' mark='0' disable='0' hide='0' customize='0' mode='1' port='2097157' mask='1' exp='0' />
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,511,300' break='0' mark='0' disable='0' hide='0' customize='0' component='SPILegacy1' macro='GetChar' >
+							<return exp='.upper' />
+						</command>
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,511,300' break='0' mark='0' disable='0' hide='0' customize='0' component='SPILegacy1' macro='GetChar' >
+							<return exp='.mid' />
+						</command>
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,511,300' break='0' mark='0' disable='0' hide='0' customize='0' component='SPILegacy1' macro='GetChar' >
+							<return exp='.lower' />
+						</command>
+						<command class_type='output' title='Output' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,511,300' break='0' mark='0' disable='0' hide='0' customize='0' mode='1' port='2097157' mask='1' exp='1' />
+						<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,511,300' break='0' mark='0' disable='0' hide='0' customize='0' >
+							<exp exp='.Return = .upper &lt;&lt; 12' />
+							<exp exp='.Return = .Return | (.mid &lt;&lt; 4)' />
+							<exp exp='.Return = .Return | (.lower &gt;&gt; 4)' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Write_DAC' description='' >
+						<param name='value' type='u16' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='upper' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='lower' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,511,300' break='0' mark='0' disable='0' hide='0' customize='0' >
+							<exp exp='.upper = .value &gt;&gt; 8' />
+							<exp exp='.lower = .value' />
+						</command>
+						<command class_type='output' title='Output' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,511,300' break='0' mark='0' disable='0' hide='0' customize='0' mode='1' port='2097157' mask='2' exp='0' />
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,511,300' break='0' mark='0' disable='0' hide='0' customize='0' component='SPILegacy1' macro='SendChar' >
+							<argument exp='0x00' />
+						</command>
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,511,300' break='0' mark='0' disable='0' hide='0' customize='0' component='SPILegacy1' macro='SendChar' >
+							<argument exp='.upper' />
+						</command>
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,511,300' break='0' mark='0' disable='0' hide='0' customize='0' component='SPILegacy1' macro='SendChar' >
+							<argument exp='.lower' />
+						</command>
+						<command class_type='output' title='Output' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,511,300' break='0' mark='0' disable='0' hide='0' customize='0' mode='1' port='2097157' mask='2' exp='1' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='' >
+						<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,511,300' break='0' mark='0' disable='0' hide='0' customize='0' macro='SPI_Init' />
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,511,300' break='0' mark='0' disable='0' hide='0' customize='0' component='DSPSystem1' macro='Initialise' />
+						<command class_type='interrupt' title='Enable Timer Tick' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,511,300' break='0' mark='0' disable='0' hide='0' customize='0' enable='1' name='TMR1' call='timer_tick' >
+							<settings timer='1' prescale='1' postscale='-1' rollover='4096' bitcount='-1' trigger='3' maskhi='-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAA' masklo='-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAA' >
+								<option value='0' />
+								<option value='0' />
+								<option value='4096' />
+								<option value='-1' />
+							</settings>
+						</command>
+						<command class_type='loop' title='Loop' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,511,300' break='0' mark='0' disable='0' hide='0' customize='0' exp='1' type='0' start='1' count='1' breakend='0' >
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='917f243e-4102-4bee-9998-81f18bc6ca9d' vmin='2' vmaj='1' codename='DSPSystem1' x='2.62997' y='73.5207' z='1.0112' xsz='32' ysz='32' zsz='1.14286' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='buffer_count' data='002' />
+					<value target='simple_mode' data='1' />
+					<value target='DSPsystem_ID' data='1' />
+					<value target='buff_a_name' data='Input' />
+					<value target='buff_b_name' data='Delayed Input' />
+					<value target='buff_c_name' data='Output' />
+					<value target='buff_d_name' data='MyBuf4' />
+					<value target='buff_e_name' data='MyBuf5' />
+					<value target='buff_f_name' data='MyBuf6' />
+					<value target='buff_g_name' data='MyBuf7' />
+					<value target='buff_h_name' data='MyBuf8' />
+					<value target='buff_a_depth' data='1' />
+					<value target='buff_a_sign' data='1' />
+					<value target='buff_a_size' data='8' />
+					<value target='buff_b_depth' data='1' />
+					<value target='buff_b_sign' data='1' />
+					<value target='buff_b_size' data='8' />
+					<value target='buff_c_depth' data='1' />
+					<value target='buff_c_sign' data='1' />
+					<value target='buff_c_size' data='8' />
+					<value target='buff_d_depth' data='1' />
+					<value target='buff_d_sign' data='1' />
+					<value target='buff_d_size' data='8' />
+					<value target='buff_e_depth' data='1' />
+					<value target='buff_e_sign' data='1' />
+					<value target='buff_e_size' data='8' />
+					<value target='buff_f_depth' data='1' />
+					<value target='buff_f_sign' data='1' />
+					<value target='buff_f_size' data='8' />
+					<value target='buff_g_depth' data='1' />
+					<value target='buff_g_sign' data='1' />
+					<value target='buff_g_size' data='8' />
+					<value target='buff_h_depth' data='1' />
+					<value target='buff_h_sign' data='1' />
+					<value target='buff_h_size' data='8' />
+					<value target='buff_simp_depth' data='1' />
+					<value target='buff_simp_sign' data='1' />
+					<value target='buff_simp_size' data='8' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='c73d493a-b6a0-4dbe-b4b5-79648f67d11e' vmin='2' vmaj='1' codename='DSPInput1' x='-54.547' y='24.2464' z='1.08191' xsz='43.5' ysz='32' zsz='1.14286' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='buffer_manager' data='1' />
+					<value target='input_a' data='0' />
+					<value target='size_a' data='8' />
+					<value target='depth_a' data='1' />
+					<value target='sign_a' data='1' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='1392d5c3-35ba-4c7f-a539-7f30a09758e4' vmin='2' vmaj='1' codename='DSPOutput2' x='-6.4616' y='-16.5763' z='1.08191' xsz='43.5' ysz='32' zsz='1.14286' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='buffer_manager' data='1' />
+					<value target='input_a' data='0' />
+					<value target='size_a' data='8' />
+					<value target='depth_a' data='1' />
+					<value target='sign_a' data='1' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='4627d2fb-b41e-44cf-b125-e8511e5ebaa4' vmin='1' vmaj='1' codename='SPILegacy1' x='116.372' y='24.9033' z='1.00378' xsz='71.4286' ysz='32' zsz='1.14286' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='CHANNEL' data='1' />
+					<value target='PR_SCALE' data='4' />
+					<value target='CKP' data='1' />
+					<value target='CKE' data='1' />
+					<value target='SMP' data='0' />
+					<value target='DAC_En' data='$PORTB.7' />
+					<value target='NVM_En' data='$PORTB.6' />
+					<value target='MOSI' data='$PORTF.3' />
+					<value target='MISO' data='$PORTF.2' />
+					<value target='CLK' data='$PORTF.6' />
+					<value target='label' data='SPI Legacy' />
+					<value target='Injector' data='000' />
+					<value target='InjectorHandle' data='0' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='e8f04af0-03d9-4b1c-83d3-9d0b1dc0f80a' vmin='1' vmaj='1' codename='Switch1' x='36.3264' y='-5.17289' z='-2.2395' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='pin' data='$PORTB.0' />
+					<value target='polarity' data='0' />
+					<value target='debounce' data='0' />
+					<value target='operation' data='1' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='1392d5c3-35ba-4c7f-a539-7f30a09758e4' vmin='2' vmaj='1' codename='DSPOutput1' x='53.0572' y='25.0158' z='1.08191' xsz='43.5' ysz='32' zsz='1.14286' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='buffer_manager' data='1' />
+					<value target='input_a' data='1' />
+					<value target='size_a' data='8' />
+					<value target='depth_a' data='1' />
+					<value target='sign_a' data='1' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='e0ddc704-6bab-4d08-8f10-19a14c6683ef' vmin='2' vmaj='1' codename='DSPDelay1' x='-1.36159' y='25.6236' z='1.08191' xsz='52' ysz='32' zsz='1.14286' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='max_delay' data='512' />
+					<value target='initial_delay' data='512' />
+					<value target='buffer_manager' data='1' />
+					<value target='input_a' data='0' />
+					<value target='output_c' data='1' />
+					<value target='size_a' data='8' />
+					<value target='size_o' data='8' />
+					<value target='depth_a' data='1' />
+					<value target='depth_o' data='1' />
+					<value target='sign_a' data='1' />
+					<value target='sign_o' data='1' />
+					<value target='sample_rate' data='20.000000' />
+					<value target='del_max' data='25.600000' />
+					<value target='del_initial' data='25.600000' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<keymap />
+	<panel2d shadows='0' lighting='2' brightness='0' perspective='0' >
+		<background rgb='9737364' img='' style='0' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel2d>
+	<panel3d shadows='0' lighting='2' brightness='0' perspective='0' >
+		<background rgb='8409120' img='' style='0' />
+		<table rgb='7360576' img='' style='0' size='0' />
+		<camera xe='3' ye='14' ze='520.117' xt='3' yt='14' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel3d>
+	<layout >
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAA5wIAAH0CAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='timer_tick' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAA5wIAAH0CAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Write_DAC' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAA5wIAAH0CAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Read_ADC' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAA5wIAAH0CAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SPI_Init' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAA5wIAAH0CAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

@@ -1,0 +1,381 @@
+<root>
+<document schema='101' license='0,30day_31868014,CP3P7W' title='' description='' guid='' target='PIC.18F.MIAC' >
+	<config data='!0,ffffffff!8,ffffffff!10,ffffffff!18,ffffffff!20,ffffffff!28,ffffffff!30,ffffffff!38,ffffffff!40,ffffffff!48,ffffffff!50,ffffffff!58,ffffffff!60,ffffffff!68,ffffffff' clkspd='48000000' simspd='1' usewdt='0' constif='0' />
+	<plugins >
+		<dll_dbg_icd enabled='0' >
+			<data name='debug' value='1' />
+			<data name='userpins' value='0' />
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='monitor' value='1' />
+			<data name='ictloop' value='1' />
+			<data name='ictrate' value='1000' />
+			<data name='ictmask' value='-1' />
+		</dll_dbg_icd>
+		<dll_dbg_ict enabled='0' >
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='userpins' value='0' />
+		</dll_dbg_ict>
+		<dll_models enabled='1' />
+		<dll_upgrader enabled='1' />
+		<dll_webhelp enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug />
+	<components >
+		<settings autoimg='1' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='' vmin='0' vmaj='1' visiblename='' description='' category='' author='' keywords='' dynamic='0' iconpath='' />
+		<component class_type='root' codename='panel' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+			<resources />
+			<properties />
+			<values />
+			<events />
+			<apis />
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='number2' type='u8' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='number1' type='s16' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='GetNumber' description='' >
+						<return name='Return' type='s16' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Digits' type='u8' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<param name='SignedValue' type='u8' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Entry' type='T8' array='7' description='' isconst='0' isinit='0' usrinit='&quot;&quot;' setinit='' />
+						<local name='index' type='u8' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='dispindex' type='u8' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='keyval' type='u8' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Clear the LCD' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='DisplayClear' />
+						<command class_type='comment' title='' comment='Initialise the entry string' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+						<command class_type='decision' title='Signed number?' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='GetNumber.SignedValue' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Add sign' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='GetNumber.Digits = GetNumber.Digits + 1' />
+									<exp exp='GetNumber.Entry[0] = &apos;+&apos;' />
+									<exp exp='' />
+								</command>
+								<command class_type='calculation' title='Initialise input' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='GetNumber.index = 1' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Initialise input' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='GetNumber.index = 0' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='loop' title='Clear the number' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='GetNumber.index &lt; GetNumber.Digits' type='0' start='0' count='1' breakend='0' >
+							<flowline >
+								<command class_type='calculation' title='Zero all digits' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='GetNumber.Entry[GetNumber.index] = &apos;0&apos;' />
+									<exp exp='GetNumber.index = GetNumber.index + 1' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='calculation' title='Terminate the string with a zero' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+							<exp exp='GetNumber.Entry[GetNumber.index] = 0' />
+							<exp exp='GetNumber.index = GetNumber.index - 1' />
+						</command>
+						<command class_type='comment' title='' comment='Initialise display' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+						<command class_type='call' title='Display instructions' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='PrintString' >
+							<argument exp='&quot;Enter number&quot;' />
+						</command>
+						<command class_type='call' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='DisplayCursor' >
+							<argument exp='2' />
+							<argument exp='1' />
+						</command>
+						<command class_type='call' title='Setup entry display' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='PrintASCII' >
+							<argument exp='&apos;[&apos;' />
+						</command>
+						<command class_type='call' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='PrintString' >
+							<argument exp='GetNumber.Entry' />
+						</command>
+						<command class_type='call' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='PrintASCII' >
+							<argument exp='&apos;]&apos;' />
+						</command>
+						<command class_type='comment' title='' comment='Select characters' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+						<command class_type='loop' title='Continue until OK pressed' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='GetNumber.keyval &lt;&gt; 4' type='0' start='0' count='1' breakend='0' >
+							<flowline >
+								<command class_type='call' title='Display the current value' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='DisplayCursor' >
+									<argument exp='3' />
+									<argument exp='1' />
+								</command>
+								<command class_type='call' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='PrintString' >
+									<argument exp='GetNumber.Entry' />
+								</command>
+								<command class_type='loop' title='Wait for all keys to be released' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='GetNumber.keyval &lt;&gt; 255' type='0' start='0' count='1' breakend='0' >
+									<flowline >
+										<command class_type='call' title='Read the keypad' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='GetKeypad' >
+											<return exp='GetNumber.keyval' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='calculation' title='Position the digit selector' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='GetNumber.dispindex = GetNumber.index + 3' />
+								</command>
+								<command class_type='call' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='DisplayCursor' >
+									<argument exp='GetNumber.dispindex' />
+									<argument exp='2' />
+								</command>
+								<command class_type='call' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='PrintASCII' >
+									<argument exp='&apos;^&apos;' />
+								</command>
+								<command class_type='loop' title='Wait for a key press' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='GetNumber.keyval = 255' type='0' start='0' count='1' breakend='0' >
+									<flowline >
+										<command class_type='call' title='read the keypad' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='GetKeypad' >
+											<return exp='GetNumber.keyval' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='decision' title='Right cursor?' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='GetNumber.keyval = 7' swap='0' >
+									<flowline >
+										<command class_type='call' title='Move the digit selector' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='DisplayCursor' >
+											<argument exp='GetNumber.dispindex' />
+											<argument exp='2' />
+										</command>
+										<command class_type='call' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='PrintASCII' >
+											<argument exp='&quot; &quot;' />
+										</command>
+										<command class_type='calculation' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='GetNumber.index = GetNumber.index + 1' />
+										</command>
+										<command class_type='decision' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='GetNumber.index = GetNumber.Digits' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+													<exp exp='GetNumber.index = 0' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='decision' title='Left cursor?' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='GetNumber.keyval = 1' swap='0' >
+									<flowline >
+										<command class_type='call' title='Move the digit selector' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='DisplayCursor' >
+											<argument exp='GetNumber.dispindex' />
+											<argument exp='2' />
+										</command>
+										<command class_type='call' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='PrintASCII' >
+											<argument exp='&quot; &quot;' />
+										</command>
+										<command class_type='calculation' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='GetNumber.index = GetNumber.index - 1' />
+										</command>
+										<command class_type='decision' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='GetNumber.index = 255' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+													<exp exp='GetNumber.index = GetNumber.Digits - 1' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='decision' title='Increment digit?' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='GetNumber.keyval = 5' swap='0' >
+									<flowline >
+										<command class_type='decision' title='Sign character?' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='GetNumber.SignedValue AND (GetNumber.index = 0)' swap='0' >
+											<flowline >
+												<command class_type='decision' title='Swap the sign' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='GetNumber.Entry[0] = &apos;+&apos;' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+															<exp exp='GetNumber.Entry[0] = &apos;-&apos;' />
+														</command>
+													</flowline>
+													<flowline >
+														<command class_type='calculation' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+															<exp exp='GetNumber.Entry[0] = &apos;+&apos;' />
+														</command>
+													</flowline>
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='calculation' title='Increment the selected digit' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+													<exp exp='GetNumber.Entry[GetNumber.index] = GetNumber.Entry[GetNumber.index] + 1' />
+												</command>
+												<command class_type='decision' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='GetNumber.Entry[GetNumber.index] &gt; &apos;9&apos;' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+															<exp exp='GetNumber.Entry[GetNumber.index] = &apos;0&apos;' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+											</flowline>
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='decision' title='Decrement digit?' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='GetNumber.keyval = 3' swap='0' >
+									<flowline >
+										<command class_type='decision' title='Sign character?' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='GetNumber.SignedValue AND (GetNumber.index = 0)' swap='0' >
+											<flowline >
+												<command class_type='decision' title='Swap the sign' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='GetNumber.Entry[0] = &apos;+&apos;' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+															<exp exp='GetNumber.Entry[0] = &apos;-&apos;' />
+														</command>
+													</flowline>
+													<flowline >
+														<command class_type='calculation' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+															<exp exp='GetNumber.Entry[0] = &apos;+&apos;' />
+														</command>
+													</flowline>
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='calculation' title='Decrement the selected digit' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+													<exp exp='GetNumber.Entry[GetNumber.index] = GetNumber.Entry[GetNumber.index] - 1' />
+												</command>
+												<command class_type='decision' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='GetNumber.Entry[GetNumber.index] &lt; &apos;0&apos;' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+															<exp exp='GetNumber.Entry[GetNumber.index] = &apos;9&apos;' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+											</flowline>
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='decision' title='OK - number complete?' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='GetNumber.keyval = 4' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculate the return value' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='GetNumber.Return = 0' />
+										</command>
+										<command class_type='decision' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='GetNumber.SignedValue' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+													<exp exp='GetNumber.index = 1' />
+													<exp exp='' />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='calculation' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+													<exp exp='GetNumber.index = 0' />
+													<exp exp='' />
+												</command>
+											</flowline>
+										</command>
+										<command class_type='loop' title='Add all the digits' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='GetNumber.index &lt; GetNumber.Digits' type='0' start='0' count='1' breakend='0' >
+											<flowline >
+												<command class_type='calculation' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+													<exp exp='GetNumber.Return = GetNumber.Return * 10 + (GetNumber.Entry[GetNumber.index] - &apos;0&apos;)' />
+													<exp exp='GetNumber.index = GetNumber.index + 1' />
+												</command>
+											</flowline>
+										</command>
+										<command class_type='decision' title='Include the sign' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='GetNumber.SignedValue' swap='0' >
+											<flowline >
+												<command class_type='decision' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='GetNumber.Entry[0] = &apos;-&apos;' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+															<exp exp='GetNumber.Return = -GetNumber.Return' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='call' title='Clear the LCD' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='DisplayClear' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='' >
+						<command class_type='comment' title='' comment='Numeric entry using
+the cursor keys.
+Re-useable macro code.' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+						<command class_type='call' title='Initialise the LCD' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='DisplayStart' />
+						<command class_type='call' title='Input a 4 digit, signed number' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='GetNumber' >
+							<return exp='number1' />
+							<argument exp='4' />
+							<argument exp='1' />
+						</command>
+						<command class_type='call' title='Input a 2 digit unsigned number' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='GetNumber' >
+							<return exp='number2' />
+							<argument exp='2' />
+							<argument exp='0' />
+						</command>
+						<command class_type='call' title='Display the values' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='PrintASCII' >
+							<argument exp='&quot;First number:&quot;' />
+						</command>
+						<command class_type='call' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='DisplayCursor' >
+							<argument exp='4' />
+							<argument exp='1' />
+						</command>
+						<command class_type='call' title='First numeric value' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='PrintNumber' >
+							<argument exp='number1' />
+						</command>
+						<command class_type='call' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='DisplayCursor' >
+							<argument exp='0' />
+							<argument exp='2' />
+						</command>
+						<command class_type='call' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='PrintASCII' >
+							<argument exp='&quot;Second number:&quot;' />
+						</command>
+						<command class_type='call' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='DisplayCursor' >
+							<argument exp='4' />
+							<argument exp='3' />
+						</command>
+						<command class_type='call' title='Second numeric value' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='PrintNumber' >
+							<argument exp='number2' />
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='d69543a8-f38b-488a-b905-9fa2d5970beb' vmin='0' vmaj='1' codename='v5__miac0' x='0' y='0' z='0' xsz='133' ysz='98.5' zsz='57.5' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='LCD_X' data='5' />
+					<value target='LCD_Y' data='3' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<keymap />
+	<panel2d shadows='0' lighting='2' perspective='0' >
+		<background rgb='9737364' img='' style='0' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel2d>
+	<panel3d shadows='1' lighting='2' perspective='0' >
+		<background rgb='8409120' img='' style='0' />
+		<table rgb='7360576' img='' style='0' size='0' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel3d>
+	<layout >
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAWwQAALUCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetNumber' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAWwQAALUCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

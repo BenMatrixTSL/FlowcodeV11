@@ -1,0 +1,193 @@
+<root>
+<document schema='101' license='50,Dev User,NXHQAN' title='' description='' guid='' target='PIC16.30F.30F3014' >
+	<config data='!0,8712!10,3f!20,87b3!30,310f!40,330f!50,7!60,c003%0,712%e,2%10,f%14,3%1f,0%20,3%24,3%27,1%28,7%2f,1%30,f%38,1%3c,3%40,f%48,3%4c,3%50,1%51,3%60,3%6e,1%6f,1' clkspd='96000000' simspd='1' usewdt='0' constif='0' />
+	<plugins >
+		<dll_dbg_icd enabled='0' >
+			<data name='debug' value='1' />
+			<data name='userpins' value='0' />
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='monitor' value='1' />
+			<data name='ictloop' value='1' />
+			<data name='ictrate' value='1000' />
+			<data name='ictmask' value='-1' />
+		</dll_dbg_icd>
+		<dll_dbg_ict enabled='0' >
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='userpins' value='0' />
+		</dll_dbg_ict>
+		<dll_models enabled='1' />
+		<dll_upgrader enabled='1' />
+		<dll_webhelp enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug />
+	<components >
+		<settings autoimg='1' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='' vmin='0' vmaj='1' visiblename='' description='' category='' author='' keywords='' dynamic='0' iconpath='' />
+		<component class_type='root' codename='panel' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+			<resources />
+			<properties />
+			<values />
+			<events />
+			<apis />
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='false' type='b1' array='0' description='' isconst='1' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='RevInput' type='u8' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='Level' type='u8' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='RevCount' type='u8' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='OldRevInput' type='u8' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='trigger' type='u8' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='true' type='b1' array='0' description='' isconst='1' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='timer_tick' description='' >
+						<command class_type='comment' title='' comment='Insert DSP Tick Code Here' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+						<command class_type='comment' title='' comment='The DSP System Tick component macro allows the buffer pointer to be
+incremented. When the buffer pointer reaches the end of the buffer 
+the pointer is reset back to 0 and the return value is a 1.
+This trigger functionality allows for the mixing of single value (tick) 
+and buffer style DSP functionality. For example a regular ADC sample
+using the tick based functions and a FFT which requires a buffer full of data.
+ ' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+						<command class_type='call' title='Perform DSP tick' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,511,300' break='0' mark='0' disable='0' hide='0' customize='0' component='DSPSystem1' macro='TickAllBuffers' >
+							<return exp='trigger' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='' >
+						<command class_type='comment' title='' comment='DSP System needs initialising or you will get compile errors.
+Initialise function basically sets up all the DSP buffers for you.' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+						<command class_type='call' title='Setup DSP System Variables' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,511,300' break='0' mark='0' disable='0' hide='0' customize='0' component='DSPSystem1' macro='Initialise' />
+						<command class_type='comment' title='' comment='This interrupt enable icon enables the main DSP timer tick
+This defines the overall DSP sample rate and therefore the
+bandwidth of the system. The rules of Nyquist suggest that
+the timer frequency should be at least twice that of the 
+highest frequency in the input signal. In practise it is 
+usually worth going beyond this to give around 12 times the 
+maximum input frequency where possible.' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+						<command class_type='interrupt' title='Enable Timer Tick' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,511,300' break='0' mark='0' disable='0' hide='0' customize='0' enable='1' name='TMR1' call='timer_tick' >
+							<settings timer='1' prescale='64' postscale='-1' rollover='2048' bitcount='-1' trigger='3' maskhi='-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAA' masklo='-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAA' >
+								<option value='0' />
+								<option value='2' />
+								<option value='2048' />
+								<option value='-1' />
+							</settings>
+						</command>
+						<command class_type='loop' title='Loop' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,511,300' break='0' mark='0' disable='0' hide='0' customize='0' exp='1' type='0' start='1' count='1' breakend='0' >
+							<flowline >
+								<command class_type='comment' title='' comment='The code for the DSP trigger is controlled by calling
+the DSP system tick component macro. On each tick the
+index pointer moves to the next buffer location. When 
+the index pointer has reached the end of the DSP buffer 
+a value of 1 will be passed into the Trigger variable
+allowing for an entire buffer to be processed at once.' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+								<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,511,300' break='0' mark='0' disable='0' hide='0' customize='0' exp='trigger = 1' swap='0' >
+									<flowline >
+										<command class_type='comment' title='' comment='Care should be taken to reset the trigger variable' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,511,300' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='trigger = 0' />
+										</command>
+										<command class_type='comment' title='' comment='Insert DSP Tick Code Here' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='917f243e-4102-4bee-9998-81f18bc6ca9d' vmin='2' vmaj='1' codename='DSPSystem1' x='0' y='0' z='0' xsz='32' ysz='32' zsz='5.1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='buffer_count' data='8' />
+					<value target='simple_mode' data='1' />
+					<value target='DSPsystem_ID' data='1' />
+					<value target='buff_a_name' data='MyBuf1' />
+					<value target='buff_b_name' data='MuBuf2' />
+					<value target='buff_c_name' data='MyBuf3' />
+					<value target='buff_d_name' data='MyBuf4' />
+					<value target='buff_e_name' data='MyBuf5' />
+					<value target='buff_f_name' data='MyBuf6' />
+					<value target='buff_g_name' data='MyBuf7' />
+					<value target='buff_h_name' data='MyBuf8' />
+					<value target='buff_a_depth' data='1' />
+					<value target='buff_a_sign' data='0' />
+					<value target='buff_a_size' data='8' />
+					<value target='buff_b_depth' data='1' />
+					<value target='buff_b_sign' data='0' />
+					<value target='buff_b_size' data='8' />
+					<value target='buff_c_depth' data='1' />
+					<value target='buff_c_sign' data='0' />
+					<value target='buff_c_size' data='8' />
+					<value target='buff_d_depth' data='1' />
+					<value target='buff_d_sign' data='0' />
+					<value target='buff_d_size' data='8' />
+					<value target='buff_e_depth' data='1' />
+					<value target='buff_e_sign' data='0' />
+					<value target='buff_e_size' data='8' />
+					<value target='buff_f_depth' data='1' />
+					<value target='buff_f_sign' data='0' />
+					<value target='buff_f_size' data='8' />
+					<value target='buff_g_depth' data='1' />
+					<value target='buff_g_sign' data='0' />
+					<value target='buff_g_size' data='8' />
+					<value target='buff_h_depth' data='1' />
+					<value target='buff_h_sign' data='0' />
+					<value target='buff_h_size' data='8' />
+					<value target='buff_simp_depth' data='1' />
+					<value target='buff_simp_sign' data='0' />
+					<value target='buff_simp_size' data='8' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<keymap />
+	<panel2d shadows='0' lighting='2' brightness='0' perspective='0' >
+		<background rgb='9737364' img='' style='0' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel2d>
+	<panel3d shadows='0' lighting='2' brightness='0' perspective='0' >
+		<background rgb='8409120' img='' style='0' />
+		<table rgb='7360576' img='' style='0' size='0' />
+		<camera xe='0' ye='0' ze='85.9603' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel3d>
+	<layout >
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAA3wIAAH0CAAA' zoom='75' scrollx='0' scrolly='33' flags='0' />
+	</layout>
+</document>
+</root>

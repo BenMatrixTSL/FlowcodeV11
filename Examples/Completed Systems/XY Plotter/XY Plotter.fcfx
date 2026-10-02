@@ -1,0 +1,1409 @@
+<root>
+<document schema='101' license='0,30day_82382337,Z0RMZY' title='' description='' guid='0fae5b4d-c92b-4acf-99fc-a224de952678' target='PIC.18F.ECIO-40' >
+	<config data='!0,ffffffff!8,ffffffff!10,ffffffff!18,ffffffff!20,ffffffff!28,ffffffff!30,ffffffff!38,ffffffff!40,ffffffff!48,ffffffff!50,ffffffff!58,ffffffff!60,ffffffff!68,ffffffff' clkspd='48000000' simspd='1' usewdt='0' constif='0' />
+	<plugins >
+		<dll_dbg_icd enabled='0' >
+			<data name='debug' value='1' />
+			<data name='userpins' value='0' />
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='monitor' value='1' />
+			<data name='ictloop' value='1' />
+			<data name='ictrate' value='1000' />
+			<data name='ictmask' value='-1' />
+		</dll_dbg_icd>
+		<dll_dbg_ict enabled='0' >
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='userpins' value='0' />
+		</dll_dbg_ict>
+		<dll_models enabled='1' />
+		<dll_upgrader enabled='1' />
+		<dll_webhelp enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug >
+		<watch expr='LocalX' />
+		<watch expr='LocalY' />
+		<watch expr='Scale' />
+		<watch expr='count' />
+		<watch expr='ScaleX' />
+		<watch expr='ScaleY' />
+		<watch expr='Movement' />
+		<watch expr='GlobalX' />
+		<watch expr='GlobalY' />
+		<watch expr='XDirection' />
+		<watch expr='YDirection' />
+		<watch expr='GetPenCoords[0]' />
+		<watch expr='GetPenCoords[1]' />
+		<watch expr='GetPenCoords[2]' />
+		<watch expr='test' />
+		<watch expr='ScaleY' />
+		<watch expr='ErrorY' />
+		<watch expr='ScaleYTemp' />
+		<watch expr='ErrorX' />
+		<watch expr='ScaleX' />
+		<watch expr='ScaleXTemp' />
+		<watch expr='KeyPadPress' />
+		<watch expr='ScaleXFlag' />
+		<watch expr='ScaleYFlag' />
+		<watch expr='StepperDelay' />
+		<watch expr='OldXDirection' />
+		<watch expr='XDirection' />
+		<watch expr='OldYDirection' />
+		<watch expr='YDirection' />
+		<watch expr='BacklashX' />
+		<watch expr='BacklashY' />
+		<watch expr='prev[0]' />
+		<watch expr='rangex' />
+		<watch expr='range' />
+		<watch expr='AxisLimit' />
+	</debug>
+	<components >
+		<settings autoimg='1' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='0fae5b4d-c92b-4acf-99fc-a224de952678' vmin='0' vmaj='1' visiblename='' description='' category='' author='' keywords='' dynamic='0' iconpath='' />
+		<component class_type='root' codename='panel' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+			<resources />
+			<properties >
+				<property name='Resolution' target='HighDef' typeid='16' hidden='0' locked='0' info='' filter='000Low
+001High' />
+			</properties>
+			<values >
+				<value target='HighDef' data='000' />
+			</values>
+			<events >
+				<event class='Simulation' event='Stop' target='Ev_Stop' />
+				<event class='Simulation' event='Start' target='Ev_Start' />
+			</events>
+			<apis />
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='Count' type='s16' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='rangey' type='s16' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='StepperDelay' type='s16' array='0' description='' isconst='0' isinit='1' usrinit='3000' setinit='3000' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='rangex' type='s16' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='GlobalY' type='s16' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='testZ' type='u8' array='100' description='' isconst='0' isinit='0' usrinit='&quot;&quot;' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='tempcount' type='u8' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='GlobalX' type='s16' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='testY' type='s16' array='100' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='testX' type='s16' array='100' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='false' type='b1' array='0' description='' isconst='1' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='switchPressY' type='b1' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='switchPressX' type='b1' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='LocalXTemp' type='s16' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='SW4' type='b1' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='ScaleXFlag' type='b1' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='BacklashY' type='u8' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='SW3' type='b1' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='BacklashX' type='u8' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='SW2' type='b1' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='KeyPadPress' type='u8' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='YDirection' type='b1' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='SW1' type='b1' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='XDirection' type='b1' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='LocalYTemp' type='s16' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='SW0' type='b1' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='ScaleYFlag' type='b1' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='ScaleY' type='f32' array='0' description='' isconst='0' isinit='1' usrinit='0.0' setinit='0.0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='ScaleX' type='f32' array='0' description='' isconst='0' isinit='1' usrinit='0.0' setinit='0.0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='AxisLimit' type='u8' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='PenFlag' type='b1' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='Movement' type='s16' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='MinDelay' type='s16' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='AxisFlag' type='b1' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='range' type='s16' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='ResetXAxis' type='b1' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='DrawCount' type='s16' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='LocalY' type='f32' array='0' description='' isconst='0' isinit='1' usrinit='0.0' setinit='0.0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='count3' type='u8' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='LocalX' type='f32' array='0' description='' isconst='0' isinit='1' usrinit='0.0' setinit='0.0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='count2' type='u8' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='ResetYAxis' type='b1' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='ScaleXTemp' type='f32' array='0' description='' isconst='0' isinit='1' usrinit='0.0' setinit='0.0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='FLASH' type='b1' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='ErrorY' type='f32' array='0' description='' isconst='0' isinit='1' usrinit='0.0' setinit='0.0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='ScaleYTemp' type='f32' array='0' description='' isconst='0' isinit='1' usrinit='0.0' setinit='0.0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='ErrorX' type='f32' array='0' description='' isconst='0' isinit='1' usrinit='0.0' setinit='0.0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='prev' type='s16' array='2' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='loop' type='b1' array='0' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='Scale' type='f32' array='0' description='' isconst='0' isinit='1' usrinit='0.0' setinit='0.00000' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='GetPenCoords' type='f32' array='3' description='' isconst='0' isinit='0' usrinit='0.0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='OldYDirection' type='b1' array='0' description='' isconst='0' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='OldXDirection' type='b1' array='0' description='' isconst='0' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='true' type='b1' array='0' description='' isconst='1' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='XYScale' description='' >
+						<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='LocalX = 0 OR LocalY = 0' swap='0' >
+							<flowline >
+								<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='LocalX = 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='ScaleX = 0' />
+											<exp exp='ScaleY = 1' />
+										</command>
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='Movement = LocalY' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='LocalY = 0' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='ScaleX = 1' />
+											<exp exp='ScaleY = 0' />
+										</command>
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='Movement = LocalX' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='MinDelay = 750' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='LocalX = LocalY' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='Scale = LocalX' />
+											<exp exp='' />
+											<exp exp='ScaleX = 1' />
+											<exp exp='ScaleY = 1' />
+											<exp exp='' />
+											<exp exp='Movement = LocalX' />
+										</command>
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='MinDelay = 750' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,-7,36,-7' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='Scale = LocalY / LocalX' />
+										</command>
+										<command class_type='decision' title='Scaling step size for X and Y movement' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='Scale &gt;= 1' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+													<exp exp='ScaleX = 1' />
+													<exp exp='ScaleY = Scale' />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+													<exp exp='ScaleX = 1 / Scale' />
+													<exp exp='ScaleY = 1' />
+												</command>
+											</flowline>
+										</command>
+										<command class_type='decision' title='Determine which axis has LEAST magitude of movement' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='LocalY &gt; LocalX' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+													<exp exp='Movement = LocalX' />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+													<exp exp='Movement = LocalY' />
+												</command>
+											</flowline>
+										</command>
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='MinDelay = 750' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+						<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+							<exp exp='BacklashX = 0' />
+							<exp exp='BacklashY = BacklashX' />
+						</command>
+						<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+							<exp exp='ScaleXTemp = ScaleX' />
+							<exp exp='ScaleYTemp = ScaleY' />
+							<exp exp='' />
+							<exp exp='// Multiply Movement by 320 to convert' />
+							<exp exp='// from mm to no. of steps.' />
+							<exp exp='Movement = (Movement * 280) + BacklashX + BacklashY' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='YCCW' description='' >
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='Stepper2' macro='DecrementStep' />
+						<command class_type='delay' title='Delay' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='StepperDelay' type='0' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Stop' description='Broadcast to all components that simulation has stopped' >
+						<return name='Return' type='u32' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='1' hide='0' customize='0' macro='Component.SetVisible' >
+							<argument exp='Stepper1' />
+							<argument exp='true' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='ResetAxes' description='' >
+						<local name='grouppos' type='h32' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Panel.Position.GetBox' >
+							<return exp='.grouppos' />
+							<argument exp='XAxis' />
+						</command>
+						<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='ManualKeypadMovement' />
+						<command class_type='loop' title='Loop' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='1' hide='0' customize='0' exp='ResetXAxis == 0' type='0' start='1' count='1' breakend='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Panel.Collision.GetSingleAxis' >
+									<return exp='switchPressX' />
+									<argument exp='XAxisSW' />
+									<argument exp='Holder' />
+									<argument exp='0.0' />
+									<argument exp='0.0' />
+									<argument exp='0.0' />
+									<argument exp='this' />
+								</command>
+								<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='switchPressX' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='ResetXAxis = switchPressX' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='comment' title='' comment='Change to switch 0 and 1, for x axis' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+										<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='keypad_eb014' macro='GetNumber' >
+											<return exp='KeyPadPress' />
+										</command>
+										<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='KeyPadPress = 10' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+													<exp exp='ResetXAxis = 1' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='XCCW' />
+								<command class_type='delay' title='Delay' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='StepperDelay' type='0' />
+							</flowline>
+						</command>
+						<command class_type='loop' title='Loop' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='1' hide='0' customize='0' exp='ResetYAxis = 0' type='0' start='1' count='1' breakend='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Panel.Collision.GetSingleAxis' >
+									<return exp='switchPressY' />
+									<argument exp='YAxisSW' />
+									<argument exp='Gantry' />
+									<argument exp='0.0' />
+									<argument exp='0.0' />
+									<argument exp='0.0' />
+									<argument exp='this' />
+								</command>
+								<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='switchPressY' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='ResetYAxis = switchPressY' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='comment' title='' comment='Change to switch 2 and 3, for y axis' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+										<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='keypad_eb014' macro='GetNumber' >
+											<return exp='KeyPadPress' />
+										</command>
+										<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='KeyPadPress = 11' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+													<exp exp='ResetYAxis = 1' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='YCCW' />
+								<command class_type='delay' title='Delay' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='StepperDelay' type='0' />
+							</flowline>
+						</command>
+						<command class_type='delay' title='Delay' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='1' hide='0' customize='0' exp='1' type='2' />
+						<command class_type='loop' title='Loop' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='1' hide='0' customize='0' exp='1' type='2' start='1' count='200' breakend='0' >
+							<flowline >
+								<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='XCW' />
+								<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='YCW' />
+								<command class_type='delay' title='Delay' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='StepperDelay' type='0' />
+							</flowline>
+						</command>
+						<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Panel.Position.GetCoords' >
+							<return exp='GetPenCoords' />
+							<argument exp='Pen' />
+							<argument exp='DrawArea' />
+						</command>
+						<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Debug.PrintLn' >
+							<argument exp='GetPenCoords[0]' />
+						</command>
+						<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Debug.PrintLn' >
+							<argument exp='GetPenCoords[1]' />
+						</command>
+						<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Debug.PrintLn' >
+							<argument exp='GetPenCoords[2]' />
+						</command>
+						<command class_type='delay' title='Delay' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='1' hide='0' customize='0' exp='3' type='2' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='DrawLine' description='' >
+						<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='testZ[count]' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='DrawCount = DrawCount + 1' />
+								</command>
+								<command class_type='comment' title='' comment='was: if drawcount = 25' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+								<command class_type='sim' title='Get pen coords' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Panel.Position.GetCoords' >
+									<return exp='GetPenCoords' />
+									<argument exp='Pen' />
+									<argument exp='DrawArea' />
+								</command>
+								<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='HighDef = 1' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='GetPenCoords[0] = GetPenCoords[0] * 10' />
+											<exp exp='GetPenCoords[1] = GetPenCoords[1] * 10' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='GetPenCoords[0] = GetPenCoords[0] * 4' />
+											<exp exp='GetPenCoords[1] = GetPenCoords[1] * 4' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='rangex = GetPenCoords[0] - prev[0]' />
+									<exp exp='rangey = GetPenCoords[1] - prev[1]' />
+									<exp exp='range = rangex * rangex + rangey * rangey' />
+									<exp exp='' />
+								</command>
+								<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='drawcount = 150' swap='0' >
+									<flowline >
+										<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Panel.Graphics.DrawBegin' >
+											<argument exp='DrawArea' />
+										</command>
+										<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Panel.Graphics.SetColorRGB' >
+											<argument exp='50' />
+											<argument exp='50' />
+											<argument exp='50' />
+										</command>
+										<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='1' hide='0' customize='0' macro='Panel.Graphics.SetColorRGB' >
+											<argument exp='random () &amp; 0xFF' />
+											<argument exp='random () &amp; 0xFF' />
+											<argument exp='random () &amp; 0xFF' />
+										</command>
+										<command class_type='sim' title='Draw Point' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Panel.Graphics.DrawCircle' >
+											<argument exp='GetPenCoords[0]' />
+											<argument exp='GetPenCoords[1]' />
+											<argument exp='5' />
+											<argument exp='5' />
+										</command>
+										<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Panel.Graphics.DrawEnd' />
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='DrawCount = 0' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='Prev[0] = GetPenCoords[0]' />
+									<exp exp='Prev[1] = GetPenCoords[1]' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Initialisation' description='' >
+						<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Panel.Graphics.DrawBegin' >
+							<argument exp='DrawArea' />
+						</command>
+						<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='HighDef = 1' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Panel.Graphics.DrawCreate' >
+									<argument exp='DrawArea' />
+									<argument exp='1250' />
+									<argument exp='1250' />
+									<argument exp='0' />
+									<argument exp='0xffffff' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Panel.Graphics.DrawCreate' >
+									<argument exp='DrawArea' />
+									<argument exp='500' />
+									<argument exp='500' />
+									<argument exp='0' />
+									<argument exp='0xffffff' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='Stepper1' macro='EnableMotor' />
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='Stepper2' macro='EnableMotor' />
+						<command class_type='call' title='Macro to Reset Axes' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='ResetAxes' />
+						<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Panel.Position.GetCoords' >
+							<return exp='GetPenCoords' />
+							<argument exp='Pen' />
+							<argument exp='DrawArea' />
+						</command>
+						<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='HighDef = 1' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='GetPenCoords[0] = GetPenCoords[0] * 10' />
+									<exp exp='GetPenCoords[1] = GetPenCoords[1] * 10' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='GetPenCoords[0] = GetPenCoords[0] * 4' />
+									<exp exp='GetPenCoords[1] = GetPenCoords[1] * 4' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='output' title='Output' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' mode='1' port='1048580' mask='1' exp='1' />
+						<command class_type='delay' title='Delay' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='200' type='1' />
+						<command class_type='sim' title='#' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Panel.Graphics.DrawCircle' >
+							<argument exp='GetPenCoords[0]' />
+							<argument exp='GetPenCoords[1]' />
+							<argument exp='20' />
+							<argument exp='20' />
+						</command>
+						<command class_type='output' title='Output' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' mode='1' port='1048580' mask='1' exp='0' />
+						<command class_type='delay' title='Delay' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='200' type='1' />
+						<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Panel.Graphics.DrawEnd' />
+						<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+							<exp exp='Prev[0] = 0' />
+							<exp exp='Prev[1] = 0' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='XCW' description='' >
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='Stepper1' macro='IncrementStep' />
+						<command class_type='delay' title='Delay' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='StepperDelay' type='0' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='PenBounce' description='' >
+						<command class_type='output' title='Output' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' mode='1' port='1048580' mask='1' exp='0' />
+						<command class_type='delay' title='Delay' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='25' type='1' />
+						<command class_type='output' title='Output' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' mode='1' port='1048580' mask='1' exp='1' />
+						<command class_type='delay' title='Delay' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='25' type='1' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='XAxis' description='' >
+						<command class_type='loop' title='Loop' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='1' type='2' start='1' count='96' breakend='0' >
+							<flowline >
+								<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='Stepper1' macro='IncrementStep' />
+								<command class_type='delay' title='Delay' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='1' type='1' />
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Termination' description='' >
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='Stepper1' macro='DisableMotor' />
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='Stepper2' macro='DisableMotor' />
+						<command class_type='output' title='Output' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' mode='1' port='1048580' mask='1' exp='1' />
+						<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+							<exp exp='Loop = 0' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='ManualKeypadMovement' description='' >
+						<command class_type='loop' title='Wait until button &apos;5&apos; is pressed' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='loop = 0' type='0' start='1' count='1' breakend='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='AxisLimit = 0' />
+									<exp exp='StepperDelay = 1000' />
+								</command>
+								<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='keypad_eb014' macro='GetNumber' >
+									<return exp='KeyPadPress' />
+								</command>
+								<command class_type='switch' title='Switch' comment='' ccode='' textshow='1' textmode='0' textarea='36,25,36,25' break='0' mark='0' disable='0' hide='0' customize='0' exp='KeyPadPress' >
+									<case >
+										<flowline >
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+										</flowline>
+									</case>
+									<case exp='1' >
+										<flowline >
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+											<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='XCW' />
+											<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='YCW' />
+										</flowline>
+									</case>
+									<case exp='2' >
+										<flowline >
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+											<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='YCW' />
+										</flowline>
+									</case>
+									<case exp='3' >
+										<flowline >
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+											<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='XCCW' />
+											<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='YCW' />
+										</flowline>
+									</case>
+									<case exp='4' >
+										<flowline >
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+											<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='XCW' />
+										</flowline>
+									</case>
+									<case exp='5' >
+										<flowline >
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+											<command class_type='interrupt' title='Interrupt' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' enable='0' name='TMR1' >
+												<settings timer='1' prescale='1' postscale='-1' rollover='-1' bitcount='-1' trigger='3' maskhi='--------------------------------------------------------------------------------------------------------------------------------------------------------------------------8' masklo='--------------------------------------------------------------------------------------------------------------------------------------------------------------------------8' >
+													<option value='0' />
+													<option value='0' />
+													<option value='0' />
+													<option value='0' />
+												</settings>
+											</command>
+											<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+												<exp exp='loop = 1' />
+											</command>
+										</flowline>
+									</case>
+									<case exp='6' >
+										<flowline >
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+											<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='XCCW' />
+										</flowline>
+									</case>
+									<case exp='7' >
+										<flowline >
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+											<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='YCCW' />
+											<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='XCW' />
+										</flowline>
+									</case>
+									<case exp='8' >
+										<flowline >
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+											<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='YCCW' />
+										</flowline>
+									</case>
+									<case exp='9' >
+										<flowline >
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+											<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+											<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='XCCW' />
+											<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='YCCW' />
+										</flowline>
+									</case>
+								</command>
+							</flowline>
+						</command>
+						<command class_type='comment' title='' comment='Reset &apos;loop&apos; variable to enable multiple axislimit calls
+' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+						<command class_type='interrupt' title='Interrupt' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' enable='1' name='TMR1' call='AxisLimit' >
+							<settings timer='1' prescale='1' postscale='-1' rollover='-1' bitcount='-1' trigger='3' maskhi='--------------------------------------------------------------------------------------------------------------------------------------------------------------------------8' masklo='--------------------------------------------------------------------------------------------------------------------------------------------------------------------------8' >
+								<option value='1' />
+								<option value='0' />
+								<option value='-1' />
+								<option value='-1' />
+							</settings>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='YAxis' description='' >
+						<command class_type='loop' title='Loop' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='1' type='2' start='1' count='96' breakend='0' >
+							<flowline >
+								<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='Stepper2' macro='IncrementStep' />
+								<command class_type='delay' title='Delay' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='1' type='1' />
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='PenUpDown' description='' >
+						<command class_type='decision' title='Pen Up/Down' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='testZ[count]' swap='0' >
+							<flowline >
+								<command class_type='comment' title='' comment='Pen Down' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+								<command class_type='output' title='Output' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' mode='1' port='1048580' mask='1' exp='1' />
+							</flowline>
+							<flowline >
+								<command class_type='comment' title='' comment='Pen Up' ccode='' textshow='1' textmode='0' textarea='36,21,36,21' break='0' mark='0' disable='0' hide='0' customize='0' />
+								<command class_type='output' title='Output' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' mode='1' port='1048580' mask='1' exp='0' />
+							</flowline>
+						</command>
+						<command class_type='delay' title='Delay' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='100' type='1' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='AxisLimit' description='' >
+						<command class_type='input' title='Input' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' mode='2' port='1048578' mask='196' exp='AxisLimit' />
+						<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='AxisLimit &gt;= 4' swap='0' >
+							<flowline >
+								<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='ManualKeypadMovement' />
+								<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='loop = 0' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='YCW' description='' >
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='Stepper2' macro='IncrementStep' />
+						<command class_type='delay' title='Delay' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='StepperDelay' type='0' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='XYMovement' description='' >
+						<command class_type='loop' title='Loop' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='ScaleX &gt;= 1' type='0' start='1' count='1' breakend='0' >
+							<flowline >
+								<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='ErrorX &gt; 1' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='ScaleX = ScaleX + 1' />
+											<exp exp='ErrorX = ErrorX - 1' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='XDirection = 1' swap='0' >
+									<flowline >
+										<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='XCW' />
+										<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='DrawLine' />
+									</flowline>
+									<flowline >
+										<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='XCCW' />
+										<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='DrawLine' />
+									</flowline>
+								</command>
+								<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='ScaleX = ScaleX - 1' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='loop' title='Loop' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='ScaleY &gt;= 1' type='0' start='1' count='1' breakend='0' >
+							<flowline >
+								<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='ErrorY &gt; 1' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='ScaleY = ScaleY + 1' />
+											<exp exp='ErrorY = ErrorY - 1' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='YDirection = 1' swap='0' >
+									<flowline >
+										<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='YCW' />
+										<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='DrawLine' />
+									</flowline>
+									<flowline >
+										<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='YCCW' />
+										<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='DrawLine' />
+									</flowline>
+								</command>
+								<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='ScaleY = ScaleY - 1' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='calculation' title='Calculate the error factor' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+							<exp exp='ErrorX = ErrorX + ScaleX' />
+							<exp exp='ErrorY = ErrorY + ScaleY' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='XCCW' description='' >
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='Stepper1' macro='DecrementStep' />
+						<command class_type='delay' title='Delay' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='StepperDelay' type='0' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='XYTravelDirection' description='' >
+						<command class_type='decision' title='Set Direction of X travel' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='LocalX &gt; 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='RotateX CW' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='XDirection = 1' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='LocalX &lt; 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='RotateX CCW' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='XDirection = 0' />
+								</command>
+								<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='LocalX = LocalX * -1' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='LocalX = 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='XDirection = XDirection' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Set Direction of Y Travel' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='LocalY &gt; 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='RotateY CW' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='YDirection = 1' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='LocalY &lt; 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='RotateY CCW' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='YDirection = 0' />
+								</command>
+								<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='LocalY = LocalY * -1' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='LocalY = 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='YDirection = YDirection' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Start' description='Broadcast to all components that simulation is starting' >
+						<return name='Return' type='u32' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='1' hide='0' customize='0' macro='Component.SetVisible' >
+							<argument exp='Stepper1' />
+							<argument exp='false' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='To run simulation, open the dashboard panel by selecting it in the menu &quot;View --&gt; Dashboard Panel&quot;
+
+Then run the simulation, and press 5 on the keypad to start the XY plotter.' >
+						<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Initialisation' />
+						<command class_type='interrupt' title='Interrupt' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' enable='1' name='TMR1' call='AxisLimit' >
+							<settings timer='1' prescale='1' postscale='-1' rollover='-1' bitcount='-1' trigger='3' maskhi='--------------------------------------------------------------------------------------------------------------------------------------------------------------------------8' masklo='--------------------------------------------------------------------------------------------------------------------------------------------------------------------------8' >
+								<option value='1' />
+								<option value='0' />
+								<option value='-1' />
+								<option value='-1' />
+							</settings>
+						</command>
+						<command class_type='calculation' title='XY Coords and Pen' comment='' ccode='' textshow='0' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+							<exp exp='testX[0] = 0' />
+							<exp exp='testX[1] = 0' />
+							<exp exp='testX[2] = 100' />
+							<exp exp='testX[3] = 100' />
+							<exp exp='testX[4] = 0' />
+							<exp exp='testX[5] = 50' />
+							<exp exp='testX[6] = 100' />
+							<exp exp='testX[7] = 10' />
+							<exp exp='testX[8] = 10' />
+							<exp exp='testX[9] = 30' />
+							<exp exp='testX[10] = 30' />
+							<exp exp='testX[11] = 10' />
+							<exp exp='testX[12] = 40' />
+							<exp exp='testX[13] = 40' />
+							<exp exp='testX[14] = 60' />
+							<exp exp='testX[15] = 60' />
+							<exp exp='testX[16] = 70' />
+							<exp exp='testX[17] = 70' />
+							<exp exp='testX[18] = 90' />
+							<exp exp='testX[19] = 90' />
+							<exp exp='testX[20] = 70' />
+							<exp exp='testX[21] = 0' />
+							<exp exp='' />
+							<exp exp='testY[0] = 50' />
+							<exp exp='testY[1] = 100' />
+							<exp exp='testY[2] = 100' />
+							<exp exp='testY[3] = 50' />
+							<exp exp='testY[4] = 50' />
+							<exp exp='testY[5] = 0' />
+							<exp exp='testY[6] = 50' />
+							<exp exp='testY[7] = 70' />
+							<exp exp='testY[8] = 90' />
+							<exp exp='testY[9] = 90' />
+							<exp exp='testY[10] = 70' />
+							<exp exp='testY[11] = 70' />
+							<exp exp='testY[12] = 100' />
+							<exp exp='testY[13] = 70' />
+							<exp exp='testY[14] = 70' />
+							<exp exp='testY[15] = 100' />
+							<exp exp='testY[16] = 70' />
+							<exp exp='testY[17] = 90' />
+							<exp exp='testY[18] = 90' />
+							<exp exp='testY[19] = 70' />
+							<exp exp='testY[20] = 70' />
+							<exp exp='testY[21] = 0' />
+							<exp exp='' />
+							<exp exp='testZ[0] = 0' />
+							<exp exp='testZ[1] = 1' />
+							<exp exp='testZ[2] = 1' />
+							<exp exp='testZ[3] = 1' />
+							<exp exp='testZ[4] = 1' />
+							<exp exp='testZ[5] = 1' />
+							<exp exp='testZ[6] = 1' />
+							<exp exp='testZ[7] = 0' />
+							<exp exp='testZ[8] = 1' />
+							<exp exp='testZ[9] = 1' />
+							<exp exp='testZ[10] = 1' />
+							<exp exp='testZ[11] = 1' />
+							<exp exp='testZ[12] = 0' />
+							<exp exp='testZ[13] = 1' />
+							<exp exp='testZ[14] = 1' />
+							<exp exp='testZ[15] = 1' />
+							<exp exp='testZ[16] = 0' />
+							<exp exp='testZ[17] = 1' />
+							<exp exp='testZ[18] = 1' />
+							<exp exp='testZ[19] = 1' />
+							<exp exp='testZ[20] = 1' />
+							<exp exp='testZ[21] = 0' />
+						</command>
+						<command class_type='loop' title='10 Sets of Coords' comment='Loop iterates as many times as there are coordinates. 
+' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='1' type='2' start='1' count='22' breakend='0' >
+							<flowline >
+								<command class_type='calculation' title='Get Coords' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='// Obtain XY Coords' />
+									<exp exp='LocalX = testX[count] - GlobalX' />
+									<exp exp='LocalY = testY[count] - GlobalY' />
+									<exp exp='' />
+									<exp exp='// Save a temp version for loops' />
+									<exp exp='LocalXTemp = LocalX' />
+									<exp exp='LocalYTemp = LocalY' />
+								</command>
+								<command class_type='call' title='Determine direction of travel for both XY' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='XYTravelDirection' />
+								<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='OldXDirection = XDirection' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='BacklashX = 0' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='BacklashX = 100' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='OldYDirection = YDirection' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='BacklashY = 0' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='47,9,47,9' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='BacklashY = 100' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='XYScale' />
+								<command class_type='delay' title='Short Delay to demonstrate arrival at each coord' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='1' hide='0' customize='0' exp='1' type='2' />
+								<command class_type='comment' title='' comment='Pen Bounce used to stop pen float' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+								<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='PenBounce' />
+								<command class_type='call' title='Call for Pen Up/ Down Movement' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='PenUpDown' />
+								<command class_type='delay' title='Short Delay to demonstrate arrival at each coord' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='1' hide='0' customize='0' exp='1' type='2' />
+								<command class_type='comment' title='' comment='Reset Motor acceleration/ deceleration delay' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+								<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='StepperDelay = 3000' />
+									<exp exp='' />
+								</command>
+								<command class_type='loop' title='Go from current XY location to new XY location' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='Movement &gt; 0' type='0' start='1' count='10' breakend='0' >
+									<flowline >
+										<command class_type='call' title='Move XY from current to new' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='XYMovement' />
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='Movement = Movement - 1' />
+											<exp exp='' />
+											<exp exp='Count3 = Count3 + 1' />
+										</command>
+										<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='Count3 = 5' swap='0' >
+											<flowline >
+												<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='StepperDelay &gt;= MinDelay &amp;&amp; Movement &gt; 28' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+															<exp exp='StepperDelay = StepperDelay - 100' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='Movement &lt; 28' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+															<exp exp='StepperDelay = StepperDelay + 100' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+													<exp exp='Count3 = 0' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='ScaleX = ScaleXTemp' />
+											<exp exp='ScaleY = ScaleYTemp' />
+											<exp exp='' />
+											<exp exp='ScaleXFlag = 0' />
+											<exp exp='ScaleYFlag = 0' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='calculation' title='Increment to next coords' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='GlobalX = testX[count]' />
+									<exp exp='GlobalY = testY[count]' />
+									<exp exp='' />
+									<exp exp='count = count + 1' />
+									<exp exp='' />
+									<exp exp='OldXDirection = XDirection' />
+									<exp exp='OldYDirection = YDirection' />
+									<exp exp='' />
+									<exp exp='//GlobalX = GlobalX + LocalXTemp' />
+									<exp exp='//GlobalY = GlobalY + LocalYTemp' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Termination' />
+						<command class_type='delay' title='Delay' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='10' type='2' />
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='shape' codename='DrawArea' x='62.5' y='62.5' z='83.8091' xsz='125' ysz='125' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Shape' data='0' />
+					<value target='Color' data='16777215' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+					<value target='Model' data='' />
+					<value target='Unit' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='26732594-ad79-472f-80ff-95d365b3b252' vmin='1' vmaj='1' codename='YAxisSW' x='-7' y='-13' z='59.0376' xsz='1' ysz='1' zsz='1' xang='90' yang='0' zang='90' xquat='0.5' yquat='0.5' zquat='0.5' wquat='0.5' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='pin' data='$PORTA.0' />
+					<value target='polarity' data='000' />
+					<value target='debounce' data='10' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='b07090da-50a4-41ed-97d8-99016c092a14' vmin='0' vmaj='1' codename='keypad_eb014' x='8' y='0' z='5.2' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='1' >
+				<resources />
+				<properties />
+				<values >
+					<value target='port' data='001' />
+					<value target='pin_col1' data='$PORTB.0' />
+					<value target='pin_col2' data='$PORTB.1' />
+					<value target='pin_col3' data='$PORTB.2' />
+					<value target='pin_row1' data='$PORTB.4' />
+					<value target='pin_row2' data='$PORTB.5' />
+					<value target='pin_row3' data='$PORTB.6' />
+					<value target='pin_row4' data='$PORTB.7' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='group' codename='BasePlate' x='55.441' y='68' z='41.9126' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values />
+				<events />
+				<apis />
+				<variables />
+				<macros />
+				<component class_type='shape' codename='Platform' x='3.559' y='-6' z='-14.2476' xsz='184.85' ysz='291.085' zsz='54.5031' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Shape' data='201' />
+						<value target='Color' data='192' />
+						<value target='Outline' data='0' />
+						<value target='Thickness' data='0' />
+						<value target='Image' data='' />
+						<value target='Model' data='.\XYplot_New_Platform.mesh' />
+						<value target='Unit' data='1' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='shape' codename='Static' x='-2.441' y='-4' z='11.0874' xsz='187.086' ysz='200' zsz='60.8234' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Shape' data='201' />
+						<value target='Color' data='192' />
+						<value target='Outline' data='0' />
+						<value target='Thickness' data='0' />
+						<value target='Image' data='' />
+						<value target='Model' data='.\XYplot_New_Static.mesh' />
+						<value target='Unit' data='1' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+			</component>
+			<component class_type='ref' guid='cfd176dc-a2c1-4dad-ac45-117781624c82' vmin='1' vmaj='1' codename='Stepper1' x='94' y='-34' z='35' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Coil_1' data='$PORTA.0' />
+					<value target='Coil_2' data='$PORTA.1' />
+					<value target='Coil_3' data='$PORTA.2' />
+					<value target='Coil_4' data='$PORTA.3' />
+					<value target='Winding_Type' data='000' />
+					<value target='Step_Type' data='001' />
+					<value target='Steps_Per_Rev' data='200' />
+					<value target='coils_enable' data='0' />
+					<value target='arrow_enable' data='1' />
+					<value target='target_object' data='XAxis' />
+					<value target='gear_ratio' data='0.000000' />
+					<value target='x_pitch' data='0.000000' />
+					<value target='y_pitch' data='1.000000' />
+					<value target='z_pitch' data='0.000000' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='cfd176dc-a2c1-4dad-ac45-117781624c82' vmin='1' vmaj='1' codename='Stepper2' x='24' y='-27' z='35' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Coil_1' data='$PORTD.0' />
+					<value target='Coil_2' data='$PORTD.1' />
+					<value target='Coil_3' data='$PORTD.2' />
+					<value target='Coil_4' data='$PORTD.3' />
+					<value target='Winding_Type' data='000' />
+					<value target='Step_Type' data='001' />
+					<value target='Steps_Per_Rev' data='200' />
+					<value target='coils_enable' data='0' />
+					<value target='arrow_enable' data='1' />
+					<value target='target_object' data='YAxis' />
+					<value target='gear_ratio' data='0.000000' />
+					<value target='x_pitch' data='1.000000' />
+					<value target='y_pitch' data='0.000000' />
+					<value target='z_pitch' data='0.000000' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='group' codename='YAxis' x='25' y='54.5' z='120.172' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values />
+				<events />
+				<apis />
+				<variables />
+				<macros />
+				<component class_type='ref' guid='26732594-ad79-472f-80ff-95d365b3b252' vmin='1' vmaj='1' codename='XAxisSW' x='-6' y='-58.5' z='48.5413' xsz='1' ysz='1' zsz='1' xang='90' yang='0' zang='-180' xquat='4.32978e-017' yquat='-0.707107' zquat='-0.707107' wquat='4.32978e-017' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='pin' data='$PORTA.0' />
+						<value target='polarity' data='000' />
+						<value target='debounce' data='10' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='shape' codename='Gantry' x='0' y='0' z='-2.7092' xsz='58.0226' ysz='209.457' zsz='125.307' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Shape' data='201' />
+						<value target='Color' data='192' />
+						<value target='Outline' data='0' />
+						<value target='Thickness' data='0' />
+						<value target='Image' data='' />
+						<value target='Model' data='.\XYplot_New_Gantry.mesh' />
+						<value target='Unit' data='1' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='group' codename='XAxis' x='1.4125' y='-26.5' z='15.5222' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values />
+					<events />
+					<apis />
+					<variables />
+					<macros />
+					<component class_type='ref' guid='1ac8ae8b-bcd2-493f-b516-36dacb3695f9' vmin='1' vmaj='1' codename='solenoid' x='3.5875' y='0' z='21.0405' xsz='1' ysz='1' zsz='1' xang='0' yang='-1.#IND' zang='0' xquat='0' yquat='0.707107' zquat='0' wquat='0.707107' visible='1' interactive='1' solid='1' layer='0' >
+						<resources />
+						<properties />
+						<values >
+							<value target='pin' data='$PORTE.0' />
+							<value target='target' data='Pen' />
+							<value target='move' data='1.500000' />
+							<value target='animate_time' data='150' />
+						</values>
+						<events />
+						<apis />
+						<variables />
+						<macros />
+					</component>
+					<component class_type='shape' codename='Pen' x='3.8875' y='0' z='-13.4705' xsz='5' ysz='4.9245' zsz='72.74' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+						<resources />
+						<properties />
+						<values >
+							<value target='Shape' data='201' />
+							<value target='Color' data='192' />
+							<value target='Outline' data='0' />
+							<value target='Thickness' data='0' />
+							<value target='Image' data='' />
+							<value target='Model' data='.\XYplot_New_Pen.mesh' />
+							<value target='Unit' data='1' />
+						</values>
+						<events />
+						<apis />
+						<variables />
+						<macros />
+					</component>
+					<component class_type='shape' codename='Holder' x='-1.4125' y='0' z='18.5535' xsz='20.25' ysz='30' zsz='60.034' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+						<resources />
+						<properties />
+						<values >
+							<value target='Shape' data='201' />
+							<value target='Color' data='192' />
+							<value target='Outline' data='0' />
+							<value target='Thickness' data='0' />
+							<value target='Image' data='' />
+							<value target='Model' data='.\XYplot_New_Holder.mesh' />
+							<value target='Unit' data='1' />
+						</values>
+						<events />
+						<apis />
+						<variables />
+						<macros />
+					</component>
+				</component>
+			</component>
+		</component>
+	</components>
+	<keymap />
+	<panel2d shadows='0' lighting='0' perspective='0' >
+		<background rgb='9737364' img='' style='0' />
+		<camera xe='0' ye='0' ze='80.4022' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel2d>
+	<panel3d shadows='0' lighting='0' perspective='1' >
+		<background rgb='15713170' img='' style='0' />
+		<table rgb='7360576' img='' style='0' size='0' />
+		<camera xe='441.342' ye='153.286' ze='306.499' xt='78.1795' yt='65.7089' zt='94.0759' xquat='-0.311107' yquat='-0.395046' zquat='-0.679083' wquat='0.534788' />
+	</panel3d>
+	<layout >
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAbwQAAG8CAAA' zoom='55' scrollx='0' scrolly='1122' flags='0' />
+		<view type='0' name='Ev_Stop' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAbwQAAG8CAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Start' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAbwQAAG8CAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='PenUpDown' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAbwQAAG8CAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='XYScale' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAbwQAAG8CAAA' zoom='55' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='PenBounce' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAbwQAAG8CAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='XYMovement' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAbwQAAG8CAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='XYTravelDirection' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAbwQAAG8CAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='AxisLimit' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAbwQAAG8CAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Initialisation' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAbwQAAG8CAAA' zoom='45' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DrawLine' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAbwQAAG8CAAA' zoom='45' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ResetAxes' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAbwQAAG8CAAA' zoom='55' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Termination' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAbwQAAG8CAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ManualKeypadMovement' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAbwQAAG8CAAA' zoom='50' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='YCCW' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAbwQAAG8CAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='YCW' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAbwQAAG8CAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='XCW' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAbwQAAG8CAAA' zoom='65' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='XCCW' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAbwQAAG8CAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

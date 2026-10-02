@@ -1,0 +1,242 @@
+<root>
+<document schema='101' license='50,Dev User,XDKHX7' title='' description='' target='PIC.16F.16F1937' >
+	<config data='!0,fe2!10,1633%0,2%3,0%5,1%6,1%7,1%8,1%9,3%b,1%c,0%d,0%10,3%14,3%18,0%19,1%1a,1%1c,1%1d,0' clkspd='19660800' simspd='1' usewdt='0' constif='0' />
+	<plugins >
+		<dll_dbg_icd enabled='0' >
+			<data name='debug' value='1' />
+			<data name='userpins' value='0' />
+			<data name='speed' value='0' />
+			<data name='usev9' value='0' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='monitor' value='1' />
+			<data name='ictloop' value='0' />
+			<data name='ictrate' value='20000' />
+			<data name='ictmask' value='0' />
+		</dll_dbg_icd>
+		<dll_models enabled='1' />
+		<dll_upgrader enabled='1' />
+		<dll_webhelp enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug />
+	<components >
+		<settings autoimg='1' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='114d8124-8e1f-4258-ac1f-336bd2dd4b60' vstate='40' vmin='0' vmaj='1' srcleaf='' visiblename='' description='' category='' catenable='1' author='' manuname='' manucode='' sysinfo='0' keywords='' dynamic='0' iconpath='' />
+		<component class_type='root' codename='panel' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+			<resources />
+			<properties />
+			<values />
+			<events />
+			<apis />
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='aLDR' type='u16' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='false' type='b1' description='' isconst='1' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='KeyPos' type='u8' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='aPOT' type='u16' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='KeyIn' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='true' type='b1' description='' isconst='1' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='Main' description='' >
+						<command class_type='call' title='Call Component Macro' component='lcd_eb005' macro='Start' />
+						<command class_type='loop' title='Loop' type='0' exp='1' >
+							<flowline >
+								<command class_type='call' title='Call Component Macro' component='LDR' macro='GetInt' >
+									<return exp='aLDR' />
+								</command>
+								<command class_type='call' title='Call Component Macro' component='POT' macro='GetInt' >
+									<return exp='aPOT' />
+								</command>
+								<command class_type='call' title='Call Component Macro' component='lcd_eb005' macro='ClearLine' >
+									<argument exp='0' />
+								</command>
+								<command class_type='call' title='Call Component Macro' component='lcd_eb005' macro='PrintString' >
+									<argument exp='&quot;LDR:&quot;' />
+								</command>
+								<command class_type='call' title='Call Component Macro' component='lcd_eb005' macro='PrintNumber' >
+									<argument exp='aLDR' />
+								</command>
+								<command class_type='call' title='Call Component Macro' component='lcd_eb005' macro='Cursor' >
+									<argument exp='8' />
+									<argument exp='0' />
+								</command>
+								<command class_type='call' title='Call Component Macro' component='lcd_eb005' macro='PrintString' >
+									<argument exp='&quot;POT:&quot;' />
+								</command>
+								<command class_type='call' title='Call Component Macro' component='lcd_eb005' macro='PrintNumber' >
+									<argument exp='aPOT' />
+								</command>
+								<command class_type='decision' title='Decision' exp='aPOT &gt; aLDR' swap='0' >
+									<flowline >
+										<command class_type='output' title='Output' mode='0' port='1048578' mask='0' exp='0xFF' />
+									</flowline>
+									<flowline >
+										<command class_type='output' title='Output' mode='0' port='1048578' mask='0' exp='0x00' />
+									</flowline>
+								</command>
+								<command class_type='call' title='Call Component Macro' component='keypad_eb014' macro='GetAscii' >
+									<return exp='KeyIn' />
+								</command>
+								<command class_type='decision' title='Decision' exp='KeyIn &lt; 255' swap='0' >
+									<flowline >
+										<command class_type='decision' title='Decision' exp='KeyPos = 16' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='KeyPos = 0' />
+												</command>
+												<command class_type='call' title='Call Component Macro' component='lcd_eb005' macro='ClearLine' >
+													<argument exp='1' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+										<command class_type='call' title='Call Component Macro' component='lcd_eb005' macro='Cursor' >
+											<argument exp='KeyPos' />
+											<argument exp='1' />
+										</command>
+										<command class_type='call' title='Call Component Macro' component='lcd_eb005' macro='PrintAscii' >
+											<argument exp='KeyIn' />
+										</command>
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='KeyPos = KeyPos + 1' />
+										</command>
+										<command class_type='call' title='Call Component Macro' component='keypad_eb014' macro='WaitReleased' />
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='delay' title='Delay' exp='100' type='1' />
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='8462ac99-ca8f-429b-953a-36dbe58ada72' vmin='808' vmaj='16' codename='LDR' x='0' y='0' z='2.4' xsz='11.8794' ysz='11.8794' zsz='16' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='1' >
+				<resources />
+				<properties />
+				<values >
+					<value target='angle_start' data='225.000000' />
+					<value target='angle_sweep' data='270.000000' />
+					<value target='color' data='16777215' />
+					<value target='channel' data='0' />
+					<value target='vrefvol' data='500' />
+					<value target='vrefop' data='000' />
+					<value target='convspd' data='003' />
+					<value target='actime' data='40' />
+					<value target='bits' data='10' />
+					<value target='bitmul' data='0.004883' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='8462ac99-ca8f-429b-953a-36dbe58ada72' vmin='808' vmaj='16' codename='POT' x='-0.276757' y='12.7308' z='2.4' xsz='11.8794' ysz='11.8794' zsz='16' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='1' >
+				<resources />
+				<properties />
+				<values >
+					<value target='angle_start' data='225.000000' />
+					<value target='angle_sweep' data='270.000000' />
+					<value target='color' data='16777215' />
+					<value target='channel' data='1' />
+					<value target='vrefvol' data='500' />
+					<value target='vrefop' data='000' />
+					<value target='convspd' data='003' />
+					<value target='actime' data='40' />
+					<value target='bits' data='10' />
+					<value target='bitmul' data='0.004883' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='d29dda88-17de-4008-991a-c881890d4c57' vmin='296' vmaj='16' codename='lcd_eb005' x='51.4769' y='4.42812' z='3.575' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Pin_Data_0' data='$PORTB.0' />
+					<value target='Pin_Data_1' data='$PORTB.1' />
+					<value target='Pin_Data_2' data='$PORTB.2' />
+					<value target='Pin_Data_3' data='$PORTB.3' />
+					<value target='Pin_RS' data='$PORTB.4' />
+					<value target='Pin_E' data='$PORTB.5' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='63177601-e8e2-4330-89d3-a4c5a7e228f5' vmin='40' vmaj='16' codename='led_array_pcb1' x='40.4066' y='-22.279' z='1.05' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='1' >
+				<resources />
+				<properties />
+				<values >
+					<value target='count' data='8' />
+					<value target='port' data='002' />
+					<value target='polarity' data='001' />
+					<value target='align' data='000' />
+					<value target='spacing' data='7.000000' />
+					<value target='reverse' data='0' />
+					<value target='show_labels' data='003' />
+					<value target='color_led0' data='65280' />
+					<value target='label_color' data='16777215' />
+					<value target='bitmask' data='255' />
+					<value target='inv_bitmask' data='-256' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='b07090da-50a4-41ed-97d8-99016c092a14' vmin='40' vmaj='16' codename='keypad_eb014' x='-34.8714' y='-7.88759' z='5.1' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='port' data='003' />
+					<value target='pin_col1' data='$PORTD.0' />
+					<value target='pin_col2' data='$PORTD.1' />
+					<value target='pin_col3' data='$PORTD.2' />
+					<value target='pin_row1' data='$PORTD.4' />
+					<value target='pin_row2' data='$PORTD.5' />
+					<value target='pin_row3' data='$PORTD.6' />
+					<value target='pin_row4' data='$PORTD.7' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<keymap />
+	<panel2d shadows='0' lighting='2' brightness='0' perspective='0' >
+		<background rgb='9737364' img='' style='0' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel2d>
+	<panel3d shadows='0' lighting='2' brightness='76' perspective='0' >
+		<background rgb='8404224' img='' style='0' />
+		<table rgb='7360576' img='' style='0' size='0' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel3d>
+	<layout >
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAngQAAJEDAAA' zoom='75' scrollx='0' scrolly='956' flags='0' />
+	</layout>
+</document>
+</root>

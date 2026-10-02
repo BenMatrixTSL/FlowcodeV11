@@ -1,0 +1,183 @@
+<root>
+<document schema='101' license='0,30day_31868014,CP3P7W' title='' description='' guid='' target='PIC.18F.MIAC' >
+	<config data='!0,ffffffff!8,ffffffff!10,ffffffff!18,ffffffff!20,ffffffff!28,ffffffff!30,ffffffff!38,ffffffff!40,ffffffff!48,ffffffff!50,ffffffff!58,ffffffff!60,ffffffff!68,ffffffff' clkspd='48000000' simspd='1' usewdt='0' constif='0' />
+	<plugins >
+		<dll_dbg_icd enabled='0' >
+			<data name='debug' value='1' />
+			<data name='userpins' value='0' />
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='monitor' value='1' />
+			<data name='ictloop' value='1' />
+			<data name='ictrate' value='1000' />
+			<data name='ictmask' value='-1' />
+		</dll_dbg_icd>
+		<dll_dbg_ict enabled='0' >
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='userpins' value='0' />
+		</dll_dbg_ict>
+		<dll_models enabled='1' />
+		<dll_upgrader enabled='1' />
+		<dll_webhelp enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug />
+	<components >
+		<settings autoimg='1' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='' vmin='0' vmaj='1' visiblename='' description='' category='' author='' keywords='' dynamic='0' iconpath='' />
+		<component class_type='root' codename='panel' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+			<resources />
+			<properties />
+			<values />
+			<events />
+			<apis />
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='channel' type='u8' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='ShowChannel' description='' >
+						<param name='Channel' type='u8' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='IntVolts' type='u8' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='DecVolts' type='u8' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='ADCvalue' type='u8' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='DisplayLine' type='u8' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='InputANALOG' >
+							<return exp='ShowChannel.ADCvalue' />
+							<argument exp='ShowChannel.Channel' />
+						</command>
+						<command class_type='decision' title='Rounding' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='ShowChannel.ADCvalue MOD 2' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='ShowChannel.ADCvalue = ShowChannel.ADCvalue + 1' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+							<exp exp='ShowChannel.ADCvalue = ShowChannel.ADCvalue / 2' />
+							<exp exp='ShowChannel.DecVolts = ShowChannel.ADCvalue MOD 10' />
+							<exp exp='ShowChannel.IntVolts = ShowChannel.ADCvalue / 10' />
+							<exp exp='ShowChannel.DisplayLine = ShowChannel.Channel - 1' />
+						</command>
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='DisplayCursor' >
+							<argument exp='5' />
+							<argument exp='ShowChannel.DisplayLine' />
+						</command>
+						<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='ShowChannel.IntVolts &lt; 10' swap='0' >
+							<flowline >
+								<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='PrintASCII' >
+									<argument exp='&quot; &quot;' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='PrintNumber' >
+							<argument exp='ShowChannel.IntVolts' />
+						</command>
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='DisplayCursor' >
+							<argument exp='8' />
+							<argument exp='ShowChannel.DisplayLine' />
+						</command>
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='PrintNumber' >
+							<argument exp='ShowChannel.DecVolts' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='' >
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='DisplayStart' />
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='PrintASCII' >
+							<argument exp='&quot;I1 =   .  Volts&quot;' />
+						</command>
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='DisplayCursor' >
+							<argument exp='0' />
+							<argument exp='1' />
+						</command>
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='PrintASCII' >
+							<argument exp='&quot;I2 =   .  Volts&quot;' />
+						</command>
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='DisplayCursor' >
+							<argument exp='0' />
+							<argument exp='2' />
+						</command>
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='PrintASCII' >
+							<argument exp='&quot;I3 =   .  Volts&quot;' />
+						</command>
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='DisplayCursor' >
+							<argument exp='0' />
+							<argument exp='3' />
+						</command>
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__miac0' macro='PrintASCII' >
+							<argument exp='&quot;I4 =   .  Volts&quot;' />
+						</command>
+						<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+							<exp exp='channel = 1' />
+						</command>
+						<command class_type='loop' title='Loop' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='1' type='0' start='1' count='1' breakend='0' >
+							<flowline >
+								<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='channel = 4' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='channel = 1' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='channel = channel + 1' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='ShowChannel' >
+									<argument exp='channel' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='d69543a8-f38b-488a-b905-9fa2d5970beb' vmin='0' vmaj='1' codename='v5__miac0' x='0' y='0' z='1.01988' xsz='133' ysz='98.5' zsz='57.7' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='LCD_X' data='8' />
+					<value target='LCD_Y' data='3' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<keymap />
+	<panel2d shadows='0' lighting='2' perspective='0' >
+		<background rgb='9737364' img='' style='0' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel2d>
+	<panel3d shadows='1' lighting='2' perspective='0' >
+		<background rgb='8409120' img='' style='0' />
+		<table rgb='7360576' img='' style='0' size='0' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel3d>
+	<layout >
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAWwQAALUCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ShowChannel' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAWwQAALUCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

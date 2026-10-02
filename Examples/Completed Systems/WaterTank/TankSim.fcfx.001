@@ -1,0 +1,1192 @@
+<root>
+<document schema='101' license='50,Dev User,NXHQAN' title='' description='' guid='f6ef1a3a-9ad3-4922-b76c-735f186fa872' target='PIC.16F.16F877A' >
+	<config data='!0,3f72%0,2%2,0%3,0%6,1%7,0%9,3%b,1%8,1%d,1' clkspd='19660800' simspd='0' usewdt='0' constif='0' />
+	<plugins >
+		<dll_dbg_icd enabled='0' >
+			<data name='debug' value='1' />
+			<data name='userpins' value='0' />
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='monitor' value='1' />
+			<data name='ictloop' value='1' />
+			<data name='ictrate' value='1000' />
+			<data name='ictmask' value='-1' />
+		</dll_dbg_icd>
+		<dll_dbg_ict enabled='0' >
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='userpins' value='0' />
+		</dll_dbg_ict>
+		<dll_models enabled='1' />
+		<dll_upgrader enabled='1' />
+		<dll_webhelp enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug />
+	<components >
+		<settings autoimg='1' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='f6ef1a3a-9ad3-4922-b76c-735f186fa872' vmin='0' vmaj='1' visiblename='Tank Sim' description='' category='Mechatronics' catenable='1' author='' sysinfo='0' keywords='' dynamic='1' iconpath='' />
+		<component class_type='root' codename='TankSim' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+			<resources >
+				<file name='tank_element.mesh' source='.\tank_element.mesh' />
+				<file name='tank_in_pipe.mesh' source='.\tank_in_pipe.mesh' />
+				<file name='Dashboard BG.PNG' source='.\Dashboard BG.PNG' />
+				<file name='tank_Hinge.mesh' source='.\tank_Hinge.mesh' />
+				<file name='tank_out_pipe.mesh' source='.\tank_out_pipe.mesh' />
+				<file name='tank_tank.mesh' source='.\tank_tank.mesh' />
+				<file name='tank_wheel.mesh' source='.\tank_wheel.mesh' />
+				<file name='tank_ballcock.mesh' source='.\tank_ballcock.mesh' />
+			</resources>
+			<properties >
+				<property name='Heater Power (W)' target='heater_power' typeid='14' hidden='0' locked='0' info='' />
+				<property name='Tank Capacity (L)' target='capacity' typeid='14' hidden='0' locked='0' info='' />
+				<property name='Input Water Temp' target='inlet_temp' typeid='15' hidden='0' locked='0' info='' />
+				<property name='Outlet Water Temp' target='outlet_temp' typeid='15' hidden='0' locked='0' info='' />
+				<property name='Room Temp' target='room_temp' typeid='15' hidden='0' locked='0' info='' />
+			</properties>
+			<values >
+				<value target='heater_power' data='1600' />
+				<value target='capacity' data='10000' />
+				<value target='inlet_temp' data='15.000000' />
+				<value target='outlet_temp' data='56.266666' />
+				<value target='room_temp' data='15.000000' />
+			</values>
+			<events >
+				<event class='System' event='Timer' target='Ev_Timer' />
+				<event class='Simulation' event='Start' target='Ev_Start' />
+				<event class='Simulation' event='Stop' target='Ev_Stop' />
+			</events>
+			<apis >
+				<api name='Ev_Timer' alt='' type='2' proto='1' />
+				<api name='Set_Heater_Off' alt='Set_Heater_Off' type='1' proto='1' />
+				<api name='Set_Sim_Water_Level' alt='' type='2' proto='1' />
+				<api name='Ev_Stop' alt='' type='2' proto='1' />
+				<api name='Set_Outlet_Flowrate' alt='Set_Outlet_Flowrate' type='1' proto='1' />
+				<api name='Set_Inlet_Flowrate' alt='Set_Inlet_Flowrate' type='1' proto='1' />
+				<api name='Get_Empty_Sensor' alt='Get_Empty_Sensor' type='1' proto='1' />
+				<api name='Set_Heater_On' alt='Set_Heater_On' type='1' proto='1' />
+				<api name='Get_Water_Temp' alt='Get_Water_Temp' type='1' proto='1' />
+				<api name='Set_Required_Water_Temp' alt='Set_Required_Water_Temp' type='1' proto='1' />
+				<api name='Ev_Start' alt='' type='2' proto='1' />
+				<api name='Get_Full_Sensor' alt='Get_Full_Sensor' type='1' proto='1' />
+			</apis>
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='Test' type='f32' description='' isconst='0' isinit='0' usrinit='0.0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='outlet_flow' type='u8' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='water_temp' type='f32' description='' isconst='0' isinit='1' usrinit='20.0' setinit='room_temp' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='TestByte' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='last_power' type='u32' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='false' type='b1' description='' isconst='1' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='litres_in' type='u32' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='heater_control' type='u8' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='Water_Level' type='u32' description='' isconst='0' isinit='1' usrinit='2000' setinit='2000' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='water_colour' type='u32' description='' isconst='0' isinit='1' usrinit='16711680' setinit='0xFF0000' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='inlet_flow' type='u8' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='power' type='u32' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='true' type='b1' description='' isconst='1' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='litres_out' type='u32' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='Ev_Timer' description='Called back on the panel command System.TimerStart' >
+						<return name='Return' type='u32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<param name='TimerID' type='u32' description='The identifier passed to the System.TimerStart panel command' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='calc' type='f32' description='' isconst='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='calc2' type='f32' description='' isconst='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='temp_buton' type='u8' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='pwr_switch' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' exp='inlet_flow &gt; 0' swap='0' >
+							<flowline >
+								<command class_type='decision' title='Decision' exp='(Water_Level + inlet_flow) &lt; capacity' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='Water_Level = (Water_Level + inlet_flow)' />
+										</command>
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.calc = FLOAT inlet_flow / Water_Level' />
+											<exp exp='water_temp = ((1 - .calc) * water_temp) + (.calc * inlet_temp)' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='Water_Level = capacity' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='Decision' exp='outlet_flow &gt; 0' swap='0' >
+							<flowline >
+								<command class_type='decision' title='Decision' exp='Water_Level &gt; outlet_flow' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='Water_Level = (Water_Level - outlet_flow)' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='Water_Level = 0' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='call' title='Call Macro' macro='Set_Sim_Water_Level' />
+						<command class_type='decision' title='Decision' exp='heater_control' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.calc = heater_power' />
+									<exp exp='.calc2 = Water_Level' />
+									<exp exp='.calc = .calc / .calc2' />
+									<exp exp='water_temp = water_temp + .calc' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.calc = 1.0 / Water_Level' />
+									<exp exp='water_temp = (water_temp * (1.0 - .calc)) + (.calc * room_temp)' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='decision' title='Decision' exp='water_temp &lt; outlet_temp' swap='0' >
+							<flowline >
+								<command class_type='decision' title='Decision' exp='water_temp &lt; inlet_temp' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='water_colour = 0xFF0000' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.calc = outlet_temp - inlet_temp' />
+											<exp exp='.calc = .calc / 256' />
+											<exp exp='.calc2 = water_temp - inlet_temp' />
+											<exp exp='.calc2 = .calc2 / .calc' />
+											<exp exp='water_colour = 255 - float2int (.calc2)' />
+											<exp exp='water_colour = water_colour &lt;&lt; 16' />
+											<exp exp='water_colour = water_colour | float2int (.calc2)' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='water_colour = 0x0000FF' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='sim' title='Call Macro' macro='Component.Property.SetValue' >
+							<argument exp='Water' />
+							<argument exp='&quot;Color&quot;' />
+							<argument exp='water_colour' />
+						</command>
+						<command class_type='sim' title='Call Macro' component='water_meter' macro='SetValue' >
+							<argument exp='Water_Level' />
+						</command>
+						<command class_type='sim' title='Call Macro' component='temp_meter' macro='SetValue' >
+							<argument exp='Water_temp' />
+						</command>
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='litres_in = litres_in + inlet_flow' />
+							<exp exp='litres_out = litres_out + outlet_flow' />
+							<exp exp='power = power + (heater_power * heater_control)' />
+						</command>
+						<command class_type='call' title='Call Macro' component='dash_button' macro='ReadState' >
+							<return exp='.temp_buton' />
+						</command>
+						<command class_type='sim' title='Simulation' macro='Debug.PrintLn' >
+							<argument exp='.temp_buton' />
+						</command>
+						<command class_type='decision' title='Decision' exp='.temp_buton != 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='last_power = power' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='sim' title='Call Macro' macro='Component.Property.SetValue' >
+							<argument exp='readout' />
+							<argument exp='&quot;Text&quot;' />
+							<argument exp='&quot;Energy:&quot; + ToString$ (power - last_power) + &quot; J&quot;' />
+						</command>
+						<command class_type='sim' title='Call Macro' component='temp_knob' macro='GetValue' >
+							<return exp='.calc' />
+						</command>
+						<command class_type='decision' title='Decision' exp='.calc &gt; inlet_temp' swap='0' >
+							<flowline >
+								<command class_type='call' title='Call Macro' macro='Set_Required_Water_Temp' >
+									<argument exp='.calc' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='sim' title='Call Macro' component='temp_meter' macro='SetRange' >
+							<argument exp='inlet_temp' />
+							<argument exp='outlet_temp' />
+						</command>
+						<command class_type='sim' title='Restart Sim Timer Running' macro='System.TimerStart' >
+							<argument exp='0' />
+							<argument exp='200' />
+						</command>
+						<command class_type='call' title='Simulation' macro='Get_Empty_Sensor' />
+						<command class_type='call' title='Simulation' macro='Get_Full_Sensor' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Set_Heater_Off' description='Switches on the tank heater element' >
+						<command class_type='calculation' title='Calc' >
+							<exp exp='heater_control = 0' />
+						</command>
+						<command class_type='sim' title='Call Macro' macro='Component.Property.SetValue' >
+							<argument exp='element' />
+							<argument exp='&quot;Color&quot;' />
+							<argument exp='0x808080' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Set_Sim_Water_Level' description='Animates the level of the water in the simulation' >
+						<local name='Water_Handle' type='h32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='calc' type='f32' description='' isconst='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='calc2' type='f32' description='' isconst='0' isinit='0' usrinit='0.0' setinit='' />
+						<command class_type='sim' title='Call Macro' macro='Panel.Position.Get' >
+							<return exp='.Water_Handle' />
+							<argument exp='Water' />
+						</command>
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.calc = Water_Level' />
+							<exp exp='.calc2 = capacity' />
+							<exp exp='.calc = .calc / .calc2' />
+							<exp exp='.calc = .calc * 58.0' />
+						</command>
+						<command class_type='sim' title='Call Macro' macro='Panel.Position.SetScale' >
+							<argument exp='.Water_Handle' />
+							<argument exp='Water' />
+						</command>
+						<command class_type='sim' title='Call Macro' macro='Panel.Position.ScaleTo' >
+							<argument exp='.Water_Handle' />
+							<argument exp='32' />
+							<argument exp='32' />
+							<argument exp='.calc' />
+						</command>
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.calc = (.calc / 2.0) + 5.0' />
+						</command>
+						<command class_type='sim' title='Call Macro' macro='Panel.Position.MoveTo' >
+							<argument exp='.Water_Handle' />
+							<argument exp='0.0' />
+							<argument exp='0.0' />
+							<argument exp='.calc' />
+						</command>
+						<command class_type='sim' title='Call Macro' macro='Panel.Position.Animate' >
+							<argument exp='Water' />
+							<argument exp='Water' />
+							<argument exp='.Water_Handle' />
+							<argument exp='200' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Stop' description='Broadcast to all components that simulation has stopped' >
+						<return name='Return' type='u32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Start Sim Timer Running' macro='System.TimerStop' >
+							<argument exp='0' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Set_Outlet_Flowrate' description='Specifies the rate of outlet flow' >
+						<param name='Rate' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='anim_end' type='h32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='anim_start' type='h32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Simulation' macro='Panel.Position.Get' >
+							<return exp='.anim_start' />
+							<argument exp='out_wheel' />
+						</command>
+						<command class_type='sim' title='Simulation' macro='Panel.Position.Get' >
+							<return exp='.anim_end' />
+							<argument exp='out_wheel' />
+						</command>
+						<command class_type='calculation' title='Calc' >
+							<exp exp='outlet_flow = .Rate' />
+						</command>
+						<command class_type='decision' title='Decision' exp='.Rate' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Call Macro' macro='Component.Property.SetValue' >
+									<argument exp='pipe_out' />
+									<argument exp='&quot;Color&quot;' />
+									<argument exp='water_colour' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Panel.Position.RotateTo' >
+									<argument exp='.anim_start' />
+									<argument exp='.anim_start' />
+									<argument exp='.anim_start' />
+									<argument exp='0' />
+									<argument exp='-90' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Panel.Position.RotateTo' >
+									<argument exp='.anim_end' />
+									<argument exp='.anim_end' />
+									<argument exp='.anim_end' />
+									<argument exp='0' />
+									<argument exp='0' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Call Macro' macro='Component.Property.SetValue' >
+									<argument exp='pipe_out' />
+									<argument exp='&quot;Color&quot;' />
+									<argument exp='0x505050' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Panel.Position.RotateTo' >
+									<argument exp='.anim_start' />
+									<argument exp='.anim_start' />
+									<argument exp='.anim_start' />
+									<argument exp='0' />
+									<argument exp='0' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Panel.Position.RotateTo' >
+									<argument exp='.anim_end' />
+									<argument exp='.anim_end' />
+									<argument exp='.anim_end' />
+									<argument exp='0' />
+									<argument exp='-90' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='sim' title='Simulation' macro='Panel.Position.Animate' >
+							<argument exp='out_wheel' />
+							<argument exp='.anim_start' />
+							<argument exp='.anim_end' />
+							<argument exp='500' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Set_Inlet_Flowrate' description='Specifies the rate of inlet flow' >
+						<param name='Rate' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='anim_start' type='h32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='anim_end' type='h32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Simulation' macro='Panel.Position.Get' >
+							<return exp='.anim_start' />
+							<argument exp='in_wheel' />
+						</command>
+						<command class_type='sim' title='Simulation' macro='Panel.Position.Get' >
+							<return exp='.anim_end' />
+							<argument exp='in_wheel' />
+						</command>
+						<command class_type='calculation' title='Calc' >
+							<exp exp='inlet_flow = .Rate' />
+						</command>
+						<command class_type='decision' title='Decision' exp='.Rate' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Call Macro' macro='Component.Property.SetValue' >
+									<argument exp='pipe_in' />
+									<argument exp='&quot;Color&quot;' />
+									<argument exp='.Rate &lt;&lt; 16' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Panel.Position.RotateTo' >
+									<argument exp='.anim_start' />
+									<argument exp='.anim_start' />
+									<argument exp='.anim_start' />
+									<argument exp='0' />
+									<argument exp='-180' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Panel.Position.RotateTo' >
+									<argument exp='.anim_end' />
+									<argument exp='.anim_end' />
+									<argument exp='.anim_end' />
+									<argument exp='0' />
+									<argument exp='-90' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Call Macro' macro='Component.Property.SetValue' >
+									<argument exp='pipe_in' />
+									<argument exp='&quot;Color&quot;' />
+									<argument exp='0x505050' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Panel.Position.RotateTo' >
+									<argument exp='.anim_start' />
+									<argument exp='.anim_start' />
+									<argument exp='.anim_start' />
+									<argument exp='0' />
+									<argument exp='-90' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Panel.Position.RotateTo' >
+									<argument exp='.anim_end' />
+									<argument exp='.anim_end' />
+									<argument exp='.anim_end' />
+									<argument exp='0' />
+									<argument exp='-180' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='sim' title='Simulation' macro='Panel.Position.Animate' >
+							<argument exp='in_wheel' />
+							<argument exp='.anim_start' />
+							<argument exp='.anim_end' />
+							<argument exp='500' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Get_Empty_Sensor' description='Returns the value of the sensor at the bottom of the tank.' >
+						<return name='Return' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='anim_start' type='h32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='anim_end' type='h32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Call Macro' macro='Panel.Collision.GetSingleAxis' >
+							<return exp='.Return' />
+							<argument exp='Water' />
+							<argument exp='empty_test' />
+							<argument exp='0.0' />
+							<argument exp='0.0' />
+							<argument exp='0.0' />
+							<argument exp='this' />
+						</command>
+						<command class_type='decision' title='Decision' exp='.Return == true' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' macro='Panel.Position.RotateTo' >
+									<argument exp='empty_sense' />
+									<argument exp='hinge1' />
+									<argument exp='hinge1' />
+									<argument exp='0' />
+									<argument exp='-10' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Simulation' macro='Panel.Position.RotateTo' >
+									<argument exp='empty_sense' />
+									<argument exp='hinge1' />
+									<argument exp='hinge1' />
+									<argument exp='0' />
+									<argument exp='0' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Set_Heater_On' description='Switches on the tank heater element' >
+						<command class_type='calculation' title='Calc' >
+							<exp exp='heater_control = 1' />
+						</command>
+						<command class_type='sim' title='Call Macro' macro='Component.Property.SetValue' >
+							<argument exp='element' />
+							<argument exp='&quot;Color&quot;' />
+							<argument exp='0x0000FF' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Get_Water_Temp' description='Returns the current water temperature.' >
+						<return name='Return' type='f32' description='' isconst='0' isinit='0' usrinit='0.0' setinit='' />
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.Return = water_temp' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Start' description='Broadcast to all components that simulation is starting' >
+						<return name='Return' type='u32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Start Sim Timer Running' macro='System.TimerStart' >
+							<argument exp='0' />
+							<argument exp='400' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Set_Required_Water_Temp' description='' >
+						<param name='Required_Temperature' type='f32' description='' isconst='0' isinit='0' usrinit='0.0' setinit='' />
+						<command class_type='sim' title='Call Macro' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;outlet_temp&quot;' />
+							<argument exp='.Required_Temperature' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='To run simulation, open the dashboard panel by selecting it in the menu &quot;View --&gt; Dashboard Panel&quot;
+
+Then run the simulation, and press the RUN switch to start the water heater tank' >
+						<local name='temp_handle' type='h32' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='temp_size' type='f32' description='' isconst='0' isinit='0' usrinit='0.0' setinit='' >
+							<array size='3' />
+						</local>
+						<local name='calc' type='f32' description='' isconst='0' isinit='1' usrinit='20.0' setinit='20.0' />
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='last_power = 0' />
+						</command>
+						<command class_type='sim' title='Call Macro' macro='Component.Property.SetValue' >
+							<argument exp='readout' />
+							<argument exp='&quot;Text&quot;' />
+							<argument exp='&quot;Energy: 000 J&quot;' />
+						</command>
+						<command class_type='sim' title='Call Macro' component='temp_knob' macro='GetValue' >
+							<return exp='.calc' />
+						</command>
+						<command class_type='sim' title='Call Macro' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;outlet_temp&quot;' />
+							<argument exp='.calc' />
+						</command>
+						<command class_type='comment' title='' comment='Dummy label pending text component change' textarea='12,0,12,0' />
+						<command class_type='sim' title='Simulation' component='drain_lamp' macro='SetOff' />
+						<command class_type='sim' title='Simulation' component='fill_lamp' macro='SetOff' />
+						<command class_type='sim' title='Simulation' component='heat_lamp' macro='SetOff' />
+						<command class_type='call' title='Simulation' component='dash_switch' macro='WaitUntilHigh' />
+						<command class_type='comment' title='' comment='Start of Ben&apos;s code' textarea='12,0,12,0' />
+						<command class_type='sim' title='Call Macro' component='water_meter' macro='SetLabel' >
+							<argument exp='&quot;Level&quot;' />
+						</command>
+						<command class_type='sim' title='Call Macro' component='water_meter' macro='SetRange' >
+							<argument exp='0' />
+							<argument exp='capacity' />
+						</command>
+						<command class_type='sim' title='Call Macro' component='temp_meter' macro='SetLabel' >
+							<argument exp='&quot;Temp&quot;' />
+						</command>
+						<command class_type='loop' title='Loop' exp='1' type='0' start='1' count='1' breakend='0' >
+							<flowline >
+								<command class_type='call' title='Simulation' component='dash_switch' macro='WaitUntilHigh' />
+								<command class_type='call' title='Call Macro' macro='Set_Heater_On' />
+								<command class_type='sim' title='Simulation' component='heat_lamp' macro='SetOn' />
+								<command class_type='loop' title='Loop' exp='Test &lt; outlet_temp' type='0' start='0' count='1' breakend='0' >
+									<flowline >
+										<command class_type='call' title='Call Macro' macro='Get_Water_Temp' >
+											<return exp='Test' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='sim' title='Simulation' component='heat_lamp' macro='SetOff' />
+								<command class_type='call' title='Call Macro' macro='Set_Heater_Off' />
+								<command class_type='call' title='Call Macro' macro='Set_Outlet_Flowrate' >
+									<argument exp='255' />
+								</command>
+								<command class_type='sim' title='Simulation' component='drain_lamp' macro='SetOn' />
+								<command class_type='loop' title='Loop' exp='TestByte' type='0' start='0' count='1' breakend='0' >
+									<flowline >
+										<command class_type='call' title='Call Macro' macro='Get_Empty_Sensor' >
+											<return exp='TestByte' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='sim' title='Simulation' component='drain_lamp' macro='SetOff' />
+								<command class_type='call' title='Call Macro' macro='Set_Outlet_Flowrate' >
+									<argument exp='0' />
+								</command>
+								<command class_type='call' title='Call Macro' macro='Set_Inlet_Flowrate' >
+									<argument exp='255' />
+								</command>
+								<command class_type='sim' title='Simulation' component='fill_lamp' macro='SetOn' />
+								<command class_type='loop' title='Loop' exp='TestByte = 0' type='0' start='0' count='1' breakend='0' >
+									<flowline >
+										<command class_type='call' title='Call Macro' macro='Get_Full_Sensor' >
+											<return exp='TestByte' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='sim' title='Simulation' component='fill_lamp' macro='SetOff' />
+								<command class_type='call' title='Call Macro' macro='Set_Inlet_Flowrate' >
+									<argument exp='0' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Get_Full_Sensor' description='Returns the value of the sensor at the top of the tank.' >
+						<return name='Return' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='anim_start' type='h32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='anim_end' type='h32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Call Macro' macro='Panel.Collision.GetSingleAxis' >
+							<return exp='.Return' />
+							<argument exp='Water' />
+							<argument exp='full_test' />
+							<argument exp='0.0' />
+							<argument exp='0.0' />
+							<argument exp='0.0' />
+							<argument exp='this' />
+						</command>
+						<command class_type='decision' title='Decision' exp='.Return == true' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Simulation' macro='Panel.Position.RotateTo' >
+									<argument exp='full_sense' />
+									<argument exp='hinge2' />
+									<argument exp='hinge2' />
+									<argument exp='0' />
+									<argument exp='-10' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Simulation' macro='Panel.Position.RotateTo' >
+									<argument exp='full_sense' />
+									<argument exp='hinge2' />
+									<argument exp='hinge2' />
+									<argument exp='0' />
+									<argument exp='0' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='shape' codename='Water' x='0' y='0' z='33.7245' xsz='32' ysz='32' zsz='57.449' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Shape' data='4' />
+					<value target='Color' data='9371760' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+					<value target='Model' data='' />
+					<value target='Unit' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='shape' codename='base' x='0' y='0' z='2.5' xsz='60' ysz='40' zsz='5' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Shape' data='0' />
+					<value target='Color' data='1857626' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+					<value target='Model' data='' />
+					<value target='Unit' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='8c84170a-6fe8-4386-9709-451a0d21da64' vmin='2' vmaj='1' codename='water_meter' x='119' y='120' z='3' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='1' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='val_min' data='0.000000' />
+					<value target='val_max' data='10000.000000' />
+					<value target='bg_color' data='0' />
+					<value target='ink_color' data='49152' />
+					<value target='neg_color' data='33023' />
+					<value target='label_color' data='8882055' />
+					<value target='resolution' data='6' />
+					<value target='marks_count' data='9' />
+					<value target='marks_subdiv' data='4' />
+					<value target='dec_places' data='0' />
+					<value target='num_size' data='10' />
+					<value target='num_font' data='Arial Narrow' />
+					<value target='label_text' data='Level' />
+					<value target='label_size' data='12' />
+					<value target='label_font' data='Arial Narrow' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='8c84170a-6fe8-4386-9709-451a0d21da64' vmin='2' vmaj='1' codename='temp_meter' x='67' y='120' z='3' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='1' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='val_min' data='15.000000' />
+					<value target='val_max' data='56.266666' />
+					<value target='bg_color' data='0' />
+					<value target='ink_color' data='49152' />
+					<value target='neg_color' data='33023' />
+					<value target='label_color' data='8882055' />
+					<value target='resolution' data='6' />
+					<value target='marks_count' data='9' />
+					<value target='marks_subdiv' data='4' />
+					<value target='dec_places' data='1' />
+					<value target='num_size' data='10' />
+					<value target='num_font' data='Arial Narrow' />
+					<value target='label_text' data='Temp' />
+					<value target='label_size' data='12' />
+					<value target='label_font' data='Arial Narrow' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='2e0aa52e-ac04-4997-b3ac-77205ba19522' vmin='2' vmaj='1' codename='temp_knob' x='32' y='120' z='11' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='1' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='val_min' data='20.000000' />
+					<value target='val_max' data='100.000000' />
+					<value target='bg_color' data='0' />
+					<value target='ink_color' data='15335423' />
+					<value target='neg_color' data='33023' />
+					<value target='label_color' data='15335401' />
+					<value target='resolution' data='6' />
+					<value target='marks_count' data='9' />
+					<value target='marks_subdiv' data='1' />
+					<value target='dec_places' data='0' />
+					<value target='num_size' data='10' />
+					<value target='num_font' data='Arial Narrow' />
+					<value target='label_text' data='Temp' />
+					<value target='label_size' data='12' />
+					<value target='label_font' data='Arial Narrow' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='ddad9cb9-122d-4f29-aaa9-233d3a967ca8' vmin='1' vmaj='1' codename='dash_switch' x='32' y='96' z='1.81875' xsz='0.4' ysz='0.4' zsz='0.4' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='1' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='pin' data='$PORTA.0' />
+					<value target='polarity' data='001' />
+					<value target='debounce' data='' />
+					<value target='Text' data='RUN' />
+					<value target='Font' data='Arial' />
+					<value target='label_color' data='8882055' />
+					<value target='slider_color' data='1973790' />
+					<value target='bezel_color' data='2960685' />
+					<value target='on_color' data='49152' />
+					<value target='off_color' data='128' />
+					<value target='operation' data='001' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='d497dced-8e07-49d5-a9f9-4e67c43cb186' vmin='1' vmaj='1' codename='bezel_radiused' x='67' y='96' z='1.75' xsz='3.2' ysz='0.8' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='1' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='target_object' data='' />
+					<value target='auto_update' data='' />
+					<value target='bezel_thick' data='2.000000' />
+					<value target='margin' data='0.000000' />
+					<value target='color' data='2960685' />
+					<value target='old_object' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='shape' codename='background' x='72' y='108' z='-0.1' xsz='160' ysz='160' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='0' solid='1' layer='1' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Shape' data='101' />
+					<value target='Color' data='10855845' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='this:Dashboard BG.PNG' />
+					<value target='Model' data='' />
+					<value target='Unit' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='textbox' codename='readout' x='67' y='96' z='3' xsz='28' ysz='4' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='1' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Color' data='40384' />
+					<value target='Background' data='0' />
+					<value target='Font' data='Arial Narrow' />
+					<value target='FontSize' data='4.000000' />
+					<value target='AlignX' data='001' />
+					<value target='AlignY' data='001' />
+					<value target='Text' data='Energy:542400 J' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='d68e61bc-0e8c-4e3d-959b-39e2decfb680' vmin='1' vmaj='1' codename='heat_lamp' x='93' y='120' z='1.26' xsz='0.3' ysz='0.3' zsz='0.3' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='1' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='pin' data='$PORTA.0' />
+					<value target='polarity' data='001' />
+					<value target='on_color' data='65280' />
+					<value target='off_color' data='128' />
+					<value target='bezel_color' data='2960685' />
+					<value target='label_color' data='10855845' />
+					<value target='Text' data='HEAT' />
+					<value target='Font' data='Arial' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='d68e61bc-0e8c-4e3d-959b-39e2decfb680' vmin='1' vmaj='1' codename='fill_lamp' x='93' y='130' z='1.26' xsz='0.3' ysz='0.3' zsz='0.3' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='1' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='pin' data='$PORTA.0' />
+					<value target='polarity' data='001' />
+					<value target='on_color' data='65280' />
+					<value target='off_color' data='128' />
+					<value target='bezel_color' data='2960685' />
+					<value target='label_color' data='10855845' />
+					<value target='Text' data='FILL' />
+					<value target='Font' data='Arial' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='d68e61bc-0e8c-4e3d-959b-39e2decfb680' vmin='1' vmaj='1' codename='drain_lamp' x='93' y='110' z='1.26' xsz='0.3' ysz='0.3' zsz='0.3' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='1' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='pin' data='$PORTA.0' />
+					<value target='polarity' data='001' />
+					<value target='on_color' data='65280' />
+					<value target='off_color' data='128' />
+					<value target='bezel_color' data='2960685' />
+					<value target='label_color' data='10855845' />
+					<value target='Text' data='DRAIN' />
+					<value target='Font' data='Arial' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='aba70ed4-4d0c-47e1-90c7-bfda5262eec3' vmin='1' vmaj='1' codename='dash_button' x='88.15' y='96' z='1' xsz='0.3' ysz='0.3' zsz='0.3' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='1' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='pin' data='$PORTA.1' />
+					<value target='polarity' data='001' />
+					<value target='debounce' data='0' />
+					<value target='Text' data='Reset' />
+					<value target='Font' data='Arial' />
+					<value target='label_color' data='8882055' />
+					<value target='bezel_color' data='2960685' />
+					<value target='button_color' data='7895160' />
+					<value target='operation' data='000' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='shape' codename='pipe_in' x='-22' y='0' z='35' xsz='12' ysz='4' zsz='60' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Shape' data='201' />
+					<value target='Color' data='5263440' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+					<value target='Model' data='this:tank_in_pipe.mesh' />
+					<value target='Unit' data='0' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='shape' codename='pipe_out' x='21.3' y='0' z='8.5' xsz='11.4' ysz='4' zsz='7' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Shape' data='201' />
+					<value target='Color' data='5263440' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+					<value target='Model' data='this:tank_out_pipe.mesh' />
+					<value target='Unit' data='0' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='shape' codename='element' x='0' y='0' z='35.63' xsz='8.5' ysz='8.5' zsz='61.26' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Shape' data='201' />
+					<value target='Color' data='255' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+					<value target='Model' data='this:tank_element.mesh' />
+					<value target='Unit' data='0' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='shape' codename='shape' x='0' y='0.447' z='43.05' xsz='33.2' ysz='32.306' zsz='76.1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Shape' data='201' />
+					<value target='Color' data='7651048' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+					<value target='Model' data='this:tank_tank.mesh' />
+					<value target='Unit' data='0' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='shape' codename='out_wheel' x='20.7654' y='-4' z='10' xsz='8' ysz='4' zsz='8' xang='0' yang='-1.#IND' zang='0' xquat='0' yquat='-0.707107' zquat='0' wquat='0.707107' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Shape' data='201' />
+					<value target='Color' data='14803425' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+					<value target='Model' data='this:tank_wheel.mesh' />
+					<value target='Unit' data='0' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='shape' codename='in_wheel' x='-26' y='-4' z='15' xsz='8' ysz='4' zsz='8' xang='180' yang='-1.27222e-014' zang='180' xquat='0' yquat='-1' zquat='0' wquat='1.11022e-016' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Shape' data='201' />
+					<value target='Color' data='14803425' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+					<value target='Model' data='this:tank_wheel.mesh' />
+					<value target='Unit' data='0' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='group' codename='full_sense' x='-14.3' y='0' z='62' xsz='1' ysz='1' zsz='1' xang='0' yang='-9.99999' zang='0' xquat='0' yquat='-0.0871557' zquat='0' wquat='0.996195' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values />
+				<events />
+				<apis />
+				<variables />
+				<macros />
+				<component class_type='shape' codename='hinge2' x='0' y='0' z='0' xsz='1' ysz='4' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Shape' data='201' />
+						<value target='Color' data='15335423' />
+						<value target='Outline' data='0' />
+						<value target='Thickness' data='0' />
+						<value target='Image' data='' />
+						<value target='Model' data='this:tank_Hinge.mesh' />
+						<value target='Unit' data='0' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='shape' codename='cock_full' x='4.46' y='0' z='0' xsz='8.92' ysz='4' zsz='4' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Shape' data='201' />
+						<value target='Color' data='15335423' />
+						<value target='Outline' data='0' />
+						<value target='Thickness' data='0' />
+						<value target='Image' data='' />
+						<value target='Model' data='this:tank_ballcock.mesh' />
+						<value target='Unit' data='0' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+			</component>
+			<component class_type='group' codename='empty_sense' x='-14.3' y='0' z='10' xsz='1' ysz='1' zsz='1' xang='0' yang='-9.99999' zang='0' xquat='0' yquat='-0.0871557' zquat='0' wquat='0.996195' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values />
+				<events />
+				<apis />
+				<variables />
+				<macros />
+				<component class_type='shape' codename='hinge1' x='0' y='0' z='0' xsz='1' ysz='4' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Shape' data='201' />
+						<value target='Color' data='15335423' />
+						<value target='Outline' data='0' />
+						<value target='Thickness' data='0' />
+						<value target='Image' data='' />
+						<value target='Model' data='this:tank_Hinge.mesh' />
+						<value target='Unit' data='0' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='shape' codename='cock1' x='4.456' y='0' z='0' xsz='8.92' ysz='4' zsz='4' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Shape' data='201' />
+						<value target='Color' data='15335423' />
+						<value target='Outline' data='0' />
+						<value target='Thickness' data='0' />
+						<value target='Image' data='' />
+						<value target='Model' data='this:tank_ballcock.mesh' />
+						<value target='Unit' data='0' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+			</component>
+			<component class_type='shape' codename='empty_test' x='0' y='0' z='10' xsz='2' ysz='2' zsz='2' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Shape' data='0' />
+					<value target='Color' data='192' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+					<value target='Model' data='' />
+					<value target='Unit' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='shape' codename='full_test' x='0' y='0' z='62' xsz='2' ysz='2' zsz='2' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Shape' data='0' />
+					<value target='Color' data='192' />
+					<value target='Outline' data='0' />
+					<value target='Thickness' data='0' />
+					<value target='Image' data='' />
+					<value target='Model' data='' />
+					<value target='Unit' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<keymap />
+	<panel2d shadows='0' lighting='2' brightness='0' perspective='0' >
+		<background rgb='3158064' img='' style='0' />
+		<camera xe='73' ye='115' ze='158.264' xt='73' yt='115' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel2d>
+	<panel3d shadows='0' lighting='2' brightness='0' perspective='1' >
+		<background rgb='16760992' img='' style='0' />
+		<table rgb='1990953' img='' style='0' size='15' />
+		<camera xe='27.3789' ye='-138.91' ze='36.0793' xt='-0.507588' yt='1.50518' zt='33.0674' xquat='-0.696272' yquat='-0.0684711' zquat='-0.0699263' wquat='0.711075' />
+	</panel3d>
+	<layout >
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAygIAAIEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Set_Heater_Off' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAygIAAIEDAAA' zoom='45' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Set_Heater_On' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAygIAAIEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Timer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAygIAAIEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Set_Outlet_Flowrate' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAygIAAIEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Stop' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAygIAAIEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Get_Full_Sensor' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAygIAAIEDAAA' zoom='85' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Get_Empty_Sensor' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAygIAAIEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Set_Inlet_Flowrate' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAygIAAIEDAAA' zoom='85' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Set_Sim_Water_Level' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAygIAAIEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Set_Required_Water_Temp' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAygIAAIEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Get_Water_Temp' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAygIAAIEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Start' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAygIAAIEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

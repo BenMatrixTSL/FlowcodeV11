@@ -1,0 +1,258 @@
+<root>
+<document schema='101' license='0,30day_31868014,CP3P7W' title='' description='' guid='' target='PIC.16F.16F877A' >
+	<config data='!0,3f72%0,2%2,0%3,0%6,1%7,0%9,3%b,1%8,1%d,1' clkspd='19660800' simspd='1' usewdt='0' constif='0' />
+	<plugins >
+		<dll_dbg_icd enabled='0' >
+			<data name='debug' value='1' />
+			<data name='userpins' value='0' />
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='monitor' value='1' />
+			<data name='ictloop' value='1' />
+			<data name='ictrate' value='1000' />
+			<data name='ictmask' value='-1' />
+		</dll_dbg_icd>
+		<dll_dbg_ict enabled='0' >
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='userpins' value='0' />
+		</dll_dbg_ict>
+		<dll_models enabled='1' />
+		<dll_upgrader enabled='1' />
+		<dll_webhelp enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug />
+	<components >
+		<settings autoimg='1' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='' vmin='0' vmaj='1' visiblename='' description='' category='' dynamic='0' iconpath='' />
+		<component class_type='root' codename='panel' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+			<resources />
+			<properties />
+			<values />
+			<events />
+			<apis />
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='BOO1' type='u8' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='INTERRUPT_TMR0' description='' />
+				</macro>
+				<macro >
+					<flowline name='INTERRUPT_PORTB' description='' />
+				</macro>
+				<macro >
+					<flowline name='INTERRUPT_RB0INT' description='' />
+				</macro>
+				<macro >
+					<flowline name='Main' description='' >
+						<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__webserver0' macro='Initialise' />
+						<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__webserver0' macro='CreateServerSocket' >
+							<argument exp='0' />
+							<argument exp='0' />
+							<argument exp='80' />
+						</command>
+						<command class_type='loop' title='Loop' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='1' type='0' start='1' count='1' breakend='0' >
+							<flowline >
+								<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__adc0' macro='GetByte' >
+									<return exp='BOO1' />
+								</command>
+								<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__webserver0' macro='CheckSocketActivity' />
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='9e68a715-edc2-4a98-be64-c0d02f700135' vmin='2' vmaj='1' codename='v5__webserver0' x='0' y='31.1634' z='1.0005' xsz='1' ysz='1' zsz='0.1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='label' data='Web Server' />
+					<value target='max_channels' data='4' />
+					<value target='html_source' data='000' />
+					<value target='Directory' data='' />
+					<value target='max_pages' data='1' />
+					<value target='name1' data='index' />
+					<value target='html1' data='&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;Embedded Temperature Monitor&lt;/title&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+
+function reFresh()
+{
+  location.reload(true)
+}
+
+window.setInterval(&quot;reFresh()&quot;,1000);
+
+function checkTemp()
+{
+  var temp = %BOO1%;
+  if(temp &gt; 100)
+  {
+	document.write(&apos;&lt;span class=\\&quot;style5\\&quot;&gt;&lt;b&gt;OVER TEMPERATURE!!&lt;/b&gt;&lt;/span&gt;&apos;);
+  }
+  else
+  {
+	document.write(&apos;&lt;span class=\\&quot;style4\\&quot;&gt;&lt;b&gt;OK&lt;/b&gt;&lt;/span&gt;&apos;);
+  }
+}
+
+&lt;/script&gt;
+
+&lt;style type=&quot;text/css&quot;&gt;
+.style1 {
+	font-size: xx-large;
+	font-weight: bold;
+	color: #0000FF;
+}
+.style2 {font-size: medium}
+.style3 {font-size: medium; font-weight: bold; color: #0000FF; }
+.style4 {color: #00FF00}
+.style5 {color: #FF0000}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;p align=&quot;center&quot; class=&quot;style1&quot;&gt;Embedded Temperature Monitor&lt;br&gt;
+  &lt;br&gt;
+  &lt;span class=&quot;style2&quot;&gt;System Status: &lt;span class=&quot;style4&quot;&gt;Online&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; class=&quot;style3&quot;&gt;Sytem Temperature: %BOO1% �C&lt;/p&gt;
+&lt;p align=&quot;center&quot; class=&quot;style3&quot;&gt;Temperature Status: &lt;script&gt; checkTemp() &lt;/script&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;' />
+					<value target='name2' data='page2' />
+					<value target='html2' data='' />
+					<value target='name3' data='page3' />
+					<value target='html3' data='' />
+					<value target='name4' data='page4' />
+					<value target='html4' data='' />
+					<value target='channel' data='' />
+					<value target='MOSI_pin' data='$PORTC.5' />
+					<value target='MISO_pin' data='$PORTC.4' />
+					<value target='CLK_pin' data='$PORTC.3' />
+					<value target='CS_pin' data='$PORTA.0' />
+					<value target='int_pin' data='' />
+					<value target='gateway0' data='192' />
+					<value target='gateway1' data='168' />
+					<value target='gateway2' data='0' />
+					<value target='gateway3' data='11' />
+					<value target='subnet0' data='255' />
+					<value target='subnet1' data='255' />
+					<value target='subnet2' data='255' />
+					<value target='subnet3' data='0' />
+					<value target='ip0' data='192' />
+					<value target='ip1' data='168' />
+					<value target='ip2' data='0' />
+					<value target='ip3' data='25' />
+					<value target='mac0' data='0' />
+					<value target='mac1' data='8' />
+					<value target='mac2' data='220' />
+					<value target='mac3' data='0' />
+					<value target='mac4' data='0' />
+					<value target='mac5' data='0' />
+					<value target='html1_n' data='5' />
+					<value target='html1_1' data='&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;Embedded Temperature Monitor&lt;/title&gt;
+
+&lt;script ' />
+					<value target='html1_2' data='type=&quot;text/javascript&quot;&gt;
+
+function reFresh()
+{
+  location.reload(tru' />
+					<value target='html1_3' data='e)
+}
+
+window.setInterval(&quot;reFresh()&quot;,1000);
+
+function checkTemp()' />
+					<value target='html1_4' data='
+{
+  var temp = %BOO1%;
+  if(temp &gt; 100)
+  {
+	document.write(&apos;&lt;span' />
+					<value target='html1_5' data=' class=\\&quot;style5\\&quot;&gt;&lt;b&gt;OVER TEMPERATURE!!&lt;/b&gt;&lt;/span&gt;&apos;);
+  }
+  else
+ ' />
+					<value target='html2_n' data='0' />
+					<value target='html2_1' data='' />
+					<value target='html2_2' data='' />
+					<value target='html2_3' data='' />
+					<value target='html2_4' data='' />
+					<value target='html2_5' data='' />
+					<value target='html3_n' data='0' />
+					<value target='html3_1' data='' />
+					<value target='html3_2' data='' />
+					<value target='html3_3' data='' />
+					<value target='html3_4' data='' />
+					<value target='html3_5' data='' />
+					<value target='html4_n' data='0' />
+					<value target='html4_1' data='' />
+					<value target='html4_2' data='' />
+					<value target='html4_3' data='' />
+					<value target='html4_4' data='' />
+					<value target='html4_5' data='' />
+					<value target='chunk' data='71' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='14683ea8-5a08-4b3a-be2d-3dea3e17e720' vmin='1' vmaj='1' codename='v5__adc0' x='0' y='0' z='0' xsz='14.2857' ysz='14.2857' zsz='1.14286' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='angle_start' data='225.000000' />
+					<value target='angle_sweep' data='270.000000' />
+					<value target='cap_color' data='192' />
+					<value target='point_color' data='16777215' />
+					<value target='channel' data='1' />
+					<value target='vrefvol' data='500' />
+					<value target='vrefop' data='0' />
+					<value target='convspd' data='3' />
+					<value target='actime' data='40' />
+					<value target='bits' data='10' />
+					<value target='bitmul' data='0.004883' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<keymap />
+	<panel2d shadows='0' lighting='2' perspective='0' >
+		<background rgb='9737364' img='' style='0' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel2d>
+	<panel3d shadows='1' lighting='2' perspective='0' >
+		<background rgb='8409120' img='' style='0' />
+		<table rgb='7360576' img='' style='0' size='0' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel3d>
+	<layout >
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAXwUAALUCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

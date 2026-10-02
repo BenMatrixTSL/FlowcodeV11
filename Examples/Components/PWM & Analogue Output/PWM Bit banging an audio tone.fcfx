@@ -1,0 +1,196 @@
+<root>
+<document schema='101' license='0,30day_31868014,2MBXKV' title='' description='' guid='' target='PIC.16F.16F88' >
+	<config data='!0,3f62!10,3ffe%0,2%2,0%3,0%5,1%6,1%7,0%8,1%9,3%b,1%c,1%d,1%10,0%11,1' clkspd='19660800' simspd='1' usewdt='0' constif='0' />
+	<plugins >
+		<dll_dbg_icd enabled='0' >
+			<data name='debug' value='1' />
+			<data name='userpins' value='0' />
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='monitor' value='1' />
+			<data name='ictloop' value='1' />
+			<data name='ictrate' value='1000' />
+			<data name='ictmask' value='-1' />
+		</dll_dbg_icd>
+		<dll_dbg_ict enabled='0' >
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='userpins' value='0' />
+		</dll_dbg_ict>
+		<dll_models enabled='1' />
+		<dll_upgrader enabled='1' />
+		<dll_webhelp enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug />
+	<components >
+		<settings autoimg='1' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='' vmin='0' vmaj='1' visiblename='' description='' category='' author='' sysinfo='0' keywords='' dynamic='0' iconpath='' />
+		<component class_type='root' codename='panel' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+			<resources />
+			<properties />
+			<values />
+			<events />
+			<apis />
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='TONE' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='KEY' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='GET_TONE' description='Generate the TONE delay from the key pressed' >
+						<command class_type='decision' title='No keys pressed?' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='KEY = 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='TONE delay value' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='TONE = 0' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='B0 pressed?' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='KEY &gt; 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='TONE delay value' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='TONE = 10' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='B1 pressed?' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='KEY &gt;= 2' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='TONE delay value' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='TONE = 20' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='B2 pressed?' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='KEY &gt;= 4' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='TONE delay value' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='TONE = 30' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='B3 pressed?' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='KEY &gt;= 8' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='TONE delay value' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='TONE = 40' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='B4 pressed?' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='KEY &gt;= 16' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='TONE delay value' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='TONE = 50' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='B5 pressed?' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='KEY &gt;= 32' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='TONE delay value' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='TONE = 60' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='B6 pressed?' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='KEY &gt;= 64' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='TONE delay value' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='TONE = 70' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='decision' title='B7 pressed?' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='KEY &gt;= 128' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='TONE delay value' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='TONE = 80' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='Generating sound by toggling A0
+
+This project must be downloaded to a chip, to be heard' >
+						<command class_type='loop' title='Infinite Loop' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='1' type='0' start='1' count='1' breakend='0' >
+							<flowline >
+								<command class_type='input' title='Check Port B for key press' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' mode='0' port='1048577' mask='255' exp='KEY' />
+								<command class_type='call' title='Get the TONE delay value' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='GET_TONE' />
+								<command class_type='decision' title='Should I make a sound?' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='TONE &gt; 0' swap='0' >
+									<flowline >
+										<command class_type='output' title='Start sound' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' mode='1' port='1048576' mask='1' exp='1' />
+										<command class_type='delay' title='TONE delay for note' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='TONE' type='1' />
+										<command class_type='output' title='Stop the sound' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' mode='1' port='1048576' mask='1' exp='0' />
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='c0df38ee-7a7e-4a0a-bfd5-5a7745203826' vmin='2' vmaj='1' codename='switch_array1' x='0' y='0' z='3' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='count' data='8' />
+					<value target='port' data='001' />
+					<value target='pin0' data='$PORTB.0' />
+					<value target='pin1' data='$PORTB.1' />
+					<value target='pin2' data='$PORTB.2' />
+					<value target='pin3' data='$PORTB.3' />
+					<value target='pin4' data='$PORTB.4' />
+					<value target='pin5' data='$PORTB.5' />
+					<value target='pin6' data='$PORTB.6' />
+					<value target='pin7' data='$PORTB.7' />
+					<value target='polarity' data='000' />
+					<value target='debounce' data='0' />
+					<value target='align' data='000' />
+					<value target='spacing' data='12.000000' />
+					<value target='operation' data='000' />
+					<value target='target_object' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<keymap />
+	<panel2d shadows='0' lighting='2' brightness='0' perspective='0' >
+		<background rgb='9737364' img='' style='0' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel2d>
+	<panel3d shadows='1' lighting='2' brightness='0' perspective='0' >
+		<background rgb='8409120' img='' style='0' />
+		<table rgb='7360576' img='' style='0' size='0' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel3d>
+	<layout >
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAZwUAALUCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GET_TONE' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAZwUAALUCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

@@ -1,0 +1,931 @@
+<root>
+<document schema='101' license='50,Dev User,NXHQAN' title='' description='' guid='1c2d5136-7f3e-45ae-abf5-6a53d5d6ca03' target='PIC.16F.16F877A' >
+	<config data='!0,3f72%0,2%2,0%3,0%6,1%7,0%9,3%b,1%8,1%d,1' clkspd='19660800' simspd='0' usewdt='0' constif='0' />
+	<plugins >
+		<dll_dbg_icd enabled='0' >
+			<data name='debug' value='1' />
+			<data name='userpins' value='0' />
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='monitor' value='1' />
+			<data name='ictloop' value='1' />
+			<data name='ictrate' value='1000' />
+			<data name='ictmask' value='-1' />
+		</dll_dbg_icd>
+		<dll_dbg_ict enabled='0' >
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='userpins' value='0' />
+		</dll_dbg_ict>
+		<dll_models enabled='1' />
+		<dll_upgrader enabled='1' />
+		<dll_webhelp enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug >
+		<watch expr='G_Command[0]' />
+		<watch expr='G_Command[1]' />
+		<watch expr='G_Command[2]' />
+		<watch expr='G_Command[3]' />
+		<watch expr='G_Command[4]' />
+		<watch expr='G_Command[5]' />
+		<watch expr='G_Command[6]' />
+		<watch expr='G_Command[7]' />
+		<watch expr='G_Command[8]' />
+		<watch expr='G_Command[9]' />
+		<watch expr='G_Command[10]' />
+		<watch expr='G_Command[11]' />
+		<watch expr='G_Command[12]' />
+		<watch expr='G_Command[13]' />
+		<watch expr='G_Command[14]' />
+		<watch expr='G_Command[15]' />
+		<watch expr='G_Command[16]' />
+		<watch expr='G_Command[17]' />
+		<watch expr='Line' />
+		<watch expr='.Req_X' />
+		<watch expr='.Req_Z' />
+		<watch expr='.valid' />
+		<watch expr='.String[3]' />
+		<watch expr='.idx' />
+		<watch expr='.RX' />
+		<watch expr='.RY' />
+		<watch expr='.RZ' />
+	</debug>
+	<components >
+		<settings autoimg='1' center='1' unitscale='1' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='1c2d5136-7f3e-45ae-abf5-6a53d5d6ca03' vmin='0' vmaj='1' visiblename='' description='' category='Misc' author='' sysinfo='0' keywords='' dynamic='1' iconpath='' />
+		<component class_type='root' codename='panel' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+			<resources />
+			<properties />
+			<values />
+			<events />
+			<apis />
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='Line' type='u32' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='false' type='b1' description='' isconst='1' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='Buffer_Size' type='s16' description='' isconst='1' isinit='1' usrinit='100' setinit='100' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='init' type='u8' description='' isconst='0' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='Req_Z' type='f32' description='' isconst='0' isinit='0' usrinit='0.0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='Req_Y' type='f32' description='' isconst='0' isinit='0' usrinit='0.0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='Req_X' type='f32' description='' isconst='0' isinit='0' usrinit='0.0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='buffer_index' type='s16' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='Coordinate_System' type='u8' description='' isconst='0' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='G_Command' type='T8' description='' isconst='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+						<array size='100' />
+					</def>
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='true' type='b1' description='' isconst='1' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='Move_To_Next_Idx' description='' >
+						<return name='Return' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<param name='str' type='T8*' description='' isconst='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='100' />
+						</param>
+						<param name='idx' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='valid' type='u8' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+						<command class_type='loop' title='Loop' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='.valid = 0' type='0' start='1' count='1' breakend='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='.idx = .idx + 1' />
+								</command>
+								<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='.idx &gt;= Buffer_Size' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Bail Out' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='.valid = 1' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='switch' title='Switch' comment='' ccode='' textshow='1' textmode='0' textarea='36,25,36,25' break='0' mark='0' disable='0' hide='0' customize='0' exp='.str[.idx]' >
+											<case >
+												<flowline >
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+												</flowline>
+											</case>
+											<case exp='0' >
+												<flowline >
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+													<command class_type='comment' title='' comment='End of string
+' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+													<command class_type='calculation' title='Bail Out' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+														<exp exp='.valid = 1' />
+													</command>
+												</flowline>
+											</case>
+											<case exp='&apos;S&apos;' >
+												<flowline >
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+													<command class_type='comment' title='' comment='Used to control 
+printhead temperature' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+													<command class_type='calculation' title='Success - Tag found' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+														<exp exp='.valid = 2' />
+													</command>
+												</flowline>
+											</case>
+											<case exp='&apos;X&apos;' >
+												<flowline >
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+													<command class_type='comment' title='' comment='X Coord
+' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+													<command class_type='calculation' title='Success - Tag found' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+														<exp exp='.valid = 2' />
+													</command>
+												</flowline>
+											</case>
+											<case exp='&apos;Y&apos;' >
+												<flowline >
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+													<command class_type='comment' title='' comment='Y Coord
+' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+													<command class_type='calculation' title='Success - Tag found' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+														<exp exp='.valid = 2' />
+													</command>
+												</flowline>
+											</case>
+											<case exp='&apos;Z&apos;' >
+												<flowline >
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+													<command class_type='comment' title='' comment='Z Coord
+' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+													<command class_type='calculation' title='Success - Tag found' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+														<exp exp='.valid = 2' />
+													</command>
+												</flowline>
+											</case>
+											<case exp='&apos;F&apos;' >
+												<flowline >
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+													<command class_type='comment' title='' comment='Feedrate - Speed
+' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+													<command class_type='calculation' title='Success - Tag found' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+														<exp exp='.valid = 2' />
+													</command>
+												</flowline>
+											</case>
+											<case exp='&apos;E&apos;' >
+												<flowline >
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+													<command class_type='comment' title='' comment='Extrude Coord' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+													<command class_type='calculation' title='Success - Tag found' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+														<exp exp='.valid = 2' />
+													</command>
+												</flowline>
+											</case>
+											<case exp='&apos;\n&apos;' >
+												<flowline >
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+													<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+													<command class_type='comment' title='' comment='New line character
+' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+													<command class_type='calculation' title='Bail Out' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+														<exp exp='.valid = 1' />
+													</command>
+												</flowline>
+											</case>
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+						<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='.valid &amp; 2' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='.return = .idx' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='.return = 255' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Collect_Float' description='Returns a floating point number representing the numeric value in the string.
+Begins at the position in the string specified by the idx parameter.
+Ends at a non numeric excluding &apos;.&apos;' >
+						<return name='Return' type='f32' description='' isconst='0' isinit='0' usrinit='0.0' setinit='' />
+						<param name='Str' type='T8' description='' isconst='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='50' />
+						</param>
+						<param name='idx' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='valid' type='u8' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='number_idx' type='u8' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='number_string' type='T8' description='' isconst='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<command class_type='loop' title='Loop' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='(.valid &amp; 0x01) = 0' type='0' start='1' count='1' breakend='0' >
+							<flowline >
+								<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='.Str[.idx] &gt;= &apos;0&apos;' swap='0' >
+									<flowline >
+										<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='.Str[.idx] &lt;= &apos;9&apos;' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+													<exp exp='.number_string[.number_idx] = .Str[.idx]' />
+												</command>
+												<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+													<exp exp='.number_idx = .number_idx + 1' />
+													<exp exp='.idx = .idx + 1' />
+												</command>
+												<command class_type='calculation' title='Number Detected' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+													<exp exp='.valid = .valid | 2' />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='calculation' title='Bail Out' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+													<exp exp='.valid = .valid | 1' />
+												</command>
+											</flowline>
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='.Str[.idx] = &apos;.&apos;' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+													<exp exp='.number_string[.number_idx] = .Str[.idx]' />
+												</command>
+												<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+													<exp exp='.number_idx = .number_idx + 1' />
+													<exp exp='.idx = .idx + 1' />
+												</command>
+												<command class_type='calculation' title='Number Detected' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+													<exp exp='.valid = .valid | 2' />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='calculation' title='Bail Out' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+													<exp exp='.valid = .valid | 1' />
+												</command>
+											</flowline>
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+						<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='.valid &amp; 2' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='.Return = StringToFloat$ (.number_string)' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='.Return = 0.0' />
+									<exp exp='' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Collect_Int' description='Returns a floating point number representing the numeric value in the string.
+Begins at the position in the string specified by the idx parameter.
+Ends at a non numeric excluding &apos;.&apos;' >
+						<return name='Return' type='u16' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Str' type='T8' description='' isconst='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='50' />
+						</param>
+						<param name='idx' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='valid' type='u8' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='number_idx' type='u8' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='number_string' type='T8' description='' isconst='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<command class_type='loop' title='Loop' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='(.valid &amp; 0x01) = 0' type='0' start='1' count='1' breakend='0' >
+							<flowline >
+								<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='.Str[.idx] &gt;= &apos;0&apos;' swap='0' >
+									<flowline >
+										<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='.Str[.idx] &lt;= &apos;9&apos;' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+													<exp exp='.number_string[.number_idx] = .Str[.idx]' />
+												</command>
+												<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+													<exp exp='.number_idx = .number_idx + 1' />
+													<exp exp='.idx = .idx + 1' />
+												</command>
+												<command class_type='calculation' title='Number Detected' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+													<exp exp='.valid = .valid | 2' />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='calculation' title='Bail Out' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+													<exp exp='.valid = .valid | 1' />
+												</command>
+											</flowline>
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Bail Out' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='.valid = .valid | 1' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+						<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='.valid &amp; 2' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='.Return = StringToInt$ (.number_string)' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='.Return = 0.0' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Collect_Line_From_File' description='' >
+						<return name='Return' type='s16' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<param name='buffer_idx' type='s16' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='file_length' type='s16' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<local name='valid' type='u8' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='cmd_index' type='u8' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='FAT' macro='ReadFileLength' >
+							<return exp='.file_length' />
+						</command>
+						<command class_type='loop' title='Loop' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='.valid = 0' type='0' start='1' count='1' breakend='0' >
+							<flowline >
+								<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='FAT' macro='ReadByteFromBuffer' >
+									<return exp='G_Command[.cmd_index]' />
+									<argument exp='.buffer_idx' />
+								</command>
+								<command class_type='decision' title='Detect Carriage Return' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='G_Command[.cmd_index] = 13' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='G_Command[.cmd_index] = 0' />
+										</command>
+										<command class_type='calculation' title='Detected line correctly' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='.valid = 2' />
+										</command>
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='.buffer_idx = .buffer_idx + 1' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='.buffer_idx = .buffer_idx + 1' />
+									<exp exp='.cmd_index = .cmd_index + 1' />
+								</command>
+								<command class_type='decision' title='End of file sector?' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='.buffer_idx &gt;= 512' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='.buffer_idx = 0' />
+										</command>
+										<command class_type='call' title='Bail out if this is the last sector and EOF' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='FAT' macro='MoveToNextFileSector' >
+											<return exp='.valid' />
+											<argument exp='0' />
+										</command>
+										<command class_type='call' title='Refresh file length' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='FAT' macro='ReadFileLength' >
+											<return exp='.file_length' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='.buffer_idx &gt;= .file_length' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Bail out if we have reached the end of a file' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='.valid = 1' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='.cmd_index &gt;= Buffer_Size' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Bail out we have run out of buffer' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='.valid = 1' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='.valid &amp; 2' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='.Return = .buffer_idx' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='.Return = -1' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Parse_G_Command' description='' >
+						<param name='Command' type='T8' description='' isconst='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='50' />
+						</param>
+						<local name='Temp_Int' type='u16' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='str_idx' type='u8' description='' isconst='0' isinit='1' usrinit='1' setinit='1' />
+						<local name='Req_E' type='f32' description='' isconst='0' isinit='1' usrinit='0.0' setinit='0.0' />
+						<local name='Move_Detected' type='u8' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+						<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+							<exp exp='.Req_E = 0' />
+						</command>
+						<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='Coordinate_System = 1' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+									<exp exp='Req_X = 0' />
+									<exp exp='Req_Y = 0' />
+									<exp exp='Req_Z = 0' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='comment' title='' comment='Start by processing the command
+' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+						<command class_type='switch' title='Switch' comment='' ccode='' textshow='1' textmode='0' textarea='36,25,36,25' break='0' mark='0' disable='0' hide='0' customize='0' exp='.Command[0]' >
+							<case >
+								<flowline >
+									<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+									<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+									<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+									<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+									<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+									<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+								</flowline>
+							</case>
+							<case exp='&apos;G&apos;' >
+								<flowline >
+									<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+									<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+									<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+									<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+									<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+									<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+									<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Collect_Int' >
+										<return exp='.Temp_Int' />
+										<argument exp='.Command' />
+										<argument exp='.str_idx' />
+									</command>
+									<command class_type='switch' title='Switch' comment='' ccode='' textshow='1' textmode='0' textarea='36,25,36,25' break='0' mark='0' disable='0' hide='0' customize='0' exp='.Temp_Int' >
+										<case >
+											<flowline >
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+											</flowline>
+										</case>
+										<case exp='90' >
+											<flowline >
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+												<command class_type='comment' title='' comment='Absolute Coords
+' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+												<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+													<exp exp='Coordinate_System = 0' />
+												</command>
+											</flowline>
+										</case>
+										<case exp='91' >
+											<flowline >
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+												<command class_type='comment' title='' comment='Relative Coords
+' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+												<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+													<exp exp='Coordinate_System = 1' />
+												</command>
+											</flowline>
+										</case>
+										<case exp='1' >
+											<flowline >
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+												<command class_type='comment' title='' comment='Linear Move' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+												<command class_type='comment' title='' comment='Collect all the arguments
+' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+												<command class_type='loop' title='Loop' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='.str_idx &lt; 255' type='0' start='1' count='1' breakend='0' >
+													<flowline >
+														<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Move_To_Next_Idx' >
+															<return exp='.str_idx' />
+															<argument exp='.Command' />
+															<argument exp='.str_idx' />
+														</command>
+														<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='.str_idx &lt; 255' swap='0' >
+															<flowline >
+																<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+																	<exp exp='.str_idx = .str_idx + 1' />
+																</command>
+																<command class_type='switch' title='Switch' comment='' ccode='' textshow='1' textmode='0' textarea='36,25,36,25' break='0' mark='0' disable='0' hide='0' customize='0' exp='.Command[.str_idx - 1]' >
+																	<case >
+																		<flowline >
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+																		</flowline>
+																	</case>
+																	<case exp='&apos;S&apos;' >
+																		<flowline >
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+																		</flowline>
+																	</case>
+																	<case exp='&apos;X&apos;' >
+																		<flowline >
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+																			<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Collect_Float' >
+																				<return exp='Req_X' />
+																				<argument exp='.Command' />
+																				<argument exp='.str_idx' />
+																			</command>
+																			<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+																				<exp exp='.Move_Detected = 1' />
+																			</command>
+																		</flowline>
+																	</case>
+																	<case exp='&apos;Y&apos;' >
+																		<flowline >
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+																			<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Collect_Float' >
+																				<return exp='Req_Y' />
+																				<argument exp='.Command' />
+																				<argument exp='.str_idx' />
+																			</command>
+																			<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+																				<exp exp='.Move_Detected = 1' />
+																			</command>
+																		</flowline>
+																	</case>
+																	<case exp='&apos;Z&apos;' >
+																		<flowline >
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+																			<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Collect_Float' >
+																				<return exp='Req_Z' />
+																				<argument exp='.Command' />
+																				<argument exp='.str_idx' />
+																			</command>
+																			<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+																				<exp exp='.Move_Detected = 1' />
+																			</command>
+																		</flowline>
+																	</case>
+																	<case exp='&apos;F&apos;' >
+																		<flowline >
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+																		</flowline>
+																	</case>
+																	<case exp='&apos;E&apos;' >
+																		<flowline >
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+																			<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+																			<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Collect_Float' >
+																				<return exp='.Req_E' />
+																				<argument exp='.Command' />
+																				<argument exp='.str_idx' />
+																			</command>
+																		</flowline>
+																	</case>
+																</command>
+															</flowline>
+															<flowline />
+														</command>
+													</flowline>
+												</command>
+												<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='.Move_Detected' swap='0' >
+													<flowline >
+														<command class_type='decision' title='Is the print head active?' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='.Req_E &gt; 0.0' swap='0' >
+															<flowline >
+																<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='RepRap_Printer' macro='ControlPrintHead' >
+																	<argument exp='1' />
+																</command>
+															</flowline>
+															<flowline >
+																<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='RepRap_Printer' macro='ControlPrintHead' >
+																	<argument exp='0' />
+																</command>
+															</flowline>
+														</command>
+														<command class_type='decision' title='Choose which coord system to use' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='Coordinate_System' swap='0' >
+															<flowline >
+																<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='RepRap_Printer' macro='MoveByXYZReal' >
+																	<argument exp='Req_X' />
+																	<argument exp='Req_Y' />
+																	<argument exp='Req_Z' />
+																</command>
+															</flowline>
+															<flowline >
+																<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='RepRap_Printer' macro='MoveToXYZReal' >
+																	<argument exp='Req_X' />
+																	<argument exp='Req_Y' />
+																	<argument exp='Req_Z' />
+																</command>
+															</flowline>
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+											</flowline>
+										</case>
+										<case exp='21' >
+											<flowline >
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+												<command class_type='comment' title='' comment='Home' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+											</flowline>
+										</case>
+										<case exp='28' >
+											<flowline >
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+												<command class_type='comment' title='' comment='Reset Coords 0,0,0
+' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+											</flowline>
+										</case>
+									</command>
+								</flowline>
+							</case>
+							<case exp='&apos;M&apos;' >
+								<flowline >
+									<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+									<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+									<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+									<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+									<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+									<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+									<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Collect_Int' >
+										<return exp='.Temp_Int' />
+										<argument exp='.Command' />
+										<argument exp='1' />
+									</command>
+									<command class_type='switch' title='Switch' comment='' ccode='' textshow='1' textmode='0' textarea='36,25,36,25' break='0' mark='0' disable='0' hide='0' customize='0' exp='.Temp_Int' >
+										<case >
+											<flowline >
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+											</flowline>
+										</case>
+										<case exp='104' >
+											<flowline >
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+												<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+											</flowline>
+										</case>
+									</command>
+								</flowline>
+							</case>
+							<case exp='&apos;;&apos;' >
+								<flowline >
+									<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+									<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+									<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+									<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+									<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='1' />
+									<command class_type='block' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='1' customize='0' start='0' />
+									<command class_type='comment' title='' comment='Comment - do nothing
+' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+								</flowline>
+							</case>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='' >
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='RepRap_Printer' macro='ClearPrevPrint' />
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='RepRap_Printer' macro='MoveToHome' />
+						<command class_type='loop' title='Loop' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='init' type='0' start='1' count='1' breakend='0' >
+							<flowline >
+								<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='FAT' macro='Initialise' >
+									<return exp='init' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='FAT' macro='OpenFile' >
+							<argument exp='&quot;Batman.G&quot;' />
+						</command>
+						<command class_type='loop' title='Loop' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='buffer_index != -1' type='0' start='1' count='1' breakend='0' >
+							<flowline >
+								<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Collect_Line_From_File' >
+									<return exp='buffer_index' />
+									<argument exp='buffer_index' />
+								</command>
+								<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='buffer_index != -1' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' >
+											<exp exp='Line = Line + 1' />
+										</command>
+										<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Parse_G_Command' >
+											<argument exp='G_Command' />
+										</command>
+										<command class_type='sim' title='Simulation' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Debug.PrintLn' >
+											<argument exp='Line' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='0b61bd39-05a3-46ee-a2a5-da7bffb583c5' vmin='10' vmaj='1' codename='FAT' x='-128' y='16' z='2.75926' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='max_concurrent_files' data='5' />
+					<value target='Channel' data='001' />
+					<value target='PR_SCALE' data='016' />
+					<value target='cs_pin' data='$PORTD.2' />
+					<value target='miso_pin' data='$PORTC.4' />
+					<value target='mosi_pin' data='$PORTC.5' />
+					<value target='sck_pin' data='$PORTC.3' />
+					<value target='root_dir' data='$(srcdir)' />
+					<value target='AutoInsertCard' data='1' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='62b6ca37-eb0a-4b5f-b2e1-9a732c4e05ce' vmin='3' vmaj='1' codename='RepRap_Printer' x='16' y='16' z='1.75' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Col_Bed' data='16777215' />
+					<value target='Col_Print' data='12582912' />
+					<value target='print_speed' data='100' />
+					<value target='PrintType' data='001' />
+					<value target='Resolution' data='5' />
+					<value target='RedrawCount' data='5000' />
+					<value target='print_size' data='1.000000' />
+					<value target='Shape' data='000' />
+					<value target='X_Width' data='200' />
+					<value target='Y_Length' data='200' />
+					<value target='Z_Height' data='150' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<keymap />
+	<panel2d shadows='0' lighting='0' brightness='0' perspective='0' >
+		<background rgb='9737364' img='' style='0' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel2d>
+	<panel3d shadows='0' lighting='0' brightness='0' perspective='1' >
+		<background rgb='8409120' img='' style='0' />
+		<table rgb='7360576' img='' style='0' size='0' />
+		<camera xe='-115.004' ye='-392.135' ze='344.738' xt='41.9763' yt='13.6415' zt='33.4056' xquat='-0.449437' yquat='0.0839162' zquat='0.163194' wquat='0.874261' />
+	</panel3d>
+	<layout >
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAA2AIAAH0CAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Parse_G_Command' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAA2AIAAH0CAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Collect_Line_From_File' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAA2AIAAH0CAAA' zoom='60' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Move_To_Next_Idx' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAA2AIAAH0CAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Collect_Int' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAA2AIAAH0CAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Collect_Float' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAA2AIAAH0CAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

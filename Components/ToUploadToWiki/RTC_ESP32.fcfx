@@ -1,0 +1,879 @@
+<root>
+<document scada='0' projtype='1' schema='103' license='1,88169790,EHXX2F' title='' description='' fcversion='720899' target='ESP.ESP32.Lolin32_Lite' >
+	<config data='' clkspd='240000000' simspd='0' usewdt='0' constif='0' Use3V3='0' />
+	<plugins >
+		<dll_models enabled='1' />
+	</plugins>
+	<supplement use='1' head='#include &quot;esp_sntp.h&quot;
+
+static const char *RTC_TAG = &quot;rtc&quot;;
+
+void time_sync_notification_cb(struct timeval *tv)
+{
+    ESP_LOGI(RTC_TAG, &quot;Notification of a time synchronization event&quot;);
+}
+
+time_t now;
+struct tm timeinfo;' body='' />
+	<debug />
+	<traces />
+	<ghost >
+		<FK2 >
+			<data name='FK2D0' port='4294967295' pin='4294967295' />
+			<data name='FK2D1' port='4294967295' pin='4294967295' />
+			<data name='FK2D2' port='4294967295' pin='4294967295' />
+			<data name='FK2D3' port='4294967295' pin='4294967295' />
+			<data name='FK2D4' port='4294967295' pin='4294967295' />
+			<data name='FK2D5' port='4294967295' pin='4294967295' />
+			<data name='FK2D6' port='4294967295' pin='4294967295' />
+			<data name='FK2D7' port='4294967295' pin='4294967295' />
+			<data name='FK2D8' port='4294967295' pin='4294967295' />
+			<data name='FK2D9' port='4294967295' pin='4294967295' />
+			<data name='FK2D10' port='4294967295' pin='4294967295' />
+			<data name='FK2D11' port='4294967295' pin='4294967295' />
+			<data name='FK2D12' port='4294967295' pin='4294967295' />
+			<data name='FK2D13' port='4294967295' pin='4294967295' />
+			<data name='FK2D14' port='4294967295' pin='4294967295' />
+			<data name='FK2D15' port='4294967295' pin='4294967295' />
+			<data name='FK2A0' port='4294967295' pin='4294967295' />
+			<data name='FK2A1' port='4294967295' pin='4294967295' />
+			<data name='FK2A2' port='4294967295' pin='4294967295' />
+			<data name='FK2A3' port='4294967295' pin='4294967295' />
+			<data name='FK2A4' port='4294967295' pin='4294967295' />
+			<data name='FK2A5' port='4294967295' pin='4294967295' />
+		</FK2>
+		<ICD >
+			<data name='AnalogPrescaleValue' value='19' />
+			<data name='DigitalSampleRate' value='100000' />
+			<data name='BreakpointCount' value='8' />
+			<data name='CallStackDepthCount' value='8' />
+			<data name='ClockPort' value='1' />
+			<data name='ClockPin' value='6' />
+			<data name='DataPort' value='1' />
+			<data name='DataPin' value='7' />
+			<data name='UseDefaultPins' value='1' />
+			<data name='WrapEnabled' value='1' />
+			<data name='CommsDelayOverridden' value='0' />
+			<data name='CommsDelay' value='1' />
+			<data name='CalculatedCommsDelay' value='1' />
+			<data name='AnalogEB2PrescaleValue' value='2' />
+			<data name='DigitalEB2SampleRate' value='100000' />
+		</ICD>
+		<pins >
+			<digital A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+			<analog A='0' B='0' C='0' D='0' E='0' F='0' G='0' H='0' I='0' J='0' K='0' L='0' M='0' N='0' O='0' P='0' Q='0' R='0' S='0' T='0' U='0' V='0' W='0' X='0' Y='0' Z='0' />
+		</pins>
+	</ghost>
+	<components >
+		<settings autoimg='0' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='1' />
+		<definition guid='920175dd-ace8-49e2-9208-ec548563c9c0' vstate='40' vmin='1' vmaj='1' srcleaf='RTC_ESP32.fcfx' visiblename='Real Time Clock (ESP32)' description='Allows an ESP32 device to act as a RTC with NTP type server synchronisation.
+Requires a WIFI network connection with internet access to synchronise.
+Provides simulation using local PC system time.' category='Real Time Clock' category2='' category3='' bIs2dOnly='1' bIs3dOnly='0' bIsWysiwyg='0' catenable='1' author='Matrix TSL' manuname='' manucode='' sysinfo='1053067' keywords='' dynamic='1' scadaCompatible='0' embeddedCompatible='1' showmacros='1' iconpath='..\..\icons\components\arc_scale.png' />
+		<component class_type='root' codename='RTC_ESP32_NTP' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' angle2d='0' comp2dType='0' >
+			<resources />
+			<properties >
+				<property name='Time Server' target='TimeServer' typeid='10' hidden='0' locked='0' info='Default time server URL.
+Set as part of the initialise macro.
+Can be overridden using the SetTimeServer macro.' />
+				<property name='UTC Offset' target='GMTOff' typeid='21' hidden='0' locked='0' info='Offset in seconds from UTC.
+Set as part of the initialise macro.
+Can be overridden using the SetUTCOffset macro.' />
+				<property name='Number of Retries' target='NumRetries' typeid='21' hidden='0' locked='0' info='Sets the number of retries to connect to the SNTP server before giving up' />
+				<property name='Sim' target='Sim' typeid='7' hidden='1' locked='0' info='' />
+			</properties>
+			<values >
+				<value target='TimeServer' data='pool.ntp.org' />
+				<value target='GMTOff' data='0' />
+				<value target='NumRetries' data='10' />
+				<value target='Sim' data='0' />
+			</values>
+			<events >
+				<event class='Compile' event='Start' target='Ev_CompileStart' />
+				<event class='Components' event='Renamed' target='Ev_Renamed' />
+				<event class='Simulation' event='Stop' target='Ev_SimStop' />
+				<event class='Simulation' event='Start' target='Ev_SimStart' />
+			</events>
+			<apis >
+				<api name='GetDateString' alt='GetDateString' type='1' proto='1' />
+				<api name='GetHours' alt='GetHours' type='1' proto='1' />
+				<api name='GetSecs' alt='GetSecs' type='1' proto='1' />
+				<api name='GetYear' alt='GetYear' type='1' proto='1' />
+				<api name='GetDateTimeString' alt='GetDateTimeString' type='1' proto='1' />
+				<api name='QueryTimeServer' alt='QueryTimeServer' type='1' proto='1' />
+				<api name='ReadTime' alt='' type='4' proto='0' />
+				<api name='SetTime' alt='SetTime' type='1' proto='1' />
+				<api name='GetMins' alt='GetMins' type='1' proto='1' />
+				<api name='GetTimeString' alt='GetTimeString' type='1' proto='1' />
+				<api name='ReadDate' alt='' type='4' proto='0' />
+				<api name='SetDate' alt='SetDate' type='1' proto='1' />
+				<api name='GetDate' alt='GetDate' type='1' proto='1' />
+				<api name='SetTimeServer' alt='SetTimeServer' type='1' proto='1' />
+				<api name='GetMonth' alt='GetMonth' type='1' proto='1' />
+				<api name='Initialise' alt='' type='1' proto='1' />
+				<api name='SetUTCOffset' alt='SetUTCOffset' type='1' proto='1' />
+			</apis>
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='TimeOffset' type='s32' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='TimeServerStr' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+						<array size='50' />
+					</def>
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='GetDateString' description='Collects the current date and returns it as a string.
+e.g. &quot;DD/MM/YY&quot; or &quot;MM/DD/YY&quot;' statediag='0' >
+						<return name='Return' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='2000' />
+						</return>
+						<param name='USFormat' type='b1' description='Select date format: 0=DD/MM/YY, 1=MM/DD/YY' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='date' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='month' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='year' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' exp='sim' swap='0' >
+							<flowline >
+								<command class_type='call' title='User Macro' macro='ReadDate' >
+									<return exp='.date' />
+									<argument exp='2' />
+								</command>
+								<command class_type='call' title='User Macro' macro='ReadDate' >
+									<return exp='.month' />
+									<argument exp='1' />
+								</command>
+								<command class_type='call' title='User Macro' macro='ReadDate' >
+									<return exp='.year' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='call' title='User Macro' macro='Prv_GetTimeNow' />
+								<command class_type='native' title='C Code' ccode='FCL_DATE = timeinfo.tm_mday;
+FCL_MONTH = timeinfo.tm_mon + 1;
+FCL_YEAR = timeinfo.tm_year - 100;' language='C' />
+							</flowline>
+						</command>
+						<command class_type='decision' title='Decision' exp='.USFormat' swap='0' >
+							<flowline >
+								<command class_type='decision' title='Decision' exp='.month &lt; 10' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.Return = &quot;0&quot;' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.Return = &quot;&quot;' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.Return = .Return + ToString$ (.month)' />
+								</command>
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.Return = .Return + &quot;/&quot;' />
+								</command>
+								<command class_type='decision' title='Decision' exp='.date &lt; 10' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.Return = .Return + &quot;0&quot;' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.Return = .Return + ToString$ (.date)' />
+								</command>
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.Return = .Return + &quot;/&quot;' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='decision' title='Decision' exp='.date &lt; 10' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.Return = &quot;0&quot;' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.Return = &quot;&quot;' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.Return = .Return + ToString$ (.date)' />
+								</command>
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.Return = .Return + &quot;/&quot;' />
+								</command>
+								<command class_type='decision' title='Decision' exp='.month &lt; 10' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.Return = .Return + &quot;0&quot;' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.Return = .Return + ToString$ (.month)' />
+								</command>
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.Return = .Return + &quot;/&quot;' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='decision' title='Decision' exp='.year &lt; 10' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.Return = .Return + &quot;0&quot;' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.Return = .Return + ToString$ (.year)' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='GetHours' description='Collects the current hour as a numeric value in the range of 0 - 23.' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' exp='sim' swap='0' >
+							<flowline >
+								<command class_type='call' title='User Macro' macro='ReadTime' >
+									<return exp='.Return' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='call' title='User Macro' macro='Prv_GetTimeNow' />
+								<command class_type='native' title='C Code' ccode='FCR_RETVAL = timeinfo.tm_hour;' language='C' />
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='GetSecs' description='Collects the current second as a numeric value in the range of 0 - 59.' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' exp='sim' swap='0' >
+							<flowline >
+								<command class_type='call' title='User Macro' macro='ReadTime' >
+									<return exp='.Return' />
+									<argument exp='2' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='call' title='User Macro' macro='Prv_GetTimeNow' />
+								<command class_type='native' title='C Code' ccode='FCR_RETVAL = timeinfo.tm_sec;' language='C' />
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='GetYear' description='Collects the year as a numeric value in the range of 0 - 99.' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' exp='sim' swap='0' >
+							<flowline >
+								<command class_type='call' title='User Macro' macro='ReadDate' >
+									<return exp='.Return' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='call' title='User Macro' macro='Prv_GetTimeNow' />
+								<command class_type='native' title='C Code' ccode='FCR_RETVAL = timeinfo.tm_year - 100;' language='C' />
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='GetDateTimeString' description='Reads the current date from the RTC and returns it formatted as a string
+
+Uses y-M-d for date entries and h-m-s for time entries, with doubled letters forcing a leading zero.
+' statediag='0' >
+						<return name='Return' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='2000' />
+						</return>
+						<param name='Format' type='T8' description='The format string (e.g. &quot;yyyy-MM-dd HH:mm:ss&quot; -&gt; &quot;2026-03-21 18:24:58&quot;)' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</param>
+						<local name='data' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='idx' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='len' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='bLeadZero' type='b1' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='bIsFormatLetter' type='b1' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+						<local name='s' type='T8' description='' isconst='0' isHidden='0' isinit='1' usrinit='&quot;&quot;' setinit='&quot;&quot;' >
+							<array size='2' />
+						</local>
+						<command class_type='comment' title='' comment='Supported formats for date:
+
+y    = year from 0 to 99
+yy   = year from 00 to 99
+M    = month from 1 to 12
+MM   = month from 01 to 12
+d    = day from 1 to 31
+dd   = day from 01 to 31' textarea='12,0,12,0' />
+						<command class_type='comment' title='' comment='Supported formats for time:
+
+h    = hour (12-hour clock) from 1 to 12
+hh   = hour (12-hour clock) from 01 to 12
+H    = hour (24-hour clock) from 0 to 23
+HH   = hour (24-hour clock) from 00 to 23
+m    = minute from 0 to 59
+mm   = minute from 00 to 59
+s    = second from 0 to 59
+ss   = second from 00 to 59' textarea='12,0,12,0' />
+						<command class_type='calculation' title='Initialise String' >
+							<exp exp='.Return = &quot;&quot;' />
+							<exp exp='.len = Length$(.Format)' />
+						</command>
+						<command class_type='loop' title='Loop' type='0' exp='.idx &lt; .len' for1='' for3='' >
+							<flowline >
+								<command class_type='decision' title='Decision' exp='(.idx + 1 &lt; .len) &amp;&amp; (.Format[.idx] == .Format[.idx + 1])' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.bLeadZero = 1' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.bLeadZero = 0' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='calculation' title='Assume it&apos;s a format letter' >
+									<exp exp='.bIsFormatLetter = 1' />
+								</command>
+								<command class_type='switch' title='Switch' textarea='36,25,36,25' exp='.Format[.idx]' >
+									<case >
+										<flowline >
+											<command class_type='calculation' title='Not a format letter' >
+												<exp exp='.bIsFormatLetter = 0' />
+												<exp exp='.bLeadZero = 0' />
+											</command>
+										</flowline>
+									</case>
+									<case exp='&apos;y&apos;' >
+										<flowline >
+											<command class_type='call' title='Call Macro' macro='GetYear' >
+												<return exp='.data' />
+											</command>
+										</flowline>
+									</case>
+									<case exp='&apos;M&apos;' >
+										<flowline >
+											<command class_type='call' title='Call Macro' macro='GetMonth' >
+												<return exp='.data' />
+											</command>
+										</flowline>
+									</case>
+									<case exp='&apos;d&apos;' >
+										<flowline >
+											<command class_type='call' title='Call Macro' macro='GetDate' >
+												<return exp='.data' />
+											</command>
+										</flowline>
+									</case>
+									<case exp='&apos;h&apos;' >
+										<flowline >
+											<command class_type='call' title='Call Macro' macro='GetHours' >
+												<return exp='.data' />
+											</command>
+											<command class_type='loop' title='Loop' type='0' exp='.data &gt; 12' for1='' for3='' >
+												<flowline >
+													<command class_type='calculation' title='Calculation' >
+														<exp exp='.data = .data - 12' />
+													</command>
+												</flowline>
+											</command>
+											<command class_type='decision' title='Decision' exp='.data == 0' swap='0' >
+												<flowline >
+													<command class_type='calculation' title='Calculation' >
+														<exp exp='.data = 12' />
+													</command>
+												</flowline>
+												<flowline />
+											</command>
+										</flowline>
+									</case>
+									<case exp='&apos;H&apos;' >
+										<flowline >
+											<command class_type='call' title='Call Macro' macro='GetHours' >
+												<return exp='.data' />
+											</command>
+										</flowline>
+									</case>
+									<case exp='&apos;m&apos;' >
+										<flowline >
+											<command class_type='call' title='Call Macro' macro='GetMins' >
+												<return exp='.data' />
+											</command>
+										</flowline>
+									</case>
+									<case exp='&apos;s&apos;' >
+										<flowline >
+											<command class_type='call' title='Call Macro' macro='GetSecs' >
+												<return exp='.data' />
+											</command>
+										</flowline>
+									</case>
+								</command>
+								<command class_type='decision' title='Decision' exp='.bIsFormatLetter' swap='0' >
+									<flowline >
+										<command class_type='decision' title='Decision' exp='.bLeadZero' swap='0' >
+											<flowline >
+												<command class_type='decision' title='Decision' exp='.bLeadZero &amp;&amp; (.data &lt; 10)' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Add leading zero' >
+															<exp exp='.Return = .Return + &quot;0&quot;' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='calculation' title='Extra increase if format letter is doubled' >
+													<exp exp='.idx = .idx + 1' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.Return = .Return + ToString$(.data)' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.s[0] = .Format[.idx]' />
+											<exp exp='.s[1] = 0' />
+											<exp exp='.Return = .Return + .s' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.idx = .idx + 1' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='QueryTimeServer' description='Attempt to collect the local time from the selected time server.
+The ESP WIFI must be connected to a network with internet to allow this to work.
+Returns true if the time server synchronised correctly with the ESP.' statediag='0' >
+						<return name='Return' type='b1' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Retry' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='TSS' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='50' />
+						</local>
+						<command class_type='decision' title='Decision' exp='sim' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.Return = 1' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.Retry = NumRetries' />
+									<exp exp='.TSS = TimeServerStr' />
+								</command>
+								<command class_type='native' title='C Code' textarea='36,-5,36,-5' ccode='#if ESP_IDF_VERSION &gt;= ESP_IDF_VERSION_VAL(5, 0, 0)	// enable functionality present in IDF v5.0
+  #define sntp_init                          esp_sntp_init
+  #define sntp_enabled                       esp_sntp_enabled
+  #define sntp_stop                          esp_sntp_stop
+  #define sntp_setoperatingmode              esp_sntp_setoperatingmode
+  #define sntp_setservername                 esp_sntp_setservername
+  #define sntp_set_time_sync_notification_cb esp_sntp_set_time_sync_notification_cb
+  #define sntp_get_sync_status               esp_sntp_get_sync_status
+#endif
+
+
+
+
+if(sntp_enabled())
+    {
+        sntp_stop();
+    }
+
+    ESP_LOGI(TAG, &quot;Initializing SNTP&quot;);
+    sntp_setoperatingmode(SNTP_OPMODE_POLL);
+    sntp_setservername(0, FCL_TSS);
+    sntp_set_time_sync_notification_cb(time_sync_notification_cb);
+#ifdef CONFIG_SNTP_TIME_SYNC_METHOD_SMOOTH
+    sntp_set_sync_mode(SNTP_SYNC_MODE_SMOOTH);
+#endif
+    sntp_init();
+
+    // wait for time to be set
+    time_t now = 0;
+    struct tm timeinfo = { 0 };
+    int retry = 0;
+    while (sntp_get_sync_status() == SNTP_SYNC_STATUS_RESET &amp;&amp; ++retry &lt; FCL_RETRY) 
+    {
+        ESP_LOGI(TAG, &quot;Waiting for system time to be set... (%d/%d)&quot;, retry, FCL_RETRY);
+        vTaskDelay(2000 / portTICK_PERIOD_MS);
+    }
+
+    if (retry &lt; FCL_RETRY)
+      FCR_RETVAL = 1;
+    else
+      FCR_RETVAL = 0;' language='C' />
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_SimStop' description='Broadcast to all components that simulation has stopped' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;Sim&quot;' />
+							<argument exp='0' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Prv_GetTimeNow' description='Reads the current internal RTC time details updating all the time and date variables.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<local name='TO' type='s32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.TO = TimeOffset' />
+						</command>
+						<command class_type='native' title='C Code' ccode='// update &apos;now&apos; variable with current time
+time(&amp;now);
+now = now + FCL_TO;
+localtime_r(&amp;now, &amp;timeinfo);' language='C' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='ReadTime' description='' statediag='0' dllpath='$(appdir)API.DLL\DateTime.dll' dllcall='115' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Unit' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SetTime' description='Manually sets the current time.
+Useful for when WIFI / NTP commnication is not available.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Hour' type='u8' description='Hour ranging from 0 to 23' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Min' type='u8' description='Minute ranging from 0 to 59' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Sec' type='u8' description='Second ranging from 0 to 59' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='TO' type='s32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' exp='sim' swap='0' >
+							<flowline />
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.TO = TimeOffset' />
+								</command>
+								<command class_type='call' title='User Macro' macro='Prv_GetTimeNow' />
+								<command class_type='native' title='C Code' ccode='timeinfo.tm_hour = FCL_HOUR;
+timeinfo.tm_min = FCL_MIN;
+timeinfo.tm_sec = FCL_SEC;
+
+time_t t = mktime(&amp;timeinfo);
+now = t - FCL_TO;
+
+settimeofday(&amp;now, NULL);' language='C' />
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_Renamed' description='' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Name' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<command class_type='sim' title='' macro='Tree.GetName' >
+							<return exp='.Name' />
+							<argument exp='this' />
+						</command>
+						<command class_type='sim' title='' macro='Component.Property.SetValue' >
+							<argument exp='LibraryComponent1' />
+							<argument exp='&quot;Name&quot;' />
+							<argument exp='.Name' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='GetMins' description='Collects the current minute as a numeric value in the range of 0 - 59.' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' exp='sim' swap='0' >
+							<flowline >
+								<command class_type='call' title='User Macro' macro='ReadTime' >
+									<return exp='.Return' />
+									<argument exp='1' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='call' title='User Macro' macro='Prv_GetTimeNow' />
+								<command class_type='native' title='C Code' ccode='FCR_RETVAL = timeinfo.tm_min;' language='C' />
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_SimStart' description='Broadcast to all components that simulation is starting' statediag='0' >
+						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;Sim&quot;' />
+							<argument exp='1' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='GetTimeString' description='Collects the current time and returns it as a string.
+e.g. &quot;HH:MM&quot; or &quot;HH:MM:SS&quot;' statediag='0' >
+						<return name='Return' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='2000' />
+						</return>
+						<param name='IncludeSeconds' type='b1' description='0=Dont Include Seconds, 1=Include Seconds in the String' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='hours' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='mins' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='secs' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' exp='sim' swap='0' >
+							<flowline >
+								<command class_type='call' title='User Macro' macro='ReadTime' >
+									<return exp='.Hours' />
+									<argument exp='0' />
+								</command>
+								<command class_type='call' title='User Macro' macro='ReadTime' >
+									<return exp='.mins' />
+									<argument exp='1' />
+								</command>
+								<command class_type='call' title='User Macro' macro='ReadTime' >
+									<return exp='.secs' />
+									<argument exp='2' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='call' title='User Macro' macro='Prv_GetTimeNow' />
+								<command class_type='native' title='C Code' ccode='FCL_HOURS = timeinfo.tm_hour;
+FCL_MINS = timeinfo.tm_min;
+FCL_SECS = timeinfo.tm_sec;' language='C' />
+							</flowline>
+						</command>
+						<command class_type='decision' title='Decision' exp='.hours &lt; 10' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.Return = &quot;0&quot;' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.Return = &quot;&quot;' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.Return = .Return + ToString$ (.hours)' />
+						</command>
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.Return = .Return + &quot;:&quot;' />
+						</command>
+						<command class_type='decision' title='Decision' exp='.mins &lt; 10' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.Return = .Return + &quot;0&quot;' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.Return = .Return + ToString$ (.mins)' />
+						</command>
+						<command class_type='decision' title='Decision' exp='.IncludeSeconds' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.Return = .Return + &quot;:&quot;' />
+								</command>
+								<command class_type='decision' title='Decision' exp='.secs &lt; 10' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.Return = .Return + &quot;0&quot;' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.Return = .Return + ToString$ (.secs)' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='ReadDate' description='' statediag='0' dllpath='$(appdir)API.DLL\DateTime.dll' dllcall='115' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Unit' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SetDate' description='Manually sets the current date.
+Useful for when WIFI / NTP commnication is not available.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Date' type='u8' description='Day of the month ranging from 1 to 31' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Month' type='u8' description='Month ranging from 1 to 12' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Year' type='u8' description='Year ranging from 0 to 99' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' exp='sim' swap='0' >
+							<flowline />
+							<flowline >
+								<command class_type='call' title='User Macro' macro='Prv_GetTimeNow' />
+								<command class_type='native' title='C Code' ccode='timeinfo.tm_mday = FCL_DATE;
+timeinfo.tm_mon = FCL_MONTH - 1;
+timeinfo.tm_year = FCL_YEAR + 100;
+
+time_t t = mktime(&amp;timeinfo);
+now = t;
+
+settimeofday(&amp;now, NULL);' language='C' />
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='GetDate' description='Collects the day of the month as a numeric value in the range of 1 - 31.' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' exp='sim' swap='0' >
+							<flowline >
+								<command class_type='call' title='User Macro' macro='ReadDate' >
+									<return exp='.Return' />
+									<argument exp='2' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='call' title='User Macro' macro='Prv_GetTimeNow' />
+								<command class_type='native' title='C Code' ccode='FCR_RETVAL = timeinfo.tm_mday;' language='C' />
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Ev_CompileStart' description='Broadcast to all components that compilation is starting' statediag='0' >
+						<return name='Return' type='u32' description='Non-zero to prevent compilation' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
+							<argument exp='this' />
+							<argument exp='&quot;Sim&quot;' />
+							<argument exp='0' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SetTimeServer' description='Overwrites the default time server setting allowing for multiple time servers to be queried.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='TimeServer' type='T8*' description='e.g. &quot;pool.ntp.org&quot;' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='50' />
+						</param>
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='TimeServerStr = .TimeServer' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<local name='Num' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='str' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='20' />
+						</local>
+						<command class_type='comment' title='' comment='Component Version Information;
+2, 1.1, 11-09-26, ST, Added generic GetDateTimeString macro;' textarea='12,0,12,0' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='GetMonth' description='Collects the month as a numeric value in the range of 1 - 12.' statediag='0' >
+						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' exp='sim' swap='0' >
+							<flowline >
+								<command class_type='call' title='User Macro' macro='ReadDate' >
+									<return exp='.Return' />
+									<argument exp='1' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='call' title='User Macro' macro='Prv_GetTimeNow' />
+								<command class_type='native' title='C Code' ccode='FCR_RETVAL = timeinfo.tm_mon + 1;' language='C' />
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Initialise' description='Configures the timeserver variable as well as sets the timezone offset in seconds.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='TimeServerStr = TimeServer' />
+							<exp exp='TimeOffset = GMTOff' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SetUTCOffset' description='Allows the UTC Offset to be defined in seconds.
+e.g. for BST use 3600 or for UTC+2 use 7200 or for UTC-2 use -7200' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='UTCOffset' type='s32' description='Time offset in seconds' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='TimeOffset = .UTCOffset' />
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='58be670e-18fb-477e-ab09-61fde14b23ec' vmin='0' vmaj='1' codename='LibraryComponent1' panelId='-1' x='0' y='0' z='0' xsz='100' ysz='100' zsz='100' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='1' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' angle2d='0' comp2dType='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Text::sText' data='ESP32
+Real Time 
+Clock' />
+					<value target='Name' data='' />
+					<value target='Peripheral::sText' data='' />
+					<value target='Text::nVerticalAlignment' data='002' />
+					<value target='ShowComms' data='0' />
+					<value target='InputIcon::CommsType' data='255' />
+					<value target='InputIcon::LinkTo' data='0' />
+					<value target='IconsOnRight' data='0' />
+					<value target='OutputIcon::CommsType' data='255' />
+					<value target='OutputIcon::LinkTo' data='0' />
+					<value target='InputIcon1::CommsType' data='255' />
+					<value target='ConsoleHandle' data='0' />
+					<value target='Upgraded' data='0' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<scadaresourcelookup />
+	<keymap />
+	<panel2d shadows='0' lighting='2' brightness='0' >
+		<background rgb='15793151' img='' style='0' />
+		<camera xe='0.00176669' ye='0.124412' ze='150.804' xt='0.00176669' yt='0.124412' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='622' dy='352' zoom='499.071' fix_topleft='0' />
+		<page x='1000' y='1000' show='0' rgb='7360576' />
+		<winpos ID='7005' RectRecentFloat='1270,427,1920,877' RectRecentDocked='1224,141,1866,1265' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+	</panel2d>
+	<panel3d shadows='0' lighting='2' brightness='0' perspective='1' >
+		<background rgb='8409120' img='' style='0' />
+		<table rgb='7360576' img='' style='0' size='0' />
+		<camera xe='0' ye='0' ze='781.66' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey0 xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<camerakey1 xe='-3.67394e-14' ye='0' ze='-300' xt='0' yt='0' zt='0' xquat='0' yquat='1' zquat='0' wquat='6.12323e-17' />
+		<camerakey2 xe='0' ye='-300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.707107' yquat='0' zquat='0' wquat='0.707107' />
+		<camerakey3 xe='-3.67394e-14' ye='300' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-4.32978e-17' yquat='0.707107' zquat='0.707107' wquat='4.32978e-17' />
+		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
+		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
+		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
+		<winpos ID='7004' RectRecentFloat='0,425,654,1002' RectRecentDocked='0,0,308,450' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+	</panel3d>
+	<panels2d count='0' />
+	<layout >
+		<view type='0' name='GetTimeString' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAtgUAAF8EAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetDateTimeString' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAtgUAAF8EAAA' zoom='100' scrollx='0' scrolly='990' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAtgUAAF8EAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

@@ -1,0 +1,185 @@
+<root>
+<document schema='101' license='50,Dev User,NXHQAN' title='' description='' guid='82be258b-3f9d-4164-86eb-a468d15cfd2f' target='SIMULATION.SIM.SIM' >
+	<config data='' clkspd='100000000' simspd='1' usewdt='0' constif='0' />
+	<plugins >
+		<dll_dbg_icd enabled='0' >
+			<data name='debug' value='1' />
+			<data name='userpins' value='0' />
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='monitor' value='1' />
+			<data name='ictloop' value='1' />
+			<data name='ictrate' value='1000' />
+			<data name='ictmask' value='-1' />
+		</dll_dbg_icd>
+		<dll_dbg_ict enabled='0' >
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='userpins' value='0' />
+		</dll_dbg_ict>
+		<dll_models enabled='1' />
+		<dll_upgrader enabled='1' />
+		<dll_webhelp enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug />
+	<components >
+		<settings autoimg='1' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='82be258b-3f9d-4164-86eb-a468d15cfd2f' vmin='0' vmaj='1' visiblename='' description='' category='' author='' sysinfo='0' keywords='' dynamic='0' iconpath='' />
+		<component class_type='root' codename='panel' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+			<resources />
+			<properties />
+			<values />
+			<events />
+			<apis />
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='Red' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='LSB' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='Blue' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='false' type='b1' description='' isconst='1' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='Green' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='MSB' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='Colour' type='u16' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='true' type='b1' description='' isconst='1' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='LED_PWM' description='' >
+						<command class_type='call' title='Call Component Macro' component='rgb_led1' macro='Tick' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='' >
+						<command class_type='call' title='Call Component Macro' component='Visi4D1' macro='Initialise' />
+						<command class_type='interrupt' title='Interrupt' enable='1' name='TMR0' call='LED_PWM' >
+							<settings timer='1' prescale='16' postscale='-1' rollover='-1' bitcount='-1' trigger='3' maskhi='--------------------------------------------------------------------------------------------------------------------------------------------------------------------------8' masklo='--------------------------------------------------------------------------------------------------------------------------------------------------------------------------8' >
+								<option value='1' />
+								<option value='0' />
+								<option value='4' />
+								<option value='-1' />
+							</settings>
+						</command>
+						<command class_type='call' title='Call Component Macro' component='rgb_led1' macro='Enable' />
+						<command class_type='loop' title='Loop' exp='1' type='0' start='1' count='1' breakend='0' >
+							<flowline >
+								<command class_type='delay' title='Delay' exp='1' type='2' />
+								<command class_type='call' title='Call Component Macro' component='Visi4D1' macro='VisiReadObject' >
+									<return exp='Red' />
+									<argument exp='Visi4D1 :: VISI_ID_ColourPicker' />
+									<argument exp='0' />
+								</command>
+								<command class_type='call' title='Call Component Macro' component='Visi4D1' macro='VisiReadByteFromMessage' >
+									<return exp='MSB' />
+									<argument exp='3' />
+								</command>
+								<command class_type='call' title='Call Component Macro' component='Visi4D1' macro='VisiReadByteFromMessage' >
+									<return exp='LSB' />
+									<argument exp='4' />
+								</command>
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='Colour = (MSB &lt;&lt; 8) + LSB' />
+									<exp exp='Red = (Colour &amp; 0xF800) &gt;&gt; 8' />
+									<exp exp='Green = (Colour &amp; 0x7E0) &gt;&gt; 3' />
+									<exp exp='Blue = (Colour &amp; 0x1F) &lt;&lt; 3' />
+									<exp exp='' />
+								</command>
+								<command class_type='call' title='Call Component Macro' component='rgb_led1' macro='SetColor' >
+									<argument exp='Red' />
+									<argument exp='Green' />
+									<argument exp='Blue' />
+								</command>
+								<command class_type='sim' title='Simulation' macro='Debug.PrintLn' >
+									<argument exp='&quot;Red:&quot; + string Red + &quot; Green:&quot; + string Green + &quot; Blue:&quot; + string Blue' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='6436a040-ccc8-46e5-82c1-68f8d87b16c5' vmin='1' vmaj='1' codename='Visi4D1' x='-4.60237' y='0' z='1.005' xsz='60' ysz='26' zsz='1.51' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='CHANNEL' data='001' />
+					<value target='BAUD_LIST' data='004' />
+					<value target='BAUD' data='9600' />
+					<value target='TX' data='$PORTC.6' />
+					<value target='RX' data='$PORTC.7' />
+					<value target='TXRemap' data='' />
+					<value target='RXRemap' data='' />
+					<value target='label' data='Visi' />
+					<value target='ConsoleColumns' data='64' />
+					<value target='com_port' data='002' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='1fb787a5-54fb-4847-9299-3adbf9927b59' vmin='3' vmaj='1' codename='rgb_led1' x='-2.30119' y='38.2572' z='1.25' xsz='5' ysz='5' zsz='5' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='red_pin' data='$PORTA.0' />
+					<value target='green_pin' data='$PORTA.1' />
+					<value target='blue_pin' data='$PORTA.2' />
+					<value target='polarity' data='000' />
+					<value target='colorbitsize' data='008' />
+					<value target='rollover' data='255' />
+					<value target='target' data='' />
+					<value target='Shape' data='007' />
+					<value target='Width' data='5.000000' />
+					<value target='Height' data='5.000000' />
+					<value target='Depth' data='2.500000' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<keymap />
+	<panel2d shadows='0' lighting='2' brightness='0' perspective='0' >
+		<background rgb='9737364' img='' style='0' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel2d>
+	<panel3d shadows='0' lighting='2' brightness='0' perspective='0' >
+		<background rgb='8409120' img='' style='0' />
+		<table rgb='7360576' img='' style='0' size='0' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel3d>
+	<layout >
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAA5wIAAFkDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='LED_PWM' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAA5wIAAFkDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

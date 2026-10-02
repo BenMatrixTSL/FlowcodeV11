@@ -1,0 +1,219 @@
+<root>
+<document schema='101' license='0,30day_10980451,BGH629' title='' description='' target='PIC.16F.16F877A' >
+	<config data='!0,3f72%0,2%2,0%3,0%6,1%7,0%9,3%b,1%8,1%d,1' clkspd='19660800' simspd='1' usewdt='0' constif='0' />
+	<plugins >
+		<dll_dbg_icd enabled='0' >
+			<data name='debug' value='1' />
+			<data name='userpins' value='0' />
+			<data name='speed' value='1000' />
+			<data name='usev9' value='0' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='monitor' value='1' />
+			<data name='ictloop' value='1' />
+			<data name='ictrate' value='1000' />
+			<data name='ictmask' value='-1' />
+		</dll_dbg_icd>
+		<dll_models enabled='1' />
+		<dll_upgrader enabled='1' />
+		<dll_webhelp enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug />
+	<components >
+		<settings autoimg='1' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='' vmin='0' vmaj='1' srcleaf='' visiblename='' description='' category='' catenable='1' author='' manuname='' manucode='' sysinfo='0' keywords='' dynamic='0' iconpath='' />
+		<component class_type='root' codename='panel' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+			<resources />
+			<properties />
+			<values />
+			<events />
+			<apis />
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='mode' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='RetVal' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='I2CReceive' description='' >
+						<return name='Return' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<param name='DeviceAddress' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<param name='InternalAddress' type='u16' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Start I²C Transaction' component='I2CMaster' macro='Start' />
+						<command class_type='call' title='Device Address + Write bit' component='I2CMaster' macro='TransmitByte' >
+							<return exp='RetVal' />
+							<argument exp='.DeviceAddress' />
+						</command>
+						<command class_type='call' title='Device Address + Write bit' component='I2CMaster' macro='TransmitByte' >
+							<argument exp='.InternalAddress &gt;&gt; 8' />
+						</command>
+						<command class_type='call' title='Device Address + Write bit' component='I2CMaster' macro='TransmitByte' >
+							<argument exp='.InternalAddress' />
+						</command>
+						<command class_type='call' title='Restart I2C' component='I2CMaster' macro='Restart' />
+						<command class_type='call' title='Device Address + Read bit' component='I2CMaster' macro='TransmitByte' >
+							<return exp='RetVal' />
+							<argument exp='.DeviceAddress | 0x01' />
+						</command>
+						<command class_type='call' title='Receive Data' component='I2CMaster' macro='ReceiveByte' >
+							<return exp='.Return' />
+							<argument exp='1' />
+						</command>
+						<command class_type='call' title='Stop I²C Transaction' component='I2CMaster' macro='Stop' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='I2CTransmit' description='' >
+						<param name='DeviceAddress' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<param name='InternalAddress' type='u16' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Data' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='call' title='Start I²C Transaction' component='I2CMaster' macro='Start' />
+						<command class_type='call' title='Device Address + Write bit' component='I2CMaster' macro='TransmitByte' >
+							<return exp='RetVal' />
+							<argument exp='.DeviceAddress' />
+						</command>
+						<command class_type='call' title='Device Address + Write bit' component='I2CMaster' macro='TransmitByte' >
+							<argument exp='.InternalAddress &gt;&gt; 8' />
+						</command>
+						<command class_type='call' title='Device Address + Write bit' component='I2CMaster' macro='TransmitByte' >
+							<argument exp='.InternalAddress' />
+						</command>
+						<command class_type='call' title='Send Data' component='I2CMaster' macro='TransmitByte' >
+							<return exp='RetVal' />
+							<argument exp='.Data' />
+						</command>
+						<command class_type='call' title='Stop I²C Transaction' component='I2CMaster' macro='Stop' />
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='' >
+						<command class_type='call' title='Initialise the LCD' component='LCDDisplay' macro='Start' />
+						<command class_type='call' title='Initialise the I²C' component='I2CMaster' macro='Initialise' />
+						<command class_type='comment' title='' comment='Main Basic overview of a I²C Write transaction
+
+1) Start transaction
+2) Send device address with read/write bit = 0
+3) Send internal EEPROM address MSB
+4) Send internal EEPROM address LSB
+5) Send n data bytes to be written
+6) Stop transaction' textarea='36,200,36,200' />
+						<command class_type='call' title='Call Component Macro' component='LCDDisplay' macro='PrintString' >
+							<argument exp='&quot;Write - Hi&quot;' />
+						</command>
+						<command class_type='call' title='Call Macro' macro='I2CTransmit' >
+							<argument exp='0xA0' />
+							<argument exp='0x0000' />
+							<argument exp='&apos;H&apos;' />
+						</command>
+						<command class_type='call' title='Call Macro' macro='I2CTransmit' >
+							<argument exp='0xA0' />
+							<argument exp='0x0001' />
+							<argument exp='&apos;i&apos;' />
+						</command>
+						<command class_type='comment' title='' comment='Main Basic overview of a I²C Read transaction
+
+1) Start transaction
+2) Send device address with read/write bit = 0
+3) Send internal EEPROM address MSB
+4) Send internal EEPROM address LSB
+5) Send a restart command
+6) Send device address with read/write bit = 1
+5) Read n data bytes from the memory
+6) Stop transaction' textarea='12,0,12,0' />
+						<command class_type='call' title='Call Component Macro' component='LCDDisplay' macro='Cursor' >
+							<argument exp='0' />
+							<argument exp='1' />
+						</command>
+						<command class_type='call' title='Call Component Macro' component='LCDDisplay' macro='PrintString' >
+							<argument exp='&quot;Read  - &quot;' />
+						</command>
+						<command class_type='call' title='Call Macro' macro='I2CReceive' >
+							<return exp='RetVal' />
+							<argument exp='0xA0' />
+							<argument exp='0x0000' />
+						</command>
+						<command class_type='call' title='Call Component Macro' component='LCDDisplay' macro='PrintAscii' >
+							<argument exp='Retval' />
+						</command>
+						<command class_type='call' title='Call Macro' macro='I2CReceive' >
+							<return exp='RetVal' />
+							<argument exp='0xA0' />
+							<argument exp='0x0001' />
+						</command>
+						<command class_type='call' title='Call Component Macro' component='LCDDisplay' macro='PrintAscii' >
+							<argument exp='Retval' />
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='0953aac0-9c23-4c2f-9843-88954a4191ea' vmin='7' vmaj='1' codename='LCDDisplay' x='0' y='0' z='0' xsz='78.2857' ysz='13.1429' zsz='1.14286' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Pin_Data_0' data='$PORTB.0' />
+					<value target='Pin_Data_1' data='$PORTB.1' />
+					<value target='Pin_Data_2' data='$PORTB.2' />
+					<value target='Pin_Data_3' data='$PORTB.3' />
+					<value target='Pin_RS' data='$PORTB.4' />
+					<value target='Pin_E' data='$PORTB.5' />
+					<value target='Rows' data='2' />
+					<value target='Columns' data='16' />
+					<value target='BackgroundColor' data='0x808080' />
+					<value target='LineColor' data='0' />
+					<value target='TextColor' data='0x000000' />
+					<value target='Font' data='Arial' />
+					<value target='CursorPosX' data='10' />
+					<value target='CursorPosY' data='1' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='24219805-113d-4b12-b6bd-e1b0b0c33981' vmin='2' vmaj='1' codename='I2CMaster' x='0.866959' y='24.7586' z='1.00378' xsz='47' ysz='28' zsz='1.14286' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='CHANNEL' data='' />
+					<value target='BAUD_LIST' data='1' />
+					<value target='SRC' data='0' />
+					<value target='SMB' data='0' />
+					<value target='BAUD' data='50000' />
+					<value target='SDA' data='$PORTC.4' />
+					<value target='SCL' data='$PORTC.3' />
+					<value target='label' data='I2C Master' />
+					<value target='Injector' data='000' />
+					<value target='InjectorHandle' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<keymap />
+	<panel2d shadows='0' lighting='2' brightness='0' perspective='0' >
+		<background rgb='9737364' img='' style='0' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel2d>
+	<panel3d shadows='1' lighting='2' brightness='0' perspective='0' >
+		<background rgb='4934475' img='' style='0' />
+		<table rgb='7360576' img='' style='0' size='0' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel3d>
+	<layout >
+		<view type='0' name='I2CReceive' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAACAUAAJEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='I2CTransmit' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAACAUAAJEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAACAUAAJEDAAA' zoom='75' scrollx='0' scrolly='468' flags='0' />
+	</layout>
+</document>
+</root>

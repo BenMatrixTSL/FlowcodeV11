@@ -1,0 +1,270 @@
+<root>
+<document schema='101' license='50,Dev User,NXHQAN' title='' description='' guid='' target='PIC.16F.16F877A' >
+	<config data='!0,3f72%0,2%2,0%3,0%6,1%7,0%9,3%b,1%8,1%d,1' clkspd='19660800' simspd='1' usewdt='0' constif='0' />
+	<plugins >
+		<dll_dbg_icd enabled='0' >
+			<data name='debug' value='1' />
+			<data name='userpins' value='0' />
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='monitor' value='1' />
+			<data name='ictloop' value='1' />
+			<data name='ictrate' value='1000' />
+			<data name='ictmask' value='-1' />
+		</dll_dbg_icd>
+		<dll_dbg_ict enabled='0' >
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='userpins' value='0' />
+		</dll_dbg_ict>
+		<dll_models enabled='1' />
+		<dll_upgrader enabled='1' />
+		<dll_webhelp enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug />
+	<components >
+		<settings autoimg='1' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='' vmin='0' vmaj='1' visiblename='' description='' category='' author='' keywords='' dynamic='0' iconpath='' />
+		<component class_type='root' codename='panel' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+			<resources />
+			<properties />
+			<values />
+			<events />
+			<apis />
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='str' type='T8' array='10' description='' isconst='0' isinit='0' usrinit='&quot;&quot;' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='lat' type='f32' array='0' description='' isconst='0' isinit='0' usrinit='0.0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='byte' type='u8' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='PrintNumberAsTwoDigit' description='' >
+						<param name='Number' type='u8' array='0' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='.Number &lt; 10' swap='0' >
+							<flowline >
+								<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__lcddisplay0' macro='PrintAscii' >
+									<argument exp='&apos;0&apos;' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__lcddisplay0' macro='PrintNumber' >
+							<argument exp='.Number' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='PrintTime' description='' >
+						<command class_type='call' title='Clear Display' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__gps0' macro='ReadUTCTime' >
+							<return exp='byte' />
+							<argument exp='&apos;h&apos;' />
+						</command>
+						<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='PrintNumberAsTwoDigit' >
+							<argument exp='byte' />
+						</command>
+						<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__lcddisplay0' macro='PrintAscii' >
+							<argument exp='&apos;:&apos;' />
+						</command>
+						<command class_type='call' title='Clear Display' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__gps0' macro='ReadUTCTime' >
+							<return exp='byte' />
+							<argument exp='&apos;m&apos;' />
+						</command>
+						<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='PrintNumberAsTwoDigit' >
+							<argument exp='byte' />
+						</command>
+						<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__lcddisplay0' macro='PrintAscii' >
+							<argument exp='&apos;:&apos;' />
+						</command>
+						<command class_type='call' title='Clear Display' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__gps0' macro='ReadUTCTime' >
+							<return exp='byte' />
+							<argument exp='&apos;s&apos;' />
+						</command>
+						<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='PrintNumberAsTwoDigit' >
+							<argument exp='byte' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='PrintDate' description='' >
+						<command class_type='call' title='Clear Display' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__gps0' macro='ReadUTCDate' >
+							<return exp='byte' />
+							<argument exp='&apos;d&apos;' />
+						</command>
+						<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='PrintNumberAsTwoDigit' >
+							<argument exp='byte' />
+						</command>
+						<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__lcddisplay0' macro='PrintAscii' >
+							<argument exp='&apos;:&apos;' />
+						</command>
+						<command class_type='call' title='Clear Display' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__gps0' macro='ReadUTCDate' >
+							<return exp='byte' />
+							<argument exp='&apos;m&apos;' />
+						</command>
+						<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='PrintNumberAsTwoDigit' >
+							<argument exp='byte' />
+						</command>
+						<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__lcddisplay0' macro='PrintAscii' >
+							<argument exp='&apos;:&apos;' />
+						</command>
+						<command class_type='call' title='Clear Display' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__gps0' macro='ReadUTCDate' >
+							<return exp='byte' />
+							<argument exp='&apos;y&apos;' />
+						</command>
+						<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='PrintNumberAsTwoDigit' >
+							<argument exp='byte' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='' >
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__lcddisplay0' macro='Start' />
+						<command class_type='loop' title='Loop' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='1' type='0' start='1' count='1' breakend='0' >
+							<flowline >
+								<command class_type='call' title='Clear Display' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__lcddisplay0' macro='Clear' />
+								<command class_type='call' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__lcddisplay0' macro='PrintString' >
+									<argument exp='&quot;Date - &quot;' />
+								</command>
+								<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='PrintDate' />
+								<command class_type='call' title='Clear Display' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__lcddisplay0' macro='Cursor' >
+									<argument exp='0' />
+									<argument exp='1' />
+								</command>
+								<command class_type='call' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='v5__lcddisplay0' macro='PrintString' >
+									<argument exp='&quot;Time - &quot;' />
+								</command>
+								<command class_type='call' title='Call Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='PrintTime' />
+								<command class_type='delay' title='Delay' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='1' type='2' />
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='0953aac0-9c23-4c2f-9843-88954a4191ea' vmin='7' vmaj='1' codename='v5__lcddisplay0' x='0' y='108.606' z='1.00379' xsz='78.2857' ysz='13.1429' zsz='1.14286' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Pin_Data_0' data='$PORTB.0' />
+					<value target='Pin_Data_1' data='$PORTB.1' />
+					<value target='Pin_Data_2' data='$PORTB.2' />
+					<value target='Pin_Data_3' data='$PORTB.3' />
+					<value target='Pin_RS' data='$PORTB.4' />
+					<value target='Pin_E' data='$PORTB.5' />
+					<value target='Rows' data='2' />
+					<value target='Columns' data='16' />
+					<value target='BackgroundColor' data='0x808080' />
+					<value target='LineColor' data='0' />
+					<value target='TextColor' data='0x000000' />
+					<value target='Font' data='Arial' />
+					<value target='CursorPosX' data='15' />
+					<value target='CursorPosY' data='1' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='575a3a3f-09b8-46be-8069-c4d1894d7e7e' vmin='1' vmaj='1' codename='v5__gps0' x='0' y='0' z='0' xsz='1.0096' ysz='1.04938' zsz='1.08171' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='buff_size' data='80' />
+					<value target='ALT_EN' data='1' />
+					<value target='OVERFLOW_EN' data='0' />
+					<value target='COG_EN' data='' />
+					<value target='DOP_EN' data='' />
+					<value target='SPD_EN' data='1' />
+					<value target='HDOP_EN' data='' />
+					<value target='LAT_EN' data='1' />
+					<value target='LON_EN' data='1' />
+					<value target='CNT_EN' data='1' />
+					<value target='TIME_EN' data='1' />
+					<value target='DATE_EN' data='1' />
+					<value target='VDOP_EN' data='' />
+					<value target='CHANNEL' data='001' />
+					<value target='BAUD_LIST' data='004' />
+					<value target='BAUD' data='19168' />
+					<value target='TX' data='$PORTC.6' />
+					<value target='RX' data='$PORTC.7' />
+					<value target='label' data='GPS' />
+					<value target='DataSource' data='001' />
+					<value target='com_port' data='000' />
+					<value target='Injector' data='000' />
+					<value target='InjectorHandle' data='905' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='c6d16a4d-a800-4636-98c5-70f7bde65654' vmin='0' vmaj='1' codename='InjectorGPS1' x='-41.3244' y='71.5008' z='0' xsz='20' ysz='20' zsz='20' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='DataPeriod' data='1000' />
+					<value target='CircularBufferSize' data='1000' />
+					<value target='DataValid' data='1' />
+					<value target='Altitude' data='0.000000' />
+					<value target='CourseOverGround' data='0.000000' />
+					<value target='DilutionOfPrecision' data='0.000000' />
+					<value target='GroundSpeed' data='0.000000' />
+					<value target='HDOP' data='0.000000' />
+					<value target='Latitude' data='12.345670' />
+					<value target='Longitude' data='123.456700' />
+					<value target='NumSatellites' data='12' />
+					<value target='VDOP' data='0.000000' />
+					<value target='LatDegs' data='12' />
+					<value target='LatMins' data='20.740185' />
+					<value target='LatDir' data='N' />
+					<value target='LatStr' data='1220.740185' />
+					<value target='LongDegrees' data='123' />
+					<value target='LongMins' data='27.402191' />
+					<value target='LongDir' data='E' />
+					<value target='LongString' data='12327.402191' />
+					<value target='DataSource' data='000' />
+					<value target='UTCDate' data='100913' />
+					<value target='UTCTime' data='152036' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<keymap />
+	<panel2d shadows='0' lighting='2' brightness='0' perspective='0' >
+		<background rgb='9737364' img='' style='0' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel2d>
+	<panel3d shadows='1' lighting='2' brightness='0' perspective='0' >
+		<background rgb='4934475' img='' style='0' />
+		<table rgb='7360576' img='' style='0' size='0' />
+		<camera xe='0' ye='0' ze='334.564' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel3d>
+	<layout >
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAA3wIAAFUCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='PrintTime' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAA3wIAAFUCAAA' zoom='75' scrollx='0' scrolly='105' flags='0' />
+		<view type='0' name='PrintDate' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAA3wIAAFUCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='PrintNumberAsTwoDigit' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAA3wIAAFUCAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

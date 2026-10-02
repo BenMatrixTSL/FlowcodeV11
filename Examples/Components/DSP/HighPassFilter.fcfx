@@ -1,0 +1,225 @@
+<root>
+<document schema='101' license='50,Dev User,NXHQAN' title='' description='' target='PIC.16F.16F877A' >
+	<config data='!0,3f72%0,2%2,0%3,0%6,1%7,0%9,3%b,1%8,1%d,1' clkspd='19660800' simspd='1' usewdt='0' constif='0' />
+	<plugins >
+		<dll_dbg_icd enabled='0' >
+			<data name='debug' value='1' />
+			<data name='userpins' value='0' />
+			<data name='speed' value='1000' />
+			<data name='usev9' value='0' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='monitor' value='1' />
+			<data name='ictloop' value='1' />
+			<data name='ictrate' value='1000' />
+			<data name='ictmask' value='-1' />
+		</dll_dbg_icd>
+		<dll_models enabled='1' />
+		<dll_upgrader enabled='1' />
+		<dll_webhelp enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug />
+	<components >
+		<settings autoimg='1' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='fc799b74-c5fa-40fd-b4b7-40ec95f35388' vmin='0' vmaj='1' srcleaf='' visiblename='' description='' category='' catenable='1' author='' sysinfo='0' keywords='' dynamic='0' iconpath='' />
+		<component class_type='root' codename='panel' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+			<resources />
+			<properties />
+			<values />
+			<events />
+			<apis />
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='false' type='b1' description='' isconst='1' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='FreqControl' type='f32' description='' isconst='0' isinit='0' usrinit='0.0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='true' type='b1' description='' isconst='1' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='Main' description='' >
+						<command class_type='call' title='Initialise the DSP Buffers' component='DSPSystem1' macro='Initialise' />
+						<command class_type='loop' title='Loop' exp='1' type='0' start='1' count='1' breakend='0' >
+							<flowline >
+								<command class_type='call' title='Read the ADC as a Floating Point Value' component='pot_color_cap1' macro='GetVoltage' >
+									<return exp='FreqControl' />
+								</command>
+								<command class_type='call' title='Set the frequency offset' component='DSPFreqGen1' macro='SetOffset' >
+									<argument exp='FreqControl' />
+								</command>
+								<command class_type='call' title='Read a value from the frequency generator' component='DSPFreqGen1' macro='GenerateTick' />
+								<command class_type='call' title='Apply the filter to the waveform' component='DSPFilter1' macro='FilterTick' />
+								<command class_type='call' title='Move to next buffer position' component='DSPSystem1' macro='TickAllBuffers' />
+								<command class_type='delay' title='Delay' exp='1' type='1' />
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='917f243e-4102-4bee-9998-81f18bc6ca9d' vmin='2' vmaj='1' codename='DSPSystem1' x='9.49145' y='28.1802' z='2.55' xsz='32' ysz='32' zsz='5.1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='buffer_count' data='002' />
+					<value target='simple_mode' data='1' />
+					<value target='DSPsystem_ID' data='1' />
+					<value target='buff_a_name' data='Waveform' />
+					<value target='buff_b_name' data='Filtered Waveform' />
+					<value target='buff_c_name' data='Buffer C' />
+					<value target='buff_d_name' data='Buffer D' />
+					<value target='buff_e_name' data='Buffer E' />
+					<value target='buff_f_name' data='Buffer F' />
+					<value target='buff_g_name' data='Buffer G' />
+					<value target='buff_h_name' data='Buffer H' />
+					<value target='buff_a_depth' data='000' />
+					<value target='buff_a_sign' data='001' />
+					<value target='buff_a_size' data='16' />
+					<value target='buff_b_depth' data='000' />
+					<value target='buff_b_sign' data='001' />
+					<value target='buff_b_size' data='16' />
+					<value target='buff_c_depth' data='000' />
+					<value target='buff_c_sign' data='001' />
+					<value target='buff_c_size' data='16' />
+					<value target='buff_d_depth' data='000' />
+					<value target='buff_d_sign' data='001' />
+					<value target='buff_d_size' data='16' />
+					<value target='buff_e_depth' data='000' />
+					<value target='buff_e_sign' data='001' />
+					<value target='buff_e_size' data='16' />
+					<value target='buff_f_depth' data='000' />
+					<value target='buff_f_sign' data='001' />
+					<value target='buff_f_size' data='16' />
+					<value target='buff_g_depth' data='000' />
+					<value target='buff_g_sign' data='001' />
+					<value target='buff_g_size' data='16' />
+					<value target='buff_h_depth' data='000' />
+					<value target='buff_h_sign' data='001' />
+					<value target='buff_h_size' data='16' />
+					<value target='buff_simp_depth' data='000' />
+					<value target='buff_simp_sign' data='001' />
+					<value target='buff_simp_size' data='16' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='cbe42abc-5955-44da-a6d0-03e7cbcdcaca' vmin='2' vmaj='1' codename='DSPFreqGen1' x='-54.8497' y='-22.3118' z='2.98251' xsz='43.5' ysz='32' zsz='5.965' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='buffer_manager' data='001' />
+					<value target='input_a' data='000' />
+					<value target='size_a' data='16' />
+					<value target='depth_a' data='000' />
+					<value target='sign_a' data='001' />
+					<value target='max_a' data='255' />
+					<value target='min_a' data='0' />
+					<value target='buffername' data='' />
+					<value target='wave_type' data='000' />
+					<value target='wave_amplitude' data='240' />
+					<value target='wave_offset' data='128' />
+					<value target='wave_period' data='100' />
+					<value target='wave_duty' data='000' />
+					<value target='wave_phase' data='000' />
+					<value target='wave_data' data='128,135,142,148,155,162,169,175,181,188,193,199,204,209,214,218,222,226,229,232,234,236,238,239,239,240,239,239,238,236,234,232,229,226,222,218,214,209,204,199,193,188,181,175,169,162,155,148,142,135,128,121,114,108,101,94,87,81,75,68,63,57,52,47,42,38,34,30,27,24,22,20,18,17,17,16,17,17,18,20,22,24,27,30,34,38,42,47,52,57,63,68,75,81,87,94,101,108,114,121' />
+					<value target='PeriodOffset' data='1.000000' />
+					<value target='sample_rate' data='100.000000' />
+					<value target='calc_period' data='1.000000' />
+					<value target='calc_freq' data='1.000000' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='317efb6a-2bad-4f83-a0bc-4ada0f4cd51e' vmin='2' vmaj='1' codename='DSPFilter1' x='10.0888' y='-21.6539' z='2.98251' xsz='55' ysz='32' zsz='5.965' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='buffer_manager' data='001' />
+					<value target='input_a' data='000' />
+					<value target='output_c' data='001' />
+					<value target='size_a' data='16' />
+					<value target='size_o' data='16' />
+					<value target='depth_a' data='000' />
+					<value target='depth_o' data='000' />
+					<value target='sign_a' data='001' />
+					<value target='sign_o' data='001' />
+					<value target='type' data='001' />
+					<value target='coef0' data='8' />
+					<value target='coef1' data='512' />
+					<value target='cutoff_shift1' data='3' />
+					<value target='cutoff_shift2' data='9' />
+					<value target='order' data='000' />
+					<value target='co0' data='1.000000' />
+					<value target='co1' data='1.000000' />
+					<value target='co2' data='1.000000' />
+					<value target='co3' data='1.000000' />
+					<value target='co4' data='1.000000' />
+					<value target='co5' data='1.000000' />
+					<value target='co6' data='1.000000' />
+					<value target='co7' data='1.000000' />
+					<value target='co8' data='1.000000' />
+					<value target='co9' data='1.000000' />
+					<value target='co10' data='1.000000' />
+					<value target='co11' data='1.000000' />
+					<value target='cob0' data='1.000000' />
+					<value target='cob1' data='1.000000' />
+					<value target='sample_rate' data='10000.000000' />
+					<value target='nyquist' data='5000.000000' />
+					<value target='cut_off_0' data='625.000000' />
+					<value target='cut_off_1' data='9.765625' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='14683ea8-5a08-4b3a-be2d-3dea3e17e720' vmin='2' vmaj='1' codename='pot_color_cap1' x='-62.1611' y='26.7264' z='18.3458' xsz='50' ysz='50' zsz='36.6917' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='1' >
+				<resources />
+				<properties />
+				<values >
+					<value target='angle_start' data='225.000000' />
+					<value target='angle_sweep' data='270.000000' />
+					<value target='cap_color' data='192' />
+					<value target='point_color' data='16777215' />
+					<value target='channel' data='0' />
+					<value target='vrefvol' data='500' />
+					<value target='vrefop' data='000' />
+					<value target='convspd' data='003' />
+					<value target='actime' data='40' />
+					<value target='bits' data='10' />
+					<value target='bitmul' data='0.004883' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<keymap />
+	<panel2d shadows='0' lighting='0' brightness='0' perspective='0' >
+		<background rgb='9737364' img='' style='0' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel2d>
+	<panel3d shadows='0' lighting='0' brightness='0' perspective='0' >
+		<background rgb='8409120' img='' style='0' />
+		<table rgb='7360576' img='' style='0' size='0' />
+		<camera xe='-20' ye='4' ze='156.308' xt='-20' yt='4' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel3d>
+	<layout >
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAA7wIAAIEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

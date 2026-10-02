@@ -1,0 +1,793 @@
+<root>
+<document schema='101' license='0,30day_31868014,2MBXKV' title='' description='' guid='4d8cf2ad-77bc-47e7-a5d4-28b5d1873c65' target='PIC.18F.Formula Flowcode Buggy' >
+	<config data='!0,ffffffff!8,ffffffff!10,ffffffff!18,ffffffff!20,ffffffff!28,ffffffff!30,ffffffff!38,ffffffff!40,ffffffff!48,ffffffff!50,ffffffff!58,ffffffff!60,ffffffff!68,ffffffff' clkspd='48000000' simspd='1' usewdt='0' constif='0' />
+	<plugins >
+		<dll_dbg_icd enabled='0' >
+			<data name='debug' value='1' />
+			<data name='userpins' value='0' />
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='monitor' value='1' />
+			<data name='ictloop' value='1' />
+			<data name='ictrate' value='1000' />
+			<data name='ictmask' value='-1' />
+		</dll_dbg_icd>
+		<dll_dbg_ict enabled='0' >
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='userpins' value='0' />
+		</dll_dbg_ict>
+		<dll_models enabled='1' />
+		<dll_upgrader enabled='1' />
+		<dll_webhelp enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug >
+		<watch expr='SenFront' />
+		<watch expr='SenL' />
+		<watch expr='SenR' />
+	</debug>
+	<components >
+		<settings autoimg='1' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='4d8cf2ad-77bc-47e7-a5d4-28b5d1873c65' vmin='0' vmaj='1' visiblename='' description='' category='' author='' sysinfo='0' keywords='' dynamic='0' iconpath='' />
+		<component class_type='root' codename='panel' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+			<resources />
+			<properties />
+			<values />
+			<events />
+			<apis />
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='SenR' type='u16' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='SenFront' type='u16' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='false' type='b1' description='' isconst='1' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='SenL' type='u16' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='true' type='b1' description='' isconst='1' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='Sensorupdate' description='' >
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='FormulaFlowcode1' macro='ReadIRSensor' >
+							<return exp='SenFront' />
+							<argument exp='1' />
+						</command>
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='FormulaFlowcode1' macro='ReadIRSensor' >
+							<return exp='SenL' />
+							<argument exp='0' />
+						</command>
+						<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='FormulaFlowcode1' macro='ReadIRSensor' >
+							<return exp='SenR' />
+							<argument exp='2' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='' >
+						<command class_type='call' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='FormulaFlowcode1' macro='Initialise' />
+						<command class_type='loop' title='Infinite Loop' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='1' type='0' start='1' count='1' breakend='0' >
+							<flowline >
+								<command class_type='call' title='Update Sensor Readings' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' macro='Sensorupdate' />
+								<command class_type='decision' title='If there&apos;s nothing in front of the Formula Flowcode buggy' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='SenFront &gt; 60' swap='0' >
+									<flowline >
+										<command class_type='call' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='FormulaFlowcode1' macro='Forward' >
+											<argument exp='100' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='call' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='FormulaFlowcode1' macro='Stop' />
+										<command class_type='decision' title='Is the object to my right closer than the object to my left?' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='SenR &lt; SenL' swap='0' >
+											<flowline >
+												<command class_type='call' title='Spin buggy left, away from object on my right' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='FormulaFlowcode1' macro='SpinLeft' >
+													<argument exp='200' />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='call' title='Spin buggy right, away from object on my left' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='FormulaFlowcode1' macro='SpinRight' >
+													<argument exp='200' />
+												</command>
+											</flowline>
+										</command>
+									</flowline>
+								</command>
+								<command class_type='decision' title='If I&apos;m too close to the object on my right' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='SenR &lt; 40' swap='0' >
+									<flowline >
+										<command class_type='call' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='FormulaFlowcode1' macro='SpinLeft' >
+											<argument exp='200' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='decision' title='If I&apos;m too close to the object on my left' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='SenL &lt; 40' swap='0' >
+									<flowline >
+										<command class_type='call' title='' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='FormulaFlowcode1' macro='SpinRight' >
+											<argument exp='200' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='text' codename='label3' x='-73.8164' y='116.318' z='1' xsz='12' ysz='12' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Color' data='16777215' />
+					<value target='Background' data='-1' />
+					<value target='Font' data='Arial' />
+					<value target='Text' data='Fomula Flowcode' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='text' codename='label4' x='-79.139' y='128.068' z='1.25' xsz='12' ysz='12' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='Color' data='16777215' />
+					<value target='Background' data='-1' />
+					<value target='Font' data='Arial' />
+					<value target='Text' data='Space Explorer' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='9d5300ab-57ae-4483-8f18-04ec2007b406' vmin='2' vmaj='1' codename='FormulaFlowcode1' x='21.5535' y='77.0086' z='-0.915318' xsz='0.1' ysz='0.1' zsz='0.1' xang='0' yang='0' zang='149.804' xquat='0' yquat='0' zquat='-0.965482' wquat='-0.260471' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='wait_b4_start' data='0' />
+					<value target='ret_type' data='000' />
+					<value target='balance' data='0' />
+					<value target='thresh_left' data='255' />
+					<value target='thresh_front' data='255' />
+					<value target='thresh_right' data='255' />
+					<value target='sim_speed' data='20' />
+					<value target='Animate_Style' data='1' />
+					<value target='Redraw' data='1' />
+					<value target='timer_interval' data='50' />
+					<value target='IR_Count' data='255' />
+					<value target='IR_Res' data='2.000000' />
+					<value target='collision_mode' data='000' />
+					<value target='collision_group' data='' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='group' codename='group1' x='0' y='0' z='5' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values />
+				<events />
+				<apis />
+				<variables />
+				<macros />
+				<component class_type='shape' codename='shape10' x='-100' y='0' z='0' xsz='1' ysz='200' zsz='10' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Shape' data='0' />
+						<value target='Color' data='16777215' />
+						<value target='Outline' data='0' />
+						<value target='Thickness' data='0' />
+						<value target='Image' data='' />
+						<value target='Model' data='' />
+						<value target='Unit' data='' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='shape' codename='shape11' x='100' y='50' z='0' xsz='1' ysz='100' zsz='10' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Shape' data='0' />
+						<value target='Color' data='16777215' />
+						<value target='Outline' data='0' />
+						<value target='Thickness' data='0' />
+						<value target='Image' data='' />
+						<value target='Model' data='' />
+						<value target='Unit' data='' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='shape' codename='shape12' x='-50' y='100' z='0' xsz='100' ysz='1' zsz='10' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Shape' data='0' />
+						<value target='Color' data='16777215' />
+						<value target='Outline' data='0' />
+						<value target='Thickness' data='0' />
+						<value target='Image' data='' />
+						<value target='Model' data='' />
+						<value target='Unit' data='' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='shape' codename='shape13' x='0' y='-100' z='0' xsz='200' ysz='1' zsz='10' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Shape' data='0' />
+						<value target='Color' data='16777215' />
+						<value target='Outline' data='0' />
+						<value target='Thickness' data='0' />
+						<value target='Image' data='' />
+						<value target='Model' data='' />
+						<value target='Unit' data='' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='shape' codename='shape18' x='0' y='0' z='-5' xsz='200' ysz='200' zsz='32' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Shape' data='101' />
+						<value target='Color' data='63' />
+						<value target='Outline' data='0' />
+						<value target='Thickness' data='0' />
+						<value target='Image' data='' />
+						<value target='Model' data='' />
+						<value target='Unit' data='' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='shape' codename='shape19' x='50' y='100' z='0' xsz='100' ysz='1' zsz='10' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Shape' data='0' />
+						<value target='Color' data='16777215' />
+						<value target='Outline' data='0' />
+						<value target='Thickness' data='0' />
+						<value target='Image' data='' />
+						<value target='Model' data='' />
+						<value target='Unit' data='' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='shape' codename='shape20' x='100' y='-50' z='0' xsz='1' ysz='100' zsz='10' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Shape' data='0' />
+						<value target='Color' data='16777215' />
+						<value target='Outline' data='0' />
+						<value target='Thickness' data='0' />
+						<value target='Image' data='' />
+						<value target='Model' data='' />
+						<value target='Unit' data='' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='group' codename='group2' x='-50' y='50' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values />
+					<events />
+					<apis />
+					<variables />
+					<macros />
+					<component class_type='shape' codename='shape14' x='15' y='0' z='0' xsz='1' ysz='30' zsz='10' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+						<resources />
+						<properties />
+						<values >
+							<value target='Shape' data='0' />
+							<value target='Color' data='16777215' />
+							<value target='Outline' data='0' />
+							<value target='Thickness' data='0' />
+							<value target='Image' data='' />
+							<value target='Model' data='' />
+							<value target='Unit' data='' />
+						</values>
+						<events />
+						<apis />
+						<variables />
+						<macros />
+					</component>
+					<component class_type='shape' codename='shape15' x='-15' y='0' z='0' xsz='1' ysz='30' zsz='10' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+						<resources />
+						<properties />
+						<values >
+							<value target='Shape' data='0' />
+							<value target='Color' data='16777215' />
+							<value target='Outline' data='0' />
+							<value target='Thickness' data='0' />
+							<value target='Image' data='' />
+							<value target='Model' data='' />
+							<value target='Unit' data='' />
+						</values>
+						<events />
+						<apis />
+						<variables />
+						<macros />
+					</component>
+					<component class_type='shape' codename='shape16' x='0' y='-15' z='0' xsz='30' ysz='1' zsz='10' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+						<resources />
+						<properties />
+						<values >
+							<value target='Shape' data='0' />
+							<value target='Color' data='16777215' />
+							<value target='Outline' data='0' />
+							<value target='Thickness' data='0' />
+							<value target='Image' data='' />
+							<value target='Model' data='' />
+							<value target='Unit' data='' />
+						</values>
+						<events />
+						<apis />
+						<variables />
+						<macros />
+					</component>
+					<component class_type='shape' codename='shape17' x='0' y='15' z='0' xsz='30' ysz='1' zsz='10' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+						<resources />
+						<properties />
+						<values >
+							<value target='Shape' data='0' />
+							<value target='Color' data='16777215' />
+							<value target='Outline' data='0' />
+							<value target='Thickness' data='0' />
+							<value target='Image' data='' />
+							<value target='Model' data='' />
+							<value target='Unit' data='' />
+						</values>
+						<events />
+						<apis />
+						<variables />
+						<macros />
+					</component>
+				</component>
+				<component class_type='group' codename='group5' x='50' y='-50' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values />
+					<events />
+					<apis />
+					<variables />
+					<macros />
+					<component class_type='shape' codename='shape31' x='15' y='0' z='0' xsz='1' ysz='30' zsz='10' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+						<resources />
+						<properties />
+						<values >
+							<value target='Shape' data='0' />
+							<value target='Color' data='16777215' />
+							<value target='Outline' data='0' />
+							<value target='Thickness' data='0' />
+							<value target='Image' data='' />
+							<value target='Model' data='' />
+							<value target='Unit' data='' />
+						</values>
+						<events />
+						<apis />
+						<variables />
+						<macros />
+					</component>
+					<component class_type='shape' codename='shape32' x='-15' y='0' z='0' xsz='1' ysz='30' zsz='10' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+						<resources />
+						<properties />
+						<values >
+							<value target='Shape' data='0' />
+							<value target='Color' data='16777215' />
+							<value target='Outline' data='0' />
+							<value target='Thickness' data='0' />
+							<value target='Image' data='' />
+							<value target='Model' data='' />
+							<value target='Unit' data='' />
+						</values>
+						<events />
+						<apis />
+						<variables />
+						<macros />
+					</component>
+					<component class_type='shape' codename='shape33' x='0' y='-15' z='0' xsz='30' ysz='1' zsz='10' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+						<resources />
+						<properties />
+						<values >
+							<value target='Shape' data='0' />
+							<value target='Color' data='16777215' />
+							<value target='Outline' data='0' />
+							<value target='Thickness' data='0' />
+							<value target='Image' data='' />
+							<value target='Model' data='' />
+							<value target='Unit' data='' />
+						</values>
+						<events />
+						<apis />
+						<variables />
+						<macros />
+					</component>
+					<component class_type='shape' codename='shape34' x='0' y='15' z='0' xsz='30' ysz='1' zsz='10' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+						<resources />
+						<properties />
+						<values >
+							<value target='Shape' data='0' />
+							<value target='Color' data='16777215' />
+							<value target='Outline' data='0' />
+							<value target='Thickness' data='0' />
+							<value target='Image' data='' />
+							<value target='Model' data='' />
+							<value target='Unit' data='' />
+						</values>
+						<events />
+						<apis />
+						<variables />
+						<macros />
+					</component>
+				</component>
+				<component class_type='group' codename='group8' x='15.5' y='15.3465' z='0' xsz='1' ysz='0.990099' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values />
+					<events />
+					<apis />
+					<variables />
+					<macros />
+					<component class_type='shape' codename='shape35' x='15' y='0' z='0' xsz='1' ysz='30' zsz='10' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+						<resources />
+						<properties />
+						<values >
+							<value target='Shape' data='0' />
+							<value target='Color' data='16777215' />
+							<value target='Outline' data='0' />
+							<value target='Thickness' data='0' />
+							<value target='Image' data='' />
+							<value target='Model' data='' />
+							<value target='Unit' data='' />
+						</values>
+						<events />
+						<apis />
+						<variables />
+						<macros />
+					</component>
+					<component class_type='shape' codename='shape36' x='-15' y='0' z='0' xsz='1' ysz='30' zsz='10' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+						<resources />
+						<properties />
+						<values >
+							<value target='Shape' data='0' />
+							<value target='Color' data='16777215' />
+							<value target='Outline' data='0' />
+							<value target='Thickness' data='0' />
+							<value target='Image' data='' />
+							<value target='Model' data='' />
+							<value target='Unit' data='' />
+						</values>
+						<events />
+						<apis />
+						<variables />
+						<macros />
+					</component>
+					<component class_type='shape' codename='shape37' x='0' y='-15' z='0' xsz='30' ysz='1' zsz='10' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+						<resources />
+						<properties />
+						<values >
+							<value target='Shape' data='0' />
+							<value target='Color' data='16777215' />
+							<value target='Outline' data='0' />
+							<value target='Thickness' data='0' />
+							<value target='Image' data='' />
+							<value target='Model' data='' />
+							<value target='Unit' data='' />
+						</values>
+						<events />
+						<apis />
+						<variables />
+						<macros />
+					</component>
+					<component class_type='shape' codename='shape38' x='0' y='15' z='0' xsz='30' ysz='1' zsz='10' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+						<resources />
+						<properties />
+						<values >
+							<value target='Shape' data='0' />
+							<value target='Color' data='16777215' />
+							<value target='Outline' data='0' />
+							<value target='Thickness' data='0' />
+							<value target='Image' data='' />
+							<value target='Model' data='' />
+							<value target='Unit' data='' />
+						</values>
+						<events />
+						<apis />
+						<variables />
+						<macros />
+					</component>
+				</component>
+				<component class_type='group' codename='group9' x='84.5' y='84.6535' z='0' xsz='1' ysz='0.990099' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values />
+					<events />
+					<apis />
+					<variables />
+					<macros />
+					<component class_type='shape' codename='shape40' x='15' y='0' z='0' xsz='1' ysz='30' zsz='10' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+						<resources />
+						<properties />
+						<values >
+							<value target='Shape' data='0' />
+							<value target='Color' data='16777215' />
+							<value target='Outline' data='0' />
+							<value target='Thickness' data='0' />
+							<value target='Image' data='' />
+							<value target='Model' data='' />
+							<value target='Unit' data='' />
+						</values>
+						<events />
+						<apis />
+						<variables />
+						<macros />
+					</component>
+					<component class_type='shape' codename='shape41' x='-15' y='0' z='0' xsz='1' ysz='30' zsz='10' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+						<resources />
+						<properties />
+						<values >
+							<value target='Shape' data='0' />
+							<value target='Color' data='16777215' />
+							<value target='Outline' data='0' />
+							<value target='Thickness' data='0' />
+							<value target='Image' data='' />
+							<value target='Model' data='' />
+							<value target='Unit' data='' />
+						</values>
+						<events />
+						<apis />
+						<variables />
+						<macros />
+					</component>
+					<component class_type='shape' codename='shape42' x='0' y='-15' z='0' xsz='30' ysz='1' zsz='10' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+						<resources />
+						<properties />
+						<values >
+							<value target='Shape' data='0' />
+							<value target='Color' data='16777215' />
+							<value target='Outline' data='0' />
+							<value target='Thickness' data='0' />
+							<value target='Image' data='' />
+							<value target='Model' data='' />
+							<value target='Unit' data='' />
+						</values>
+						<events />
+						<apis />
+						<variables />
+						<macros />
+					</component>
+					<component class_type='shape' codename='shape43' x='0' y='15' z='0' xsz='30' ysz='1' zsz='10' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+						<resources />
+						<properties />
+						<values >
+							<value target='Shape' data='0' />
+							<value target='Color' data='16777215' />
+							<value target='Outline' data='0' />
+							<value target='Thickness' data='0' />
+							<value target='Image' data='' />
+							<value target='Model' data='' />
+							<value target='Unit' data='' />
+						</values>
+						<events />
+						<apis />
+						<variables />
+						<macros />
+					</component>
+				</component>
+				<component class_type='group' codename='group3' x='-84.5' y='-85.1535' z='0' xsz='1' ysz='0.990099' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values />
+					<events />
+					<apis />
+					<variables />
+					<macros />
+					<component class_type='shape' codename='shape21' x='15' y='0' z='0' xsz='1' ysz='30' zsz='10' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+						<resources />
+						<properties />
+						<values >
+							<value target='Shape' data='0' />
+							<value target='Color' data='16777215' />
+							<value target='Outline' data='0' />
+							<value target='Thickness' data='0' />
+							<value target='Image' data='' />
+							<value target='Model' data='' />
+							<value target='Unit' data='' />
+						</values>
+						<events />
+						<apis />
+						<variables />
+						<macros />
+					</component>
+					<component class_type='shape' codename='shape22' x='-15' y='0' z='0' xsz='1' ysz='30' zsz='10' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+						<resources />
+						<properties />
+						<values >
+							<value target='Shape' data='0' />
+							<value target='Color' data='16777215' />
+							<value target='Outline' data='0' />
+							<value target='Thickness' data='0' />
+							<value target='Image' data='' />
+							<value target='Model' data='' />
+							<value target='Unit' data='' />
+						</values>
+						<events />
+						<apis />
+						<variables />
+						<macros />
+					</component>
+					<component class_type='shape' codename='shape23' x='0' y='-15' z='0' xsz='30' ysz='1' zsz='10' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+						<resources />
+						<properties />
+						<values >
+							<value target='Shape' data='0' />
+							<value target='Color' data='16777215' />
+							<value target='Outline' data='0' />
+							<value target='Thickness' data='0' />
+							<value target='Image' data='' />
+							<value target='Model' data='' />
+							<value target='Unit' data='' />
+						</values>
+						<events />
+						<apis />
+						<variables />
+						<macros />
+					</component>
+					<component class_type='shape' codename='shape24' x='0' y='15' z='0' xsz='30' ysz='1' zsz='10' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+						<resources />
+						<properties />
+						<values >
+							<value target='Shape' data='0' />
+							<value target='Color' data='16777215' />
+							<value target='Outline' data='0' />
+							<value target='Thickness' data='0' />
+							<value target='Image' data='' />
+							<value target='Model' data='' />
+							<value target='Unit' data='' />
+						</values>
+						<events />
+						<apis />
+						<variables />
+						<macros />
+					</component>
+				</component>
+				<component class_type='group' codename='group4' x='-15.5' y='-15.8465' z='0' xsz='1' ysz='0.990099' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values />
+					<events />
+					<apis />
+					<variables />
+					<macros />
+					<component class_type='shape' codename='shape27' x='15' y='0' z='0' xsz='1' ysz='30' zsz='10' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+						<resources />
+						<properties />
+						<values >
+							<value target='Shape' data='0' />
+							<value target='Color' data='16777215' />
+							<value target='Outline' data='0' />
+							<value target='Thickness' data='0' />
+							<value target='Image' data='' />
+							<value target='Model' data='' />
+							<value target='Unit' data='' />
+						</values>
+						<events />
+						<apis />
+						<variables />
+						<macros />
+					</component>
+					<component class_type='shape' codename='shape28' x='-15' y='0' z='0' xsz='1' ysz='30' zsz='10' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+						<resources />
+						<properties />
+						<values >
+							<value target='Shape' data='0' />
+							<value target='Color' data='16777215' />
+							<value target='Outline' data='0' />
+							<value target='Thickness' data='0' />
+							<value target='Image' data='' />
+							<value target='Model' data='' />
+							<value target='Unit' data='' />
+						</values>
+						<events />
+						<apis />
+						<variables />
+						<macros />
+					</component>
+					<component class_type='shape' codename='shape29' x='0' y='-15' z='0' xsz='30' ysz='1' zsz='10' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+						<resources />
+						<properties />
+						<values >
+							<value target='Shape' data='0' />
+							<value target='Color' data='16777215' />
+							<value target='Outline' data='0' />
+							<value target='Thickness' data='0' />
+							<value target='Image' data='' />
+							<value target='Model' data='' />
+							<value target='Unit' data='' />
+						</values>
+						<events />
+						<apis />
+						<variables />
+						<macros />
+					</component>
+					<component class_type='shape' codename='shape30' x='0' y='15' z='0' xsz='30' ysz='1' zsz='10' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+						<resources />
+						<properties />
+						<values >
+							<value target='Shape' data='0' />
+							<value target='Color' data='16777215' />
+							<value target='Outline' data='0' />
+							<value target='Thickness' data='0' />
+							<value target='Image' data='' />
+							<value target='Model' data='' />
+							<value target='Unit' data='' />
+						</values>
+						<events />
+						<apis />
+						<variables />
+						<macros />
+					</component>
+				</component>
+			</component>
+		</component>
+	</components>
+	<keymap />
+	<panel2d shadows='0' lighting='2' brightness='0' perspective='0' >
+		<background rgb='9737364' img='' style='0' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel2d>
+	<panel3d shadows='0' lighting='2' brightness='0' perspective='0' >
+		<background rgb='8409120' img='' style='5' />
+		<table rgb='7360576' img='' style='0' size='0' />
+		<camera xe='4.89011' ye='3.15715' ze='435.634' xt='4.89011' yt='3.15715' zt='1' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel3d>
+	<layout >
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAXwUAAKQDAAA' zoom='34' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Sensorupdate' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAXwUAAKQDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

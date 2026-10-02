@@ -1,0 +1,296 @@
+<root>
+<document schema='101' license='50,Dev User,NXHQAN' title='' description='' target='PIC16.30F.30F3014' >
+	<config data='!0,8712!10,3f!20,87b3!30,310f!40,330f!50,7!60,c003%0,712%e,2%10,f%14,3%1f,0%20,3%24,3%27,1%28,7%2f,1%30,f%38,1%3c,3%40,f%48,3%4c,3%50,1%51,3%60,3%6e,1%6f,1' clkspd='96000000' simspd='1' usewdt='0' constif='0' />
+	<plugins >
+		<dll_dbg_icd enabled='0' >
+			<data name='debug' value='1' />
+			<data name='userpins' value='0' />
+			<data name='speed' value='1000' />
+			<data name='usev9' value='0' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='monitor' value='1' />
+			<data name='ictloop' value='1' />
+			<data name='ictrate' value='1000' />
+			<data name='ictmask' value='-1' />
+		</dll_dbg_icd>
+		<dll_models enabled='1' />
+		<dll_upgrader enabled='1' />
+		<dll_webhelp enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug />
+	<components >
+		<settings autoimg='1' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='' vmin='0' vmaj='1' srcleaf='' visiblename='' description='' category='' catenable='1' author='' sysinfo='0' keywords='' dynamic='0' iconpath='' />
+		<component class_type='root' codename='panel' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+			<resources />
+			<properties />
+			<values />
+			<events />
+			<apis />
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='ScopeSPHandle' type='h32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='false' type='b1' description='' isconst='1' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='ScopeGroupHandle' type='h32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='Data' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='Level' type='u8' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='trigger' type='u8' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='true' type='b1' description='' isconst='1' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='timer_tick' description='' >
+						<command class_type='call' title='Sample ADC Feedback' textarea='36,0,511,300' component='FeedbackADC' macro='GetByte' >
+							<return exp='Data' />
+						</command>
+						<command class_type='call' title='Add ADC Sample to DSP Buffer' textarea='36,0,511,300' component='DSPInput1' macro='AddAsByteTick' >
+							<argument exp='Data' />
+						</command>
+						<command class_type='call' title='Perform On / Off Control' textarea='36,0,511,300' component='DSPControl1' macro='ProcessTick' >
+							<argument exp='Level' />
+						</command>
+						<command class_type='call' title='Read Output Buffer' textarea='36,0,511,300' component='DSPOutput1' macro='ReadAsByteTick' >
+							<return exp='Level' />
+						</command>
+						<command class_type='sim' title='Simulation' macro='Debug.PrintLn' >
+							<argument exp='&quot;Level: &quot; + STRING level' />
+						</command>
+						<command class_type='decision' title='And output to control Relay' textarea='36,0,511,300' exp='Level' swap='0' >
+							<flowline >
+								<command class_type='call' title='Call Component Macro' textarea='36,0,511,300' component='LED1' macro='TurnOn' />
+							</flowline>
+							<flowline >
+								<command class_type='call' title='Call Component Macro' textarea='36,0,511,300' component='LED1' macro='TurnOff' />
+							</flowline>
+						</command>
+						<command class_type='call' title='DSP Master Tick' textarea='36,0,511,300' component='DSPSystem1' macro='TickAllBuffers' >
+							<return exp='trigger' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Main' description='' >
+						<command class_type='call' title='Initialise DSP System Buffers' textarea='36,0,511,300' component='DSPSystem1' macro='Initialise' />
+						<command class_type='interrupt' title='Enable Timer Tick' textarea='36,0,511,300' enable='1' name='TMR1' call='timer_tick' >
+							<settings timer='1' prescale='64' postscale='-1' rollover='2048' bitcount='-1' trigger='3' maskhi='-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAA' masklo='-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAD-AAAA-wAAAP8AAAA' >
+								<option value='0' />
+								<option value='2' />
+								<option value='2048' />
+								<option value='-1' />
+							</settings>
+						</command>
+						<command class_type='loop' title='Loop' textarea='36,0,511,300' exp='1' type='0' start='1' count='1' breakend='0' >
+							<flowline >
+								<command class_type='decision' title='If Triggered' textarea='36,0,511,300' exp='trigger = 1' swap='0' >
+									<flowline >
+										<command class_type='call' title='Read Setpoint ADC' textarea='36,0,511,300' component='SetpointADC' macro='GetByte' >
+											<return exp='Level' />
+										</command>
+										<command class_type='calculation' title='Reset Trigger' textarea='36,0,511,300' >
+											<exp exp='trigger = 0' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='917f243e-4102-4bee-9998-81f18bc6ca9d' vmin='2' vmaj='1' codename='DSPSystem1' x='-37.6001' y='37.624' z='1.0112' xsz='35' ysz='35' zsz='1.14286' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='buffer_count' data='002' />
+					<value target='simple_mode' data='1' />
+					<value target='DSPsystem_ID' data='1' />
+					<value target='buff_a_name' data='Feedback' />
+					<value target='buff_b_name' data='Output' />
+					<value target='buff_c_name' data='MyBuf3' />
+					<value target='buff_d_name' data='MyBuf4' />
+					<value target='buff_e_name' data='MyBuf5' />
+					<value target='buff_f_name' data='MyBuf6' />
+					<value target='buff_g_name' data='MyBuf7' />
+					<value target='buff_h_name' data='MyBuf8' />
+					<value target='buff_a_depth' data='0' />
+					<value target='buff_a_sign' data='1' />
+					<value target='buff_a_size' data='8' />
+					<value target='buff_b_depth' data='0' />
+					<value target='buff_b_sign' data='1' />
+					<value target='buff_b_size' data='8' />
+					<value target='buff_c_depth' data='0' />
+					<value target='buff_c_sign' data='1' />
+					<value target='buff_c_size' data='8' />
+					<value target='buff_d_depth' data='0' />
+					<value target='buff_d_sign' data='1' />
+					<value target='buff_d_size' data='8' />
+					<value target='buff_e_depth' data='0' />
+					<value target='buff_e_sign' data='1' />
+					<value target='buff_e_size' data='8' />
+					<value target='buff_f_depth' data='0' />
+					<value target='buff_f_sign' data='1' />
+					<value target='buff_f_size' data='8' />
+					<value target='buff_g_depth' data='0' />
+					<value target='buff_g_sign' data='1' />
+					<value target='buff_g_size' data='8' />
+					<value target='buff_h_depth' data='0' />
+					<value target='buff_h_sign' data='1' />
+					<value target='buff_h_size' data='8' />
+					<value target='buff_simp_depth' data='0' />
+					<value target='buff_simp_sign' data='1' />
+					<value target='buff_simp_size' data='8' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='14683ea8-5a08-4b3a-be2d-3dea3e17e720' vmin='2' vmaj='1' codename='FeedbackADC' x='-69.3165' y='-25.6625' z='1.44754' xsz='30' ysz='30' zsz='1.14286' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='angle_start' data='225.000000' />
+					<value target='angle_sweep' data='270.000000' />
+					<value target='cap_color' data='192' />
+					<value target='point_color' data='16777215' />
+					<value target='channel' data='0' />
+					<value target='vrefvol' data='500' />
+					<value target='vrefop' data='0' />
+					<value target='convspd' data='3' />
+					<value target='actime' data='40' />
+					<value target='bits' data='10' />
+					<value target='bitmul' data='0.004883' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='c73d493a-b6a0-4dbe-b4b5-79648f67d11e' vmin='2' vmaj='1' codename='DSPInput1' x='-35.5048' y='-25.5944' z='1.08191' xsz='43.5' ysz='32' zsz='1.14286' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='buffer_manager' data='1' />
+					<value target='input_a' data='0' />
+					<value target='size_a' data='8' />
+					<value target='depth_a' data='0' />
+					<value target='sign_a' data='1' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='e6dd1315-4acf-4fb5-abd9-5743d3715cbe' vmin='2' vmaj='1' codename='DSPControl1' x='24.0628' y='-16.4733' z='1.08191' xsz='55' ysz='32' zsz='1.14286' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='buffer_manager' data='1' />
+					<value target='input_a' data='0' />
+					<value target='output_c' data='1' />
+					<value target='size_a' data='8' />
+					<value target='size_o' data='8' />
+					<value target='depth_a' data='0' />
+					<value target='depth_o' data='0' />
+					<value target='sign_a' data='1' />
+					<value target='sign_o' data='1' />
+					<value target='style' data='001' />
+					<value target='method' data='0' />
+					<value target='Hysteresis' data='10' />
+					<value target='on_val' data='255' />
+					<value target='off_val' data='0' />
+					<value target='proportional' data='50' />
+					<value target='integral' data='50' />
+					<value target='derivative' data='50' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='1392d5c3-35ba-4c7f-a539-7f30a09758e4' vmin='2' vmaj='1' codename='DSPOutput1' x='83.6305' y='-16.4733' z='1.08191' xsz='43' ysz='32' zsz='1.14286' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='buffer_manager' data='1' />
+					<value target='input_a' data='1' />
+					<value target='size_a' data='8' />
+					<value target='depth_a' data='0' />
+					<value target='sign_a' data='1' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='7fdaec78-394e-4ec9-a578-4f1a12a12076' vmin='0' vmaj='1' codename='LED1' x='111.716' y='-15.795' z='-3.25' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='pin' data='$PORTF.0' />
+					<value target='polarity' data='1' />
+					<value target='on_color' data='8453975' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='ref' guid='14683ea8-5a08-4b3a-be2d-3dea3e17e720' vmin='2' vmaj='1' codename='SetpointADC' x='13.2679' y='15.3794' z='1.44754' xsz='30' ysz='30' zsz='1.14286' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' poslock='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='angle_start' data='225.000000' />
+					<value target='angle_sweep' data='270.000000' />
+					<value target='cap_color' data='192' />
+					<value target='point_color' data='16777215' />
+					<value target='channel' data='1' />
+					<value target='vrefvol' data='500' />
+					<value target='vrefop' data='0' />
+					<value target='convspd' data='3' />
+					<value target='actime' data='40' />
+					<value target='bits' data='10' />
+					<value target='bitmul' data='0.004883' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+		</component>
+	</components>
+	<keymap />
+	<panel2d shadows='0' lighting='2' brightness='0' perspective='0' >
+		<background rgb='9737364' img='' style='0' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel2d>
+	<panel3d shadows='0' lighting='2' brightness='0' perspective='0' >
+		<background rgb='8409120' img='' style='0' />
+		<table rgb='7360576' img='' style='0' size='0' />
+		<camera xe='24' ye='10' ze='270.373' xt='24' yt='10' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel3d>
+	<layout >
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAwQIAAIEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='timer_tick' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAwQIAAIEDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

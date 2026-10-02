@@ -1,0 +1,223 @@
+<root>
+<document schema='101' license='0,30day_31868014,2MBXKV' title='' description='' guid='865286da-ba8c-44c8-a3c9-4a2a89b1e05c' target='PIC.16F.16F877A' >
+	<config data='!0,3f72%0,2%2,0%3,0%6,1%7,0%9,3%b,1%8,1%d,1' clkspd='19660800' simspd='1' usewdt='0' constif='0' />
+	<plugins >
+		<dll_dbg_icd enabled='0' >
+			<data name='debug' value='1' />
+			<data name='userpins' value='0' />
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='monitor' value='1' />
+			<data name='ictloop' value='1' />
+			<data name='ictrate' value='1000' />
+			<data name='ictmask' value='-1' />
+		</dll_dbg_icd>
+		<dll_dbg_ict enabled='0' >
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='userpins' value='0' />
+		</dll_dbg_ict>
+		<dll_models enabled='1' />
+		<dll_upgrader enabled='1' />
+		<dll_webhelp enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug />
+	<components >
+		<settings autoimg='1' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='865286da-ba8c-44c8-a3c9-4a2a89b1e05c' vmin='0' vmaj='1' visiblename='' description='' category='Misc' author='' sysinfo='0' keywords='' dynamic='0' iconpath='' />
+		<component class_type='root' codename='panel' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+			<resources />
+			<properties />
+			<values />
+			<events />
+			<apis />
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='false' type='b1' description='' isconst='1' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='delayval' type='s16' description='' isconst='0' isinit='1' usrinit='500' setinit='500' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='State' type='b1' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='true' type='b1' description='' isconst='1' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='Main' description='' >
+						<command class_type='comment' title='' comment='Comment' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+						<command class_type='comment' title='' comment='This project demonstrates the subject of grouping and targets for motors
+
+Simulation settings are configured in the properties menu for each
+component.
+
+The lower solenoid has a target corresponding to the grouping of the
+middle and the upper solenoid. named &quot;middleandupperblock&quot;.
+
+The middle solenoid has a target of the &quot;uppersolenoidBlock&quot;.
+
+When any solenoid is enabled in the flowcode, the target of the 
+solenoid is moved.' ccode='' textshow='1' textmode='0' textarea='12,0,12,0' break='0' mark='0' disable='0' hide='0' customize='0' />
+						<command class_type='loop' title='Loop' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='1' type='0' start='1' count='1' breakend='0' >
+							<flowline >
+								<command class_type='delay' title='Delay' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='delayval' type='1' />
+								<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='upperSolenoid' macro='TurnOn' />
+								<command class_type='delay' title='Delay' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='delayval' type='1' />
+								<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='middleSolenoid' macro='TurnOn' />
+								<command class_type='delay' title='Delay' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='delayval' type='1' />
+								<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='lowerSolenoid' macro='TurnOn' />
+								<command class_type='delay' title='Delay' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='delayval' type='1' />
+								<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='upperSolenoid' macro='TurnOff' />
+								<command class_type='delay' title='Delay' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='delayval' type='1' />
+								<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='middleSolenoid' macro='TurnOff' />
+								<command class_type='delay' title='Delay' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' exp='delayval' type='1' />
+								<command class_type='call' title='Call Component Macro' comment='' ccode='' textshow='1' textmode='0' textarea='36,0,36,0' break='0' mark='0' disable='0' hide='0' customize='0' component='lowerSolenoid' macro='TurnOff' />
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+			<component class_type='ref' guid='1ac8ae8b-bcd2-493f-b516-36dacb3695f9' vmin='1' vmaj='1' codename='lowerSolenoid' x='0' y='35' z='-60' xsz='1' ysz='1' zsz='1' xang='0' yang='-90' zang='0' xquat='0.5' yquat='-0.5' zquat='0.5' wquat='0.5' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values >
+					<value target='pin' data='$PORTA.2' />
+					<value target='target' data='middleandupperBlock' />
+					<value target='move' data='12.000000' />
+					<value target='animate_time' data='100' />
+				</values>
+				<events />
+				<apis />
+				<variables />
+				<macros />
+			</component>
+			<component class_type='group' codename='middleandupperBlock' x='3.1' y='24.4' z='-13.025' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+				<resources />
+				<properties />
+				<values />
+				<events />
+				<apis />
+				<variables />
+				<macros />
+				<component class_type='ref' guid='1ac8ae8b-bcd2-493f-b516-36dacb3695f9' vmin='1' vmaj='1' codename='middleSolenoid' x='-3.1' y='5.6' z='-3' xsz='1' ysz='1' zsz='1' xang='-90' yang='0' zang='-90' xquat='-0.5' yquat='0.5' zquat='-0.5' wquat='0.5' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='pin' data='$PORTA.1' />
+						<value target='target' data='upperBlock' />
+						<value target='move' data='12.000000' />
+						<value target='animate_time' data='100' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+				<component class_type='group' codename='upperBlock' x='-1.77636e-015' y='-24.4' z='4.5' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values />
+					<events />
+					<apis />
+					<variables />
+					<macros />
+					<component class_type='shape' codename='middleshape' x='-3.1' y='0' z='-7' xsz='10' ysz='10' zsz='12' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+						<resources />
+						<properties />
+						<values >
+							<value target='Shape' data='4' />
+							<value target='Color' data='192' />
+							<value target='Outline' data='0' />
+							<value target='Thickness' data='0.000000' />
+							<value target='Image' data='' />
+							<value target='Model' data='' />
+							<value target='Unit' data='' />
+						</values>
+						<events />
+						<apis />
+						<variables />
+						<macros />
+					</component>
+					<component class_type='ref' guid='1ac8ae8b-bcd2-493f-b516-36dacb3695f9' vmin='1' vmaj='1' codename='upperSolenoid' x='-3.1' y='0' z='8.525' xsz='1' ysz='1' zsz='1' xang='90' yang='0' zang='0' xquat='0.707107' yquat='0' zquat='0' wquat='0.707107' visible='1' interactive='1' solid='1' layer='0' >
+						<resources />
+						<properties />
+						<values >
+							<value target='pin' data='$PORTA.0' />
+							<value target='target' data='blob' />
+							<value target='move' data='12.000000' />
+							<value target='animate_time' data='100' />
+						</values>
+						<events />
+						<apis />
+						<variables />
+						<macros />
+					</component>
+					<component class_type='shape' codename='uppershape' x='26.9' y='0' z='8.525' xsz='10' ysz='10' zsz='10' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+						<resources />
+						<properties />
+						<values >
+							<value target='Shape' data='1' />
+							<value target='Color' data='192' />
+							<value target='Outline' data='0' />
+							<value target='Thickness' data='0' />
+							<value target='Image' data='' />
+							<value target='Model' data='' />
+							<value target='Unit' data='' />
+						</values>
+						<events />
+						<apis />
+						<variables />
+						<macros />
+					</component>
+				</component>
+				<component class_type='shape' codename='lowershape' x='-3.1' y='10.6' z='-15.975' xsz='32' ysz='32' zsz='6' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+					<resources />
+					<properties />
+					<values >
+						<value target='Shape' data='4' />
+						<value target='Color' data='192' />
+						<value target='Outline' data='0' />
+						<value target='Thickness' data='0' />
+						<value target='Image' data='' />
+						<value target='Model' data='' />
+						<value target='Unit' data='' />
+					</values>
+					<events />
+					<apis />
+					<variables />
+					<macros />
+				</component>
+			</component>
+		</component>
+	</components>
+	<keymap />
+	<panel2d shadows='0' lighting='0' brightness='0' perspective='0' >
+		<background rgb='3158064' img='' style='0' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel2d>
+	<panel3d shadows='0' lighting='2' brightness='0' perspective='1' >
+		<background rgb='8404224' img='' style='0' />
+		<table rgb='0' img='' style='0' size='0' />
+		<camera xe='365.711' ye='141.927' ze='118.197' xt='4.66119' yt='18.38' zt='-28.831' xquat='-0.329058' yquat='-0.460389' zquat='-0.670761' wquat='0.479419' />
+	</panel3d>
+	<layout >
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAAXwUAAKQDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>

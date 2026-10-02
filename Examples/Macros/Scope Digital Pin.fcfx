@@ -1,0 +1,111 @@
+<root>
+<document schema='101' license='50,Dev User,NXHQAN' title='' description='' guid='38364be0-c00c-4a79-be69-a3236c8d707d' target='PIC.16F.16F1939' >
+	<config data='!0,fe2!10,1633%0,2%3,0%5,1%6,1%7,1%8,1%9,3%b,1%c,0%d,0%10,3%14,3%18,0%19,1%1a,1%1c,1%1d,0' clkspd='19660800' simspd='1' usewdt='0' constif='0' />
+	<plugins >
+		<dll_dbg_icd enabled='0' >
+			<data name='debug' value='1' />
+			<data name='userpins' value='0' />
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='monitor' value='1' />
+			<data name='ictloop' value='1' />
+			<data name='ictrate' value='1000' />
+			<data name='ictmask' value='-1' />
+		</dll_dbg_icd>
+		<dll_dbg_ict enabled='0' >
+			<data name='speed' value='1000' />
+			<data name='firmware' value='0000000000000000' />
+			<data name='breaks' value='8' />
+			<data name='stacks' value='8' />
+			<data name='clkport' value='1' />
+			<data name='clkbit' value='6' />
+			<data name='dataport' value='1' />
+			<data name='databit' value='7' />
+			<data name='userpins' value='0' />
+		</dll_dbg_ict>
+		<dll_models enabled='1' />
+		<dll_upgrader enabled='1' />
+		<dll_webhelp enabled='1' />
+	</plugins>
+	<supplement use='0' head='' body='' />
+	<debug />
+	<components >
+		<settings autoimg='1' center='1' unitscale='0' fixedscale='0' fixedx='1' fixedy='1' fixedz='1' headcode='0' />
+		<definition guid='38364be0-c00c-4a79-be69-a3236c8d707d' vmin='0' vmaj='1' visiblename='' description='' category='' author='' sysinfo='0' keywords='' dynamic='0' iconpath='' />
+		<component class_type='root' codename='panel' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' interactive='1' solid='1' layer='0' >
+			<resources />
+			<properties />
+			<values />
+			<events />
+			<apis />
+			<variables >
+				<variable public='0' >
+					<def class_type='variable' name='Count' type='u8' description='' isconst='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='false' type='b1' description='' isconst='1' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='ScopeGroupHandle' type='h32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='ScopeStreamHandle' type='h32' description='' isconst='0' isinit='0' usrinit='0' setinit='' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='true' type='b1' description='' isconst='1' isinit='1' usrinit='1' setinit='1' />
+				</variable>
+			</variables>
+			<macros >
+				<macro >
+					<flowline name='Main' description='' >
+						<command class_type='sim' title='Create Scope Group' macro='Scope.AddGroup' >
+							<return exp='ScopeGroupHandle' />
+							<argument exp='&quot;Test Group&quot;' />
+						</command>
+						<command class_type='sim' title='Create Scope Stream' macro='Scope.AddStream' >
+							<return exp='ScopeStreamHandle' />
+							<argument exp='ScopeGroupHandle' />
+							<argument exp='&quot;LED&quot;' />
+						</command>
+						<command class_type='sim' title='Assign PortB To Stream' macro='Scope.AddPort' >
+							<argument exp='ScopeStreamHandle' />
+							<argument exp='1' />
+							<argument exp='0xFF' />
+							<argument exp='0' />
+							<argument exp='0' />
+						</command>
+						<command class_type='loop' title='Loop Forever' exp='1' type='0' start='1' count='1' breakend='0' >
+							<flowline >
+								<command class_type='output' title='Output' mode='0' port='1048577' mask='0' exp='Count' />
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='Count = Count + 1' />
+								</command>
+								<command class_type='delay' title='Delay' exp='1' type='1' />
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+			</macros>
+		</component>
+	</components>
+	<keymap />
+	<panel2d shadows='0' lighting='2' brightness='0' perspective='0' >
+		<background rgb='9737364' img='' style='0' />
+		<camera xe='0' ye='0' ze='300' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel2d>
+	<panel3d shadows='0' lighting='2' brightness='0' perspective='0' >
+		<background rgb='16777047' img='' style='0' />
+		<table rgb='16776960' img='' style='0' size='0' />
+		<camera xe='0' ye='0' ze='52.1315' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+	</panel3d>
+	<layout >
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wAAAAAUAAAApAMAAFkDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+	</layout>
+</document>
+</root>
