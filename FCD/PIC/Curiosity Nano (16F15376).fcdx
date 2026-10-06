@@ -1,22 +1,29 @@
-<!-- CRC: 90CF26913586BBA787FE92D553771933A22A3246106A63C92C46B8BFCF82E04BE5E44918D1017FFD181EB1D98E7E67C975BED07D6418C4CC18660AACDCDBCC910213E691BE6D3ADB273BFD4967B5A64DF067E7D8958C228AFB774D786D4AEA4EDE65130F649B82F90C3CAEE8E7DA69875E406BC2178A7857225E87361F790F7758D2D204ABE398D856CD9A443206EB8DF8BDA2E1D945CAA608438550C36510CAE498CA8AF823CD9AFFAEDAAF93AE796FC28CBC6A688EE82657BD678FCDFB5FB9C4CDF9C6D8BDDAC9086944AE325796A66C93FC2C42021723AC7FC282A1A788F734EDF4C243CD328FB0330AA6FB05B88105A68DA3CE9026E5 -->
-<!-- REVISION: 1.0 -->
+<!-- CRC: 90CF26913586BBA787FE92D553771933A22A3246106A63C92C46B8BFCF82E04BE5E44918D1017FFD181EB1D98E7E67C975BED07D6418C4CC18660AACDCDBCC910213E691BE6D3ADB273BFD4967B5A64D62F72D27E9D34842BF9B97A3AFBBCBEE3027571EAD75915DA9B11F738DF98E15B015B4274BC89FBC225E87361F790F7758D2D204ABE398D856CD9A443206EB8DF8BDA2E1D945CAA608438550C36510CAE498CA8AF823CD9AFFAEDAAF93AE796FC28CBC6A688EE82657BD678FCDFB5FB9C4CDF9C6D8BDDAC9086944AE325796A652CD09B6B4C3439E15009F6C17D20054C5F314276C6FB7E7C7E9BF2E0A60D235BB3AB4325F399FDA -->
+<!-- REVISION: 3.0 -->
 <!-- GUID: 8AC1BC9D-A615-45AC-AAFE-1DA25E7D67A7 -->
-<!-- DATE: 30\09\2025 -->
+<!-- DATE: 06\10\2026 -->
 <!-- DIR: FCD\PIC\Curiosity|Nano|(16F15376).fcdx -->
 
 <root>
+<build>
+<programmer exe="$(fcddir)PIC\Batch\pic_curiosity_prog.bat"  params="&quot;$(outdir)&quot; &quot;$(target)&quot; CURIOSITY &quot;$(compilerpico)&quot; " UsesComm="1" />
+</build>
+
 <device file='Curiosity Nano (16F15376)' name='16F15376' product='PIC' cal='PIC' family='16F' bits='8' >
-    <clock max_speed='32000000' master_divider='4' default='19660800' />
+    <comminfo>
+        <com pid="2175" vid="03EB" devdesc="Curiosity Virtual COM Port" />
+    </comminfo>
+    <clock max_speed='32000000' master_divider='4' default='32000000' />
     <memory >
         <flash bytes='28672' />
         <ram bytes='2048' />
     </memory>
     <configuration address='1' mult='2' >
 	<format >
-	  <word value='0x3FFF' />
-	  <word value='0x3FFF' />
-	  <word value='0x3F9F' />
-	  <word value='0x3FFF' />
+	  <word value='0x3F8C' />
+	  <word value='0x37FD' />
+	  <word value='0x3B92' />
+	  <word value='0x1FFF' />
 	  <word value='0x3FFF' />
         </format>
         <setting />
@@ -467,7 +474,7 @@
     <main >
         <start code='\nvoid main()\n{\n\t#ifdef INTOSCHELPER\n\t\tINTOSCHELPERCODE\n\t#endif\n\n' />
         <end code='\tmainendloop: goto mainendloop;\n}\n\n' />
-        <init code='ANSELA = 0x00;\nANSELC = 0x00;\n\t//Setup UART Remapping UART2=USB\n\RX2DTPPS = 25;\n\tRD0PPS = 17;\n' />
+        <init code='ANSELA = 0x00;\nANSELC = 0x00;\n\t//Setup UART Remapping UART2=USB\n\tRX2DTPPS = 25;\n\tRD0PPS = 17;\n' />
     </main>
     <interrupt >
         <enable code='st_bit(INTCON,GIE);\n' />
@@ -485,6 +492,6 @@
         <clock port='0' pin='1' />
         <data port='0' pin='0' />
     </icd>
-	<icd3 type='com' channel='2' baud='115200' rxport='3' rxpin='1' txport='3' txpin='0' autodetect='0' />
+    <icd3 type='com' channel='2' baud='115200' rxport='3' rxpin='1' txport='3' txpin='0' autodetect='0' />
 </test>
 </root>

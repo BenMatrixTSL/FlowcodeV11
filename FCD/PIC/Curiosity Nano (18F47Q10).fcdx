@@ -1,12 +1,19 @@
-<!-- CRC: 90CF26913586BBA787FE92D553771933A22A3246106A63C92C46B8BFCF82E04BE5E44918D1017FFD181EB1D98E7E67C95C413B2CA91EAC2A4D110E8CF1D50D560213E691BE6D3ADB273BFD4967B5A64DF067E7D8958C228AFB774D786D4AEA4EDE65130F649B82F90C3CAEE8E7DA698761996AA32A0BD9B52879A0630667D7A3BACA4157EF35114653428108D99C84D7B441DCAF044B29AC8E357BDDD9B4DB58F60D54BC957402B28556D934278057AF3448E9A44E79B7349C35CF3EA728F1B92DF22F84BBB1B2C4086944AE325796A6FBEF373273FBC577EE70C0B8BEF209213F83CF067309C2E8E846F4249C78524CED7B734AF21E187E -->
-<!-- REVISION: 1.0 -->
+<!-- CRC: 90CF26913586BBA787FE92D553771933A22A3246106A63C92C46B8BFCF82E04BE5E44918D1017FFD181EB1D98E7E67C95C413B2CA91EAC2A4D110E8CF1D50D560213E691BE6D3ADB273BFD4967B5A64D62F72D27E9D34842BF9B97A3AFBBCBEE3027571EAD75915DA9B11F738DF98E159D35A812E7EFE6512879A0630667D7A3BACA4157EF35114653428108D99C84D7B441DCAF044B29AC8E357BDDD9B4DB58F60D54BC957402B28556D934278057AF3448E9A44E79B7349C35CF3EA728F1B92DF22F84BBB1B2C4086944AE325796A69D6E1BF2ABB1A23A0DDF476CAD7ADA6B10E56E0C405B7D3B77651D1BAA682C68D0B2E42AC1619AB5 -->
+<!-- REVISION: 3.0 -->
 <!-- GUID: 5D84965E-5D6D-45DC-AF19-C800C66655B2 -->
-<!-- DATE: 30\09\2025 -->
+<!-- DATE: 06\10\2026 -->
 <!-- DIR: FCD\PIC\Curiosity|Nano|(18F47Q10).fcdx -->
 
 <root>
+<build>
+<programmer exe="$(fcddir)PIC\Batch\pic_curiosity_prog.bat"  params="&quot;$(outdir)&quot; &quot;$(target)&quot; CURIOSITY &quot;$(compilerpico)&quot; " UsesComm="1" />
+</build>
+
 <device file='Curiosity Nano (18F47Q10)' name='18F47Q10' product='PIC' cal='PIC' family='18F' bits='8' >
-    <clock max_speed='64000000' master_divider='4' default='19660800' />
+    <comminfo>
+        <com pid="2175" vid="03EB" devdesc="Curiosity Virtual COM Port" />
+    </comminfo>
+    <clock max_speed='64000000' master_divider='4' default='64000000' />
     <memory >
         <flash bytes='131072' />
         <ram bytes='3615' />
@@ -14,10 +21,10 @@
 
     <configuration address='1' mult='2' >
         <format >
-            <word address='FEXTOSC' value='0' />
-            <word address='RSTOSC' value='1' />
-            <word address='CLKOUTEN' value='0' />
-            <word address='CSWEN' value='0' />
+            <word address='FEXTOSC' value='4' />
+            <word address='RSTOSC' value='0' />
+            <word address='CLKOUTEN' value='1' />
+            <word address='CSWEN' value='1' />
             <word address='FCMEN' value='0' />
             <word address='MCLRE' value='1' />
             <word address='PWRTE' value='0' />
@@ -27,7 +34,7 @@
             <word address='ZCD' value='1' />
             <word address='PPS1WAY' value='1' />
             <word address='STVREN' value='1' />
-            <word address='XINST' value='0' />
+            <word address='XINST' value='1' />
             <word address='WDTCPS' value='0' />
             <word address='WDTE' value='0' />
             <word address='WDTCWS' value='0' />
@@ -771,7 +778,7 @@
     <main >
         <start code='\nvoid main()\n{\n\t#ifdef INTOSCHELPER\n\t\tINTOSCHELPERCODE\n\t#endif\n\n' />
         <end code='\tmainendloop: goto mainendloop;\n}\n\n' />
-        <init code='ANSELA = 0x00;\nANSELB = 0x00;\nANSELC = 0x00;\nANSELD = 0x00;\nANSELE = 0x00;\n\t//Setup UART Remapping UART2=USB\n\RX2PPS = 25;\n\tRD0PPS = 11;\n' />
+        <init code='ANSELA = 0x00;\nANSELB = 0x00;\nANSELC = 0x00;\nANSELD = 0x00;\nANSELE = 0x00;\n\t//Setup UART Remapping UART2=USB\n\tRX2PPS = 25;\n\tRD0PPS = 11;\n' />
     </main>
     <interrupt >
         <enable code='st_bit(INTCON, GIE);\n' />
@@ -790,6 +797,6 @@
         <clock port='1' pin='6' />
         <data port='1' pin='7' />
     </icd>
-	<icd3 type='com' channel='2' baud='115200' rxport='3' rxpin='1' txport='3' txpin='0' autodetect='0' />
+    <icd3 type='com' channel='2' baud='9600' rxport='3' rxpin='1' txport='3' txpin='0' autodetect='0' />
 </test>
 </root>
