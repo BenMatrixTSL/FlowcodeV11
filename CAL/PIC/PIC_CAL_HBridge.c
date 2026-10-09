@@ -1,7 +1,7 @@
-// CRC: 20C35A1E87BE6D5C727502197CD041A7B491451D5915BA6B046B33DA966607B8585891215DADC5BD4545792B0722580C186EF292F6E67B0826724E02FB1A52139A0D46BD3B6AACB92DE4D84759EBB5079CA9DA2D2BBCDAE2A4D1C56CD1580BF583CFCF0458A4E5CB4ED9E12520781B20A03ACA64B46819753590D0E7FE1BB9D03AEE2368CA9D682874C22F2D6CD8A76CB336187FFB563FD52A1B41E30D2B0D4A08DD2BA6D683DDBCF590F929A205C1B4B9E670B98ED97111549D34A0D5AD11F37401AD45BF293031D64C58CD34B9D4EFB338E56A10ABD1BB3D04CF7CD5577C5FE9D77FAA9053C2CE
-// REVISION: 1.0
+// CRC: 20C35A1E87BE6D5C727502197CD041A7B491451D5915BA6B046B33DA966607B8585891215DADC5BD4545792B0722580C186EF292F6E67B0826724E02FB1A52130AA5E8A2F812169EA82655AA92B9A6C440F95D75065804C8A9B11F738DF98E15805532BC85F82B274ED9E12520781B20A03ACA64B46819753590D0E7FE1BB9D03AEE2368CA9D682874C22F2D6CD8A76CB336187FFB563FD52A1B41E30D2B0D4A08DD2BA6D683DDBCF590F929A205C1B4B9E670B98ED97111549D34A0D5AD11F3FD3238E8543E34C20478AF592B1CEF16FA8480BD3CE5D7CEA7E0A38DADB65FFF85A60D01A8F5E6C8
+// REVISION: 3.0
 // GUID: B65572E7-11DC-465A-B5DF-4A9641EA6911
-// DATE: 08\08\2022
+// DATE: 09\10\2026
 // DIR: CAL\PIC\PIC_CAL_HBridge.c
 /*********************************************************************
  *                  Flowcode CAL HBridge File
@@ -833,6 +833,266 @@ CALFUNCTION(void, FC_CAL_HBRIDGE_SetDirection_, (MX_UINT8 direction));
 		}
 
 	#endif	//MX_HBRIDGE_TYPE_X == 4
+
+	#if (MX_HBRIDGE_TYPE == 5)			//PIC18F47K42
+
+		CALFUNCTION(void, FC_CAL_HBRIDGE_Enable_, (void))
+		{
+			#ifdef MX_PWM_REMAPPABLE
+
+				MX_HBRIDGE_A_RPOR_X = MX_HBRIDGE_A_RPOC_X;			//Assign RP Output A
+				MX_HBRIDGE_B_RPOR_X = MX_HBRIDGE_B_RPOC_X;			//Assign RP Output B
+
+				#if (MX_HBRIDGE_MODE_X == 1)						//Pins C&D only available in Full Bridge Mode
+					MX_HBRIDGE_C_RPOR_X = MX_HBRIDGE_C_RPOC_X;		//Assign RP Output C
+					MX_HBRIDGE_D_RPOR_X = MX_HBRIDGE_D_RPOC_X;		//Assign RP Output D
+				#endif
+
+			#endif
+
+			//Set pins to output - This is needed for the HBRIDGE outputs to work
+			FC_CAL_Bit_Low_DDR (MX_HBRIDGE_PORTA, MX_HBRIDGE_TRISA, MX_HBRIDGE_PINA_X);		//HBRIDGE pin A is an output
+			FC_CAL_Bit_Low_DDR (MX_HBRIDGE_PORTB, MX_HBRIDGE_TRISB, MX_HBRIDGE_PINB_X);		//HBRIDGE pin B is an output
+
+			#if (MX_HBRIDGE_MODE_X == 1)
+				FC_CAL_Bit_Low_DDR (MX_HBRIDGE_PORTC, MX_HBRIDGE_TRISC, MX_HBRIDGE_PINC_X);	//HBRIDGE pin C is an output
+				FC_CAL_Bit_Low_DDR (MX_HBRIDGE_PORTD, MX_HBRIDGE_TRISD, MX_HBRIDGE_PIND_X);	//HBRIDGE pin D is an output
+			#endif
+
+			#if (MX_HBRIDGE_CHANNEL_X == 1)
+
+				//Disable PWM functionality
+				CCP1CON = 0;
+
+				//Configure CCP1 Timer - Default Timer2
+				CCPTMRS0 = CCPTMRS0 & ~(0x03);
+				#if (MX_HBRIDGE_TIMER_X == 2)
+				    CCPTMRS0 = CCPTMRS0 | 0x01;
+					PR2 = (MX_HBRIDGE_PERIOD_X >> 2);
+					T2CLK = 0x01;
+					T2CON = MX_HBRIDGE_PRESCALE_X << 4;
+					T2CONbits.ON = 1;
+				#endif
+				#if (MX_HBRIDGE_TIMER_X == 4)
+					CCPTMRS0 = CCPTMRS0 | 0x02;
+					PR4 = (MX_HBRIDGE_PERIOD_X >> 2);
+					T4CLK = 0x01;
+					T4CON = MX_HBRIDGE_PRESCALE_X << 4;
+					T4CONbits.ON = 1;
+				#endif
+				#if (MX_HBRIDGE_TIMER_X == 6)
+					CCPTMRS0 = CCPTMRS0 | 0x03;
+					PR6 = (MX_HBRIDGE_PERIOD_X >> 2);
+					T6CLK = 0x01;
+					T6CON = MX_HBRIDGE_PRESCALE_X << 4;
+					T6CONbits.ON = 1;
+				#endif
+
+				//Initialise the duty to 0%
+				CCPR1L = 0;
+				CCPR1H = 0;
+
+				CCP1CON = 0x9F;							//Enable CCP Peripheral - PWM Mode
+
+				//Initialise rising and falling counters
+				CWG1DBR = MX_HBRIDGE_RC_X;
+				CWG1DBF	= MX_HBRIDGE_FC_X;
+
+				CWG1CON1 = MX_HBRIDGE_POL_X;			//Set output polarity
+				CWG1ISM = 0x01;							//Based on CCP1 period / duty
+
+				//Set the mode and enable
+				#if (MX_HBRIDGE_MODE_X == 0)			//Half Bridge Mode
+				  CWG1CON0 = 0x84;						//Enable CWG HB Mode
+				#endif
+				#if (MX_HBRIDGE_MODE_X == 1)			//Full Bridge Mode
+				  CWG1CON0 = 0x82;						//Enable CWG FB Forwards Mode
+				#endif
+
+			#endif
+
+			#if (MX_HBRIDGE_CHANNEL_X == 2)
+
+				//Disable PWM functionality
+				CCP2CON = 0;
+
+				//Configure CCP2 Timer - Default Timer2
+				CCPTMRS0 = CCPTMRS0 & ~(0x0C);
+				#if (MX_HBRIDGE_TIMER_X == 2)
+					CCPTMRS0 = CCPTMRS0 | 0x04;
+					PR2 = (MX_HBRIDGE_PERIOD_X >> 2);
+					T2CLK = 0x01;
+					T2CON = MX_HBRIDGE_PRESCALE_X << 4;
+					T2CONbits.ON = 1;
+				#endif
+				#if (MX_HBRIDGE_TIMER_X == 4)
+					CCPTMRS0 = CCPTMRS0 | 0x08;
+					PR4 = (MX_HBRIDGE_PERIOD_X >> 2);
+					T4CLK = 0x01;
+					T4CON = MX_HBRIDGE_PRESCALE_X << 4;
+					T4CONbits.ON = 1;
+				#endif
+				#if (MX_HBRIDGE_TIMER_X == 6)
+					CCPTMRS0 = CCPTMRS0 | 0x0C;
+					PR6 = (MX_HBRIDGE_PERIOD_X >> 2);
+					T6CLK = 0x01;
+					T6CON = MX_HBRIDGE_PRESCALE_X << 4;
+					T6CONbits.ON = 1;
+				#endif
+
+				//Initialise the duty to 0%
+				CCPR2L = 0;
+				CCPR2H = 0;
+
+				CCP2CON = 0x9F;							//Enable CCP Peripheral - PWM Mode
+
+				//Initialise rising and falling counters
+				CWG2DBR = MX_HBRIDGE_RC_X;
+				CWG2DBF	= MX_HBRIDGE_FC_X;
+
+				CWG2CON1 = MX_HBRIDGE_POL_X;			//Set output polarity
+				CWG2ISM = 0x02;							//Based on CCP2 period / duty
+
+				//Set the mode and enable
+				#if (MX_HBRIDGE_MODE_X == 0)			//Half Bridge Mode
+				  CWG2CON0 = 0x84;						//Enable CWG HB Mode
+				#endif
+				#if (MX_HBRIDGE_MODE_X == 1)			//Full Bridge Mode
+				  CWG2CON0 = 0x82;						//Enable CWG FB Forwards Mode
+				#endif
+
+			#endif
+
+			#if (MX_HBRIDGE_CHANNEL_X == 3)
+
+				//Disable PWM functionality
+				CCP3CON = 0;
+
+				//Configure CCP3 Timer - Default Timer2
+				CCPTMRS0 = CCPTMRS0 & ~(0x30);
+				#if (MX_HBRIDGE_TIMER_X == 2)
+					CCPTMRS0 = CCPTMRS0 | 0x10;
+					PR2 = (MX_HBRIDGE_PERIOD_X >> 2);
+					T2CLK = 0x01;
+					T2CON = MX_HBRIDGE_PRESCALE_X << 4;
+					T2CONbits.ON = 1;
+				#endif
+				#if (MX_HBRIDGE_TIMER_X == 4)
+					CCPTMRS0 = CCPTMRS0 | 0x20;
+					PR4 = (MX_HBRIDGE_PERIOD_X >> 2);
+					T4CLK = 0x01;
+					T4CON = MX_HBRIDGE_PRESCALE_X << 4;
+					T4CONbits.ON = 1;
+				#endif
+				#if (MX_HBRIDGE_TIMER_X == 6)
+					CCPTMRS0 = CCPTMRS0 | 0x30;
+					PR6 = (MX_HBRIDGE_PERIOD_X >> 2);
+					T6CLK = 0x01;
+					T6CON = MX_HBRIDGE_PRESCALE_X << 4;
+					T6CONbits.ON = 1;
+				#endif
+
+				//Initialise the duty to 0%
+				CCPR3L = 0;
+				CCPR3H = 0;
+
+				CCP3CON = 0x9F;							//Enable CCP Peripheral - PWM Mode
+
+				//Initialise rising and falling counters
+				CWG3DBR = MX_HBRIDGE_RC_X;
+				CWG3DBF	= MX_HBRIDGE_FC_X;
+
+				CWG3CON1 = MX_HBRIDGE_POL_X;			//Set output polarity
+				CWG3ISM = 0x03;							//Based on CCP3 period / duty
+
+				//Set the mode and enable
+				#if (MX_HBRIDGE_MODE_X == 0)			//Half Bridge Mode
+				  CWG3CON0 = 0x84;						//Enable CWG HB Mode
+				#endif
+				#if (MX_HBRIDGE_MODE_X == 1)			//Full Bridge Mode
+				  CWG3CON0 = 0x82;						//Enable CWG FB Forwards Mode
+				#endif
+
+			#endif
+
+		}
+
+		CALFUNCTION(void, FC_CAL_HBRIDGE_Disable_, (void))
+		{
+			#if (MX_HBRIDGE_CHANNEL_X == 1)
+				CCP1CON = 0;			//Disable PWM functionality
+				CWG1CON0 = 0;			//Disable CWG functionality
+			#endif
+
+			#if (MX_HBRIDGE_CHANNEL_X == 2)
+				CCP2CON = 0;			//Disable PWM functionality
+				CWG2CON0 = 0;			//Disable CWG functionality
+			#endif
+
+			#if (MX_HBRIDGE_CHANNEL_X == 3)
+				CCP3CON = 0;			//Disable PWM functionality
+				CWG3CON0 = 0;			//Disable CWG functionality
+			#endif
+
+		}
+
+		CALFUNCTION(void, FC_CAL_HBRIDGE_SetSpeed_, (MX_UINT16 duty))
+		{
+			if (duty > 1023)
+				duty = 1023;
+
+			#if (MX_HBRIDGE_CHANNEL_X == 1)
+				CCPR1H = duty >> 2;				//8MSB HHHHHHHH
+				CCPR1L = duty << 6;				//2LSB LL000000
+			#endif
+
+			#if (MX_HBRIDGE_CHANNEL_X == 2)
+				CCPR2H = duty >> 2;				//8MSB HHHHHHHH
+				CCPR2L = duty << 6;				//2LSB LL000000
+			#endif
+
+			#if (MX_HBRIDGE_CHANNEL_X == 3)
+				CCPR3H = duty >> 2;				//8MSB HHHHHHHH
+				CCPR3L = duty << 6;				//2LSB LL000000
+			#endif
+
+		}
+
+		CALFUNCTION(void, FC_CAL_HBRIDGE_SetDirection_, (MX_UINT8 direction))
+		{
+			#if (MX_HBRIDGE_MODE_X == 1)				//Direction Control Only In Full Bridge Mode
+
+				#if (MX_HBRIDGE_CHANNEL_X == 1)
+
+					if (direction == 0)					//Forwards
+						CWG1CON0 &= 0xFE;
+					else								//Reverse
+						CWG1CON0 |= 0x01;
+
+				#endif
+
+				#if (MX_HBRIDGE_CHANNEL_X == 2)
+
+					if (direction == 0)					//Forwards
+						CWG2CON0 &= 0xFE;
+					else								//Reverse
+						CWG2CON0 |= 0x01;
+
+				#endif
+
+				#if (MX_HBRIDGE_CHANNEL_X == 3)
+
+					if (direction == 0)					//Forwards
+						CWG3CON0 &= 0xFE;
+					else								//Reverse
+						CWG3CON0 |= 0x01;
+
+				#endif
+
+			#endif
+		}
+
+	#endif	//MX_HBRIDGE_TYPE_X == 5
 
   #endif  //MX_HBRIDGE_EN_X == 1
 
