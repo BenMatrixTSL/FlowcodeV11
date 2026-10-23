@@ -1,5 +1,5 @@
 <root>
-<document scada='0' projtype='1' schema='103' license='1,82702381,95CJQR' title='' description='' fcversion='720896' target='PIC16.24F.24FJ128GB202' >
+<document scada='0' projtype='1' schema='103' license='1,82702381,95CJQR' title='' description='' fcversion='720899' target='PIC16.24F.24FJ128GB202' >
 	<config data='!0,ffff!10,ffff!20,ffbf!30,7fff%0,f%4,1%5,1%6,3%8,3%a,1%b,1%c,1%d,1%e,1%10,3%13,3%15,1%16,3%18,7%1b,1%1c,1%1d,1%1f,1%20,3f%28,1%29,3%2b,1%2c,1%2d,1%2e,1%2f,1%30,1f%35,1%36,1%37,1%38,1%3a,f%3e,1%3f,0' clkspd='12000000' simspd='0' usewdt='0' constif='0' Use3V3='0' />
 	<plugins >
 		<dll_models enabled='1' />
@@ -56,8 +56,8 @@
 	</ghost>
 	<components >
 		<settings autoimg='0' center='1' unitscale='0' fixedscale='0' fixedx='25' fixedy='25' fixedz='25' headcode='0' />
-		<definition guid='534a9915-a70f-4f65-8309-e13fedf445e4' vstate='40' vmin='0' vmaj='1' srcleaf='DC_Slider.fcfx' visiblename='Circular Slider' description='A circular slider widget used with the Graphical Manager on the GLCD Layout Editor panel.' category='Graphical Manager Primitives' category2='' category3='' bIs2dOnly='0' bIs3dOnly='0' bIsWysiwyg='1' catenable='1' author='Matrix TSL' manuname='' manucode='' sysinfo='1061131' keywords='' dynamic='1' scadaCompatible='0' embeddedCompatible='1' showmacros='1' group='wysiwyg' iconpath='..\..\..\Icons\Components\glcdLib.png' />
-		<component class_type='root' codename='DC_CircularSlider' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' macronames='$(type)_$(module)__$(macro)' >
+		<definition guid='534a9915-a70f-4f65-8309-e13fedf445e4' vstate='40' vmin='1' vmaj='1' srcleaf='DC_CircularSlider.fcfx' visiblename='Circular Slider' description='A circular slider or circular gauge widget used with the Graphical Manager on the GLCD Layout Editor panel.&#13;&#10;Indicator = Thumb gives a touchable slider, Needle or None gives a gauge driven by SetSliderValue.' category='Graphical Manager Primitives' category2='' category3='' bIs2dOnly='0' bIs3dOnly='0' bIsWysiwyg='1' catenable='1' author='Matrix TSL' manuname='' manucode='' sysinfo='1061131' keywords='' dynamic='1' scadaCompatible='0' embeddedCompatible='1' showmacros='1' group='wysiwyg' iconpath='..\..\..\Icons\Components\glcdLib.png' />
+		<component class_type='root' codename='DC_CircularSlider' panelId='-1' x='0' y='0' z='0' xsz='1' ysz='1' zsz='1' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='0' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' angle2d='0' comp2dType='0' macronames='$(type)_$(module)__$(macro)' >
 			<resources />
 			<properties >
 				<property name='ID' target='ID' typeid='21' hidden='1' locked='1' info='The assigned Object/Widget ID based on ordering' />
@@ -68,24 +68,20 @@
 					<property name='Use Colour Themes' target='UseThemes' typeid='7' hidden='1' locked='0' info='No - Use custom colour, Yes - Uses the themes specified by the Display Manager' />
 					<property name='Object Theme' target='ObjectTheme' typeid='16' hidden='1' locked='0' info='The colour theme used to draw the object/widget' />
 					<property name='Widget Theme' target='WidgetTheme' typeid='16' hidden='1' locked='0' info='The colour theme used to draw the object' />
-					<property name='Orientation' target='Orientation' typeid='16' hidden='0' locked='0' info='' filter='000Horizontal
-001Vertical' />
-					<property name='Line Width' target='LineWidth' typeid='21' hidden='0' locked='0' info='Width of the line in pixels' />
-					<property name='ThumbShape' target='ThumbShape' typeid='16' hidden='0' locked='0' info='' filter='000Rectangle
-001Circle' />
-					<property name='Thumb Width' target='DrawHighlight' typeid='21' hidden='0' locked='0' info='Width of the thumb in pixels' />
-					<property name='Thumb Colour' target='FgColour' typeid='1' hidden='0' locked='0' info='The colour of the outer border line' />
-					<property name='Background Colour' target='BgColour' typeid='1' hidden='0' locked='0' info='The fill colour of the shape' />
-					<property name='Low Line Colour' target='TextColour' typeid='1' hidden='0' locked='0' info='' />
-					<property name='High Line Colour' target='HlColour' typeid='1' hidden='0' locked='0' info='The colour of the drop shadow' />
+					<property name='Orientation' target='Orientation' typeid='16' hidden='1' locked='0' info='' filter='000Horizontal&#10;001Vertical' />
+					<property name='Line Width' target='LineWidth' typeid='21' hidden='0' locked='0' info='Thickness of the arc in pixels' />
+					<property name='ThumbShape' target='ThumbShape' typeid='16' hidden='1' locked='0' info='' filter='000Rectangle&#10;001Circle' />
+					<property name='Indicator' target='Indicator' typeid='16' hidden='0' locked='0' info='Thumb - a touchable circular slider with a round thumb on the arc&#13;&#10;Needle - a circular gauge with a needle from the centre (not touchable)&#13;&#10;None - a circular gauge showing the value as the filled part of the arc (not touchable)' filter='000Thumb&#10;001Needle&#10;002None' />
+					<property name='Indicator Width' target='DrawHighlight' typeid='21' hidden='0' locked='0' info='Diameter of the thumb or width of the needle in pixels' />
+					<property name='Indicator Colour' target='FgColour' typeid='1' hidden='0' locked='0' info='The colour of the thumb or needle' />
+					<property name='Background Colour' target='BgColour' typeid='1' hidden='0' locked='0' info='The fill colour of the disc behind the arc' />
+					<property name='Low Line Colour' target='TextColour' typeid='1' hidden='0' locked='0' info='Arc colour from the start of the arc (bottom left) up to the thumb' />
+					<property name='High Line Colour' target='HlColour' typeid='1' hidden='0' locked='0' info='Arc colour from the thumb to the end of the arc (bottom right)' />
 				</property>
 				<property name='Touch' hidden='0' >
-					<property name='Touchable' target='Touchable' typeid='7' hidden='1' locked='0' info='Determines if the display creator defined area responds to touches
-Touch is detected by using the DisplayManager::CheckForTouch macro with the X,Y coordinates of a touch' />
+					<property name='Touchable' target='Touchable' typeid='7' hidden='1' locked='0' info='Determines if the display creator defined area responds to touches&#13;&#10;Touch is detected by using the DisplayManager::CheckForTouch macro with the X,Y coordinates of a touch' />
 					<property name='Use Callback' target='UseCallback' typeid='7' hidden='1' locked='0' info='Automatically calls the selected macro when the area is touched' />
-					<property name='Touch Callback' target='TouchCallback' typeid='24' hidden='1' locked='0' info='' filter='NamDC_Touched
-DesOptional macro called by the DisplayManager::CheckForTouch component macro when the defined area is touched
-ParHandle|HANDLE|The handle of the component that was clicked' />
+					<property name='Touch Callback' target='TouchCallback' typeid='24' hidden='1' locked='0' info='' filter='NamDC_Touched&#13;&#10;DesOptional macro called by the DisplayManager::CheckForTouch component macro when the defined area is touched&#13;&#10;ParHandle|HANDLE|The handle of the component that was clicked' />
 				</property>
 				<property name='TimerFired' target='TimerFired' typeid='7' hidden='1' locked='0' info='' />
 				<property name='Value Range' hidden='0' >
@@ -97,7 +93,7 @@ ParHandle|HANDLE|The handle of the component that was clicked' />
 			<values >
 				<value target='ID' data='0' />
 				<value target='DisplayManager' data='0' />
-				<value target='ShapeType' data='5' />
+				<value target='ShapeType' data='10' />
 				<value target='Type' data='87' />
 				<value target='UseThemes' data='0' />
 				<value target='ObjectTheme' data='000' />
@@ -105,7 +101,8 @@ ParHandle|HANDLE|The handle of the component that was clicked' />
 				<value target='Orientation' data='000' />
 				<value target='LineWidth' data='10' />
 				<value target='ThumbShape' data='000' />
-				<value target='DrawHighlight' data='40' />
+				<value target='Indicator' data='001' />
+				<value target='DrawHighlight' data='0' />
 				<value target='FgColour' data='0' />
 				<value target='BgColour' data='16777215' />
 				<value target='TextColour' data='9868950' />
@@ -119,13 +116,13 @@ ParHandle|HANDLE|The handle of the component that was clicked' />
 				<value target='MaxValue' data='1.0' />
 			</values>
 			<events >
-				<event class='Components' event='PostInitialise' target='Ev_PostInitialise' />
-				<event class='Components' event='PropertyEx' target='Ev_PropertyEx' />
-				<event class='System' event='User' target='Ev_User' />
-				<event class='Components' event='Property' target='Ev_Property' />
 				<event class='System' event='Timer' target='Ev_Timer' />
 				<event class='Components' event='Initialise' target='Ev_Initialise' />
+				<event class='Components' event='PropertyEx' target='Ev_PropertyEx' />
 				<event class='Components' event='Resize' target='Ev_Resize' />
+				<event class='System' event='User' target='Ev_User' />
+				<event class='Components' event='Property' target='Ev_Property' />
+				<event class='Components' event='PostInitialise' target='Ev_PostInitialise' />
 			</events>
 			<apis >
 				<api name='ModifyColour' alt='ModifyColour' type='1' proto='1' />
@@ -204,7 +201,7 @@ ParHandle|HANDLE|The handle of the component that was clicked' />
 											<argument exp='&quot;Font&quot;' />
 											<argument exp='&quot;&quot;' />
 										</command>
-										<command class_type='loop' title='Loop' type='2' forvar='.idx' exp='.FontCount' >
+										<command class_type='loop' title='Loop' type='2' forvar='.idx' exp='.FontCount' for1='' for3='' >
 											<flowline >
 												<command class_type='sim' title='Built-in Function' macro='Component.Property.GetValue' >
 													<return exp='.Test' />
@@ -236,7 +233,7 @@ ParHandle|HANDLE|The handle of the component that was clicked' />
 				<macro >
 					<flowline name='ModifyColour' description='Changes the theme index of the selected Object or Widget.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<param name='Index' type='u8' description='0=Thumb, 1=Background, 2=Low Line, 3=High Line' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Index' type='u8' description='0=Thumb/Needle, 1=Background, 2=Low Line, 3=High Line' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='R' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='G' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='B' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
@@ -307,11 +304,10 @@ ParHandle|HANDLE|The handle of the component that was clicked' />
 				<macro >
 					<flowline name='Ev_PostInitialise' description='Post-initialisation routine for the component once all components have been initialised' statediag='0' >
 						<return name='Return' type='u32' description='Non-zero to prevent initialisation' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='comment' title='' comment='On loading a project with a touchable widget the drop shadow effect is scaled incorrectly
-Resize after a delay to solve the problem.' textarea='12,0,12,0' />
+						<command class_type='comment' title='' comment='On loading a project with a touchable widget the drop shadow effect is scaled incorrectly&#10;Resize after a delay to solve the problem.' textarea='12,0,12,0' />
 						<command class_type='sim' title='Built-in Function' macro='System.TimerStart' >
 							<argument exp='0' />
-							<argument exp='60000' />
+							<argument exp='10000' />
 						</command>
 					</flowline>
 				</macro>
@@ -411,7 +407,7 @@ Resize after a delay to solve the problem.' textarea='12,0,12,0' />
 							<argument exp='&apos;W&apos;' />
 						</command>
 						<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
-							<argument exp='ShapeLine' />
+							<argument exp='ShapeBackground' />
 							<argument exp='&quot;sTooltipText&quot;' />
 							<argument exp='&quot;Widget ID: &quot; + ToString$(ID)' />
 						</command>
@@ -440,53 +436,72 @@ Resize after a delay to solve the problem.' textarea='12,0,12,0' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='decision' title='Decision' exp='ThumbShape' swap='0' >
+						<command class_type='sim' title='Thumb / hub is a circle' macro='Component.Property.SetValue' >
+							<argument exp='ShapeThumb' />
+							<argument exp='&quot;nType&quot;' />
+							<argument exp='1' />
+						</command>
+						<command class_type='sim' title='Background is a disc' macro='Component.Property.SetValue' >
+							<argument exp='ShapeBackground' />
+							<argument exp='&quot;nType&quot;' />
+							<argument exp='1' />
+						</command>
+						<command class_type='decision' title='Thumb indicator?' exp='Indicator = 0' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
-									<argument exp='ShapeThumb' />
-									<argument exp='&quot;nType&quot;' />
+								<command class_type='sim' title='Circular slider' macro='Component.Property.SetValue' >
+									<argument exp='this' />
+									<argument exp='&quot;ShapeType&quot;' />
+									<argument exp='9' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Circular gauge' macro='Component.Property.SetValue' >
+									<argument exp='this' />
+									<argument exp='&quot;ShapeType&quot;' />
+									<argument exp='10' />
+								</command>
+								<command class_type='sim' title='Gauge is not touchable' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;UseCallback&quot;' />
+									<argument exp='0' />
+								</command>
+								<command class_type='sim' title='Gauge is not touchable' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;TouchCallback&quot;' />
+									<argument exp='0' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='decision' title='No indicator?' exp='Indicator = 2' swap='0' >
+							<flowline >
+								<command class_type='sim' title='No indicator width' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;DrawHighlight&quot;' />
+									<argument exp='0' />
+								</command>
+								<command class_type='decision' title='Force width 0' exp='DrawHighlight &gt; 0' swap='0' >
+									<flowline >
+										<command class_type='sim' title='Arc only' macro='Component.Property.SetValue' >
+											<argument exp='this' />
+											<argument exp='&quot;DrawHighlight&quot;' />
+											<argument exp='0' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
+									<argument exp='this' />
+									<argument exp='&quot;DrawHighlight&quot;' />
 									<argument exp='1' />
 								</command>
-								<command class_type='decision' title='Decision' exp='Orientation' swap='0' >
-									<flowline >
-										<command class_type='sim' title='HorizRectSlider' macro='Component.Property.SetValue' >
-											<argument exp='this' />
-											<argument exp='&quot;ShapeType&quot;' />
-											<argument exp='6' />
-										</command>
-									</flowline>
-									<flowline >
-										<command class_type='sim' title='HorizRectSlider' macro='Component.Property.SetValue' >
-											<argument exp='this' />
-											<argument exp='&quot;ShapeType&quot;' />
-											<argument exp='7' />
-										</command>
-									</flowline>
-								</command>
 							</flowline>
-							<flowline >
-								<command class_type='sim' title='Built-in Function' macro='Component.Property.SetValue' >
-									<argument exp='ShapeThumb' />
-									<argument exp='&quot;nType&quot;' />
-									<argument exp='5' />
-								</command>
-								<command class_type='decision' title='Decision' exp='Orientation' swap='0' >
-									<flowline >
-										<command class_type='sim' title='HorizRectSlider' macro='Component.Property.SetValue' >
-											<argument exp='this' />
-											<argument exp='&quot;ShapeType&quot;' />
-											<argument exp='4' />
-										</command>
-									</flowline>
-									<flowline >
-										<command class_type='sim' title='HorizRectSlider' macro='Component.Property.SetValue' >
-											<argument exp='this' />
-											<argument exp='&quot;ShapeType&quot;' />
-											<argument exp='5' />
-										</command>
-									</flowline>
-								</command>
-							</flowline>
+						</command>
+						<command class_type='sim' title='Indicator colour only when there is one' macro='Component.Property.SetVisible' >
+							<argument exp='this' />
+							<argument exp='&quot;FgColour&quot;' />
+							<argument exp='Indicator &lt; 2' />
 						</command>
 						<command class_type='decision' title='Decision' exp='.DM_Comp &gt; 0' swap='0' >
 							<flowline >
@@ -507,7 +522,7 @@ Resize after a delay to solve the problem.' textarea='12,0,12,0' />
 									<argument exp='.DM_Comp' />
 									<argument exp='&quot;WidgetThemeCount&quot;' />
 								</command>
-								<command class_type='loop' title='Loop' type='2' forvar='.Idx' exp='.ThemeCount' >
+								<command class_type='loop' title='Loop' type='2' forvar='.Idx' exp='.ThemeCount' for1='' for3='' >
 									<flowline >
 										<command class_type='decision' title='Decision' exp='.Idx &lt; 10' swap='0' >
 											<flowline >
@@ -619,8 +634,47 @@ Resize after a delay to solve the problem.' textarea='12,0,12,0' />
 										</command>
 									</flowline>
 								</command>
-								<command class_type='sim' title='Apply to fill' macro='Component.Property.SetValue' >
-									<argument exp='ShapeLine' />
+								<command class_type='sim' title='High arc colour' macro='Component.Property.SetValue' >
+									<argument exp='ComplexShape2' />
+									<argument exp='&quot;colOutline&quot;' />
+									<argument exp='.Colour' />
+								</command>
+								<command class_type='sim' title='High arc end cap' macro='Component.Property.SetValue' >
+									<argument exp='LineEnd2' />
+									<argument exp='&quot;colFill&quot;' />
+									<argument exp='.Colour' />
+								</command>
+								<command class_type='decision' title='Decision' exp='UseThemes' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.TempStr = &quot;Btn_Ll_&quot; + ToString$(WidgetTheme)' />
+										</command>
+										<command class_type='sim' title='Get Theme Lowlight Colour' macro='Component.Property.GetValue' >
+											<return exp='.Colour' />
+											<argument exp='.DM_Comp' />
+											<argument exp='.TempStr' />
+										</command>
+										<command class_type='sim' title='Set Local Low Line Colour' macro='Component.Property.SetValue' >
+											<argument exp='this' />
+											<argument exp='&quot;TextColour&quot;' />
+											<argument exp='.Colour' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='sim' title='Get Local Low Line Colour' macro='Component.Property.GetValue' >
+											<return exp='.Colour' />
+											<argument exp='this' />
+											<argument exp='&quot;TextColour&quot;' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='sim' title='Low arc colour' macro='Component.Property.SetValue' >
+									<argument exp='ComplexShape1' />
+									<argument exp='&quot;colOutline&quot;' />
+									<argument exp='.Colour' />
+								</command>
+								<command class_type='sim' title='Low arc end cap' macro='Component.Property.SetValue' >
+									<argument exp='LineEnd1' />
 									<argument exp='&quot;colFill&quot;' />
 									<argument exp='.Colour' />
 								</command>
@@ -650,7 +704,7 @@ Resize after a delay to solve the problem.' textarea='12,0,12,0' />
 						<command class_type='sim' title='Find First Top Level Component in project' macro='Tree.StepChildHead' >
 							<argument exp='.Return' />
 						</command>
-						<command class_type='loop' title='Loop' type='0' exp='.Return' >
+						<command class_type='loop' title='Loop' type='0' exp='.Return' for1='' for3='' >
 							<flowline >
 								<command class_type='sim' title='Check to see if it is a display manager component' macro='Component.Property.GetValue' >
 									<return exp='.Test' />
@@ -659,7 +713,7 @@ Resize after a delay to solve the problem.' textarea='12,0,12,0' />
 								</command>
 								<command class_type='decision' title='Decision' exp='.Test == 1' swap='0' >
 									<flowline >
-										<command class_type='goto' title='Display Manager Component Found' labelid='0' labelname='' />
+										<command class_type='goto' title='Display Manager Component Found' labelid='0' labelname='' labeltype='0' />
 									</flowline>
 									<flowline />
 								</command>
@@ -668,7 +722,7 @@ Resize after a delay to solve the problem.' textarea='12,0,12,0' />
 								</command>
 							</flowline>
 						</command>
-						<command class_type='label' title='Declare Connection Point' labelid='0' labelname='A' />
+						<command class_type='label' title='Declare Connection Point' labelid='0' labelname='A' labeltype='4' />
 					</flowline>
 				</macro>
 				<macro >
@@ -692,7 +746,7 @@ Resize after a delay to solve the problem.' textarea='12,0,12,0' />
 									</flowline>
 									<flowline />
 								</command>
-								<command class_type='decision' title='Decision' exp='.Property = &quot;DrawHighlight&quot;' swap='0' >
+								<command class_type='decision' title='Decision' exp='(.Property = &quot;DrawHighlight&quot;) || (.Property = &quot;Indicator&quot;)' swap='0' >
 									<flowline >
 										<command class_type='call' title='User Macro' macro='Ev_Resize' >
 											<argument exp='this' />
@@ -709,67 +763,143 @@ Resize after a delay to solve the problem.' textarea='12,0,12,0' />
 				</macro>
 				<macro >
 					<flowline name='Ev_Resize' description='Sent to the mouse target when the user has altered the position of a component child' statediag='0' >
-						<return name='Return' type='u32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<param name='Component' type='h32' description='The component that has been altered' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='PrevPos' type='h32' description='The position of the object before the start of positioning' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Final' type='b1' description='True if this is the end of a drag operation' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Pos' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' >
 							<array size='4' />
 						</local>
+						<local name='D' type='f32' description='Disc diameter' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='CX' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='CY' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='Ra' type='f32' description='Arc centre-line radius' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='M' type='f32' description='Margin for arc/thumb thickness' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='Dx' type='f32' description='Offset to the arc end points' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='LW' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='T' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='Th' type='f32' description='Arc stroke width in shape units' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
 						<command class_type='sim' title='Built-in Function' macro='Panel.Position.GetActual2dPosition' >
 							<return exp='.Pos' />
 							<argument exp='this' />
 						</command>
-						<command class_type='decision' title='Decision' exp='Orientation' swap='0' >
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.LW = LineWidth' />
+							<exp exp='.T = DrawHighlight' />
+						</command>
+						<command class_type='decision' title='Fit the smaller side' exp='.Pos[2] &lt; .Pos[3]' swap='0' >
 							<flowline >
-								<command class_type='sim' title='Built-in Function' macro='Panel.Position.SetActual2dPosition' >
-									<argument exp='ShapeBackground' />
-									<argument exp='.Pos[0]' />
-									<argument exp='.Pos[1]' />
-									<argument exp='.Pos[2]' />
-									<argument exp='.Pos[3]' />
-									<argument exp='1' />
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.D = .Pos[2]' />
 								</command>
-								<command class_type='sim' title='Built-in Function' macro='Panel.Position.SetActual2dPosition' >
-									<argument exp='ShapeLine' />
-									<argument exp='.Pos[0] + ((.Pos[2] / 2) - (Linewidth &gt;&gt; 1))' />
-									<argument exp='.Pos[1]' />
-									<argument exp='LineWidth' />
-									<argument exp='.Pos[3]' />
-									<argument exp='1' />
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.D = .Pos[3]' />
 								</command>
-								<command class_type='sim' title='Built-in Function' macro='Panel.Position.SetActual2dPosition' >
+							</flowline>
+						</command>
+						<command class_type='calculation' title='Centre' >
+							<exp exp='.CX = .Pos[0] + (.Pos[2] / 2.0)' />
+							<exp exp='.CY = .Pos[1] + (.Pos[3] / 2.0)' />
+						</command>
+						<command class_type='sim' title='Background disc' macro='Panel.Position.SetActual2dPosition' >
+							<argument exp='ShapeBackground' />
+							<argument exp='.CX - (.D / 2.0)' />
+							<argument exp='.CY - (.D / 2.0)' />
+							<argument exp='.D' />
+							<argument exp='.D' />
+							<argument exp='1' />
+						</command>
+						<command class_type='decision' title='Thumb or arc, whichever is wider' exp='(Indicator = 0) &amp;&amp; (.T &gt; .LW)' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.M = .T' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.M = .LW' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='calculation' title='Arc radius (matches Prv_DrawRadial)' >
+							<exp exp='.Ra = (.D / 2.0) - (.M / 2.0) - 1.0' />
+						</command>
+						<command class_type='decision' title='Clamp' exp='.Ra &lt; 1.0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.Ra = 1.0' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='sim' title='Low arc' macro='Panel.Position.SetActual2dPosition' >
+							<argument exp='ComplexShape1' />
+							<argument exp='.CX - .Ra' />
+							<argument exp='.CY - .Ra' />
+							<argument exp='.Ra * 2.0' />
+							<argument exp='.Ra * 2.0' />
+							<argument exp='1' />
+						</command>
+						<command class_type='sim' title='High arc' macro='Panel.Position.SetActual2dPosition' >
+							<argument exp='ComplexShape2' />
+							<argument exp='.CX - .Ra' />
+							<argument exp='.CY - .Ra' />
+							<argument exp='.Ra * 2.0' />
+							<argument exp='.Ra * 2.0' />
+							<argument exp='1' />
+						</command>
+						<command class_type='calculation' title='Stroke width in shape units: fThickness is measured against the 100 unit half-size, so 1 pixel = 50 / Ra units' >
+							<exp exp='.Th = (.LW * 50.0) / .Ra' />
+						</command>
+						<command class_type='sim' title='Arc thickness' macro='Component.Property.SetValue' >
+							<argument exp='ComplexShape1' />
+							<argument exp='&quot;fThickness&quot;' />
+							<argument exp='.Th' />
+						</command>
+						<command class_type='sim' title='Arc thickness' macro='Component.Property.SetValue' >
+							<argument exp='ComplexShape2' />
+							<argument exp='&quot;fThickness&quot;' />
+							<argument exp='.Th' />
+						</command>
+						<command class_type='calculation' title='cos/sin 45 degrees' >
+							<exp exp='.Dx = .Ra * 0.70711' />
+						</command>
+						<command class_type='sim' title='Round cap at arc start (bottom left)' macro='Panel.Position.SetActual2dPosition' >
+							<argument exp='LineEnd1' />
+							<argument exp='.CX - .Dx - (.LW / 2.0)' />
+							<argument exp='.CY + .Dx - (.LW / 2.0)' />
+							<argument exp='.LW' />
+							<argument exp='.LW' />
+							<argument exp='1' />
+						</command>
+						<command class_type='sim' title='Round cap at arc end (bottom right)' macro='Panel.Position.SetActual2dPosition' >
+							<argument exp='LineEnd2' />
+							<argument exp='.CX + .Dx - (.LW / 2.0)' />
+							<argument exp='.CY + .Dx - (.LW / 2.0)' />
+							<argument exp='.LW' />
+							<argument exp='.LW' />
+							<argument exp='1' />
+						</command>
+						<command class_type='decision' title='Thumb indicator?' exp='Indicator = 0' swap='0' >
+							<flowline >
+								<command class_type='sim' title='Thumb at the 50% position (top)' macro='Panel.Position.SetActual2dPosition' >
 									<argument exp='ShapeThumb' />
-									<argument exp='.Pos[0]' />
-									<argument exp='.Pos[1] + (.Pos[3] - DrawHighlight)' />
-									<argument exp='.Pos[2]' />
-									<argument exp='DrawHighlight' />
+									<argument exp='.CX - (.T / 2.0)' />
+									<argument exp='.CY - .Ra - (.T / 2.0)' />
+									<argument exp='.T' />
+									<argument exp='.T' />
 									<argument exp='1' />
 								</command>
 							</flowline>
 							<flowline >
-								<command class_type='sim' title='Built-in Function' macro='Panel.Position.SetActual2dPosition' >
-									<argument exp='ShapeBackground' />
-									<argument exp='.Pos[0]' />
-									<argument exp='.Pos[1]' />
-									<argument exp='.Pos[2]' />
-									<argument exp='.Pos[3]' />
-									<argument exp='1' />
-								</command>
-								<command class_type='sim' title='Built-in Function' macro='Panel.Position.SetActual2dPosition' >
-									<argument exp='ShapeLine' />
-									<argument exp='.Pos[0]' />
-									<argument exp='.Pos[1] + ((.Pos[3]/2) - (LineWidth &gt;&gt; 1))' />
-									<argument exp='.Pos[2]' />
-									<argument exp='LineWidth' />
-									<argument exp='1' />
-								</command>
-								<command class_type='sim' title='Built-in Function' macro='Panel.Position.SetActual2dPosition' >
+								<command class_type='sim' title='Needle hub at the centre (0 size when no needle)' macro='Panel.Position.SetActual2dPosition' >
 									<argument exp='ShapeThumb' />
-									<argument exp='.Pos[0]' />
-									<argument exp='.Pos[1]' />
-									<argument exp='DrawHighlight' />
-									<argument exp='.Pos[3]' />
+									<argument exp='.CX - .T' />
+									<argument exp='.CY - .T' />
+									<argument exp='.T * 2.0' />
+									<argument exp='.T * 2.0' />
 									<argument exp='1' />
 								</command>
 							</flowline>
@@ -787,7 +917,7 @@ Resize after a delay to solve the problem.' textarea='12,0,12,0' />
 					</flowline>
 				</macro>
 			</macros>
-			<component class_type='ref' guid='2558f53b-a5c3-460a-b6c4-3e42d94efe34' vmin='0' vmaj='1' codename='DisplayManagerDummy1' panelId='0' x='42.5' y='-42.5' z='1' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='2' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+			<component class_type='ref' guid='2558f53b-a5c3-460a-b6c4-3e42d94efe34' vmin='0' vmaj='1' codename='DisplayManagerDummy1' panelId='0' x='42.5' y='-42.5' z='1' xsz='25' ysz='25' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='2' poslock='1' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' angle2d='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values />
@@ -796,7 +926,7 @@ Resize after a delay to solve the problem.' textarea='12,0,12,0' />
 				<variables />
 				<macros />
 			</component>
-			<component class_type='ref' guid='ccdce31d-a1a3-437a-88ba-5431745ddf6e' vmin='0' vmaj='2' codename='MapFunction1' panelId='0' x='62.5' y='-32.5' z='0' xsz='1.11607' ysz='1.11607' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='0' solid='1' layer='2' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='0' >
+			<component class_type='ref' guid='ccdce31d-a1a3-437a-88ba-5431745ddf6e' vmin='0' vmaj='2' codename='MapFunction1' panelId='0' x='62.5' y='-32.5' z='0' xsz='1.11607' ysz='1.11607' zsz='25' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='0' scadavisible='1' interactive='0' solid='1' layer='2' poslock='0' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' angle2d='0' comp2dType='0' >
 				<resources />
 				<properties />
 				<values />
@@ -805,11 +935,11 @@ Resize after a delay to solve the problem.' textarea='12,0,12,0' />
 				<variables />
 				<macros />
 			</component>
-			<component class_type='GdiShape' codename='ShapeBackground' panelId='0' x='145' y='-185' z='2' xsz='53.125' ysz='53.125' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='2' poslock='8' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='46' >
+			<component class_type='GdiShape' codename='ShapeBackground' panelId='0' x='145' y='-185' z='2' xsz='53.125' ysz='53.125' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='2' poslock='8' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' angle2d='0' comp2dType='46' >
 				<resources />
 				<properties />
 				<values >
-					<value target='nType' data='5' />
+					<value target='nType' data='1' />
 					<value target='iSubStyle' data='0' />
 					<value target='iRounding' data='25' />
 					<value target='colFill' data='9868950' />
@@ -824,22 +954,20 @@ Resize after a delay to solve the problem.' textarea='12,0,12,0' />
 					<value target='colOutlineGradient' data='0' />
 					<value target='nOutlineStyle' data='0' />
 					<value target='nOutlineOpacity' data='1.0' />
-					<value target='bTooltipEnable' data='0' />
-					<value target='sTooltipText' data='' />
-					<value target='sTooltipDesc' data='' />
+					<value target='bTooltipEnable' data='1' />
+					<value target='sTooltipText' data='Widget ID: 0' />
+					<value target='sTooltipDesc' data='Circular Slider' />
 				</values>
 				<events />
 				<apis />
 				<variables />
 				<macros />
 			</component>
-			<component class_type='GdiComplexShape' codename='ComplexShape1' panelId='0' x='145' y='-185' z='3' xsz='46.875' ysz='46.875' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='2' poslock='8' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='46' >
+			<component class_type='GdiComplexShape' codename='ComplexShape1' panelId='0' x='145' y='-185' z='3' xsz='46.875' ysz='46.875' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='2' poslock='8' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' angle2d='0' comp2dType='46' >
 				<resources />
 				<properties />
 				<values >
-					<value target='sCode' data='SS,-70,70
-AA, 0, -100, 100, 100
-' />
+					<value target='sCode' data='SS,-70,70&#13;&#10;AA, 0, -100, 100, 100&#13;&#10;' />
 					<value target='bClosed' data='0' />
 					<value target='nStyle' data='0' />
 					<value target='bFixedScale' data='0' />
@@ -859,13 +987,11 @@ AA, 0, -100, 100, 100
 				<variables />
 				<macros />
 			</component>
-			<component class_type='GdiComplexShape' codename='ComplexShape2' panelId='0' x='145' y='-185' z='4' xsz='46.875' ysz='46.875' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='2' poslock='8' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='46' >
+			<component class_type='GdiComplexShape' codename='ComplexShape2' panelId='0' x='145' y='-185' z='4' xsz='46.875' ysz='46.875' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='2' poslock='8' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' angle2d='0' comp2dType='46' >
 				<resources />
 				<properties />
 				<values >
-					<value target='sCode' data='SS,0,-100
-AA, 70, 70, 100, 100
-' />
+					<value target='sCode' data='SS,0,-100&#13;&#10;AA, 70, 70, 100, 100&#13;&#10;' />
 					<value target='bClosed' data='0' />
 					<value target='nStyle' data='0' />
 					<value target='bFixedScale' data='0' />
@@ -885,11 +1011,11 @@ AA, 70, 70, 100, 100
 				<variables />
 				<macros />
 			</component>
-			<component class_type='GdiShape' codename='ShapeThumb' panelId='0' x='145' y='-110' z='5' xsz='6.25' ysz='6.25' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='2' poslock='8' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='46' >
+			<component class_type='GdiShape' codename='ShapeThumb' panelId='0' x='145' y='-110' z='5' xsz='6.25' ysz='6.25' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='2' poslock='8' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' angle2d='0' comp2dType='46' >
 				<resources />
 				<properties />
 				<values >
-					<value target='nType' data='  1' />
+					<value target='nType' data='1' />
 					<value target='iSubStyle' data='0' />
 					<value target='iRounding' data='25' />
 					<value target='colFill' data='65535' />
@@ -913,7 +1039,7 @@ AA, 70, 70, 100, 100
 				<variables />
 				<macros />
 			</component>
-			<component class_type='GdiShape' codename='LineEnd1' panelId='0' x='91' y='-236' z='6' xsz='6.25' ysz='6.25' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='2' poslock='8' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='46' >
+			<component class_type='GdiShape' codename='LineEnd1' panelId='0' x='91' y='-236' z='6' xsz='6.25' ysz='6.25' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='2' poslock='8' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' angle2d='0' comp2dType='46' >
 				<resources />
 				<properties />
 				<values >
@@ -941,7 +1067,7 @@ AA, 70, 70, 100, 100
 				<variables />
 				<macros />
 			</component>
-			<component class_type='GdiShape' codename='LineEnd2' panelId='0' x='199' y='-236' z='7' xsz='6.25' ysz='6.25' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='2' poslock='8' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' comp2dType='46' >
+			<component class_type='GdiShape' codename='LineEnd2' panelId='0' x='199' y='-236' z='7' xsz='6.25' ysz='6.25' zsz='0' xang='0' yang='0' zang='0' xquat='0' yquat='0' zquat='0' wquat='1' visible='1' scadavisible='1' interactive='1' solid='1' layer='2' poslock='8' ancTop='0' ancBottom='0' ancLeft='0' ancRight='0' ancMinX='0' ancMinY='0' angle2d='0' comp2dType='46' >
 				<resources />
 				<properties />
 				<values >
@@ -975,10 +1101,10 @@ AA, 70, 70, 100, 100
 	<keymap />
 	<panel2d shadows='0' lighting='2' brightness='0' >
 		<background rgb='7292207' img='' style='0' />
-		<camera xe='0' ye='0' ze='1446.63' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
-		<viewport dx='376' dy='396' zoom='31.4496' fix_topleft='0' />
+		<camera xe='0' ye='0' ze='2012.2' xt='0' yt='0' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='523' dy='396' zoom='31.4496' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='0' />
-		<winpos ID='7005' RectRecentFloat='724,181,1378,735' RectRecentDocked='0,0,376,419' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7005' RectRecentFloat='724,181,1378,735' RectRecentDocked='0,0,523,419' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel2d>
 	<panel3d shadows='0' lighting='2' brightness='0' perspective='1' >
 		<background rgb='8409120' img='' style='0' />
@@ -991,30 +1117,30 @@ AA, 70, 70, 100, 100
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='0,630,650,1080' RectRecentDocked='0,0,210,842' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='0,630,650,1080' RectRecentDocked='0,0,236,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='1' >
 		<panel2d_0 id='0' name='2D Panel' type='0' >
-			<winpos ID='1171' RectRecentFloat='997,302,1391,681' RectRecentDocked='969,141,1465,1007' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
+			<winpos ID='1171' RectRecentFloat='330,-480,724,-101' RectRecentDocked='957,141,1480,1061' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='1' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
 			<background fill='72057594035033043' showgrid='1' gridstyle='1' gridsize='10' gridbrush='71776119075691740' snaptogrid='1' fitcomp='0' disp_x='300' disp_y='400' scale='100' disp_col='16777215' />
 		</panel2d_0>
 	</panels2d>
 	<layout >
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4QMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4QMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Timer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4QMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4QMAAGMDAAA' zoom='95' scrollx='0' scrolly='2331' flags='0' />
-		<view type='0' name='FindDisplayManager' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4QMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_User' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4QMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='FindGLCDBase' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4QMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetID' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4QMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Resize' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4QMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_PostInitialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4QMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Start' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4QMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='ModifyColour' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4QMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='GetSliderValue' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4QMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetSliderValue' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4QMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_PropertyEx' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAA4QMAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAEgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAEgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Timer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAEgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAEgQAAJMDAAA' zoom='95' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='FindDisplayManager' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAEgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_User' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAEgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='FindGLCDBase' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAEgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetID' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAEgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Resize' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAEgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_PostInitialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAEgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Start' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAEgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='ModifyColour' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAEgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetSliderValue' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAEgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetSliderValue' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAEgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_PropertyEx' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAEgQAAJMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>
