@@ -988,7 +988,7 @@ Returns 1 if the WebSocket connection is now open, 0 if the request was rejected
 						<command class_type='calculation' title='Reset the parser' >
 							<exp exp='.Return = 0' />
 							<exp exp='.Target = &quot;SEC-WEBSOCKET-KEY:&quot;' />
-							<exp exp='.OptTarget[0] = 0' />
+							<exp exp='.OptTarget = &quot;OPTIONS &quot;' />
 							<exp exp='.RxTempBuff[0] = 0' />
 							<exp exp='.state = 0' />
 							<exp exp='.m = 0' />
@@ -1172,7 +1172,7 @@ Returns 1 if the WebSocket connection is now open, 0 if the request was rejected
 						<command class_type='calculation' title='Terminate the key' >
 							<exp exp='.Key[.ki] = 0' />
 						</command>
-						<command class_type='decision' title='OPTIONS preflight request?' exp='.IsOptions = 1' swap='0' >
+						<command class_type='decision' title='OPTIONS preflight request?' exp='(.IsOptions = 1) &amp;&amp; (.got = 1)' swap='0' >
 							<flowline >
 								<command class_type='comment' title='' comment='Chrome sends this before the WebSocket GET when the page origin (eg. file:// or a public origin) is less trusted than the local/private target IP. It must see 200/204 with Access-Control-Allow-Private-Network: true or it cancels the connection before the real handshake is even attempted.' textarea='12,0,12,0' />
 								<command class_type='call' title='Send 204 response' component='NetworkComms1' macro='Send' >
@@ -1260,9 +1260,14 @@ Returns 1 if the WebSocket connection is now open, 0 if the request was rejected
 						</command>
 						<command class_type='decision' title='Handshake failed?' exp='(.Return = 0) &amp;&amp; (.Handled = 0)' swap='0' >
 							<flowline >
-								<command class_type='call' title='Send 400 response' component='NetworkComms1' macro='Send' >
-									<argument exp='&quot;HTTP/1.1 400 Bad Request\r\n\r\n&quot;' />
-									<argument exp='28' />
+								<command class_type='decision' title='Client sent a request?' exp='.got = 1' swap='0' >
+									<flowline >
+									<command class_type='call' title='Send 400 response' component='NetworkComms1' macro='Send' >
+										<argument exp='&quot;HTTP/1.1 400 Bad Request\r\n\r\n&quot;' />
+										<argument exp='28' />
+									</command>
+									</flowline>
+									<flowline />
 								</command>
 								<command class_type='call' title='Close the accepted connection' component='NetworkComms1' macro='AcceptClose' />
 								<command class_type='sim' title='Simulation' macro='Debug.PrintLn' >
@@ -1357,7 +1362,7 @@ Returns 0 = nothing, 2 = data frame received, 3 = client closed, 4 = ping receiv
 							<return exp='.n' />
 							<argument exp='.Hdr' />
 							<argument exp='2' />
-							<argument exp='Timeout' />
+							<argument exp='0' />
 						</command>
 						<command class_type='decision' title='Frame available?' exp='.n &gt; 0' swap='0' >
 							<flowline >

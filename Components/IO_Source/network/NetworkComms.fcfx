@@ -503,79 +503,91 @@ Returns the number of bytes received.' statediag='0' >
 									</flowline>
 									<flowline />
 								</command>
-								<command class_type='decision' title='W5100 &amp; W5500' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='RemapIndex = 3' swap='0' >
+								<command class_type='decision' title='W5100 &amp; W5500' exp='RemapIndex = 3' swap='0' >
 									<flowline >
-										<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='TxDataStart' swap='0' >
-											<flowline >
-												<command class_type='call' title='Call Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='TCP_IP_EB023_00_2_Dummy1' macro='TxEnd' >
-													<argument exp='TCPIP_Channel' />
-												</command>
-												<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
-													<exp exp='TxDataStart = 0' />
-												</command>
-												<command class_type='delay' title='Delay' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='1' type='1' />
-											</flowline>
-											<flowline />
+								<command class_type='decision' title='Decision' exp='TxDataStart' swap='0' >
+									<flowline >
+										<command class_type='call' title='Call Component Macro' component='TCP_IP_EB023_00_2_Dummy1' macro='TxEnd' >
+											<argument exp='TCPIP_Channel' />
 										</command>
-										<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='RxCount = 0' swap='0' >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='TxDataStart = 0' />
+										</command>
+										<command class_type='delay' title='Delay' exp='1' type='1' />
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='decision' title='Decision' exp='RxCount = 0' swap='0' >
+									<flowline >
+										<command class_type='call' title='Call Component Macro' component='TCP_IP_EB023_00_2_Dummy1' macro='RxDataAvailable' >
+											<return exp='.DataAvailable' />
+											<argument exp='TCPIP_Channel' />
+										</command>
+										<command class_type='loop' title='Wait up to Timeout ms for data' type='0' exp='(.Timeout &gt; 0) &amp;&amp; (.DataAvailable = 0)' for1='' for3='' >
 											<flowline >
-												<command class_type='call' title='Call Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='TCP_IP_EB023_00_2_Dummy1' macro='RxDataAvailable' >
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='.Timeout = .Timeout - 1' />
+												</command>
+												<command class_type='delay' title='Delay' exp='1' type='1' />
+												<command class_type='call' title='Call Component Macro' component='TCP_IP_EB023_00_2_Dummy1' macro='RxDataAvailable' >
 													<return exp='.DataAvailable' />
 													<argument exp='TCPIP_Channel' />
 												</command>
 											</flowline>
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.DataAvailable = 1' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='decision' title='Decision' exp='.DataAvailable' swap='0' >
+									<flowline >
+										<command class_type='decision' title='Decision' exp='RxCount = 0' swap='0' >
 											<flowline >
-												<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
-													<exp exp='.DataAvailable = 1' />
+												<command class_type='call' title='Call Component Macro' component='TCP_IP_EB023_00_2_Dummy1' macro='RxDataSize' >
+													<return exp='.Return' />
+													<argument exp='TCPIP_Channel' />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='.Return = RxCount' />
 												</command>
 											</flowline>
 										</command>
-										<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='.DataAvailable' swap='0' >
+										<command class_type='decision' title='Decision' exp='.Return &gt; .Count' swap='0' >
 											<flowline >
-												<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='RxCount = 0' swap='0' >
-													<flowline >
-														<command class_type='call' title='Call Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='TCP_IP_EB023_00_2_Dummy1' macro='RxDataSize' >
-															<return exp='.Return' />
-															<argument exp='TCPIP_Channel' />
-														</command>
-													</flowline>
-													<flowline >
-														<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
-															<exp exp='.Return = RxCount' />
-														</command>
-													</flowline>
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='RxCount = .Return - .Count' />
 												</command>
-												<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='.Return &gt; .Count' swap='0' >
-													<flowline >
-														<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
-															<exp exp='RxCount = .Return - .Count' />
-														</command>
-														<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
-															<exp exp='.Return = .Count' />
-														</command>
-													</flowline>
-													<flowline >
-														<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
-															<exp exp='RxCount = 0' />
-														</command>
-													</flowline>
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='.Return = .Count' />
 												</command>
-												<command class_type='call' title='Call Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='TCP_IP_EB023_00_2_Dummy1' macro='RxReadArray' >
+											</flowline>
+											<flowline >
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='RxCount = 0' />
+												</command>
+											</flowline>
+										</command>
+										<command class_type='call' title='Call Component Macro' component='TCP_IP_EB023_00_2_Dummy1' macro='RxReadArray' >
+											<argument exp='TCPIP_Channel' />
+											<argument exp='.Data' />
+											<argument exp='.Return' />
+										</command>
+										<command class_type='decision' title='All of the captured data consumed: release it to the chip' exp='RxCount = 0' swap='0' >
+											<flowline >
+												<command class_type='call' title='Call Component Macro' component='TCP_IP_EB023_00_2_Dummy1' macro='RxFlushData' >
 													<argument exp='TCPIP_Channel' />
-													<argument exp='.Data' />
-													<argument exp='.Return' />
-												</command>
-												<command class_type='decision' title='Decision' disable='1' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='RxCount = 0' swap='0' >
-													<flowline >
-														<command class_type='call' title='Call Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='TCP_IP_EB023_00_2_Dummy1' macro='RxFlushData' >
-															<argument exp='TCPIP_Channel' />
-														</command>
-													</flowline>
-													<flowline />
 												</command>
 											</flowline>
 											<flowline />
 										</command>
+									</flowline>
+									<flowline />
+								</command>
 									</flowline>
 									<flowline />
 								</command>
@@ -1461,6 +1473,7 @@ Open socket inside listen or connect instead' textarea='12,0,12,0' cmdcolor='167
 					<flowline name='AcceptOpen' description='Required for systems where there can be multiple incoming threads
 Returns 1 if there is incoming comms requiring a new thread, else returns 0' statediag='0' >
 						<return name='Return' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='status' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
 							<exp exp='.Return = 0' />
 						</command>
@@ -1499,33 +1512,58 @@ Returns 1 if there is incoming comms requiring a new thread, else returns 0' sta
 									</flowline>
 									<flowline />
 								</command>
-								<command class_type='decision' title='EB023 v2 WIZ810' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='RemapIndex = 3' swap='0' >
+								<command class_type='decision' title='EB023 v2 WIZ810' exp='RemapIndex = 3' swap='0' >
 									<flowline >
-										<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='closed' swap='0' >
-											<flowline >
-												<command class_type='native' title='Code' disable='1' ccode='FCD_047b1_UART1__SendChar(&apos;O&apos;);' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' language='C' />
-												<command class_type='call' title='Call Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='TCP_IP_EB023_00_2_Dummy1' macro='CreateTCPSocket' >
-													<return exp='.Return' />
-													<argument exp='TCPIP_Channel' />
-													<argument exp='Port' />
-												</command>
-												<command class_type='call' title='Call Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='TCP_IP_EB023_00_2_Dummy1' macro='TCPListen' >
-													<argument exp='TCPIP_Channel' />
-												</command>
-												<command class_type='call' title='Call Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='TCP_IP_EB023_00_2_Dummy1' macro='RxFlushData' >
-													<argument exp='TCPIP_Channel' />
-												</command>
-												<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
-													<exp exp='closed = 0' />
-													<exp exp='rxcount = 0' />
-													<exp exp='TxDataStart = 0' />
-												</command>
-											</flowline>
-											<flowline />
+								<command class_type='decision' title='Socket needs (re)opening?' exp='closed' swap='0' >
+									<flowline >
+										<command class_type='call' title='Call Component Macro' component='TCP_IP_EB023_00_2_Dummy1' macro='CreateTCPSocket' >
+											<return exp='.Return' />
+											<argument exp='TCPIP_Channel' />
+											<argument exp='Port' />
 										</command>
-										<command class_type='calculation' title='Accept Open Not Supported - Skip' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
+										<command class_type='call' title='Call Component Macro' component='TCP_IP_EB023_00_2_Dummy1' macro='TCPListen' >
+											<argument exp='TCPIP_Channel' />
+										</command>
+										<command class_type='call' title='Call Component Macro' component='TCP_IP_EB023_00_2_Dummy1' macro='RxFlushData' >
+											<argument exp='TCPIP_Channel' />
+										</command>
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='closed = 0' />
+											<exp exp='rxcount = 0' />
+											<exp exp='TxDataStart = 0' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='call' title='Read socket state' component='TCP_IP_EB023_00_2_Dummy1' macro='GetSocketStatus' >
+									<return exp='.status' />
+									<argument exp='TCPIP_Channel' />
+								</command>
+								<command class_type='decision' title='Client connected? (Sn_SR = ESTABLISHED 0x17)' exp='.status = 0x17' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Accepted' >
 											<exp exp='.Return = 1' />
 										</command>
+									</flowline>
+									<flowline >
+										<command class_type='decision' title='Socket dead? (not LISTEN 0x14 / INIT 0x13 / SYN 0x15,0x16)' exp='(.status != 0x14) &amp;&amp; (.status != 0x13) &amp;&amp; (.status != 0x15) &amp;&amp; (.status != 0x16)' swap='0' >
+											<flowline >
+												<command class_type='call' title='Call Component Macro' component='TCP_IP_EB023_00_2_Dummy1' macro='TCPClose' >
+													<argument exp='TCPIP_Channel' />
+												</command>
+												<command class_type='calculation' title='Reopen on the next call' >
+													<exp exp='closed = 1' />
+													<exp exp='.Return = 0' />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='calculation' title='Still listening' >
+													<exp exp='.Return = 0' />
+												</command>
+											</flowline>
+										</command>
+									</flowline>
+								</command>
 									</flowline>
 									<flowline />
 								</command>
@@ -1623,27 +1661,27 @@ Returns 1 if there is incoming comms requiring a new thread, else returns 0' sta
 									<flowline />
 									<flowline />
 								</command>
-								<command class_type='decision' title='EB023 v2 WIZ810' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='RemapIndex = 3' swap='0' >
+								<command class_type='decision' title='EB023 v2 WIZ810' exp='RemapIndex = 3' swap='0' >
 									<flowline >
-										<command class_type='decision' title='Decision' cmdcolor='16098537' cmdcolor_sec='9519237' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='TxDataStart' swap='0' >
-											<flowline >
-												<command class_type='native' title='Code' disable='1' ccode='FCD_047b1_UART1__SendChar(&apos;C&apos;);' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' language='C' />
-												<command class_type='call' title='Call Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='TCP_IP_EB023_00_2_Dummy1' macro='TxEnd' >
-													<argument exp='TCPIP_Channel' />
-												</command>
-												<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
-													<exp exp='TxDataStart = 0' />
-												</command>
-												<command class_type='delay' title='Delay' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' exp='1' type='1' />
-												<command class_type='call' title='Call Component Macro' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' component='TCP_IP_EB023_00_2_Dummy1' macro='TCPClose' >
-													<argument exp='TCPIP_Channel' />
-												</command>
-												<command class_type='calculation' title='Calculation' cmdcolor='16772726' cmdcolor_sec='13404690' cmdcolor_txt='8355711' cmdgradient='1' cmdopacity='1' >
-													<exp exp='closed = 1' />
-												</command>
-											</flowline>
-											<flowline />
+								<command class_type='decision' title='Decision' exp='TxDataStart' swap='0' >
+									<flowline >
+										<command class_type='call' title='Call Component Macro' component='TCP_IP_EB023_00_2_Dummy1' macro='TxEnd' >
+											<argument exp='TCPIP_Channel' />
 										</command>
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='TxDataStart = 0' />
+										</command>
+										<command class_type='delay' title='Delay' exp='1' type='1' />
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='call' title='Call Component Macro' component='TCP_IP_EB023_00_2_Dummy1' macro='TCPClose' >
+									<argument exp='TCPIP_Channel' />
+								</command>
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='closed = 1' />
+									<exp exp='rxcount = 0' />
+								</command>
 									</flowline>
 									<flowline />
 								</command>
