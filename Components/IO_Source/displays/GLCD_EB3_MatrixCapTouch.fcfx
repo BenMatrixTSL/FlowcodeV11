@@ -3049,6 +3049,9 @@ The binary font file must be placed onto the SD card inside the Fonts folder.' s
 						</param>
 						<param name='CharacterSpacing' type='u8' description='Number of pixel columns added in between each character' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='SpaceWidth' type='u8' description='Number of pixel columns used for a space character' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='MirrorMsg' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='60' />
+						</local>
 						<command class_type='calculation' title='Calculation' >
 							<exp exp='CommandTX[0] = &apos;+&apos;' />
 							<exp exp='CommandTX[1] = .Font' />
@@ -3059,6 +3062,17 @@ The binary font file must be placed onto the SD card inside the Fonts folder.' s
 						</command>
 						<command class_type='call' title='User Macro' macro='SendCommandWithString' >
 							<argument exp='.Str' />
+						</command>
+						<command class_type='decision' title='Tell the web mirror which font file to use' exp='EB3_WebMirror' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Load Font action (Type 6)' >
+									<exp exp='.MirrorMsg = &quot;{\&quot;ID\&quot;:&quot; + ToString$(.Font) + &quot;,\&quot;Type\&quot;:6,\&quot;f\&quot;:\&quot;&quot; + .Str + &quot;\&quot;,\&quot;c\&quot;:&quot; + ToString$(.CharacterSpacing) + &quot;,\&quot;s\&quot;:&quot; + ToString$(.SpaceWidth) + &quot;}&quot;' />
+								</command>
+								<command class_type='call' title='User Macro' macro='SendBinaryAction' >
+									<argument exp='.MirrorMsg' />
+								</command>
+							</flowline>
+							<flowline />
 						</command>
 					</flowline>
 				</macro>
@@ -3489,7 +3503,8 @@ e.g. File, Bluetooth, Wifi' textarea='12,0,12,0' />
 20, 20.0, 02-08-24, MW, Added an aditional font count of 4, total font count of 8;
 23, 23.0, 28-11-24, MW, Fixed error trap for lines when y = 0;
 23, 23.0, 28-11-24, MW, Fixed shapes colour background  not working;
-23, 23.0, 29-11-24, MW, Fixed initial background colour not working; 
+23, 23.0, 29-11-24, MW, Fixed initial background colour not working;
+41, 41.0, 29-10-26, BR, SetExternalFont sends the font file to the web mirror (Load Font action Type 6), WiFi now connects before the fonts are set;
 
 ' textarea='12,0,12,0' />
 						<command class_type='sim' title='Built-in Function' macro='Component.Property.SetVisible' >
@@ -3656,6 +3671,13 @@ FileInit must be called first to ensure the File System is setup.' statediag='0'
 							<argument exp='1' />
 						</command>
 						<command class_type='call' title='User Macro' macro='ClearDisplay' />
+						<command class_type='decision' title='Connect before the fonts so SetExternalFont can tell the web mirror' exp='EB3_WebMirror' swap='0' >
+							<flowline >
+								<command class_type='call' title='User Macro' macro='ConnectWifi' />
+								<command class_type='delay' title='Delay' exp='5' type='2' />
+							</flowline>
+							<flowline />
+						</command>
 						<command class_type='call' title='User Macro' macro='SetExternalFont' >
 							<argument exp='0' />
 							<argument exp='FontFile0' />
@@ -3738,13 +3760,6 @@ FileInit must be called first to ensure the File System is setup.' statediag='0'
 								</command>
 							</flowline>
 							<flowline folded='1' totalfolded='1' />
-						</command>
-						<command class_type='decision' title='Decision' exp='EB3_WebMirror' swap='0' >
-							<flowline >
-								<command class_type='call' title='User Macro' macro='ConnectWifi' />
-								<command class_type='delay' title='Delay' exp='5' type='2' />
-							</flowline>
-							<flowline />
 						</command>
 					</flowline>
 				</macro>

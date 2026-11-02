@@ -2184,6 +2184,17 @@
 														<command class_type='calculation' title='Calculation' >
 															<exp exp='.Coord = .X - X[.ID] - (DrawHighlight[.ID - MaxObjects] &gt;&gt; 1)' />
 														</command>
+														<command class_type='calculation' title='Calculation' >
+															<exp exp='.Fval = FLOAT .Coord / FLOAT (W[.ID] - DrawHighlight[.ID - MaxObjects])' />
+														</command>
+														<command class_type='call' title='User Macro' macro='SetSliderValue' >
+															<argument exp='.ID + 1' />
+															<argument exp='.Fval' />
+															<argument exp='1' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
 												<command class_type='decision' title='Circular slider?' exp='Type[.ID] = Widget_CircularSlider' swap='0' >
 													<flowline >
 														<command class_type='calculation' title='Offset from centre' >
@@ -2220,17 +2231,6 @@
 																</command>
 															</flowline>
 															<flowline />
-														</command>
-														<command class_type='call' title='User Macro' macro='SetSliderValue' >
-															<argument exp='.ID + 1' />
-															<argument exp='.Fval' />
-															<argument exp='1' />
-														</command>
-													</flowline>
-													<flowline />
-												</command>
-														<command class_type='calculation' title='Calculation' >
-															<exp exp='.Fval = FLOAT .Coord / FLOAT (W[.ID] - DrawHighlight[.ID - MaxObjects])' />
 														</command>
 														<command class_type='call' title='User Macro' macro='SetSliderValue' >
 															<argument exp='.ID + 1' />
@@ -4014,6 +4014,348 @@
 					</flowline>
 				</macro>
 				<macro >
+					<flowline name='Prv_DrawNeedle' description='Draws a gauge needle from CX,CY of length Len pixels at angle Deg (degrees, clockwise on screen, 0 = right, 90 = down),&#10;Thick pixels wide, in the current foreground colour.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='CX' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='CY' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Deg' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Len' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Thick' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Ang' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='Dx' type='f32' description='Unit vector along needle' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='Dy' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='Px' type='f32' description='Unit vector across needle' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='Py' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='Off' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
+						<local name='K' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.Ang = FLOAT .Deg * 0.0174533' />
+							<exp exp='.Dx = cos (.Ang)' />
+							<exp exp='.Dy = sin (.Ang)' />
+							<exp exp='.Px = 0.0 - .Dy' />
+							<exp exp='.Py = .Dx' />
+						</command>
+						<command class_type='decision' title='Minimum 1 pixel' exp='.Thick &lt; 1' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.Thick = 1' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='loop' title='One line per pixel of width' type='2' forvar='.K' exp='.Thick' for1='' for3='' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.Off = FLOAT .K - FLOAT (.Thick &gt;&gt; 1)' />
+								</command>
+								<command class_type='call' title='User Macro' macro='Prv_Line' >
+									<argument exp='Round (FLOAT .CX + (.Off * .Px))' />
+									<argument exp='Round (FLOAT .CY + (.Off * .Py))' />
+									<argument exp='Round (FLOAT .CX + (.Dx * FLOAT .Len) + (.Off * .Px))' />
+									<argument exp='Round (FLOAT .CY + (.Dy * FLOAT .Len) + (.Off * .Py))' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='Prv_DrawRadial' description='Draws or updates a circular slider (type 9) or circular gauge (type 10).&#10;The arc sweeps 270 degrees clockwise from the bottom-left (135 degrees) leaving a gap at the bottom.&#10;Colours: 0=Thumb/needle, 1=Background disc, 2=Low side of arc, 3=High side of arc.&#10;LineWidth = arc thickness. DrawHighlight = thumb diameter (slider) or needle width (gauge, 0 = no needle).&#10;After the first draw only the arc under the old thumb and between the old and new positions is redrawn,&#10;skipping the part hidden by the new thumb, so the update is quick and flickers as little as possible.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='ID' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='WI' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Gauge' type='b1' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='CX' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='CY' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Rout' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='R' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Thumb' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Lw' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='T' type='s16' description='Thumb radius, 0 for a gauge' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Rr' type='s16' description='Half the arc thickness' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Deg' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='OldDeg' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Lo' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Hi' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='A' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Delta' type='s16' description='Degrees either side of the old thumb to redraw' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Dn' type='s16' description='Degrees either side of the new thumb hidden underneath it' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Seam' type='s16' description='Degrees past the new thumb so the high colour overlaps the low as on a full draw' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Step' type='u8' description='Arc circle spacing, 0 = automatic' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='Ang' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.WI = .ID - MaxObjects' />
+						</command>
+						<command class_type='decision' title='Value changed?' exp='Value[.WI] != OldValue[.WI]' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.Gauge = (Type[.ID] == Widget_Gauge)' />
+									<exp exp='.Thumb = DrawHighlight[.WI]' />
+									<exp exp='.Lw = LineWidth[.ID]' />
+									<exp exp='.Rr = .Lw &gt;&gt; 1' />
+									<exp exp='.CX = X[.ID] + (W[.ID] &gt;&gt; 1)' />
+									<exp exp='.CY = Y[.ID] + (H[.ID] &gt;&gt; 1)' />
+								</command>
+								<command class_type='decision' title='Decision' exp='W[.ID] &lt; H[.ID]' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.Rout = W[.ID] &gt;&gt; 1' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.Rout = H[.ID] &gt;&gt; 1' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='decision' title='Gauge has a needle instead of a thumb' exp='.Gauge' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.T = 0' />
+											<exp exp='.R = .Rout - .Rr - 1' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.T = .Thumb &gt;&gt; 1' />
+										</command>
+										<command class_type='decision' title='Decision' exp='.Thumb &gt; .Lw' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='.R = .Rout - .T - 1' />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='.R = .Rout - .Rr - 1' />
+												</command>
+											</flowline>
+										</command>
+									</flowline>
+								</command>
+								<command class_type='decision' title='Decision' exp='.R &lt; 1' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.R = 1' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.Deg = 135 + fmul(270, Value[.WI])' />
+									<exp exp='.Dn = 0' />
+									<exp exp='.Step = 0' />
+								</command>
+								<command class_type='call' title='User Macro' macro='Prv_SetColour' >
+									<argument exp='.ID' />
+									<argument exp='1' />
+									<argument exp='0' />
+								</command>
+								<command class_type='decision' title='First draw?' exp='OldValue[.WI] &gt; 1.0' swap='0' >
+									<flowline >
+										<command class_type='call' title='User Macro' macro='Prv_Circle' >
+											<argument exp='.CX' />
+											<argument exp='.CY' />
+											<argument exp='.Rout' />
+											<argument exp='0' />
+											<argument exp='1' />
+										</command>
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.Lo = 135' />
+											<exp exp='.Hi = 405' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='comment' title='' comment='Remove the old thumb or needle' textarea='12,0,12,0' />
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.OldDeg = 135 + fmul(270, OldValue[.WI])' />
+										</command>
+										<command class_type='decision' title='Decision' exp='.Gauge' swap='0' >
+											<flowline >
+												<command class_type='decision' title='Decision' exp='.Thumb &gt; 0' swap='0' >
+													<flowline >
+														<command class_type='call' title='User Macro' macro='Prv_DrawNeedle' >
+															<argument exp='.CX' />
+															<argument exp='.CY' />
+															<argument exp='.OldDeg' />
+															<argument exp='.R - .Rr - 1' />
+															<argument exp='.Thumb' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='.Ang = FLOAT .OldDeg * 0.0174533' />
+												</command>
+												<command class_type='call' title='User Macro' macro='Prv_Circle' >
+													<argument exp='Round (FLOAT .CX + (FLOAT .R * cos (.Ang)))' />
+													<argument exp='Round (FLOAT .CY + (FLOAT .R * sin (.Ang)))' />
+													<argument exp='.T' />
+													<argument exp='0' />
+													<argument exp='1' />
+												</command>
+											</flowline>
+										</command>
+										<command class_type='comment' title='' comment='Redraw the arc under the old thumb and between the old and new positions' textarea='12,0,12,0' />
+										<command class_type='calculation' title='Degrees to redraw' >
+											<exp exp='.Delta = ((.T + 1) * 58) / .R + 1' />
+											<exp exp='.Seam = ((.Rr + 1) * 58) / .R + 1' />
+											<exp exp='.Lo = .OldDeg - .Delta' />
+											<exp exp='.Hi = .OldDeg + .Delta' />
+										</command>
+										<command class_type='decision' title='New thumb hides the arc near its centre?' exp='.T &gt; (.Rr + 1)' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='.Dn = ((.T - .Rr - 1) * 58) / .R' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+										<command class_type='decision' title='Decision' exp='.Deg &lt; .Lo' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='.Lo = .Deg' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+										<command class_type='decision' title='Decision' exp='(.Deg + .Seam) &gt; .Hi' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='.Hi = .Deg + .Seam' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+										<command class_type='decision' title='Decision' exp='.Lo &lt; 135' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='.Lo = 135' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+										<command class_type='decision' title='Decision' exp='.Hi &gt; 405' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='.Hi = 405' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+										<command class_type='decision' title='Thick arc? Closer circles so no old colour shows at the edges' exp='.Lw &gt;= 8' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='.Step = .Lw &gt;&gt; 2' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.A = .Deg - .Dn' />
+								</command>
+								<command class_type='decision' title='Decision' exp='.A &gt; .Hi' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.A = .Hi' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='decision' title='Low side of the arc' exp='.A &gt; .Lo' swap='0' >
+									<flowline >
+										<command class_type='call' title='User Macro' macro='Prv_SetColour' >
+											<argument exp='.ID' />
+											<argument exp='2' />
+											<argument exp='0' />
+										</command>
+										<command class_type='call' title='User Macro' macro='Prv_DrawArc' >
+											<argument exp='.CX' />
+											<argument exp='.CY' />
+											<argument exp='.R' />
+											<argument exp='.Lo' />
+											<argument exp='.A' />
+											<argument exp='.Lw' />
+											<argument exp='.Step' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.A = .Deg + .Dn' />
+								</command>
+								<command class_type='decision' title='Decision' exp='.A &lt; .Lo' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.A = .Lo' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='decision' title='High side of the arc' exp='.Hi &gt; .A' swap='0' >
+									<flowline >
+										<command class_type='call' title='User Macro' macro='Prv_SetColour' >
+											<argument exp='.ID' />
+											<argument exp='3' />
+											<argument exp='0' />
+										</command>
+										<command class_type='call' title='User Macro' macro='Prv_DrawArc' >
+											<argument exp='.CX' />
+											<argument exp='.CY' />
+											<argument exp='.R' />
+											<argument exp='.A' />
+											<argument exp='.Hi' />
+											<argument exp='.Lw' />
+											<argument exp='.Step' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='call' title='User Macro' macro='Prv_SetColour' >
+									<argument exp='.ID' />
+									<argument exp='0' />
+									<argument exp='0' />
+								</command>
+								<command class_type='decision' title='Decision' exp='.Gauge' swap='0' >
+									<flowline >
+										<command class_type='decision' title='Decision' exp='.Thumb &gt; 0' swap='0' >
+											<flowline >
+												<command class_type='call' title='User Macro' macro='Prv_DrawNeedle' >
+													<argument exp='.CX' />
+													<argument exp='.CY' />
+													<argument exp='.Deg' />
+													<argument exp='.R - .Rr - 1' />
+													<argument exp='.Thumb' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.Ang = FLOAT .Deg * 0.0174533' />
+										</command>
+										<command class_type='call' title='User Macro' macro='Prv_Circle' >
+											<argument exp='Round (FLOAT .CX + (FLOAT .R * cos (.Ang)))' />
+											<argument exp='Round (FLOAT .CY + (FLOAT .R * sin (.Ang)))' />
+											<argument exp='.T' />
+											<argument exp='0' />
+											<argument exp='1' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='OldValue[.WI] = Value[.WI]' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
 					<flowline name='Prv_DrawArc' description='Draws an arc of radius R centred on CX,CY from Deg0 to Deg1 (degrees, clockwise on screen, 0 = right,&#10;90 = down, 270 = up; Deg1 may exceed 360) in the current foreground colour, Thick pixels wide.&#10;Thickness 1-2 uses short line segments, 3+ uses overlapping solid circles. Uses one sin/cos pair then&#10;incremental rotation so it stays fast on small targets.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<param name='CX' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
@@ -4022,7 +4364,7 @@
 						<param name='Deg0' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Deg1' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Thick' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<local name='Step' type='u16' description='Pixels between points' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Step' type='u16' description='Pixels between circles, 0 = automatic (half the thickness)' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='N' type='u16' description='Number of steps' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Ang' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
 						<local name='Ca' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
@@ -4036,17 +4378,22 @@
 						<local name='Y1' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='decision' title='Non-empty arc?' exp='.Deg1 &gt; .Deg0' swap='0' >
 							<flowline >
-								<command class_type='decision' title='Thick stroke?' exp='.Thick &gt; 2' swap='0' >
+								<command class_type='decision' title='Automatic spacing?' exp='.Step = 0' swap='0' >
 									<flowline >
-										<command class_type='calculation' title='Calculation' >
-											<exp exp='.Step = .Thick &gt;&gt; 1' />
+										<command class_type='decision' title='Thick stroke?' exp='.Thick &gt; 2' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='.Step = .Thick &gt;&gt; 1' />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='.Step = 3' />
+												</command>
+											</flowline>
 										</command>
 									</flowline>
-									<flowline >
-										<command class_type='calculation' title='Calculation' >
-											<exp exp='.Step = 3' />
-										</command>
-									</flowline>
+									<flowline />
 								</command>
 								<command class_type='calculation' title='Step count' >
 									<exp exp='.N = (FLOAT .R * FLOAT (.Deg1 - .Deg0) * 0.0174533) / FLOAT .Step' />
@@ -4120,350 +4467,6 @@
 											<exp exp='.Y0 = .Y1' />
 										</command>
 									</flowline>
-								</command>
-							</flowline>
-							<flowline />
-						</command>
-					</flowline>
-				</macro>
-				<macro >
-					<flowline name='Prv_DrawNeedle' description='Draws a gauge needle from CX,CY of length Len pixels at angle Deg (degrees, same convention as Prv_DrawArc),&#10;Thick pixels wide, in the current foreground colour.' statediag='0' >
-						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<param name='CX' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='CY' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Deg' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Len' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Thick' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<local name='Ang' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
-						<local name='Dx' type='f32' description='Unit vector along needle' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
-						<local name='Dy' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
-						<local name='Px' type='f32' description='Unit vector across needle' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
-						<local name='Py' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
-						<local name='Off' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
-						<local name='K' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='calculation' title='Calculation' >
-							<exp exp='.Ang = FLOAT .Deg * 0.0174533' />
-							<exp exp='.Dx = cos (.Ang)' />
-							<exp exp='.Dy = sin (.Ang)' />
-							<exp exp='.Px = 0.0 - .Dy' />
-							<exp exp='.Py = .Dx' />
-						</command>
-						<command class_type='decision' title='Minimum 1 pixel' exp='.Thick &lt; 1' swap='0' >
-							<flowline >
-								<command class_type='calculation' title='Calculation' >
-									<exp exp='.Thick = 1' />
-								</command>
-							</flowline>
-							<flowline />
-						</command>
-						<command class_type='loop' title='One line per pixel of width' type='2' forvar='.K' exp='.Thick' for1='' for3='' >
-							<flowline >
-								<command class_type='calculation' title='Calculation' >
-									<exp exp='.Off = FLOAT .K - FLOAT (.Thick &gt;&gt; 1)' />
-								</command>
-								<command class_type='call' title='User Macro' macro='Prv_Line' >
-									<argument exp='Round (FLOAT .CX + (.Off * .Px))' />
-									<argument exp='Round (FLOAT .CY + (.Off * .Py))' />
-									<argument exp='Round (FLOAT .CX + (.Dx * FLOAT .Len) + (.Off * .Px))' />
-									<argument exp='Round (FLOAT .CY + (.Dy * FLOAT .Len) + (.Off * .Py))' />
-								</command>
-							</flowline>
-						</command>
-					</flowline>
-				</macro>
-				<macro >
-					<flowline name='Prv_DrawRadial' description='Draws or updates a circular slider (type 9) or circular gauge (type 10).&#10;The arc sweeps 270 degrees clockwise from the bottom-left (135 degrees) leaving a gap at the bottom.&#10;Colours: 0=Thumb/needle, 1=Background disc, 2=Low side of arc, 3=High side of arc.&#10;LineWidth = arc thickness. DrawHighlight = thumb diameter (slider) or needle width (gauge, 0 = no needle).&#10;Only the changed part of the arc and the thumb/needle are redrawn after the first draw.' statediag='0' >
-						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<param name='ID' type='u16' description='0-indexed widget' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<local name='WI' type='u16' description='Widget index' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<local name='Gauge' type='b1' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<local name='CX' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<local name='CY' type='s16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<local name='Rout' type='u16' description='Outer radius' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<local name='R' type='s16' description='Arc radius' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<local name='Thumb' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<local name='Lw' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<local name='Deg' type='s16' description='New angle' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<local name='OldDeg' type='s16' description='Old angle' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<local name='Lo' type='s16' description='Arc repaint start' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<local name='Hi' type='s16' description='Arc repaint end' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<local name='Delta' type='s16' description='Angular half width of thumb' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<local name='Ang' type='f32' description='' isconst='0' isHidden='0' isinit='0' usrinit='0.0' setinit='' />
-						<command class_type='calculation' title='Calculation' >
-							<exp exp='.WI = .ID - MaxObjects' />
-						</command>
-						<command class_type='decision' title='Value changed?' exp='Value[.WI] != OldValue[.WI]' swap='0' >
-							<flowline >
-								<command class_type='calculation' title='Geometry' >
-									<exp exp='.Gauge = (Type[.ID] == Widget_Gauge)' />
-									<exp exp='.Thumb = DrawHighlight[.WI]' />
-									<exp exp='.Lw = LineWidth[.ID]' />
-									<exp exp='.CX = X[.ID] + (W[.ID] &gt;&gt; 1)' />
-									<exp exp='.CY = Y[.ID] + (H[.ID] &gt;&gt; 1)' />
-								</command>
-								<command class_type='decision' title='Fit the smaller side' exp='W[.ID] &lt; H[.ID]' swap='0' >
-									<flowline >
-										<command class_type='calculation' title='Calculation' >
-											<exp exp='.Rout = W[.ID] &gt;&gt; 1' />
-										</command>
-									</flowline>
-									<flowline >
-										<command class_type='calculation' title='Calculation' >
-											<exp exp='.Rout = H[.ID] &gt;&gt; 1' />
-										</command>
-									</flowline>
-								</command>
-								<command class_type='decision' title='Keep thumb inside the disc' exp='.Thumb &gt; .Lw' swap='0' >
-									<flowline >
-										<command class_type='calculation' title='Calculation' >
-											<exp exp='.R = .Rout - (.Thumb &gt;&gt; 1) - 1' />
-										</command>
-									</flowline>
-									<flowline >
-										<command class_type='calculation' title='Calculation' >
-											<exp exp='.R = .Rout - (.Lw &gt;&gt; 1) - 1' />
-										</command>
-									</flowline>
-								</command>
-								<command class_type='decision' title='Gauge arc hugs the edge' exp='.Gauge' swap='0' >
-									<flowline >
-										<command class_type='calculation' title='Calculation' >
-											<exp exp='.R = .Rout - (.Lw &gt;&gt; 1) - 1' />
-										</command>
-									</flowline>
-									<flowline />
-								</command>
-								<command class_type='decision' title='Clamp radius' exp='.R &lt; 1' swap='0' >
-									<flowline >
-										<command class_type='calculation' title='Calculation' >
-											<exp exp='.R = 1' />
-										</command>
-									</flowline>
-									<flowline />
-								</command>
-								<command class_type='calculation' title='New angle' >
-									<exp exp='.Deg = 135 + fmul(270, Value[.WI])' />
-								</command>
-								<command class_type='call' title='Background colour' macro='Prv_SetColour' >
-									<argument exp='.ID' />
-									<argument exp='1' />
-									<argument exp='0' />
-								</command>
-								<command class_type='decision' title='First draw?' exp='OldValue[.WI] &gt; 1.0' swap='0' >
-									<flowline >
-										<command class_type='comment' title='' comment='First draw - paint the disc and the whole arc' textarea='12,0,12,0' />
-										<command class_type='call' title='Background disc' macro='Prv_Circle' >
-											<argument exp='.CX' />
-											<argument exp='.CY' />
-											<argument exp='.Rout' />
-											<argument exp='0' />
-											<argument exp='1' />
-										</command>
-										<command class_type='calculation' title='Calculation' >
-											<exp exp='.Lo = 135' />
-											<exp exp='.Hi = 405' />
-										</command>
-									</flowline>
-									<flowline >
-										<command class_type='comment' title='' comment='Update - erase old thumb/needle and work out which part of the arc to repaint' textarea='12,0,12,0' />
-										<command class_type='calculation' title='Calculation' >
-											<exp exp='.OldDeg = 135 + fmul(270, OldValue[.WI])' />
-										</command>
-										<command class_type='decision' title='Gauge?' exp='.Gauge' swap='0' >
-											<flowline >
-												<command class_type='decision' title='Needle?' exp='.Thumb &gt; 0' swap='0' >
-													<flowline >
-														<command class_type='call' title='Erase old needle' macro='Prv_DrawNeedle' >
-															<argument exp='.CX' />
-															<argument exp='.CY' />
-															<argument exp='.OldDeg' />
-															<argument exp='.R - (.Lw &gt;&gt; 1) - 1' />
-															<argument exp='.Thumb' />
-														</command>
-													</flowline>
-													<flowline />
-												</command>
-											</flowline>
-											<flowline >
-												<command class_type='calculation' title='Calculation' >
-													<exp exp='.Ang = FLOAT .OldDeg * 0.0174533' />
-												</command>
-												<command class_type='call' title='Erase old thumb' macro='Prv_Circle' >
-													<argument exp='Round (FLOAT .CX + (FLOAT .R * cos (.Ang)))' />
-													<argument exp='Round (FLOAT .CY + (FLOAT .R * sin (.Ang)))' />
-													<argument exp='.Thumb &gt;&gt; 1' />
-													<argument exp='0' />
-													<argument exp='1' />
-												</command>
-											</flowline>
-										</command>
-										<command class_type='calculation' title='Half width in degrees' >
-											<exp exp='.Delta = (((.Thumb &gt;&gt; 1) + (.Lw &gt;&gt; 1) + 2) * 58) / .R + 1' />
-										</command>
-										<command class_type='decision' title='Which way did it move?' exp='.Deg &gt; .OldDeg' swap='0' >
-											<flowline >
-												<command class_type='calculation' title='Calculation' >
-													<exp exp='.Lo = .OldDeg - .Delta' />
-													<exp exp='.Hi = .Deg + .Delta' />
-												</command>
-											</flowline>
-											<flowline >
-												<command class_type='calculation' title='Calculation' >
-													<exp exp='.Lo = .Deg - .Delta' />
-													<exp exp='.Hi = .OldDeg + .Delta' />
-												</command>
-											</flowline>
-										</command>
-										<command class_type='decision' title='Clamp start' exp='.Lo &lt; 135' swap='0' >
-											<flowline >
-												<command class_type='calculation' title='Calculation' >
-													<exp exp='.Lo = 135' />
-												</command>
-											</flowline>
-											<flowline />
-										</command>
-										<command class_type='decision' title='Clamp end' exp='.Hi &gt; 405' swap='0' >
-											<flowline >
-												<command class_type='calculation' title='Calculation' >
-													<exp exp='.Hi = 405' />
-												</command>
-											</flowline>
-											<flowline />
-										</command>
-										<command class_type='comment' title='' comment='Erase the window with a slightly thicker stroke so no fringe of the old colour survives,&#10;then widen the repaint window so the joins land on dots of the same colour' textarea='12,0,12,0' />
-										<command class_type='call' title='Erase window in background colour' macro='Prv_DrawArc' >
-											<argument exp='.CX' />
-											<argument exp='.CY' />
-											<argument exp='.R' />
-											<argument exp='.Lo' />
-											<argument exp='.Hi' />
-											<argument exp='.Lw + 2' />
-										</command>
-										<command class_type='calculation' title='Widen by the erase overshoot' >
-											<exp exp='.Delta = (((.Lw &gt;&gt; 1) + 2) * 58) / .R + 1' />
-											<exp exp='.Lo = .Lo - .Delta' />
-											<exp exp='.Hi = .Hi + .Delta' />
-										</command>
-										<command class_type='decision' title='Clamp start' exp='.Lo &lt; 135' swap='0' >
-											<flowline >
-												<command class_type='calculation' title='Calculation' >
-													<exp exp='.Lo = 135' />
-												</command>
-											</flowline>
-											<flowline />
-										</command>
-										<command class_type='decision' title='Clamp end' exp='.Hi &gt; 405' swap='0' >
-											<flowline >
-												<command class_type='calculation' title='Calculation' >
-													<exp exp='.Hi = 405' />
-												</command>
-											</flowline>
-											<flowline />
-										</command>
-									</flowline>
-								</command>
-								<command class_type='comment' title='' comment='Low side of the arc (start to value)' textarea='12,0,12,0' />
-								<command class_type='decision' title='Visible?' exp='.Deg &gt; .Lo' swap='0' >
-									<flowline >
-										<command class_type='call' title='Low colour' macro='Prv_SetColour' >
-											<argument exp='.ID' />
-											<argument exp='2' />
-											<argument exp='0' />
-										</command>
-										<command class_type='decision' title='Clip to repaint window' exp='.Deg &lt; .Hi' swap='0' >
-											<flowline >
-												<command class_type='call' title='User Macro' macro='Prv_DrawArc' >
-													<argument exp='.CX' />
-													<argument exp='.CY' />
-													<argument exp='.R' />
-													<argument exp='.Lo' />
-													<argument exp='.Deg' />
-													<argument exp='.Lw' />
-												</command>
-											</flowline>
-											<flowline >
-												<command class_type='call' title='User Macro' macro='Prv_DrawArc' >
-													<argument exp='.CX' />
-													<argument exp='.CY' />
-													<argument exp='.R' />
-													<argument exp='.Lo' />
-													<argument exp='.Hi' />
-													<argument exp='.Lw' />
-												</command>
-											</flowline>
-										</command>
-									</flowline>
-									<flowline />
-								</command>
-								<command class_type='comment' title='' comment='High side of the arc (value to end)' textarea='12,0,12,0' />
-								<command class_type='decision' title='Visible?' exp='.Hi &gt; .Deg' swap='0' >
-									<flowline >
-										<command class_type='call' title='High colour' macro='Prv_SetColour' >
-											<argument exp='.ID' />
-											<argument exp='3' />
-											<argument exp='0' />
-										</command>
-										<command class_type='decision' title='Clip to repaint window' exp='.Deg &gt; .Lo' swap='0' >
-											<flowline >
-												<command class_type='call' title='User Macro' macro='Prv_DrawArc' >
-													<argument exp='.CX' />
-													<argument exp='.CY' />
-													<argument exp='.R' />
-													<argument exp='.Deg' />
-													<argument exp='.Hi' />
-													<argument exp='.Lw' />
-												</command>
-											</flowline>
-											<flowline >
-												<command class_type='call' title='User Macro' macro='Prv_DrawArc' >
-													<argument exp='.CX' />
-													<argument exp='.CY' />
-													<argument exp='.R' />
-													<argument exp='.Lo' />
-													<argument exp='.Hi' />
-													<argument exp='.Lw' />
-												</command>
-											</flowline>
-										</command>
-									</flowline>
-									<flowline />
-								</command>
-								<command class_type='comment' title='' comment='Thumb or needle' textarea='12,0,12,0' />
-								<command class_type='call' title='Thumb colour' macro='Prv_SetColour' >
-									<argument exp='.ID' />
-									<argument exp='0' />
-									<argument exp='0' />
-								</command>
-								<command class_type='decision' title='Gauge?' exp='.Gauge' swap='0' >
-									<flowline >
-										<command class_type='decision' title='Needle?' exp='.Thumb &gt; 0' swap='0' >
-											<flowline >
-												<command class_type='call' title='User Macro' macro='Prv_DrawNeedle' >
-													<argument exp='.CX' />
-													<argument exp='.CY' />
-													<argument exp='.Deg' />
-													<argument exp='.R - (.Lw &gt;&gt; 1) - 1' />
-													<argument exp='.Thumb' />
-												</command>
-											</flowline>
-											<flowline />
-										</command>
-									</flowline>
-									<flowline >
-										<command class_type='calculation' title='Calculation' >
-											<exp exp='.Ang = FLOAT .Deg * 0.0174533' />
-										</command>
-										<command class_type='call' title='User Macro' macro='Prv_Circle' >
-											<argument exp='Round (FLOAT .CX + (FLOAT .R * cos (.Ang)))' />
-											<argument exp='Round (FLOAT .CY + (FLOAT .R * sin (.Ang)))' />
-											<argument exp='.Thumb &gt;&gt; 1' />
-											<argument exp='0' />
-											<argument exp='1' />
-										</command>
-									</flowline>
-								</command>
-								<command class_type='calculation' title='Calculation' >
-									<exp exp='OldValue[.WI] = Value[.WI]' />
 								</command>
 							</flowline>
 							<flowline />
@@ -7080,7 +7083,7 @@
 				<macro >
 					<flowline name='Main' description='' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<command class_type='comment' title='' comment='Component Version Information;&#10;13, 2.0, 22-05-24, BR, Added text alignment options;&#10;14, 2.1, 14-06-24, BR, Renamed Button to Widget to better include things like sliders;&#10;15, 2.1, 26-07-24, BR, Added SetTextFloat and AddTextNumber macros;&#10;16, 2.1, 29-07-24, BR, Renamed Themes to ObjectThemes and WidgetThemes;&#10;17, 2.1, 29-07-24, BR, Added CreateTextField macro which automates creating a simple textbox;&#10;18, 2.1, 06-08-24, BR, Fixed a problem with updating values, theme, text on IDs;&#10;19, 2.1, 06-08-24, BR, Textfield now uses hidden object type instead of rectangle;&#10;20, 2.1, 06-08-24, BR, Fixed a problem where slider value could be set with out of range value;&#10;21, 2.1, 06-08-24, BR, Fixed problem where SetTextNumber would reset an ESP32;&#10;22, 22.0, 19-03-25, MW, Added keypad creation function;&#10;23, 22.1, 23-10-26, BR, Split DrawItem into Prv_ drawing macros, added Widget_CircularSlider (9) and Widget_Gauge (10);&#10;' textarea='12,0,12,0' />
+						<command class_type='comment' title='' comment='Component Version Information;&#10;13, 2.0, 22-05-24, BR, Added text alignment options;&#10;14, 2.1, 14-06-24, BR, Renamed Button to Widget to better include things like sliders;&#10;15, 2.1, 26-07-24, BR, Added SetTextFloat and AddTextNumber macros;&#10;16, 2.1, 29-07-24, BR, Renamed Themes to ObjectThemes and WidgetThemes;&#10;17, 2.1, 29-07-24, BR, Added CreateTextField macro which automates creating a simple textbox;&#10;18, 2.1, 06-08-24, BR, Fixed a problem with updating values, theme, text on IDs;&#10;19, 2.1, 06-08-24, BR, Textfield now uses hidden object type instead of rectangle;&#10;20, 2.1, 06-08-24, BR, Fixed a problem where slider value could be set with out of range value;&#10;21, 2.1, 06-08-24, BR, Fixed problem where SetTextNumber would reset an ESP32;&#10;22, 22.0, 19-03-25, MW, Added keypad creation function;&#10;23, 22.1, 23-10-26, BR, Split DrawItem into Prv_ drawing macros, added Widget_CircularSlider (9) and Widget_Gauge (10);&#10;24, 22.2, 29-10-26, BR, Fixed circular slider touch, circular slider and gauge updates only redraw the arc around the old and new positions to reduce flicker;&#10;' textarea='12,0,12,0' />
 					</flowline>
 				</macro>
 				<macro >
@@ -7471,7 +7474,6 @@
 		<view type='0' name='Prv_AxisRect' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAJgQAAF0DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
 		<view type='0' name='Prv_AxisEllipse' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAJgQAAF0DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
 		<view type='0' name='Prv_DrawLinearSlider' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAJgQAAF0DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Prv_DrawArc' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAJgQAAF0DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
 		<view type='0' name='Prv_DrawNeedle' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAJgQAAF0DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
 		<view type='0' name='Prv_DrawRadial' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAYAAAAJgQAAF0DAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
 	</layout>
