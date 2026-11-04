@@ -108,6 +108,10 @@
 						<property name='DNS2' target='dns2' typeid='14' hidden='0' locked='0' info='Third octet of the DNS server IP address (e.g. 8 in 8.8.8.8).' />
 						<property name='DNS3' target='dns3' typeid='14' hidden='0' locked='0' info='Fourth octet of the DNS server IP address (e.g. 8 in 8.8.8.8). Google Public DNS default.' />
 					</property>
+					<property name='Network Name' hidden='0' >
+						<property name='Hostname' target='HostName_P' typeid='10' hidden='0' locked='0' info='Network name for this device, e.g. &quot;windtunnel&quot;. &#13;&#10;Sent to the DHCP server (option 12) and answered by the mDNS responder as &lt;hostname&gt;.local. &#13;&#10;Letters are made lower case and anything other than a-z, 0-9 and - is removed (max 32 characters). &#13;&#10;Leave blank to use w5500-xxxxxx built from the last three MAC bytes.' />
+						<property name='Auto Start mDNS' target='MDNS' typeid='7' hidden='0' locked='0' info='Answers multicast DNS queries for &lt;hostname&gt;.local so the device can be reached by name (e.g. http://windtunnel.local). &#13;&#10;Uses W5500 socket 7, which must not be used for anything else. &#13;&#10;Call MDNS_Poll regularly from the main loop.' />
+					</property>
 				</property>
 				<property name='MIAC System' target='MIAC_SYSTEM' typeid='7' hidden='1' locked='0' info='Internal flag indicating whether a MIAC system is present. Managed automatically by Flowcode.' />
 				<property name='Simulation' folder='property_1' hidden='0' >
@@ -159,6 +163,8 @@
 				<value target='dns1' data='8' />
 				<value target='dns2' data='8' />
 				<value target='dns3' data='8' />
+				<value target='HostName_P' data='' />
+				<value target='MDNS' data='0' />
 				<value target='MIAC_SYSTEM' data='0' />
 				<value target='label' data='TCP/IP W5500' />
 				<value target='SimType' data='000' />
@@ -171,10 +177,10 @@
 			</values>
 			<events >
 				<event class='Components' event='Property' target='Ev_Property' />
-				<event class='System' event='Timer' target='Ev_Timer' />
-				<event class='Components' event='Initialise' target='Ev_Initialise' />
 				<event class='Connection' event='ChipChange' target='Ev_ChipChange' />
+				<event class='Components' event='Initialise' target='Ev_Initialise' />
 				<event class='Components' event='Renamed' target='Ev_Renamed' />
+				<event class='System' event='Timer' target='Ev_Timer' />
 			</events>
 			<apis >
 				<api name='DNS_GetHostByName' alt='DNS_GetHostByName' type='1' proto='1' />
@@ -183,6 +189,7 @@
 				<api name='RxMatch_4_Bytes' alt='RxMatch_4_Bytes_Sim' type='1' proto='1' />
 				<api name='SetMyIP' alt='SetMyIP' type='1' proto='1' />
 				<api name='TxSendString' alt='TxSendString_Sim' type='1' proto='1' />
+				<api name='SetHostname' alt='SetHostname' type='1' proto='1' />
 				<api name='DNS_GetServer' alt='DNS_GetServer' type='1' proto='1' />
 				<api name='RxReadHeader' alt='RxReadHeader_Sim' type='1' proto='1' />
 				<api name='RxSkipBytes' alt='RxSkipBytes_Sim' type='1' proto='1' />
@@ -190,12 +197,15 @@
 				<api name='CreateIPSocket' alt='CreateIPSocket_Sim' type='1' proto='1' />
 				<api name='SetDestination' alt='SetDestination_Sim' type='1' proto='1' />
 				<api name='MIAC_Module_GetData' alt='MIAC_Module_GetData' type='4' proto='0' />
+				<api name='MDNS_Start' alt='MDNS_Start_Sim' type='1' proto='1' />
 				<api name='TxStart' alt='TxStart_Sim' type='1' proto='1' />
 				<api name='RxReadArray' alt='RxReadArray_Sim' type='1' proto='1' />
 				<api name='MIAC_Module_Message' alt='MIAC_Module_Message' type='4' proto='0' />
+				<api name='MDNS_Poll' alt='MDNS_Poll_Sim' type='1' proto='1' />
 				<api name='RxReadByte' alt='RxReadByte_Sim' type='1' proto='1' />
 				<api name='CreateUDPSocket' alt='CreateUDPSocket_Sim' type='1' proto='1' />
 				<api name='RxMatch_6_Bytes' alt='RxMatch_6_Bytes_Sim' type='1' proto='1' />
+				<api name='MDNS_Stop' alt='MDNS_Stop_Sim' type='1' proto='1' />
 				<api name='RxMatch_2_Bytes' alt='RxMatch_2_Bytes_Sim' type='1' proto='1' />
 				<api name='TxEnd' alt='TxEnd_Sim' type='1' proto='1' />
 				<api name='RxReadString' alt='RxReadString_Sim' type='1' proto='1' />
@@ -212,6 +222,7 @@
 				<api name='DNS_GetResolvedIP' alt='DNS_GetResolvedIP' type='1' proto='1' />
 				<api name='RxMatchMyMAC' alt='RxMatchMyMAC_Sim' type='1' proto='1' />
 				<api name='RxDataSize' alt='RxDataSize_Sim' type='1' proto='1' />
+				<api name='GetHostname' alt='GetHostname' type='1' proto='1' />
 				<api name='CreateMACSocket' alt='CreateMACSocket_Sim' type='1' proto='1' />
 				<api name='TxSendMyMAC' alt='TxSendMyMAC_Sim' type='1' proto='1' />
 				<api name='SetMACAddress' alt='SetMACAddress' type='1' proto='1' />
@@ -248,7 +259,7 @@
 				</variable>
 				<variable public='0' >
 					<def class_type='variable' name='gHrdSize' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
-						<array size='4' />
+						<array size='8' />
 					</def>
 				</variable>
 				<variable public='0' >
@@ -258,6 +269,9 @@
 					<def class_type='variable' name='DHCP_Timeout' type='u16' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
 				</variable>
 				<variable public='0' >
+					<def class_type='variable' name='DHCP_SOCKET' type='s16' description='W5500 socket used for DHCP. Kept away from socket 0 so a lease renewal cannot disturb a TCP connection that an application has opened on channel 0.' isconst='1' isHidden='0' isinit='1' usrinit='3' setinit='3' />
+				</variable>
+				<variable public='0' >
 					<def class_type='variable' name='Sn_MR_TCP' type='s16' description='' isconst='1' isHidden='0' isinit='1' usrinit='1' setinit='1' />
 				</variable>
 				<variable public='0' >
@@ -265,7 +279,7 @@
 				</variable>
 				<variable public='0' >
 					<def class_type='variable' name='Header' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
-						<array size='32' />
+						<array size='64' />
 					</def>
 				</variable>
 				<variable public='0' >
@@ -273,7 +287,7 @@
 				</variable>
 				<variable public='0' >
 					<def class_type='variable' name='gTxSize' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' >
-						<array size='4' />
+						<array size='8' />
 					</def>
 				</variable>
 				<variable public='0' >
@@ -281,6 +295,9 @@
 				</variable>
 				<variable public='0' >
 					<def class_type='variable' name='Sn_MR_IPRAW' type='s16' description='' isconst='1' isHidden='0' isinit='1' usrinit='3' setinit='0x03' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='MDNS_Len' type='u16' description='Number of bytes of the current mDNS packet held in DHCP_MSG' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
 				</variable>
 				<variable public='0' >
 					<def class_type='variable' name='false' type='b1' description='' isconst='1' isHidden='0' isinit='1' usrinit='0' setinit='0' />
@@ -291,8 +308,13 @@
 					</def>
 				</variable>
 				<variable public='0' >
+					<def class_type='variable' name='HostName' type='T8' description='Sanitised network name (single DNS label, lower case) used for DHCP option 12 and mDNS.' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+						<array size='33' />
+					</def>
+				</variable>
+				<variable public='0' >
 					<def class_type='variable' name='gRxSize' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' >
-						<array size='4' />
+						<array size='8' />
 					</def>
 				</variable>
 				<variable public='0' >
@@ -303,6 +325,9 @@
 				</variable>
 				<variable public='0' >
 					<def class_type='variable' name='SIPR3' type='s16' description='' isconst='1' isHidden='0' isinit='1' usrinit='18' setinit='0x12' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='HostLen' type='u8' description='Number of characters in HostName' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
 				</variable>
 				<variable public='0' >
 					<def class_type='variable' name='Sn_RX_RD' type='s16' description='' isconst='1' isHidden='0' isinit='1' usrinit='40' setinit='0x28' />
@@ -333,7 +358,13 @@
 					<def class_type='variable' name='SIPR0' type='s16' description='' isconst='1' isHidden='0' isinit='1' usrinit='15' setinit='0x0F' />
 				</variable>
 				<variable public='0' >
+					<def class_type='variable' name='Sn_DHAR' type='s16' description='Socket n Destination Hardware Address (6 bytes)' isconst='1' isHidden='0' isinit='1' usrinit='6' setinit='0x06' />
+				</variable>
+				<variable public='0' >
 					<def class_type='variable' name='Sn_SR_ESTABLISHED' type='s16' description='' isconst='1' isHidden='0' isinit='1' usrinit='23' setinit='0x17' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='MDNS_End' type='u16' description='Offset just past the name parsed by the last MDNS_NameMatch call, 0 if the name was malformed' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
 				</variable>
 				<variable public='0' >
 					<def class_type='variable' name='Sn_PORT' type='s16' description='Socket n Source Port' isconst='1' isHidden='0' isinit='1' usrinit='4' setinit='0x04' />
@@ -344,12 +375,21 @@
 					</def>
 				</variable>
 				<variable public='0' >
+					<def class_type='variable' name='MDNS_Active' type='u8' description='1 while the mDNS socket is open and the responder is running' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
 					<def class_type='variable' name='Sn_SR_CLOSED' type='s16' description='' isconst='1' isHidden='0' isinit='1' usrinit='0' setinit='0' />
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='MDNS_Pending' type='u8' description='1 when an announcement could not be sent because the Ethernet link was down; MDNS_Poll retries it' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
 				</variable>
 				<variable public='0' >
 					<def class_type='variable' name='Subnet' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 						<array size='4' />
 					</def>
+				</variable>
+				<variable public='0' >
+					<def class_type='variable' name='MDNS_SOCKET' type='s16' description='W5500 socket reserved for the mDNS responder (multicast 224.0.0.251:5353).' isconst='1' isHidden='0' isinit='1' usrinit='7' setinit='7' />
 				</variable>
 				<variable public='0' >
 					<def class_type='variable' name='Pvt_Channel' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0x0' />
@@ -370,9 +410,6 @@
 				</variable>
 				<variable public='0' >
 					<def class_type='variable' name='DHCP_State' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
-				</variable>
-				<variable public='0' >
-					<def class_type='variable' name='DHCP_SOCKET' type='s16' description='W5500 socket used for DHCP. Kept away from socket 0 so a lease renewal cannot disturb a TCP connection that an application has opened on channel 0.' isconst='1' isHidden='0' isinit='1' usrinit='3' setinit='3' />
 				</variable>
 				<variable public='0' >
 					<def class_type='variable' name='Sn_MR_UDP' type='s16' description='' isconst='1' isHidden='0' isinit='1' usrinit='2' setinit='2' />
@@ -411,7 +448,7 @@
 				</variable>
 				<variable public='0' >
 					<def class_type='variable' name='gRxPtr' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' >
-						<array size='4' />
+						<array size='8' />
 					</def>
 				</variable>
 				<variable public='0' >
@@ -456,11 +493,14 @@
 					<def class_type='variable' name='MAC_BANK' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
 				</variable>
 				<variable public='0' >
+					<def class_type='variable' name='Sn_TTL' type='s16' description='Socket n IP Time To Live' isconst='1' isHidden='0' isinit='1' usrinit='22' setinit='0x16' />
+				</variable>
+				<variable public='0' >
 					<def class_type='variable' name='true' type='b1' description='' isconst='1' isHidden='0' isinit='1' usrinit='1' setinit='1' />
 				</variable>
 				<variable public='0' >
 					<def class_type='variable' name='gTxPtr' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' >
-						<array size='4' />
+						<array size='8' />
 					</def>
 				</variable>
 				<variable public='0' >
@@ -479,6 +519,17 @@
 							</flowline>
 							<flowline >
 								<command class_type='sim' title='Call Component Macro' component='TCP_Base' macro='Initialise' />
+								<command class_type='calculation' title='Copy MAC so the default hostname matches hardware' >
+									<exp exp='My_MAC[0] = mac0' />
+									<exp exp='My_MAC[1] = mac1' />
+									<exp exp='My_MAC[2] = mac2' />
+									<exp exp='My_MAC[3] = mac3' />
+									<exp exp='My_MAC[4] = mac4' />
+									<exp exp='My_MAC[5] = mac5' />
+								</command>
+								<command class_type='call' title='Hostname from the property (or MAC based default)' macro='SetHostname' >
+									<argument exp='HostName_P' />
+								</command>
 								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Return = 1' />
 								</command>
@@ -489,7 +540,7 @@
 				<macro >
 					<flowline name='MAC_SetRegister' description='Set the bank address at the given Socket register area' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<param name='Socket' type='u8' description='Socket number (0-3) whose register block is being configured' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Socket' type='u8' description='Socket number (0-7) whose register block is being configured' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='call' title='Call Macro' macro='MAC_SetBank' >
 							<argument exp='(.Socket &lt;&lt; 2)+1' />
 						</command>
@@ -516,7 +567,7 @@
 				<macro >
 					<flowline name='TxSendMyIP' description='This macro fills the specified channel&apos;s transmit buffer with 4 bytes of data representing this Internet E-Block&apos;s IP address as specified in the component&apos;s property page.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='call' title='Call Macro' macro='TxSendByte' >
 							<argument exp='.Channel' />
 							<argument exp='My_IP[0]' />
@@ -538,7 +589,7 @@
 				<macro >
 					<flowline name='TxSendString_Sim' description='This macro fills the specified channel&apos;s transmit buffer with data.  It can fill the buffer with a string of information.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Data' type='T8' description='Data byte to append to Tx buffer.' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
 						</param>
@@ -630,7 +681,7 @@
 				<macro >
 					<flowline name='DNS_GetHostByName' description='Resolves a hostname to an IPv4 address using the configured DNS server. Opens a UDP socket on the specified channel, sends a type-A query, waits up to ~2 seconds for a response, then parses the answer. Returns 1 on success with DNS_ResolvedIP populated, or 0 on timeout or any error.' statediag='0' >
 						<return name='Return' type='u8' description='1 if the hostname resolved successfully and DNS_ResolvedIP contains the IP, 0 on failure or timeout' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Channel' type='u8' description='UDP socket channel to use (0-3). Must not conflict with DHCP channel.' isconst='0' isHidden='0' isinit='0' usrinit='1' setinit='' />
+						<param name='Channel' type='u8' description='UDP socket channel to use (0-7). Must not conflict with the DHCP (3) or mDNS (7) channels.' isconst='0' isHidden='0' isinit='0' usrinit='1' setinit='' />
 						<param name='Hostname' type='T8' description='URL to try and resolve e.g. &quot;Flowcode.co.uk&quot;' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='64' />
 						</param>
@@ -733,9 +784,47 @@
 					</flowline>
 				</macro>
 				<macro >
+					<flowline name='MAC_WaitCR' description='Internal. Polls Sn_CR of the currently selected socket until the W5500 has accepted the last command (reads 0). Gives up after about 100 ms so a missing link or a dead SPI bus cannot hang the program. Returns 1 if accepted, 0 on timeout.' statediag='0' >
+						<return name='Return' type='u8' description='1 if the command was accepted, 0 on timeout' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='reg' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='timeout' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.timeout = 100' />
+						</command>
+						<command class_type='call' title='Read Sn_CR' macro='MAC_ReadByte' >
+							<return exp='.reg' />
+							<argument exp='Sn_CR' />
+						</command>
+						<command class_type='loop' title='Normally clears on the first read' type='0' exp='(.reg) &amp;&amp; (.timeout)' for1='' for3='' >
+							<flowline >
+								<command class_type='delay' title='Delay' exp='1' type='1' />
+								<command class_type='call' title='Read Sn_CR' macro='MAC_ReadByte' >
+									<return exp='.reg' />
+									<argument exp='Sn_CR' />
+								</command>
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.timeout = .timeout - 1' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='decision' title='Accepted?' exp='.reg = 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.Return = 1' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.Return = 0' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
 					<flowline name='RxReadHeader_Sim' description='A call to this macro will return a byte of data in the reception buffer of the specified channel.  It will also internally increment a pointer to that data so that the next call to &apos;Rx_readbyte&apos; (or any other read function) will read the next byte ' statediag='0' >
 						<return name='Return' type='u8' description='Value of the requested header field' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Idx' type='u8' description='Index of the header field to read (0-based)' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='decision' title='Decision' exp='SimType' swap='0' >
 							<flowline >
@@ -758,7 +847,7 @@
 				<macro >
 					<flowline name='RxMatch_6_Bytes_Sim' description='This macro returns a non-zero value when the next 6 bytes of data in the specified channel&apos;s reception buffer are the same as those passed as parameters.  There are similar functions that check for 2 bytes and 4 bytes.' statediag='0' >
 						<return name='Return' type='u8' description='1 if all 6 bytes matched, 0 otherwise' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Byte1' type='u8' description='Specifies the value of the first byte' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Byte2' type='u8' description='Specifies the value of the second byte' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Byte3' type='u8' description='Specifies the value of the third byte' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
@@ -796,7 +885,7 @@
 				<macro >
 					<flowline name='RxMatchMyIP' description='This macro returns a non-zero value when the next 4 bytes of data in the specified channel&apos;s reception buffer are the same as the Internet E-block&apos;s IP address.' statediag='0' >
 						<return name='Return' type='u8' description='1 if the received destination IP equals My_IP, 0 otherwise' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='rx_byte' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Return = 1' />
@@ -854,7 +943,7 @@
 				<macro >
 					<flowline name='TxStart_Sim' description='This macro indicates the start of data transmission for the specified buffer.  In TCP mode, data transmission can only begin once the socket has become established.  In other modes, data transmission can occur as soon as the socket has been opened.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='decision' title='Decision' exp='SimType' swap='0' >
 							<flowline >
 								<command class_type='call' title='Call Macro' macro='TxStart' >
@@ -872,7 +961,7 @@
 				<macro >
 					<flowline name='TCPClose_Sim' description='When an established TCP connection has finished transmission of data, either the local application (i.e. your code) or the remote application (i.e. the application at the other end of the connection) can initiate closure of the socket.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='decision' title='Decision' exp='SimType' swap='0' >
 							<flowline >
 								<command class_type='call' title='Call Macro' macro='TCPClose' >
@@ -888,9 +977,26 @@
 					</flowline>
 				</macro>
 				<macro >
+					<flowline name='MDNS_Poll_Sim' description='Simulation version of MDNS_Poll.' statediag='0' >
+						<return name='Return' type='u8' description='Always 0 when simulating via the PC network' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Simulating via SPI / Injector?' exp='SimType' swap='0' >
+							<flowline >
+								<command class_type='call' title='Call Macro' macro='MDNS_Poll' >
+									<return exp='.Return' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='PC TCP simulation has no mDNS' >
+									<exp exp='.Return = 0' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
 					<flowline name='RxDataAvailable_Sim' description='This macro is used to check whether or not data has been received by the Internet E-Block. A return value of zero indicated that no data has been received.  A positive return value indicates that data is available.' statediag='0' >
 						<return name='Return' type='u8' description='1 if bytes are waiting in the receive buffer, 0 otherwise' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='decision' title='Decision' exp='SimType' swap='0' >
 							<flowline >
 								<command class_type='call' title='Call Macro' macro='RxDataAvailable' >
@@ -911,7 +1017,7 @@
 				<macro >
 					<flowline name='RxMatch_4_Bytes' description='This macro returns a non-zero value when the next 4 bytes of data in the specified channel&apos;s reception buffer are the same as those passed as parameters.  There are similar functions that check for 2 bytes and 6 bytes.' statediag='0' >
 						<return name='Return' type='u8' description='1 if all 4 bytes matched, 0 otherwise' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Byte1' type='u8' description='Specifies the value of the first byte' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Byte2' type='u8' description='Specifies the value of the second byte' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Byte3' type='u8' description='Specifies the value of the third byte' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
@@ -1092,7 +1198,7 @@
 				<macro >
 					<flowline name='TxSendString' description='This macro fills the specified channel&apos;s transmit buffer with data.  It can fill the buffer with a string of information.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Data' type='T8*' description='Data byte to append to Tx buffer.' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='20' />
 						</param>
@@ -1115,6 +1221,78 @@
 									<exp exp='.idx = .idx + 1' />
 								</command>
 							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='SetHostname' description='Sets the network name used for DHCP option 12 and the mDNS responder (&lt;name&gt;.local). The name is made lower case and any character other than a-z, 0-9 and - is removed; at most 32 characters are kept. An empty result falls back to w5500-xxxxxx built from the last three MAC bytes. If the mDNS responder is running the new name is announced straight away. The DHCP server only sees the new name at the next DHCP request.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='Name' type='T8' description='Requested network name, e.g. &quot;windtunnel&quot;' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='33' />
+						</param>
+						<local name='i' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='len' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='ch' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='hex' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='17' />
+						</local>
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='HostLen = 0' />
+							<exp exp='.i = 0' />
+							<exp exp='.len = Length$(.Name)' />
+						</command>
+						<command class_type='loop' title='Copy the valid characters' type='0' exp='(.i &lt; .len) &amp;&amp; (HostLen &lt; 32)' for1='' for3='' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.ch = .Name[.i]' />
+								</command>
+								<command class_type='decision' title='Upper case?' exp='(.ch &gt;= &apos;A&apos;) &amp;&amp; (.ch &lt;= &apos;Z&apos;)' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='To lower case' >
+											<exp exp='.ch = .ch + 32' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='decision' title='Valid DNS label character?' exp='((.ch &gt;= &apos;a&apos;) &amp;&amp; (.ch &lt;= &apos;z&apos;)) || ((.ch &gt;= &apos;0&apos;) &amp;&amp; (.ch &lt;= &apos;9&apos;)) || (.ch = &apos;-&apos;)' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Keep it' >
+											<exp exp='HostName[HostLen] = .ch' />
+											<exp exp='HostLen = HostLen + 1' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.i = .i + 1' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='decision' title='Nothing usable?' exp='HostLen = 0' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Default name w5500-xxxxxx from the last three MAC bytes' >
+									<exp exp='HostName = &quot;w5500-&quot;' />
+									<exp exp='HostLen = 6' />
+									<exp exp='.hex = &quot;0123456789abcdef&quot;' />
+								</command>
+								<command class_type='loop' title='Loop' type='2' forvar='.i' exp='3' for1='' for3='' >
+									<flowline >
+										<command class_type='calculation' title='Two hex digits per byte' >
+											<exp exp='.ch = My_MAC[3 + .i]' />
+											<exp exp='HostName[HostLen] = .hex[.ch &gt;&gt; 4]' />
+											<exp exp='HostName[HostLen + 1] = .hex[.ch &amp; 0x0F]' />
+											<exp exp='HostLen = HostLen + 2' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='calculation' title='Terminate' >
+							<exp exp='HostName[HostLen] = 0' />
+						</command>
+						<command class_type='call' title='Announce the new name if mDNS is running' macro='MDNS_Announce' >
+							<argument exp='120' />
 						</command>
 					</flowline>
 				</macro>
@@ -1142,9 +1320,36 @@
 					</flowline>
 				</macro>
 				<macro >
+					<flowline name='MAC_WaitSR' description='Internal. Polls Sn_SR of the currently selected socket until it equals Status or Timeout ms have passed. Returns the last Sn_SR value read.' statediag='0' >
+						<return name='Return' type='u8' description='Last Sn_SR value read' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Status' type='u8' description='Sn_SR value to wait for' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Timeout' type='u16' description='Maximum wait in ms' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='t' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.t = .Timeout' />
+						</command>
+						<command class_type='call' title='Read Sn_SR' macro='MAC_ReadByte' >
+							<return exp='.Return' />
+							<argument exp='Sn_SR' />
+						</command>
+						<command class_type='loop' title='Loop' type='0' exp='(.Return != .Status) &amp;&amp; (.t)' for1='' for3='' >
+							<flowline >
+								<command class_type='delay' title='Delay' exp='1' type='1' />
+								<command class_type='call' title='Read Sn_SR' macro='MAC_ReadByte' >
+									<return exp='.Return' />
+									<argument exp='Sn_SR' />
+								</command>
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.t = .t - 1' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
 					<flowline name='SetDestination_Sim' description='This is used in IP and UDP modes to set the destination of the intended data transfer.  The destination IP address needs to be set for both IP and UDP modes.' statediag='0' >
 						<return name='Return' type='u8' description='Always 0' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Dst_IP0' type='u8' description='Specifies the first byte of an IP address' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Dst_IP1' type='u8' description='Specifies the second byte of an IP address' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Dst_IP2' type='u8' description='Specifies the third byte of an IP address' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
@@ -1179,7 +1384,7 @@
 				<macro >
 					<flowline name='TxSendMyMAC_Sim' description='This macro fills the specified channel&apos;s transmit buffer with 6 bytes of data representing this Internet E-Block&apos;s MAC address as specified in the component&apos;s property page.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='decision' title='Decision' exp='SimType' swap='0' >
 							<flowline >
 								<command class_type='call' title='Call Macro' macro='TxSendMyMAC' >
@@ -1206,7 +1411,7 @@
 				<macro >
 					<flowline name='RxSkipBytes_Sim' description='Often when receiving data packets, it may be necessary to ignore large sections of the data.  This can be achieved by reading each byte individually (and ignoring the returned data), but a better way is to use this Rx_skipbytes macro.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Count' type='u8' description='Specifies how many bytes to skip' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='decision' title='Decision' exp='SimType' swap='0' >
 							<flowline >
@@ -1255,6 +1460,23 @@
 					</flowline>
 				</macro>
 				<macro >
+					<flowline name='MDNS_Start_Sim' description='Simulation version of MDNS_Start.' statediag='0' >
+						<return name='Return' type='u8' description='Always 0 when simulating via the PC network' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Simulating via SPI / Injector?' exp='SimType' swap='0' >
+							<flowline >
+								<command class_type='call' title='Call Macro' macro='MDNS_Start' >
+									<return exp='.Return' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='PC TCP simulation has no mDNS' >
+									<exp exp='.Return = 0' />
+								</command>
+							</flowline>
+						</command>
+					</flowline>
+				</macro>
+				<macro >
 					<flowline name='Ev_ChipChange' description='Sent when the target device has changed' statediag='0' >
 						<return name='Return' type='u32' description='Unused; always 0' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Target' type='T8' description='The name of the new target device' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
@@ -1265,8 +1487,8 @@
 				</macro>
 				<macro >
 					<flowline name='CreateIPSocket_Sim' description='Note that sockets on up to 4 channels can be simultaneously opened and these channels are numbered 0 to 3.  Note that sockets with different modes can be opened on different channels.' statediag='0' >
-						<return name='Return' type='u8' description='Allocated socket handle (0-3), or 0xFF if no socket was free' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<return name='Return' type='u8' description='Allocated socket handle (0-7), or 0xFF if no socket was free' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Protocol' type='u8' description='Specifies which IP protocol to use' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Broadcast' type='u8' description='Allows broadcast type packets to be sent and received' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='decision' title='Decision' exp='SimType' swap='0' >
@@ -1292,7 +1514,7 @@
 				<macro >
 					<flowline name='RxReadHeader' description='Once data in a particular channel has been received, the header will be filled with information about the received data.  This macro will return the information in the header.  The idx parameter specifies which byte of information in the header to read ' statediag='0' >
 						<return name='Return' type='u8' description='Value of the requested header field' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Idx' type='u8' description='Specifies the byte index to return' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Return = Header[(.Channel * 8) + .Idx]' />
@@ -1302,7 +1524,7 @@
 				<macro >
 					<flowline name='TxSendMyIP_Sim' description='This macro fills the specified channel&apos;s transmit buffer with 4 bytes of data representing this Internet E-Block&apos;s IP address as specified in the component&apos;s property page.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='decision' title='Decision' exp='SimType' swap='0' >
 							<flowline >
 								<command class_type='call' title='Call Macro' macro='TxSendMyIP' >
@@ -1320,7 +1542,7 @@
 				<macro >
 					<flowline name='RxSkipBytes' description='Often when receiving data packets, it may be necessary to ignore large sections of the data.  This can be achieved by reading each byte individually (and ignoring the returned data), but a better way is to use this Rx_skipbytes macro.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Count' type='u8' description='Specifies how many bytes to skip' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='idx' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
 						<command class_type='calculation' title='Calculation' >
@@ -1376,7 +1598,7 @@
 				<macro >
 					<flowline name='RxReadArray_Sim' description='A call to this macro will return a byte of data in the reception buffer of the specified channel.  It will also internally increment a pointer to that data so that the next call to &apos;Rx_readbyte&apos; (or any other read function) will read the next byte ' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Data' type='u8' description='Destination byte array to receive the simulated data' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='1000' />
 						</param>
@@ -1404,11 +1626,12 @@
 				</macro>
 				<macro >
 					<flowline name='CreateIPSocket' description='Note that sockets on up to 4 channels can be simultaneously opened and these channels are numbered 0 to 3.  Note that sockets with different modes can be opened on different channels.' statediag='0' >
-						<return name='Return' type='u8' description='Allocated socket handle (0-3), or 0xFF if no socket was free' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<return name='Return' type='u8' description='Allocated socket handle (0-7), or 0xFF if no socket was free' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Protocol' type='u8' description='Specifies which IP protocol to use' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Broadcast' type='u8' description='Allows broadcast type packets to be sent and received' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Regval' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='tries' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='call' title='Call Macro' macro='ModePingBlock' >
 							<argument exp='1' />
 						</command>
@@ -1425,18 +1648,18 @@
 									<argument exp='Sn_CR' />
 									<argument exp='Sn_CR_CLOSE' />
 								</command>
-								<command class_type='loop' title='Wait for socket to close' type='0' exp='.Regval != Sn_SR_CLOSED' for1='' for3='' >
-									<flowline >
-										<command class_type='call' title='Call Macro' macro='MAC_ReadByte' >
-											<return exp='.Regval' />
-											<argument exp='Sn_SR' />
-										</command>
-									</flowline>
+								<command class_type='call' title='Wait up to 100 ms for the socket to close' macro='MAC_WaitSR' >
+									<return exp='.Regval' />
+									<argument exp='Sn_SR_CLOSED' />
+									<argument exp='100' />
 								</command>
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='loop' title='Loop' type='0' exp='.Regval = Sn_SR_CLOSED' start='0' for1='' for3='' >
+						<command class_type='calculation' title='Give up after 10 attempts' >
+							<exp exp='.tries = 10' />
+						</command>
+						<command class_type='loop' title='Loop' type='0' exp='(.Regval = Sn_SR_CLOSED) &amp;&amp; (.tries)' start='0' for1='' for3='' >
 							<flowline >
 								<command class_type='comment' title='' comment='Sn_MR = 3 is not supported on W5500&#13;&#10;Some info suggests MACRAW is used ' textarea='12,0,12,0' />
 								<command class_type='call' title='Setup socket protocol and option flags' macro='MAC_WriteByte' >
@@ -1451,19 +1674,15 @@
 									<argument exp='Sn_CR' />
 									<argument exp='Sn_CR_OPEN' />
 								</command>
-								<command class_type='loop' title='Wait until command accepted' type='0' exp='.Regval' start='0' for1='' for3='' >
-									<flowline >
-										<command class_type='call' title='Read socket status' macro='MAC_ReadByte' >
-											<return exp='.Regval' />
-											<argument exp='Sn_CR' />
-										</command>
-									</flowline>
-								</command>
+								<command class_type='call' title='Wait (max 100 ms) for the command to be accepted' macro='MAC_WaitCR' />
 								<command class_type='call' title='' macro='MAC_ReadByte' >
 									<return exp='.Regval' />
 									<argument exp='Sn_SR' />
 								</command>
 								<command class_type='delay' title='Delay' exp='1' type='1' />
+								<command class_type='calculation' title='Count the attempt' >
+									<exp exp='.tries = .tries - 1' />
+								</command>
 							</flowline>
 						</command>
 						<command class_type='calculation' title='Reset Globals' >
@@ -1476,21 +1695,30 @@
 							<exp exp='Header[6] = 0' />
 							<exp exp='Header[7] = 0' />
 						</command>
-						<command class_type='calculation' title='Opened socket correctly' >
-							<exp exp='.Return = 1' />
+						<command class_type='decision' title='Socket opened?' exp='.Regval != Sn_SR_CLOSED' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Opened socket correctly' >
+									<exp exp='.Return = 1' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Failed to open' >
+									<exp exp='.Return = 0' />
+								</command>
+							</flowline>
 						</command>
 					</flowline>
 				</macro>
 				<macro >
 					<flowline name='SetDestination' description='This is used in IP and UDP modes to set the destination of the intended data transfer.  The destination IP address needs to be set for both IP and UDP modes.' statediag='0' >
 						<return name='Return' type='u8' description='Always 0' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Dst_IP0' type='u8' description='Specifies the first byte of an IP address' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Dst_IP1' type='u8' description='Specifies the second byte of an IP address' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Dst_IP2' type='u8' description='Specifies the third byte of an IP address' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Dst_IP3' type='u8' description='Specifies the fourth byte of an IP address' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Dst_Port' type='u16' description='Destination Port' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Decision' exp='.Channel &gt;= 4' swap='0' >
+						<command class_type='decision' title='Decision' exp='.Channel &gt;= 8' swap='0' >
 							<flowline >
 								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Return = 0' />
@@ -1529,8 +1757,8 @@
 				</macro>
 				<macro >
 					<flowline name='CreateTCPSocket_Sim' description='This macro creates a socket for sending and receiving TCP data.' statediag='0' >
-						<return name='Return' type='u8' description='Allocated socket handle (0-3), or 0xFF if no socket was free' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<return name='Return' type='u8' description='Allocated socket handle (0-7), or 0xFF if no socket was free' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Src_Port' type='u16' description='Local TCP port number to bind the socket to (1-65535)' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='decision' title='Decision' exp='SimType' swap='0' >
 							<flowline >
@@ -1554,7 +1782,7 @@
 				<macro >
 					<flowline name='GetSocketStatus_Sim' description='This returns the state of the requested channel&apos;s socket.' statediag='0' >
 						<return name='Return' type='u8' description='W5500 Sn_SR (socket status register) value for the specified socket' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='decision' title='Decision' exp='SimType' swap='0' >
 							<flowline >
 								<command class_type='call' title='Call Macro' macro='GetSocketStatus' >
@@ -1574,7 +1802,7 @@
 				<macro >
 					<flowline name='TxEnd_Sim' description='Once the transmit buffer has been filled with data, call this macro to actually send the data.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='decision' title='Decision' exp='SimType' swap='0' >
 							<flowline >
 								<command class_type='call' title='Call Macro' macro='TxEnd' >
@@ -1594,7 +1822,7 @@
 						<return name='Return' type='T8' description='Null-terminated string of up to Length characters read from the simulated buffer' isconst='0' isHidden='0' isinit='0' usrinit='&quot;\x00&quot;' setinit='' >
 							<array size='2000' />
 						</return>
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Length' type='u8' description='Maximum number of characters to read' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='rx_mem' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='idx' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
@@ -1628,7 +1856,7 @@
 				<macro >
 					<flowline name='RxMatchMyIP_Sim' description='This macro returns a non-zero value when the next 4 bytes of data in the specified channel&apos;s reception buffer are the same as the Internet E-block&apos;s IP address.' statediag='0' >
 						<return name='Return' type='u8' description='1 if the received destination IP equals My_IP, 0 otherwise' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='decision' title='Decision' exp='SimType' swap='0' >
 							<flowline >
 								<command class_type='call' title='Call Macro' macro='RxMatchMyIP' >
@@ -1759,7 +1987,7 @@
 										<command class_type='calculation' title='Start after 12-byte header' >
 											<exp exp='.ptr = 12' />
 										</command>
-										<command class_type='loop' title='Skip QNAME labels (no compression in question)' type='0' exp='DNS_MSG[.ptr] != 0' for1='' for3='' >
+										<command class_type='loop' title='Skip QNAME labels (no compression in question)' type='0' exp='(.ptr &lt; .PktLen) &amp;&amp; (DNS_MSG[.ptr] != 0)' for1='' for3='' >
 											<flowline >
 												<command class_type='calculation' title='Skip label: advance by length+1' >
 													<exp exp='.ptr = .ptr + DNS_MSG[.ptr] + 1' />
@@ -1778,7 +2006,7 @@
 												<command class_type='calculation' title='Reset name-done flag' >
 													<exp exp='.done_flag = 0' />
 												</command>
-												<command class_type='loop' title='Skip answer NAME (with compression)' type='0' exp='(DNS_MSG[.ptr] != 0) &amp;&amp; (.done_flag = 0)' for1='' for3='' >
+												<command class_type='loop' title='Skip answer NAME (with compression)' type='0' exp='(.ptr &lt; .PktLen) &amp;&amp; (DNS_MSG[.ptr] != 0) &amp;&amp; (.done_flag = 0)' for1='' for3='' >
 													<flowline >
 														<command class_type='decision' title='Compression pointer (top 2 bits set)?' exp='(DNS_MSG[.ptr] &amp; 0xC0) = 0xC0' swap='0' >
 															<flowline >
@@ -1843,9 +2071,304 @@
 					</flowline>
 				</macro>
 				<macro >
+					<flowline name='MDNS_Start' description='Opens W5500 socket 7 as a multicast UDP socket on 224.0.0.251:5353 and starts answering mDNS queries for &lt;hostname&gt;.local. The W5500 sends the IGMP join itself. An announcement is sent immediately. Called automatically by Initialise when the mDNS Responder property is enabled. Returns 1 if the socket opened.' statediag='0' >
+						<return name='Return' type='u8' description='1 if the mDNS socket opened, 0 otherwise' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='reg' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='timeout' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='grp' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='6' />
+						</local>
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.Return = 0' />
+							<exp exp='MDNS_Active = 0' />
+						</command>
+						<command class_type='call' title='Call Macro' macro='MAC_SetRegister' >
+							<argument exp='MDNS_SOCKET' />
+						</command>
+						<command class_type='call' title='Read socket status' macro='MAC_ReadByte' >
+							<return exp='.reg' />
+							<argument exp='Sn_SR' />
+						</command>
+						<command class_type='decision' title='Socket already open?' exp='.reg != Sn_SR_CLOSED' swap='0' >
+							<flowline >
+								<command class_type='call' title='Close Socket' macro='MAC_WriteByte' >
+									<argument exp='Sn_CR' />
+									<argument exp='Sn_CR_CLOSE' />
+								</command>
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.timeout = 500' />
+								</command>
+								<command class_type='loop' title='Wait for socket to close' type='0' exp='(.reg != Sn_SR_CLOSED) &amp;&amp; (.timeout)' for1='' for3='' >
+									<flowline >
+										<command class_type='delay' title='Delay' exp='1' type='1' />
+										<command class_type='call' title='Read socket status' macro='MAC_ReadByte' >
+											<return exp='.reg' />
+											<argument exp='Sn_SR' />
+										</command>
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.timeout = .timeout - 1' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='comment' title='' comment='Multicast settings must be in place before OPEN' textarea='12,0,12,0' />
+						<command class_type='call' title='UDP with multicast enabled' macro='MAC_WriteByte' >
+							<argument exp='Sn_MR' />
+							<argument exp='Sn_MR_UDP | Sn_MR_MFEN' />
+						</command>
+						<command class_type='call' title='Source port 5353' macro='MAC_WriteWord' >
+							<argument exp='Sn_PORT' />
+							<argument exp='5353' />
+						</command>
+						<command class_type='calculation' title='Multicast MAC for 224.0.0.251' >
+							<exp exp='.grp[0] = 0x01' />
+							<exp exp='.grp[1] = 0x00' />
+							<exp exp='.grp[2] = 0x5E' />
+							<exp exp='.grp[3] = 0x00' />
+							<exp exp='.grp[4] = 0x00' />
+							<exp exp='.grp[5] = 0xFB' />
+						</command>
+						<command class_type='call' title='Destination MAC' macro='MAC_WriteArray' >
+							<argument exp='Sn_DHAR' />
+							<argument exp='.grp' />
+							<argument exp='6' />
+						</command>
+						<command class_type='calculation' title='Group address 224.0.0.251' >
+							<exp exp='.grp[0] = 224' />
+							<exp exp='.grp[1] = 0' />
+							<exp exp='.grp[2] = 0' />
+							<exp exp='.grp[3] = 251' />
+						</command>
+						<command class_type='call' title='Destination IP' macro='MAC_WriteArray' >
+							<argument exp='Sn_DIPR0' />
+							<argument exp='.grp' />
+							<argument exp='4' />
+						</command>
+						<command class_type='call' title='Destination port 5353' macro='MAC_WriteWord' >
+							<argument exp='Sn_DPORT' />
+							<argument exp='5353' />
+						</command>
+						<command class_type='call' title='IP TTL 255 as required by RFC 6762' macro='MAC_WriteByte' >
+							<argument exp='Sn_TTL' />
+							<argument exp='255' />
+						</command>
+						<command class_type='call' title='Open the socket' macro='MAC_WriteByte' >
+							<argument exp='Sn_CR' />
+							<argument exp='Sn_CR_OPEN' />
+						</command>
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.timeout = 500' />
+							<exp exp='.reg = 0' />
+						</command>
+						<command class_type='loop' title='Wait for the socket to enter UDP mode' type='0' exp='(.reg != Sn_SR_UDP) &amp;&amp; (.timeout)' for1='' for3='' >
+							<flowline >
+								<command class_type='delay' title='Delay' exp='1' type='1' />
+								<command class_type='call' title='Read socket status' macro='MAC_ReadByte' >
+									<return exp='.reg' />
+									<argument exp='Sn_SR' />
+								</command>
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.timeout = .timeout - 1' />
+								</command>
+							</flowline>
+						</command>
+						<command class_type='decision' title='Opened?' exp='.reg = Sn_SR_UDP' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Running' >
+									<exp exp='gRxSize[MDNS_SOCKET] = 0' />
+									<exp exp='gHrdSize[MDNS_SOCKET] = 0' />
+									<exp exp='MDNS_Active = 1' />
+									<exp exp='.Return = 1' />
+								</command>
+								<command class_type='call' title='Announce our name' macro='MDNS_Announce' >
+									<argument exp='120' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='call' title='Restore common register bank' macro='MAC_SetBank' >
+							<argument exp='0' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
+					<flowline name='MDNS_NameMatch' description='Internal. Walks the DNS name starting at offset Start in DHCP_MSG, following compression pointers, and compares it (case insensitive) with &lt;HostName&gt;.local. Sets MDNS_End to the offset just after the name in the original position (0 if the name is malformed or runs past MDNS_Len). Returns 1 on a match.' statediag='0' >
+						<return name='Return' type='u8' description='1 if the name is &lt;HostName&gt;.local' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Start' type='u16' description='Offset of the name in DHCP_MSG' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='pos' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='end' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='c' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='ch' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='lab' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='ok' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='hops' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='run' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='i' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='rlen' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='ref' type='T8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='33' />
+						</local>
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.pos = .Start' />
+							<exp exp='.end = 0' />
+							<exp exp='.lab = 0' />
+							<exp exp='.ok = 1' />
+							<exp exp='.hops = 0' />
+							<exp exp='.run = 1' />
+						</command>
+						<command class_type='loop' title='Walk the labels' type='0' exp='.run' for1='' for3='' >
+							<flowline >
+								<command class_type='decision' title='Past the end of the packet?' exp='.pos &gt;= MDNS_Len' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Malformed name' >
+											<exp exp='.run = 0' />
+											<exp exp='.end = 0' />
+											<exp exp='.ok = 0' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='Length byte' >
+											<exp exp='.c = DHCP_MSG[.pos]' />
+										</command>
+										<command class_type='decision' title='Root label (end of name)?' exp='.c = 0' swap='0' >
+											<flowline >
+												<command class_type='decision' title='No pointer followed?' exp='.end = 0' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' >
+															<exp exp='.end = .pos + 1' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='calculation' title='Done' >
+													<exp exp='.run = 0' />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='decision' title='Compression pointer?' exp='(.c &amp; 0xC0) = 0xC0' swap='0' >
+													<flowline >
+														<command class_type='decision' title='First pointer?' exp='.end = 0' swap='0' >
+															<flowline >
+																<command class_type='calculation' title='Name ends after the pointer' >
+																	<exp exp='.end = .pos + 2' />
+																</command>
+															</flowline>
+															<flowline />
+														</command>
+														<command class_type='calculation' title='Follow the pointer' >
+															<exp exp='.pos = ((.c &amp; 0x3F) &lt;&lt; 8) | DHCP_MSG[.pos + 1]' />
+															<exp exp='.hops = .hops + 1' />
+														</command>
+														<command class_type='decision' title='Pointer loop?' exp='.hops &gt; 16' swap='0' >
+															<flowline >
+																<command class_type='calculation' title='Malformed name' >
+																	<exp exp='.run = 0' />
+																	<exp exp='.end = 0' />
+																	<exp exp='.ok = 0' />
+																</command>
+															</flowline>
+															<flowline />
+														</command>
+													</flowline>
+													<flowline >
+														<command class_type='decision' title='Reserved label type or label past the end?' exp='((.c &amp; 0xC0) != 0) || ((.pos + 1 + .c) &gt; MDNS_Len)' swap='0' >
+															<flowline >
+																<command class_type='calculation' title='Malformed name' >
+																	<exp exp='.run = 0' />
+																	<exp exp='.end = 0' />
+																	<exp exp='.ok = 0' />
+																</command>
+															</flowline>
+															<flowline >
+																<command class_type='decision' title='First label?' exp='.lab = 0' swap='0' >
+																	<flowline >
+																		<command class_type='calculation' title='Compare with the hostname' >
+																			<exp exp='.ref = HostName' />
+																			<exp exp='.rlen = HostLen' />
+																		</command>
+																	</flowline>
+																	<flowline >
+																		<command class_type='decision' title='Second label?' exp='.lab = 1' swap='0' >
+																			<flowline >
+																				<command class_type='calculation' title='Compare with local' >
+																					<exp exp='.ref = &quot;local&quot;' />
+																					<exp exp='.rlen = 5' />
+																				</command>
+																			</flowline>
+																			<flowline >
+																				<command class_type='calculation' title='Too many labels' >
+																					<exp exp='.rlen = 0xFF' />
+																				</command>
+																			</flowline>
+																		</command>
+																	</flowline>
+																</command>
+																<command class_type='decision' title='Length matches?' exp='.c = .rlen' swap='0' >
+																	<flowline >
+																		<command class_type='loop' title='Compare characters' type='2' forvar='.i' exp='.c' for1='' for3='' >
+																			<flowline >
+																				<command class_type='calculation' title='Calculation' >
+																					<exp exp='.ch = DHCP_MSG[.pos + 1 + .i]' />
+																				</command>
+																				<command class_type='decision' title='Upper case?' exp='(.ch &gt;= &apos;A&apos;) &amp;&amp; (.ch &lt;= &apos;Z&apos;)' swap='0' >
+																					<flowline >
+																						<command class_type='calculation' title='To lower case' >
+																							<exp exp='.ch = .ch + 32' />
+																						</command>
+																					</flowline>
+																					<flowline />
+																				</command>
+																				<command class_type='decision' title='Different?' exp='.ch != .ref[.i]' swap='0' >
+																					<flowline >
+																						<command class_type='calculation' title='Calculation' >
+																							<exp exp='.ok = 0' />
+																						</command>
+																					</flowline>
+																					<flowline />
+																				</command>
+																			</flowline>
+																		</command>
+																	</flowline>
+																	<flowline >
+																		<command class_type='calculation' title='Calculation' >
+																			<exp exp='.ok = 0' />
+																		</command>
+																	</flowline>
+																</command>
+																<command class_type='calculation' title='Next label' >
+																	<exp exp='.lab = .lab + 1' />
+																	<exp exp='.pos = .pos + 1 + .c' />
+																</command>
+															</flowline>
+														</command>
+													</flowline>
+												</command>
+											</flowline>
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+						</command>
+						<command class_type='decision' title='Exactly two labels?' exp='.lab != 2' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.ok = 0' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='MDNS_End = .end' />
+							<exp exp='.Return = .ok' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
 					<flowline name='TxStart' description='This macro indicates the start of data transmission for the specified buffer.  In TCP mode, data transmission can only begin once the socket has become established.  In other modes, data transmission can occur as soon as the socket has been opened.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='tx_ptr_val' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='call' title='Call Macro' macro='MAC_SetRegister' >
 							<argument exp='.Channel' />
@@ -1865,7 +2388,7 @@
 				<macro >
 					<flowline name='MAC_SetTxBuffer' description='Set the bank address at the given Socket transmit buffer area' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<param name='Socket' type='u8' description='Socket number (0-3) whose TX buffer is to be selected' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Socket' type='u8' description='Socket number (0-7) whose TX buffer is to be selected' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='call' title='Call Macro' macro='MAC_SetBank' >
 							<argument exp='(.Socket &lt;&lt; 2) + 2' />
 						</command>
@@ -1874,7 +2397,7 @@
 				<macro >
 					<flowline name='RxReadArray' description='A call to this macro will return a byte of data in the reception buffer of the specified channel.  It will also internally increment a pointer to that data so that the next call to &apos;Rx_readbyte&apos; (or any other read function) will read the next byte ' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Data' type='u8' description='Destination byte array to receive the data' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='1000' />
 						</param>
@@ -1895,7 +2418,7 @@
 				</macro>
 				<macro >
 					<flowline name='CreateMACSocket_Sim' description='This macro creates a socket for sending and receiving Ethernet data using raw data.' statediag='0' >
-						<return name='Return' type='u8' description='Allocated socket handle (0-3), or 0xFF if no socket was free' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<return name='Return' type='u8' description='Allocated socket handle (0-7), or 0xFF if no socket was free' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Promiscuous' type='u8' description='Receive everything (1) or just data bound for your MAC (0)' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Broadcast' type='u8' description='Allows broadcast messages to be accepted (1) or rejected (0)' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Error' type='u8' description='Allowsmessages with errors to be accepted (1) or rejected (0)' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
@@ -1922,7 +2445,7 @@
 				<macro >
 					<flowline name='TCPListen_Sim' description='This macro puts a previously opened TCP channel in &quot;passive open&quot; mode.  This is the required mode when writing a TCP server application (e.g. a web server to display HTML web pages).' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='decision' title='Decision' exp='SimType' swap='0' >
 							<flowline >
 								<command class_type='call' title='Call Macro' macro='TCPListen' >
@@ -1945,9 +2468,131 @@
 					</flowline>
 				</macro>
 				<macro >
+					<flowline name='MDNS_Poll' description='Services the mDNS responder. Call this frequently from the main loop (alongside the web server / WebSocket CheckSocketActivity calls). If a query for &lt;hostname&gt;.local (type A or ANY) is waiting it is answered with the current IP address via multicast. Other packets are discarded. Returns 1 if a query was answered, 0 otherwise. Uses DHCP_MSG as its packet buffer.' statediag='0' >
+						<return name='Return' type='u8' description='1 if a query for our name was answered' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='qd' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='p' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='match' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='want' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='type' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='cls' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.Return = 0' />
+						</command>
+						<command class_type='decision' title='Responder running?' exp='MDNS_Active' swap='0' >
+							<flowline >
+								<command class_type='decision' title='Announcement waiting for the link?' exp='MDNS_Pending' swap='0' >
+									<flowline >
+										<command class_type='call' title='Try again (checks the link)' macro='MDNS_Announce' >
+											<argument exp='120' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='call' title='Anything received?' macro='RxDataAvailable' >
+									<return exp='.qd' />
+									<argument exp='MDNS_SOCKET' />
+								</command>
+								<command class_type='decision' title='Packet waiting?' exp='.qd' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Clamp to the buffer size' >
+											<exp exp='MDNS_Len = gRxSize[MDNS_SOCKET]' />
+										</command>
+										<command class_type='decision' title='Larger than the buffer?' exp='MDNS_Len &gt; 548' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='MDNS_Len = 548' />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+										<command class_type='call' title='Read the packet' macro='RxReadArray' >
+											<argument exp='MDNS_SOCKET' />
+											<argument exp='DHCP_MSG' />
+											<argument exp='MDNS_Len' />
+										</command>
+										<command class_type='call' title='Release it back to the W5500' macro='RxFlushData' >
+											<argument exp='MDNS_SOCKET' />
+										</command>
+										<command class_type='decision' title='Standard query (QR = 0, opcode 0)?' exp='(MDNS_Len &gt;= 12) &amp;&amp; ((DHCP_MSG[2] &amp; 0xF8) = 0)' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Question count' >
+													<exp exp='.qd = DHCP_MSG[5]' />
+													<exp exp='.p = 12' />
+													<exp exp='.want = 0' />
+												</command>
+												<command class_type='decision' title='More than 255 questions?' exp='DHCP_MSG[4]' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' >
+															<exp exp='.qd = 255' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+												<command class_type='loop' title='Check each question' type='0' exp='(.qd) &amp;&amp; (.p) &amp;&amp; (.want = 0)' for1='' for3='' >
+													<flowline >
+														<command class_type='call' title='Is it our name?' macro='MDNS_NameMatch' >
+															<return exp='.match' />
+															<argument exp='.p' />
+														</command>
+														<command class_type='calculation' title='Calculation' >
+															<exp exp='.p = MDNS_End' />
+														</command>
+														<command class_type='decision' title='Name malformed or question truncated?' exp='(.p = 0) || ((.p + 4) &gt; MDNS_Len)' swap='0' >
+															<flowline >
+																<command class_type='calculation' title='Stop' >
+																	<exp exp='.p = 0' />
+																</command>
+															</flowline>
+															<flowline >
+																<command class_type='calculation' title='QTYPE and QCLASS (top bit = unicast response requested)' >
+																	<exp exp='.type = DHCP_MSG[.p]' />
+																	<exp exp='.type = (.type &lt;&lt; 8) | DHCP_MSG[.p + 1]' />
+																	<exp exp='.cls = DHCP_MSG[.p + 2] &amp; 0x7F' />
+																	<exp exp='.cls = (.cls &lt;&lt; 8) | DHCP_MSG[.p + 3]' />
+																</command>
+																<command class_type='decision' title='A or ANY record for our name in class IN?' exp='(.match) &amp;&amp; (.cls = 1) &amp;&amp; ((.type = 1) || (.type = 255))' swap='0' >
+																	<flowline >
+																		<command class_type='calculation' title='Calculation' >
+																			<exp exp='.want = 1' />
+																		</command>
+																	</flowline>
+																	<flowline />
+																</command>
+																<command class_type='calculation' title='Next question' >
+																	<exp exp='.p = .p + 4' />
+																	<exp exp='.qd = .qd - 1' />
+																</command>
+															</flowline>
+														</command>
+													</flowline>
+												</command>
+												<command class_type='decision' title='Answer needed?' exp='.want' swap='0' >
+													<flowline >
+														<command class_type='call' title='Send our A record' macro='MDNS_Announce' >
+															<argument exp='120' />
+														</command>
+														<command class_type='calculation' title='Calculation' >
+															<exp exp='.Return = 1' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+											</flowline>
+											<flowline />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
 					<flowline name='RxReadByte' description='A call to this macro will return a byte of data in the reception buffer of the specified channel.  It will also internally increment a pointer to that data so that the next call to &apos;Rx_readbyte&apos; (or any other read function) will read the next byte ' statediag='0' >
 						<return name='Return' type='u8' description='Byte read from the socket receive buffer' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='call' title='Call Macro' macro='MAC_SetRxBuffer' >
 							<argument exp='.Channel' />
 						</command>
@@ -1962,8 +2607,8 @@
 				</macro>
 				<macro >
 					<flowline name='CreateUDPSocket' description='This macro creates a socket for sending and receiving UDP data.' statediag='0' >
-						<return name='Return' type='u8' description='Allocated socket handle (0-3), or 0xFF if no socket is free' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<return name='Return' type='u8' description='Allocated socket handle (0-7), or 0xFF if no socket is free' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Src_Port' type='u16' description='Port Number' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Regval' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Timeout' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
@@ -1983,13 +2628,10 @@
 									<argument exp='Sn_CR' />
 									<argument exp='Sn_CR_CLOSE' />
 								</command>
-								<command class_type='loop' title='Wait for socket to close' type='0' exp='.Regval != Sn_SR_CLOSED' for1='' for3='' >
-									<flowline >
-										<command class_type='call' title='Call Macro' macro='MAC_ReadByte' >
-											<return exp='.Regval' />
-											<argument exp='Sn_SR' />
-										</command>
-									</flowline>
+								<command class_type='call' title='Wait up to 100 ms for the socket to close' macro='MAC_WaitSR' >
+									<return exp='.Regval' />
+									<argument exp='Sn_SR_CLOSED' />
+									<argument exp='100' />
 								</command>
 							</flowline>
 							<flowline />
@@ -2011,14 +2653,7 @@
 									<argument exp='Sn_CR' />
 									<argument exp='Sn_CR_OPEN' />
 								</command>
-								<command class_type='loop' title='Wait until clear' type='0' exp='.Regval' start='0' for1='' for3='' >
-									<flowline >
-										<command class_type='call' title='Read socket status' macro='MAC_ReadByte' >
-											<return exp='.Regval' />
-											<argument exp='Sn_CR' />
-										</command>
-									</flowline>
-								</command>
+								<command class_type='call' title='Wait (max 100 ms) for the command to be accepted' macro='MAC_WaitCR' />
 								<command class_type='comment' title='' comment='Command accepted&#13;&#10;Now wait until confirmation of socket opened in UDP mode' textarea='12,0,12,0' />
 								<command class_type='delay' title='Delay' exp='1' type='1' />
 								<command class_type='call' title='' macro='MAC_ReadByte' >
@@ -2224,7 +2859,7 @@
 				<macro >
 					<flowline name='RxMatch_6_Bytes' description='This macro returns a non-zero value when the next 6 bytes of data in the specified channel&apos;s reception buffer are the same as those passed as parameters.  There are similar functions that check for 2 bytes and 4 bytes.' statediag='0' >
 						<return name='Return' type='u8' description='1 if all 6 bytes matched, 0 otherwise' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Byte1' type='u8' description='Specifies the value of the first byte' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Byte2' type='u8' description='Specifies the value of the second byte' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Byte3' type='u8' description='Specifies the value of the third byte' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
@@ -2687,8 +3322,10 @@
 					</flowline>
 				</macro>
 				<macro >
-					<flowline name='DHCP_Discover' description='Internal. Builds and broadcasts a DHCPDISCOVER packet on channel 0 (port 67). Appends options: message type=1, client ID (Ethernet/MAC), hostname composed of &quot;WIZnet&quot; and the last three MAC bytes, and a parameter request list asking for subnet mask, gateway, DNS, domain, T1, and T2 timers. Only runs when the DHCP property is enabled. Called automatically by DHCP_Run.' statediag='0' >
+					<flowline name='DHCP_Discover' description='Internal. Builds and broadcasts a DHCPDISCOVER packet on channel 0 (port 67). Appends options: message type=1, client ID (Ethernet/MAC), hostname (option 12) from HostName, and a parameter request list asking for subnet mask, gateway, DNS, domain, T1, and T2 timers. Only runs when the DHCP property is enabled. Called automatically by DHCP_Run.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<local name='ptr' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='i' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='call' title='User Macro' macro='DHCP_MakeMessage' />
 						<command class_type='calculation' title='dhcpMessageType - DISCOVER' >
 							<exp exp='DHCP_MSG[240] = 53' />
@@ -2706,29 +3343,38 @@
 							<exp exp='DHCP_MSG[250] = My_MAC[4]' />
 							<exp exp='DHCP_MSG[251] = My_MAC[5]' />
 						</command>
-						<command class_type='calculation' title='HostName' >
-							<exp exp='DHCP_MSG[252] = 12' />
-							<exp exp='DHCP_MSG[253] = 9' />
-							<exp exp='DHCP_MSG[254] = &apos;W&apos;' />
-							<exp exp='DHCP_MSG[255] = &apos;I&apos;' />
-							<exp exp='DHCP_MSG[256] = &apos;Z&apos;' />
-							<exp exp='DHCP_MSG[257] = &apos;n&apos;' />
-							<exp exp='DHCP_MSG[258] = &apos;e&apos;' />
-							<exp exp='DHCP_MSG[259] = &apos;t&apos;' />
-							<exp exp='DHCP_MSG[260] = My_MAC[3]' />
-							<exp exp='DHCP_MSG[261] = My_MAC[4]' />
-							<exp exp='DHCP_MSG[262] = My_MAC[5]' />
+						<command class_type='calculation' title='Options continue after the client identifier' >
+							<exp exp='.ptr = 252' />
 						</command>
-						<command class_type='calculation' title='Options' >
-							<exp exp='DHCP_MSG[263] = 55' />
-							<exp exp='DHCP_MSG[264] = 6' />
-							<exp exp='DHCP_MSG[265] = 1' />
-							<exp exp='DHCP_MSG[266] = 3' />
-							<exp exp='DHCP_MSG[267] = 6' />
-							<exp exp='DHCP_MSG[268] = 15' />
-							<exp exp='DHCP_MSG[269] = 58' />
-							<exp exp='DHCP_MSG[270] = 59' />
-							<exp exp='DHCP_MSG[271] = 255' />
+						<command class_type='decision' title='Hostname set?' exp='HostLen' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='HostName (option 12)' >
+									<exp exp='DHCP_MSG[.ptr] = 12' />
+									<exp exp='DHCP_MSG[.ptr + 1] = HostLen' />
+									<exp exp='.ptr = .ptr + 2' />
+								</command>
+								<command class_type='loop' title='Loop' type='2' forvar='.i' exp='HostLen' for1='' for3='' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='DHCP_MSG[.ptr] = HostName[.i]' />
+											<exp exp='.ptr = .ptr + 1' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+						<command class_type='calculation' title='Parameter request list' >
+							<exp exp='DHCP_MSG[.ptr] = 55' />
+							<exp exp='DHCP_MSG[.ptr + 1] = 6' />
+							<exp exp='DHCP_MSG[.ptr + 2] = 1' />
+							<exp exp='DHCP_MSG[.ptr + 3] = 3' />
+							<exp exp='DHCP_MSG[.ptr + 4] = 6' />
+							<exp exp='DHCP_MSG[.ptr + 5] = 15' />
+							<exp exp='DHCP_MSG[.ptr + 6] = 58' />
+							<exp exp='DHCP_MSG[.ptr + 7] = 59' />
+							<exp exp='DHCP_MSG[.ptr + 8] = 255' />
+							<exp exp='.ptr = .ptr + 9' />
 						</command>
 						<command class_type='call' title='Setup broadcast packet' macro='SetDestination' >
 							<argument exp='DHCP_SOCKET' />
@@ -2744,7 +3390,7 @@
 						<command class_type='call' title='endOption' macro='TxSendArray' >
 							<argument exp='DHCP_SOCKET' />
 							<argument exp='DHCP_MSG' />
-							<argument exp='272' />
+							<argument exp='.ptr' />
 						</command>
 						<command class_type='call' title='User Macro' macro='TxEnd' >
 							<argument exp='DHCP_SOCKET' />
@@ -2752,9 +3398,35 @@
 					</flowline>
 				</macro>
 				<macro >
+					<flowline name='MDNS_Stop' description='Sends an mDNS goodbye (TTL 0) so other devices forget the name straight away, then closes the mDNS socket.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='decision' title='Running?' exp='MDNS_Active' swap='0' >
+							<flowline >
+								<command class_type='call' title='Goodbye packet' macro='MDNS_Announce' >
+									<argument exp='0' />
+								</command>
+								<command class_type='call' title='Call Macro' macro='MAC_SetRegister' >
+									<argument exp='MDNS_SOCKET' />
+								</command>
+								<command class_type='call' title='Close Socket' macro='MAC_WriteByte' >
+									<argument exp='Sn_CR' />
+									<argument exp='Sn_CR_CLOSE' />
+								</command>
+								<command class_type='calculation' title='Stopped' >
+									<exp exp='MDNS_Active = 0' />
+								</command>
+								<command class_type='call' title='Restore common register bank' macro='MAC_SetBank' >
+									<argument exp='0' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
 					<flowline name='TCPConnect_Sim' description='This macro puts a previously opened TCP channel in &quot;active open&quot; mode.  This is the required mode when writing a TCP client application (e.g. using SMTP to send an email).' statediag='0' >
 						<return name='Return' type='u8' description='1 if the TCP connection was established, 0 on timeout or refusal' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Dst_IP0' type='u8' description='First Byte of IP address' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Dst_IP1' type='u8' description='Second Byte of IP address' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Dst_IP2' type='u8' description='Third Byte of IP address' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
@@ -2790,7 +3462,7 @@
 				<macro >
 					<flowline name='RxMatch_2_Bytes' description='This macro returns a non-zero value when the next 2 bytes of data in the specified channel&apos;s reception buffer are the same as those passed as parameters.  There are similar functions that check for 4 bytes and 6 bytes.' statediag='0' >
 						<return name='Return' type='u8' description='1 if both bytes matched, 0 otherwise' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Byte1' type='u8' description='Specifies the value of the first byte' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Byte2' type='u8' description='Specifies the value of the second byte' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='rx_byte' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
@@ -2826,7 +3498,7 @@
 				<macro >
 					<flowline name='TxEnd' description='Once the transmit buffer has been filled with data, call this macro to actually send the data.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='tx_ptr_cur' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='temp' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='call' title='Call Macro' macro='MAC_SetRegister' >
@@ -2850,14 +3522,7 @@
 						<command class_type='calculation' title='Calculation' >
 							<exp exp='.temp = 1' />
 						</command>
-						<command class_type='loop' title='Wait for sendng process to complete' type='0' exp='.temp' for1='' for3='' >
-							<flowline >
-								<command class_type='call' title='Call Macro' macro='MAC_ReadByte' >
-									<return exp='.temp' />
-									<argument exp='Sn_CR' />
-								</command>
-							</flowline>
-						</command>
+						<command class_type='call' title='Wait (max 100 ms) for the command to be accepted' macro='MAC_WaitCR' />
 						<command class_type='calculation' title='Reset Sent size' >
 							<exp exp='gTxSize[.Channel] = 0' />
 						</command>
@@ -2868,7 +3533,7 @@
 						<return name='Return' type='T8' description='Null-terminated string of up to Length characters read from the receive buffer' isconst='0' isHidden='0' isinit='0' usrinit='&quot;\x00&quot;' setinit='' >
 							<array size='2000' />
 						</return>
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Length' type='u8' description='Maximum number of characters to read' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='idx' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
 						<command class_type='call' title='Call Macro' macro='MAC_SetRxBuffer' >
@@ -2892,10 +3557,11 @@
 				</macro>
 				<macro >
 					<flowline name='CreateTCPSocket' description='This macro creates a socket for sending and receiving TCP data.' statediag='0' >
-						<return name='Return' type='u8' description='Allocated socket handle (0-3), or 0xFF if no socket is free' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<return name='Return' type='u8' description='Allocated socket handle (0-7), or 0xFF if no socket is free' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Src_Port' type='u16' description='Port Number' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Regval' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='tries' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='call' title='Call Macro' macro='MAC_SetRegister' >
 							<argument exp='.Channel' />
 						</command>
@@ -2909,18 +3575,18 @@
 									<argument exp='Sn_CR' />
 									<argument exp='Sn_CR_CLOSE' />
 								</command>
-								<command class_type='loop' title='Wait for socket to close' type='0' exp='.Regval != Sn_SR_CLOSED' for1='' for3='' >
-									<flowline >
-										<command class_type='call' title='Call Macro' macro='MAC_ReadByte' >
-											<return exp='.Regval' />
-											<argument exp='Sn_SR' />
-										</command>
-									</flowline>
+								<command class_type='call' title='Wait up to 100 ms for the socket to close' macro='MAC_WaitSR' >
+									<return exp='.Regval' />
+									<argument exp='Sn_SR_CLOSED' />
+									<argument exp='100' />
 								</command>
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='loop' title='Loop' type='0' exp='.Regval != Sn_SR_INIT' start='0' for1='' for3='' >
+						<command class_type='calculation' title='Give up after 10 attempts' >
+							<exp exp='.tries = 10' />
+						</command>
+						<command class_type='loop' title='Loop' type='0' exp='(.Regval != Sn_SR_INIT) &amp;&amp; (.tries)' start='0' for1='' for3='' >
 							<flowline >
 								<command class_type='call' title='Setup socket protocol and option flags' macro='MAC_WriteByte' >
 									<argument exp='Sn_MR' />
@@ -2934,30 +3600,36 @@
 									<argument exp='Sn_CR' />
 									<argument exp='Sn_CR_OPEN' />
 								</command>
-								<command class_type='loop' title='Wait until clear' type='0' exp='.Regval' start='0' for1='' for3='' >
-									<flowline >
-										<command class_type='call' title='Read socket status' macro='MAC_ReadByte' >
-											<return exp='.Regval' />
-											<argument exp='Sn_CR' />
-										</command>
-									</flowline>
-								</command>
+								<command class_type='call' title='Wait (max 100 ms) for the command to be accepted' macro='MAC_WaitCR' />
 								<command class_type='call' title='' macro='MAC_ReadByte' >
 									<return exp='.Regval' />
 									<argument exp='Sn_SR' />
 								</command>
+								<command class_type='delay' title='Delay' exp='1' type='1' />
+								<command class_type='calculation' title='Count the attempt' >
+									<exp exp='.tries = .tries - 1' />
+								</command>
 							</flowline>
 						</command>
-						<command class_type='calculation' title='Opened socket correctly' >
-							<exp exp='.Return = 1' />
+						<command class_type='decision' title='Socket opened?' exp='.Regval = Sn_SR_INIT' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Opened socket correctly' >
+									<exp exp='.Return = 1' />
 									<exp exp='gRxSize[.Channel] = 0' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Failed to open' >
+									<exp exp='.Return = 0' />
+								</command>
+							</flowline>
 						</command>
 					</flowline>
 				</macro>
 				<macro >
 					<flowline name='RxDataAvailable' description='This macro is used to check whether or not data has been received by the Internet E-Block. A return value of zero indicated that no data has been received.  A positive return value indicates that data is available.' statediag='0' >
 						<return name='Return' type='u8' description='1 if bytes are waiting in the receive buffer, 0 otherwise' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='ssr' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='rx_rsr_val' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='offset' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
@@ -3164,7 +3836,7 @@
 					</flowline>
 				</macro>
 				<macro >
-					<flowline name='DHCP_ApplyLease' description='Internal. Writes the DHCP-assigned Gateway, Subnet and My_IP into the W5500 GAR, SUBR and SIPR registers. Called by DHCP_Run whenever a lease is acquired or renewed (state 3).' statediag='0' >
+					<flowline name='DHCP_ApplyLease' description='Internal. Writes the DHCP-assigned Gateway, Subnet and My_IP into the W5500 GAR, SUBR and SIPR registers, then re-announces the mDNS name if the responder is running. Called by DHCP_Run whenever a lease is acquired or renewed (state 3).' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<command class_type='call' title='Select the common register bank' macro='MAC_SetBank' >
 							<argument exp='0' />
@@ -3184,12 +3856,18 @@
 							<argument exp='My_IP' />
 							<argument exp='4' />
 						</command>
+						<command class_type='call' title='Tell the network about the (possibly new) address' macro='MDNS_Announce' >
+							<argument exp='120' />
+						</command>
+						<command class_type='call' title='Leave the common register bank selected' macro='MAC_SetBank' >
+							<argument exp='0' />
+						</command>
 					</flowline>
 				</macro>
 				<macro >
 					<flowline name='TxSendByte' description='This macro fills the specified channel&apos;s transmit buffer with data.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Data' type='u8' description='Data byte to append to Tx buffer.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='call' title='Call Macro' macro='MAC_SetTxBuffer' >
 							<argument exp='.Channel' />
@@ -3207,8 +3885,8 @@
 				<macro >
 					<flowline name='TCPListen' description='This macro puts a previously opened TCP channel in &quot;passive open&quot; mode.  This is the required mode when writing a TCP server application (e.g. a web server to display HTML web pages).' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Decision' exp='.Channel &gt;= 4' swap='0' >
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Decision' exp='.Channel &gt;= 8' swap='0' >
 							<flowline />
 							<flowline >
 								<command class_type='call' title='Call Macro' macro='MAC_SetRegister' >
@@ -3280,7 +3958,7 @@
 				<macro >
 					<flowline name='TxSendByte_Sim' description='This macro fills the specified channel&apos;s transmit buffer with data.  It can fill the buffer with a single byte of data, or with a string of information.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Data' type='u8' description='Data byte to append to Tx buffer.' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='decision' title='Decision' exp='SimType' swap='0' >
 							<flowline >
@@ -3347,7 +4025,7 @@
 				<macro >
 					<flowline name='RxFlushData' description='Once data reception has been completed, this macro should be called to release the data packet back to the W5500 (advances Sn_RX_RD and issues RECV) so the next packet can be read. Only the packet captured by the last RxDataAvailable call (header + payload) is released; any data that arrived after that call stays in the buffer. If no size is known everything in the buffer is released.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='rx_sz' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='rx_ptr' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='rel' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
@@ -3360,35 +4038,35 @@
 						</command>
 						<command class_type='decision' title='Anything to release?' exp='.rx_sz' swap='0' >
 							<flowline >
-							<command class_type='calculation' title='Release the packet captured by the last RxDataAvailable (header + payload)' >
-								<exp exp='.rel = gHrdSize[.Channel] + gRxSize[.Channel]' />
-							</command>
-							<command class_type='decision' title='Unknown or stale size: release everything' exp='(.rel = 0) || (.rel &gt; .rx_sz)' swap='0' >
-								<flowline >
-									<command class_type='calculation' title='Calculation' >
-										<exp exp='.rel = .rx_sz' />
-									</command>
-								</flowline>
-								<flowline />
-							</command>
-							<command class_type='call' title='Call Macro' macro='MAC_ReadWord' >
-								<return exp='.rx_ptr' />
-								<argument exp='Sn_RX_RD' />
-							</command>
-							<command class_type='calculation' title='Advance the read pointer' >
-								<exp exp='.rx_ptr = .rx_ptr + .rel' />
-							</command>
-							<command class_type='call' title='Call Macro' macro='MAC_WriteWord' >
-								<argument exp='Sn_RX_RD' />
-								<argument exp='.rx_ptr' />
-							</command>
-							<command class_type='call' title='Send the RECV command' macro='MAC_WriteByte' >
-								<argument exp='Sn_CR' />
-								<argument exp='Sn_CR_RECV' />
-							</command>
-							<command class_type='calculation' title='Packet consumed' >
-								<exp exp='gRxSize[.Channel] = 0' />
-							</command>
+								<command class_type='calculation' title='Release the packet captured by the last RxDataAvailable (header + payload)' >
+									<exp exp='.rel = gHrdSize[.Channel] + gRxSize[.Channel]' />
+								</command>
+								<command class_type='decision' title='Unknown or stale size: release everything' exp='(.rel = 0) || (.rel &gt; .rx_sz)' swap='0' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.rel = .rx_sz' />
+										</command>
+									</flowline>
+									<flowline />
+								</command>
+								<command class_type='call' title='Call Macro' macro='MAC_ReadWord' >
+									<return exp='.rx_ptr' />
+									<argument exp='Sn_RX_RD' />
+								</command>
+								<command class_type='calculation' title='Advance the read pointer' >
+									<exp exp='.rx_ptr = .rx_ptr + .rel' />
+								</command>
+								<command class_type='call' title='Call Macro' macro='MAC_WriteWord' >
+									<argument exp='Sn_RX_RD' />
+									<argument exp='.rx_ptr' />
+								</command>
+								<command class_type='call' title='Send the RECV command' macro='MAC_WriteByte' >
+									<argument exp='Sn_CR' />
+									<argument exp='Sn_CR_RECV' />
+								</command>
+								<command class_type='calculation' title='Packet consumed' >
+									<exp exp='gRxSize[.Channel] = 0' />
+								</command>
 							</flowline>
 							<flowline />
 						</command>
@@ -3397,7 +4075,7 @@
 				<macro >
 					<flowline name='MAC_SetRxBuffer' description='Set the bank address at the given Socket receive buffer area' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<param name='Socket' type='u8' description='Socket number (0-3) whose RX buffer is to be selected' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Socket' type='u8' description='Socket number (0-7) whose RX buffer is to be selected' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='call' title='Call Macro' macro='MAC_SetBank' >
 							<argument exp='(.Socket &lt;&lt; 2) + 3' />
 						</command>
@@ -3441,14 +4119,14 @@
 				<macro >
 					<flowline name='TCPConnect' description='This macro puts a previously opened TCP channel in &quot;active open&quot; mode.  This is the required mode when writing a TCP client application (e.g. using SMTP to send an email).' statediag='0' >
 						<return name='Return' type='u8' description='1 if the connection was established, 0 on timeout or failure' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Dst_IP0' type='u8' description='First Byte of IP address' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Dst_IP1' type='u8' description='Second Byte of IP address' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Dst_IP2' type='u8' description='Third Byte of IP address' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Dst_IP3' type='u8' description='Fourth Byte of IP address' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Dst_Port' type='u16' description='Destination Port' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Timeout' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<command class_type='decision' title='Decision' exp='.Channel &gt;= 4' swap='0' >
+						<command class_type='decision' title='Decision' exp='.Channel &gt;= 8' swap='0' >
 							<flowline >
 								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Return = 0' />
@@ -3482,14 +4160,7 @@
 									<argument exp='Sn_CR' />
 									<argument exp='Sn_CR_CONNECT' />
 								</command>
-								<command class_type='loop' title='Loop' type='0' exp='.Return' start='0' for1='' for3='' >
-									<flowline >
-										<command class_type='call' title='Wait for result to clear' macro='MAC_ReadByte' >
-											<return exp='.Return' />
-											<argument exp='Sn_CR' />
-										</command>
-									</flowline>
-								</command>
+								<command class_type='call' title='Wait (max 100 ms) for the command to be accepted' macro='MAC_WaitCR' />
 								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Timeout = 500' />
 								</command>
@@ -3524,7 +4195,7 @@
 				<macro >
 					<flowline name='RxReadByte_Sim' description='A call to this macro will return a byte of data in the reception buffer of the specified channel.  It will also internally increment a pointer to that data so that the next call to &apos;Rx_readbyte&apos; (or any other read function) will read the next byte ' statediag='0' >
 						<return name='Return' type='u8' description='Byte read from the simulated receive buffer' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='decision' title='Decision' exp='SimType' swap='0' >
 							<flowline >
 								<command class_type='call' title='Call Macro' macro='RxReadByte' >
@@ -3791,9 +4462,20 @@
 					</flowline>
 				</macro>
 				<macro >
+					<flowline name='MDNS_Stop_Sim' description='Simulation version of MDNS_Stop.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<command class_type='decision' title='Simulating via SPI / Injector?' exp='SimType' swap='0' >
+							<flowline >
+								<command class_type='call' title='Call Macro' macro='MDNS_Stop' />
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
 					<flowline name='RxMatchMyMAC' description='This macro returns a non-zero value when the next 6 bytes of data in the specified channel&apos;s reception buffer are the same as the Internet E-block&apos;s MAC address entered in the component&apos;s property page.' statediag='0' >
 						<return name='Return' type='u8' description='1 if the received source MAC equals My_MAC, 0 otherwise' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='rx_byte' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Return = 1' />
@@ -3884,7 +4566,7 @@
 				<macro >
 					<flowline name='RxFlushData_Sim' description='Once data reception has been completed, this macro should be called to discard the data packet and allow other data packets to be read.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='decision' title='Decision' exp='SimType' swap='0' >
 							<flowline >
 								<command class_type='call' title='Call Macro' macro='RxFlushData' >
@@ -3902,20 +4584,31 @@
 				<macro >
 					<flowline name='RxDataSize' description='This macro is used to detect the size of data collected by the Rx_data_available macro.' statediag='0' >
 						<return name='Return' type='u16' description='Number of bytes currently waiting in the socket receive buffer' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='calculation' title='Calculation' >
 							<exp exp='.Return = gRxSize[.Channel]' />
 						</command>
 					</flowline>
 				</macro>
 				<macro >
+					<flowline name='GetHostname' description='Returns the network name currently in use (without the .local suffix).' statediag='0' >
+						<return name='Return' type='T8' description='Current network name' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
+							<array size='2000' />
+						</return>
+						<command class_type='calculation' title='Calculation' >
+							<exp exp='.Return = HostName' />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
 					<flowline name='CreateMACSocket' description='This macro creates a socket for sending and receiving Ethernet data using raw data.' statediag='0' >
-						<return name='Return' type='u8' description='Allocated socket handle (0-3), or 0xFF if no socket is free' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<return name='Return' type='u8' description='Allocated socket handle (0-7), or 0xFF if no socket is free' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Promiscuous' type='u8' description='Receive everything (1) or just data bound for your MAC (0)' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Broadcast' type='u8' description='Allows broadcast messages to be accepted (1) or rejected (0)' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Error' type='u8' description='Allowsmessages with errors to be accepted (1) or rejected (0)' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='Regval' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='4' setinit='0x04' />
 						<local name='Sn_MR_VAL' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='tries' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='call' title='Call Macro' macro='ModePingBlock' >
 							<argument exp='1' />
 						</command>
@@ -3932,18 +4625,18 @@
 									<argument exp='Sn_CR' />
 									<argument exp='Sn_CR_CLOSE' />
 								</command>
-								<command class_type='loop' title='Wait for socket to close' type='0' exp='.Regval != Sn_SR_CLOSED' for1='' for3='' >
-									<flowline >
-										<command class_type='call' title='Call Macro' macro='MAC_ReadByte' >
-											<return exp='.Regval' />
-											<argument exp='Sn_SR' />
-										</command>
-									</flowline>
+								<command class_type='call' title='Wait up to 100 ms for the socket to close' macro='MAC_WaitSR' >
+									<return exp='.Regval' />
+									<argument exp='Sn_SR_CLOSED' />
+									<argument exp='100' />
 								</command>
 							</flowline>
 							<flowline />
 						</command>
-						<command class_type='loop' title='Loop' type='0' exp='.Regval != Sn_SR_MACRAW' start='0' for1='' for3='' >
+						<command class_type='calculation' title='Give up after 10 attempts' >
+							<exp exp='.tries = 10' />
+						</command>
+						<command class_type='loop' title='Loop' type='0' exp='(.Regval != Sn_SR_MACRAW) &amp;&amp; (.tries)' start='0' for1='' for3='' >
 							<flowline >
 								<command class_type='calculation' title='Calculation' >
 									<exp exp='.Sn_MR_VAL = Sn_MR_MACRAW' />
@@ -3972,19 +4665,15 @@
 									<argument exp='Sn_CR' />
 									<argument exp='Sn_CR_OPEN' />
 								</command>
-								<command class_type='loop' title='Wait until clear' type='0' exp='.Regval' start='0' for1='' for3='' >
-									<flowline >
-										<command class_type='call' title='Read socket status' macro='MAC_ReadByte' >
-											<return exp='.Regval' />
-											<argument exp='Sn_CR' />
-										</command>
-									</flowline>
-								</command>
+								<command class_type='call' title='Wait (max 100 ms) for the command to be accepted' macro='MAC_WaitCR' />
 								<command class_type='call' title='' macro='MAC_ReadByte' >
 									<return exp='.Regval' />
 									<argument exp='Sn_SR' />
 								</command>
 								<command class_type='delay' title='Delay' exp='1' type='1' />
+								<command class_type='calculation' title='Count the attempt' >
+									<exp exp='.tries = .tries - 1' />
+								</command>
 							</flowline>
 						</command>
 						<command class_type='calculation' title='Reset Globals' >
@@ -3997,15 +4686,24 @@
 							<exp exp='Header[6] = 0' />
 							<exp exp='Header[7] = 0' />
 						</command>
-						<command class_type='calculation' title='Opened socket correctly' >
-							<exp exp='.Return = 1' />
+						<command class_type='decision' title='Socket opened?' exp='.Regval = Sn_SR_MACRAW' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='Opened socket correctly' >
+									<exp exp='.Return = 1' />
+								</command>
+							</flowline>
+							<flowline >
+								<command class_type='calculation' title='Failed to open' >
+									<exp exp='.Return = 0' />
+								</command>
+							</flowline>
 						</command>
 					</flowline>
 				</macro>
 				<macro >
 					<flowline name='CreateUDPSocket_Sim' description='This macro creates a socket for sending and receiving UDP data.' statediag='0' >
-						<return name='Return' type='u8' description='Allocated socket handle (0-3), or 0xFF if no socket was free' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<return name='Return' type='u8' description='Allocated socket handle (0-7), or 0xFF if no socket was free' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Src_Port' type='u16' description='Port Number' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='decision' title='Decision' exp='SimType' swap='0' >
 							<flowline >
@@ -4029,7 +4727,7 @@
 				<macro >
 					<flowline name='TxSendMyMAC' description='This macro fills the specified channel&apos;s transmit buffer with 6 bytes of data representing this Internet E-Block&apos;s MAC address as specified in the component&apos;s property page.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='addr_l' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='addr_h' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='offset' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
@@ -4085,9 +4783,107 @@
 					</flowline>
 				</macro>
 				<macro >
+					<flowline name='MDNS_Announce' description='Internal. Sends an unsolicited mDNS response holding the A record &lt;hostname&gt;.local -&gt; My_IP with the cache-flush bit set, to 224.0.0.251:5353. Used to answer queries, to announce at start-up or after a new DHCP lease, and with TTL 0 as a goodbye. Does nothing unless the responder is running and an IP address is set. If the Ethernet link is not up yet the send is skipped and MDNS_Pending is set so MDNS_Poll retries later. Builds the packet in DHCP_MSG.' statediag='0' >
+						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
+						<param name='TTL' type='u8' description='Record time to live in seconds (120 normally, 0 for goodbye)' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='p' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='i' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='phy' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<command class_type='decision' title='Running with an IP address and a name?' exp='(MDNS_Active) &amp;&amp; (My_IP[0] != 0) &amp;&amp; (HostLen)' swap='0' >
+							<flowline >
+								<command class_type='call' title='Select the common register bank' macro='MAC_SetBank' >
+									<argument exp='0' />
+								</command>
+								<command class_type='call' title='Read PHYCFGR' macro='MAC_ReadByte' >
+									<return exp='.phy' />
+									<argument exp='0x2E' />
+								</command>
+								<command class_type='calculation' title='Header: ID 0, response + authoritative, 1 answer' >
+									<exp exp='DHCP_MSG[0] = 0' />
+									<exp exp='DHCP_MSG[1] = 0' />
+									<exp exp='DHCP_MSG[2] = 0x84' />
+									<exp exp='DHCP_MSG[3] = 0' />
+									<exp exp='DHCP_MSG[4] = 0' />
+									<exp exp='DHCP_MSG[5] = 0' />
+									<exp exp='DHCP_MSG[6] = 0' />
+									<exp exp='DHCP_MSG[7] = 1' />
+									<exp exp='DHCP_MSG[8] = 0' />
+									<exp exp='DHCP_MSG[9] = 0' />
+									<exp exp='DHCP_MSG[10] = 0' />
+									<exp exp='DHCP_MSG[11] = 0' />
+									<exp exp='DHCP_MSG[12] = HostLen' />
+									<exp exp='.p = 13' />
+								</command>
+								<command class_type='loop' title='Hostname label' type='2' forvar='.i' exp='HostLen' for1='' for3='' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='DHCP_MSG[.p] = HostName[.i]' />
+											<exp exp='.p = .p + 1' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='calculation' title='local label and terminator' >
+									<exp exp='DHCP_MSG[.p] = 5' />
+									<exp exp='DHCP_MSG[.p + 1] = &apos;l&apos;' />
+									<exp exp='DHCP_MSG[.p + 2] = &apos;o&apos;' />
+									<exp exp='DHCP_MSG[.p + 3] = &apos;c&apos;' />
+									<exp exp='DHCP_MSG[.p + 4] = &apos;a&apos;' />
+									<exp exp='DHCP_MSG[.p + 5] = &apos;l&apos;' />
+									<exp exp='DHCP_MSG[.p + 6] = 0' />
+									<exp exp='.p = .p + 7' />
+								</command>
+								<command class_type='calculation' title='Type A, class IN with cache-flush, TTL, 4 byte address' >
+									<exp exp='DHCP_MSG[.p] = 0' />
+									<exp exp='DHCP_MSG[.p + 1] = 1' />
+									<exp exp='DHCP_MSG[.p + 2] = 0x80' />
+									<exp exp='DHCP_MSG[.p + 3] = 0x01' />
+									<exp exp='DHCP_MSG[.p + 4] = 0' />
+									<exp exp='DHCP_MSG[.p + 5] = 0' />
+									<exp exp='DHCP_MSG[.p + 6] = 0' />
+									<exp exp='DHCP_MSG[.p + 7] = .TTL' />
+									<exp exp='DHCP_MSG[.p + 8] = 0' />
+									<exp exp='DHCP_MSG[.p + 9] = 4' />
+									<exp exp='DHCP_MSG[.p + 10] = My_IP[0]' />
+									<exp exp='DHCP_MSG[.p + 11] = My_IP[1]' />
+									<exp exp='DHCP_MSG[.p + 12] = My_IP[2]' />
+									<exp exp='DHCP_MSG[.p + 13] = My_IP[3]' />
+									<exp exp='.p = .p + 14' />
+								</command>
+								<command class_type='decision' title='Link up? (PHYCFGR bit 0) Sending with no link stalls TxEnd' exp='.phy &amp; 0x01' swap='0' >
+									<flowline >
+										<command class_type='call' title='Call Macro' macro='TxStart' >
+											<argument exp='MDNS_SOCKET' />
+										</command>
+										<command class_type='call' title='Call Macro' macro='TxSendArray' >
+											<argument exp='MDNS_SOCKET' />
+											<argument exp='DHCP_MSG' />
+											<argument exp='.p' />
+										</command>
+										<command class_type='call' title='Call Macro' macro='TxEnd' >
+											<argument exp='MDNS_SOCKET' />
+										</command>
+										<command class_type='calculation' title='Sent' >
+											<exp exp='MDNS_Pending = 0' />
+										</command>
+									</flowline>
+									<flowline >
+										<command class_type='calculation' title='No link yet: MDNS_Poll sends it once the link is up' >
+											<exp exp='MDNS_Pending = 1' />
+										</command>
+									</flowline>
+								</command>
+								<command class_type='call' title='Restore common register bank' macro='MAC_SetBank' >
+									<argument exp='0' />
+								</command>
+							</flowline>
+							<flowline />
+						</command>
+					</flowline>
+				</macro>
+				<macro >
 					<flowline name='RxMatch_4_Bytes_Sim' description='This macro returns a non-zero value when the next 4 bytes of data in the specified channel&apos;s reception buffer are the same as those passed as parameters.  There are similar functions that check for 2 bytes and 6 bytes.' statediag='0' >
 						<return name='Return' type='u8' description='1 if all 4 bytes matched, 0 otherwise' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Byte1' type='u8' description='Specifies the value of the first byte' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Byte2' type='u8' description='Specifies the value of the second byte' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Byte3' type='u8' description='Specifies the value of the third byte' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
@@ -4120,6 +4916,7 @@
 					<flowline name='DHCP_Request' description='Internal. Builds and sends a DHCPREQUEST (message type 3) on channel 0. For lease renewal (DHCP_State=4) unicasts to DHCP_ServerIP with ciaddr set to the current My_IP (RFC 2131 RENEWING). For the initial request (any other state) broadcasts to 255.255.255.255 and includes option 50 (requested IP = yiaddr from the OFFER) and option 54 (server identifier from the OFFER). Also appends client ID, hostname, parameter request list and END. Called automatically by DHCP_Run.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
 						<local name='ptr' type='u16' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<local name='i' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='ip' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='4' />
 						</local>
@@ -4169,19 +4966,23 @@
 							<exp exp='DHCP_MSG[.ptr + 8] = My_MAC[5]' />
 							<exp exp='.ptr = .ptr + 9' />
 						</command>
-						<command class_type='calculation' title='HostName' >
-							<exp exp='DHCP_MSG[.ptr] = 12' />
-							<exp exp='DHCP_MSG[.ptr + 1] = 9' />
-							<exp exp='DHCP_MSG[.ptr + 2] = &apos;W&apos;' />
-							<exp exp='DHCP_MSG[.ptr + 3] = &apos;I&apos;' />
-							<exp exp='DHCP_MSG[.ptr + 4] = &apos;Z&apos;' />
-							<exp exp='DHCP_MSG[.ptr + 5] = &apos;n&apos;' />
-							<exp exp='DHCP_MSG[.ptr + 6] = &apos;e&apos;' />
-							<exp exp='DHCP_MSG[.ptr + 7] = &apos;t&apos;' />
-							<exp exp='DHCP_MSG[.ptr + 8] = My_MAC[3]' />
-							<exp exp='DHCP_MSG[.ptr + 9] = My_MAC[4]' />
-							<exp exp='DHCP_MSG[.ptr + 10] = My_MAC[5]' />
-							<exp exp='.ptr = .ptr + 11' />
+						<command class_type='decision' title='Hostname set?' exp='HostLen' swap='0' >
+							<flowline >
+								<command class_type='calculation' title='HostName (option 12)' >
+									<exp exp='DHCP_MSG[.ptr] = 12' />
+									<exp exp='DHCP_MSG[.ptr + 1] = HostLen' />
+									<exp exp='.ptr = .ptr + 2' />
+								</command>
+								<command class_type='loop' title='Loop' type='2' forvar='.i' exp='HostLen' for1='' for3='' >
+									<flowline >
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='DHCP_MSG[.ptr] = HostName[.i]' />
+											<exp exp='.ptr = .ptr + 1' />
+										</command>
+									</flowline>
+								</command>
+							</flowline>
+							<flowline />
 						</command>
 						<command class_type='decision' title='Initial request (SELECTING): add requested IP and server identifier' exp='DHCP_State != 4' swap='0' >
 							<flowline >
@@ -4247,7 +5048,7 @@
 				<macro >
 					<flowline name='RxDataSize_Sim' description='This macro is used to detect the size of data collected by the Rx_data_available macro.' statediag='0' >
 						<return name='Return' type='u8' description='Number of bytes available in the simulated receive buffer' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='decision' title='Decision' exp='SimType' swap='0' >
 							<flowline >
 								<command class_type='call' title='Call Macro' macro='RxDataSize' >
@@ -4293,7 +5094,7 @@
 				<macro >
 					<flowline name='TxSendArray_Sim' description='This macro fills the specified channel&apos;s transmit buffer with data.  It can fill the buffer with a single byte of data, or with a string of information.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Data' type='u8' description='Data byte to append to Tx buffer.' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='1000' />
 						</param>
@@ -4334,7 +5135,7 @@
 				<macro >
 					<flowline name='RxMatch_2_Bytes_Sim' description='This macro returns a non-zero value when the next 2 bytes of data in the specified channel&apos;s reception buffer are the same as those passed as parameters.  There are similar functions that check for 4 bytes and 6 bytes.' statediag='0' >
 						<return name='Return' type='u8' description='1 if both bytes matched, 0 otherwise' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Byte1' type='u8' description='Specifies the value of the first byte' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Byte2' type='u8' description='Specifies the value of the second byte' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='decision' title='Decision' exp='SimType' swap='0' >
@@ -4405,7 +5206,7 @@
 				<macro >
 					<flowline name='TxSendArray' description='This macro fills the specified channel&apos;s transmit buffer with data.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<param name='Data' type='u8' description='Data byte to append to Tx buffer.' isconst='0' isHidden='0' isinit='0' usrinit='&quot;&quot;' setinit='' >
 							<array size='1000' />
 						</param>
@@ -4427,7 +5228,7 @@
 				<macro >
 					<flowline name='RxMatchMyMAC_Sim' description='This macro returns a non-zero value when the next 4 bytes of data in the specified channel&apos;s reception buffer are the same as the Internet E-block&apos;s IP address.' statediag='0' >
 						<return name='Return' type='u8' description='1 if the received source MAC equals My_MAC, 0 otherwise' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='decision' title='Decision' exp='SimType' swap='0' >
 							<flowline >
 								<command class_type='call' title='Call Macro' macro='RxMatchMyMAC' >
@@ -4447,7 +5248,7 @@
 				<macro >
 					<flowline name='TCPClose' description='When an established TCP connection has finished transmission of data, either the local application (i.e. your code) or the remote application (i.e. the application at the other end of the connection) can initiate closure of the socket.' statediag='0' >
 						<return name='Return' type='v0' description='' isconst='0' isHidden='0' isinit='0' usrinit='' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='is_equal' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='0' setinit='0' />
 						<local name='timeout' type='u8' description='' isconst='0' isHidden='0' isinit='1' usrinit='100' setinit='100' />
 						<local name='temp' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
@@ -4461,65 +5262,62 @@
 						</command>
 						<command class_type='decision' title='Connected? (ESTABLISHED 0x17 or CLOSE_WAIT 0x1C)' exp='(.status = 0x17) || (.status = 0x1C)' swap='0' >
 							<flowline >
-							<command class_type='loop' title='Wait for the last SEND to complete (SEND_OK) or 100 ms' type='0' exp='.is_equal = 0' for1='' for3='' >
-								<flowline >
-									<command class_type='call' title='Call Macro' macro='MAC_ReadByte' >
-										<return exp='.temp' />
-										<argument exp='Sn_IR' />
-									</command>
-									<command class_type='decision' title='Decision' exp='.temp &amp; 0x10' swap='0' >
-										<flowline >
-											<command class_type='calculation' title='Calculation' >
-												<exp exp='.is_equal = 1' />
-											</command>
-										</flowline>
-										<flowline >
-											<command class_type='delay' title='Delay' exp='1' type='1' />
-											<command class_type='calculation' title='Calculation' >
-												<exp exp='.timeout = .timeout - 1' />
-											</command>
-											<command class_type='decision' title='Decision' exp='.timeout = 0' swap='0' >
-												<flowline >
-													<command class_type='calculation' title='Calculation' >
-														<exp exp='.is_equal = 1' />
-													</command>
-												</flowline>
-												<flowline />
-											</command>
-										</flowline>
-									</command>
-								</flowline>
-							</command>
-							<command class_type='call' title='Send FIN' macro='MAC_WriteByte' >
-								<argument exp='Sn_CR' />
-								<argument exp='Sn_CR_DISCON' />
-							</command>
-							<command class_type='calculation' title='Calculation' >
-								<exp exp='.is_equal = 1' />
-							</command>
-							<command class_type='loop' title='Wait for command accepted' type='0' exp='.is_equal' for1='' for3='' >
-								<flowline >
-									<command class_type='call' title='Call Macro' macro='MAC_ReadByte' >
-										<return exp='.is_equal' />
-										<argument exp='Sn_CR' />
-									</command>
-								</flowline>
-							</command>
-							<command class_type='calculation' title='Calculation' >
-								<exp exp='.timeout = 100' />
-							</command>
-							<command class_type='loop' title='Wait up to 100 ms for the socket to reach CLOSED' type='0' exp='(.status != 0) &amp;&amp; (.timeout &gt; 0)' for1='' for3='' >
-								<flowline >
-									<command class_type='delay' title='Delay' exp='1' type='1' />
-									<command class_type='calculation' title='Calculation' >
-										<exp exp='.timeout = .timeout - 1' />
-									</command>
-									<command class_type='call' title='Call Macro' macro='MAC_ReadByte' >
-										<return exp='.status' />
-										<argument exp='Sn_SR' />
-									</command>
-								</flowline>
-							</command>
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.is_equal = 0' />
+									<exp exp='.timeout = 100' />
+								</command>
+								<command class_type='loop' title='Wait for the last SEND to complete (SEND_OK) or 100 ms' type='0' exp='.is_equal = 0' for1='' for3='' >
+									<flowline >
+										<command class_type='call' title='Call Macro' macro='MAC_ReadByte' >
+											<return exp='.temp' />
+											<argument exp='Sn_IR' />
+										</command>
+										<command class_type='decision' title='Decision' exp='.temp &amp; 0x10' swap='0' >
+											<flowline >
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='.is_equal = 1' />
+												</command>
+											</flowline>
+											<flowline >
+												<command class_type='delay' title='Delay' exp='1' type='1' />
+												<command class_type='calculation' title='Calculation' >
+													<exp exp='.timeout = .timeout - 1' />
+												</command>
+												<command class_type='decision' title='Decision' exp='.timeout = 0' swap='0' >
+													<flowline >
+														<command class_type='calculation' title='Calculation' >
+															<exp exp='.is_equal = 1' />
+														</command>
+													</flowline>
+													<flowline />
+												</command>
+											</flowline>
+										</command>
+									</flowline>
+								</command>
+								<command class_type='call' title='Send FIN' macro='MAC_WriteByte' >
+									<argument exp='Sn_CR' />
+									<argument exp='Sn_CR_DISCON' />
+								</command>
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.is_equal = 1' />
+								</command>
+								<command class_type='call' title='Wait (max 100 ms) for the command to be accepted' macro='MAC_WaitCR' />
+								<command class_type='calculation' title='Calculation' >
+									<exp exp='.timeout = 100' />
+								</command>
+								<command class_type='loop' title='Wait up to 100 ms for the socket to reach CLOSED' type='0' exp='(.status != 0) &amp;&amp; (.timeout &gt; 0)' for1='' for3='' >
+									<flowline >
+										<command class_type='delay' title='Delay' exp='1' type='1' />
+										<command class_type='calculation' title='Calculation' >
+											<exp exp='.timeout = .timeout - 1' />
+										</command>
+										<command class_type='call' title='Call Macro' macro='MAC_ReadByte' >
+											<return exp='.status' />
+											<argument exp='Sn_SR' />
+										</command>
+									</flowline>
+								</command>
 							</flowline>
 							<flowline />
 						</command>
@@ -4530,14 +5328,7 @@
 						<command class_type='calculation' title='Calculation' >
 							<exp exp='.is_equal = 1' />
 						</command>
-						<command class_type='loop' title='Wait for command accepted' type='0' exp='.is_equal' for1='' for3='' >
-							<flowline >
-								<command class_type='call' title='Call Macro' macro='MAC_ReadByte' >
-									<return exp='.is_equal' />
-									<argument exp='Sn_CR' />
-								</command>
-							</flowline>
-						</command>
+						<command class_type='call' title='Wait (max 100 ms) for the command to be accepted' macro='MAC_WaitCR' />
 						<command class_type='calculation' title='Discard any receive bookkeeping for this socket' >
 							<exp exp='gRxSize[.Channel] = 0' />
 						</command>
@@ -4546,11 +5337,11 @@
 				<macro >
 					<flowline name='GetSocketStatus' description='This returns the state of the requested channel&apos;s socket.' statediag='0' >
 						<return name='Return' type='u8' description='W5500 Sn_SR (socket status register) value for the specified socket' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
-						<param name='Channel' type='u8' description='Specifies the communications channel 0-3' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
+						<param name='Channel' type='u8' description='Specifies the communications channel 0-7' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='call' title='Call Macro' macro='MAC_SetRegister' >
 							<argument exp='.Channel' />
 						</command>
-						<command class_type='decision' title='Decision' exp='.Channel &gt;= 4' swap='0' >
+						<command class_type='decision' title='Decision' exp='.Channel &gt;= 8' swap='0' >
 							<flowline >
 								<command class_type='calculation' title='Trying to open a non-existant channel' >
 									<exp exp='.Return = 255' />
@@ -4567,7 +5358,7 @@
 					</flowline>
 				</macro>
 				<macro >
-					<flowline name='Initialise' description='Resets and initialises the W5500 IC.&#13;&#10;Sets up the gateway address, subnet mask, device IP address and device MAC address.&#13;&#10;This macro must be called before any other TCP_IP component macros.&#13;&#10;Returns 1 to indicate successful communication.' statediag='0' >
+					<flowline name='Initialise' description='Resets and initialises the W5500 IC.&#13;&#10;Sets up the gateway address, subnet mask, device IP address, device MAC address and hostname, and starts the mDNS responder when enabled.&#13;&#10;This macro must be called before any other TCP_IP component macros.&#13;&#10;Returns 1 to indicate successful communication.' statediag='0' >
 						<return name='Return' type='u8' description='W5500 Sn_SR (socket status register) value for the specified socket' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<local name='temp' type='u8' description='' isconst='0' isHidden='0' isinit='0' usrinit='0' setinit='' />
 						<command class_type='calculation' title='Setup the default MAC' >
@@ -4577,6 +5368,13 @@
 							<exp exp='My_MAC[3] = mac3' />
 							<exp exp='My_MAC[4] = mac4' />
 							<exp exp='My_MAC[5] = mac5' />
+						</command>
+						<command class_type='calculation' title='Chip reset closes every socket' >
+							<exp exp='MDNS_Active = 0' />
+							<exp exp='MDNS_Pending = 0' />
+						</command>
+						<command class_type='call' title='Hostname from the property (or MAC based default)' macro='SetHostname' >
+							<argument exp='HostName_P' />
 						</command>
 						<command class_type='decision' title='Decision' exp='MIAC_SYSTEM' swap='0' >
 							<flowline >
@@ -4722,6 +5520,14 @@
 									<exp exp='.Return = 0' />
 								</command>
 							</flowline>
+						</command>
+						<command class_type='decision' title='mDNS Responder enabled?' exp='MDNS' swap='0' >
+							<flowline >
+								<command class_type='call' title='Start answering &lt;hostname&gt;.local' macro='MDNS_Start' >
+									<return exp='.temp' />
+								</command>
+							</flowline>
+							<flowline />
 						</command>
 					</flowline>
 				</macro>
@@ -4989,10 +5795,10 @@
 	<keymap />
 	<panel2d shadows='0' lighting='0' brightness='0' >
 		<background rgb='9737364' img='' style='0' />
-		<camera xe='-4.35863' ye='1.63388' ze='855.219' xt='-4.35863' yt='1.63388' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
-		<viewport dx='630' dy='782' zoom='89.1351' fix_topleft='0' />
+		<camera xe='-4.35863' ye='1.63388' ze='545.711' xt='-4.35863' yt='1.63388' zt='0' xquat='0' yquat='0' zquat='0' wquat='1' />
+		<viewport dx='382' dy='782' zoom='84.7005' fix_topleft='0' />
 		<page x='1000' y='1000' show='0' rgb='0' />
-		<winpos ID='7005' RectRecentFloat='1134,71,1725,945' RectRecentDocked='1270,141,1920,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7005' RectRecentFloat='1134,71,1725,945' RectRecentDocked='1518,141,1920,1013' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='1' />
 	</panel2d>
 	<panel3d shadows='0' lighting='0' brightness='0' perspective='1' >
 		<background rgb='8409120' img='' style='0' />
@@ -5005,56 +5811,56 @@
 		<camerakey4 xe='-300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='0.5' zquat='0.5' wquat='0.5' />
 		<camerakey5 xe='300' ye='-6.66134e-14' ze='6.66134e-14' xt='0' yt='0' zt='0' xquat='-0.5' yquat='-0.5' zquat='-0.5' wquat='0.5' />
 		<camerakey6 xe='-173.205' ye='-173.205' ze='173.205' xt='0' yt='0' zt='0' xquat='-0.424708' yquat='0.17592' zquat='0.339851' wquat='0.820473' />
-		<winpos ID='7004' RectRecentFloat='575,270,1225,720' RectRecentDocked='0,0,484,450' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
+		<winpos ID='7004' RectRecentFloat='575,270,1225,720' RectRecentDocked='0,0,382,872' RecentFrameAlignment='16384' RecentRowIndex='0' IsFloating='0' MRUWidth='32767' PinState='0' IsMaximized='0' IsVisible='0' />
 	</panel3d>
 	<panels2d count='0' />
 	<layout >
-		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='InitialiseSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='TCPClose' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='Ev_Timer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='CreateIPSocket' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='MAC_ReadByte' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='MAC_ReadWord' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='MAC_WriteByte' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='MAC_WriteWord' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='TxSendByte_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='RxDataAvailable_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetMyIP' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='MAC_SetCommon' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='MAC_SetRegister' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='MAC_SetBank' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='MAC_WriteArray' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='MAC_ReadArray' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetGateway' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='SetMACAddress' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='TxSendByte' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='TxSendString' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='TxSendArray' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='TxSendArray_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='CreateTCPSocket' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='CreateMACSocket' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='CreateUDPSocket' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='RxReadArray' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='RxReadByte_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='RxReadArray_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='RxDataAvailable' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DHCP_Run' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='884' flags='0' />
-		<view type='0' name='DHCP_CheckLease' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DHCP_Discover' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='232' flags='0' />
-		<view type='0' name='DHCP_Parse' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='1174' flags='0' />
-		<view type='0' name='DHCP_Request' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='1198' flags='0' />
-		<view type='0' name='DHCP_MakeMessage' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='99' flags='0' />
-		<view type='0' name='GetIPString' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DNS_GetHostByName' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DNS_GetServer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DNS_GetResolvedIP' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DNS_BuildQuery' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DNS_ParseResponse' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
-		<view type='0' name='DHCP_ApplyLease' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAbQQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='InitialiseSim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='TCPClose' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Main' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Initialise' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Property' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='Ev_Timer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CreateIPSocket' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='MAC_ReadByte' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='MAC_ReadWord' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='MAC_WriteByte' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='MAC_WriteWord' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='TxSendByte_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='RxDataAvailable_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='75' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetMyIP' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='MAC_SetCommon' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='MAC_SetRegister' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='MAC_SetBank' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='MAC_WriteArray' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='MAC_ReadArray' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetGateway' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='SetMACAddress' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='TxSendByte' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='TxSendString' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='TxSendArray' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='TxSendArray_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CreateTCPSocket' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CreateMACSocket' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='CreateUDPSocket' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='RxReadArray' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='RxReadByte_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='RxReadArray_Sim' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='RxDataAvailable' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DHCP_Run' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DHCP_CheckLease' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DHCP_Discover' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DHCP_Parse' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DHCP_Request' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DHCP_MakeMessage' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='GetIPString' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DNS_GetHostByName' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DNS_GetServer' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DNS_GetResolvedIP' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DNS_BuildQuery' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DNS_ParseResponse' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
+		<view type='0' name='DHCP_ApplyLease' mode='0' placement='LAAAAAAAAAABAAAA---------------------wUAAAAbAAAAMgQAAGMDAAA' zoom='100' scrollx='0' scrolly='0' flags='0' />
 	</layout>
 </document>
 </root>
