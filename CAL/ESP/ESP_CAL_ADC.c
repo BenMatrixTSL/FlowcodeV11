@@ -1,7 +1,7 @@
-// CRC: 84D9E1FE72EA3BCC519B65499DB4B2BCC2E928A318D32B862581E6BBE90394A0298EE8C9FC6B4135A3C7E653C47A3E7E0F49ACC266A9D3D79B14CAE55A2DB626ABB24D739BCDFCC30C3CAEE8E7DA69871498BB485154219A073F424834EDD335D44D8362AFB3EA14A67EBF8A447D857875AB7F0C240CA5A620394E67F4665BF519EE712C6DCA7E5701F2A8F6B9AA7C82D2A1042278990451B13A63D6467E264A3C812A96556EBB62549D34A0D5AD11F366CD4E344B91B50C597BAB6CD1F04EB379ED40D293571EA6B64C1696A7E966BD4B005A56FBFB0362
-// REVISION: 8.0
+// CRC: 84D9E1FE72EA3BCC519B65499DB4B2BCC2E928A318D32B862581E6BBE90394A0298EE8C9FC6B4135A3C7E653C47A3E7E2E5E803813867B467E404F6188BF6473EE9C40F438F233A5A9B11F738DF98E156DA03D7DC51B7E32073F424834EDD335D44D8362AFB3EA14A67EBF8A447D857875AB7F0C240CA5A620394E67F4665BF519EE712C6DCA7E5701F2A8F6B9AA7C82D2A1042278990451B13A63D6467E264A3C812A96556EBB62549D34A0D5AD11F383D0027892EF6C4CC6352C70EE5A551B8397F7D355301E49072F880DBB6DFDD32544F23D1CC1FCAE
+// REVISION: 9.0
 // GUID: A3DAB360-833F-4DB0-87AF-FEC4D8C732BB
-// DATE: 27\06\2025
+// DATE: 11\11\2026
 // DIR: CAL\ESP\ESP_CAL_ADC.c
 /*********************************************************************
  *                  Flowcode CAL ADC File
@@ -38,6 +38,12 @@
  * 110423 | BR | Added support for IDF v5.0
  * 151024 | BR | Fixed a problem with 8-bit ADC reads
  * 260625 | MW | Fixed a problem with IDF v5.0 ADC2channels was causing a reset.
+ * 061126 | MW | IDF v5: Enable only creates the ADC unit if not already open, Disable clears the handle.
+ *               Fixes abort "adc1 is already in use" when Enable is called per sample (adc_base GetAverageInt/Byte).
+ * 061126 | MW | IDF v5: Sample returns factory calibrated counts (adc_cali line/curve fitting, eFuse data).
+ *               Raw adc_oneshot_read on ESP32 read ~0.16 V low (0.956 V on pin gave 986 instead of 1186).
+ *               Calibrated mV is scaled back to counts against MX_ADC_CAL_VDD_MV so ratiometric components still work.
+ *               If no calibration data is available the raw reading is returned as before.
  */
 
 
@@ -67,12 +73,61 @@ CALFUNCTION(void, FC_CAL_ADC_Disable_, (void));
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 0)	// enable functionality present in IDF v5.0
 
 	#include "esp_adc/adc_oneshot.h"
+	#include "esp_adc/adc_cali.h"						//Factory calibration (fix: raw reads were ~0.16 V low)
+	#include "esp_adc/adc_cali_scheme.h"
+	#include "soc/soc_caps.h"
+
+	#ifndef MX_ADC_CAL_VDD_MV
+		#define MX_ADC_CAL_VDD_MV	3300					//Supply in mV that calibrated readings are scaled against
+	#endif
+	#define MX_ADC_CAL_MAX_COUNT	((1 << SOC_ADC_RTC_MAX_BITWIDTH) - 1)
 
 	#define MX_ADC_EN
 	#define MX_ADC_DIS
 	#define MX_ADC_INIT(A,B)
 
-	adc_oneshot_unit_handle_t adc_handle;
+	adc_oneshot_unit_handle_t adc_handle = NULL;
+	MX_UINT8 adc_unit_open = 0;						//0 = no unit open, 1 = ADC1, 2 = ADC2 (fix: Enable may be called repeatedly, e.g. adc_base GetAverage)
+	adc_cali_handle_t adc_cali_handle = NULL;		//Calibration for the open unit, NULL = not available, use raw
+
+	//Create factory calibration for the unit just opened, leaves handle NULL if the chip has no calibration data
+	void FC_CAL_ADC_CaliCreate(adc_unit_t unit)
+	{
+		adc_cali_handle = NULL;
+	#if ADC_CALI_SCHEME_CURVE_FITTING_SUPPORTED
+		adc_cali_curve_fitting_config_t cali_config = {
+			.unit_id = unit,
+		#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 1, 0)
+			.chan = 0,
+		#endif
+			.atten = ADC_ATTEN_DB_11,
+			.bitwidth = ADC_BITWIDTH_DEFAULT
+		};
+		if (adc_cali_create_scheme_curve_fitting(&cali_config, &adc_cali_handle) != ESP_OK)
+			adc_cali_handle = NULL;
+	#elif ADC_CALI_SCHEME_LINE_FITTING_SUPPORTED
+		adc_cali_line_fitting_config_t cali_config = {
+			.unit_id = unit,
+			.atten = ADC_ATTEN_DB_11,
+			.bitwidth = ADC_BITWIDTH_DEFAULT
+		};
+		if (adc_cali_create_scheme_line_fitting(&cali_config, &adc_cali_handle) != ESP_OK)
+			adc_cali_handle = NULL;
+	#endif
+	}
+
+	void FC_CAL_ADC_CaliDelete(void)
+	{
+		if (adc_cali_handle != NULL)
+		{
+	#if ADC_CALI_SCHEME_CURVE_FITTING_SUPPORTED
+			adc_cali_delete_scheme_curve_fitting(adc_cali_handle);
+	#elif ADC_CALI_SCHEME_LINE_FITTING_SUPPORTED
+			adc_cali_delete_scheme_line_fitting(adc_cali_handle);
+	#endif
+			adc_cali_handle = NULL;
+		}
+	}
 
 	// ADC Type 1 Supported Devices IDF 5.x *******************************************************
 	// ESP32
@@ -85,22 +140,42 @@ CALFUNCTION(void, FC_CAL_ADC_Disable_, (void));
 
 		CALFUNCTION(void, FC_CAL_ADC_Enable_, (MX_UINT8 Channel, MX_UINT8 Conv_Speed, MX_UINT8 Vref, MX_UINT8 T_Charge))
 		{
+			MX_UINT8 unit = (Channel < 32) ? 1 : 2;
+
+			if ((adc_handle != NULL) && (adc_unit_open != unit))	//Other ADC unit open - close it first
+			{
+				FC_CAL_ADC_CaliDelete();
+				ESP_ERROR_CHECK(adc_oneshot_del_unit(adc_handle));
+				adc_handle = NULL;
+				adc_unit_open = 0;
+			}
+
 			if (Channel < 32)								//ADC1
 			{
-				adc_oneshot_unit_init_cfg_t init_config1 = {
-						.unit_id = ADC_UNIT_1,
-						.ulp_mode = ADC_ULP_MODE_DISABLE
-				};
-				ESP_ERROR_CHECK(adc_oneshot_new_unit(&init_config1, &adc_handle));
+				if (adc_handle == NULL)						//Only create the unit if not already open
+				{
+					adc_oneshot_unit_init_cfg_t init_config1 = {
+							.unit_id = ADC_UNIT_1,
+							.ulp_mode = ADC_ULP_MODE_DISABLE
+					};
+					ESP_ERROR_CHECK(adc_oneshot_new_unit(&init_config1, &adc_handle));
+					adc_unit_open = 1;
+					FC_CAL_ADC_CaliCreate(ADC_UNIT_1);
+				}
 			}
 			else											//ADC2
 			{
 				Channel = Channel - 32;                    //ADC 2 restart from 32 @ index 0
-				adc_oneshot_unit_init_cfg_t init_config1 = {
-						.unit_id = ADC_UNIT_2,
-						.ulp_mode = ADC_ULP_MODE_DISABLE
-				};
-				ESP_ERROR_CHECK(adc_oneshot_new_unit(&init_config1, &adc_handle));
+				if (adc_handle == NULL)						//Only create the unit if not already open
+				{
+					adc_oneshot_unit_init_cfg_t init_config1 = {
+							.unit_id = ADC_UNIT_2,
+							.ulp_mode = ADC_ULP_MODE_DISABLE
+					};
+					ESP_ERROR_CHECK(adc_oneshot_new_unit(&init_config1, &adc_handle));
+					adc_unit_open = 2;
+					FC_CAL_ADC_CaliCreate(ADC_UNIT_2);
+				}
 			}
 
 			adc_oneshot_chan_cfg_t config =
@@ -117,6 +192,17 @@ CALFUNCTION(void, FC_CAL_ADC_Disable_, (void));
 			int Sample = 0;
 			ESP_ERROR_CHECK(adc_oneshot_read(adc_handle, MX_ADC_CHA_X, &Sample));
 
+			if (adc_cali_handle != NULL)				//Apply factory calibration, return counts against MX_ADC_CAL_VDD_MV
+			{
+				int mV = 0;
+				if (adc_cali_raw_to_voltage(adc_cali_handle, Sample, &mV) == ESP_OK)
+				{
+					Sample = (int)(((int32_t)mV * MX_ADC_CAL_MAX_COUNT + (MX_ADC_CAL_VDD_MV / 2)) / MX_ADC_CAL_VDD_MV);
+					if (Sample > MX_ADC_CAL_MAX_COUNT) Sample = MX_ADC_CAL_MAX_COUNT;
+					if (Sample < 0) Sample = 0;
+				}
+			}
+
 			if (Sample_Mode == 0)
 			{
 				Sample = Sample >> 4;						//Reduce to 8-bit sample
@@ -127,7 +213,13 @@ CALFUNCTION(void, FC_CAL_ADC_Disable_, (void));
 
 		CALFUNCTION(void, FC_CAL_ADC_Disable_, ())
 		{
-			ESP_ERROR_CHECK(adc_oneshot_del_unit(adc_handle));
+			if (adc_handle != NULL)							//Only delete if a unit is open
+			{
+				FC_CAL_ADC_CaliDelete();
+				ESP_ERROR_CHECK(adc_oneshot_del_unit(adc_handle));
+				adc_handle = NULL;
+				adc_unit_open = 0;
+			}
 		}
 
 		#ifdef MX_ADC_TOUCH
