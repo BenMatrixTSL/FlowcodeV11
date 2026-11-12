@@ -1,7 +1,7 @@
-// CRC: 675B15CA0DE03A7497A65F03351863B93D8DFBB3B6960DACF67DB601F837E3BEA99F79DF56372A99CEABC1DCFEB790029A0D46BD3B6AACB92DE4D84759EBB5079CA9DA2D2BBCDAE2A4D1C56CD1580BF5ECE5D94893D6F6995226350A737298D1DECDEBF1C00C87E767BDD1E8A08CC214166FBE0B7F76E90A9B408C866B29F69A3A572FB7C7384619FDE0704210F71F16ABC01007072B2188134ACEBFC949235A01BD7AD8F39DEE8D549D34A0D5AD11F30ED77C12B1D0D2BE23B56F1F03441DFE438F9B8FEFA7266CAFA22E870078457321B85372DCE0C3F0
-// REVISION: 1.0
+// CRC: 675B15CA0DE03A7497A65F03351863B93D8DFBB3B6960DACF67DB601F837E3BEA99F79DF56372A99CEABC1DCFEB79002C224CC8FEEF312C5C951050EA34CC75A14C7C93C31DAFADEA9B11F738DF98E150B174C20FB3FAA955226350A737298D1DECDEBF1C00C87E767BDD1E8A08CC214166FBE0B7F76E90A9B408C866B29F69A3A572FB7C7384619FDE0704210F71F16ABC01007072B2188134ACEBFC949235A01BD7AD8F39DEE8D549D34A0D5AD11F31EBE877A25DD4513913C57D59AEE3D1C69D40838894949D17BE859FCFFBFD79E33DBA559DB338738
+// REVISION: 2.0
 // GUID: 98C9DF97-DA17-4B8F-90EA-974879DAEF5C
-// DATE: 08\08\2022
+// DATE: 12\11\2026
 // DIR: CAL\STARM\STARM_CAL_IO.c
 /*********************************************************************
  *                  Flowcode CAL IO File
@@ -37,6 +37,7 @@
  * 010911 | SK | Created
  * 050911 | BR | Added 10F and 12F compatible I/O functions
  * 020312 | BR | Updated to v5.1 CAL Schema
+ * 121126 | BR | Input reads no longer clear user configured internal pull-up/pull-down
  *
  */
 
@@ -1169,16 +1170,59 @@
 	}
 
 
+	// Switch the selected pins to digital inputs WITHOUT touching the pull-up/pull-down
+	// configuration. Previously this used HAL_GPIO_Init(...GPIO_NOPULL...) which cleared
+	// any internal pull-up/down the user had enabled via C code each time the pin was read.
+	static void FC_CAL_Port_SetInput__x (GPIO_TypeDef *PORT, MX_UINT16 InMask)
+	{
+		MX_UINT32 p;
+
+	#if defined GPIO_CRH_MODE
+		// STM32F1 style CRL/CRH: 4 bits per pin, CNF[1:0]:MODE[1:0]
+		// 0x4 = floating input, 0x8 = input with pull-up/down (direction set by ODR bit).
+		// Leave pins already configured as floating or pulled inputs alone, otherwise
+		// (output, alternate function or analogue) switch them to floating input.
+		MX_UINT32 cr, cfg;
+
+		for (p = 0U; p < 16U; p++)
+		{
+			if (InMask & (1UL << p))
+			{
+				if (p < 8U)
+				{
+					cr = PORT->CRL;
+					cfg = (cr >> (p * 4U)) & 0xFUL;
+					if ((cfg != 0x4UL) && (cfg != 0x8UL))
+						PORT->CRL = (cr & ~(0xFUL << (p * 4U))) | (0x4UL << (p * 4U));
+				}
+				else
+				{
+					cr = PORT->CRH;
+					cfg = (cr >> ((p - 8U) * 4U)) & 0xFUL;
+					if ((cfg != 0x4UL) && (cfg != 0x8UL))
+						PORT->CRH = (cr & ~(0xFUL << ((p - 8U) * 4U))) | (0x4UL << ((p - 8U) * 4U));
+				}
+			}
+		}
+	#else
+		// MODER style (F0/F2/F3/F4/F7/L0/L1/L4...): input = MODER 00.
+		// PUPDR (pull-up/pull-down) is deliberately left untouched.
+		MX_UINT32 moder_mask = 0;
+
+		for (p = 0U; p < 16U; p++)
+		{
+			if (InMask & (1UL << p))
+				moder_mask |= (3UL << (p * 2U));
+		}
+		PORT->MODER &= ~moder_mask;
+	#endif
+	}
+
+
 	static MX_UINT16 FC_CAL_Port_In_DDR__x (GPIO_TypeDef *PORT, MX_UINT16 InMask, MX_UINT16 Shift)
 	{
-		GPIO_InitTypeDef  GPIO_InitStruct;
-
-		// Configure inputs
-		GPIO_InitStruct.Pin = InMask;
-		GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-		GPIO_InitStruct.Pull = GPIO_NOPULL;
-		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-		HAL_GPIO_Init(PORT, &GPIO_InitStruct);
+		// Configure inputs (preserving any pull-up/pull-down configuration)
+		FC_CAL_Port_SetInput__x(PORT, InMask);
 
 		return (PORT->IDR & InMask) >> Shift;
 	}
@@ -1195,14 +1239,7 @@
 		PORT->MODER = PORT->MODER & ~(3<<((Pin)*2));
 		return test_bit(PORT->IDR, Pin);
 	#elif defined GPIO_CRH_MODE
-		if (Pin < 8)
-		{
-			PORT->CRL = PORT->CRL&~(3<<((Pin)*4));
-		}
-		else
-		{
-			PORT->CRH = PORT->CRH&~(3<<((Pin&7)*4));
-		};
+		FC_CAL_Port_SetInput__x(PORT, (1 << Pin));		//Preserves any pull-up/pull-down configuration
 		return test_bit(PORT->IDR, Pin);
 	#else
 		return FC_CAL_Port_In_DDR__x (PORT, (1 << Pin), (Pin));
