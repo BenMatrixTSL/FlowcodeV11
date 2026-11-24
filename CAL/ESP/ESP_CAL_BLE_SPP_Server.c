@@ -1,7 +1,7 @@
-// CRC: 84D9E1FE72EA3BCC519B65499DB4B2BCC2E928A318D32B862581E6BBE90394A0C50EC9A622BC26BB8DEA673A10B7CD916527A4218AE1DAC1CC23E85E07FE4DA10AFB77E66B93F23DC0924CC487F83FC5C76D869352E0CB4A0C3CAEE8E7DA6987B14353BCAAC07CC3DAC847DBF6DF32148318CD0646F93457785DA27AF0EB19477DD64BF97B2588F98D0153C943D277CFA4486BC3E2BC43F081195D8ABD8E77B6DF4DC114886C69C90D9B6942068BE8E3863DD2A7D5FC2A5E549D34A0D5AD11F376469852F00B6E812F4420775CF63C4635251C250EB75562E4565E63FDA312627DD474674123A97D
-// REVISION: 3.0
+// CRC: 84D9E1FE72EA3BCC519B65499DB4B2BCC2E928A318D32B862581E6BBE90394A0C50EC9A622BC26BB8DEA673A10B7CD916527A4218AE1DAC1CC23E85E07FE4DA156557CC7FB74F055CCDF56843D14FE724474B131B536F04EA9B11F738DF98E15EC0E8272595EAED0DAC847DBF6DF32148318CD0646F93457785DA27AF0EB19477DD64BF97B2588F98D0153C943D277CFA4486BC3E2BC43F081195D8ABD8E77B6DF4DC114886C69C90D9B6942068BE8E3863DD2A7D5FC2A5E549D34A0D5AD11F3F549048CA9E7A29F0C08A61B592DEF3742DBF82CFF8D6361E907423A8D190A732508A81D4B1C62AB
+// REVISION: 4.0
 // GUID: D6758F12-7EA3-43C1-A3AF-1CD455707176
-// DATE: 27\11\2025
+// DATE: 24\11\2026
 // DIR: CAL\ESP\ESP_CAL_BLE_SPP_Server.c
 
 #include <string.h>
@@ -58,6 +58,14 @@ static uint16_t spp_char_uuid = SPP_CHAR_UUID;
 // UUID also fits inside the 31-byte advertising frame.
 #define BT_ADV_NAME_MAX_LEN 19
 
+// Device name set at runtime by BT_BLE_SSP_Server_SetName. While this is
+// empty the fixed BT_DEV_NAME from the Flowcode property is used instead.
+static char bt_dev_name[BT_ADV_NAME_MAX_LEN + 1] = {0};
+
+// Set when the name changes while a client is connected, so the advertising
+// data is rebuilt with the new name once the client disconnects.
+static bool bt_dev_name_adv_pending = false;
+
 // Attribute table definition.
 static esp_gatts_attr_db_t spp_gatt_db[IDX_SPP_NB] = {
     // Service Declaration
@@ -110,6 +118,7 @@ static void send_byte_to_client(uint8_t byte_value);
 static void send_byte_array_to_client(const uint8_t *data, uint16_t length);
 static void set_device_name_with_limit(void);
 static void configure_raw_advertising(void);
+static const char *get_device_name(void);
 
 // RX buffer helpers.
 static void spp_rx_buffer_reset(void);
@@ -123,10 +132,23 @@ static uint16_t spp_rx_read_block(uint8_t *out, uint16_t max_length);
 uint16_t spp_rx_data_available(void);
 bool spp_read_byte(uint8_t *out_byte);
 uint16_t spp_read_bytes(uint8_t *out, uint16_t max_length);
+void BT_BLE_SSP_Server_SetName(MX_CHAR *name, MX_UINT16 name_size);
+
+/*
+ * Return the name to advertise: the runtime name if one has been set,
+ * otherwise the fixed BT_DEV_NAME from the Flowcode property.
+ */
+static const char *get_device_name(void)
+{
+    if (bt_dev_name[0] != '\0') {
+        return bt_dev_name;
+    }
+    return BT_DEV_NAME;
+}
 
 static void log_adv_payload_size(void)
 {
-    const char *name = BT_DEV_NAME;
+    const char *name = get_device_name();
     size_t trimmed = strlen(name) > BT_ADV_NAME_MAX_LEN ? BT_ADV_NAME_MAX_LEN : strlen(name);
 
     size_t bytes = 0;
@@ -140,11 +162,11 @@ static void log_adv_payload_size(void)
 }
 
 /*
- * Copy BT_DEV_NAME into a trimmed buffer that fits the advertisement payload.
+ * Copy the device name into a trimmed buffer that fits the advertisement payload.
  */
 static void set_device_name_with_limit(void)
 {
-    const char *source = BT_DEV_NAME;
+    const char *source = get_device_name();
     size_t source_len = strlen(source);
     size_t copy_len = source_len > BT_ADV_NAME_MAX_LEN ? BT_ADV_NAME_MAX_LEN : source_len;
     char limited_name[BT_ADV_NAME_MAX_LEN + 1];
@@ -170,7 +192,7 @@ static void set_device_name_with_limit(void)
 static void configure_raw_advertising(void)
 {
     char limited_name[BT_ADV_NAME_MAX_LEN + 1];
-    const char *source = BT_DEV_NAME;
+    const char *source = get_device_name();
     size_t source_len = strlen(source);
     size_t copy_len = source_len > BT_ADV_NAME_MAX_LEN ? BT_ADV_NAME_MAX_LEN : source_len;
     memcpy(limited_name, source, copy_len);
@@ -392,7 +414,11 @@ static void gap_event_handler(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param
     	#if (BT_DEBUG & 1)
           ESP_LOGI(BLE_TAG, "Advertising data configured");
         #endif
-        start_advertising();
+        // Don't advertise while connected - a name change made during a
+        // connection is advertised once the client disconnects.
+        if (!client_connected) {
+            start_advertising();
+        }
         break;
     case ESP_GAP_BLE_ADV_START_COMPLETE_EVT:
         if (param->adv_start_cmpl.status != ESP_BT_STATUS_SUCCESS)
@@ -495,7 +521,14 @@ static void gatts_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_t gatts_
         client_connected = false;
         connection_id = 0;
         spp_rx_buffer_reset();
-        start_advertising();
+        if (bt_dev_name_adv_pending) {
+            // Name changed while connected: rebuild the advertising data,
+            // advertising restarts from ESP_GAP_BLE_ADV_DATA_SET_COMPLETE_EVT.
+            bt_dev_name_adv_pending = false;
+            configure_raw_advertising();
+        } else {
+            start_advertising();
+        }
         break;
 
     case ESP_GATTS_WRITE_EVT:
@@ -560,6 +593,56 @@ static void BT_BLE_SSP_Server_Init(void)
 }
 
 /*
+ * Change the Bluetooth device name at runtime.
+ *
+ * name      - new name, max 19 characters (longer names are trimmed to fit
+ *             the advertising packet). Pass an empty string to go back to
+ *             the fixed name from the Flowcode Device Name property.
+ * name_size - size of the name buffer, so names that fill the whole
+ *             Flowcode string with no null terminator are handled.
+ *
+ * Can be called before or after BT_BLE_SSP_Server_Init:
+ *  - Before init (or before the stack is ready) the name is stored and used
+ *    when advertising starts.
+ *  - While advertising, the name is changed straight away.
+ *  - While a client is connected, the GAP device name is updated straight
+ *    away and the new name is advertised once the client disconnects.
+ * The name is kept across BT_BLE_SSP_Server_Deinit / Init.
+ */
+void BT_BLE_SSP_Server_SetName(MX_CHAR *name, MX_UINT16 name_size)
+{
+    MX_UINT16 len = 0;
+
+    if (name != NULL) {
+        while (len < name_size && len < BT_ADV_NAME_MAX_LEN && name[len] != '\0') {
+            len++;
+        }
+        memcpy(bt_dev_name, name, len);
+    }
+    bt_dev_name[len] = '\0';
+
+    #if (BT_DEBUG & 1)
+      ESP_LOGI(BLE_TAG, "Device name set to \"%s\"", get_device_name());
+    #endif
+
+    // Stack not up yet - the name is picked up at ESP_GATTS_REG_EVT.
+    if (server_if == ESP_GATT_IF_NONE) {
+        return;
+    }
+
+    set_device_name_with_limit();
+
+    if (client_connected) {
+        bt_dev_name_adv_pending = true;
+    } else {
+        // Rebuild the advertising data, advertising restarts from
+        // ESP_GAP_BLE_ADV_DATA_SET_COMPLETE_EVT with the new name.
+        esp_ble_gap_stop_advertising();
+        configure_raw_advertising();
+    }
+}
+
+/*
  * Completely shut down and uninitialize Bluetooth functionality.
  * This stops advertising, disconnects clients, and powers down the BLE stack.
  * Call this when you want to save power or completely disable BLE.
@@ -594,6 +677,7 @@ void BT_BLE_SSP_Server_Deinit(void)
     server_if = ESP_GATT_IF_NONE;
     connection_id = 0;
     client_connected = false;
+    bt_dev_name_adv_pending = false;
     spp_rx_buffer_reset();
 
 	#if (BT_DEBUG & 1)

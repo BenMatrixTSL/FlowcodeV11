@@ -1,7 +1,7 @@
-// CRC: 20C35A1E87BE6D5C727502197CD041A7B491451D5915BA6B046B33DA966607B8780D0B864F5D1F680368647E196A8AACEA68E2929511E6E27D52A876A9F220FA562AF2F62E9AB6760C3CAEE8E7DA6987DE3F57CDBA3A75ED618FE9E6D8BAA9A87668C33C7D0D76AF9CB24CE08F8B3A6208E90FACA779D500822923DC1AB94DA057834014FAB126860197DC63678D55DF5E1DCE6D459C3CFBAC0A36EDE6FFF9B2636F7A56F194CD15549D34A0D5AD11F30D22ADDCB073812F2DE26A97C9D202459AB2FADFBA6617B461112B2378F6127E5D3A7ED706D09BBA
-// REVISION: 6.0
+// CRC: 20C35A1E87BE6D5C727502197CD041A7B491451D5915BA6B046B33DA966607B8780D0B864F5D1F680368647E196A8AAC56557CC7FB74F055CCDF56843D14FE724474B131B536F04EA9B11F738DF98E15F0D61FBECFFA35BA618FE9E6D8BAA9A87668C33C7D0D76AF9CB24CE08F8B3A6208E90FACA779D500822923DC1AB94DA057834014FAB126860197DC63678D55DF5E1DCE6D459C3CFBAC0A36EDE6FFF9B2636F7A56F194CD15549D34A0D5AD11F3C1CE122C1F15A36A4EBBC1484C3EA8A0C7D4F749E9175128EC447A7A7C3AA69E9E27863BF8B478B1
+// REVISION: 7.0
 // GUID: 51FF44D1-6796-4E76-97BD-E923529881BA
-// DATE: 19\09\2025
+// DATE: 24\11\2026
 // DIR: CAL\PIC\PIC_CAL_I2C.c
 /*********************************************************************
  *                  Flowcode CAL I2C File
@@ -46,6 +46,8 @@
  * 260416 | LM | Updates for XC8
  * 220118 | LM | Addition of transaction functions
  * 120925 | BR | Added new I2CxCON0 style peripheral support
+ * 241126 | BR | Slave receive without data hold (DHEN): release SCL once per byte and clear SSPOV
+ * 241126 | BR | Slave channel 2 init now checks SSP2CON3 and SSP2MSK instead of the channel 1 registers
  */
 
 
@@ -818,10 +820,10 @@ CALFUNCTION(void, FC_CAL_I2C_Slave_Init_, (MX_UINT8 Address, MX_UINT8 Mask))
 			#endif
 			SSP2CON1 = 0x36;			// SSPEN=1, CKP=1, SSPM<3:0>=0110  = I2C Slave mode, 7-bit address
 			SSP2CON2 = 1;				// SEN=1 Clock stretching is enabled
-			#ifdef SSPCON3
+			#ifdef SSP2CON3
 				SSP2CON3 = 3;			// set AHEN and DHEN
 			#endif
-			#ifdef SSPMSK
+			#ifdef SSP2MSK
 				SSP2MSK = Mask;
 			#endif
 			SSP2ADD = Address;
@@ -928,13 +930,28 @@ CALFUNCTION(MX_UINT8, FC_CAL_I2C_Slave_RxByte_, (MX_UINT8 Last))
 			else
 			{
 				// It's a write from Master to Slave
-				Last ? st_bit(SSPCON2, ACKDT) : cr_bit(SSPCON2, ACKDT);	// Ack or Nak
-				st_bit(SSPCON, CKP);									// release SCL
-				if (0 == Last)
+				#ifdef SSPCON3
+				if (ts_bit(SSPCON3, DHEN))
 				{
-					MX_I2C_TIMEOUT_X = 0xFFFF;
-					while (ts_bit(SSPCON, CKP) && MX_I2C_TIMEOUT_X--);						// wait for CKP to go low again indicating that the Ack has been sent
-					st_bit(SSPCON, CKP);								// release SCL (again)
+					// Data hold enabled: SCL is held before the Ack (DHEN) and again after it (SEN)
+					Last ? st_bit(SSPCON2, ACKDT) : cr_bit(SSPCON2, ACKDT);	// Ack or Nak
+					st_bit(SSPCON, CKP);									// release SCL
+					if (0 == Last)
+					{
+						MX_I2C_TIMEOUT_X = 0xFFFF;
+						while (ts_bit(SSPCON, CKP) && MX_I2C_TIMEOUT_X--);						// wait for CKP to go low again indicating that the Ack has been sent
+						st_bit(SSPCON, CKP);								// release SCL (again)
+					}
+				}
+				else
+				#endif
+				{
+					// No data hold (legacy MSSP e.g. 18F252/18F2525, or DHEN not enabled): the hardware
+					// has already sent the Ack and, with SEN = 1, SCL is held once, after the Ack, until
+					// the byte is read. Release it once only - waiting for CKP to clear again would release
+					// the following byte before it has been read and lead to a receive overflow.
+					cr_bit(SSPCON, SSPOV);									// clear any overflow, otherwise all further bytes are Nak'd
+					st_bit(SSPCON, CKP);									// release SCL
 				}
 			}
 
@@ -964,13 +981,26 @@ CALFUNCTION(MX_UINT8, FC_CAL_I2C_Slave_RxByte_, (MX_UINT8 Last))
 			else
 			{
 				// It's a write from Master to Slave
-				Last ? st_bit(SSP2CON2, ACKDT) : cr_bit(SSP2CON2, ACKDT);	// Ack or Nak
-				st_bit(SSP2CON1, CKP);									// release SCL
-				if (0 == Last)
+				#ifdef SSP2CON3
+				if (ts_bit(SSP2CON3, DHEN))
 				{
-					MX_I2C_TIMEOUT_X = 0xFFFF;
-					while (ts_bit(SSP2CON1, CKP) && MX_I2C_TIMEOUT_X--);						// wait for CKP to go low again indicating that the Ack has been sent
-					st_bit(SSP2CON1, CKP);								// release SCL (again)
+					// Data hold enabled: SCL is held before the Ack (DHEN) and again after it (SEN)
+					Last ? st_bit(SSP2CON2, ACKDT) : cr_bit(SSP2CON2, ACKDT);	// Ack or Nak
+					st_bit(SSP2CON1, CKP);									// release SCL
+					if (0 == Last)
+					{
+						MX_I2C_TIMEOUT_X = 0xFFFF;
+						while (ts_bit(SSP2CON1, CKP) && MX_I2C_TIMEOUT_X--);						// wait for CKP to go low again indicating that the Ack has been sent
+						st_bit(SSP2CON1, CKP);								// release SCL (again)
+					}
+				}
+				else
+				#endif
+				{
+					// No data hold: Ack already sent by hardware, SCL held once after the Ack (SEN = 1).
+					// Release it once only, see channel 1 above.
+					cr_bit(SSP2CON1, SSPOV);								// clear any overflow, otherwise all further bytes are Nak'd
+					st_bit(SSP2CON1, CKP);									// release SCL
 				}
 			}
 		#endif
