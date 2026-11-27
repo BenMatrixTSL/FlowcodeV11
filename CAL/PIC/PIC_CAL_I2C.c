@@ -1,7 +1,7 @@
-// CRC: 20C35A1E87BE6D5C727502197CD041A7B491451D5915BA6B046B33DA966607B8780D0B864F5D1F680368647E196A8AAC56557CC7FB74F055CCDF56843D14FE724474B131B536F04EA9B11F738DF98E15F0D61FBECFFA35BA618FE9E6D8BAA9A87668C33C7D0D76AF9CB24CE08F8B3A6208E90FACA779D500822923DC1AB94DA057834014FAB126860197DC63678D55DF5E1DCE6D459C3CFBAC0A36EDE6FFF9B2636F7A56F194CD15549D34A0D5AD11F3C1CE122C1F15A36A4EBBC1484C3EA8A0C7D4F749E9175128EC447A7A7C3AA69E9E27863BF8B478B1
-// REVISION: 7.0
+// CRC: 20C35A1E87BE6D5C727502197CD041A7B491451D5915BA6B046B33DA966607B8780D0B864F5D1F680368647E196A8AAC0AFB77E66B93F23DC0924CC487F83FC540F95D75065804C8A9B11F738DF98E15F0D61FBECFFA35BA618FE9E6D8BAA9A87668C33C7D0D76AF9CB24CE08F8B3A6208E90FACA779D500822923DC1AB94DA057834014FAB126860197DC63678D55DF5E1DCE6D459C3CFBAC0A36EDE6FFF9B2636F7A56F194CD15549D34A0D5AD11F3081D242D7C3A60EEC8E693DD736D5BE23A5A7A83DC36B3DD19F5A1519A28222137BBA28BD2FD4C2E
+// REVISION: 8.0
 // GUID: 51FF44D1-6796-4E76-97BD-E923529881BA
-// DATE: 24\11\2026
+// DATE: 27\11\2026
 // DIR: CAL\PIC\PIC_CAL_I2C.c
 /*********************************************************************
  *                  Flowcode CAL I2C File
@@ -48,6 +48,7 @@
  * 120925 | BR | Added new I2CxCON0 style peripheral support
  * 241126 | BR | Slave receive without data hold (DHEN): release SCL once per byte and clear SSPOV
  * 241126 | BR | Slave channel 2 init now checks SSP2CON3 and SSP2MSK instead of the channel 1 registers
+ * 271126 | BR | Slave receive without data hold: RxByte(Last=0) waits for the next byte again (fixes regression in sequential reads)
  */
 
 
@@ -952,6 +953,13 @@ CALFUNCTION(MX_UINT8, FC_CAL_I2C_Slave_RxByte_, (MX_UINT8 Last))
 					// the following byte before it has been read and lead to a receive overflow.
 					cr_bit(SSPCON, SSPOV);									// clear any overflow, otherwise all further bytes are Nak'd
 					st_bit(SSPCON, CKP);									// release SCL
+					if (0 == Last)
+					{
+						// Wait for the next byte to arrive (as the previous CAL did via CKP) so that back to back
+						// RxByte calls without a status check stay in step with the master. SCL is not released again.
+						MX_I2C_TIMEOUT_X = 0xFFFF;
+						while (ts_bit(SSPSTAT, BF) == 0 && MX_I2C_TIMEOUT_X--);
+					}
 				}
 			}
 
@@ -1001,6 +1009,12 @@ CALFUNCTION(MX_UINT8, FC_CAL_I2C_Slave_RxByte_, (MX_UINT8 Last))
 					// Release it once only, see channel 1 above.
 					cr_bit(SSP2CON1, SSPOV);								// clear any overflow, otherwise all further bytes are Nak'd
 					st_bit(SSP2CON1, CKP);									// release SCL
+					if (0 == Last)
+					{
+						// Wait for the next byte to arrive, see channel 1 above
+						MX_I2C_TIMEOUT_X = 0xFFFF;
+						while (ts_bit(SSP2STAT, BF) == 0 && MX_I2C_TIMEOUT_X--);
+					}
 				}
 			}
 		#endif
